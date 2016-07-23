@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.common.exception.InsufficientAccessException;
@@ -48,7 +49,6 @@ import com.pratilipi.data.type.PratilipiContentDoc;
 import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
 import com.pratilipi.data.type.PratilipiReviewsDoc;
 import com.pratilipi.data.type.UserPratilipi;
-import com.pratilipi.data.type.doc.PratilipiContentDocImpl.Chapter;
 import com.pratilipi.filter.AccessTokenFilter;
 import com.pratilipi.filter.UxModeFilter;
 
@@ -290,11 +290,19 @@ public class PratilipiDataUtil {
 			pratilipiData.setLastUpdated( pratilipi.getLastUpdated() );
 
 		if( UxModeFilter.isAndroidApp() ) {
-			BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor().getBlob( CONTENT_FOLDER + "/" + pratilipi.getId() );
-			if( blobEntry != null ) {
-				String contentHtml = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
-				PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( pratilipi, contentHtml );
-				pratilipiData.setIndex( pratilipiContentUtil.generateIndexForAndroid() );
+			DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
+			PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( pratilipi.getId() );
+			if( pcDoc != null ) {
+				JsonArray index = new JsonArray();
+				int chapterNo = 1;
+				for( PratilipiContentDoc.Chapter chapter : pcDoc.getChapterList() ) {
+					JsonObject indexItem = new JsonObject();
+					indexItem.addProperty( "chapterNo", chapterNo++ );
+					indexItem.addProperty( "title", chapter.getTitle() );
+					indexItem.addProperty( "nesting", chapter.getNesting() );
+					index.add( indexItem );
+				}
+				pratilipiData.setIndex( index );
 			}
 		} else {
 			pratilipiData.setIndex( pratilipi.getIndex() );
@@ -940,22 +948,23 @@ public class PratilipiDataUtil {
 
 		if( contentType == PratilipiContentType.PRATILIPI ) {
 
-			BlobEntry blobEntry = blobAccessor.getBlob( CONTENT_FOLDER + "/" + pratilipiId );
-			
-			if( blobEntry == null )
-				return null;
-			
-			String contentHtml = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
-			PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( pratilipi, contentHtml );
-
 			if( UxModeFilter.isAndroidApp() ) {
-				Object content = pratilipiContentUtil.toPratilipiContentData();
-				if( content != null && chapterNo != null )
-					content = ( (PratilipiContentDoc) content ).getChapter( chapterNo );
-				if( content != null && pageNo != null )
-					content = ( (Chapter) content ).getPage( pageNo );
-				return content;
+				DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
+				PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( pratilipiId );
+				if( pcDoc == null )
+					return null;
+				else if( chapterNo == null )
+					return pcDoc;
+				else if( chapterNo != null && pageNo == null )
+					return pcDoc.getChapter( chapterNo );
+				else
+					return pcDoc.getChapter( chapterNo ).getPage( pageNo );
 			} else {
+				BlobEntry blobEntry = blobAccessor.getBlob( CONTENT_FOLDER + "/" + pratilipiId );
+				if( blobEntry == null )
+					return null;
+				String contentHtml = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
+				PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( pratilipi, contentHtml );
 				contentHtml = pratilipiContentUtil.getContent( chapterNo != null ? chapterNo : pageNo );
 				return contentHtml;
 			}

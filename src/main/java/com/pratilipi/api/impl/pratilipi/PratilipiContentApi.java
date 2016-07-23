@@ -17,6 +17,7 @@ import com.pratilipi.common.type.PratilipiContentType;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.util.PratilipiDataUtil;
+import com.pratilipi.filter.UxModeFilter;
 import com.pratilipi.taskqueue.Task;
 import com.pratilipi.taskqueue.TaskQueueFactory;
 
@@ -45,16 +46,22 @@ public class PratilipiContentApi extends GenericApi {
 	public static class Response extends GenericResponse {
 		
 		private Long pratilipiId;
+		private Integer chapterNo;
 		private Integer pageNo;
+		private Object content;
 		private Object pageContent;
 
 		
 		private Response() {}
 		
-		private Response( Long pratilipiId, Integer pageNo, Object pageContent ) {
+		private Response( Long pratilipiId, Integer chapterNo, Integer pageNo, Object pageContent ) {
 			this.pratilipiId = pratilipiId;
+			this.chapterNo = chapterNo;
 			this.pageNo = pageNo;
-			this.pageContent = pageContent;
+			if( UxModeFilter.isAndroidApp() )
+				this.content = pageContent;
+			else
+				this.pageContent = pageContent;
 		}
 
 	}
@@ -68,8 +75,8 @@ public class PratilipiContentApi extends GenericApi {
 		
 		if( request.contentType == null )
 			contentType = DataAccessorFactory.getDataAccessor()
-							.getPratilipi( request.pratilipiId )
-							.getContentType();
+					.getPratilipi( request.pratilipiId )
+					.getContentType();
 
 		Object content = PratilipiDataUtil.getPratilipiContent(
 				request.pratilipiId,
@@ -80,6 +87,7 @@ public class PratilipiContentApi extends GenericApi {
 		if( contentType == PratilipiContentType.PRATILIPI ) {
 			return new Response(
 					request.pratilipiId,
+					request.chapterNo,
 					request.pageNo,
 					content );
 		} else if( contentType == PratilipiContentType.IMAGE ) {

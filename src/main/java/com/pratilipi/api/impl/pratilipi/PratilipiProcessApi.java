@@ -195,6 +195,7 @@ public class PratilipiProcessApi extends GenericApi {
 		if( request.processContent() ) {
 			for( Long pratilipiId : pratilipiIdList ) {
 				
+				PratilipiDocUtil.updatePratilipiContent( pratilipiId );
 				PratilipiDataUtil.updatePratilipiIndex( pratilipiId );
 				
 				boolean changed = PratilipiDataUtil.updatePratilipiKeywords( pratilipiId );

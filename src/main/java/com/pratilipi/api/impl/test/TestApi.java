@@ -13,7 +13,6 @@ import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.User;
-import com.pratilipi.data.type.doc.PratilipiContentDocImpl.Pagelet;
 import com.pratilipi.data.type.gae.AccessTokenEntity;
 import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.PageEntity;
@@ -38,14 +37,9 @@ public class TestApi extends GenericApi {
 	public static class Response extends GenericResponse {
 		
 		String msg;
-		List<Pagelet> pageletList;
 		
 		Response( String msg ) {
 			this.msg = msg;
-		}
-	
-		Response( List<Pagelet> pageletList ) {
-			this.pageletList = pageletList;
 		}
 		
 	}

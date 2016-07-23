@@ -49,10 +49,22 @@ public class DocAccessorImpl implements DocAccessor {
 
 
 	// Pratilipi Content Doc
-	public PratilipiContentDoc getPratilipiContentDoc() {
+	public PratilipiContentDoc newPratilipiContentDoc() {
 		return new PratilipiContentDocImpl();
 	}
 	
+	public PratilipiContentDoc getPratilipiContentDoc( Long pratilipiId ) throws UnexpectedServerException {
+		if( pratilipiId != null )
+			return _get( "pratilipi/" + pratilipiId + "/content", PratilipiContentDocImpl.class );
+		return null;
+	}
+	
+	@Override
+	public void save( Long pratilipiId, PratilipiContentDoc contentDoc ) throws UnexpectedServerException {
+		if( pratilipiId != null )
+			_save( "pratilipi/" + pratilipiId + "/content", contentDoc );
+	}
+
 	
 	// Pratilipi Reviews Doc
 	

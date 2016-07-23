@@ -2,31 +2,16 @@ package com.pratilipi.common.util;
 
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Element;
-import org.jsoup.nodes.Node;
-import org.jsoup.nodes.TextNode;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.pratilipi.common.exception.UnexpectedServerException;
-import com.pratilipi.data.BlobAccessor;
-import com.pratilipi.data.DataAccessorFactory;
-import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.Pratilipi;
-import com.pratilipi.data.type.PratilipiContentDoc;
-import com.pratilipi.data.type.doc.PratilipiContentDocImpl.Chapter;
-import com.pratilipi.data.type.doc.PratilipiContentDocImpl.Page;
-import com.pratilipi.data.type.doc.PratilipiContentDocImpl.Pagelet;
 
 
 public class PratilipiContentUtil {
@@ -261,19 +246,6 @@ public class PratilipiContentUtil {
 		return new Gson().toJson( index );
 	}
 
-	public JsonArray generateIndexForAndroid() throws UnexpectedServerException {
-		JsonArray index = new JsonArray();
-		int chapterNo = 1;
-		for( Chapter chapter : toPratilipiContentData().getChapterList() ) {
-			JsonObject indexItem = new JsonObject();
-			indexItem.addProperty( "chapterNo", chapterNo++ );
-			indexItem.addProperty( "title", chapter.getTitle() );
-			indexItem.addProperty( "nesting", chapter.getNesting() );
-			index.add( indexItem );
-		}
-		return index;
-	}
-	
 	public String generateKeywords() {
 		String[] words = this.content
 				.replaceAll( nonKeywordsPattern, " " )
@@ -290,125 +262,4 @@ public class PratilipiContentUtil {
 		return keywords.trim();
 	}
 
-	public PratilipiContentDoc toPratilipiContentData() throws UnexpectedServerException {
-		
-		PratilipiContentDoc pcDoc = DataAccessorFactory.getDocAccessor().getPratilipiContentDoc();
-		
-		List<Pagelet> pageletList = _createPageletList( Jsoup.parse( content ).body() );
-		
-		Chapter chapter = null;
-		if( pageletList.get( 0 ).getType() != PratilipiContentDoc.PageletType.HEAD_1 ) {
-			chapter = new Chapter( pratilipi.getTitle() == null ? pratilipi.getTitle() : pratilipi.getTitleEn() );
-			pcDoc.addChapter( chapter );
-		}
-		
-		for( Pagelet pagelet : pageletList ) {
-			if( pagelet.getType() == PratilipiContentDoc.PageletType.HEAD_1 ) {
-				
-				chapter = new Chapter( (String) pagelet.getData() );
-				pcDoc.addChapter( chapter );
-
-			} else if( pagelet.getType() == PratilipiContentDoc.PageletType.HEAD_2 ) {
-
-				chapter = new Chapter( (String) pagelet.getData(), 1 );
-				pcDoc.addChapter( chapter );
-				
-			} else {
-				
-				if( chapter.getPage( 1 ) == null )
-					chapter.addPage( new Page() );
-				chapter.getPage( 1 ).addPagelet( pagelet );;
-				
-			}
-		}
-		
-		return pcDoc;
-		
-	}
-	
-	private List<Pagelet> _createPageletList( Node node ) throws UnexpectedServerException {
-		
-		List<Pagelet> pageletList = new LinkedList<>();
-		
-		Pagelet pagelet = null;
-		for( Node childNode : node.childNodes() ) {
-			
-			if( childNode.nodeName().equals( "body" )
-					|| childNode.nodeName().equals( "div" )
-					|| childNode.nodeName().equals( "p" ) ) {
-				
-				pagelet = null;
-				pageletList.addAll( _createPageletList( childNode ) );
-				
-			} else if( childNode.nodeName().equals( "h1" ) ) {
-				
-				pagelet = null;
-				pageletList.add( new Pagelet( ( (Element) childNode ).text().trim(), PratilipiContentDoc.PageletType.HEAD_1 ) );
-				
-			} else if( childNode.nodeName().equals( "h2" ) ) {
-				
-				pagelet = null;
-				pageletList.add( new Pagelet( ( (Element) childNode ).text().trim(), PratilipiContentDoc.PageletType.HEAD_2 ) );
-				
-			} else if( childNode.nodeName().equals( "img" ) ) {
-				
-				pagelet = null;
-				
-				BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-				BlobEntry blobEntry = null;
-				String imagUrl = childNode.attr( "src" );
-				String imageName = null;
-				if( imagUrl.startsWith( "http" ) ) {
-					imageName = imagUrl.replaceAll( "[:/.?=&+]+", "_" );
-					String fileName = "pratilipi/" + pratilipi.getId() + "/images/" + imagUrl.replaceAll( "[:/.?=&+]+", "_" );
-					blobEntry = blobAccessor.getBlob( fileName );
-					if( blobEntry == null ) {
-						blobEntry = HttpUtil.doGet( imagUrl );
-						blobEntry.setName( fileName );
-						blobAccessor.createOrUpdateBlob( blobEntry );
-					}
-				} else {
-					imageName = imagUrl.substring( imagUrl.indexOf( "name=" ) + 5 );
-					if( imageName.indexOf( '&' ) != -1 )
-						imageName = imageName.substring( 0, imageName.indexOf( '&' ) );
-					String fileName = "pratilipi/" + pratilipi.getId() + "/images/" + imageName;
-					blobEntry = blobAccessor.getBlob( fileName );
-				}
-				
-				if( blobEntry == null )
-					continue;
-				
-				JsonObject imgData = new JsonObject();
-				imgData.addProperty( "name", imageName );
-				imgData.addProperty( "height", ImageUtil.getHeight( blobEntry.getData() ) );
-				imgData.addProperty( "width", ImageUtil.getWidth( blobEntry.getData() ) );
-				
-				pageletList.add( new Pagelet( imgData, PratilipiContentDoc.PageletType.IMAGE ) );
-				
-			} else if( childNode.nodeName().equals( "br" ) ) {
-				
-				pagelet = null;
-				
-			} else {
-				
-				String text  = childNode.getClass() == TextNode.class
-						? ( (TextNode) childNode ).text().trim()
-						: ( (Element) childNode ).text().trim();
-				if( text.isEmpty() )
-					continue;
-				if( pagelet == null ) {
-					pagelet = new Pagelet( text, PratilipiContentDoc.PageletType.TEXT );
-					pageletList.add( pagelet );
-				} else {
-					pagelet = new Pagelet( pagelet.getData() + " " + text, PratilipiContentDoc.PageletType.TEXT );
-				}
-				
-			}
-			
-		}
-		
-		return pageletList;
-		
-	}
-	
 }

@@ -11,8 +11,14 @@ import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Node;
+import org.jsoup.nodes.TextNode;
+
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.CommentParentType;
 import com.pratilipi.common.type.CommentState;
@@ -22,6 +28,8 @@ import com.pratilipi.common.type.UserReviewState;
 import com.pratilipi.common.type.VoteParentType;
 import com.pratilipi.common.type.VoteType;
 import com.pratilipi.common.util.GoogleAnalyticsApi;
+import com.pratilipi.common.util.HttpUtil;
+import com.pratilipi.common.util.ImageUtil;
 import com.pratilipi.data.BlobAccessor;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
@@ -30,6 +38,8 @@ import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.Comment;
 import com.pratilipi.data.type.CommentDoc;
 import com.pratilipi.data.type.Page;
+import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.type.PratilipiContentDoc;
 import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
 import com.pratilipi.data.type.PratilipiReviewsDoc;
 import com.pratilipi.data.type.UserPratilipi;
@@ -41,6 +51,122 @@ public class PratilipiDocUtil {
 	
 	private static final Logger logger =
 			Logger.getLogger( PratilipiDocUtil.class.getName() );
+	
+	
+	public static void updatePratilipiContent( Long pratilipiId ) throws UnexpectedServerException {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
+		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
+		
+		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+		BlobEntry blobEntry = blobAccessor.getBlob( "pratilipi-content/pratilipi/" + pratilipiId );
+		String contentHtml = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
+		
+		PratilipiContentDoc pcDoc = DataAccessorFactory.getDocAccessor().newPratilipiContentDoc();
+		
+		List<Object[]> pageletList = _createPageletList( pratilipi, Jsoup.parse( contentHtml ).body() );
+		
+		PratilipiContentDoc.Chapter chapter = null;
+		if( pageletList.get( 0 )[0] != PratilipiContentDoc.PageletType.HEAD_1 )
+			chapter = pcDoc.addChapter( pratilipi.getTitle() == null ? pratilipi.getTitle() : pratilipi.getTitleEn() );
+		
+		for( Object[] pagelet : pageletList ) {
+			if( pagelet[0] == PratilipiContentDoc.PageletType.HEAD_1 )
+				chapter = pcDoc.addChapter( (String) pagelet[1] );
+			else if( pagelet[0] == PratilipiContentDoc.PageletType.HEAD_2 )
+				chapter = pcDoc.addChapter( (String) pagelet[1], 1 );
+			else if( chapter.getPage( 1 ) == null )
+				chapter.addPage( (PratilipiContentDoc.PageletType) pagelet[0], pagelet[1] );
+			else
+				chapter.getPage( 1 ).addPagelet( (PratilipiContentDoc.PageletType) pagelet[0], pagelet[1] );
+		}
+		
+		docAccessor.save( pratilipiId, pcDoc );
+		
+	}
+	
+	private static List<Object[]> _createPageletList( Pratilipi pratilipi, Node node ) throws UnexpectedServerException {
+		
+		List<Object[]> pageletList = new LinkedList<>();
+		
+		Object[] pagelet = null;
+		for( Node childNode : node.childNodes() ) {
+			
+			if( childNode.nodeName().equals( "body" )
+					|| childNode.nodeName().equals( "div" )
+					|| childNode.nodeName().equals( "p" ) ) {
+				
+				pagelet = null;
+				pageletList.addAll( _createPageletList( pratilipi, childNode ) );
+				
+			} else if( childNode.nodeName().equals( "h1" ) ) {
+				
+				pagelet = null;
+				pageletList.add( new Object[] { PratilipiContentDoc.PageletType.HEAD_1, ( (Element) childNode ).text().trim() } );
+				
+			} else if( childNode.nodeName().equals( "h2" ) ) {
+				
+				pagelet = null;
+				pageletList.add( new Object[] { PratilipiContentDoc.PageletType.HEAD_2, ( (Element) childNode ).text().trim() } );
+				
+			} else if( childNode.nodeName().equals( "img" ) ) {
+				
+				pagelet = null;
+				
+				BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
+				BlobEntry blobEntry = null;
+				String imagUrl = childNode.attr( "src" );
+				String imageName = null;
+				if( imagUrl.startsWith( "http" ) ) {
+					imageName = imagUrl.replaceAll( "[:/.?=&+]+", "_" );
+					String fileName = "pratilipi/" + pratilipi.getId() + "/images/" + imagUrl.replaceAll( "[:/.?=&+]+", "_" );
+					blobEntry = blobAccessor.getBlob( fileName );
+					if( blobEntry == null ) {
+						blobEntry = HttpUtil.doGet( imagUrl );
+						blobEntry.setName( fileName );
+						blobAccessor.createOrUpdateBlob( blobEntry );
+					}
+				} else {
+					imageName = imagUrl.substring( imagUrl.indexOf( "name=" ) + 5 );
+					if( imageName.indexOf( '&' ) != -1 )
+						imageName = imageName.substring( 0, imageName.indexOf( '&' ) );
+					String fileName = "pratilipi/" + pratilipi.getId() + "/images/" + imageName;
+					blobEntry = blobAccessor.getBlob( fileName );
+				}
+				
+				JsonObject imgData = new JsonObject();
+				imgData.addProperty( "name", imageName );
+				imgData.addProperty( "height", ImageUtil.getHeight( blobEntry.getData() ) );
+				imgData.addProperty( "width", ImageUtil.getWidth( blobEntry.getData() ) );
+				
+				pageletList.add( new Object[] { PratilipiContentDoc.PageletType.IMAGE, imgData } );
+				
+			} else if( childNode.nodeName().equals( "br" ) ) {
+				
+				pagelet = null;
+				
+			} else {
+				
+				String text  = childNode.getClass() == TextNode.class
+						? ( (TextNode) childNode ).text().trim()
+						: ( (Element) childNode ).text().trim();
+				if( text.isEmpty() )
+					continue;
+				if( pagelet == null ) {
+					pagelet = new Object[] { PratilipiContentDoc.PageletType.TEXT, text };
+					pageletList.add( pagelet );
+				} else {
+					pagelet = new Object[] { PratilipiContentDoc.PageletType.TEXT, pagelet[1] + " " + text };
+				}
+				
+			}
+			
+		}
+		
+		return pageletList;
+		
+	}
 	
 	
 	public static void updatePratilipiReviews( Long pratilipiId ) throws UnexpectedServerException {

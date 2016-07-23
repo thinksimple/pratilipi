@@ -9,62 +9,58 @@ import com.pratilipi.data.type.PratilipiContentDoc;
 
 public class PratilipiContentDocImpl implements PratilipiContentDoc {
 	
-	public static class Pagelet {
+	public static class PageletImpl implements PratilipiContentDoc.Pagelet {
 		
-		private Object data;
-
 		private PageletType type;
 		
+		private Object data;
+		
 
-		public Pagelet( Object data, PageletType type ) {
-			this.data = data;
+		public PageletImpl( PageletType type, Object data ) {
 			this.type = type;
+			this.data = data;
 		}
 
 		
-		public Object getData() {
-			return data;
-		}
-
+		@Override
 		public PageletType getType() {
 			return type;
 		}
 
+		@Override
+		public Object getData() {
+			return data;
+		}
+
 	}
 
-	public static class Page {
+	public static class PageImpl implements PratilipiContentDoc.Page {
 
 		private List<Pagelet> pagelets;
 		
 		
-		public Page() {}
+		public PageImpl() {}
 		
-		public Page( List<Pagelet> pageletList ) {
+		public PageImpl( List<Pagelet> pageletList ) {
 			this.pagelets = pageletList;
 		}
 
 		
-		public int getPageletCount() {
-			return pagelets == null ? 0 : pagelets.size();
-		}
-
-		public Pagelet getPagelet( int pageletNo ) {
-			return pagelets == null || pagelets.size() < pageletNo ? null : pagelets.get( pageletNo - 1 );
-		}
-
+		@Override
 		public List<Pagelet> getPageletList() {
 			return pagelets == null ? new ArrayList<Pagelet>( 1 ) : pagelets;
 		}
 
-		public void addPagelet( Pagelet pagelet ) {
+		@Override
+		public void addPagelet( PageletType type, Object data ) {
 			if( this.pagelets == null )
 				this.pagelets = new LinkedList<>();
-			this.pagelets.add( pagelet );
+			this.pagelets.add( new PageletImpl( type, data ) );
 		}
 		
 	}
 	
-	public static class Chapter {
+	public static class ChapterImpl implements PratilipiContentDoc.Chapter {
 		
 		private String title;
 
@@ -73,39 +69,47 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 		private Integer nesting;
 
 		
-		public Chapter( String title ) {
+		public ChapterImpl( String title ) {
 			this.title = title;
 		}
 
-		public Chapter( String title, Integer nesting ) {
+		public ChapterImpl( String title, Integer nesting ) {
 			this.title = title;
 			this.nesting = nesting;
 		}
-
-		public Chapter( String title, List<Page> pageList ) {
-			this.title = title;
-			this.pages = pageList;
-		}
 		
 		
+		@Override
 		public String getTitle() {
 			return title;
 		}
 
+		@Override
 		public int getPageCount() {
 			return pages == null ? 0 : pages.size();
 		}
 
+		@Override
 		public Page getPage( int pageNo ) {
 			return pages == null || pages.size() < pageNo ? null : pages.get( pageNo - 1 );
 		}
 		
-		public void addPage( Page page ) {
+		@Override
+		public Page addPage( PageletType type, Object data ) {
+			Page page = new PageImpl();
+			page.addPagelet( type, data );
 			if( this.pages == null )
 				this.pages = new LinkedList<>();
 			this.pages.add( page );
+			return page;
 		}
 		
+		@Override
+		public List<Page> getPageList() {
+			return pages;
+		}
+		
+		@Override
 		public int getNesting() {
 			return nesting == null ? 0 : nesting;
 		}
@@ -124,22 +128,37 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 	}
 	
 
+	@Override
 	public int getChapterCount() {
 		return chapterList == null ? 0 : chapterList.size();
 	}
 
+	@Override
 	public Chapter getChapter( int chapterNo ) {
 		return chapterList == null || chapterList.size() < chapterNo ? null : chapterList.get( chapterNo - 1 );
 	}
 	
+	@Override
 	public List<Chapter> getChapterList() {
 		return chapterList == null ? new ArrayList<Chapter>( 0 ) : chapterList;
 	}
 	
-	public void addChapter( Chapter chapter ) {
+	@Override
+	public Chapter addChapter( String title ) {
+		Chapter chapter = new ChapterImpl( title );
 		if( this.chapterList == null )
 			this.chapterList = new LinkedList<>();
 		this.chapterList.add( chapter );
+		return chapter;
+	}
+
+	@Override
+	public Chapter addChapter( String title, int nesting ) {
+		Chapter chapter = new ChapterImpl( title, nesting );
+		if( this.chapterList == null )
+			this.chapterList = new LinkedList<>();
+		this.chapterList.add( chapter );
+		return chapter;
 	}
 	
 }

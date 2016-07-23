@@ -18,7 +18,9 @@ public interface DocAccessor {
 
 
 	// Pratilipi Content Doc
-	PratilipiContentDoc getPratilipiContentDoc();
+	PratilipiContentDoc newPratilipiContentDoc();
+	PratilipiContentDoc getPratilipiContentDoc( Long pratilipiId ) throws UnexpectedServerException;
+	void save( Long pratilipiId, PratilipiContentDoc contentDoc ) throws UnexpectedServerException;
 	
 	// Pratilipi Reviews Doc
 	PratilipiReviewsDoc newPratilipiReviewsDoc();
