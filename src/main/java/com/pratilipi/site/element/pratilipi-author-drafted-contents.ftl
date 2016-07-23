@@ -2,10 +2,14 @@
 	<script>
 		function changePratilipiState(bookId, state) {
 		var caps_state = state.toUpperCase();
+		console.log("Inside change pratilipi state");
+		console.log(bookId);
+		console.log(caps_state);
 		    $.ajax({type: "POST",
 		            url: "/api/pratilipi",
 		            data: { pratilipiId: bookId, state: caps_state },
 		            success:function(response){
+		            	console.log("I am here");
 		            	console.log(response);
 		            	console.log(typeof response);
 		            	
