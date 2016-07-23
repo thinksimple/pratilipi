@@ -14,14 +14,14 @@
 	    <span id="book-rating-${ pratilipi.getId()?c }"> <span class="glyphicon glyphicon-star" aria-hidden="true"></span></span>
 	    <span>${ pratilipi.getReadCount() }<span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
 	    <div>
-	    	<a class="pratilipi-light-blue-button" href="${ pratilipi.getReadPageUrl() }">Read</a>
-	    	<#if user.isGuest == true>
-	    		<a class="pratilipi-light-blue-button" href="/login?ret=${ author.getPageUrl() }"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add to Library</a>
-	    	<#else>
+	    	<#if user.isGuest == false>
+	    		<#if ( user.getId() == author.getUser().getId() ) >
+	    			<button type="button" class="pratilipi-light-blue-button" onclick="confirmAndChangePratilipiState( '${ pratilipi.getId()?c }', 'DRAFTED' )">Move to Drafts</button>
+	    		</#if>
 	    		<#if pratilipi.isAddedToLib() == true>
-	    			<button type="button" class="pratilipi-grey-button" onclick="AddToLibrary( ${ pratilipi.getId()?c }, false )"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span>Library</button>
+	    			<button type="button" class="pratilipi-grey-button" onclick="AddToLibrary( ${ pratilipi.getId()?c }, false )">- Library</button>
 	    		<#else>
-	    			<button type="button" class="pratilipi-light-blue-button" onclick="AddToLibrary( ${ pratilipi.getId()?c }, true )"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add to Library</button>
+	    			<button type="button" class="pratilipi-light-blue-button" onclick="AddToLibrary( ${ pratilipi.getId()?c }, true )">+ Library</button>
 	    		</#if>
 	    	</#if>
 	    </div> 

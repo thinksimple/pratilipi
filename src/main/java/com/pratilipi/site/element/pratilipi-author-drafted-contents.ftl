@@ -1,33 +1,4 @@
 <#if author.hasAccessToUpdate()==true >
-	<script>
-		function changePratilipiState(bookId, state) {
-		var caps_state = state.toUpperCase();
-		console.log("Inside change pratilipi state");
-		console.log(bookId);
-		console.log(caps_state);
-		    $.ajax({type: "POST",
-		            url: "/api/pratilipi",
-		            data: { pratilipiId: bookId, state: caps_state },
-		            success:function(response){
-		            	console.log("I am here");
-		            	console.log(response);
-		            	console.log(typeof response);
-		            	
-		            	var parsed_data = jQuery.parseJSON( response );
-		      			if ( parsed_data.state == caps_state ) {
-		      				window.location.reload();
-		      			}
-		      			else {
-		      				
-		      			}
-		    		},
-		            fail:function(response){
-						alert("Sorry, we could not process your request.");
-		    		}			    		
-		    		
-		    });		
-		}
-	</script>
 	<div class="pratilipi-shadow secondary-500 box">	
 		<div class="pull-left">
 			<h5 class="pratilipi-red pratilipi-bold pratilipi-no-margin">
