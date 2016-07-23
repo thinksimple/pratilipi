@@ -14,7 +14,7 @@
 	<hr style="margin-top:0px;margin-bottom:0px;">	
 	
 	<#if followingList.getAuthorList()?has_content>
-		<#include "../element/pratilipi-follow-author-card.ftl">
+		<#include "pratilipi-follow-author-card.ftl">
 		<#list followingList.getAuthorList() as local_author>
 			<#if user.getId()?? && ( user.getId() != local_author.getUser().getId() ) >
 				<#assign can_follow_boolean = "true">
