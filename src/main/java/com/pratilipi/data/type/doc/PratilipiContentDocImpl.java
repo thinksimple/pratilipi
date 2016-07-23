@@ -65,14 +65,21 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 	}
 	
 	public static class Chapter {
-
+		
 		private String title;
 
 		private List<Page> pages;
 
+		private Integer nesting;
+
 		
 		public Chapter( String title ) {
 			this.title = title;
+		}
+
+		public Chapter( String title, Integer nesting ) {
+			this.title = title;
+			this.nesting = nesting;
 		}
 
 		public Chapter( String title, List<Page> pageList ) {
@@ -98,6 +105,10 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 				this.pages = new LinkedList<>();
 			this.pages.add( page );
 		}
+		
+		public int getNesting() {
+			return nesting == null ? 0 : nesting;
+		}
 
 	}
 	
@@ -119,6 +130,10 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 
 	public Chapter getChapter( int chapterNo ) {
 		return chapterList == null || chapterList.size() < chapterNo ? null : chapterList.get( chapterNo - 1 );
+	}
+	
+	public List<Chapter> getChapterList() {
+		return chapterList == null ? new ArrayList<Chapter>( 0 ) : chapterList;
 	}
 	
 	public void addChapter( Chapter chapter ) {

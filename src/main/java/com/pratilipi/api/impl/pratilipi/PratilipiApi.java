@@ -11,6 +11,7 @@ import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
+import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PratilipiContentType;
 import com.pratilipi.common.type.PratilipiState;
@@ -98,7 +99,7 @@ public class PratilipiApi extends GenericApi {
 		private Long listingDateMillis;
 		private Long lastUpdatedMillis;
 		
-		private String index;
+		private Object index;
 		
 		private Long reviewCount;
 		private Long ratingCount;
@@ -273,7 +274,7 @@ public class PratilipiApi extends GenericApi {
 	
 	
 	@Get
-	public Response get( GetRequest request ) {
+	public Response get( GetRequest request ) throws UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( request.pratilipiId );
@@ -289,7 +290,7 @@ public class PratilipiApi extends GenericApi {
 
 	@Post
 	public Response post( PostRequest request )
-			throws InvalidArgumentException, InsufficientAccessException {
+			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
 		Gson gson = new Gson();
 

@@ -9,6 +9,7 @@ import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
+import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.PratilipiType;
@@ -117,7 +118,7 @@ public class PratilipiListApi extends GenericApi {
 	
 	@Get
 	public Response get( GetRequest request )
-			throws InsufficientAccessException {
+			throws InsufficientAccessException, UnexpectedServerException {
 
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
 		pratilipiFilter.setAuthorId( request.authorId );

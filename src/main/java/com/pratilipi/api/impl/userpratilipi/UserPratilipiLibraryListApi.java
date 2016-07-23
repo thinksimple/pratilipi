@@ -6,6 +6,7 @@ import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.impl.pratilipi.PratilipiListApi;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.common.exception.InsufficientAccessException;
+import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.client.PratilipiData;
 import com.pratilipi.data.util.UserPratilipiDataUtil;
@@ -25,7 +26,7 @@ public class UserPratilipiLibraryListApi extends GenericApi {
 	
 	@Get
 	public static PratilipiListApi.Response get( GetRequest request ) 
-			throws InsufficientAccessException {
+			throws InsufficientAccessException, UnexpectedServerException {
 		
 		DataListCursorTuple<PratilipiData> pratilipiDataListCursorTuple
 				= UserPratilipiDataUtil.getUserLibrary(

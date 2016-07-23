@@ -246,15 +246,15 @@ public class PratilipiDataUtil {
 	}
 	
 
-	public static PratilipiData createPratilipiData( Pratilipi pratilipi, Author author ) {
+	public static PratilipiData createPratilipiData( Pratilipi pratilipi, Author author ) throws UnexpectedServerException {
 		return createPratilipiData( pratilipi, null, author, false );
 	}
 	
-	public static PratilipiData createPratilipiData( Pratilipi pratilipi, Author author, boolean includeMetaData ) {
+	public static PratilipiData createPratilipiData( Pratilipi pratilipi, Author author, boolean includeMetaData ) throws UnexpectedServerException {
 		return createPratilipiData( pratilipi, null, author, includeMetaData );
 	}
 	
-	public static PratilipiData createPratilipiData( Pratilipi pratilipi, Page pratilipiPage, Author author, boolean includeMetaData ) {
+	public static PratilipiData createPratilipiData( Pratilipi pratilipi, Page pratilipiPage, Author author, boolean includeMetaData ) throws UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		if( pratilipiPage == null ) // will still be null for DELETED Pratilipis
@@ -288,8 +288,17 @@ public class PratilipiDataUtil {
 		pratilipiData.setListingDate( pratilipi.getListingDate() );
 		if( includeMetaData )
 			pratilipiData.setLastUpdated( pratilipi.getLastUpdated() );
-		
-		pratilipiData.setIndex( pratilipi.getIndex() );
+
+		if( UxModeFilter.isAndroidApp() ) {
+			BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor().getBlob( CONTENT_FOLDER + "/" + pratilipi.getId() );
+			if( blobEntry != null ) {
+				String contentHtml = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
+				PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( pratilipi, contentHtml );
+				pratilipiData.setIndex( pratilipiContentUtil.generateIndexForAndroid() );
+			}
+		} else {
+			pratilipiData.setIndex( pratilipi.getIndex() );
+		}
 		
 		pratilipiData.setReviewCount( pratilipi.getReviewCount() );
 		pratilipiData.setRatingCount( pratilipi.getRatingCount() );
@@ -307,11 +316,11 @@ public class PratilipiDataUtil {
 	}
 	
 	
-	public static List<PratilipiData> createPratilipiDataList( List<Long> pratilipiIdList, boolean includeAuthorData ) {
+	public static List<PratilipiData> createPratilipiDataList( List<Long> pratilipiIdList, boolean includeAuthorData ) throws UnexpectedServerException {
 		return createPratilipiDataList( pratilipiIdList, includeAuthorData, false );
 	}
 
-	public static List<PratilipiData> createPratilipiDataList( List<Long> pratilipiIdList, boolean includeAuthorData, boolean includeMetaData ) {
+	public static List<PratilipiData> createPratilipiDataList( List<Long> pratilipiIdList, boolean includeAuthorData, boolean includeMetaData ) throws UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		List<Pratilipi> pratilipiList = dataAccessor.getPratilipiList( pratilipiIdList );
@@ -358,7 +367,7 @@ public class PratilipiDataUtil {
 	@Deprecated
 	public static DataListCursorTuple<PratilipiData> getPratilipiDataList(
 			PratilipiFilter pratilipiFilter, String cursor, Integer resultCount )
-			throws InsufficientAccessException {
+			throws InsufficientAccessException, UnexpectedServerException {
 
 		return getPratilipiDataList( null, pratilipiFilter, cursor, null, resultCount);
 	}
@@ -366,7 +375,7 @@ public class PratilipiDataUtil {
 	@Deprecated
 	public static DataListCursorTuple<PratilipiData> getPratilipiDataList(
 			PratilipiFilter pratilipiFilter, String cursor, Integer offset, Integer resultCount )
-			throws InsufficientAccessException {
+			throws InsufficientAccessException, UnexpectedServerException {
 
 		return getPratilipiDataList( null, pratilipiFilter, cursor, offset, resultCount);
 	}
@@ -375,7 +384,7 @@ public class PratilipiDataUtil {
 	public static DataListCursorTuple<PratilipiData> getPratilipiDataList(
 			String searchQuery, PratilipiFilter pratilipiFilter,
 			String cursor, Integer resultCount )
-			throws InsufficientAccessException {
+			throws InsufficientAccessException, UnexpectedServerException {
 		
 		return getPratilipiDataList( searchQuery, pratilipiFilter, cursor, null, resultCount );
 	}
@@ -383,7 +392,7 @@ public class PratilipiDataUtil {
 	public static DataListCursorTuple<PratilipiData> getPratilipiDataList(
 			String searchQuery, PratilipiFilter pratilipiFilter,
 			String cursor, Integer offset, Integer resultCount )
-			throws InsufficientAccessException {
+			throws InsufficientAccessException, UnexpectedServerException {
 		
 		if( ! hasAccessToListPratilipiData( pratilipiFilter ) )
 			throw new InsufficientAccessException();
@@ -417,7 +426,7 @@ public class PratilipiDataUtil {
 	}
 	
 	public static PratilipiData savePratilipiData( PratilipiData pratilipiData )
-			throws InvalidArgumentException, InsufficientAccessException {
+			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
 		_validatePratilipiDataForSave( pratilipiData );
 		

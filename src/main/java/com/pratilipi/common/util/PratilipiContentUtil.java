@@ -261,6 +261,19 @@ public class PratilipiContentUtil {
 		return new Gson().toJson( index );
 	}
 
+	public JsonArray generateIndexForAndroid() throws UnexpectedServerException {
+		JsonArray index = new JsonArray();
+		int chapterNo = 1;
+		for( Chapter chapter : toPratilipiContentData().getChapterList() ) {
+			JsonObject indexItem = new JsonObject();
+			indexItem.addProperty( "chapterNo", chapterNo++ );
+			indexItem.addProperty( "title", chapter.getTitle() );
+			indexItem.addProperty( "nesting", chapter.getNesting() );
+			index.add( indexItem );
+		}
+		return index;
+	}
+	
 	public String generateKeywords() {
 		String[] words = this.content
 				.replaceAll( nonKeywordsPattern, " " )
@@ -290,13 +303,14 @@ public class PratilipiContentUtil {
 		}
 		
 		for( Pagelet pagelet : pageletList ) {
-			if( pagelet.getType() == PratilipiContentDoc.PageletType.HEAD_1
-					|| pagelet.getType() == PratilipiContentDoc.PageletType.HEAD_2 ) {
+			if( pagelet.getType() == PratilipiContentDoc.PageletType.HEAD_1 ) {
 				
-				Page page = new Page();
-				page.addPagelet( pagelet );
-				chapter = new Chapter( pratilipi.getTitle() == null ? pratilipi.getTitle() : pratilipi.getTitleEn() );
-				chapter.addPage( page );
+				chapter = new Chapter( (String) pagelet.getData() );
+				pcDoc.addChapter( chapter );
+
+			} else if( pagelet.getType() == PratilipiContentDoc.PageletType.HEAD_2 ) {
+
+				chapter = new Chapter( (String) pagelet.getData(), 1 );
 				pcDoc.addChapter( chapter );
 				
 			} else {

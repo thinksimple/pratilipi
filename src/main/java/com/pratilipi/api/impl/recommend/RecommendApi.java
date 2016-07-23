@@ -12,6 +12,7 @@ import com.pratilipi.api.impl.pratilipi.PratilipiApi;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
+import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.util.PratilipiFilter;
@@ -65,7 +66,7 @@ public class RecommendApi extends GenericApi {
 	
 	
 	@Get
-	public GenericResponse get( GetRequest request ) throws InsufficientAccessException {
+	public GenericResponse get( GetRequest request ) throws InsufficientAccessException, UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		

@@ -158,7 +158,7 @@ public class UserPratilipiDataUtil {
 		
 	}
 	
-	public static DataListCursorTuple<PratilipiData> getUserLibrary( Long userId, String cursor, Integer offset, Integer resultCount ) {
+	public static DataListCursorTuple<PratilipiData> getUserLibrary( Long userId, String cursor, Integer offset, Integer resultCount ) throws UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		

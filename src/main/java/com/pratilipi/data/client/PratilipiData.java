@@ -55,7 +55,7 @@ public class PratilipiData implements Serializable {
 
 
 	@Deprecated
-	private String index;
+	private Object index;
 	
 	
 	private Long reviewCount;
@@ -255,11 +255,11 @@ public class PratilipiData implements Serializable {
 	}
 
 
-	public String getIndex() {
+	public Object getIndex() {
 		return index;
 	}
 	
-	public void setIndex( String index ) {
+	public void setIndex( Object index ) {
 		this.index = index;
 	}
 

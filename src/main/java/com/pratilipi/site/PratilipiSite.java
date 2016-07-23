@@ -504,7 +504,7 @@ public class PratilipiSite extends HttpServlet {
 
 	
 	@SuppressWarnings("deprecation")
-	private List<String> createFbOpenGraphTags( Long pratilipiId ) {
+	private List<String> createFbOpenGraphTags( Long pratilipiId ) throws UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
@@ -553,7 +553,7 @@ public class PratilipiSite extends HttpServlet {
 	}
 	
 	private Map<String, Object> createDataModelForHomePage( boolean basicMode, Language filterLanguage )
-			throws InsufficientAccessException, IOException {
+			throws InsufficientAccessException, IOException, UnexpectedServerException {
 
 		if( filterLanguage == null )
 			filterLanguage = Language.ENGLISH;
@@ -606,7 +606,7 @@ public class PratilipiSite extends HttpServlet {
 		
 	}
 
-	private Map<String, Object> createDataModelForLibraryPage( boolean basicMode, Language filterLanguage ) {
+	private Map<String, Object> createDataModelForLibraryPage( boolean basicMode, Language filterLanguage ) throws UnexpectedServerException {
 		
 		DataListCursorTuple<PratilipiData> pratilipiDataListCursorTuple
 				= UserPratilipiDataUtil.getUserLibrary( AccessTokenFilter.getAccessToken().getUserId(), null, null, null );
@@ -686,7 +686,7 @@ public class PratilipiSite extends HttpServlet {
 	}
 	
 	public Map<String, Object> createDataModelForAuthorPage( Long authorId, boolean basicMode )
-			throws InsufficientAccessException {
+			throws InsufficientAccessException, UnexpectedServerException {
 
 		AuthorApi.GetRequest authorApiGetRequest = new AuthorApi.GetRequest();
 		authorApiGetRequest.setAuthorId( authorId );
@@ -807,7 +807,7 @@ public class PratilipiSite extends HttpServlet {
 	}
 	
 	public Map<String, Object> createDataModelForEventPage( Long eventId, boolean basicMode )
-			throws InsufficientAccessException {
+			throws InsufficientAccessException, UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Event event = dataAccessor.getEvent( eventId );
@@ -935,7 +935,7 @@ public class PratilipiSite extends HttpServlet {
 
 	
 	private Map<String, Object> createDataModelForSearchPage( boolean basicMode, Language lang, HttpServletRequest request )
-			throws InsufficientAccessException {
+			throws InsufficientAccessException, UnexpectedServerException {
 		
 		String searchQuery = request.getParameter( RequestParameter.SEARCH_QUERY.getName() );
 		if( searchQuery != null && searchQuery.trim().isEmpty() )
@@ -979,14 +979,14 @@ public class PratilipiSite extends HttpServlet {
 	
 	private Map<String, Object> createDataModelForListPage( PratilipiType type,
 			boolean basicMode, Language displayLanguage, Language filterLanguage,
-			HttpServletRequest request ) throws InsufficientAccessException {
+			HttpServletRequest request ) throws InsufficientAccessException, UnexpectedServerException {
 		
 		return createDataModelForListPage( type, null, basicMode, displayLanguage, filterLanguage, request );
 	}
 
 	private Map<String, Object> createDataModelForListPage( String listName,
 			boolean basicMode, Language displayLanguage, Language filterLanguage,
-			HttpServletRequest request ) throws InsufficientAccessException {
+			HttpServletRequest request ) throws InsufficientAccessException, UnexpectedServerException {
 
 		return createDataModelForListPage( null, listName, basicMode, displayLanguage, filterLanguage, request );
 		
@@ -994,7 +994,7 @@ public class PratilipiSite extends HttpServlet {
 	
 	private Map<String, Object> createDataModelForListPage( PratilipiType type, String listName,
 			boolean basicMode, Language displayLanugage, Language filterLanguage,
-			HttpServletRequest request ) throws InsufficientAccessException {
+			HttpServletRequest request ) throws InsufficientAccessException, UnexpectedServerException {
 
 		String listTitle = null;
 		String listTitleEn = null;
