@@ -38,30 +38,32 @@
 							opacity: 0.9;"><div style="margin-top: -2px;">{{ likeCount }}</div></div>
 			</template>
 	 	</div>
-	 	<div class="drop_menu" style="margin-left: 90px; position:  absolute;">
-			    <a class="link" href="#" class="dropdown-toggle" data-toggle="dropdown">
-					${ _strings.share } 
-					<b class="caret"></b>
-			    </a>
-			
-			    <ul class="dropdown-menu" role="menu">
-					<li>
-						<a href="{{__hack__}}#" title="On Facebook" on-click="_share_facebook">
-							<i class="fa fa-facebook fa-sm fb"></i>
-						</a>
-					</li>
-       				<li>
-						<a href="{{__hack__}}#" title="On Twitter" on-click="_share_twitter">
-							<i class="fa fa-twitter fa-sm tw"></i>
-						</a>
-					</li>
-					<li>
-						<a href="{{__hack__}}#" title="On Google Plus" on-click="_share_google_plus">
-							<i class="fa fa-google-plus fa-sm google"></i>
-						</a>
-					</li>				
-			    </ul>
-		</div>
+	 	<template is="dom-if" if="{{ share }}">
+	 		<div class="drop_menu" style="margin-left: 100px; position:  absolute;">
+				    <a class="link" href="#" class="dropdown-toggle" data-toggle="dropdown">
+						${ _strings.share } 
+						<b class="caret"></b>
+				    </a>
+				
+				    <ul class="dropdown-menu" role="menu">
+						<li>
+							<a href="{{__hack__}}#" title="On Facebook" on-click="_share_facebook">
+								<i class="fa fa-facebook fa-sm fb"></i>
+							</a>
+						</li>
+	       				<li>
+							<a href="{{__hack__}}#" title="On Twitter" on-click="_share_twitter">
+								<i class="fa fa-twitter fa-sm tw"></i>
+							</a>
+						</li>
+						<li>
+							<a href="{{__hack__}}#" title="On Google Plus" on-click="_share_google_plus">
+								<i class="fa fa-google-plus fa-sm google"></i>
+							</a>
+						</li>
+				    </ul>
+			</div>
+	 	</template>
 	</template>
 
 	<script>
@@ -71,6 +73,7 @@
 			is: 'pratilipi-social',
 			
 			properties: {
+				share: { type: Boolean, value: false },
 				shareUrl: { type: String },
 				showLikeCount: { type: Boolean, value: false },
 				likeCount: { type: Number }

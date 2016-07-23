@@ -184,6 +184,11 @@
 
 				if( this.rating == null || this.rating == 0 ) {
 					this.message = "${ _strings.rating_mandatory_message }";
+					var stars = jQuery( this.querySelector( 'pratilipi-rating-input' ) );
+					for( var i = 0; i < 3; i ++ ) {
+						stars.animate( { opacity: '0.4'}, 100 );
+						stars.animate( { opacity: '1'}, 50 );
+					}
 					return;
 				}
 

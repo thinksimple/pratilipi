@@ -330,18 +330,24 @@
 		},
 		
 		shareAuthorOnFacebook: function() {
-			window.open( "http://www.facebook.com/sharer.php?u=" + "http://${ domain }" + this.author.pageUrl, 
-					"share" + "%26" + "utm_source=author_page", "width=1100,height=500,left=70px,top=60px" );
+			window.open( "http://www.facebook.com/sharer.php?u=" + "http://${ domain }" + this.author.pageUrl 
+					+ ( this.author.pageUrl.indexOf( '?' ) == -1 ? encodeURIComponent( "?" ) : encodeURIComponent( "&" ) )
+					+ "share=facebook" + encodeURIComponent( "&" ) + "utm_source=author_page",
+					"share", "width=1100,height=500,left=70px,top=60px" );
 		},
 		
 		shareAuthorOnTwitter: function() {
-			window.open( "http://www.facebook.com/sharer.php?u=" + "http://${ domain }" + this.author.pageUrl,
-					"share" + "%26" + "utm_source=author_page", "width=1100,height=500,left=70px,top=60px" );
+			window.open( "http://twitter.com/share?url=" + "http://${ domain }" + this.author.pageUrl
+					+ ( this.author.pageUrl.indexOf( '?' ) == -1 ? encodeURIComponent( "?" ) : encodeURIComponent( "&" ) )
+					+ "share=twitter" + encodeURIComponent( "&" ) + "utm_source=author_page",
+					"share", "width=1100,height=500,left=70px,top=60px" );
 		},
 		
 		shareAuthorOnGplus: function() {
-			window.open( "http://www.facebook.com/sharer.php?u=" + "http://${ domain }" + this.author.pageUrl,
-					"share" + "%26" + "utm_source=author_page", "width=1100,height=500,left=70px,top=60px" );
+			window.open( "https://plus.google.com/share?url=" + "http://${ domain }" + this.author.pageUrl
+					+ ( this.author.pageUrl.indexOf( '?' ) == -1 ? encodeURIComponent( "?" ) : encodeURIComponent( "&" ) )
+					+ "share=gplus" + encodeURIComponent( "&" ) + "utm_source=author_page",
+					"share", "width=1100,height=500,left=70px,top=60px" );
 		},
 
 		_chooseFile: function() {

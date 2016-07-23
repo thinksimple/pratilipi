@@ -82,11 +82,33 @@
 			--paper-spinner-layer-4-color: #107FE5;
 		}
 		
+		.summary-container {
+			padding: 10px 20px 20px 20px;
+		}
+		
+		@media only screen and (max-width: 768px) {
+			.summary-container {
+				text-align: left;
+			}
+		}
+		@media only screen and (min-width: 769px) {
+			.summary-container {
+				text-align: justify;
+			}
+		}
+
 	</style>
 
 	<template>
 		<paper-card>
-			
+			<paper-menu-button class="pull-right" horizontal-align="right" vertical-align="top">
+				<iron-icon icon="social:share" class="dropdown-trigger"></iron-icon>
+				<paper-menu class="dropdown-content">
+					<paper-item on-click="sharePratilipiOnFacebook"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></paper-item>
+					<paper-item on-click="sharePratilipiOnTwitter"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></paper-item>
+					<paper-item on-click="sharePratilipiOnGplus"><i class="fa fa-google-plus fa-lg" aria-hidden="true"></i></paper-item>
+				</paper-menu>
+			</paper-menu-button>
 			<template is="dom-if" if="{{ hasAccessToUpdate }}">
 				<div class="dropdown">
 					<paper-icon-button style="color: #333;" class="dropdown-trigger pull-right" icon="more-vert" noink type="button" data-toggle="dropdown"></paper-icon-button>
@@ -143,7 +165,7 @@
 						</div>
 					</template>
 					<div style="width: 150px; margin: 0px auto 15px auto; display: block; padding: 15px 0px;">
-						<pratilipi-social show-like-count share-url="[[ pratilipiData.pageUrl ]]" like-count="[[ pratilipiData.fbLikeShareCount ]]"></pratilipi-social>
+						<pratilipi-social show-like-count like-count="[[ pratilipiData.fbLikeShareCount ]]"></pratilipi-social>
 					</div>
 				</div>
 				<div id="pratilipi-col-right" style="padding: 20px;">
@@ -206,7 +228,7 @@
 		<!-- Displaying author summary if.. -->
 		<div id="pratilipi-summary">
 			<paper-card>
-				<div style="padding: 10px 20px 20px 20px; text-align: justify;">
+				<div class="summary-container">
 					<h4 style="color: #D0021B;">${ _strings.pratilipi_summary }</h4>
 						<div id="pratilipi-summary-text" style="margin-top: 10px; margin-down: 20px;">{{ summary }}</div>
 						<div style="text-align: center; padding-top: 10px;">
@@ -352,8 +374,8 @@
 				
 				if( window.location.pathname != pratilipi.pageUrl )
 					window.location.href = pratilipi.pageUrl;
-				
-				
+
+
 				this.set( 'pratilipi', pratilipi );
 				this.set( 'title', ( pratilipi.title != null && pratilipi.title.trim() != "" ) ? pratilipi.title : pratilipi.titleEn );
 				this.set( 'averageRating', pratilipi.averageRating != null ? pratilipi.averageRating : 0 );
@@ -479,6 +501,27 @@
 			uploadImage: function() {
 				document.getElementById( "uploadImage" ).submit();
 				this.imageUploaded = true;
+			},
+
+			sharePratilipiOnFacebook: function() {
+				window.open( "http://www.facebook.com/sharer.php?u=" + "http://${ domain }" + this.pratilipi.pageUrl 
+						+ ( this.pratilipi.pageUrl.indexOf( '?' ) == -1 ? encodeURIComponent( "?" ) : encodeURIComponent( "&" ) )
+						+ "share=facebook" + encodeURIComponent( "&" ) + "utm_source=content_page",
+						"share", "width=1100,height=500,left=70px,top=60px" );
+			},
+
+			sharePratilipiOnTwitter: function() {
+				window.open( "http://twitter.com/share?url=" + "http://${ domain }" + this.pratilipi.pageUrl 
+						+ ( this.pratilipi.pageUrl.indexOf( '?' ) == -1 ? encodeURIComponent( "?" ) : encodeURIComponent( "&" ) )
+						+ "share=twitter" + encodeURIComponent( "&" ) + "utm_source=content_page",
+						"share", "width=1100,height=500,left=70px,top=60px" );
+			},
+
+			sharePratilipiOnGplus: function() {
+				window.open( "https://plus.google.com/share?url=" + "http://${ domain }" + this.pratilipi.pageUrl 
+						+ ( this.pratilipi.pageUrl.indexOf( '?' ) == -1 ? encodeURIComponent( "?" ) : encodeURIComponent( "&" ) )
+						+ "share=gplus" + encodeURIComponent( "&" ) + "utm_source=content_page",
+						"share", "width=1100,height=500,left=70px,top=60px" );
 			}
 			
 		});

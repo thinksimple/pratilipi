@@ -147,22 +147,25 @@
 			
 			shareOnFacebook: function( pos ) {
 				window.open( "http://www.facebook.com/sharer.php?u=" + "http://${ domain }" + this.pratilipi.pageUrl 
-						+ ( this.pratilipi.pageUrl.indexOf( '?' ) == -1 ? '?' : '&' )
-						+ "share=facebook" + ( pos != null ? encodeURIComponent( "&" ) + "pos=" + pos : "" ), 
+						+ ( this.pratilipi.pageUrl.indexOf( '?' ) == -1 ? encodeURIComponent( "?" ) : encodeURIComponent( "&" ) )
+						+ "share=facebook" + ( pos != null ? encodeURIComponent( "&" ) + "pos=" + pos : "" )
+						+ encodeURIComponent( "&" ) + "utm_source=reader",
 						"share", "width=1100,height=500,left=70px,top=60px" );
 			},
 			
 			shareOnTwitter: function( pos ) {
 				window.open( "http://twitter.com/share?url=" + "http://${ domain }" + this.pratilipi.pageUrl 
-						+ ( this.pratilipi.pageUrl.indexOf( '?' ) == -1 ? '?' : '&' )
-						+ "share=twitter" + ( pos != null ? encodeURIComponent( "&" ) + "pos=" + pos : "" ),
+						+ ( this.pratilipi.pageUrl.indexOf( '?' ) == -1 ? encodeURIComponent( "?" ) : encodeURIComponent( "&" ) )
+						+ "share=twitter" + ( pos != null ? encodeURIComponent( "&" ) + "pos=" + pos : "" )
+						+ encodeURIComponent( "&" ) + "utm_source=reader",
 						"share", "width=1100,height=500,left=70px,top=60px" );
 			},
 			
 			shareOnGplus: function( pos ) {
 				window.open( "https://plus.google.com/share?url=" + "http://${ domain }" + this.pratilipi.pageUrl 
-						+ ( this.pratilipi.pageUrl.indexOf( '?' ) == -1 ? '?' : '&' )
-						+ "share=gplus" + ( pos != null ? encodeURIComponent( "&" ) + "pos=" + pos : "" ),
+						+ ( this.pratilipi.pageUrl.indexOf( '?' ) == -1 ? encodeURIComponent( "?" ) : encodeURIComponent( "&" ) )
+						+ "share=gplus" + ( pos != null ? encodeURIComponent( "&" ) + "pos=" + pos : "" )
+						+ encodeURIComponent( "&" ) + "utm_source=reader",
 						"share", "width=1100,height=500,left=70px,top=60px" );
 			},
 			
