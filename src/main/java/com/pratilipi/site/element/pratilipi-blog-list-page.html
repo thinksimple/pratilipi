@@ -266,7 +266,7 @@
 					<iron-icon icon="icons:open-in-new"></iron-icon>
 				</a>
 			</div>
-			<div class="text-muted content-summary">{{ contentText }}<a class="view-more" href="{{ blogpost.pageUrl }}">( ${ _strings.view_more } )</a></div>
+			<div class="text-muted content-summary">{{ content }}<a class="view-more" href="{{ blogpost.pageUrl }}">( ${ _strings.view_more } )</a></div>
 		</paper-card>
 	</template>
 	<script>
@@ -274,12 +274,12 @@
 			is: 'pratilipi-bloglist-snippet',
 			properties: {
 				blogpost: { type: Object },
-				contentText: { type: String }
+				content: { type: String }
 			},
 			ready: function() {
-				if( this.blogpost.contentText != null ) {
-					var contentText = this.blogpost.content.replace(/&nbsp;/g, " " ).trim();
-					this.set( 'contentText', contentText.substring( 0, Math.min( 600, contentText.length ) ) + "..." );
+				if( this.blogpost.content != null ) {
+					var content = this.blogpost.content.replace(/&nbsp;/g, " " ).trim();
+					this.set( 'content', content.substring( 0, Math.min( 600, content.length ) ) + "..." );
 				}
 			}
 		});

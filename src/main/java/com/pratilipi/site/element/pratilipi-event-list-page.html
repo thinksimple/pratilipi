@@ -132,7 +132,7 @@
 						<a class="pratilipi-red event-title" href="[[ event.pageUrl ]]">{{ event.name }}</a>
 						<a class="open-in-new" target="_blank" href="[[ event.pageUrl ]]"><iron-icon icon="icons:open-in-new"></iron-icon></a>
 					</div>
-					<div class="text-muted description-summary">{{ descriptionText }}</div>
+					<div class="text-muted description-summary">{{ description }}</div>
 				</div>
 			</div>
 		</paper-card>
@@ -142,14 +142,14 @@
 			is: 'pratilipi-event-snippet',
 			properties: {
 				event: { type: Object },
-				descriptionText: { type: String }
+				description: { type: String }
 			},
 			ready: function() {
 				this.eventBannerImageUrl = this.event.bannerImageUrl + 
 											( this.event.bannerImageUrl.indexOf( '?' ) == -1 ? "?" : "&" ) + "width=400";
-				if( this.event.descriptionText != null ) {
-					var descriptionText = this.event.description.replace(/&nbsp;/g, " " ).trim();
-					this.set( 'descriptionText', descriptionText );
+				if( this.event.description != null ) {
+					var description = this.event.description.replace(/&nbsp;/g, " " ).trim();
+					this.set( 'description', description );
 				}
 			}
 		});
