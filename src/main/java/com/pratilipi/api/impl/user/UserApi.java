@@ -9,6 +9,7 @@ import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.impl.author.AuthorApi;
 import com.pratilipi.api.impl.author.AuthorListApi;
 import com.pratilipi.api.impl.blogpost.BlogPostApi;
+import com.pratilipi.api.impl.blogpost.BlogPostListApi;
 import com.pratilipi.api.impl.comment.CommentApi;
 import com.pratilipi.api.impl.user.shared.GenericUserResponse;
 import com.pratilipi.api.impl.user.shared.PostUserRequest;
@@ -65,7 +66,7 @@ public class UserApi extends GenericApi {
 				this.phone = userData.getPhone();
 				this.state = userData.getState();
 				
-			} else if( clazz == BlogPostApi.class ) {
+			} else if( clazz == BlogPostApi.class || clazz == BlogPostListApi.class ) {
 				
 				this.displayName = userData.getDisplayName();
 				this.profilePageUrl = userData.getProfilePageUrl();

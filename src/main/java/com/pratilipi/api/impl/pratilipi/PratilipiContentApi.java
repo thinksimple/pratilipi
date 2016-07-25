@@ -89,7 +89,8 @@ public class PratilipiContentApi extends GenericApi {
 					content );
 		} else if( contentType == PratilipiContentType.IMAGE ) {
 			BlobEntry blobEntry = ( BlobEntry ) content;
-			return new GenericFileDownloadResponse( blobEntry.getData(),
+			return new GenericFileDownloadResponse(
+					blobEntry.getData(),
 					blobEntry.getMimeType(),
 					blobEntry.getETag() );
 		}

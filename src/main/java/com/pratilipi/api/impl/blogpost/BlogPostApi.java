@@ -84,7 +84,7 @@ public class BlogPostApi extends GenericApi {
 					this.content = Jsoup.parse( blogPostData.getContent() ).text();
 				this.state = blogPostData.getState();
 				if( blogPostData.getCreatedBy() != null )
-					this.createdBy = new UserApi.Response( blogPostData.getCreatedBy(), BlogPostApi.class );
+					this.createdBy = new UserApi.Response( blogPostData.getCreatedBy(), clazz );
 				this.creationDateMillis = blogPostData.getCreationDate().getTime();
 				this.lastUpdatedMillis = blogPostData.getLastUpdated().getTime();
 				this.pageUrl = blogPostData.getPageUrl();

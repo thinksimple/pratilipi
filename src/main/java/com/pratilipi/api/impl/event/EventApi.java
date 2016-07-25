@@ -1,15 +1,20 @@
 package com.pratilipi.api.impl.event;
 
+import java.util.List;
+
+import org.jsoup.Jsoup;
+
 import com.google.gson.Gson;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.annotation.Post;
-import com.pratilipi.api.impl.event.shared.GenericEventResponse;
-import com.pratilipi.api.impl.event.shared.GetEventRequest;
-import com.pratilipi.api.impl.event.shared.PostEventRequest;
+import com.pratilipi.api.annotation.Validate;
+import com.pratilipi.api.shared.GenericRequest;
+import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
+import com.pratilipi.common.type.Language;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.client.EventData;
@@ -20,20 +25,188 @@ import com.pratilipi.data.util.EventDataUtil;
 @Bind( uri = "/event" )
 public class EventApi extends GenericApi {
 	
+	public static class GetRequest extends GenericRequest {
+
+		@Validate( required = true, minLong = 1L )
+		private Long eventId;
+		
+	}
+	
+	public static class PostRequest extends GenericRequest {
+
+		@Validate( minLong = 1L )
+		private Long eventId;
+
+		private String name;
+		private boolean hasName;
+		
+		private String nameEn;
+		private boolean hasNameEn;
+		
+		private Language language;
+		private boolean hasLanguage;
+
+		private String description;
+		private boolean hasDescription;
+		
+		private List<String> pratilipiUrlList;
+		private boolean hasPratilipiUrlList;
+		
+		
+		public Long getId() {
+			return eventId;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public boolean hasName() {
+			return hasName;
+		}
+
+		public String getNameEn() {
+			return nameEn;
+		}
+
+		public boolean hasNameEn() {
+			return hasNameEn;
+		}
+
+		public Language getLanguage() {
+			return language;
+		}
+
+		public boolean hasLanguage() {
+			return hasLanguage;
+		}
+		
+		public String getDescription() {
+			return description;
+		}
+		
+		public boolean hasDescription() {
+			return hasDescription;
+		}
+		
+		public List<String> getPratilipiUrlList() {
+			return pratilipiUrlList;
+		}
+		
+		public boolean hasPratilipiUrlList() {
+			return hasPratilipiUrlList;
+		}
+		
+	}
+	
+	public static class Response extends GenericResponse {
+		
+		private Long eventId;
+		
+		private String name;
+		private String nameEn;
+		
+		private Language language;
+		private String description;
+		private List<String> pratilipiUrlList;
+		
+		private String pageUrl;
+		private String bannerImageUrl;
+		
+		private Boolean hasAccessToUpdate;
+
+		
+		@SuppressWarnings("unused")
+		private Response() {}
+		
+		private Response( EventData eventData ) {
+			this.eventId = eventData.getId();
+			this.name = eventData.getName();
+			this.nameEn = eventData.getNameEn();
+			this.language = eventData.getLanguage();
+			this.description = eventData.getDescription();
+			this.pratilipiUrlList = eventData.getPratilipiUrlList();
+			this.pageUrl = eventData.getPageUrl();
+			this.bannerImageUrl = eventData.getBannerImageUrl();
+			this.hasAccessToUpdate = eventData.hasAccessToUpdate();
+		}
+		
+		public Response( EventData eventData, Class<? extends GenericApi> clazz ) {
+			if( clazz == EventListApi.class ) {
+				this.eventId = eventData.getId();
+				this.name = eventData.getName();
+				this.nameEn = eventData.getNameEn();
+				this.language = eventData.getLanguage();
+				if( eventData.getDescription() != null )
+					this.description = Jsoup.parse( eventData.getDescription() ).text();
+				this.pratilipiUrlList = eventData.getPratilipiUrlList();
+				this.pageUrl = eventData.getPageUrl();
+				this.bannerImageUrl = eventData.getBannerImageUrl();
+				this.hasAccessToUpdate = eventData.hasAccessToUpdate();
+			}
+		}
+		
+		
+		public Long getId() {
+			return eventId;
+		}
+		
+		
+		public String getName() {
+			return name;
+		}
+		
+		public String getNameEn() {
+			return nameEn;
+		}
+		
+		
+		public Language getLanguage() {
+			return language;
+		}
+		
+		public String getDescription() {
+			return description;
+		}
+		
+		public List<String> getPratilipiUrlList() {
+			return pratilipiUrlList;
+		}
+
+		
+		public String getPageUrl() {
+			return pageUrl;
+		}
+
+		public String getBannerImageUrl() {
+			return bannerImageUrl;
+		}
+
+		public String getBannerImageUrl( Integer width ) {
+			return bannerImageUrl + ( bannerImageUrl.indexOf( '?' ) == -1 ? "?" : "&" ) + "width=" + width;
+		}
+		
+		public Boolean hasAccessToUpdate() {
+			return hasAccessToUpdate;
+		}
+		
+	}
+	
+	
 	@Get
-	public GenericEventResponse get( GetEventRequest request ) {
+	public Response get( GetRequest request ) {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Event event = dataAccessor.getEvent( request.getEventId() );
+		Event event = dataAccessor.getEvent( request.eventId );
 		
 		EventData eventData = EventDataUtil.createEventData( event );
 
-		return new GenericEventResponse( eventData );
+		return new Response( eventData );
 		
 	}
 
 	@Post
-	public GenericEventResponse post( PostEventRequest request )
+	public Response post( PostRequest request )
 			throws InvalidArgumentException, InsufficientAccessException {
 
 		Gson gson = new Gson();
@@ -42,7 +215,7 @@ public class EventApi extends GenericApi {
 		
 		eventData = EventDataUtil.saveEventData( eventData );
 
-		return new GenericEventResponse( eventData );
+		return new Response( eventData );
 		
 	}		
 
