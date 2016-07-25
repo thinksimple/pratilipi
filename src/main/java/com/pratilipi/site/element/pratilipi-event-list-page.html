@@ -148,7 +148,7 @@
 				this.eventBannerImageUrl = this.event.bannerImageUrl + 
 											( this.event.bannerImageUrl.indexOf( '?' ) == -1 ? "?" : "&" ) + "width=400";
 				if( this.event.descriptionText != null ) {
-					var descriptionText = this.event.descriptionText.replace(/&nbsp;/g, " " ).trim();
+					var descriptionText = this.event.description.replace(/&nbsp;/g, " " ).trim();
 					this.set( 'descriptionText', descriptionText );
 				}
 			}

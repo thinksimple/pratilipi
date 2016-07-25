@@ -895,12 +895,12 @@ public class PratilipiSite extends HttpServlet {
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", blog.getTitle() );
 		if( basicMode ) {
-			dataModel.put( "blogPostList", blogPostList );
+			dataModel.put( "blogPostList", blogPostList.getBlogPostList() );
 		} else {
 			Gson gson = new Gson();
 			dataModel.put( "blogId", blogId );
 			dataModel.put( "hasAccessToAdd", hasAccessToAdd );
-			dataModel.put( "blogPostListJson", gson.toJson( blogPostList ) );
+			dataModel.put( "blogPostListJson", gson.toJson( blogPostList.getBlogPostList() ) );
 			dataModel.put( "blogPostFilterJson", gson.toJson( request ) );
 			dataModel.put( "blogPostListCursor", blogPostList.getCursor() );
 		}

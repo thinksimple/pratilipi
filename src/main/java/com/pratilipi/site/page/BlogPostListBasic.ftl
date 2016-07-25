@@ -42,7 +42,7 @@
 								<a class="pratilipi-red blog-title" href="${ blogPost.getPageUrl() }">${  blogPost.getTitle() }</a>
 								<a class="view-more" href="${ blogPost.getPageUrl() }">${ _strings.view_more }...</a>
 							</div>
-							<div class="text-muted content-summary">${ blogPost.getContentText() }</div>
+							<div class="text-muted content-summary">${ blogPost.getContent() }</div>
 						</div>
 					</#list>
 				</div>

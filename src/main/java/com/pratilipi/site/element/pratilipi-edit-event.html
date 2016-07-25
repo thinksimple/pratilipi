@@ -43,7 +43,7 @@
 					<textarea name="eventDescription" id="eventDescription" rows="10" value="{{ description::input }}"></textarea>
 					<br/>
 					<span class="edit-summary-text">${ _strings.event_entries_url_list }</span>
-					<textarea id="urlList" value="{{ pratilipiUrlList::input }}"></textarea>
+					<textarea id="urlList" rows="10" value="{{ pratilipiUrlList::input }}"></textarea>
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -103,7 +103,7 @@
 			
 			editCurrentEvent: function( event ) {
 				this._process( event );
-				this.modalTitle = event.title + " - " + "Edit Event";
+				this.modalTitle = event.name + " - " + "Edit Event";
 				this.modalButtonText = "${ _strings.event_save_changes }";
 				this.open();
 			},
