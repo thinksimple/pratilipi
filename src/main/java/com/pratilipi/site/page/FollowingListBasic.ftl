@@ -13,6 +13,13 @@
 		<div class="parent-container">
 			<div class="container">
 				<div class="pratilipi-shadow secondary-500 box">
+					<div class="pull-left">
+						<h5 class="pratilipi-red pratilipi-bold pratilipi-no-margin">
+							Following
+						</h5>
+						<p class="works-number">${ followingList.getNumberFound() } Members</p>
+					</div>
+					<div class="clearfix"></div>
 					<#if followingList.getAuthorList()?has_content>
 						<#include "../element/pratilipi-follow-author-card.ftl">
 						<#list followingList.getAuthorList() as local_author>
@@ -31,12 +38,6 @@
 				<#assign maxPage = maxPage>
 				<#include "../element/pratilipi-page-navigation.ftl">
 				
-				<div>
-					currPage = ${ currPage }
-				</div>
-				<div>
-					maxPage = ${ maxPage }
-				</div>
 			</div>
 		</div>
 		<#include "../element/pratilipi-footer.ftl">
