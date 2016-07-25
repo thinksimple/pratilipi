@@ -297,7 +297,10 @@ public class PratilipiDataUtil {
 				int chapterNo = 1;
 				for( PratilipiContentDoc.Chapter chapter : pcDoc.getChapterList() ) {
 					JsonObject indexItem = new JsonObject();
-					indexItem.addProperty( "chapterNo", chapterNo++ );
+					if( chapter.getPageCount() == 0 )
+						indexItem.addProperty( "chapterNo", chapterNo );
+					else
+						indexItem.addProperty( "chapterNo", chapterNo++ );
 					indexItem.addProperty( "title", chapter.getTitle() );
 					indexItem.addProperty( "nesting", chapter.getNesting() );
 					index.add( indexItem );
