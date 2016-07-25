@@ -27,7 +27,7 @@
 		<a class="media-left" href="${ pageUrl }">
 		    <img class="media-object img-circle pratilipi-without-margin" style="width:90px;height:90px;" src="${ imageUrl }">
 		</a>
-		<div class="media-body">
+		<div class="media-body pratilipi-padding-15">
 		    <a href="${ pageUrl }"><h4 class="media-heading">${ name }</h4></a>
 		    <span>${ followCount } Followers</span>
 		    <#if isGuest == "true" >

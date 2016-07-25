@@ -8,11 +8,10 @@
 			<p class="works-number"> ${ author.getContentDrafted() }</p>
 		</div>
 		<div class="pull-right">
-			<br>	
-			<a class="pull-right pratilipi-red" href="#">View More</a>
+			<a class="pull-right pratilipi-red pratilipi-view-more-link" href="#">View More</a>
 		</div>                   
 		<div class="clearfix"></div>
-		<hr style="margin-top:0px;margin-bottom:0px;">	
+		<hr>	
 		<#if draftedPratilipiList?has_content>
 			<#list draftedPratilipiList as pratilipi>
 				<#include "pratilipi-draft-card-mini.ftl">

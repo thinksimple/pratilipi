@@ -7,11 +7,10 @@
 		<p class="works-number">${ followingList.getNumberFound() } Members</p>
 	</div>
 	<div class="pull-right">
-		<br>	
-		<a class="pull-right pratilipi-red" href="/following?uId=${ author.getUser().getId()?c }">View More</a>
+		<a class="pull-right pratilipi-red pratilipi-view-more-link" href="/following?uId=${ author.getUser().getId()?c }">View More</a>
 	</div>
 	<div class="clearfix"></div>
-	<hr style="margin-top:0px;margin-bottom:0px;">	
+	<hr>	
 	
 	<#if followingList.getAuthorList()?has_content>
 		<#include "pratilipi-follow-author-card.ftl">

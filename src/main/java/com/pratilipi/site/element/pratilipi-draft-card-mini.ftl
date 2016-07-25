@@ -4,10 +4,10 @@
   </a>
   <div class="media-body">
   	<div class="pull-left">	
-	    <h4 class="media-heading">${ pratilipi.getTitle()!pratilipi.getTitleEn() } &nbsp; <a href="${ pratilipi.getPageUrl() }"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></h4>
+	    <h3 class="media-heading">${ pratilipi.getTitle()!pratilipi.getTitleEn() } &nbsp; <a href="${ pratilipi.getPageUrl() }"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></h3>
 	    <div>
-	    	<button type="button" class="pratilipi-light-blue-button" onclick="changePratilipiState( '${ pratilipi.getId()?c }', 'PUBLISHED' )">Publish</button>
-	    	<button type="button" class="pratilipi-light-blue-button" onclick="confirmAndChangePratilipiState( '${ pratilipi.getId()?c }', 'DELETED' )">Delete</button>
+	    	<button type="button" class="pratilipi-light-blue-button pratilipi-padding-7" onclick="changePratilipiState( '${ pratilipi.getId()?c }', 'PUBLISHED' )">Publish</button>
+	    	<button type="button" class="pratilipi-light-blue-button pratilipi-padding-7" onclick="confirmAndChangePratilipiState( '${ pratilipi.getId()?c }', 'DELETED' )">Delete</button>
 	    </div> 
 	 </div>
   </div>

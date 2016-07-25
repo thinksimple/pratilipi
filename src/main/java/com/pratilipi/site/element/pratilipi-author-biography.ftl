@@ -10,9 +10,6 @@
 	<div class="pull-left">
 		<h5 class="pratilipi-red pratilipi-bold">
 			Biography &nbsp;
-			<a href="#">
-			 	<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> 
-			</a>
 		</h5>					
 	</div>
 	<div class="clearfix"></div>
