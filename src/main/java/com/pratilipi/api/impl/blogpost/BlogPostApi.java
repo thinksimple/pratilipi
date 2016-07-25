@@ -6,6 +6,7 @@ import org.jsoup.Jsoup;
 
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
+import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.impl.user.UserApi;
@@ -14,13 +15,27 @@ import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.type.BlogPostState;
+import com.pratilipi.data.DataAccessor;
+import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.client.BlogPostData;
+import com.pratilipi.data.type.BlogPost;
 import com.pratilipi.data.util.BlogPostDataUtil;
 import com.pratilipi.filter.UxModeFilter;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/blogpost" )
 public class BlogPostApi extends GenericApi {
+
+	public static class GetRequest extends GenericRequest {
+
+		@Validate( required = true, minLong = 1L )
+		private Long blogPostId;
+
+		public void setBlogPostId( Long blogPostId ) {
+			this.blogPostId = blogPostId;
+		}
+
+	}
 
 	public static class PostRequest extends GenericRequest {
 
@@ -142,8 +157,14 @@ public class BlogPostApi extends GenericApi {
 		
 	}
 
-	
-	
+	@Get
+	public Response get( GetRequest request ) {
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		BlogPost blogPost = dataAccessor.getBlogPost( request.blogPostId );
+		BlogPostData blogPostData = BlogPostDataUtil.createBlogPostData( blogPost );
+		return new Response( blogPostData );
+	}
+
 	@Post
 	public Response post( PostRequest request )
 			throws InvalidArgumentException, InsufficientAccessException {

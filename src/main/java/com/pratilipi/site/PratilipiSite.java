@@ -27,7 +27,8 @@ import com.google.gson.Gson;
 import com.pratilipi.api.ApiRegistry;
 import com.pratilipi.api.impl.author.AuthorApi;
 import com.pratilipi.api.impl.author.AuthorListApi;
-import com.pratilipi.api.impl.blogpost.shared.GenericBlogPostResponse;
+import com.pratilipi.api.impl.blogpost.BlogPostApi;
+import com.pratilipi.api.impl.blogpost.BlogPostListApi;
 import com.pratilipi.api.impl.event.EventListApi;
 import com.pratilipi.api.impl.event.shared.GenericEventResponse;
 import com.pratilipi.api.impl.event.shared.GetEventListRequest;
@@ -51,7 +52,6 @@ import com.pratilipi.common.type.RequestCookie;
 import com.pratilipi.common.type.RequestParameter;
 import com.pratilipi.common.type.Website;
 import com.pratilipi.common.util.AuthorFilter;
-import com.pratilipi.common.util.BlogPostFilter;
 import com.pratilipi.common.util.FacebookApi;
 import com.pratilipi.common.util.FreeMarkerUtil;
 import com.pratilipi.common.util.PratilipiFilter;
@@ -68,7 +68,6 @@ import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.client.UserPratilipiData;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Blog;
-import com.pratilipi.data.type.BlogPost;
 import com.pratilipi.data.type.Event;
 import com.pratilipi.data.type.Navigation;
 import com.pratilipi.data.type.Page;
@@ -878,28 +877,24 @@ public class PratilipiSite extends HttpServlet {
 		
 	}
 	
-	public Map<String, Object> createDataModelForBlogPage( Long blogId, Language lang, boolean basicMode ) {
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		
-		Blog blog = dataAccessor.getBlog( blogId );
-		
-		BlogPostFilter blogPostFilter = new BlogPostFilter();
-		blogPostFilter.setBlogId( blogId );
-		blogPostFilter.setLanguage( lang );
-		blogPostFilter.setState( BlogPostState.PUBLISHED );
-		
-		BlogPostData blogPostLanguage = new BlogPostData();
-		blogPostLanguage.setLanguage( lang );
-		boolean hasAccessToAdd = BlogPostDataUtil.hasAccessToAddBlogPostData( blogPostLanguage );
-		
-		DataListCursorTuple<BlogPostData> blogPostDataListCursorTuple
-				= BlogPostDataUtil.getBlogPostDataList( blogPostFilter, null, 0, 10 );
+	public Map<String, Object> createDataModelForBlogPage( Long blogId, Language language, boolean basicMode ) 
+			throws InsufficientAccessException {
 
-		List<GenericBlogPostResponse> blogPostList
-				= new ArrayList<>( blogPostDataListCursorTuple.getDataList().size() );
-		for( BlogPostData blogPostData : blogPostDataListCursorTuple.getDataList() )
-			blogPostList.add( new GenericBlogPostResponse( blogPostData ) );
-		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Blog blog = dataAccessor.getBlog( blogId );
+
+		BlogPostListApi.GetRequest request = new BlogPostListApi.GetRequest();
+		request.setBlogId( blogId );
+		request.setLangugage( language );
+		request.setState( BlogPostState.PUBLISHED );
+		BlogPostListApi.Response blogPostList = ApiRegistry
+				.getApi( BlogPostListApi.class )
+				.get( request );
+
+		BlogPostData blogPostLanguage = new BlogPostData();
+		blogPostLanguage.setLanguage( language );
+		boolean hasAccessToAdd = BlogPostDataUtil.hasAccessToAddBlogPostData( blogPostLanguage );
+
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", blog.getTitle() );
 		if( basicMode ) {
@@ -909,32 +904,30 @@ public class PratilipiSite extends HttpServlet {
 			dataModel.put( "blogId", blogId );
 			dataModel.put( "hasAccessToAdd", hasAccessToAdd );
 			dataModel.put( "blogPostListJson", gson.toJson( blogPostList ) );
-			dataModel.put( "blogPostFilterJson", gson.toJson( blogPostFilter ) );
-			dataModel.put( "blogPostListCursor", blogPostDataListCursorTuple.getCursor() );
+			dataModel.put( "blogPostFilterJson", gson.toJson( request ) );
+			dataModel.put( "blogPostListCursor", blogPostList.getCursor() );
 		}
 		return dataModel;
 	}
-	
-	public Map<String, Object> createDataModelForBlogPostPage( Long blogId, boolean basicMode )
-			throws InsufficientAccessException {
-		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		BlogPost blogPost = dataAccessor.getBlogPost( blogId );
-		BlogPostData blogPostData = BlogPostDataUtil.createBlogPostData( blogPost );
 
-		Gson gson = new Gson();
-		
-		GenericBlogPostResponse eventResponse = new GenericBlogPostResponse( blogPostData );
-		
+	public Map<String, Object> createDataModelForBlogPostPage( Long blogPostId, boolean basicMode )
+			throws InsufficientAccessException {
+
+		BlogPostApi.GetRequest request = new BlogPostApi.GetRequest();
+		request.setBlogPostId( blogPostId );
+		BlogPostApi.Response response = ApiRegistry
+				.getApi( BlogPostApi.class )
+				.get( request ); 
+
 		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put( "title", createPageTitle( blogPostData.getTitle(), blogPostData.getTitleEn() ) );
+		dataModel.put( "title", createPageTitle( response.getTitle(), response.getTitleEn() ) );
 		if( basicMode ) {
-			dataModel.put( "blogPost", blogPostData );
+			dataModel.put( "blogPost", response );
 		} else {
-			dataModel.put( "blogPostJson", gson.toJson( eventResponse ) );
+			dataModel.put( "blogPostJson", new Gson().toJson( response ) );
 		}
 		return dataModel;
-		
+
 	}
 	
 	@SuppressWarnings("deprecation")

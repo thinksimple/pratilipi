@@ -27,10 +27,30 @@ public class BlogPostListApi extends GenericApi {
 		private Long blogId;
 		private Language language;
 		private BlogPostState state;
-		
+
 		private String cursor;
 		private Integer resultCount;
-		
+
+		public void setBlogId( Long blogId ) {
+			this.blogId = blogId;
+		}
+
+		public void setLangugage( Language language ) {
+			this.language = language;
+		}
+
+		public void setState( BlogPostState state ) {
+			this.state = state;
+		}
+
+		public void setCursor( String cursor ) {
+			this.cursor = cursor;
+		}
+
+		public void setResultCount( Integer resultCount ) {
+			this.resultCount = resultCount;
+		}
+
 	}
 
 	@SuppressWarnings("unused")
@@ -39,9 +59,9 @@ public class BlogPostListApi extends GenericApi {
 		private List<BlogPostApi.Response> blogPostList;
 		private String cursor;
 
-		
+
 		private Response() {}
-		
+
 		public Response( List<BlogPostData> blogPostList, String cursor ) {
 			List<BlogPostApi.Response> genericBlogPostResponseList = new ArrayList<>( blogPostList.size() );
 			for( BlogPostData blogPostData : blogPostList )
@@ -49,7 +69,14 @@ public class BlogPostListApi extends GenericApi {
 			this.blogPostList = genericBlogPostResponseList;
 			this.cursor = cursor;
 		}
-		
+
+		public List<BlogPostApi.Response> getBlogPostList() {
+			return blogPostList;
+		}
+
+		public String getCursor() {
+			return cursor;
+		}
 	}
 	
 	
