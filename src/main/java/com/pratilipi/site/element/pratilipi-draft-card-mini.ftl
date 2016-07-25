@@ -1,4 +1,4 @@
-<div class="media">
+<div class="media pratilipi-without-margin">
   <a class="media-left" href="#">
     <img class="media-object" src="${ pratilipi.getCoverImageUrl(75) }">	
   </a>
