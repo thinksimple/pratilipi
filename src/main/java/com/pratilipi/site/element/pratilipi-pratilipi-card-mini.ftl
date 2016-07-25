@@ -16,12 +16,12 @@
 	    <div>
 	    	<#if user.isGuest == false>
 	    		<#if author.hasAccessToUpdate() >
-	    			<button type="button" class="pratilipi-light-blue-button pratilipi-padding-7 pratilipi-font-size-15" onclick="confirmAndChangePratilipiState( '${ pratilipi.getId()?c }', 'DRAFTED' )">Move to Drafts</button>
+	    			<button type="button" class="pratilipi-light-blue-button pratilipi-padding-7 pratilipi-font-size-15" onclick="confirmAndChangePratilipiState( '${ pratilipi.getId()?c }', 'DRAFTED' )">${ _strings.pratilipi_move_to_drafts }</button>
 	    		</#if>
 	    		<#if pratilipi.isAddedToLib() == true>
-	    			<button type="button" class="pratilipi-grey-button pratilipi-padding-7 pratilipi-font-size-15" onclick="AddToLibrary( ${ pratilipi.getId()?c }, false )">- Library</button>
+	    			<button type="button" class="pratilipi-grey-button pratilipi-padding-7 pratilipi-font-size-15" onclick="AddToLibrary( ${ pratilipi.getId()?c }, false )">- ${ _strings.my_library } </button>
 	    		<#else>
-	    			<button type="button" class="pratilipi-light-blue-button pratilipi-padding-7 pratilipi-font-size-15" onclick="AddToLibrary( ${ pratilipi.getId()?c }, true )">+ Library</button>
+	    			<button type="button" class="pratilipi-light-blue-button pratilipi-padding-7 pratilipi-font-size-15" onclick="AddToLibrary( ${ pratilipi.getId()?c }, true )">+ ${ _strings.my_library } </button>
 	    		</#if>
 	    	</#if>
 	    </div> 

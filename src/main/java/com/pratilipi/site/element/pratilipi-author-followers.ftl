@@ -1,12 +1,12 @@
 <div class="pratilipi-shadow secondary-500 box">	
 	<div class="pull-left">
 		<h5 class="pratilipi-red pratilipi-bold pratilipi-no-margin">
-			<!-- ${ _strings.author_drafts } -->Followers
+			 ${ _strings.author_followers }
 		</h5>
-		<p class="works-number">${ followersList.getNumberFound() } Members</p>
+		<p class="works-number">${ followersList.getNumberFound() } ${ _strings.author_follow_members }</p>
 	</div>
 	<div class="pull-right">
-		<a class="pull-right pratilipi-red pratilipi-view-more-link" href="/followers?aId=${ author.getId()?c }">View More</a>
+		<a class="pull-right pratilipi-red pratilipi-view-more-link" href="/followers?aId=${ author.getId()?c }"> ${ _strings.view_more } </a>
 	</div>
 	<div class="clearfix"></div>
 	<hr>	

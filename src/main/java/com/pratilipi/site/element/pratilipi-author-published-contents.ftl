@@ -9,13 +9,12 @@
 	<div class="pratilipi-shadow secondary-500 box">	
 		<div class="pull-left">
 			<h5 class="pratilipi-red pratilipi-bold pratilipi-no-margin">
-				Published
-					<!-- <span><button class="pratilipi-grey-button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add new</button></span> -->
+				${ _strings.author_published_works }
 			</h5>
 			<p class="works-number"> ${author.getContentPublished()} ${ _strings.author_count_works }</p>
 		</div>
 		<div class="pull-right">	
-			<a class="pull-right pratilipi-red pratilipi-view-more-link" href="#">View More</a>
+			<a class="pull-right pratilipi-red pratilipi-view-more-link" href="#">${ _strings.view_more }</a>
 		</div>
 		<div class="clearfix"></div>
 		<hr>	

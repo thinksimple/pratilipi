@@ -18,6 +18,7 @@
 							Following
 						</h5>
 						<p class="works-number">${ followingList.getNumberFound() } Members</p>
+						<hr>
 					</div>
 					<div class="clearfix"></div>
 					<#if followingList.getAuthorList()?has_content>

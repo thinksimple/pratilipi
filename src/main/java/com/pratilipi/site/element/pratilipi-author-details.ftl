@@ -26,19 +26,19 @@
 				<#if userAuthor.isFollowing() == true>
 					<button class="pratilipi-grey-button" onclick="FollowUnfollowPostRequest(false)">
 						<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-						Unfollow | ${ author.getFollowCount()?c }
+						${ _strings.author_unfollow } | ${ author.getFollowCount()?c }
 					</button>		
 				<#else>
 					<button class="pratilipi-light-blue-button" onclick="FollowUnfollowPostRequest(true)">
 						<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-						Follow | ${ author.getFollowCount()?c }
+						${ _strings.author_follow } | ${ author.getFollowCount()?c }
 					</button>
 				</#if> 
 			</#if>
 		<#else>
 			<a class="pratilipi-light-blue-button" href="/login?ret=${ author.getPageUrl() }">
 						<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-						Follow | ${ author.getFollowCount()?c }
+						${ _strings.author_follow } | ${ author.getFollowCount()?c }
 			</a>					
 		</#if>
 	</div>
