@@ -271,7 +271,7 @@ a.pratilipi-dark-blue-button:hover, a.pratilipi-dark-blue-button:focus {
 }
 
 .cover-image {
-	height: 350px;
+	height: 325px;
 	border-radius: 0;
 	background-color: #FFF;
 	background-repeat: no-repeat;
@@ -324,7 +324,7 @@ a.pratilipi-dark-blue-button:hover, a.pratilipi-dark-blue-button:focus {
 	white-space: nowrap;
 	font-size: 15px;
 	color: Blue;
-	padding: 7px;
+	padding: 9px;
 	border: 1px blue solid;
 	margin-top: 10px;
 }
@@ -337,7 +337,7 @@ a.pratilipi-dark-blue-button:hover, a.pratilipi-dark-blue-button:focus {
 	white-space: nowrap;
 	font-size: 15px;
 	color: Blue;
-	padding: 7px;
+	padding: 9px;
 	border: 1px blue solid;
 	margin-top: 10px;
 }
@@ -356,7 +356,7 @@ a.pratilipi-dark-blue-button:hover, a.pratilipi-dark-blue-button:focus {
 	line-height: 16px;
 	text-shadow: 0px 1px 2px #FFFFFF;
 	display: block;
-	padding: 5px;
+	padding: 9px;
 	margin: 0 auto;
 	margin-top: 10px;
 	outline: none;

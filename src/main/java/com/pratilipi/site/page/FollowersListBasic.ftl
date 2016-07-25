@@ -26,6 +26,12 @@
 						</#list>
 					</#if>
 				</div>
+				
+				<#-- Add page navigation -->
+				<#assign currentPage = currPage>
+				<#assign maxPage = maxPage>
+				<#include "../element/pratilipi-page-navigation.ftl">	
+							
 				<div>
 					currPage = ${ currPage }
 				</div>
