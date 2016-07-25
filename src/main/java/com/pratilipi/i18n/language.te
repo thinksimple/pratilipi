@@ -253,6 +253,7 @@ register_part_2					= మరియు
 register_part_3					= .
 
 # Event Page
+event_events					= Events
 event_entries			= పోటీ నిమిత్తం ప్రచురితమైన రచనలు
 event_name				= సాహితీ కార్యక్రమం పేరు
 event_name_en			= సాహితీ కార్యక్రమం పేరు (ఆంగ్లంలో)
@@ -281,6 +282,7 @@ month_nov	= నవంబరు
 month_dec	= డిసెంబరు
 
 # Library
+library				= Library
 my_library			= నా గ్రంథాలయం
 add_to_library		= గ్రంథాలయానికి జత చేయండి
 added_to_library	= Success! You have added this content to your library!

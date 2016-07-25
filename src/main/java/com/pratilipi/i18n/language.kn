@@ -253,6 +253,7 @@ register_part_2					= and
 register_part_3					= .
 
 # Event Page
+event_events					= Events
 event_entries			         = ಕಾರ್ಯಕ್ರಮ ನಮೂದುಗಳು 
 event_name				         = ಕಾರ್ಯಕ್ರಮದ ಹೆಸರು 
 event_name_en			         = ಆಂಗ್ಲ ಭಾಷೆಯಲ್ಲಿ ಕಾರ್ಯಕ್ರಮದ ಹೆಸರು 
@@ -281,6 +282,7 @@ month_nov	       = ನವೆಂಬರ್
 month_dec        = ಡಿಸೆಂಬರ್ 
 
 # Library
+library				= Library
 my_library			           = ನನ್ನ ಪುಸ್ತಕ ಭಂಡಾರ
 add_to_library		         = ಪುಸ್ತಕ ಭಂಡಾರಕ್ಕೆ ಸೇರಿಸಿ 
 added_to_library	         = ಯಶಸ್ವಿ! ಈ ಬರಹವನ್ನು ನೀವು ಪುಸ್ತಕ ಭಂಡಾರಕ್ಕೆ ಸೇರಿಸಿರುವಿರಿ!

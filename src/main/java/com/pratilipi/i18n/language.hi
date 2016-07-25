@@ -253,6 +253,7 @@ register_part_2					=
 register_part_3					= 
 
 # Event Page
+event_events			= Events
 event_entries			= इवेंट एंट्री 
 event_name				= इवेंट शीर्षक 
 event_name_en			= इवेंट शीर्षक अंग्रेजी में 
@@ -281,6 +282,7 @@ month_nov	= नवेम्बर
 month_dec	= दिसम्बर
 
 # Library
+library				= Library
 my_library			= मेरी लाइब्रेरी 
 add_to_library		= लाइब्रेरी में जोड़े 
 added_to_library	= जय हो! यह साहित्य आपकी लाइब्रेरी में जोड़ दिया गया है।

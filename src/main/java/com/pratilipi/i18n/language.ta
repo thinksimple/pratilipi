@@ -253,6 +253,7 @@ register_part_2					= மற்றும்
 register_part_3					= க்கு ஒப்புக்கொள்கிறேன்.
 
 # Event Page
+event_events					= Events
 event_entries			= போட்டிக்கான படைப்புகள் 
 event_name				= போட்டியின் பெயர்
 event_name_en			= Event Name in English
@@ -281,6 +282,7 @@ month_nov	= நவம்பர்
 month_dec	= டிசம்பர்
 
 # Library
+library				= Library
 my_library			= என் நூலகம்
 add_to_library		= என் நூலகத்தில் சேர்க்க
 added_to_library	= Success! You have added this content to your library! 

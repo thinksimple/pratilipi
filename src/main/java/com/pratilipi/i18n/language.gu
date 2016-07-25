@@ -253,6 +253,7 @@ register_part_2					= અને
 register_part_3					= .
 
 # Event Page
+event_events			= Events
 event_entries			= ઇવેન્ટ એન્ટ્રી 
 event_name				= ઇવેન્ટ શીર્ષક 
 event_name_en			= ઇવેન્ટનું શીર્ષક અંગ્રેજીમાં 
@@ -281,6 +282,7 @@ month_nov	= નવેમ્બર
 month_dec	= ડીસેમ્બર 
 
 # Library
+library				= Library
 my_library			= મારી લાઈબ્રેરી 
 add_to_library		= લાઈબ્રેરીમાં ઉમેરો
 added_to_library	= સફળતાપૂર્વક રચના લાયબ્રેરીમાં ઉમેરાઈ ગઈ છે!

@@ -253,6 +253,7 @@ register_part_2					=
 register_part_3					= 
 
 # Event Page
+event_events					= Events
 event_entries = कार्यक्रम प्रवेश
 event_name = कार्यक्रमाचे नाव
 event_name_en =कार्यक्रम शिर्षक इंग्लिश मध्ये
@@ -281,6 +282,7 @@ month_nov = नोव्हेंबर
 month_dec =डिसेंबर
 
 # Library
+library				= Library
 my_library			= माझा संग्रह 
 add_to_library		= संग्रहाला जोडा
 added_to_library	= यशस्वी! आपण आपल्या लायब्ररीमध्ये या सामग्री जोडली आहे

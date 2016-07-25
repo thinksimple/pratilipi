@@ -253,6 +253,7 @@ register_part_2					= യും
 register_part_3					= ഉം അംഗീകരിക്കുന്നു.
 
 # Event Page
+event_events					= Events
 event_entries			= മത്സര എന്‍ട്രികള്‍ 
 event_name				= രചനാ മത്സരത്തിന്റെ പേര്
 event_name_en			= മത്സരത്തിന്റെ പേര് ഇംഗ്ലീഷില്‍ 
@@ -281,6 +282,7 @@ month_nov	= നവംബര്‍
 month_dec	= ഡിസംബര്‍
 
 # Library
+library				= Library
 my_library			= എന്‍റെ വായനശാല
 add_to_library		= എന്‍റെ വായനശാലയിലേക്ക് കൂട്ടിച്ചേര്‍ക്കുക
 added_to_library	= Success! You have added this content to your library!

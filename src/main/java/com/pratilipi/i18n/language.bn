@@ -253,6 +253,7 @@ register_part_2					=
 register_part_3					= 
 
 # Event Page
+event_events			= Events
 event_entries			= ইভেন্ট এন্ট্রি
 event_name				= ইভেন্ট  নাম
 event_name_en			=  ইভেন্ট নাম ইংরাজীতে
@@ -281,6 +282,7 @@ month_nov	= নভেম্বর
 month_dec	= ডিসেম্বর
 
 # Library
+library				= Library
 my_library			= আমার লাইব্রেরী
 add_to_library		= লাইব্রেরীতে এড করুন
 added_to_library	= সফল! আপনি আপনার লাইব্রেরিতে এই বিষয়বস্তুটি যোগ করেছেন
