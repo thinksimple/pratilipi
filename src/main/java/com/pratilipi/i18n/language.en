@@ -253,6 +253,7 @@ register_part_2					= and
 register_part_3					= .
 
 # Event Page
+event_events			= Events
 event_entries			= Event Entries
 event_name				= Event Name
 event_name_en			= Event Name in English
@@ -281,6 +282,7 @@ month_nov	= November
 month_dec	= December
 
 # Library
+library				= Library
 my_library			= My Library
 add_to_library		= Add to Library
 added_to_library	= Success! You have added this content to your library!

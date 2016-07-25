@@ -29,7 +29,11 @@ public class EventApi extends GenericApi {
 
 		@Validate( required = true, minLong = 1L )
 		private Long eventId;
-		
+
+		public void setEventId( Long eventId ) {
+			this.eventId = eventId;
+		}
+
 	}
 	
 	public static class PostRequest extends GenericRequest {
@@ -108,6 +112,7 @@ public class EventApi extends GenericApi {
 		
 		private Language language;
 		private String description;
+		private List<Long> pratilipiIdList;
 		private List<String> pratilipiUrlList;
 		
 		private String pageUrl;
@@ -125,6 +130,7 @@ public class EventApi extends GenericApi {
 			this.nameEn = eventData.getNameEn();
 			this.language = eventData.getLanguage();
 			this.description = eventData.getDescription();
+			this.pratilipiIdList = eventData.getPratilipiIdList();
 			this.pratilipiUrlList = eventData.getPratilipiUrlList();
 			this.pageUrl = eventData.getPageUrl();
 			this.bannerImageUrl = eventData.getBannerImageUrl();
@@ -169,6 +175,10 @@ public class EventApi extends GenericApi {
 			return description;
 		}
 		
+		public List<Long> getPratilipiIdList() { 
+			return pratilipiIdList;
+		}
+
 		public List<String> getPratilipiUrlList() {
 			return pratilipiUrlList;
 		}

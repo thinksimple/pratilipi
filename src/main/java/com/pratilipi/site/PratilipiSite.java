@@ -29,10 +29,8 @@ import com.pratilipi.api.impl.author.AuthorApi;
 import com.pratilipi.api.impl.author.AuthorListApi;
 import com.pratilipi.api.impl.blogpost.BlogPostApi;
 import com.pratilipi.api.impl.blogpost.BlogPostListApi;
+import com.pratilipi.api.impl.event.EventApi;
 import com.pratilipi.api.impl.event.EventListApi;
-import com.pratilipi.api.impl.event.shared.GenericEventResponse;
-import com.pratilipi.api.impl.event.shared.GetEventListRequest;
-import com.pratilipi.api.impl.event.shared.GetEventListResponse;
 import com.pratilipi.api.impl.pratilipi.PratilipiApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiListApi;
 import com.pratilipi.api.impl.user.shared.GenericUserResponse;
@@ -68,7 +66,6 @@ import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.client.UserPratilipiData;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Blog;
-import com.pratilipi.data.type.Event;
 import com.pratilipi.data.type.Navigation;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
@@ -830,48 +827,48 @@ public class PratilipiSite extends HttpServlet {
 		
 	}
 	
-	public Map<String, Object> createDataModelForEventsPage( Language lang, boolean basicMode ) throws InsufficientAccessException {
+	public Map<String, Object> createDataModelForEventsPage( Language language, boolean basicMode ) throws InsufficientAccessException {
+
 		EventData eventData = new EventData();
-		eventData.setLanguage( lang );
-		
+		eventData.setLanguage( language );
 		boolean hasAccessToAdd = EventDataUtil.hasAccessToAddEventData( eventData );
-		
-		GetEventListRequest eventListRequest = new GetEventListRequest();
-		eventListRequest.setLanguage( lang );
-		GetEventListResponse eventListResponse = ApiRegistry
-				.getApi( EventListApi.class )
-				.get( eventListRequest );
-		
+
+		EventListApi.GetRequest request = new EventListApi.GetRequest();
+		request.setLanguage( language );
+		EventListApi.GetResponse eventListResponse = ApiRegistry
+											.getApi( EventListApi.class )
+											.get( request );
+
 		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put( "title", "Events" );
-		if( basicMode )
-			dataModel.put( "eventList", eventListResponse.getEventList() );
-		else
-			dataModel.put( "eventListJson", new Gson().toJson( eventListResponse.getEventList() ) );
+		dataModel.put( "title", I18n.getString( "event_events", language ) );
 		dataModel.put( "hasAccessToAdd", hasAccessToAdd );
+		if( basicMode ) {
+			dataModel.put( "eventList", eventListResponse.getEventList() );
+		} else {
+			dataModel.put( "eventListJson", new Gson().toJson( eventListResponse.getEventList() ) );
+		}
 		return dataModel;
 	}
 	
 	public Map<String, Object> createDataModelForEventPage( Long eventId, boolean basicMode )
 			throws InsufficientAccessException, UnexpectedServerException {
-		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Event event = dataAccessor.getEvent( eventId );
-		EventData eventData = EventDataUtil.createEventData( event );
 
-		Gson gson = new Gson();
-		
-		GenericEventResponse eventResponse = new GenericEventResponse( eventData );
-		List<PratilipiData> pratilipiDataList = PratilipiDataUtil.createPratilipiDataList( event.getPratilipiIdList(), true );
-		
+		EventApi.GetRequest request = new EventApi.GetRequest();
+		request.setEventId( eventId );
+		EventApi.Response eventResponse = ApiRegistry
+											.getApi( EventApi.class )
+											.get( request );
+
 		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put( "title", createPageTitle( eventData.getName(), eventData.getNameEn() ) );
+		Gson gson = new Gson();
+		dataModel.put( "title", createPageTitle( eventResponse.getName(), eventResponse.getNameEn() ) );
+
 		if( basicMode ) {
-			dataModel.put( "event", eventData );
-			dataModel.put( "pratilipiList", toListResponseObject( pratilipiDataList ) );
+			dataModel.put( "event", eventResponse );
+			dataModel.put( "pratilipiList", toPratilipiListResponseObject( eventResponse.getPratilipiIdList() ) );
 		} else {
 			dataModel.put( "eventJson", gson.toJson( eventResponse ) );
-			dataModel.put( "pratilipiListJson", gson.toJson( toListResponseObject( pratilipiDataList ) ) );
+			dataModel.put( "pratilipiListJson", gson.toJson( toPratilipiListResponseObject( eventResponse.getPratilipiIdList() ) ) );
 		}
 		return dataModel;
 		
@@ -1132,6 +1129,18 @@ public class PratilipiSite extends HttpServlet {
 		return dataModel;
 	}
 
+
+	private List<PratilipiApi.Response> toPratilipiListResponseObject( List<Long> pratilipiIdList ) 
+			throws UnexpectedServerException {
+		List<PratilipiApi.Response> pratilipiList = new ArrayList<>( pratilipiIdList.size() );
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		for( Long pratilipiId : pratilipiIdList ) {
+			Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+			Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
+			pratilipiList.add( new PratilipiApi.Response( PratilipiDataUtil.createPratilipiData( pratilipi, author ) ) );
+		}
+		return pratilipiList;
+	}
 
 	private List<PratilipiApi.Response> toListResponseObject( List<PratilipiData> pratilipiDataList ) {
 		List<PratilipiApi.Response> pratilipiList = new ArrayList<>( pratilipiDataList.size() );
