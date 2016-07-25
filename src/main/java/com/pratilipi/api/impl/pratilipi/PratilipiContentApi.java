@@ -33,16 +33,13 @@ public class PratilipiContentApi extends GenericApi {
 		@Validate( required = true )
 		private Integer chapterNo;
 		
-		@Validate
 		private Integer pageNo;
-		
-		@Validate
-		private String pageletId;
 		
 		private PratilipiContentType contentType;
 
 	}
 	
+	@SuppressWarnings("unused")
 	public static class Response extends GenericResponse {
 		
 		private Long pratilipiId;
@@ -92,8 +89,8 @@ public class PratilipiContentApi extends GenericApi {
 					content );
 		} else if( contentType == PratilipiContentType.IMAGE ) {
 			BlobEntry blobEntry = ( BlobEntry ) content;
-			return new GenericFileDownloadResponse( blobEntry.getData(), 
-					blobEntry.getMimeType(), 
+			return new GenericFileDownloadResponse( blobEntry.getData(),
+					blobEntry.getMimeType(),
 					blobEntry.getETag() );
 		}
 		

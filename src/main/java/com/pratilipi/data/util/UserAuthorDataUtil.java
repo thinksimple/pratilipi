@@ -128,8 +128,11 @@ public class UserAuthorDataUtil {
 			
 		}
 		
-		if( dataAccessor.getAuthorByUserId( AccessTokenFilter.getAccessToken().getUserId() ) != null ) {
-			// Setting UserData.isFollowing flag
+		
+		// Setting UserData.isFollowing flag
+		Author author = dataAccessor.getAuthorByUserId( AccessTokenFilter.getAccessToken().getUserId() );
+		if( author != null ) {
+			
 			List<Long> userIdList = new ArrayList<>( authorDataList.size() );
 			for( AuthorData authorData : authorDataList )
 				if( authorData.getUser().getId() != null )
@@ -137,11 +140,12 @@ public class UserAuthorDataUtil {
 			
 			List<UserAuthor> userAuthorList = dataAccessor.getUserAuthorList(
 					userIdList,
-					dataAccessor.getAuthorByUserId( AccessTokenFilter.getAccessToken().getUserId() ).getId() );
+					author.getId() );
 			
 			for( UserAuthor userAuthor : userAuthorList )
 				if( userAuthor != null && userAuthor.isFollowing() )
 					authorDataList.get( authorIdList.indexOf( userAuthor.getAuthorId() ) ).getUser().setFollowing( true );
+			
 		}
 
 		

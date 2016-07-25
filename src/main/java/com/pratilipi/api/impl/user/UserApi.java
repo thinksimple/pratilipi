@@ -8,6 +8,7 @@ import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.impl.author.AuthorApi;
 import com.pratilipi.api.impl.author.AuthorListApi;
+import com.pratilipi.api.impl.blogpost.BlogPostApi;
 import com.pratilipi.api.impl.comment.CommentApi;
 import com.pratilipi.api.impl.user.shared.GenericUserResponse;
 import com.pratilipi.api.impl.user.shared.PostUserRequest;
@@ -63,6 +64,12 @@ public class UserApi extends GenericApi {
 				this.email = userData.getEmail();
 				this.phone = userData.getPhone();
 				this.state = userData.getState();
+				
+			} else if( clazz == BlogPostApi.class ) {
+				
+				this.displayName = userData.getDisplayName();
+				this.profilePageUrl = userData.getProfilePageUrl();
+				this.profileImageUrl = userData.getProfileImageUrl();
 				
 			} else if( clazz == UserPratilipiApi.class || clazz == CommentApi.class ) {
 				
