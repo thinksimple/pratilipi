@@ -15,7 +15,7 @@
 		    	<div class="col-xs-2 pratilipi-no-padding"><a href="${ pratilipi.getPageUrl() }"><img style="height:16px;width:16px;" src="http://0.ptlp.co/resource-all/icon/svg/share.svg"></img></a></div>
 		    </div>
 		    
-		    <# if pratilipi.getAverageRating() >= 1 >
+		    <#if pratilipi.getAverageRating() >= 1 >
 		    	<span id="book-rating-${ pratilipi.getId()?c }"> <span class="glyphicon glyphicon-star" aria-hidden="true"></span></span>
 		    </#if>
 		    <#if pratilipi.getReadCount() > 0 >
