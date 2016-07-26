@@ -11,7 +11,7 @@
   <div class="media-body">
 	  	<div class="col-xs-11">
 	  		<div class="row">
-		    	<div class="col-xs-10"><h3 class="media-heading clip-content-2-lines">${ pratilipi.getTitle()!pratilipi.getTitleEn() } &nbsp; </h3></div>
+		    	<div class="col-xs-10"><h4 class="media-heading clip-content-2-lines">${ pratilipi.getTitle()!pratilipi.getTitleEn() } &nbsp; </h4></div>
 		    	<div class="col-xs-2 pratilipi-no-padding"><a href="${ pratilipi.getPageUrl() }"><img style="height:16px;width:16px;" src="http://0.ptlp.co/resource-all/icon/svg/share.svg"></img></a></div>
 		    </div>
 		    
@@ -20,12 +20,12 @@
 		    <div>
 		    	<#if user.isGuest == false>
 		    		<#if author.hasAccessToUpdate() >
-		    			<button type="button" class="pratilipi-light-blue-button pratilipi-padding-7 pratilipi-font-size-15" onclick="confirmAndChangePratilipiState( '${ pratilipi.getId()?c }', 'DRAFTED' )">${ _strings.pratilipi_move_to_drafts }</button>
+		    			<button type="button" class="pratilipi-light-blue-button pratilipi-padding-7 pratilipi-font-size-14" onclick="confirmAndChangePratilipiState( '${ pratilipi.getId()?c }', 'DRAFTED' )">${ _strings.pratilipi_move_to_drafts }</button>
 		    		</#if>
 		    		<#if pratilipi.isAddedToLib() == true>
-		    			<button type="button" class="pratilipi-grey-button pratilipi-padding-7 pratilipi-font-size-15" onclick="AddToLibrary( ${ pratilipi.getId()?c }, false )">- ${ _strings.my_library } </button>
+		    			<button type="button" class="pratilipi-grey-button pratilipi-padding-7 pratilipi-font-size-14" onclick="AddToLibrary( ${ pratilipi.getId()?c }, false )">- ${ _strings.my_library } </button>
 		    		<#else>
-		    			<button type="button" class="pratilipi-light-blue-button pratilipi-padding-7 pratilipi-font-size-15" onclick="AddToLibrary( ${ pratilipi.getId()?c }, true )">+ ${ _strings.my_library } </button>
+		    			<button type="button" class="pratilipi-light-blue-button pratilipi-padding-7 pratilipi-font-size-14" onclick="AddToLibrary( ${ pratilipi.getId()?c }, true )">+ ${ _strings.my_library } </button>
 		    		</#if>
 		    	</#if>
 		    </div> 
