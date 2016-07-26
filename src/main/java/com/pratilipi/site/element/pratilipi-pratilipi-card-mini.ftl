@@ -13,7 +13,7 @@
 	  	<div class="col-xs-11">
 	  		<div class="row">
 		    	<div class="col-xs-11"><h3 class="media-heading clip-content-2-lines">${ pratilipi.getTitle()!pratilipi.getTitleEn() } &nbsp; </h3></div>
-		    	<div class="col-xs-1"><a href="${ pratilipi.getPageUrl() }"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></div>
+		    	<div class="col-xs-1"><a href="${ pratilipi.getPageUrl() }"><img src="http://0.ptlp.co/resource-all/icon/svg/share.svg"></img></a></div>
 		    </div>
 		    
 		    <span id="book-rating-${ pratilipi.getId()?c }"> <span class="glyphicon glyphicon-star" aria-hidden="true"></span></span>
@@ -33,7 +33,7 @@
 		 </div>
 		 <div class="col-xs-1">
 		 	<a href="#">
-		 		<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> 
+		 		<img src="http://0.ptlp.co/resource-all/icon/svg/share2.svg"></img> 
 		 	</a> 
 		 </div> 
 	  </div>
