@@ -208,7 +208,7 @@ public class PratilipiSite extends HttpServlet {
 				templateName = templateFilePrefix + ( basicMode ? "PratilipiBasic.ftl" : "Pratilipi.ftl" );
 				
 			} else if( page != null && page.getType() == PageType.AUTHOR ) {
-				dataModel = createDataModelForAuthorPage( page.getPrimaryContentId(), basicMode );
+				dataModel = createDataModelForAuthorPage( page.getPrimaryContentId(), basicMode, request );
 				if( SystemProperty.STAGE.equals( "gamma" ) )
 					templateName = templateFilePrefix + ( basicMode ? "AuthorPageBasic.ftl" : "AuthorPage.ftl" );
 				else
@@ -667,7 +667,7 @@ public class PratilipiSite extends HttpServlet {
 		
 	}
 	
-	public Map<String, Object> createDataModelForAuthorPage( Long authorId, boolean basicMode )
+	public Map<String, Object> createDataModelForAuthorPage( Long authorId, boolean basicMode, HttpServletRequest request )
 			throws InsufficientAccessException, UnexpectedServerException {
 
 		AuthorApi.GetRequest authorApiGetRequest = new AuthorApi.GetRequest();
@@ -732,6 +732,7 @@ public class PratilipiSite extends HttpServlet {
 			}
 
 			if( basicMode ) {
+				dataModel.put( "action", request.getParameter( "action" ) != null ? request.getParameter( "action" ) : "author_page" );
 				dataModel.put( "userAuthor", userAuthorResponse );
 				dataModel.put( "followersList", followersList );
 				dataModel.put( "followingList", followingList );
