@@ -12,8 +12,12 @@
 		<#include "../element/pratilipi-header.ftl">
 		<div class="parent-container">
 			<div class="container">
-				<#include "../element/pratilipi-author-details.ftl">
-				<#include "../element/pratilipi-author-tabs.ftl">
+				<#if action == "edit-profile">
+					<#include "../element/pratilipi-author-settings.ftl">
+				<#else>
+					<#include "../element/pratilipi-author-details.ftl">
+					<#include "../element/pratilipi-author-tabs.ftl">
+				</#if>	
 			</div>
 		</div>
 		<#include "../element/pratilipi-footer.ftl">
