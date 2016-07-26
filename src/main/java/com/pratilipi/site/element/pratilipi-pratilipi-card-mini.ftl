@@ -9,11 +9,10 @@
     <img class="media-object" src="${ pratilipi.getCoverImageUrl(75) }">	
   </a>
   <div class="media-body">
-	  <div class="row">
 	  	<div class="col-xs-11">
 	  		<div class="row">
-		    	<div class="col-xs-11"><h3 class="media-heading clip-content-2-lines">${ pratilipi.getTitle()!pratilipi.getTitleEn() } &nbsp; </h3></div>
-		    	<div class="col-xs-1"><a href="${ pratilipi.getPageUrl() }"><img src="http://0.ptlp.co/resource-all/icon/svg/share.svg"></img></a></div>
+		    	<div class="col-xs-10"><h3 class="media-heading clip-content-2-lines">${ pratilipi.getTitle()!pratilipi.getTitleEn() } &nbsp; </h3></div>
+		    	<div class="col-xs-2 no-padding"><a href="${ pratilipi.getPageUrl() }"><img style="height:16px;width:16px;" src="http://0.ptlp.co/resource-all/icon/svg/share.svg"></img></a></div>
 		    </div>
 		    
 		    <span id="book-rating-${ pratilipi.getId()?c }"> <span class="glyphicon glyphicon-star" aria-hidden="true"></span></span>
@@ -31,12 +30,11 @@
 		    	</#if>
 		    </div> 
 		 </div>
-		 <div class="col-xs-1">
+		 <div class="col-xs-1 no-padding" >
 		 	<a href="#">
 		 		<img src="http://0.ptlp.co/resource-all/icon/svg/share2.svg"></img> 
 		 	</a> 
 		 </div> 
-	  </div>
   </div>
   <hr>
 </div>

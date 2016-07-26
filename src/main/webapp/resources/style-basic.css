@@ -370,6 +370,10 @@ a.pratilipi-dark-blue-button:hover, a.pratilipi-dark-blue-button:focus {
 	font-size: 15px;
 }
 
+.pratilipi-no-padding {
+	padding: 0px;
+}
+
 .active>.nav-tab-blue-underline {
 	text-decoration: none;
 	font-weight: bold;
@@ -401,6 +405,9 @@ a.pratilipi-dark-blue-button:hover, a.pratilipi-dark-blue-button:focus {
 }
 
 .pratilipi-font-size-15 {
+	font-size: 15px;
+}
+.pratilipi-font-size-14 {
 	font-size: 15px;
 }
 
