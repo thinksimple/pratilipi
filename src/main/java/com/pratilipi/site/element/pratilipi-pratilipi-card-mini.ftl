@@ -5,13 +5,13 @@
 </script>
 
 <div class="media pratilipi-without-margin">
-  <a class="media-left" href="#">
+  <a class="media-left" href="${ pratilipi.getPageUrl() }">
     <img class="media-object" src="${ pratilipi.getCoverImageUrl(75) }">	
   </a>
   <div class="media-body">
 	  	<div class="col-xs-11">
 	  		<div class="row">
-		    	<div class="col-xs-10"><h4 class="media-heading clip-content-2-lines">${ pratilipi.getTitle()!pratilipi.getTitleEn() } &nbsp; </h4></div>
+		    	<div class="col-xs-10"><a href="${ pratilipi.getPageUrl() }"><h4 class="media-heading clip-content-2-lines">${ pratilipi.getTitle()!pratilipi.getTitleEn() } &nbsp; </h4></a></div>
 		    	<div class="col-xs-2 pratilipi-no-padding"><a href="${ pratilipi.getPageUrl() }"><img style="height:16px;width:16px;" src="http://0.ptlp.co/resource-all/icon/svg/share.svg"></img></a></div>
 		    </div>
 		    

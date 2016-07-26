@@ -15,7 +15,7 @@
 	</div>
 	<div class="author-info text-center">
 		<div>
-			<img class="img-responsive img-thumbnail img-circle profile-picture" src="${ author.getImageUrl() }">
+			<img class="img-responsive img-thumbnail img-circle profile-picture" src="${ author.getImageUrl(140) }">
 		</div>
 		<div class="author-name">${ author.getName()!author.getNameEn() }</div>
 	</div>
