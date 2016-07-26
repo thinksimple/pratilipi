@@ -9,32 +9,34 @@
     <img class="media-object" src="${ pratilipi.getCoverImageUrl(75) }">	
   </a>
   <div class="media-body">
-  	<div class="col-xs-11">
-  		<div class="row">
-	    	<h3 class="media-heading clip-content-2-lines col-xs-11">${ pratilipi.getTitle()!pratilipi.getTitleEn() } &nbsp; </h3>
-	    	<a class="col-xs-1" href="${ pratilipi.getPageUrl() }"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></a>
-	    </div>
-	    
-	    <span id="book-rating-${ pratilipi.getId()?c }"> <span class="glyphicon glyphicon-star" aria-hidden="true"></span></span>
-	    <span>${ pratilipi.getReadCount() }<span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
-	    <div>
-	    	<#if user.isGuest == false>
-	    		<#if author.hasAccessToUpdate() >
-	    			<button type="button" class="pratilipi-light-blue-button pratilipi-padding-7 pratilipi-font-size-15" onclick="confirmAndChangePratilipiState( '${ pratilipi.getId()?c }', 'DRAFTED' )">${ _strings.pratilipi_move_to_drafts }</button>
-	    		</#if>
-	    		<#if pratilipi.isAddedToLib() == true>
-	    			<button type="button" class="pratilipi-grey-button pratilipi-padding-7 pratilipi-font-size-15" onclick="AddToLibrary( ${ pratilipi.getId()?c }, false )">- ${ _strings.my_library } </button>
-	    		<#else>
-	    			<button type="button" class="pratilipi-light-blue-button pratilipi-padding-7 pratilipi-font-size-15" onclick="AddToLibrary( ${ pratilipi.getId()?c }, true )">+ ${ _strings.my_library } </button>
-	    		</#if>
-	    	</#if>
-	    </div> 
-	 </div>
-	 <div class="col-xs-1">
-	 	<a href="#">
-	 		<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> 
-	 	</a> 
-	 </div> 
+	  <div class="row">
+	  	<div class="col-xs-11">
+	  		<div class="row">
+		    	<div class="col-xs-11"><h3 class="media-heading clip-content-2-lines">${ pratilipi.getTitle()!pratilipi.getTitleEn() } &nbsp; </h3></div>
+		    	<div class="col-xs-1"><a href="${ pratilipi.getPageUrl() }"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></div>
+		    </div>
+		    
+		    <span id="book-rating-${ pratilipi.getId()?c }"> <span class="glyphicon glyphicon-star" aria-hidden="true"></span></span>
+		    <span>${ pratilipi.getReadCount() }<span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
+		    <div>
+		    	<#if user.isGuest == false>
+		    		<#if author.hasAccessToUpdate() >
+		    			<button type="button" class="pratilipi-light-blue-button pratilipi-padding-7 pratilipi-font-size-15" onclick="confirmAndChangePratilipiState( '${ pratilipi.getId()?c }', 'DRAFTED' )">${ _strings.pratilipi_move_to_drafts }</button>
+		    		</#if>
+		    		<#if pratilipi.isAddedToLib() == true>
+		    			<button type="button" class="pratilipi-grey-button pratilipi-padding-7 pratilipi-font-size-15" onclick="AddToLibrary( ${ pratilipi.getId()?c }, false )">- ${ _strings.my_library } </button>
+		    		<#else>
+		    			<button type="button" class="pratilipi-light-blue-button pratilipi-padding-7 pratilipi-font-size-15" onclick="AddToLibrary( ${ pratilipi.getId()?c }, true )">+ ${ _strings.my_library } </button>
+		    		</#if>
+		    	</#if>
+		    </div> 
+		 </div>
+		 <div class="col-xs-1">
+		 	<a href="#">
+		 		<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> 
+		 	</a> 
+		 </div> 
+	  </div>
   </div>
   <hr>
 </div>
