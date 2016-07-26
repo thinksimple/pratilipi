@@ -9,8 +9,12 @@
     <img class="media-object" src="${ pratilipi.getCoverImageUrl(75) }">	
   </a>
   <div class="media-body">
-  	<div class="col-sm-11">
-	    <h3 class="media-heading clip-content-2-lines">${ pratilipi.getTitle()!pratilipi.getTitleEn() } &nbsp; <a href="${ pratilipi.getPageUrl() }"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></h3>
+  	<div class="col-xs-11">
+  		<div class="row">
+	    	<h3 class="media-heading clip-content-2-lines col-xs-11">${ pratilipi.getTitle()!pratilipi.getTitleEn() } &nbsp; </h3>
+	    	<a class="col-xs-1" href="${ pratilipi.getPageUrl() }"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></a>
+	    </div>
+	    
 	    <span id="book-rating-${ pratilipi.getId()?c }"> <span class="glyphicon glyphicon-star" aria-hidden="true"></span></span>
 	    <span>${ pratilipi.getReadCount() }<span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
 	    <div>
@@ -26,7 +30,7 @@
 	    	</#if>
 	    </div> 
 	 </div>
-	 <div class="col-sm-1">
+	 <div class="col-xs-1">
 	 	<a href="#">
 	 		<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> 
 	 	</a> 
