@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import com.google.gson.Gson;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.type.AccessType;
@@ -233,19 +232,11 @@ public class UserAuthorDataUtil {
 			throw new InsufficientAccessException();
 		
 		
-		Gson gson = new Gson();
-
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		AuditLog auditLog = dataAccessor.newAuditLog();
-		auditLog.setAccessId( accessToken.getId() );
-		auditLog.setAccessType( AccessType.USER_AUTHOR_FOLLOWING );
-		auditLog.setEventDataOld( gson.toJson( userAuthor ) );
+		AuditLog auditLog = dataAccessor.newAuditLog( accessToken.getId(), AccessType.USER_AUTHOR_FOLLOWING, userAuthor );
 
 		userAuthor.setFollowing( following );
 		userAuthor.setFollowingSince( new Date() );
-		
-		auditLog.setEventDataNew( gson.toJson( userAuthor ) );
-		
 		
 		userAuthor = dataAccessor.createOrUpdateUserAuthor( userAuthor, auditLog );
 		
