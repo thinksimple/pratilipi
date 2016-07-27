@@ -1,27 +1,30 @@
 பிரபலமானவை
-/most-read                         வாசகர் தேர்வு
+/event/friend                      நட்பு போட்டி
+/featured                          பரிந்துரை
 /new                               புதியவை
-/nationalised-books                நாட்டுடைமை நூல்கள்
-/event/nna                         நலம் நலமறிய ஆவல்
-/event/friend                      நட்பதிகாரம்
-/books                             புத்தகங்கள்
-/poems                             கவிதைகள்
-/stories                           கதைகள்
-/articles                          கட்டுரைகள்
-/magazines                         இதழ்கள்
+/most-read                         வாசகர் தேர்வு
+
+பிரிவுகள்
+/romance         காதல்
+/cinema          சினிமா
+/politics        அரசியல்
+/spiritual       ஆன்மீகம்
+/society         சமூகம்
+/horror          மர்மம் / திகில்
+/experience      அனுபவம்
+/self-help       சுயமுன்னேற்றம்
+/relationship    இல்லறம்  / உறவு
+general-knowledgeபொது அறிவு
+/history         வரலாறு
+/education       கல்வி
+/travel          பயணம்
+/book-review     புத்தக விமர்சனம்
+/others          மற்றவை
 
 வகைகள்
-/fiction         புனைவு
-/romance         காதல்
-/spiritual       ஆன்மீகம்
-/history         வரலாறு
-/science         அறிவியல்
-/family          குடும்பம்
-/collection      தொகுப்பு
-/literature      இலக்கியம்
-/non-fiction     புனைவிலி
-/poem-collection கவிதைத்தொகுப்பு
-/humour          நகைச்சுவை
-/children        குழந்தைகள்
-/self-help       தன்மேம்பாடு
-/experience      அனுபவம்
+/articles                          கட்டுரைகள்
+/stories                           கதைகள்
+/poems                             கவிதைகள்
+/books                             புத்தகங்கள்
+/magazines                         இதழ்கள்
+/nationalised-books                நாட்டுடைமை நூல்கள்
