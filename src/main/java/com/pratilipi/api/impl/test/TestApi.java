@@ -2,7 +2,6 @@ package com.pratilipi.api.impl.test;
 
 import java.util.List;
 
-import com.google.gson.Gson;
 import com.googlecode.objectify.ObjectifyService;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
@@ -11,12 +10,10 @@ import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
-import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
-import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.BlogPost;
 import com.pratilipi.data.type.User;
@@ -26,20 +23,19 @@ import com.pratilipi.data.type.gae.PageEntity;
 import com.pratilipi.data.type.gae.PratilipiEntity;
 import com.pratilipi.data.type.gae.UserAuthorEntity;
 import com.pratilipi.data.type.gae.UserPratilipiEntity;
-import com.pratilipi.filter.AccessTokenFilter;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/test" )
 public class TestApi extends GenericApi {
 	
 	public static class GetRequest extends GenericRequest {
-//		Long deleteUserId;
-//		String email;
-//		String facebookId;
-//		
-//		Long pratilipiId;
-//		Integer pageNo;
-//		String url;
+		Long deleteUserId;
+		String email;
+		String facebookId;
+		
+		Long pratilipiId;
+		Integer pageNo;
+		String url;
 		Long blogPostId;
 		Language language;
 	}
@@ -156,22 +152,16 @@ public class TestApi extends GenericApi {
 			
 		}*/
 
-		Gson gson = new Gson();
-
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		BlogPost blogPost = dataAccessor.getBlogPost( request.blogPostId );
+		
+		BlogPost blogPost = dataAccessor.getBlogPost( 6203770581024768L );
+		blogPost.setLanguage( Language.HINDI );
+		ObjectifyService.ofy().save().entity( blogPost );
 
-		AuditLog auditLog = dataAccessor.newAuditLog();
-		auditLog.setAccessId( AccessTokenFilter.getAccessToken().getId() );
-		auditLog.setAccessType( AccessType.BLOG_POST_UPDATE );
-		auditLog.setEventDataOld( gson.toJson( blogPost ) );
-
-
-		blogPost.setLanguage( request.language );
-
-
-		auditLog.setEventDataNew( gson.toJson( blogPost ) );
-		blogPost = dataAccessor.createOrUpdateBlogPost( blogPost, auditLog );
+		blogPost = dataAccessor.getBlogPost( 5718455143628800L );
+		blogPost.setLanguage( Language.HINDI );
+		ObjectifyService.ofy().save().entity( blogPost );
+		
 		return new GenericResponse();
 		
 	}

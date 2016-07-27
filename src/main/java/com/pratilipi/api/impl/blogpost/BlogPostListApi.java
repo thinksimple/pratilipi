@@ -31,6 +31,7 @@ public class BlogPostListApi extends GenericApi {
 		private String cursor;
 		private Integer resultCount;
 
+		
 		public void setBlogId( Long blogId ) {
 			this.blogId = blogId;
 		}
@@ -70,6 +71,7 @@ public class BlogPostListApi extends GenericApi {
 			this.cursor = cursor;
 		}
 
+		
 		public List<BlogPostApi.Response> getBlogPostList() {
 			return blogPostList;
 		}
@@ -77,6 +79,7 @@ public class BlogPostListApi extends GenericApi {
 		public String getCursor() {
 			return cursor;
 		}
+		
 	}
 	
 	

@@ -157,6 +157,7 @@ public class BlogPostApi extends GenericApi {
 		
 	}
 
+	
 	@Get
 	public Response get( GetRequest request ) {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();

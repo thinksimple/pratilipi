@@ -30,6 +30,7 @@ public class EventApi extends GenericApi {
 		@Validate( required = true, minLong = 1L )
 		private Long eventId;
 
+		
 		public void setEventId( Long eventId ) {
 			this.eventId = eventId;
 		}
