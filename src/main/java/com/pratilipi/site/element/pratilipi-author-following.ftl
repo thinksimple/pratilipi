@@ -1,6 +1,6 @@
 <div class="pratilipi-shadow secondary-500 box">	
 	<div class="pull-left">
-		<h5 class="pratilipi-red pratilipi-bold pratilipi-no-margin">
+		<h5 class="pratilipi-bold pratilipi-no-margin">
 			${ _strings.author_following }
 		</h5>
 		<p class="works-number">${ followingList.getNumberFound() } ${ _strings.author_follow_members }</p>

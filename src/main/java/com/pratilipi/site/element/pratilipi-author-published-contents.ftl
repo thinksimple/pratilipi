@@ -8,7 +8,7 @@
 <#else>
 	<div class="pratilipi-shadow secondary-500 box">	
 		<div class="pull-left">
-			<h5 class="pratilipi-red pratilipi-bold pratilipi-no-margin">
+			<h5 class="pratilipi-bold pratilipi-no-margin">
 				${ _strings.author_published_works }
 			</h5>
 			<p class="works-number"> ${author.getContentPublished()} ${ _strings.author_count_works }</p>

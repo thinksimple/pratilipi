@@ -2,13 +2,13 @@
 	<div class="">
 		<div class="edit-profile pull-left">
 		    <a href="#" class="icon">
-		    	<span class="badge"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></span>
+		    	<span class="glyph-white-background badge badge-circle"><img src="http://0.ptlp.co/resource-all/icon/svg/pencil.svg"></span>
 			</a>
 			
 		</div>
 		<div class="share-author pull-right">
 			<a href="#" class="icon">
-				<span class="glyphicon glyphicon-share white" aria-hidden="true"></span>
+				<span class="glyph-white-background badge badge-circle"><img src="http://0.ptlp.co/resource-all/icon/svg/share2.svg"></span>
 			</a>
 		</div>
 		<div class="clearfix"></div>
