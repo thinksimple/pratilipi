@@ -155,11 +155,11 @@ public class TestApi extends GenericApi {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
 		BlogPost blogPost = dataAccessor.getBlogPost( 6203770581024768L );
-		blogPost.setLanguage( Language.HINDI );
+		blogPost.setLanguage( Language.GUJARATI );
 		ObjectifyService.ofy().save().entity( blogPost );
 
 		blogPost = dataAccessor.getBlogPost( 5718455143628800L );
-		blogPost.setLanguage( Language.HINDI );
+		blogPost.setLanguage( Language.BENGALI );
 		ObjectifyService.ofy().save().entity( blogPost );
 		
 		return new GenericResponse();
