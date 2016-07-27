@@ -9,9 +9,10 @@
 /love പ്രണയം
 /lives ജീവിതങ്ങള്‍
 /memory ഓര്‍മ്മ
+/women     സ്ത്രീ
 /mystery ദുരൂഹം
 /classics  ക്ലാസ്സിക്സ്
-/women     സ്ത്രീ
+
 
 സാഹിത്യ രൂപങ്ങൾ 
 /books     പുസ്തകങ്ങൾ 
