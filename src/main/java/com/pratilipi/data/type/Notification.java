@@ -1,6 +1,7 @@
 package com.pratilipi.data.type;
 
 import java.util.Date;
+import java.util.List;
 
 import com.pratilipi.common.type.NotificationState;
 import com.pratilipi.common.type.NotificationType;
@@ -23,6 +24,10 @@ public interface Notification extends GenericOfyType {
 	
 	void setData( Object data );
 
+	List<Long> getAuditLogIds();
+	
+	void addAuditLogId( Long auditLogId );
+		
 	NotificationState getState();
 	
 	void setState( NotificationState state );

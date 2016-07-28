@@ -109,6 +109,8 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		
 		ObjectifyService.register( MailingListSubscriptionEntity.class );
 		
+		ObjectifyService.register( NotificationEntity.class );
+		
 	}
 	
 	
@@ -1622,7 +1624,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return ObjectifyService.ofy().load()
 				.type( NotificationEntity.class )
 				.filter( "USER_ID", userId )
-				.filter( "NOTIFICATION_TYPE", type )
+				.filter( "TYPE", type )
 				.order( "-LAST_UPDATED" )
 				.first().now();
 	

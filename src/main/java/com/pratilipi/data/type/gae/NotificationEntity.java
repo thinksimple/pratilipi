@@ -1,6 +1,8 @@
 package com.pratilipi.data.type.gae;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Cache;
@@ -23,9 +25,11 @@ public class NotificationEntity implements Notification {
 	private Long USER_ID;
 	
 	@Index
-	private NotificationType NOTIFICATION_TYPE;
+	private NotificationType TYPE;
 
 	private Object DATA;
+	
+	private List<Long> AUDIT_LOG_IDS;
 	
 	@Index
 	private NotificationState STATE;
@@ -79,12 +83,12 @@ public class NotificationEntity implements Notification {
 
 	@Override
 	public NotificationType getType() {
-		return NOTIFICATION_TYPE;
+		return TYPE;
 	}
 
 	@Override
 	public void setType( NotificationType type ) {
-		this.NOTIFICATION_TYPE = type;
+		this.TYPE = type;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -96,6 +100,18 @@ public class NotificationEntity implements Notification {
 	@Override
 	public void setData( Object data ) {
 		this.DATA = data;
+	}
+	
+	@Override
+	public List<Long> getAuditLogIds() {
+		return AUDIT_LOG_IDS;
+	}
+	
+	@Override
+	public void addAuditLogId( Long auditLogId ) {
+		if( this.AUDIT_LOG_IDS == null )
+			this.AUDIT_LOG_IDS = new ArrayList<>( 1 );
+		this.AUDIT_LOG_IDS.add( auditLogId );
 	}
 	
 	@Override

@@ -3,6 +3,8 @@ package com.pratilipi.api.impl.auditlog;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -17,6 +19,7 @@ import com.pratilipi.common.type.NotificationState;
 import com.pratilipi.common.type.NotificationType;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.DataAccessorGaeImpl;
 import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.AuditLog;
@@ -27,6 +30,9 @@ import com.pratilipi.data.type.Notification;
 @Bind( uri = "/auditlog/process" )
 public class AuditLogProcessApi extends GenericApi {
 
+	private static final Logger logger =
+			Logger.getLogger( DataAccessorGaeImpl.class.getName() );
+
 	@Get
 	public GenericResponse get( GenericRequest request ) {
 		
@@ -35,9 +41,13 @@ public class AuditLogProcessApi extends GenericApi {
 		// Fetching AppProperty
 		String appPropertyId = "Api.AuditLogProcess";
 		AppProperty appProperty = dataAccessor.getAppProperty( appPropertyId );
+		if( appProperty == null )
+			appProperty = dataAccessor.newAppProperty( "Api.AuditLogProcess" );
 
 		// Fetching list of audit logs
 		DataListCursorTuple<AuditLog> auditLogDataListCursorTuple = dataAccessor.getAuditLogList( (String) appProperty.getValue(), 10000 );
+		
+		int count = 0;
 		
 		Gson gson = new Gson();
 		for( AuditLog auditLog : auditLogDataListCursorTuple.getDataList() ) {
@@ -49,11 +59,13 @@ public class AuditLogProcessApi extends GenericApi {
 				Long authorId = jsonObject.get( "AUTHOR_ID" ).getAsLong();
 				boolean following = jsonObject.get( "FOLLOWING" ).getAsBoolean();
 				
-				Notification notification = dataAccessor.getNotification( userId, NotificationType.AUTHOR_FOLLOW );
+				Author author = dataAccessor.getAuthor( authorId );
+				if( author.getUserId() == null )
+					continue;
+				Notification notification = dataAccessor.getNotification( author.getUserId(), NotificationType.AUTHOR_FOLLOW );
 				
 				if( following ) {
 					if( notification == null || ( (List<Long>) notification.getData() ).size() >= 10 ) {
-						Author author = dataAccessor.getAuthor( authorId );
 						notification = dataAccessor.newNotification();
 						notification.setUserId( author.getUserId() );
 						notification.setType( NotificationType.AUTHOR_FOLLOW );
@@ -70,11 +82,13 @@ public class AuditLogProcessApi extends GenericApi {
 						followingUserIdList = new ArrayList<>( 1 );
 						followingUserIdList.add( userId );
 						notification.setData( followingUserIdList );
+						notification.addAuditLogId( auditLog.getId() );
 					} else if( followingUserIdList.contains( userId ) ) {
 						continue;
 					} else {
 						followingUserIdList.add( userId );
 						notification.setData( followingUserIdList );
+						notification.addAuditLogId( auditLog.getId() );
 					}
 				} else {
 					if( notification == null ) {
@@ -84,6 +98,7 @@ public class AuditLogProcessApi extends GenericApi {
 						if( followingUserIdList.contains( userId ) ) {
 							followingUserIdList.remove( userId );
 							notification.setData( followingUserIdList );
+							notification.addAuditLogId( auditLog.getId() );
 						} else {
 							continue;
 						}
@@ -91,6 +106,7 @@ public class AuditLogProcessApi extends GenericApi {
 				}
 				
 				notification = dataAccessor.createOrUpdateNotification( notification );
+				count++;
 				
 			} // End of if( auditLog.getAccessType() == AccessType.USER_AUTHOR_FOLLOWING )
 			
@@ -101,6 +117,8 @@ public class AuditLogProcessApi extends GenericApi {
 			appProperty.setValue( auditLogDataListCursorTuple.getCursor() );
 			appProperty = dataAccessor.createOrUpdateAppProperty( appProperty );
 		}
+		
+		logger.log( Level.INFO, "Created/updated " + count + " notifications." );
 		
 		return new GenericResponse();
 		

@@ -86,6 +86,7 @@ public class AuthorListApi extends GenericApi {
 				this.authorList.add( new AuthorApi.Response( authorData, AuthorListApi.class ) );
 			this.cursor = cursor;
 		}
+		
 
 		public List<AuthorApi.Response> getAuthorList() {
 			return authorList;
