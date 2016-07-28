@@ -1,0 +1,362 @@
+<dom-module id="pratilipi-new-header">
+
+	<style>
+		:host {
+			width: 100%;
+			display: block;
+		}
+		paper-card {
+			height: 64px;
+			width: 100%;
+			display: block;
+			--paper-card-header: { display: none };
+		}
+		.vertical-align {
+			display: -webkit-flex;
+			display: flex;
+			-webkit-flex-flow: row;
+			flex-flow: row;
+		}
+		.vertical-align * {
+			align-self: center;
+		}
+		.pratilipi-logo {
+			-webkit-flex-basis: 60px;
+			flex-basis: 60px;
+		}
+		.pratilipi-text {
+			-webkit-flex-basis: 115px;
+			flex-basis: 115px;
+			padding-left: 4px;
+		}
+		.pratilipi-text a {
+			font-size: 22px;
+			<#if lang == "ta">
+				font-size: 17px;
+				margin-left: 0px;
+			</#if>
+			<#if lang == "ml">
+				font-size: 19px;
+				margin-left: 0px;
+			</#if>
+			font-weight: 700;
+		}
+		
+		.button-holder {
+			flex-basis: 110px;
+			white-space: nowrap;
+		}
+		.button-holder a, .button-holder a:hover, .button-holder a:focus {
+			color: #4c4c4c!important;
+		}
+		.button-holder a iron-icon {
+			height: 22px;
+			width: 22px;
+		}
+		.button-holder a span {
+			font-weight: 700;
+			font-size: 16px;
+		}
+		.sign-in-button {
+			white-space: nowrap;
+		}
+		.sign-in-button a span {
+			color: #4c4c4c!important;
+			font-size: 15px;
+			font-weight: 700;
+			margin-left: 2px;
+		}
+		.sign-in-button .btn-primary {
+			color: #fff;
+			background-color: #107fe5;
+			border-color: #107fe5;
+			border-radius: 0;
+			outline: none;
+		}
+		.sign-in-button .btn-primary iron-icon {
+			width: 20px;
+			height: 20px;
+		}
+		.sign-in-button .btn-primary span {
+			font-size: 13px;
+			letter-spacing: 0.3px;
+			font-weight: 700;
+		}
+		@media only screen and (max-width: 767px) {
+			.pratilipi-text {
+				display: none;
+			}
+			.search-bar {
+				display: none;
+			}
+			.button-holder {
+				flex: 1;
+				text-align: center;
+			}
+			.button-holder a iron-icon {
+				height: 28px;
+				width: 28px;
+			}
+			.button-holder a span {
+				display: none;
+			}
+			.sign-in-button {
+				display: none;
+			}
+		}
+		@media only screen and (min-width: 768px) and (max-width: 1199px) {
+			.pratilipi-text {
+				display: none;
+			}
+			.search-bar {
+				flex-basis: 55%;
+				padding-left: 4px;
+				padding-right: 4px;
+			}
+			.sign-in-text, .menu-icon, .search-icon {
+				display: none;
+			}
+			.sign-in-button {
+				margin-left: 16px;
+				margin-top: 2px;
+			}
+		}
+		@media only screen and (min-width: 992px) {
+			#searchInput paper-icon-button.menu-icon-search-bar {
+				display: none;
+			}
+		}
+		@media only screen and (min-width: 1200px) {
+			.search-bar {
+				flex-basis: 520px;
+				padding-left: 8px;
+				padding-right: 8px;
+			}
+			.sign-in-text, .menu-icon, .search-icon {
+				display: none;
+			}
+			.sign-in-button {
+				position: absolute;
+				height: 64px;
+				line-height: 64px;
+				margin-left: 16px;
+				margin-top: 3px;
+			}
+		}
+		
+		paper-input.search {
+	        --paper-input-container-focus-color: #797979;
+		}
+		paper-input.search /deep/ ::-webkit-input-placeholder {
+			font-size: 15px;
+			font-family: inherit;
+		}
+		paper-input.search /deep/ ::-moz-placeholder {
+			font-size: 15px;
+			font-family: inherit;
+		}
+		paper-input.search /deep/ :-ms-input-placeholder {
+			font-size: 15px;
+			font-family: inherit;
+		}
+		
+	</style>
+
+	<template>
+		<paper-card id="pratilipi-header-card">
+			<div class="parent-container">
+				<div class="vertical-align container">
+					<div class="pratilipi-logo">
+						<a href="/">
+							<iron-image sizing="contain" style="width: 56px; height: 64px;" 
+										title="${ _strings.pratilipi }" alt="${ _strings.pratilipi }" 
+										src="http://0.ptlp.co/resource-${ lang }/logo/pratilipi_logo.png"></iron-image>
+						</a>
+					</div>
+					<div class="pratilipi-text">
+						<a class="pratilipi-red" href="/">
+							${ _strings.pratilipi }
+						</a>
+					</div>
+					<div class="button-holder menu-icon">
+						<a on-click="_openMenuNavigation">
+							<iron-icon icon="icons:menu"></iron-icon>
+						</a>
+					</div>
+					<div class="search-bar">
+						<form id="searchForm" action="javascript:void(0);" style="margin: -20px 15px auto 10px;" on-keyup="onSubmit">
+							<paper-input id="searchInput" name="q" class="search" type="search" placeholder="${ _strings.search_bar_help }" onfocus="this.placeholder = ''" onblur="this.placeholder = '${ _strings.search_bar_help }'" value="{{ query::input }}">
+								<paper-icon-button suffix icon="icons:search" noink="true" on-click="onSubmit"></paper-icon-button>
+								<paper-icon-button prefix class="menu-icon-search-bar" icon="icons:menu" noink="true" on-click="_openMenuNavigation"></paper-icon-button>
+							</paper-input>
+						</form>
+					</div>
+					<#-- Minor tweat to get the search icon again -->
+					<#--
+					<div class="button-holder search-icon">
+						<a on-click="openSearch">
+							<iron-icon icon="icons:search"></iron-icon>
+						</a>
+					</div>
+					-->
+					<div class="button-holder">
+						<a on-click="_write">
+							<iron-icon icon="icons:create"></iron-icon>
+							<span>Write</span>
+						</a>
+					</div>
+					<div class="button-holder">
+						<a on-click="_gotoLibrary">
+							<iron-icon icon="icons:book"></iron-icon>
+							<span>Library</span>
+						</a>
+					</div>
+					<div class="button-holder">
+						<a on-click="_notifications">
+							<iron-icon icon="social:notifications"></iron-icon>
+							<span>Notification</span>
+						</a>
+					</div>
+					<div class="button-holder sign-in-text">
+						<template is="dom-if" if="{{ isGuest }}">
+							<a on-click="_logIn">
+								<iron-icon icon="icons:input"></iron-icon>
+								<span>Log In</span>
+							</a>
+						</template>
+						<template is="dom-if" if="{{ !isGuest }}">
+							<a href="{{ profilePageUrl }}">
+								<img class="img-circle" style="width: 32px; height: 32px;"
+									alt="{{ displayName }}" src="{{ profileImageUrl }}" />
+							</a>
+						</template>
+					</div>
+					<div class="sign-in-button">
+						<template is="dom-if" if="{{ isGuest }}">
+							<button class="btn btn-primary" on-click="_logIn">
+								<iron-icon icon="icons:input"></iron-icon>
+								<span>Log In</span>
+							</button>
+						</template>
+						<template is="dom-if" if="{{ !isGuest }}">
+							<a href="{{ profilePageUrl }}">
+								<img class="img-circle" style="width: 32px; height: 32px;"
+									alt="{{ displayName }}" src="{{ profileImageUrl }}" />
+								<span>{{ displayName }}</span>
+							</a>
+						</template>
+					</div>
+				</div>
+			</div>
+		</paper-card>
+		
+		<#--
+		<paper-card id="pratilipi-header-search-bar" style="display: none;">
+			<div class="parent-container">
+				<div class="vertical-align container">
+					<div class="pratilipi-logo">
+						<a href="/">
+							<iron-image sizing="contain" style="width: 56px; height: 64px;" 
+										title="${ _strings.pratilipi }" alt="${ _strings.pratilipi }" 
+										src="http://0.ptlp.co/resource-${ lang }/logo/pratilipi_logo.png"></iron-image>
+						</a>
+					</div>
+					<div class="search-bar-mobile" style="flex-basis: 100%;">
+						<form id="searchFormMobile" action="javascript:void(0);" style="margin: -20px 15px auto 10px;" on-keyup="onSubmit">
+							<paper-input id="searchInput" name="q" class="search" type="search" placeholder="${ _strings.search_bar_help }" onfocus="this.placeholder = ''" onblur="this.placeholder = '${ _strings.search_bar_help }'" value="{{ query::input }}">
+								<paper-icon-button suffix icon="icons:search" noink="true" on-click="onSubmit"></paper-icon-button>
+								<paper-icon-button prefix icon="icons:close" noink="true" on-click="closeSearch"></paper-icon-button>
+							</paper-input>
+						</form>
+					</div>
+				</div>
+			</div>
+		</paper-card>
+		-->
+	</template>
+
+
+	<script>
+
+		Polymer({
+			
+			is: 'pratilipi-new-header',
+			
+			properties: {
+				user: { type: Object, observer: "_userChanged" },
+				query: { type: String },
+				isGuest: { type: Boolean },
+				profilePageUrl: { type: String },
+				profileImageUrl: { type: String },
+				displayName: { type: String },
+				
+				writeButtonActive: { type: Boolean, value: false }
+			},
+			
+			_userChanged: function() {
+				if( ! this.user.isGuest && this.writeButtonActive ) {
+					this.set( 'writeButtonActive', false );
+					this.async( function() {
+						this.write();
+					}, 1000 );
+				}
+				this.set( 'isGuest', this.user.isGuest );
+				this.set( 'profilePageUrl', this.user.profilePageUrl );
+				this.set( 'displayName', this.user.displayName );
+				this.set( 'profileImageUrl', this.user.profileImageUrl + ( this.user.profileImageUrl.indexOf( '?' ) == -1 ? '?' : '&' ) + "width=48" );
+			},
+			
+			_logIn: function() {
+				document.querySelector( 'pratilipi-user' ).logIn();
+			},
+			
+			_write: function() {
+				if( this.user.isGuest ) {
+					this.set( 'writeButtonActive', true );
+					document.querySelector( 'pratilipi-user' ).logIn( true );
+					return;
+				}
+				this.set( 'writeButtonActive', false );
+				document.querySelector( 'pratilipi-write' ).createNewPratilipi();
+			},
+			
+			_gotoLibrary: function() {
+				if( this.user.isGuest )
+					document.querySelector( 'pratilipi-user' ).logIn( true );
+				else
+					window.location.href = "/library";
+			},
+			
+			_openMenuNavigation: function() {
+				document.querySelector( 'pratilipi-navigation-drawer' ).show();
+			},
+			
+			onSubmit: function( event ) {
+				if( event.keyCode != null && event.keyCode != 0 && event.keyCode != 13 || this.query == null || this.query.trim() == "" )
+					return;
+				var str = decodeURI( window.location.pathname );
+				if( str == "/search" ) {
+					document.querySelector( 'pratilipi-card-grid' ).setSearchQuery( jQuery( "#searchInput" ).val() );
+				} else {
+					jQuery( "#searchForm" ).prop( "action", "/search" );
+					jQuery( "#searchForm" ).submit();
+				}
+			}
+			
+			<#-- 
+			openSearch: function() {
+				jQuery( '#pratilipi-header-card' ).css( 'display', 'none' );
+				jQuery( '#pratilipi-header-search-bar' ).css( 'display', 'block' );
+			},
+			
+			closeSearch: function() {
+				jQuery( '#pratilipi-header-search-bar' ).css( 'display', 'none' );
+				jQuery( '#pratilipi-header-card' ).css( 'display', 'block' );
+			}
+			-->
+			
+		});
+
+	</script>
+
+</dom-module>

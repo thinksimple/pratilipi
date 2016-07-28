@@ -1,12 +1,24 @@
+<#include "pratilipi-new-header.html">
 <#include "pratilipi-author-details.html">
 <#include "pratilipi-author-tabs.html">
 <#include "pratilipi-author-settings.html">
 
 <dom-module id="pratilipi-author-page">
 
+	<style>
+		main {
+			padding-top: 64px;
+		}
+		header {
+			height: 64px;
+		}
+		.nav-up {
+			top: -64px;
+		}
+	</style>
 	<template>
 		<header class="nav-down">
-    		<pratilipi-header user='[[ user ]]'></pratilipi-header>
+    		<pratilipi-new-header user='[[ user ]]'></pratilipi-new-header>
 		</header>
 		<main>
 			<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
