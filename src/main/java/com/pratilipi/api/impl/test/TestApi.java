@@ -13,6 +13,7 @@ import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.Language;
+import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.gae.AccessTokenEntity;
@@ -157,10 +158,11 @@ public class TestApi extends GenericApi {
 		
 		List<AccessTokenEntity> accessTokenList = ObjectifyService.ofy()
 				.load().type( AccessTokenEntity.class )
-				.filter( "ACCESS_TOKEN_TYPE", "USER_PUBLISHER" )
+				.filter( "ACCESS_TOKEN_TYPE", "USER" )
 				.limit( 1000 ).list();
 		
-		ObjectifyService.ofy().delete().entities( accessTokenList );
+		for( AccessToken accessToken : accessTokenList )
+			ObjectifyService.ofy().save().entity( accessToken );
 		
 		return new GenericResponse();
 		
