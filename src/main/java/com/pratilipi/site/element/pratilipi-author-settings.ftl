@@ -1,3 +1,10 @@
+<script>
+	$( document ).ready(function() {
+		<# if ( author.getLanguage()?? ) >
+		    $("#language").val("${ author.getLanguage() }");
+	    </#if>
+	});
+</script>
 <div class="pratilipi-shadow secondary-500 box">
 		<button class="pull-left pratilipi-grey-button pratilipi-without-margin">Cancel</button>
 		<button class="pull-right pratilipi-light-blue-button pratilipi-without-margin">Save</button>
@@ -14,14 +21,6 @@
 			>
 		</div>
 		
-		<div class="form-group">
-			<label for="last_name">Last Name(Vernacular)</label>
-			<input type="text" class="form-control" id="last_name_vernacular" 
-				<#if author.getLastName()?? >
-					value="${ author.getLastName() }"
-				</#if>
-			>
-		</div>
 		
 		<div class="form-group">
 			<label for="first_name">First Name(English)</label>
@@ -30,7 +29,17 @@
 				value="${ author.getFirstNameEn() }"
 			</#if>	
 			>
+		</div>		
+		
+		<div class="form-group">
+			<label for="last_name">Last Name(Vernacular)</label>
+			<input type="text" class="form-control" id="last_name_vernacular" 
+				<#if author.getLastName()?? >
+					value="${ author.getLastName() }"
+				</#if>
+			>
 		</div>
+
 		
 		<div class="form-group">
 			<label for="last_name">Last Name(English)</label>
@@ -68,32 +77,44 @@
 		
 		<div class="form-group">
 			<label for="gender">Gender</label><br>
-			<label class="radio-inline"><input type="radio" name="gender">Male</label>
-			<label class="radio-inline"><input type="radio" name="gender">Female</label>
-			<label class="radio-inline"><input type="radio" name="gender">Other</label>
+			<label class="radio-inline"><input type="radio" name="gender" value="MALE"
+				<#if author.getGender()?? && author.getGender()=="MALE" >
+					checked
+				</#if>	
+			>Male</label>
+			<label class="radio-inline"><input type="radio" name="gender" value="FEMALE"
+				<#if author.getGender()?? && author.getGender()=="FEMALE" >
+					checked
+				</#if>			
+			>Female</label>
+			<label class="radio-inline"><input type="radio" name="gender" value="OTHER"
+				<#if author.getGender()?? && author.getGender()=="OTHER" >
+					checked
+				</#if>			
+			>Other</label>
 		</div>
 			
 		<div class="form-group">
 		  <label for="language">Language:</label>
 		  <select class="form-control" id="language">
-		    <option value="hindi">Hindi</option>
-		    <option value="tamil">Tamil</option>
-		    <option value="kannada">Kannada</option>
-		    <option value="bengali">Bengali</option>
-		    <option value="telugu">Telugu</option>
-		    <option value="gujarati">Gujarati</option>
-		    <option value="marathi">Marathi</option>
-		    <option value="malayalam">Malayalam</option>
+		    <option value="HINDI">${ _strings.language_hi }</option>
+		    <option value="TAMIL">${ _strings.language_ta }</option>
+		    <option value="KANNADA">${ _strings.language_kn }</option>
+		    <option value="BENGALI">${ _strings.language_bn }</option>
+		    <option value="TELUGU">${ _strings.language_te }</option>
+		    <option value="GUJARATI">${ _strings.language_gu }</option>
+		    <option value="MARATHI">${ _strings.language_mr }</option>
+		    <option value="MALAYALAM">${ _strings.language_ml }</option>
 		  </select>
 		</div>
 
 		<div class="form-group">
 		  	<label for="biography">Biography:</label>
-		  	<textarea class="form-control" id="biography"
-				<#if author.getSummary()?? >
-					value="${ author.getSummary() }"
-				</#if>		  	
-		  	></textarea>
+		  	<textarea class="form-control" id="biography">
+		  		<#if author.getSummary()?? >
+					${ author.getSummary() }
+				</#if>
+		  	</textarea>
 		</div>
 	</form>
 </div>
