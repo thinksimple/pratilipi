@@ -1,7 +1,8 @@
 package com.pratilipi.api.impl.test;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.googlecode.objectify.ObjectifyService;
 import com.pratilipi.api.GenericApi;
@@ -13,11 +14,7 @@ import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.Language;
-import com.pratilipi.data.DataAccessor;
-import com.pratilipi.data.DataAccessorFactory;
-import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.Author;
-import com.pratilipi.data.type.BlogPost;
 import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.gae.AccessTokenEntity;
 import com.pratilipi.data.type.gae.AuthorEntity;
@@ -29,6 +26,10 @@ import com.pratilipi.data.type.gae.UserPratilipiEntity;
 @SuppressWarnings("serial")
 @Bind( uri = "/test" )
 public class TestApi extends GenericApi {
+	
+	private static final Logger logger =
+			Logger.getLogger( TestApi.class.getName() );
+	
 	
 	public static class GetRequest extends GenericRequest {
 		Long deleteUserId;
@@ -154,11 +155,14 @@ public class TestApi extends GenericApi {
 			
 		}*/
 
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
-		AppProperty appProperty = dataAccessor.newAppProperty( "Test" );
-		appProperty.setValue( new ArrayList<>() );
-		dataAccessor.createOrUpdateAppProperty( appProperty );
+		List<AccessTokenEntity> accessTokenList = ObjectifyService.ofy()
+				.load().type( AccessTokenEntity.class )
+				.filter( "ACCESS_TOKEN_TYPE", "USER_PUBLISHER" )
+				.limit( 1000 ).list();
+		
+		for( AccessTokenEntity accessToken : accessTokenList )
+			logger.log( Level.INFO, accessToken.getId() );
 		
 		return new GenericResponse();
 		

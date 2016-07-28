@@ -31,7 +31,7 @@ import com.pratilipi.data.type.Notification;
 public class AuditLogProcessApi extends GenericApi {
 
 	private static final Logger logger =
-			Logger.getLogger( DataAccessorGaeImpl.class.getName() );
+			Logger.getLogger( AuditLogProcessApi.class.getName() );
 
 	@Get
 	public GenericResponse get( GenericRequest request ) {
