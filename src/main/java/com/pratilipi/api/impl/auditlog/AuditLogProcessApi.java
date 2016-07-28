@@ -99,6 +99,7 @@ public class AuditLogProcessApi extends GenericApi {
 							followingUserIdList.remove( userId );
 							notification.setData( followingUserIdList );
 							notification.addAuditLogId( auditLog.getId() );
+							notification.setLastUpdated( new Date() );
 						} else {
 							continue;
 						}

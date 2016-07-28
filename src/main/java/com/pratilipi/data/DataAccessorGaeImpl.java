@@ -26,6 +26,7 @@ import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.CommentParentType;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.MailingList;
+import com.pratilipi.common.type.NotificationState;
 import com.pratilipi.common.type.NotificationType;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.ReferenceType;
@@ -1628,6 +1629,47 @@ public class DataAccessorGaeImpl implements DataAccessor {
 				.order( "-LAST_UPDATED" )
 				.first().now();
 	
+	}
+	
+	@Override
+	public DataListCursorTuple<Notification> getNotificationList( Long userId, String cursorStr, Integer resultCount ) {
+	
+		Query<NotificationEntity> query = ObjectifyService.ofy().load().type( NotificationEntity.class );
+		
+		if( userId != null )
+			query = query.filter( "USER_ID", userId );
+		
+		query = query.filter( "STATE !=", NotificationState.HIDDEN );
+		
+		query = query.order( "-LAST_UPDATED" );
+		
+		if( cursorStr != null )
+			query = query.startAt( Cursor.fromWebSafeString( cursorStr ) );
+		
+		if( resultCount != null && resultCount > 0 )
+			query = query.limit( resultCount );
+		
+		
+		QueryResultIterator<NotificationEntity> iterator = query.iterator();
+
+		
+		// Notification List
+		ArrayList<Notification> notificationList = resultCount == null
+				? new ArrayList<Notification>()
+				: new ArrayList<Notification>( resultCount );
+		
+		while( iterator.hasNext() )
+			notificationList.add( iterator.next() );
+		
+		
+		// Cursor
+		Cursor cursor = iterator.getCursor();
+
+		
+		return new DataListCursorTuple<Notification>(
+				notificationList,
+				cursor == null ? null : cursor.toWebSafeString() );
+		
 	}
 	
 	@Override
