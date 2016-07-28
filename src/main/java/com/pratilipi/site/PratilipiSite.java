@@ -49,7 +49,6 @@ import com.pratilipi.common.type.PratilipiType;
 import com.pratilipi.common.type.RequestCookie;
 import com.pratilipi.common.type.RequestParameter;
 import com.pratilipi.common.type.Website;
-import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.common.util.FacebookApi;
 import com.pratilipi.common.util.FreeMarkerUtil;
 import com.pratilipi.common.util.PratilipiFilter;
@@ -58,7 +57,6 @@ import com.pratilipi.common.util.ThirdPartyResource;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
-import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.client.BlogPostData;
 import com.pratilipi.data.client.EventData;
 import com.pratilipi.data.client.PratilipiData;
@@ -69,7 +67,6 @@ import com.pratilipi.data.type.Blog;
 import com.pratilipi.data.type.Navigation;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
-import com.pratilipi.data.util.AuthorDataUtil;
 import com.pratilipi.data.util.BlogPostDataUtil;
 import com.pratilipi.data.util.EventDataUtil;
 import com.pratilipi.data.util.PratilipiDataUtil;
@@ -808,22 +805,21 @@ public class PratilipiSite extends HttpServlet {
 		return dataModel;
 	}
 
-	public Map<String, Object> createDataModelForAuthorsPage( Language lang )
+	public Map<String, Object> createDataModelForAuthorsPage( Language language )
 			throws InsufficientAccessException {
-		
-		AuthorFilter authorFilter = new AuthorFilter();
-		authorFilter.setLanguage( lang );
-		
-		DataListCursorTuple<AuthorData> authorDataListCursorTuple =
-				AuthorDataUtil.getAuthorDataList( null, authorFilter, null, 20 );
-		
+
+		AuthorListApi.GetRequest request = new AuthorListApi.GetRequest();
+		request.setLanguage( language );
+		AuthorListApi.Response response = ApiRegistry
+											.getApi( AuthorListApi.class )
+											.get( request );
+
 		Gson gson = new Gson();
-		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", "Authors" );
-		dataModel.put( "authorListJson", gson.toJson( authorDataListCursorTuple.getDataList() ) );
-		dataModel.put( "authorListFilterJson", gson.toJson( authorFilter ) );
-		dataModel.put( "authorListCursor", authorDataListCursorTuple.getCursor() );
+		dataModel.put( "authorListJson", gson.toJson( response.getAuthorList() ) );
+		dataModel.put( "authorListFilterJson", gson.toJson( request ) );
+		dataModel.put( "authorListCursor", response.getCursor() );
 		return dataModel;
 		
 	}
@@ -972,44 +968,68 @@ public class PratilipiSite extends HttpServlet {
 	}
 
 	
-	private Map<String, Object> createDataModelForSearchPage( boolean basicMode, Language lang, HttpServletRequest request )
+	private Map<String, Object> createDataModelForSearchPage( boolean basicMode, Language language, HttpServletRequest request )
 			throws InsufficientAccessException, UnexpectedServerException {
 		
 		String searchQuery = request.getParameter( RequestParameter.SEARCH_QUERY.getName() );
-		if( searchQuery != null && searchQuery.trim().isEmpty() )
+		if( searchQuery == null || searchQuery.trim().isEmpty() )
 			searchQuery = null;
-		
-		PratilipiFilter pratilipiFilter = new PratilipiFilter();
-		pratilipiFilter.setLanguage( lang );
-		pratilipiFilter.setState( PratilipiState.PUBLISHED );
-		
-		int pageCurr = 1;
-		int pageSize = 20;
-		
-		if( basicMode ) {
-			String pageNoStr = request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() );
-			if( pageNoStr != null && ! pageNoStr.trim().isEmpty() )
-				pageCurr = Integer.parseInt( pageNoStr );
-		}
-		
-		DataListCursorTuple<PratilipiData> pratilipiDataListCursorTuple =
-				PratilipiDataUtil.getPratilipiDataList( searchQuery, pratilipiFilter, null, (pageCurr - 1) * pageSize, pageSize );
 
+		Long authorId = null;
+		String authorIdString = request.getParameter( RequestParameter.AUTHOR_ID.getName() );
+		if( authorIdString != null && ! authorIdString.trim().isEmpty() )
+			authorId = Long.parseLong( authorIdString );
+
+		PratilipiState pratilipiState = PratilipiState.PUBLISHED;
+		String state = request.getParameter( RequestParameter.PRATILIPI_STATE.getName() );
+		if( state != null && ! state.trim().isEmpty() )
+			pratilipiState = PratilipiState.valueOf( state );
+
+		Integer resultCount = 20;
+		String resultCountString = request.getParameter( RequestParameter.RESULT_COUNT.getName() );
+		if( resultCountString != null && ! resultCountString.trim().isEmpty() )
+			resultCount = Integer.parseInt( resultCountString );
+
+		Integer pageCurr = 1;
+		String pageNoString = request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() );
+		if( pageNoString != null && ! pageNoString.trim().isEmpty() )
+			pageCurr = Integer.parseInt( pageNoString );
+
+
+		PratilipiListApi.GetRequest pratilipiListApiRequest = new PratilipiListApi.GetRequest();
+		pratilipiListApiRequest.setLanguage( language );
+		pratilipiListApiRequest.setState( pratilipiState );
+		pratilipiListApiRequest.setOffset( ( pageCurr - 1 ) * resultCount );
+		if( searchQuery != null )
+			pratilipiListApiRequest.setSearchQuery( searchQuery );
+		if( authorId != null )
+			pratilipiListApiRequest.setAuthorId( authorId );
+		PratilipiListApi.Response response = ApiRegistry
+												.getApi( PratilipiListApi.class )
+												.get( pratilipiListApiRequest );
+
+
+		PratilipiFilter pratilipiFilter = new PratilipiFilter();
+		pratilipiFilter.setLanguage( language );
+		pratilipiFilter.setState( pratilipiState );
+		if( authorId != null )
+			pratilipiFilter.setAuthorId( authorId );
+		
 		Gson gson = new Gson();
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", "Search" );
 		if( basicMode ) {
-			dataModel.put( "pratilipiList", toListResponseObject( pratilipiDataListCursorTuple.getDataList() ) );
+			dataModel.put( "pratilipiList", response.getPratilipiList() );
 			dataModel.put( "pratilipiListSearchQuery", searchQuery );
 			dataModel.put( "pratilipiListPageCurr", pageCurr );
-			if( pratilipiDataListCursorTuple.getNumberFound() != null )
-				dataModel.put( "pratilipiListPageMax", (int) Math.ceil( ( (double) pratilipiDataListCursorTuple.getNumberFound() ) / pageSize ) );
+			if( response.getNumberFound() != null )
+				dataModel.put( "pratilipiListPageMax", (int) Math.ceil( ( (double) response.getNumberFound() ) / resultCount ) );
 		} else {
-			dataModel.put( "pratilipiListJson", gson.toJson( toListResponseObject( pratilipiDataListCursorTuple.getDataList() ) ) );
+			dataModel.put( "pratilipiListJson", gson.toJson( response.getPratilipiList() ) );
 			dataModel.put( "pratilipiListSearchQuery", searchQuery );
 			dataModel.put( "pratilipiListFilterJson", gson.toJson( pratilipiFilter ) );
-			dataModel.put( "pratilipiListCursor", pratilipiDataListCursorTuple.getCursor() );
+			dataModel.put( "pratilipiListCursor", response.getCursor() );
 		}
 		return dataModel;
 		

@@ -13,7 +13,10 @@ public enum RequestParameter {
 	PASSWORD_RESET_EMAIL_FLAG( "passwordReset" ),
 	VERIFY_EMAIL_FLAG( "verifyUser" ),
 	AUTHOR_ID_FOLLOWERS( "aId" ),
-	USER_ID_FOLLOWING( "uId" )
+	USER_ID_FOLLOWING( "uId" ),
+	AUTHOR_ID( "authorId" ),
+	PRATILIPI_STATE( "state" ),
+	RESULT_COUNT( "count" )
 	;
 	
 	

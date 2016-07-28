@@ -28,46 +28,74 @@ public class AuthorListApi extends GenericApi {
 
 		private String cursor;
 		private Integer resultCount;
-		
-		
+
+
 		public String getSearchQuery() {
 			return searchQuery;
+		}
+
+		public void setSearchQuery( String searchQuery ) {
+			this.searchQuery = searchQuery;
 		}
 
 		public Language getLanguage() {
 			return language;
 		}
-		
+
+		public void setLanguage( Language language ) {
+			this.language = language;
+		}
+
 		public Boolean getOrderByContentPublished() {
 			return orderByContentPublished;
+		}
+
+		public void setOrderByContentPublished( Boolean orderByContentPublished ) {
+			this.orderByContentPublished = orderByContentPublished;
 		}
 
 		public String getCursor() {
 			return cursor;
 		}
-		
+
+		public void setCursor( String cursor ) {
+			this.cursor = cursor;
+		}
+
 		public Integer getResultCount() {
 			return resultCount;
 		}
-		
+
+		public void setResultCount( Integer resultCount ) {
+			this.resultCount = resultCount;
+		}
+
 	}
 
-	@SuppressWarnings("unused")
 	public class Response extends GenericResponse {
 
 		private List<AuthorApi.Response> authorList;
 		private String cursor;
 
-		
+
 		private Response() {}
-		
+
 		private Response( List<AuthorData> authorList, String cursor ) {
 			this.authorList = new ArrayList<>( authorList.size() );
 			for( AuthorData authorData : authorList )
 				this.authorList.add( new AuthorApi.Response( authorData, AuthorListApi.class ) );
 			this.cursor = cursor;
 		}
-		
+
+		public List<AuthorApi.Response> getAuthorList() {
+			return authorList;
+		}
+
+		public String getCursor() {
+			return cursor;
+					
+		}
+
 	}
 	
 	
