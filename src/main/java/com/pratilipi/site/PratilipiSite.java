@@ -999,6 +999,7 @@ public class PratilipiSite extends HttpServlet {
 		PratilipiListApi.GetRequest pratilipiListApiRequest = new PratilipiListApi.GetRequest();
 		pratilipiListApiRequest.setLanguage( language );
 		pratilipiListApiRequest.setState( pratilipiState );
+		pratilipiListApiRequest.setResultCount( resultCount );
 		pratilipiListApiRequest.setOffset( ( pageCurr - 1 ) * resultCount );
 		if( searchQuery != null )
 			pratilipiListApiRequest.setSearchQuery( searchQuery );
@@ -1012,9 +1013,7 @@ public class PratilipiSite extends HttpServlet {
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
 		pratilipiFilter.setLanguage( language );
 		pratilipiFilter.setState( pratilipiState );
-		if( authorId != null )
-			pratilipiFilter.setAuthorId( authorId );
-		
+
 		Gson gson = new Gson();
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
@@ -1023,8 +1022,9 @@ public class PratilipiSite extends HttpServlet {
 			dataModel.put( "pratilipiList", response.getPratilipiList() );
 			dataModel.put( "pratilipiListSearchQuery", searchQuery );
 			dataModel.put( "pratilipiListPageCurr", pageCurr );
-			if( response.getNumberFound() != null )
-				dataModel.put( "pratilipiListPageMax", (int) Math.ceil( ( (double) response.getNumberFound() ) / resultCount ) );
+			Integer pageMax = response.getNumberFound() != null ?
+					(int) Math.ceil( ( (double) response.getNumberFound() ) / resultCount ) : 1;
+			dataModel.put( "pratilipiListPageMax", pageMax );
 		} else {
 			dataModel.put( "pratilipiListJson", gson.toJson( response.getPratilipiList() ) );
 			dataModel.put( "pratilipiListSearchQuery", searchQuery );
