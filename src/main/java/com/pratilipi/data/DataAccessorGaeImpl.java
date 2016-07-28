@@ -26,6 +26,7 @@ import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.CommentParentType;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.MailingList;
+import com.pratilipi.common.type.NotificationType;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.ReferenceType;
 import com.pratilipi.common.type.UserState;
@@ -46,6 +47,7 @@ import com.pratilipi.data.type.Event;
 import com.pratilipi.data.type.GenericOfyType;
 import com.pratilipi.data.type.MailingListSubscription;
 import com.pratilipi.data.type.Navigation;
+import com.pratilipi.data.type.Notification;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.User;
@@ -63,6 +65,7 @@ import com.pratilipi.data.type.gae.CommentEntity;
 import com.pratilipi.data.type.gae.EventEntity;
 import com.pratilipi.data.type.gae.MailingListSubscriptionEntity;
 import com.pratilipi.data.type.gae.NavigationEntity;
+import com.pratilipi.data.type.gae.NotificationEntity;
 import com.pratilipi.data.type.gae.PageEntity;
 import com.pratilipi.data.type.gae.PratilipiEntity;
 import com.pratilipi.data.type.gae.UserAuthorEntity;
@@ -423,6 +426,29 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	@Override
 	public AuditLog newAuditLog( String accessId, AccessType accessType, Object eventDataOld ) {
 		return new AuditLogEntity( accessId, accessType, eventDataOld );
+	}
+	
+	public DataListCursorTuple<AuditLog> getAuditLogList( String cursorStr, Integer resultCount ) {
+		
+		Query<AuditLogEntity> query = ObjectifyService.ofy().load().type( AuditLogEntity.class );
+		
+		if( cursorStr != null )
+			query = query.startAt( Cursor.fromWebSafeString( cursorStr ) );
+
+		if( resultCount != null )
+			query = query.limit( resultCount );
+	
+		
+		List<AuditLog> responseList = resultCount == null ? new ArrayList<AuditLog>() : new ArrayList<AuditLog>( resultCount );
+		QueryResultIterator <AuditLogEntity> iterator = query.iterator();
+		while( iterator.hasNext() )
+			responseList.add( iterator.next() );
+		Cursor cursor = iterator.getCursor();
+
+		return new DataListCursorTuple<AuditLog>(
+				responseList,
+				cursor == null ? null : cursor.toWebSafeString() );
+		
 	}
 	
 	
@@ -1583,4 +1609,28 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return createOrUpdateEntity( mailingListSubscription, auditLog );
 	}
 	
+	
+	// NOTIFICATION Table
+	
+	public Notification newNotification() {
+		return new NotificationEntity();
+	}
+	
+	@Override
+	public Notification getNotification( Long userId, NotificationType type ) {
+
+		return ObjectifyService.ofy().load()
+				.type( NotificationEntity.class )
+				.filter( "USER_ID", userId )
+				.filter( "NOTIFICATION_TYPE", type )
+				.order( "-LAST_UPDATED" )
+				.first().now();
+	
+	}
+	
+	@Override
+	public Notification createOrUpdateNotification( Notification notification ) {
+		return createOrUpdateEntity( notification );
+	}
+
 }
