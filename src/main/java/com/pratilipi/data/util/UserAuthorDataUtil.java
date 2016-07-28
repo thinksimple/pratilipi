@@ -234,7 +234,7 @@ public class UserAuthorDataUtil {
 		
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
 		AuditLog auditLog = dataAccessor.newAuditLog( accessToken.getId(), AccessType.USER_AUTHOR_FOLLOWING, userAuthor );
-
+		
 		userAuthor.setFollowing( following );
 		userAuthor.setFollowingSince( new Date() );
 		

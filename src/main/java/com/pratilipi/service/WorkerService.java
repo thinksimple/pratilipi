@@ -2,6 +2,7 @@ package com.pratilipi.service;
 
 import com.pratilipi.api.ApiRegistry;
 import com.pratilipi.api.GenericService;
+import com.pratilipi.api.impl.auditlog.AuditLogProcessApi;
 import com.pratilipi.api.impl.author.AuthorBackupApi;
 import com.pratilipi.api.impl.author.AuthorProcessApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiBackupApi;
@@ -22,6 +23,8 @@ public class WorkerService extends GenericService {
 		ApiRegistry.register( UserEmailApi.class );
 		ApiRegistry.register( UserFacebookValidationApi.class );
 		ApiRegistry.register( UserBackupApi.class );
+		
+		ApiRegistry.register( AuditLogProcessApi.class );
 		
 		ApiRegistry.register( PratilipiProcessApi.class );
 		ApiRegistry.register( PratilipiStatsApi.class );
