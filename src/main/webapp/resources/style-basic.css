@@ -455,3 +455,6 @@ a.pratilipi-dark-blue-button:hover, a.pratilipi-dark-blue-button:focus {
 .badge-circle {
 	padding: 7px 7px;
 }
+.bigger-line-height {
+	line-height: 1.5;
+}
