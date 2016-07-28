@@ -1,6 +1,6 @@
 <script>
 	$( document ).ready(function() {
-		<# if ( author.getLanguage()?? ) >
+		<#if ( author.getLanguage()?? ) >
 		    $("#language").val("${ author.getLanguage() }");
 	    </#if>
 	});
