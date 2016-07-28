@@ -1,7 +1,6 @@
 package com.pratilipi.api.impl.test;
 
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.googlecode.objectify.ObjectifyService;
@@ -161,8 +160,7 @@ public class TestApi extends GenericApi {
 				.filter( "ACCESS_TOKEN_TYPE", "USER_PUBLISHER" )
 				.limit( 1000 ).list();
 		
-		for( AccessTokenEntity accessToken : accessTokenList )
-			logger.log( Level.INFO, accessToken.getId() );
+		ObjectifyService.ofy().delete().entities( accessTokenList );
 		
 		return new GenericResponse();
 		
