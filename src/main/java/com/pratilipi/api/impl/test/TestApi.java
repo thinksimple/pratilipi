@@ -1,5 +1,6 @@
 package com.pratilipi.api.impl.test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.googlecode.objectify.ObjectifyService;
@@ -14,6 +15,7 @@ import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.BlogPost;
 import com.pratilipi.data.type.User;
@@ -154,13 +156,9 @@ public class TestApi extends GenericApi {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
-		BlogPost blogPost = dataAccessor.getBlogPost( 6203770581024768L );
-		blogPost.setLanguage( Language.GUJARATI );
-		ObjectifyService.ofy().save().entity( blogPost );
-
-		blogPost = dataAccessor.getBlogPost( 5718455143628800L );
-		blogPost.setLanguage( Language.BENGALI );
-		ObjectifyService.ofy().save().entity( blogPost );
+		AppProperty appProperty = dataAccessor.newAppProperty( "Test" );
+		appProperty.setValue( new ArrayList<>() );
+		dataAccessor.createOrUpdateAppProperty( appProperty );
 		
 		return new GenericResponse();
 		
