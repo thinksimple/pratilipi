@@ -10,14 +10,14 @@
   </a>
   <div class="media-body">
 	  	<div class="col-xs-11">
-			<a href="${ pratilipi.getPageUrl() }"><h4 class="media-heading clip-content-2-lines">${ pratilipi.getTitle()!pratilipi.getTitleEn() } &nbsp; </h4></a>
+			<a href="${ pratilipi.getPageUrl() }"><h4 class="media-heading clip-content-2-lines bigger-line-height">${ pratilipi.getTitle()!pratilipi.getTitleEn() } &nbsp; </h4></a>
 		    
 		    <#if ( pratilipi.getAverageRating() >= 1 ) >
-		    	<span id="book-rating-${ pratilipi.getId()?c }"> <img src="http://0.ptlp.co/resource-all/icon/svg/star-full.svg"></span>
+		    	<span id="book-rating-${ pratilipi.getId()?c }"> <img src="http://0.ptlp.co/resource-all/icon/svg/star-full.svg" style="width:13px;height:13px;"></span>
 		    </#if>
 		    
 		    <#if ( pratilipi.getReadCount() > 0 ) >
-		    	<span>${ pratilipi.getReadCount() }<img src="http://0.ptlp.co/resource-all/icon/svg/user.svg"></span>
+		    	<span>${ pratilipi.getReadCount() }<img src="http://0.ptlp.co/resource-all/icon/svg/user.svg" style="width:13px;height:13px;"></span>
 		    </#if>
 		    <div>
 		    	<#if user.isGuest == false>

@@ -47,7 +47,7 @@
 		    		<p>${ _strings.author_cannot_follow_yourself }</p>
 		    	</#if>
 		    </#if>	
-		    <a href="${ pageUrl }"><h4 class="media-heading clip-content-2-lines">${ name }</h4></a>
+		    <a href="${ pageUrl }"><h4 class="media-heading clip-content-2-lines bigger-line-height">${ name }</h4></a>
 		    <span>${ followCount } ${ _strings.author_followers }</span>  			
 		</div>
 		<br>

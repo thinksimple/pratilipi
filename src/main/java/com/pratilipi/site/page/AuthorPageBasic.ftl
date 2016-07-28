@@ -12,7 +12,7 @@
 		<#include "../element/pratilipi-header.ftl">
 		<div class="parent-container">
 			<div class="container">
-				<#if action == "edit-profile">
+				<#if ( ( action == "edit_profile") && author.hasAccessToUpdate() )>
 					<#include "../element/pratilipi-author-settings.ftl">
 				<#else>
 					<#include "../element/pratilipi-author-details.ftl">
