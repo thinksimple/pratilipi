@@ -3,13 +3,14 @@
     	return ( str.length === 0 || !str.trim() );
     }
     
-	String.prototype.appendErrorMsg = function(newMsg) {
-		if ( isEmpty( this ) ) {
-			this += newMsg;
+	function appendErrorMsg(origMsg, newMsg) {
+		if ( isEmpty( origMsg ) ) {
+			origMsg += newMsg;
 		}
 		else {
-			this += ( "\n" + newMsg );
+			origMsg += ( "\n" + newMsg );
 		}
+		return origMsg;
 	};
 	
 	var processDateOfBirth = function( input ) {
@@ -57,12 +58,12 @@
     	var error_message = "";
     	if( isEmpty( form.find( "#first_name_en" ).val() ) || isEmpty( form.find( "#first_name" ).val() ) ) {
     		var first_name_error = "Please provide a first name in english or other language.";
-    		error_message.appendErrorMsg();
+    		error_message = appendErrorMsg(error_message, first_name_error);
     	}
     	
     	if( isEmpty( form.find( "#language" ).val() ) ) {
     		var language_error = "Please select your language.";
-    		error_message.appendErrorMsg(language_error);
+    		error_message = appendErrorMsg(error_message, language_error);
     	}
     	
     	if( isEmpty( error_message ) ) {
