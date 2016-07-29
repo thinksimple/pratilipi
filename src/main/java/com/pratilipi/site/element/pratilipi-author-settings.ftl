@@ -56,7 +56,7 @@
     function validateSettingsForm() {
     	var form = $("#user_settings_form");
     	var error_message = "";
-    	if( isEmpty( form.find( "#first_name_en" ).val() ) || isEmpty( form.find( "#first_name" ).val() ) ) {
+    	if( isEmpty( form.find( "#first_name_en" ).val() ) && isEmpty( form.find( "#first_name" ).val() ) ) {
     		var first_name_error = "Please provide a first name in english or other language.";
     		error_message = appendErrorMsg(error_message, first_name_error);
     	}
