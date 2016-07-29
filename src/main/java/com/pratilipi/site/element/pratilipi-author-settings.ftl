@@ -83,7 +83,7 @@
 	    </#if>
 	    <#if ( author.getDateOfBirth()?? ) >
 	    	var convertDobToStandardFormat = function( input ) {
-				return input.split("-").reverse().join("-"));
+				return ( input.split( "-" ).reverse().join( "-" ) );
 			};
 		    $("#date_of_birth").val( convertDobToStandardFormat( "${ author.getDateOfBirth() }" ) );
 	    </#if>
