@@ -30,7 +30,7 @@
 	            		firstNameEn: form.find("#first_name_en").val(),
 	            		lastNameEn: form.find("#last_name_en").val(),
 	            		penNameEn: form.find("#pen_name_en").val(),
-	            		gender: form.find('input[name=gender]:checked').val();,
+	            		gender: form.find('input[name=gender]:checked').val(),
 	            		dateOfBirth: processDateOfBirth( form.find( "#date_of_birth" ).val() ),
 	            		language: form.find("#language").val(),
 	            		
