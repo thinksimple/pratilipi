@@ -1,20 +1,94 @@
 <script>
+    function isEmpty(str) {
+    	return ( str.length === 0 || !str.trim() );
+    }
+    
+	String.prototype.appendErrorMsg = function(newMsg) {
+		if ( isEmpty( this ) ) {
+			this += newMsg;
+		}
+		else {
+			this += ( "\n" + newMsg );
+		}
+	};
+	
+	var processDateOfBirth = function( input ) {
+		var datePart = input.match(/\d+/g);
+		if( parseInt( datePart[0] ) < 1800 ) return input;
+		var year = datePart[0], month = datePart[1], day = datePart[2];
+		return day+'-'+month+'-'+year;
+	}
+	
+	function AjaxSubmitForm() {
+		var form = $("#user_settings_form");
+	    $.ajax({type: "POST",
+	            url: "/api/author",
+	            data: { authorId: "${ author.getId()?c }",
+	            		firstName: form.find("#first_name").val() ,
+	            		lastName: form.find("#last_name").val(),
+	            		penName: form.find("#pen_name").val(),
+	            		firstNameEn: form.find("#first_name_en").val(),
+	            		lastNameEn: form.find("#last_name_en").val(),
+	            		penNameEn: form.find("#pen_name_en").val(),
+	            		gender: form.find('input[name=gender]:checked').val();,
+	            		dateOfBirth: processDateOfBirth( form.find( "#date_of_birth" ).val() ),
+	            		language: form.find("#language").val(),
+	            		
+	            	   },
+	            success:function(response){
+	            	console.log(response);
+	            	console.log(typeof response);
+	            	
+	            	var parsed_data = jQuery.parseJSON( response );
+	            	console.log(parsed_data);
+	      			window.location.reload();
+	    		},
+	            fail:function(response){
+	            	var message = jQuery.parseJSON( response.responseText );
+					alert(message);
+	    		}			    		
+	    		
+	    });		
+	}
+    
+    
+    function validateSettingsForm() {
+    	var form = $("#user_settings_form");
+    	var error_message = "";
+    	if( isEmpty( form.find( "#first_name_en" ).val() ) || isEmpty( form.find( "#first_name" ).val() ) ) {
+    		var first_name_error = "Please provide a first name in english or other language.";
+    		error_message.appendErrorMsg();
+    	}
+    	
+    	if( isEmpty( form.find( "#language" ).val() ) ) {
+    		var language_error = "Please select your language.";
+    		error_message.appendErrorMsg(language_error);
+    	}
+    	
+    	if( isEmpty( error_message ) ) {
+    		AjaxSubmitForm();
+    	}
+    	else {
+    		window.alert(error_message);
+    	}
+    }
 	$( document ).ready(function() {
 		<#if ( author.getLanguage()?? ) >
 		    $("#language").val("${ author.getLanguage() }");
 	    </#if>
+	    
 	});
 </script>
 <div class="pratilipi-shadow secondary-500 box">
 		<button class="pull-left pratilipi-grey-button pratilipi-without-margin">Cancel</button>
-		<button class="pull-right pratilipi-light-blue-button pratilipi-without-margin">Save</button>
+		<button class="pull-right pratilipi-light-blue-button pratilipi-without-margin" onclick="validateSettingsForm()">Save</button>
 		<h3 class="text-center pratilipi-red" style="margin-top: 10px;"> Edit Profile </h3>
 </div>
 <div class="pratilipi-shadow secondary-500 box">
-	<form>
+	<form id="user_settings_form">
 		<div class="form-group">
 			<label for="first_name">First Name(Vernacular)</label>
-			<input type="text" class="form-control" id="first_name_vernacular" 
+			<input type="text" class="form-control" id="first_name" 
 			<#if author.getFirstName()?? >
 				value="${ author.getFirstName() }"
 			</#if>	
@@ -23,7 +97,7 @@
 		
 		
 		<div class="form-group">
-			<label for="first_name">First Name(English)</label>
+			<label for="first_name_en">First Name(English)</label>
 			<input type="text" class="form-control" id="first_name_en" 
 			<#if author.getFirstNameEn()?? >
 				value="${ author.getFirstNameEn() }"
@@ -33,7 +107,7 @@
 		
 		<div class="form-group">
 			<label for="last_name">Last Name(Vernacular)</label>
-			<input type="text" class="form-control" id="last_name_vernacular" 
+			<input type="text" class="form-control" id="last_name" 
 				<#if author.getLastName()?? >
 					value="${ author.getLastName() }"
 				</#if>
@@ -42,8 +116,8 @@
 
 		
 		<div class="form-group">
-			<label for="last_name">Last Name(English)</label>
-			<input type="text" class="form-control" id="last_name_english" 
+			<label for="last_name_en">Last Name(English)</label>
+			<input type="text" class="form-control" id="last_name_en" 
 				<#if author.getLastNameEn()?? >
 					value="${ author.getLastNameEn() }"
 				</#if>
@@ -52,14 +126,14 @@
 			
 		<div class="form-group">
 			<label for="pen_name">Pen Name(Vernacular)</label>
-			<input type="text" class="form-control" id="pen_name_vernacular" 
+			<input type="text" class="form-control" id="pen_name" 
 				<#if author.getPenName()?? >
 					value="${ author.getPenName() }"
 				</#if>			
 			>
 		</div>	
 		<div class="form-group">
-			<label for="pen_name">Pen Name(English)</label>
+			<label for="pen_name_en">Pen Name(English)</label>
 			<input type="text" class="form-control" id="pen_name_en" 
 				<#if author.getPenNameEn()?? >
 					value="${ author.getPenNameEn() }"
@@ -110,7 +184,7 @@
 
 		<div class="form-group">
 		  	<label for="biography">Biography:</label>
-		  	<textarea class="form-control" id="biography">
+		  	<textarea rows="10" class="form-control" id="biography">
 		  		<#if author.getSummary()?? >
 					${ author.getSummary() }
 				</#if>
