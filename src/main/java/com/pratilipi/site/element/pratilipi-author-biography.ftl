@@ -1,8 +1,8 @@
 <script>
 	$( document ).ready(function() {
-	    $( "#since-date-${ author.getId()?c }" ).append( convertDate( ${ author.getRegistrationDateMillis() } ) );
+	    $( "#since-date-${ author.getId()?c }" ).append( convertDate( ${ author.getRegistrationDateMillis()?c } ) );
 	    <#if author.getDateOfBirth()?? >
-	    	$( "#birth-date-${ author.getId()?c }" ).append( convertDate( ${ author.getDateOfBirth() } ) );
+	    	$( "#birth-date-${ author.getId()?c }" ).append( convertDate( "${ author.getDateOfBirth()" } ) );
 	    </#if>
 	});
 </script>
