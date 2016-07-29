@@ -14,11 +14,15 @@
 	};
 	
 	var processDateOfBirth = function( input ) {
+		if isEmpty( input ) {
+			return "";
+		}
 		var datePart = input.match(/\d+/g);
 		if( parseInt( datePart[0] ) < 1800 ) return input;
 		var year = datePart[0], month = datePart[1], day = datePart[2];
 		return day+'-'+month+'-'+year;
 	}
+		
 	
 	function AjaxSubmitForm() {
 		var form = $("#user_settings_form");
@@ -42,7 +46,7 @@
 	            	
 	            	var parsed_data = jQuery.parseJSON( response );
 	            	console.log(parsed_data);
-	      			window.location.reload();
+	      			window.location = ( window.location.href.split("/")[0] + parsed_data.pageUrl );
 	    		},
 	            fail:function(response){
 	            	var message = jQuery.parseJSON( response.responseText );
@@ -77,6 +81,13 @@
 		<#if ( author.getLanguage()?? ) >
 		    $("#language").val("${ author.getLanguage() }");
 	    </#if>
+	    <#if ( author.getDateOfBirth()?? ) >
+	    	var convertDobToStandardFormat = function( input ) {
+				return input.split("-").reverse().join("-"));
+			};
+		    $("#date_of_birth").val( convertDobToStandardFormat( "${ author.getDateOfBirth() }" ) );
+	    </#if>
+
 	    
 	});
 </script>
@@ -143,11 +154,7 @@
 		</div>			
 		<div class="form-group">
 			<label for="date_of_birth">Date of Birth</label>
-			<input type="date" class="form-control" id="date_of_birth"
-				<#if author.getDateOfBirth()?? >
-					value="${ author.getDateOfBirth() }"
-				</#if>			
-			>
+			<input type="date" class="form-control" id="date_of_birth">
 		</div>
 		
 		<div class="form-group">
