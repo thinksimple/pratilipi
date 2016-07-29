@@ -14,7 +14,7 @@
 	};
 	
 	var processDateOfBirth = function( input ) {
-		if isEmpty( input ) {
+		if ( isEmpty( input ) ) {
 			return "";
 		}
 		var datePart = input.match(/\d+/g);
