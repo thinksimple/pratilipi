@@ -8,7 +8,7 @@
 			<p class="works-number"> ${ author.getContentDrafted() } ${ _strings.author_drafts }</p>
 		</div>
 		<div class="pull-right">
-			<a class="pull-right pratilipi-red pratilipi-view-more-link" href="/search?authorId=${ author.getId?c }&state=DRAFTED"> ${ _strings.view_more } </a>
+			<a class="pull-right pratilipi-red pratilipi-view-more-link" href="/search?authorId=${ author.getId()?c }&state=DRAFTED"> ${ _strings.view_more } </a>
 		</div>                   
 		<div class="clearfix"></div>
 		<hr>	
