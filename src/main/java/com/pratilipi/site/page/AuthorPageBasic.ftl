@@ -25,7 +25,7 @@
 			function gotoShare( pageUrl, utmSource, pos ) {
 				var language = "${ language }".toLowerCase();
 				var url = "http://" + language + ".pratilipi.com" + pageUrl + "?utm_source=" + utmSource;
-				if(pos !== 'undefined') {
+				if(pos !== "undefined") {
 					url += ( "&pos=" + pos )
 				}
 				

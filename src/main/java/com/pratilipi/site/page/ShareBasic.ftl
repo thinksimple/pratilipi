@@ -19,7 +19,8 @@
 			function shareOnFacebook( ) {
 				var url = getUrlParameter( "url" );
 				url += encodeURIComponent( "&share=facebook" )
-				window.open( url, "share", "width=600,height=500,left=70px,top=60px" );
+				var fbUrl = ( "http://www.facebook.com/sharer.php?u=" + url );
+				window.open( fbUrl, "share", "width=600,height=500,left=70px,top=60px" );
 			}
 
 		</script>
