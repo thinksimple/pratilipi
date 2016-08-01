@@ -1,7 +1,7 @@
 <div class="pratilipi-block cover-image pratilipi-shadow secondary-500 box" style="background-image: url('http://trendymods.com/wp-content/uploads/2015/10/facebook-cover-photos-ideas-5.jpg')">
 	<div class="">
 		<div class="edit-profile pull-left">
-		    <a href="#" class="icon">
+		    <a href="?action=edit_profile" class="icon">
 		    	<span class="glyph-white-background badge badge-circle"><img src="http://0.ptlp.co/resource-all/icon/svg/pencil.svg"></span>
 			</a>
 			

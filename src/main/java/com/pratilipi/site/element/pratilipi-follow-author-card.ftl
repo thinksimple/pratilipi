@@ -29,26 +29,26 @@
 		</a>
 		<div class="media-body pratilipi-padding-15">
 		    <#if isGuest == "true" >
-		    	<a class="pratilipi-light-blue-button pull-right" href="/login?ret=${ retUrl }"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> ${ _strings.author_follow } &nbsp</a>
+		    	<a class="pratilipi-light-blue-button pull-right" href="/login?ret=${ retUrl }"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> ${ _strings.author_follow } </a>
 		    <#else>
 		    	<#if can_follow == "true">
 			    	<#if following == true >
 					    <button class="pratilipi-grey-button pull-right" onclick="FollowAuthorPostRequest(${ authorId?c }, false)">
 							<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-							${ _strings.author_unfollow } &nbsp
+							${ _strings.author_unfollow }
 						</button>
 					<#else>
 						<button class="pratilipi-light-blue-button pull-right" onclick="FollowAuthorPostRequest(${ authorId?c }, true)">
 							<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-							${ _strings.author_follow } &nbsp
+							${ _strings.author_follow }
 						</button>			
 					</#if>		    		
 		    	<#else>
 		    		<p>${ _strings.author_cannot_follow_yourself }</p>
 		    	</#if>
 		    </#if>	
-		    <a href="${ pageUrl }"><h4 class="media-heading clip-content-2-lines bigger-line-height">${ name }</h4></a>
-		    <span>${ followCount } ${ _strings.author_followers }</span>  			
+		    <a href="${ pageUrl }"><h4 style="display:inline;" class="media-heading clip-content-2-lines bigger-line-height">${ name }</h4></a>
+		    <div>${ followCount } ${ _strings.author_followers }</div>  			
 		</div>
 		<br>
 	</div>

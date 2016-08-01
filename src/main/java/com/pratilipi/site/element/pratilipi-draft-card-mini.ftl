@@ -4,7 +4,7 @@
   </a>
   <div class="media-body">
   	<div class="pull-left">	
-	    <h3 class="media-heading bigger-line-height">${ pratilipi.getTitle()!pratilipi.getTitleEn() } &nbsp; <a href="${ pratilipi.getPageUrl() }"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></h3>
+	    <a href="${ pratilipi.getPageUrl() }"><h3 class="media-heading bigger-line-height">${ pratilipi.getTitle()!pratilipi.getTitleEn() } </h3></a>
 	    <div>
 	    	<button type="button" class="pratilipi-light-blue-button pratilipi-padding-7" onclick="changePratilipiState( '${ pratilipi.getId()?c }', 'PUBLISHED' )">${ _strings.pratilipi_publish_it }</button>
 	    	<button type="button" class="pratilipi-light-blue-button pratilipi-padding-7" onclick="confirmAndChangePratilipiState( '${ pratilipi.getId()?c }', 'DELETED' )">${ _strings.pratilipi_delete_content }</button>
