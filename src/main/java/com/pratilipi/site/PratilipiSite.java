@@ -255,8 +255,12 @@ public class PratilipiSite extends HttpServlet {
 			} else if( uri.equals( "/search" ) ) {
 				dataModel = createDataModelForSearchPage( basicMode, filterLanguage, request );
 				templateName = templateFilePrefix + ( basicMode ? "SearchBasic.ftl" : "Search.ftl" );
+
+			} else if( uri.equals( "/share" ) ) {
+				dataModel = new HashMap<String, Object>();
+				dataModel.put( "title", "Share" );
+				templateName = templateFilePrefix + ( basicMode ? "ShareBasic.ftl" : "Share.ftl" );
 				
-			
 			// Master website specific links
 			
 			} else if( filterLanguage == null && uri.equals( "/books" ) ) {
