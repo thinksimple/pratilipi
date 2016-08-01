@@ -53,7 +53,7 @@
 	
 
 	<template>
-		<div class="modal modal-fullscreen fade" id="pratilipiWrite" role="dialog" tabindex="-1">
+		<div class="modal modal-fullscreen fade" id="pratilipiWrite" role="dialog">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-fullscreen-close-button">
@@ -114,7 +114,17 @@
 	<script>
 	HTMLImports.whenReady(function () {
 		if( CKEDITOR != null && document.getElementById( 'writeSummary' ) != null )
-			CKEDITOR.replace( 'writeSummary' );
+			CKEDITOR.replace( 'writeSummary', {
+			    plugins: "dialogui,dialog,a11yhelp,basicstyles,bidi,clipboard," +
+			    "button,panelbutton,panel,floatpanel,menu," +
+			    "contextmenu,dialogadvtab,elementspath,enterkey,entities,popup," +
+			    "horizontalrule,htmlwriter,image,indent," +
+			    "indentblock,indentlist,justify,link,list,liststyle," +
+			    "pastefromword,pastetext,preview," +
+			    "removeformat,resize,menubutton,scayt,selectall," +
+			    "showborders,tab," +
+			    "templates,toolbar,undo,wsc,wysiwygarea"
+			} );
 	});
 		Polymer({
 

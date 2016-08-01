@@ -1,3 +1,4 @@
+<#include "pratilipi-search-bar.html">
 <dom-module id="pratilipi-new-header">
 
 	<style>
@@ -6,7 +7,6 @@
 			display: block;
 		}
 		paper-card {
-			height: 64px;
 			width: 100%;
 			display: block;
 			--paper-card-header: { display: none };
@@ -16,6 +16,7 @@
 			display: flex;
 			-webkit-flex-flow: row;
 			flex-flow: row;
+			height: 64px;
 		}
 		.vertical-align * {
 			align-self: center;
@@ -43,19 +44,16 @@
 		}
 		
 		.button-holder {
-			flex-basis: 110px;
+			flex-basis: 64px;
 			white-space: nowrap;
+			text-align: center;
 		}
 		.button-holder a, .button-holder a:hover, .button-holder a:focus {
 			color: #4c4c4c!important;
 		}
 		.button-holder a iron-icon {
-			height: 22px;
-			width: 22px;
-		}
-		.button-holder a span {
-			font-weight: 700;
-			font-size: 16px;
+			height: 28px;
+			width: 28px;
 		}
 		.sign-in-button {
 			white-space: nowrap;
@@ -93,13 +91,6 @@
 				flex: 1;
 				text-align: center;
 			}
-			.button-holder a iron-icon {
-				height: 28px;
-				width: 28px;
-			}
-			.button-holder a span {
-				display: none;
-			}
 			.sign-in-button {
 				display: none;
 			}
@@ -109,7 +100,7 @@
 				display: none;
 			}
 			.search-bar {
-				flex-basis: 55%;
+				flex-basis: 80%;
 				padding-left: 4px;
 				padding-right: 4px;
 			}
@@ -128,9 +119,7 @@
 		}
 		@media only screen and (min-width: 1200px) {
 			.search-bar {
-				flex-basis: 520px;
-				padding-left: 8px;
-				padding-right: 8px;
+				flex-basis: 620px;
 			}
 			.sign-in-text, .menu-icon, .search-icon {
 				display: none;
@@ -146,17 +135,18 @@
 		
 		paper-input.search {
 	        --paper-input-container-focus-color: #797979;
+	        font-size: 14px;
 		}
 		paper-input.search /deep/ ::-webkit-input-placeholder {
-			font-size: 15px;
+			font-size: 14px;
 			font-family: inherit;
 		}
 		paper-input.search /deep/ ::-moz-placeholder {
-			font-size: 15px;
+			font-size: 14px;
 			font-family: inherit;
 		}
 		paper-input.search /deep/ :-ms-input-placeholder {
-			font-size: 15px;
+			font-size: 14px;
 			font-family: inherit;
 		}
 		
@@ -202,26 +192,22 @@
 					<div class="button-holder">
 						<a on-click="_write">
 							<iron-icon icon="icons:create"></iron-icon>
-							<span>Write</span>
 						</a>
 					</div>
 					<div class="button-holder">
 						<a on-click="_gotoLibrary">
 							<iron-icon icon="icons:book"></iron-icon>
-							<span>Library</span>
 						</a>
 					</div>
 					<div class="button-holder">
 						<a on-click="_notifications">
 							<iron-icon icon="social:notifications"></iron-icon>
-							<span>Notification</span>
 						</a>
 					</div>
 					<div class="button-holder sign-in-text">
 						<template is="dom-if" if="{{ isGuest }}">
 							<a on-click="_logIn">
 								<iron-icon icon="icons:input"></iron-icon>
-								<span>Log In</span>
 							</a>
 						</template>
 						<template is="dom-if" if="{{ !isGuest }}">
@@ -248,8 +234,8 @@
 					</div>
 				</div>
 			</div>
+			<pratilipi-search-bar class="visible-xs-* hidden-sm hidden-md hidden-lg" query="{{ query }}"></pratilipi-search-bar>
 		</paper-card>
-		
 		<#--
 		<paper-card id="pratilipi-header-search-bar" style="display: none;">
 			<div class="parent-container">
@@ -303,7 +289,9 @@
 				this.set( 'isGuest', this.user.isGuest );
 				this.set( 'profilePageUrl', this.user.profilePageUrl );
 				this.set( 'displayName', this.user.displayName );
-				this.set( 'profileImageUrl', this.user.profileImageUrl + ( this.user.profileImageUrl.indexOf( '?' ) == -1 ? '?' : '&' ) + "width=48" );
+				this.set( 'profileImageUrl', this.user.profileImageUrl != null ? 
+													( this.user.profileImageUrl + ( this.user.profileImageUrl.indexOf( '?' ) == -1 ? '?' : '&' ) + "width=48" )
+													: null );
 			},
 			
 			_logIn: function() {

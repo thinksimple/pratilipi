@@ -1,13 +1,99 @@
 <dom-module id="pratilipi-search-bar">
 	<style>
+		:host {
+			display: block;
+		}
+		paper-input.search {
+			font-size: 14px;
+	        --paper-input-container-focus-color: #797979;
+		}
+		paper-input.search /deep/ ::-webkit-input-placeholder {
+			font-size: 14px;
+			font-family: inherit;
+		}
+		paper-input.search /deep/ ::-moz-placeholder {
+			font-size: 14px;
+			font-family: inherit;
+		}
+		paper-input.search /deep/ :-ms-input-placeholder {
+			font-size: 14px;
+			font-family: inherit;
+		}
+		/*Bootstrap overrides*/
+		.row {
+			margin-left: 0px;
+			margin-right: 0px;
+			padding: 0 4px;
+		}
+		.col-xs-2, .col-sm-10 {
+			padding-left: 0px;
+			padding-right: 0px;
+		}
+		paper-dropdown-menu {
+			margin-top: -12px;
+		}
+		form {
+			margin-top: -28px;
+		}
+		paper-item a {
+			font-size: 13px;
+			color: #333;
+		}
+		/* Polymer override */
+		div.input-content div.label-and-input-container {
+			margin-bottom: -12px !important;
+		}
 	</style>
 	<template>
+			<div class="row">
+				<div class="col-xs-2 language-choose">
+					<paper-dropdown-menu noink horizontal-align="right" vertical-align="top">
+						<#assign i=-1>
+						<#list languageList as lang>
+							<#assign i = i + 1 >
+							<#if lang?upper_case == language?upper_case>
+								<#assign selected = i >
+							</#if>
+						</#list>
+						<paper-menu selected="${ selected! }" class="dropdown-content">
+							<#list languageList as language>
+								<paper-item>
+									<a href="http://${ language.getHostName() }/">${ language.getName() }</a>
+								</paper-item>
+							</#list>
+						</paper-menu>
+					</paper-dropdown-menu>
+				</div>
+				<div class="col-xs-10">
+					<form id="searchBarForm" action="javascript:void(0);" on-keyup="onSubmit">
+						<paper-input id="searchBarInput" name="q" class="search" type="search" placeholder="${ _strings.search_bar_help }" onfocus="this.placeholder = ''" onblur="this.placeholder = '${ _strings.search_bar_help }'" value="{{ query::input }}">
+							<paper-icon-button suffix icon="icons:search" noink="true" on-click="onSubmit"></paper-icon-button>
+						</paper-input>
+					</form>
+				</div>
+			</div>
 	</template>
 	<script>
 		Polymer({
-		
-		is: 'pratilipi-search-bar'
-		
+
+		is: 'pratilipi-search-bar',
+
+		properties: {
+			query: { type: String },
+		},
+
+		onSubmit: function( event ) {
+			if( event.keyCode != null && event.keyCode != 0 && event.keyCode != 13 || this.query == null || this.query.trim() == "" )
+				return;
+			var str = decodeURI( window.location.pathname );
+			if( str == "/search" ) {
+				document.querySelector( 'pratilipi-card-grid' ).setSearchQuery( this.query );
+			} else {
+				jQuery( "#searchBarForm" ).prop( "action", "/search" );
+				jQuery( "#searchBarForm" ).submit();
+			}
+		}
+
 		});
 	</script>
 </dom-module>
