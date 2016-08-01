@@ -2,7 +2,9 @@
 	<div class="media">
 		<div class="media-left">
 			<div style="width: 100px; height: 150px; margin-left: 5px;" class="pratilipi-shadow">
-				<img src="${ pratilipi.getCoverImageUrl( 100 ) }" alt="${ pratilipi.title }" title="${ pratilipi.title }" />
+				<a href="${ pratilipi.pageUrl }">
+					<img src="${ pratilipi.getCoverImageUrl( 100 ) }" alt="${ pratilipi.title }" title="${ pratilipi.title }" />
+				</a>
 			</div>
 		</div>
 		<div class="media-body">

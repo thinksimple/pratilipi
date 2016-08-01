@@ -46,7 +46,7 @@
 						pageUrl: user.profilePageUrl,
 						followCount: user.author.followCount,
 						imageUrl: user.profileImageUrl,
-						following: user.following,
+						following: user.author.following,
 						canFollow: user.userId != document.querySelector( 'pratilipi-user' ).getCurrentUser().userId 
 					};
 					followList.push( follow );
