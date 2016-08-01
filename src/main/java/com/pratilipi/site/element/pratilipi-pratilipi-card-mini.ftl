@@ -25,7 +25,7 @@
 		 		<img src="http://0.ptlp.co/resource-all/icon/svg/share2.svg"></img> 
 		 	</a> 
 		 </div> 
-	    <div class="align-button-bottom">
+	    <div class="align-to-bottom">
 	    	<#if user.isGuest == false>
 	    		<#if author.hasAccessToUpdate() >
 	    			<button type="button" class="pratilipi-light-blue-button pratilipi-padding-7 pratilipi-font-size-14" onclick="confirmAndChangePratilipiState( '${ pratilipi.getId()?c }', 'DRAFTED' )">${ _strings.pratilipi_move_to_drafts }</button>
