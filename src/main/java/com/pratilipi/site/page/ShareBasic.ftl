@@ -47,11 +47,11 @@
 						<img class="reader-icon" src="http://0.ptlp.co/resource-all/icon/svg/facebook2.svg"/>
 						<span>${ _strings.share_on_facebook }</span>
 					</a>
-					<a class="menu-item" style="cursor: pointer;" >
+					<a class="menu-item" style="cursor: pointer;" onclick="shareOnTwitter()" >
 						<img class="reader-icon" src="http://0.ptlp.co/resource-all/icon/svg/twitter.svg"/>
 						<span>${ _strings.share_on_twitter }</span>
 					</a>
-					<a class="menu-item" style="cursor: pointer;" >
+					<a class="menu-item" style="cursor: pointer;" onclick="shareOnGplus()">
 						<img class="reader-icon" src="http://0.ptlp.co/resource-all/icon/svg/google-plus2.svg"/>
 						<span>${ _strings.share_on_gplus }</span>
 					</a>
