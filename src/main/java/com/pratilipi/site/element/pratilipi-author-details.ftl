@@ -48,15 +48,15 @@
 	<div class="row">
 		<div class="col-xs-4 pratilipi-author-stat">
 			<span>${ _strings.author_count_works }</span>
-			<div class="numbers">${ author.getContentPublished()? }</div>
+			<div class="numbers">${ author.getContentPublished() }</div>
 		</div>
 		<div class="col-xs-4 pratilipi-author-stat">
 			<span> ${ _strings.author_count_reads }</span>
-			<div class="numbers"> ${ author.getTotalReadCount()? } </div>
+			<div class="numbers"> ${ author.getTotalReadCount() } </div>
 		</div>
 		<div class="col-xs-4 pratilipi-author-stat">
 			<span> ${ _strings.author_count_likes } </span>
-			<div class="numbers"> ${ author.getTotalFbLikeShareCount()? }</div>
+			<div class="numbers"> ${ author.getTotalFbLikeShareCount() }</div>
 		</div>
 	</div>
 </div>
