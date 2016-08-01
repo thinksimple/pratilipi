@@ -10,24 +10,7 @@
 	
 	<body>
 		<script>
-			function shareOnFacebook( pos ) {
-				window.open( "http://www.facebook.com/sharer.php?u=" + "http://${ website_host }" + "${ pratilipi.getPageUrl() }" 
-				+ ( "${ pratilipi.getPageUrl() }".indexOf( '?' ) == -1 ? '?' : '&' ) 
-				+ "share=facebook" + ( pos != null ? encodeURIComponent( "&" ) + "pos=" + pos : "" ),
-				"share", "width=600,height=500,left=70px,top=60px" );
-			}
-			function shareOnTwitter( pos ) {
-				window.open( "http://twitter.com/share?url=" + "http://${ website_host }" + "${ pratilipi.getPageUrl() }"
-				+ ( "${ pratilipi.getPageUrl() }".indexOf( '?' ) == -1 ? '?' : '&' ) 
-				+ "share=twitter" + ( pos != null ? encodeURIComponent( "&" ) + "pos=" + pos : "" ),
-				"share", "width=500,height=600,left=70px,top=60px" );
-			}
-			function shareOnGplus( pos ) {
-				window.open( "https://plus.google.com/share?url=" + "http://${ website_host }" + "${ pratilipi.getPageUrl() }"
-				+ ( "${ pratilipi.getPageUrl() }".indexOf( '?' ) == -1 ? '?' : '&' )
-				+ "share=gplus" + ( pos != null ? encodeURIComponent( "&" ) + "pos=" + pos : "" ),
-				"share", "width=500,height=600,left=70px,top=60px" );
-			}
+
 		</script>
 		<div class="secondary-500 pratilipi-shadow" style="display: block; padding: 5px; height: 64px;">
 			<a style="cursor: pointer; position: absolute; right: 16px; top: 20px;" onClick="history.back();return false;">
