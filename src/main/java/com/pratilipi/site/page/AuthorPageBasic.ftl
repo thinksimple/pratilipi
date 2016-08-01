@@ -22,6 +22,15 @@
 		</div>
 		<#include "../element/pratilipi-footer.ftl">
 		<script>
+			function gotoShare( pageUrl, utmSource, pos="" ) {
+				var url = "http://${ language }.pratilipi.com" + pageUrl + "?utm_source=" + utmSource;
+				if(pos != "") {
+					url += ( "&pos=" + pos )
+				}
+				
+				window.location.href = ( "/share?url=" + encodeURIComponent(url) );
+			}		
+			
 			function convertDate( date ) {
 				var d = new Date( date );
 				function day(d) { return (d < 10) ? '0' + d : d; }

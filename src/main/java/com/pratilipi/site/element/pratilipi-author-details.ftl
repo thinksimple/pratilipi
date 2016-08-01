@@ -7,7 +7,7 @@
 			
 		</div>
 		<div class="share-author pull-right">
-			<a href="#" class="icon">
+			<a onclick="gotoShare( '${ author.getPageUrl() }', 'author_page' )" class="icon">
 				<span class="glyph-white-background badge badge-circle"><img src="http://0.ptlp.co/resource-all/icon/svg/share2.svg"></span>
 			</a>
 		</div>
