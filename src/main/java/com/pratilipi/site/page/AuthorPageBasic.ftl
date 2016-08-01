@@ -22,9 +22,9 @@
 		</div>
 		<#include "../element/pratilipi-footer.ftl">
 		<script>
-			function gotoShare( pageUrl, utmSource, pos="" ) {
+			function gotoShare( pageUrl, utmSource, pos ) {
 				var url = "http://${ language }.pratilipi.com" + pageUrl + "?utm_source=" + utmSource;
-				if(pos != "") {
+				if(pos != 'undefined') {
 					url += ( "&pos=" + pos )
 				}
 				
