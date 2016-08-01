@@ -1,7 +1,7 @@
 <div class="pratilipi-block cover-image pratilipi-shadow secondary-500 box" style="background-image: url('http://trendymods.com/wp-content/uploads/2015/10/facebook-cover-photos-ideas-5.jpg')">
 	<div class="">
 		<div class="edit-profile pull-left">
-		    <a href="?action=edit_profile" class="icon">
+		    <a href="?action=edit_profile&ret=${ author.getPageUrl() }" class="icon">
 		    	<span class="glyph-white-background badge badge-circle"><img src="http://0.ptlp.co/resource-all/icon/svg/pencil.svg"></span>
 			</a>
 			
@@ -48,15 +48,15 @@
 	<div class="row">
 		<div class="col-xs-4 pratilipi-author-stat">
 			<span>${ _strings.author_count_works }</span>
-			<div class="numbers">${ author.getContentPublished()?c }</div>
+			<div class="numbers">${ author.getContentPublished()? }</div>
 		</div>
 		<div class="col-xs-4 pratilipi-author-stat">
 			<span> ${ _strings.author_count_reads }</span>
-			<div class="numbers"> ${ author.getTotalReadCount()?c } </div>
+			<div class="numbers"> ${ author.getTotalReadCount()? } </div>
 		</div>
 		<div class="col-xs-4 pratilipi-author-stat">
 			<span> ${ _strings.author_count_likes } </span>
-			<div class="numbers"> ${ author.getTotalFbLikeShareCount()?c }</div>
+			<div class="numbers"> ${ author.getTotalFbLikeShareCount()? }</div>
 		</div>
 	</div>
 </div>

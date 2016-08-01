@@ -77,6 +77,28 @@
     		window.alert(error_message);
     	}
     }
+    
+	function getUrlParameters() {
+		var str = decodeURI( location.search.substring(1) ), 
+			res = str.split("&"), 
+			retObj = {};
+		for( var i = 0; i < res.length; i++ ){
+			var key = res[i].substring( 0, res[i].indexOf( '=' ) );
+			var value = res[i].substring( res[i].indexOf( '=' ) + 1 );
+			retObj[ key ] = value;
+		}
+		if( retObj[""] != null ) delete retObj[""];
+		return retObj;
+	}
+	    
+	function redirectToPreviousPage() {
+		var retUrl = getUrlParameters().ret;
+		if(  retUrl != null )
+			window.location.href = retUrl;
+		else
+			window.location.href = "/"; 		
+	}
+	    
 	$( document ).ready(function() {
 		<#if ( author.getLanguage()?? ) >
 		    $("#language").val("${ author.getLanguage() }");
@@ -92,7 +114,7 @@
 	});
 </script>
 <div class="pratilipi-shadow secondary-500 box">
-		<button class="pull-left pratilipi-grey-button pratilipi-without-margin">Cancel</button>
+		<button class="pull-left pratilipi-grey-button pratilipi-without-margin" onclick="redirectToPreviousPage()" >Cancel</button>
 		<button class="pull-right pratilipi-light-blue-button pratilipi-without-margin" onclick="validateSettingsForm()">Save</button>
 		<h3 class="text-center pratilipi-red" style="margin-top: 10px;"> Edit Profile </h3>
 </div>
