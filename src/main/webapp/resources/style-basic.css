@@ -489,7 +489,16 @@ a.pratilipi-dark-blue-button:hover, a.pratilipi-dark-blue-button:focus {
 a:hover {
   cursor:pointer;
  }
- .pratilipi-card-mini-button {
+.pratilipi-card-mini-button {
  	margin: 2px !important;
  	padding: 5px !important;
- }
+}
+.pratilipi-icon {
+	 max-width: 56px;
+	 max-height: 64px;
+	 position: absolute;
+	 left: 0;
+	 top: 0;
+	 right: 0;
+	 bottom: 0;
+}
