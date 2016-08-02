@@ -10,7 +10,7 @@
   </a>
   <div class="media-body" style="position: relative;">
 	  	<div class="col-xs-11">
-			<a href="${ pratilipi.getPageUrl() }"><h4 class="media-heading clip-content-1-line bigger-line-height pratilipi-card-heading">${ pratilipi.getTitle()!pratilipi.getTitleEn() } &nbsp; </h4></a>
+			<a href="${ pratilipi.getPageUrl() }"><h4 class="media-heading clip-content-1-line bigger-line-height pratilipi-card-heading pratilipi-without-margin">${ pratilipi.getTitle()!pratilipi.getTitleEn() } &nbsp; </h4></a>
 		    <div>
 			    <#if ( pratilipi.getReadCount() > 0 ) >
 			    	<span>${ pratilipi.getReadCount() }<img src="http://0.ptlp.co/resource-all/icon/svg/user.svg" style="width:13px;height:13px;"></span>

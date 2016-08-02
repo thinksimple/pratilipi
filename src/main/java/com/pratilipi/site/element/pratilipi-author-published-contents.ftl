@@ -6,15 +6,16 @@
 
 <#if ( ( user.isGuest == false ) && ( user.getId() == author.getUser().getId() ) && ( !publishedPratilipiList?has_content ) ) >
 <#else>
+	<#assign publishedUrl = "/search?authorId=" + author.getId()?c + "&state=PUBLISHED">
 	<div class="pratilipi-shadow secondary-500 box">	
 		<div class="pull-left">
-			<h5 class="pratilipi-bold pratilipi-no-margin">
+			<a href="${ publishedUrl }"><h5 class="pratilipi-red pratilipi-no-margin">
 				${ _strings.author_published_works }
-			</h5>
-			<p class="works-number"> ${author.getContentPublished()} ${ _strings.author_count_works }</p>
+			</h5></a>
+			<a href="${ publishedUrl }"><p class="works-number"> ${author.getContentPublished()} ${ _strings.author_count_works }</p></a>
 		</div>
 		<div class="pull-right">	
-			<a class="pull-right pratilipi-red pratilipi-view-more-link" href="/search?authorId=${ author.getId()?c }&state=PUBLISHED">${ _strings.view_more }</a>
+			<a class="pull-right pratilipi-red pratilipi-view-more-link" href="${ publishedUrl }">${ _strings.view_more }</a>
 		</div>
 		<div class="clearfix"></div>
 		<hr>	

@@ -1,12 +1,13 @@
-<div class="pratilipi-shadow secondary-500 box">	
+<div class="pratilipi-shadow secondary-500 box">
+	<#assign followersUrl = "/followers?aId=" + author.getId()?c >	
 	<div class="pull-left">
-		<h5 class="pratilipi-bold pratilipi-no-margin">
+		<a href="${ followersUrl }"><h5 class="pratilipi-red pratilipi-no-margin">
 			 ${ _strings.author_followers }
-		</h5>
-		<p class="works-number">${ followersList.getNumberFound() } ${ _strings.author_follow_members }</p>
+		</h5></a>
+		<a href="${ followersUrl }"><p class="works-number">${ followersList.getNumberFound() } ${ _strings.author_follow_members }</p></a>
 	</div>
 	<div class="pull-right">
-		<a class="pull-right pratilipi-red pratilipi-view-more-link" href="/followers?aId=${ author.getId()?c }"> ${ _strings.view_more } </a>
+		<a class="pull-right pratilipi-red pratilipi-view-more-link" href="${ followersUrl }"> ${ _strings.view_more } </a>
 	</div>
 	<div class="clearfix"></div>
 	<hr>	
