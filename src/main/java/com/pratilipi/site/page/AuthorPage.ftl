@@ -4,7 +4,7 @@
 	<head>
 		<#assign mainPage="pratilipi-author-page">
 		<#include "meta/Head.ftl">
-		<link rel='import' href='/elements.${lang}/pratilipi-author-profile-page.html?20160802'>
+		<link rel='import' href='/elements.${lang}/pratilipi-author-profile-page.html?2016080202'>
 	</head>
 
 	<body>
@@ -16,7 +16,8 @@
 			following-list='${ followingListJson }'
 			followers-list='${ followersListJson }'
 			pratilipi-types='${ pratilipiTypesJson }'
-			navigation-list='${ navigationList }'></pratilipi-author-page>
+			navigation-list='${ navigationList }'
+			language-map='${ languageMap }'></pratilipi-author-page>
 	</body>
 	
 </html>

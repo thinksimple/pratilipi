@@ -373,12 +373,12 @@ public class PratilipiSite extends HttpServlet {
 			pratilipiTypes.put( pratilipiType, pratilipiTypeMap );
 		}
 
-		Map<String, String> websiteMap = new HashMap<String, String>();
+		Map<String, String> languageMap = new HashMap<String, String>();
 		for( Website website : Website.values() ) {
 			if( ! website.toString().contains( "GAMMA" ) && 
 					! website.toString().contains( "DEVO" ) && 
 					website != Website.ALL_LANGUAGE ) {
-				websiteMap.put( website.toString(), website.getHostName() );
+				languageMap.put( website.toString(), website.getFilterLanguage().getName() );
 			}
 		}
 
@@ -391,7 +391,7 @@ public class PratilipiSite extends HttpServlet {
 		dataModel.put( "language", displayLanguage );
 		dataModel.put( "website_host", UxModeFilter.getWebsite().getHostName() );
 		dataModel.put( "website_mobile_host", UxModeFilter.getWebsite().getMobileHostName() );
-		dataModel.put( "websiteMapJson", new Gson().toJson( websiteMap ) );
+		dataModel.put( "languageMap", new Gson().toJson( languageMap ) );
 		dataModel.put( "_strings", I18n.getStrings( displayLanguage ) );
 		dataModel.put( "resourceList", resourceList );
 		dataModel.put( "user", userResponse );

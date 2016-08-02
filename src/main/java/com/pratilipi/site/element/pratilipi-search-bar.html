@@ -2,6 +2,10 @@
 	<style>
 		:host {
 			display: block;
+			position: relative;
+			background: #FFF;
+			border-bottom: 1px solid #d3d3d3;
+			padding-top: 64px;
 		}
 		paper-input.search {
 			font-size: 14px;
@@ -19,47 +23,58 @@
 			font-size: 14px;
 			font-family: inherit;
 		}
-		/*Bootstrap overrides*/
-		.row {
-			margin-left: 0px;
-			margin-right: 0px;
-			padding: 0 4px;
-		}
-		.col-xs-2, .col-sm-10 {
-			padding-left: 0px;
-			padding-right: 0px;
-		}
-		paper-dropdown-menu {
-			margin-top: -12px;
+
+		.flex-container {
+			display: flex;
 		}
 		form {
-			margin-top: -28px;
+			margin-top: -40px;
+			margin-left: 4px;
+			margin-right: 8px;
+			flex-grow: 1;
 		}
-		paper-item a {
-			font-size: 13px;
-			color: #333;
+		.pratilipi-text {
+			font-weight: bold;
+			text-align: center;
+			white-space: nowrap;
 		}
-		/* Polymer override */
-		div.input-content div.label-and-input-container {
-			margin-bottom: -12px !important;
+		iron-icon {
+			margin-left: -8px;
+		}
+		paper-menu {
+			margin-left: 8px;
+			padding: 0;
+			width: 100px;
+		}
+		paper-menu-button {
+			cursor: pointer;
+			padding-top: 0;
+		}
+		paper-menu-button.language {
+			--iron-dropdown: {
+				top: 0;
+			}
 		}
 	</style>
 	<template>
-			<div class="row">
-				<div class="col-xs-2 language-choose">
-					<paper-dropdown-menu noink horizontal-align="right" vertical-align="top">
-						<paper-menu selected="${ selected! }" class="dropdown-content">
-						</paper-menu>
-					</paper-dropdown-menu>
+		<div class="flex-container">
+			<paper-menu-button no-animations vertical-offset=36 class="language" horizontal-align="left" vertical-align="top">
+				<div class="pratilipi-red pratilipi-text dropdown-trigger">
+					${ _strings.pratilipi }
+					<iron-icon icon="icons:arrow-drop-down"></iron-icon>
 				</div>
-				<div class="col-xs-10">
-					<form id="searchBarForm" action="javascript:void(0);" on-keyup="onSubmit">
-						<paper-input id="searchBarInput" name="q" class="search" type="search" placeholder="${ _strings.search_bar_help }" onfocus="this.placeholder = ''" onblur="this.placeholder = '${ _strings.search_bar_help }'" value="{{ query::input }}">
-							<paper-icon-button suffix icon="icons:search" noink="true" on-click="onSubmit"></paper-icon-button>
-						</paper-input>
-					</form>
-				</div>
-			</div>
+				<paper-menu class="dropdown-content">
+					<paper-item>Hindi</paper-item>
+					<paper-item>Gujarati</paper-item>
+					<paper-item>Tamil</paper-item>
+				</paper-menu>
+			</paper-menu-button>
+			<form id="searchBarForm" action="javascript:void(0);" on-keyup="onSubmit">
+				<paper-input id="searchBarInput" name="q" class="search" type="search" placeholder="${ _strings.search }" onfocus="this.placeholder = ''" onblur="this.placeholder = '${ _strings.search_bar_help }'" value="{{ query::input }}">
+					<paper-icon-button suffix icon="icons:search" noink="true" on-click="onSubmit"></paper-icon-button>
+				</paper-input>
+			</form>
+		</div>
 	</template>
 	<script>
 		Polymer({

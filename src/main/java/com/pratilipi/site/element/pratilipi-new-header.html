@@ -6,45 +6,43 @@
 			width: 100%;
 			display: block;
 		}
-		paper-card {
+		#pratilipi-header-card {
+			position: fixed;
+			z-index: 10;
 			width: 100%;
 			display: block;
-			--paper-card-header: { display: none };
+			border-bottom: 1px solid #d3d3d3;
 		}
 		.vertical-align {
 			display: -webkit-flex;
 			display: flex;
 			-webkit-flex-flow: row;
 			flex-flow: row;
-			height: 64px;
+			height: 60px;
 		}
 		.vertical-align * {
 			align-self: center;
 		}
 		.pratilipi-logo {
-			-webkit-flex-basis: 60px;
-			flex-basis: 60px;
-		}
-		.pratilipi-text {
-			-webkit-flex-basis: 115px;
-			flex-basis: 115px;
-			padding-left: 4px;
+			text-align: right;
+			-webkit-flex-basis: 65px;
+			flex-basis: 65px;
 		}
 		.pratilipi-text a {
-			font-size: 22px;
+			font-size: 20px;
 			<#if lang == "ta">
-				font-size: 17px;
+				font-size: 16px;
 				margin-left: 0px;
 			</#if>
 			<#if lang == "ml">
-				font-size: 19px;
+				font-size: 17px;
 				margin-left: 0px;
 			</#if>
 			font-weight: 700;
 		}
 		
 		.button-holder {
-			flex-basis: 64px;
+			flex-basis: 48px;
 			white-space: nowrap;
 			text-align: center;
 		}
@@ -81,6 +79,9 @@
 			font-weight: 700;
 		}
 		@media only screen and (max-width: 767px) {
+			#pratilipi-header-card {
+				border: none;
+			}
 			.pratilipi-text {
 				display: none;
 			}
@@ -96,11 +97,8 @@
 			}
 		}
 		@media only screen and (min-width: 768px) and (max-width: 1199px) {
-			.pratilipi-text {
-				display: none;
-			}
 			.search-bar {
-				flex-basis: 80%;
+				flex-grow: 1;
 				padding-left: 4px;
 				padding-right: 4px;
 			}
@@ -118,18 +116,21 @@
 			}
 		}
 		@media only screen and (min-width: 1200px) {
+			.pratilipi-text {
+				-webkit-flex-basis: 115px;
+				flex-basis: 115px;
+			}
 			.search-bar {
-				flex-basis: 620px;
+				flex-grow: 1;
 			}
 			.sign-in-text, .menu-icon, .search-icon {
 				display: none;
 			}
 			.sign-in-button {
 				position: absolute;
-				height: 64px;
-				line-height: 64px;
+				height: 60px;
+				line-height: 60px;
 				margin-left: 16px;
-				margin-top: 3px;
 			}
 		}
 		
@@ -149,16 +150,15 @@
 			font-size: 14px;
 			font-family: inherit;
 		}
-		
 	</style>
 
 	<template>
-		<paper-card id="pratilipi-header-card">
+		<div class="secondary-500" id="pratilipi-header-card">
 			<div class="parent-container">
 				<div class="vertical-align container">
 					<div class="pratilipi-logo">
 						<a href="/">
-							<iron-image sizing="contain" style="width: 56px; height: 64px;" 
+							<iron-image sizing="contain" style="width: 56px; height: 48px;" 
 										title="${ _strings.pratilipi }" alt="${ _strings.pratilipi }" 
 										src="http://0.ptlp.co/resource-${ lang }/logo/pratilipi_logo.png"></iron-image>
 						</a>
@@ -174,21 +174,13 @@
 						</a>
 					</div>
 					<div class="search-bar">
-						<form id="searchForm" action="javascript:void(0);" style="margin: -20px 15px auto 10px;" on-keyup="onSubmit">
+						<form id="searchForm" action="javascript:void(0);" style="margin: -24px 15px auto 8px;" on-keyup="onSubmit">
 							<paper-input id="searchInput" name="q" class="search" type="search" placeholder="${ _strings.search_bar_help }" onfocus="this.placeholder = ''" onblur="this.placeholder = '${ _strings.search_bar_help }'" value="{{ query::input }}">
 								<paper-icon-button suffix icon="icons:search" noink="true" on-click="onSubmit"></paper-icon-button>
 								<paper-icon-button prefix class="menu-icon-search-bar" icon="icons:menu" noink="true" on-click="_openMenuNavigation"></paper-icon-button>
 							</paper-input>
 						</form>
 					</div>
-					<#-- Minor tweat to get the search icon again -->
-					<#--
-					<div class="button-holder search-icon">
-						<a on-click="openSearch">
-							<iron-icon icon="icons:search"></iron-icon>
-						</a>
-					</div>
-					-->
 					<div class="button-holder">
 						<a on-click="_write">
 							<iron-icon icon="icons:create"></iron-icon>
@@ -234,31 +226,8 @@
 					</div>
 				</div>
 			</div>
-			<pratilipi-search-bar class="visible-xs-* hidden-sm hidden-md hidden-lg" query="{{ query }}"></pratilipi-search-bar>
-		</paper-card>
-		<#--
-		<paper-card id="pratilipi-header-search-bar" style="display: none;">
-			<div class="parent-container">
-				<div class="vertical-align container">
-					<div class="pratilipi-logo">
-						<a href="/">
-							<iron-image sizing="contain" style="width: 56px; height: 64px;" 
-										title="${ _strings.pratilipi }" alt="${ _strings.pratilipi }" 
-										src="http://0.ptlp.co/resource-${ lang }/logo/pratilipi_logo.png"></iron-image>
-						</a>
-					</div>
-					<div class="search-bar-mobile" style="flex-basis: 100%;">
-						<form id="searchFormMobile" action="javascript:void(0);" style="margin: -20px 15px auto 10px;" on-keyup="onSubmit">
-							<paper-input id="searchInput" name="q" class="search" type="search" placeholder="${ _strings.search_bar_help }" onfocus="this.placeholder = ''" onblur="this.placeholder = '${ _strings.search_bar_help }'" value="{{ query::input }}">
-								<paper-icon-button suffix icon="icons:search" noink="true" on-click="onSubmit"></paper-icon-button>
-								<paper-icon-button prefix icon="icons:close" noink="true" on-click="closeSearch"></paper-icon-button>
-							</paper-input>
-						</form>
-					</div>
-				</div>
-			</div>
-		</paper-card>
-		-->
+		</div>
+		<pratilipi-search-bar class="visible-xs hidden-sm hidden-md hidden-lg"></pratilipi-search-bar>
 	</template>
 
 
@@ -330,18 +299,6 @@
 					jQuery( "#searchForm" ).submit();
 				}
 			}
-			
-			<#-- 
-			openSearch: function() {
-				jQuery( '#pratilipi-header-card' ).css( 'display', 'none' );
-				jQuery( '#pratilipi-header-search-bar' ).css( 'display', 'block' );
-			},
-			
-			closeSearch: function() {
-				jQuery( '#pratilipi-header-search-bar' ).css( 'display', 'none' );
-				jQuery( '#pratilipi-header-card' ).css( 'display', 'block' );
-			}
-			-->
 			
 		});
 

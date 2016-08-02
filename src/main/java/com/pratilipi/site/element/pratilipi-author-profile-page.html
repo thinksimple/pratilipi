@@ -4,28 +4,38 @@
 <#include "pratilipi-author-settings.html">
 
 <dom-module id="pratilipi-author-page">
-
 	<style>
-		main {
-			padding-top: 64px;
+		:host {
+			display: block;
 		}
-		header {
-			height: 64px;
+		.pratilipi-header {
+			position: relative;
+			width: 100%;
 		}
-		.nav-up {
-			top: -64px;
+		@media only screen and (max-width: 767px) {
+			main {
+				padding-top: 0;
+			}
 		}
+		@media only screen and (min-width: 768px) {
+			main {
+				padding-top: 60px;
+			}
+		}
+		
 	</style>
+	
 	<template>
-		<header class="nav-down">
-    		<pratilipi-new-header user='[[ user ]]'></pratilipi-new-header>
-		</header>
-		<main>
-			<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
-			<pratilipi-edit-account user='[[ user ]]'></pratilipi-edit-account>
-			<pratilipi-write pratilipi-types='[[ pratilipiTypes ]]'></pratilipi-write>
-			<pratilipi-alert></pratilipi-alert>
-			<div class="parent-container margin-top-bottom">
+		<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
+		<pratilipi-edit-account user='[[ user ]]'></pratilipi-edit-account>
+		<pratilipi-write pratilipi-types='[[ pratilipiTypes ]]'></pratilipi-write>
+		<pratilipi-alert></pratilipi-alert>
+
+   		<div class="pratilipi-header">
+   			<pratilipi-new-header user='[[ user ]]'></pratilipi-new-header>
+   		</div>
+   		<main>
+   			<div class="parent-container margin-top-bottom">
 				<div class="container">
 					<pratilipi-navigation
 							class='pull-left hidden-xs hidden-sm'
@@ -34,7 +44,6 @@
 					<#-- Navigation & Search bar for extra-small & small screens. -->
 					<pratilipi-navigation-drawer with-backdrop navigation-list='[[ navigationList ]]'></pratilipi-navigation-drawer>
 					<div style="overflow:hidden">
-						<pratilipi-search-bar class="visible-xs-* hidden-sm hidden-md hidden-lg" query="{{ query }}"></pratilipi-search-bar>
 						<pratilipi-author-details
 								author='[[ author ]]'
 								user-author='[[ userAuthor ]]'></pratilipi-author-details>
@@ -48,7 +57,7 @@
 					</div>
 				</div>
 			</div>
-		</main>
+   		</main>
 		<footer>
    			<pratilipi-footer></pratilipi-footer>
 		</footer>

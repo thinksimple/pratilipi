@@ -100,6 +100,7 @@
 			width: 12px;
 			height: 12px;
 			--paper-fab-background: #F5F5F5;
+			--paper-fab-keyboard-focus-background: #F5F5F5;
 			--paper-fab-iron-icon: {
 				color: #333;
 			}
@@ -136,7 +137,7 @@
 			</template>
 			
 			<div class="share-author">
-				<paper-menu-button horizontal-align="right" vertical-align="top">
+				<paper-menu-button no-animations vertical-offset=48 noink horizontal-align="right" vertical-align="top">
 					<paper-fab icon="social:share" class="dropdown-trigger"></paper-fab>
 					<paper-menu class="dropdown-content">
 						<paper-item on-click="shareAuthorOnFacebook"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></paper-item>
