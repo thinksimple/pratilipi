@@ -102,13 +102,19 @@ public class PratilipiDocUtil {
 				
 			} else if( childNode.nodeName().equals( "h1" ) ) {
 				
+				String text  = ( (Element) childNode ).text().trim();
+				if( text.isEmpty() )
+					continue;
 				pagelet = null;
-				pageletList.add( new Object[] { PratilipiContentDoc.PageletType.HEAD_1, ( (Element) childNode ).text().trim() } );
+				pageletList.add( new Object[] { PratilipiContentDoc.PageletType.HEAD_1, text } );
 				
 			} else if( childNode.nodeName().equals( "h2" ) ) {
 				
+				String text  = ( (Element) childNode ).text().trim();
+				if( text.isEmpty() )
+					continue;
 				pagelet = null;
-				pageletList.add( new Object[] { PratilipiContentDoc.PageletType.HEAD_2, ( (Element) childNode ).text().trim() } );
+				pageletList.add( new Object[] { PratilipiContentDoc.PageletType.HEAD_2, text } );
 				
 			} else if( childNode.nodeName().equals( "img" ) ) {
 				
