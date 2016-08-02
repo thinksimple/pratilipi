@@ -1,14 +1,15 @@
 <#if author.hasAccessToUpdate()==true >
+	<#assign draftsUrl = "/search?authorId=" + "author.getId()?c" + "&state=DRAFTED">
 	<div class="pratilipi-shadow secondary-500 box">	
 		<div class="pull-left">
-			<h5 class="pratilipi-bold pratilipi-no-margin">
+			<a href="${ draftsUrl }"><h5 class="pratilipi-no-margin"></a>
 				${ _strings.author_drafts }
 					<#-- <span><button class="pratilipi-grey-button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add new</button></span> -->
 			</h5>
-			<p class="works-number"> ${ author.getContentDrafted() } ${ _strings.author_drafts }</p>
+			<a href="${ draftsUrl }"><p class="works-number"> ${ author.getContentDrafted() } ${ _strings.author_drafts }</p></a>
 		</div>
 		<div class="pull-right">
-			<a class="pull-right pratilipi-red pratilipi-view-more-link" href="/search?authorId=${ author.getId()?c }&state=DRAFTED"> ${ _strings.view_more } </a>
+			<a class="pull-right pratilipi-red pratilipi-view-more-link" href="${ draftsUrl }"> ${ _strings.view_more } </a>
 		</div>                   
 		<div class="clearfix"></div>
 		<hr>	

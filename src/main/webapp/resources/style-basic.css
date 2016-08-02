@@ -282,7 +282,7 @@ a.pratilipi-dark-blue-button:hover, a.pratilipi-dark-blue-button:focus {
 .edit-profile {
 	position: relative;
 	top: 16px;
-	left: 40px;
+	right: 80px;
 }
 
 .numbers {
@@ -293,7 +293,7 @@ a.pratilipi-dark-blue-button:hover, a.pratilipi-dark-blue-button:focus {
 .share-author {
 	position: relative;
 	top: 16px;
-	right: 40px;
+	right: 5px;
 }
 
 .profile-picture {
@@ -374,13 +374,13 @@ a.pratilipi-dark-blue-button:hover, a.pratilipi-dark-blue-button:focus {
 	padding: 0px;
 }
 
-.active>.nav-tab-blue-underline {
+.active>.nav-tab-red-underline {
 	text-decoration: none;
 	font-weight: bold;
 	border-radius: 0px;
 	border-bottom-width: 4px !important;
 	border-bottom-style: solid;
-	border-bottom-color: blue !important;
+	border-bottom-color: #D0021B !important;
 	color: #000 !important;
 	background-color: transparent !important;
 }
@@ -445,6 +445,13 @@ a.pratilipi-dark-blue-button:hover, a.pratilipi-dark-blue-button:focus {
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical; 
+}
+
+.clip-content-1-line {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
     -webkit-box-orient: vertical; 
 }
 

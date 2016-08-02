@@ -53,6 +53,7 @@ author_follow					= Follow
 author_unfollow					= UnFollow
 author_followers				= Followers
 author_no_followers				= Sorry! This author doesn't have any followers
+author_already_following        = Following
 author_following				= Following
 author_no_following				= Sorry! This author is not following anyone!
 author_follow_members			= Members

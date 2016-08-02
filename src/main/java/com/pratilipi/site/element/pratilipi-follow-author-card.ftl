@@ -43,8 +43,6 @@
 							${ _strings.author_follow }
 						</button>			
 					</#if>		    		
-		    	<#else>
-		    		<p>${ _strings.author_cannot_follow_yourself }</p>
 		    	</#if>
 		    </#if>	
 		    <a href="${ pageUrl }"><h4 style="display:inline;" class="media-heading clip-content-2-lines bigger-line-height">${ name }</h4></a>

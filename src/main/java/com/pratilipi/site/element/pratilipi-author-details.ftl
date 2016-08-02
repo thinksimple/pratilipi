@@ -1,8 +1,8 @@
 <div class="pratilipi-block cover-image pratilipi-shadow secondary-500 box" style="background-image: url('http://trendymods.com/wp-content/uploads/2015/10/facebook-cover-photos-ideas-5.jpg')">
 	<div class="">
-		<div class="edit-profile pull-left">
+		<div class="edit-profile pull-right">
 		    <a href="?action=edit_profile&ret=${ author.getPageUrl() }" class="icon">
-		    	<span class="glyph-white-background badge badge-circle"><img src="http://0.ptlp.co/resource-all/icon/svg/pencil.svg"></span>
+		    	<span class="glyph-white-background badge badge-circle"><img src="http://0.ptlp.co/resource-all/icon/svg/cog.svg"></span>
 			</a>
 			
 		</div>
@@ -26,7 +26,7 @@
 				<#if userAuthor.isFollowing() == true>
 					<button class="pratilipi-grey-button" onclick="FollowUnfollowPostRequest(false)">
 						<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-						${ _strings.author_unfollow } | ${ author.getFollowCount()?c }
+						${ _strings.author_already_following } | ${ author.getFollowCount()?c }
 					</button>		
 				<#else>
 					<button class="pratilipi-light-blue-button" onclick="FollowUnfollowPostRequest(true)">
