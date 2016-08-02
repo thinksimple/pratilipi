@@ -81,11 +81,11 @@ pratilipi_confirm_move_to_drafts_false	= இல்லை, வரைவுகள�
 pratilipi_move_to_drafts				= வரைவுகளுக்கு அனுப்ப
 pratilipi_publish_it					= பதிப்பிக்க
 pratilipi_delete_content				= நீக்க
-pratilipi_confirm_move_to_drafts		= Do you want to move it to drafts?
-pratilipi_confirm_move_to_drafts_okay	= Okay
-pratilipi_confirm_delete_content		= Do you want to delete the content?
-pratilipi_confirm_delete_content_okay	= Okay
-pratilipi_deleted_successfully			= The content has been deleted successfully!
+pratilipi_confirm_move_to_drafts		= வரைவுகளுக்கு அனுப்பவேண்டுமா?
+pratilipi_confirm_move_to_drafts_okay	= ஆம்
+pratilipi_confirm_delete_content		= படைப்பை நீக்கவேண்டுமா?
+pratilipi_confirm_delete_content_okay	= ஆம்
+pratilipi_deleted_successfully			= படைப்பு நீக்கப்பட்டது
 
 # Rating
 rating_rating				= மதிப்பீடு 
@@ -93,7 +93,7 @@ rating_ratings				= மதிப்பீடகள்
 rating_rate_this			= மதிப்பிடுக!
 rating_your_rating			= உங்கள் மதிப்பீடு!
 rating_be_first_one			= முதல் ஆளாக மதிப்பீடு வழங்க!
-rating_mandatory_message	= Please enter your rating!
+rating_mandatory_message	= உங்களது மதிப்பீட்டை வழங்கவும்
 rating_1_star				= 1
 rating_2_star				= 2
 rating_3_star				= 3
@@ -223,7 +223,7 @@ updated_review						= வெற்றி !
 
 #Failure Messages
 server_error_message				= Some error Occured! Please try again!
-write_please_login_desktop			= You can publish contents by logging into desktop.
+write_please_login_desktop			= உள்நுழைந்துவிட்டு எழுதவும்
 
 # Author Edit Popup
 edit_author_heading				= உங்கள் விவரத்தை திருத்த	
@@ -253,7 +253,7 @@ register_part_2					= மற்றும்
 register_part_3					= க்கு ஒப்புக்கொள்கிறேன்.
 
 # Event Page
-event_events					= Events
+event_events					= போட்டிகள்
 event_entries			= போட்டிக்கான படைப்புகள் 
 event_name				= போட்டியின் பெயர்
 event_name_en			= Event Name in English
@@ -262,7 +262,7 @@ event_entries_url_list	= Entries URL List
 event_save_changes		= மாற்றங்களை சேமிக்க 
 
 # Gender
-gender				= Gender
+gender				= பாலினம்
 gender_male			= ஆண்
 gender_female		= பெண்
 gender_other		= வேறு
@@ -282,14 +282,14 @@ month_nov	= நவம்பர்
 month_dec	= டிசம்பர்
 
 # Library
-library				= Library
+library				= நூலகம்
 my_library			= என் நூலகம்
 add_to_library		= என் நூலகத்தில் சேர்க்க
-added_to_library	= Success! You have added this content to your library! 
+added_to_library	= வெற்றி! இந்த படைப்பு உங்கள் நூலகத்தில் சேர்க்கப்பட்டது!
 remove_from_library	= என் நூலகத்திலிருந்து  அழிக்க  
-removed_from_library = You have removed the content from your library!
+removed_from_library = இந்த படைப்பு உங்கள் நூலகத்திலிருந்து நீக்கப்பட்டது
 empty_library		= மன்னிக்கவும், உங்களது நூலகத்தில் படைப்புகள் எதுவும் இல்லை,  பிடித்தமான படைப்புகளை சொடுக்கி அதன் பக்கத்திற்கு சென்று நூலகத்தில் சேர்க்கலாம்..
-library_content_in_library	= Add content to Library
+library_content_in_library	= படைப்புகளை நூலகத்தில் சேர்க்க
 
 # Reader
 reader_goto_content_page	= படைப்புப் பக்கத்திற்குச் செல்ல
