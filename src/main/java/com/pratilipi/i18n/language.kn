@@ -63,8 +63,8 @@ author_settings_require_language	= Please enter your language!     = ನಿಮ�
 # Pratilipi   
 pratilipi_type				            = ವಿಧ 
 pratilipi_listing_date		        = ಪ್ರಕಟಿತ ದಿನಾಂಕ
-pratilipi_last_updated_date			= Last Updated Date = ಕೊನೆಯ ನವೀಕರಿಸಲ್ಪಟ್ಟ ದಿನಾಂಕ 
-pratilipi_published			          = ಪ್ರಕಟಗೊಂಡಿದೆ.
+pratilipi_last_updated_date			= Last Updated Date = ಕೊನೆಯದಾಗಿ ನವೀಕರಿಸಲ್ಪಟ್ಟ ದಿನಾಂಕ 
+pratilipi_published			          = ಪ್ರಕಟಗೊಂಡಿದೆ
 pratilipi_published_year	        = ಪ್ರಕಟಿತ ವರ್ಷ 
 pratilipi_summary			            = ಸಾರಾಂಶ
 pratilipi_edit_info			          = ಮಾಹಿತಿ ಎಡಿಟ್ ಮಾಡಿ 
@@ -222,8 +222,8 @@ updated_pratilipi_info_success		       = ಯಶಸ್ವಿ!
 updated_review						               = ಯಶಸ್ವಿ!
 
 #Failure Messages
-server_error_message				= Some error Occured! Please try again!
-write_please_login_desktop			= You can publish contents by logging into desktop.
+server_error_message				= Some error Occured! Please try again! 
+write_please_login_desktop			= You can publish contents by logging into desktop. 
 
 # Author Edit Popup
 edit_author_heading				       = ಲೇಖಕರ ಮಾಹಿತಿಯನ್ನು ಎಡಿಟ್ ಮಾಡಿ 
@@ -282,21 +282,21 @@ month_nov	       = ನವೆಂಬರ್
 month_dec        = ಡಿಸೆಂಬರ್ 
 
 # Library
-library				= Library
+library				= Library    = ಪುಸ್ತಕ ಭಂಡಾರ 
 my_library			           = ನನ್ನ ಪುಸ್ತಕ ಭಂಡಾರ
 add_to_library		         = ಪುಸ್ತಕ ಭಂಡಾರಕ್ಕೆ ಸೇರಿಸಿ 
 added_to_library	         = ಯಶಸ್ವಿ! ಈ ಬರಹವನ್ನು ನೀವು ಪುಸ್ತಕ ಭಂಡಾರಕ್ಕೆ ಸೇರಿಸಿರುವಿರಿ!
 remove_from_library	       = ಪುಸ್ತಕ ಭಂಡಾರದಿಂದ ತೆಗೆದುಹಾಕಿ 
 removed_from_library       = ನೀವು ಬರಹವನ್ನು ಪುಸ್ತಕ ಭಂಡಾರದಿಂದ ತೆಗೆದು ಹಾಕಿರುವಿರಿ!
 empty_library		           = ಕ್ಷಮಿಸಿ, ನಿಮ್ಮ ಪುಸ್ತಕ ಭಂಡಾರದಲ್ಲಿ ಯಾವುದೇ ಪುಸ್ತಕಗಳಿಲ್ಲ, ನೀವು ಪುಸ್ತಕಗಳನ್ನು ಬರಹ ಪುಟದಿಂದ ತೆಗೆದು ಸೇರಿಸಬಹುದು.
-library_content_in_library	= Add content to Library
+library_content_in_library	= Add content to Library = ಬರಹವನ್ನು ಪುಸ್ತಕ ಭಂಡಾರಕ್ಕೆ ಸೇರಿಸಿ 
 
 # Reader
 reader_goto_content_page	         = ಬರಹ ಪುಟಕ್ಕೆ ಹೋಗಿ 
 reader_goto_author_profile         = ಲೇಖಕರ ಪುಟಕ್ಕೆ ಹೋಗಿ 
 reader_goto_home_page	             = ಮುಖಪುಟಕ್ಕೆ ಹೋಗಿ 
 share_on_facebook		               = ಫೇಸ್ಬುಕ್ನಲ್ಲಿ ಶೇರ್ ಮಾಡಿ 
-share_on_twitter		               = ಟ್ವಿಟ್ಟರ್ನಲ್ಲಿ ಶೇರ್ ಮಾಡಿ 
+share_on_twitter		               = ಟ್ವಿಟರ್ನಲ್ಲಿ ಶೇರ್ ಮಾಡಿ 
 share_on_gplus			               = ಗೂಗಲ್ ಪ್ಲಸ್ನಲ್ಲಿ ಶೇರ್ ಮಾಡಿ 
 increase_font_size		             = ಫಾಂಟ್ ಘಾತ್ರ ಹಿಗ್ಗಿಸಿ 
 decrease_font_size		             = ಫಾಂಟ್ ಘಾತ್ರ ಕುಗ್ಗಿಸಿ 
