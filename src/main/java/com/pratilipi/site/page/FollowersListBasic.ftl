@@ -15,12 +15,12 @@
 				<div class="pratilipi-shadow secondary-500 box">
 					<div class="pull-left">
 						<h5 class="pratilipi-red pratilipi-bold pratilipi-no-margin">
-							Followers
+							${ _strings.author_followers }
 						</h5>
-						<p class="works-number">${ followersList.getNumberFound() } Members</p>
-						<hr>
+						<p class="works-number">${ followersList.getNumberFound() } ${ _strings.author_follow_members }</p>
 					</div>
 					<div class="clearfix"></div>
+					<hr>
 					<#if followersList.getUserList()?has_content>
 						<#include "../element/pratilipi-follow-author-card.ftl">
 						<#list followersList.getUserList() as local_user>
