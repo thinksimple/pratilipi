@@ -137,7 +137,16 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 
 	@Override
 	public Chapter getChapter( int chapterNo ) {
-		return chapters == null || chapters.size() < chapterNo ? null : chapters.get( chapterNo - 1 );
+		if( chapters == null || chapters.size() < chapterNo )
+			return null;
+		int count = 0;
+		for( Chapter chapter : chapters ) {
+			if( chapter.getPageCount() > 0 )
+				count++;
+			if( count == chapterNo )
+				return chapter;
+		}
+		return null;
 	}
 	
 	@Override
