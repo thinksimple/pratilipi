@@ -44,26 +44,26 @@ author_drafts					= డ్రాఫ్టులు
 author_published_works			= ప్రచురించబడిన రచనలు
 author_add_new_content			= కొత్త రచనను చేయండి
 author_no_contents_published	= క్షమించండి! ఈ రచయిత ఖాతాలో ఎలాంటి రచనలు లేవు!
-author_activity					= Activity
-author_about					= About
-author_biography				= Biography
-author_location					= Location
-author_date_of_birth			= Date Of Birth
-author_follow					= Follow
-author_unfollow					= UnFollow
-author_followers				= Followers
-author_no_followers				= Sorry! This author doesn't have any followers
-author_following				= Following
-author_no_following				= Sorry! This author is not following anyone!
-author_follow_members			= Members
-author_cannot_follow_yourself	= Yourself
-author_settings_require_first_name	= Please enter your first name!
-author_settings_require_language	= Please enter your language!  
+author_activity					= చర్యలు
+author_about					= రచయిత గురించి
+author_biography				= ప్రొఫైల్
+author_location					= ప్రాంతం
+author_date_of_birth			= పుట్టినతేదీ
+author_follow					= అనుసరించండి
+author_unfollow					= అనుసరించవద్దు
+author_followers				= అనుచరులు
+author_no_followers				= క్షమించండి.. ఈ రచయితను ఎవరూ అనుసరించడం లేదు
+author_following				= అనుసరిస్తున్నారు
+author_no_following				= క్షమించండి.. ఈ రచయిత ఎవరినీ అనుసరించడం లేదు
+author_follow_members			= సభ్యులు
+author_cannot_follow_yourself	= మీరు
+author_settings_require_first_name	= మీ మొదటి  పేరును నమోదు చేయండి
+author_settings_require_language	= మీ భాషను నమోదు చేయండి
 
 # Pratilipi
 pratilipi_type				= వర్గం
 pratilipi_listing_date		= జమా చేసిన తేదీ
-pratilipi_last_updated_date	= Last Updated Date 
+pratilipi_last_updated_date	= అప్ డేట్ చేసిన చివరితేదీ
 pratilipi_published			= ప్రచురించబడింది
 pratilipi_published_year	= ప్రచురించిన సంవత్సరం
 pratilipi_summary			= సంగ్రహం
@@ -80,12 +80,12 @@ pratilipi_confirm_move_to_drafts_true	= అవును. డ్రాఫ్ట�
 pratilipi_confirm_move_to_drafts_false	= లేదు. డ్రాఫ్టులలోకి పంపించవద్దు
 pratilipi_move_to_drafts				= డ్రాఫ్ట్సులోకి పంపించండి
 pratilipi_publish_it					= ప్రచురించండి!
-pratilipi_delete_content				= Delete
-pratilipi_confirm_move_to_drafts		= Do you want to move it to drafts?
-pratilipi_confirm_move_to_drafts_okay	= Okay
-pratilipi_confirm_delete_content		= Do you want to delete the content?
-pratilipi_confirm_delete_content_okay	= Okay
-pratilipi_deleted_successfully			= The content has been deleted successfully!
+pratilipi_delete_content				= తొలిగించండి
+pratilipi_confirm_move_to_drafts		= మీరు డ్రాఫ్ట్సులోకి పంపించాలని భావిస్తున్నారా?
+pratilipi_confirm_move_to_drafts_okay	= అలాగే
+pratilipi_confirm_delete_content		= మీరు రచనను తొలిగించాలని భావిస్తున్నారా?
+pratilipi_confirm_delete_content_okay	= అలాగే
+pratilipi_deleted_successfully			= ఈ రచన విజయవంతంగా తొలిగించబడింది
 
 # Rating
 rating_rating				= రేటింగ్‌  
@@ -93,7 +93,7 @@ rating_ratings				= రేటింగులు
 rating_rate_this			= రేటింగ్ ఇవ్వండి!
 rating_your_rating			= మీ రేటింగ్
 rating_be_first_one			= తొలిసారిగా మీరే రేటింగ్ ఇవ్వండి !
-rating_mandatory_message	= Please enter your rating!
+rating_mandatory_message	= మీ రేటింగ్ ఇవ్వండి!
 rating_1_star				= బాగాలేదు
 rating_2_star				= ఫర్వాలేదు
 rating_3_star				= బాగుంది 
@@ -163,9 +163,9 @@ user_current_password		= ప్రస్తుత పాస్ వర్డు
 user_new_password			= కొత్త పాస్ వర్డు
 user_full_name				= పూర్తి పేరు
 user_email					= ఈమెయిల్
-user_email_not_available	= Email Not Available!
-user_phone					= Phone
-user_phone_not_available	= Phone Number Not Available!
+user_email_not_available	= ఈమెయిల్  సదుపాయం అందుబాటులో లేదు
+user_phone					= చరవాణి
+user_phone_not_available	= చరవాణి అందుబాటులో లేదు!
 user_password				= పాస్ వర్డు
 user_confirm_password		= పాస్ వర్డును ధ్రువీకరించండి
 user_my_profile				= నా ప్రొఫైల్
@@ -222,8 +222,8 @@ updated_pratilipi_info_success		= విజయవంతంగా పూర్త
 updated_review						= విజయవంతంగా పూర్తయ్యింది!
 
 #Failure Messages
-server_error_message				= Some error Occured! Please try again!
-write_please_login_desktop			= You can publish contents by logging into desktop.
+server_error_message				= 'సాంకేతికపరమైన సమస్య.. మళ్లీ ప్రయత్నించండి
+write_please_login_desktop			= మీరు డెస్క్ టాప్ పై లాగిన్ అవ్వడం ద్వారా రచనలు ప్రచురించుకోవచ్చు
 
 # Author Edit Popup
 edit_author_heading				= రచయిత సమాచారాన్ని ఎడిట్ చేయండి	
@@ -253,16 +253,16 @@ register_part_2					= మరియు
 register_part_3					= .
 
 # Event Page
-event_events					= Events
+event_events					= సాహితీ కార్యక్రమాలు
 event_entries			= పోటీ నిమిత్తం ప్రచురితమైన రచనలు
 event_name				= సాహితీ కార్యక్రమం పేరు
 event_name_en			= సాహితీ కార్యక్రమం పేరు (ఆంగ్లంలో)
-event_description		= సాహితీ కార్యక్రమం గురించి
+event_description		=  కార్యక్రమం గురించి
 event_entries_url_list	= ఎంట్రీల యూఆరెల్ జాబితా
 event_save_changes		= మార్పులను సేవ్ చేయండి
 
 # Gender
-gender				= Gender
+gender				= లింగము
 gender_male			= పురుషుడు
 gender_female		= స్త్రీ
 gender_other		= ఇతరులు
@@ -282,14 +282,14 @@ month_nov	= నవంబరు
 month_dec	= డిసెంబరు
 
 # Library
-library				= Library
+library				= గ్రంథాలయం
 my_library			= నా గ్రంథాలయం
 add_to_library		= గ్రంథాలయానికి జత చేయండి
-added_to_library	= Success! You have added this content to your library!
+added_to_library	= విజయంతమైంది.. మీ  రచనను గ్రంథాలయానికి జత పరిచారు
 remove_from_library	= గ్రంథాలయం నుండి తొలగించండి
-removed_from_library = You have removed the content from your library!
+removed_from_library = మీరు రచనను గ్రంథాలయం నుండి తొలిగించారు!
 empty_library		= క్షమించండి, మీ గ్రంథాలయంలో ఎలాంటి పుస్తకాలు లేవు. మీరు రచనల పేజికి వెళ్ళి వాటిని జత చేసుకోవచ్చు. 
-library_content_in_library	= Add content to Library
+library_content_in_library	= గ్రంథాలయానికి ఈ రచనను జతపరచండి
 
 # Reader
 reader_goto_content_page	= కంటెంట్ పేజీకి వెళ్లండి
