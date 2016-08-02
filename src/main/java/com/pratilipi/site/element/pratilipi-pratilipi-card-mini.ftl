@@ -22,7 +22,7 @@
 		    </div>
 		 </div>
 		 <div class="col-xs-1 pratilipi-no-padding" >
-		 	<a onclick=gotoShare( "${ pratilipi.getPageUrl() }", "author_page", "pratilipi_card" ) >
+		 	<a onclick="gotoShare( '${ pratilipi.getPageUrl() }', 'author_page', 'pratilipi_card' )" >
 		 		<img src="http://0.ptlp.co/resource-all/icon/svg/share2.svg"></img> 
 		 	</a> 
 		 </div> 
