@@ -209,9 +209,11 @@
 				} else if( this.contentType == "IMAGE" ) {
 					this._onImageSizeChange();
 				}
-				this.async( function() {
-					jQuery( 'html, body' ).animate( { scrollTop : 0 }, 500 );
-				} );
+				if( jQuery( window ).scrollTop() > 128 ) {
+					this.async( function() {
+						jQuery( 'html, body' ).animate( { scrollTop : 0 }, 500 );
+					} );
+				}
 			},
 
 			getImageUrl: function( pageNo ) {

@@ -80,10 +80,10 @@
 				if( this.pageCount == null || this.pageNo == null )
 					return;
 				
-				this.pageNoInput = this.pageNo;
-				this.pageNoSlider = this.pageNo;
-				this.prevButtonDisabled = this.pageNo <= 1;
-				this.nextButtonDisabled = ( this.pageCount <= 1 || this.pageNo >= this.pageCount );
+				this.set( 'pageNoInput', this.pageNo );
+				this.set( 'pageNoSlider', this.pageNo );
+				this.set( 'prevButtonDisabled', this.pageNo <= 1 );
+				this.set( 'nextButtonDisabled', ( this.pageCount <= 1 || this.pageNo >= this.pageCount ) )
 			},
 
 			showPrevious: function() {
