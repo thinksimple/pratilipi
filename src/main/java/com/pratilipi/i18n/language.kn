@@ -34,7 +34,7 @@ _pratilipi_type_magazines	      = ನಿಯತಕಾಲಿಕೆಗಳು
 # Author  
 author_about				           = ಲೇಖಕರ ಕುರಿತು  
 author_language					       = ಭಾಷೆ 
-author_since					
+author_since					         = ಪ್ರತಿಲಿಪಿಯೊಂದಿಗೆ 
 author_count_works				     = ಪ್ರಕಟಿತ ಸಾಹಿತ್ಯ
 author_count_reads			       = ಓದುಗರು 
 author_count_likes				     = ಮೆಚ್ಚುಗೆಗಳು 
@@ -44,26 +44,26 @@ author_drafts					         = ಅಪ್ರಕಟಿತ ಬರಹಗಳು
 author_published_works			   = ಪ್ರಕಟಿತ ಬರಹಗಳು 
 author_add_new_content		     = ಹೊಸ ಬರಹವನ್ನು ಸೇರಿಸಿ 
 author_no_contents_published	 = ಕ್ಷಮಿಸಿ! ಈ ಲೇಖಕರ ಪ್ರಕಟಿತ ಪುಸ್ತಕಗಳು ಯಾವುವೂ ಇಲ್ಲ!
-author_activity					= Activity
-author_about					= About
-author_biography				= Biography
-author_location					= Location
-author_date_of_birth			= Date Of Birth
-author_follow					= Follow
-author_unfollow					= UnFollow
-author_followers				= Followers
-author_no_followers				= Sorry! This author doesn't have any followers
-author_following				= Following
-author_no_following				= Sorry! This author is not following anyone!
-author_follow_members			= Members
-author_cannot_follow_yourself	= Yourself
-author_settings_require_first_name	= Please enter your first name!
-author_settings_require_language	= Please enter your language!
+author_activity					= Activity      = ಬರಹಗಳು 
+author_about					= About           = ಲೇಖಕರ ಕುರಿತು 
+author_biography				= Biography     = ಪರಿಚಯ  
+author_location					= Location      = 
+author_date_of_birth			= Date Of Birth = ಜನ್ಮ ದಿನಾಂಕ 
+author_follow					= Follow            = ಹಿಂಬಾಲಿಸಿ 
+author_unfollow					= UnFollow        = ಹಿಂಬಾಲಿಸಬೇಡಿ 
+author_followers				= Followers       = ಹಿಂಬಾಲಕರು 
+author_no_followers				= Sorry! This author doesn't have any followers = ಕ್ಷಮಿಸಿ! ಈ ಲೇಖಕರಿಗೆ ಇನ್ನೂ ಯಾವ ಹಿಂಬಾಲಕರೂ ಇಲ್ಲ
+author_following				= Following       = ಹಿಂಬಾಲಿಸುತ್ತಿದ್ದಾರೆ
+author_no_following				= Sorry! This author is not following anyone! ಕ್ಷಮಿಸಿ! ಈ ಲೇಖಕರು ಯಾರನ್ನೂ ಅನುಸರಿಸುತ್ತಿಲ್ಲ
+author_follow_members			= Members       = ಸದಸ್ಯರು 
+author_cannot_follow_yourself	= Yourself    = 
+author_settings_require_first_name	= Please enter your first name! = ನಿಮ್ಮ ಮೊದಲ ಹೆಸರನ್ನು ನಮೂದಿಸಿ
+author_settings_require_language	= Please enter your language!     = ನಿಮ್ಮ ಭಾಷೆಯನ್ನು ನಮೂದಿಸಿ
 
 # Pratilipi   
 pratilipi_type				            = ವಿಧ 
 pratilipi_listing_date		        = ಪ್ರಕಟಿತ ದಿನಾಂಕ
-pratilipi_last_updated_date			= Last Updated Date
+pratilipi_last_updated_date			= Last Updated Date = ಕೊನೆಯ ನವೀಕರಿಸಲ್ಪಟ್ಟ ದಿನಾಂಕ 
 pratilipi_published			          = ಪ್ರಕಟಗೊಂಡಿದೆ.
 pratilipi_published_year	        = ಪ್ರಕಟಿತ ವರ್ಷ 
 pratilipi_summary			            = ಸಾರಾಂಶ
@@ -80,12 +80,12 @@ pratilipi_confirm_move_to_drafts_true	     = ಹೌದು, ಅಪ್ರಕಟಿ
 pratilipi_confirm_move_to_drafts_false	   = ಇಲ್ಲ, ಅಪ್ರಕಟಿತಗೊಳಿಸಬೇಡಿ!
 pratilipi_move_to_drafts				= ಅಪ್ರಕಟಿತಗೊಳಿಸಿ
 pratilipi_publish_it					= ಪ್ರಕಟಿಸಿ!
-pratilipi_delete_content				= Delete
-pratilipi_confirm_move_to_drafts		= Do you want to move it to drafts?
-pratilipi_confirm_move_to_drafts_okay	= Okay
-pratilipi_confirm_delete_content		= Do you want to delete the content?
-pratilipi_confirm_delete_content_okay	= Okay
-pratilipi_deleted_successfully			= The content has been deleted successfully!
+pratilipi_delete_content				= Delete = ಡಿಲೀಟ್ ಮಾಡಿ 
+pratilipi_confirm_move_to_drafts		= Do you want to move it to drafts? = ನೀವು ಈ ಬರಹವನ್ನು ಅಪ್ರಟಿತಗೊಳಿಸಲು ಇಚ್ಚಿಸುತ್ತೀರಾ?
+pratilipi_confirm_move_to_drafts_okay	= Okay = ಸರಿ 
+pratilipi_confirm_delete_content		= Do you want to delete the content? ನೀವು ಈ ಬರಹವನ್ನು ಡಿಲೀಟ್ ಮಾಡಲು ಬಯಸುವಿರಾ?
+pratilipi_confirm_delete_content_okay	= Okay = ಸರಿ 
+pratilipi_deleted_successfully			= The content has been deleted successfully! = ಈ ಬರಹವು ಯಶಸ್ವಿಯಾಗಿ ಡಿಲೀಟ್ ಆಗಿರುತ್ತದೆ!
 
 # Rating          
 rating_rating				       = ರೇಟಿಂಗ್
@@ -93,7 +93,7 @@ rating_ratings				     = ರೇಟಿಂಗ್ಸ್
 rating_rate_this			     = ರೇಟಿಂಗ್ ನೀಡಿ!
 rating_your_rating			   = ನಿಮ್ಮ ರೇಟಿಂಗ್
 rating_be_first_one			   = ಇದಕ್ಕೆ ರೇಟಿಂಗ್ ನೀಡಲು ಮುಂದಾಗಿ!
-rating_mandatory_message		= Please enter your rating!
+rating_mandatory_message		= Please enter your rating! = ದಯವಿಟ್ಟು ನಿಮ್ಮ ರೇಟಿಂಗ್ ನಮೂದಿಸಿ!
 rating_1_star			         = ಚೆನ್ನಾಗಿಲ್ಲ 
 rating_2_star			         = ಪರವಾಗಿಲ್ಲ  
 rating_3_star				       = ಚೆನ್ನಾಗಿದೆ 
