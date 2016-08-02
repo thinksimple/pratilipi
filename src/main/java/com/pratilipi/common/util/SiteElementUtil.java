@@ -40,7 +40,6 @@ public class SiteElementUtil {
 				Map<String, Object> dataModel = new HashMap<>();
 				dataModel.put( "lang", language.getCode() );
 				dataModel.put( "language", language );
-				dataModel.put( "languageList", Language.values() );
 				dataModel.put( "domain", language.getHostName() );
 				dataModel.put( "fbAppId", "293990794105516" );
 				dataModel.put( "_strings", I18n.getStrings( language ) );

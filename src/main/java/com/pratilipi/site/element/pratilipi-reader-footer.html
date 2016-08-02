@@ -5,6 +5,8 @@
 			display: block;
 		}
 		paper-slider.pratilipi-slider {
+			margin-top: 2px;
+			width: 100%;
 			--paper-slider-active-color: #D0021B;
 			--paper-slider-knob-color: #D0021B;
 			--paper-slider-knob-start-color: #D0021B;
@@ -46,7 +48,6 @@
 					<div class="horizontal layout center">
 						<paper-slider
 								class="flex pratilipi-slider"
-								style="margin-top: 2px;"
 								min="1" max="{{ pageCount }}"
 								value="{{ pageNoSlider }}"
 								on-change="_sliderObserver"

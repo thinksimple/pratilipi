@@ -48,19 +48,7 @@
 			<div class="row">
 				<div class="col-xs-2 language-choose">
 					<paper-dropdown-menu noink horizontal-align="right" vertical-align="top">
-						<#assign i=-1>
-						<#list languageList as lang>
-							<#assign i = i + 1 >
-							<#if lang?upper_case == language?upper_case>
-								<#assign selected = i >
-							</#if>
-						</#list>
 						<paper-menu selected="${ selected! }" class="dropdown-content">
-							<#list languageList as language>
-								<paper-item>
-									<a href="http://${ language.getHostName() }/">${ language.getName() }</a>
-								</paper-item>
-							</#list>
 						</paper-menu>
 					</paper-dropdown-menu>
 				</div>
