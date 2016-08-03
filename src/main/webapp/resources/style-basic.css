@@ -190,9 +190,33 @@ table tr td {
 	outline: none;
 }
 
+.pratilipi-red-button {
+	background: #FFFFFF;
+	border: 1px solid #d0021b;
+	box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.50);
+	border-radius: 5px;
+	font-size: 13px;
+	color: #d0021b;
+	letter-spacing: 0.3px;
+	line-height: 16px;
+	text-shadow: 0px 1px 2px #FFFFFF;
+	display: inline-block;
+	padding: 10px 15px 10px 15px;
+	margin-right: 10px;
+	magin-top: 5px;
+	outline: none;
+}
+
 a.pratilipi-light-blue-button:hover, a.pratilipi-light-blue-button:focus
 	{
 	color: #0C68BD;
+	text-decoration: none;
+	font-size: 13px;
+}
+
+a.pratilipi-red-button:hover, a.pratilipi-red-button:focus
+	{
+	color: #d0021b;
 	text-decoration: none;
 	font-size: 13px;
 }

@@ -25,22 +25,20 @@
 <#macro follow_author_card isGuest can_follow retUrl authorId followCount following name pageUrl imageUrl >
 	<div class="media">
 		<a class="media-left" href="${ pageUrl }">
-		    <img class="media-object img-circle pratilipi-without-margin" style="width:90px;height:90px;" src="${ imageUrl }">
+		    <img class="media-object img-circle pratilipi-without-margin" style="width:80px;height:80px;" src="${ imageUrl }">
 		</a>
 		<div class="media-body pratilipi-padding-15">
 		    <#if isGuest == "true" >
-		    	<a class="pratilipi-light-blue-button pull-right" href="/login?ret=${ retUrl }"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> ${ _strings.author_follow } </a>
+		    	<a class="pratilipi-red-button pull-right" href="/login?ret=${ retUrl }"><img src="http://0.ptlp.co/resource-all/icon/svg/user-plus-red.svg"></img></a>
 		    <#else>
 		    	<#if can_follow == "true">
 			    	<#if following == true >
-					    <button class="pratilipi-grey-button pull-right" onclick="FollowAuthorPostRequest(${ authorId?c }, false)">
-							<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-							${ _strings.author_unfollow }
+					    <button class="pratilipi-red-button pull-right" onclick="FollowAuthorPostRequest(${ authorId?c }, false)">
+							<img src="http://0.ptlp.co/resource-all/icon/svg/user-check-red.svg"></img>
 						</button>
 					<#else>
-						<button class="pratilipi-light-blue-button pull-right" onclick="FollowAuthorPostRequest(${ authorId?c }, true)">
-							<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-							${ _strings.author_follow }
+						<button class="pratilipi-red-button pull-right" onclick="FollowAuthorPostRequest(${ authorId?c }, true)">
+							<img style="width:16px;height:16px;" src="http://0.ptlp.co/resource-all/icon/svg/user-plus-red.svg"></img>
 						</button>			
 					</#if>		    		
 		    	</#if>

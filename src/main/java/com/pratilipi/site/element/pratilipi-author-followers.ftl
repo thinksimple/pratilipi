@@ -7,7 +7,7 @@
 		<a href="${ followersUrl }"><p class="works-number">${ followersList.getNumberFound() } ${ _strings.author_follow_members }</p></a>
 	</div>
 	<div class="pull-right">
-		<a class="pull-right pratilipi-red pratilipi-view-more-link" href="${ followersUrl }"> ${ _strings.view_more } </a>
+		<a class="pull-right pratilipi-red pratilipi-view-more-link" href="${ followersUrl }"><img src="http://0.ptlp.co/resource-all/icon/svg/chevron-right-red.svg"></img> </a>
 	</div>
 	<div class="clearfix"></div>
 	<hr>	
@@ -21,7 +21,7 @@
 				<#assign can_follow_boolean = "false">
 			</#if>
 			<#assign local_author = local_user.getAuthor() >
-			<@follow_author_card isGuest=user.isGuest?c can_follow=can_follow_boolean retUrl=author.getPageUrl() authorId=local_author.getId() followCount=local_author.getFollowCount() following=local_author.isFollowing() name=local_user.getDisplayName() pageUrl=local_user.getProfilePageUrl() imageUrl=local_user.getProfileImageUrl()/>
+			<@follow_author_card isGuest=user.isGuest?c can_follow=can_follow_boolean retUrl=author.getPageUrl() authorId=local_author.getId() followCount=local_author.getFollowCount() following=local_author.isFollowing() name=local_user.getDisplayName() pageUrl=local_user.getProfilePageUrl() imageUrl=local_user.getProfileImageUrl(100)/>
 		</#list>
 	</#if>		
 </div>	
