@@ -1,4 +1,4 @@
-<div class="secondary-500 pratilipi-shadow" class="pratilipi-new-header" style="display: block; padding: 5px;">
+<div class="secondary-500 pratilipi-shadow pratilipi-new-header" style="display: block; padding: 5px;">
 	<div class="row" style="text-align: center; margin: 0 auto;">
 		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
 			<a href="/">
@@ -48,11 +48,11 @@
 			  </select>
 			</div>
 		  </div>
-		  <div class="col-xs-9">
+		  <div class="col-xs-9" style="padding-left: 2px;">
 		    <div class="input-group">
 		      <input type="text" class="form-control" placeholder="Search for">
 		      <span class="input-group-btn">
-		        <button class="btn btn-default" type="button"><img src="http://0.ptlp.co/resource-all/icon/svg/search.svg"></button>
+		        <button class="btn btn-default" style="padding: 6px;" type="button"><img src="http://0.ptlp.co/resource-all/icon/svg/search.svg"></button>
 		      </span>
 		    </div><!-- /input-group -->
 		  </div>
