@@ -213,7 +213,7 @@
 						<template is="dom-if" if="{{ isGuest }}">
 							<button class="btn btn-primary" on-click="_logIn">
 								<iron-icon icon="icons:input"></iron-icon>
-								<span>Log In</span>
+								<span>${ _strings.user_sign_in }</span>
 							</button>
 						</template>
 						<template is="dom-if" if="{{ !isGuest }}">
@@ -227,7 +227,7 @@
 				</div>
 			</div>
 		</div>
-		<pratilipi-search-bar class="visible-xs hidden-sm hidden-md hidden-lg"></pratilipi-search-bar>
+		<pratilipi-search-bar language-map="{{ languageMap }}" class="visible-xs hidden-sm hidden-md hidden-lg"></pratilipi-search-bar>
 	</template>
 
 
@@ -245,7 +245,9 @@
 				profileImageUrl: { type: String },
 				displayName: { type: String },
 				
-				writeButtonActive: { type: Boolean, value: false }
+				writeButtonActive: { type: Boolean, value: false },
+				languageMap: { type: Object },
+				languageArray: { type: Array, value: function() { return []; } }
 			},
 			
 			_userChanged: function() {

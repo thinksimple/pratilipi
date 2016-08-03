@@ -32,7 +32,7 @@
 		<pratilipi-alert></pratilipi-alert>
 
    		<div class="pratilipi-header">
-   			<pratilipi-new-header user='[[ user ]]'></pratilipi-new-header>
+   			<pratilipi-new-header language-map="[[ languageMap ]]" user='[[ user ]]'></pratilipi-new-header>
    		</div>
    		<main>
    			<div class="parent-container margin-top-bottom">
@@ -101,6 +101,7 @@
 				followersList: { type: Object },
 				pratilipiTypes: { types: Object },
 				navigationList: { type: Array },
+				languageMap: { type: Object },
 				lastScrollTop: { type: Number, value: 0 }
 			},
 			

@@ -7,6 +7,45 @@
 			border-bottom: 1px solid #d3d3d3;
 			padding-top: 64px;
 		}
+		.flex-container {
+			display: flex;
+		}
+		.flex-container form {
+			margin-top: -40px;
+			margin-left: 4px;
+			margin-right: 8px;
+			flex-grow: 1;
+		}
+		.flex-container .pratilipi-text {
+			font-weight: bold;
+			text-align: center;
+			white-space: nowrap;
+		}
+		.flex-container .pratilipi-text iron-icon {
+			margin-left: -8px;
+		}
+		.flex-container paper-menu {
+			margin-left: 8px;
+			padding: 0;
+			width: 100px;
+		}
+		.flex-container paper-menu-button {
+			cursor: pointer;
+			padding-top: 0;
+		}
+		.flex-container paper-menu-button.language {
+			--iron-dropdown: {
+				top: 0;
+			}
+		}
+		.flex-container paper-item.language-font {
+			font-size: 14px;
+			font-weight: 700;
+		}
+		a.pratilipi-black {
+			color: #333 !important;
+		}
+		
 		paper-input.search {
 			font-size: 14px;
 	        --paper-input-container-focus-color: #797979;
@@ -23,38 +62,6 @@
 			font-size: 14px;
 			font-family: inherit;
 		}
-
-		.flex-container {
-			display: flex;
-		}
-		form {
-			margin-top: -40px;
-			margin-left: 4px;
-			margin-right: 8px;
-			flex-grow: 1;
-		}
-		.pratilipi-text {
-			font-weight: bold;
-			text-align: center;
-			white-space: nowrap;
-		}
-		iron-icon {
-			margin-left: -8px;
-		}
-		paper-menu {
-			margin-left: 8px;
-			padding: 0;
-			width: 100px;
-		}
-		paper-menu-button {
-			cursor: pointer;
-			padding-top: 0;
-		}
-		paper-menu-button.language {
-			--iron-dropdown: {
-				top: 0;
-			}
-		}
 	</style>
 	<template>
 		<div class="flex-container">
@@ -64,9 +71,16 @@
 					<iron-icon icon="icons:arrow-drop-down"></iron-icon>
 				</div>
 				<paper-menu class="dropdown-content">
-					<paper-item>Hindi</paper-item>
-					<paper-item>Gujarati</paper-item>
-					<paper-item>Tamil</paper-item>
+					<template is="dom-repeat" items="{{ languageArray }}" as="language">
+						<template is="dom-if" if="{{ !language.current }}">
+							<a class="pratilipi-black" href="{{ language.link }}">
+								<paper-item class="language-font">{{ language.value }}</paper-item>
+							</a>
+						</template>
+						<template is="dom-if" if="{{ language.current }}">
+							<paper-item class="language-font pratilipi-red" selected>{{ language.value }}</paper-item>
+						</template>
+					</template>
 				</paper-menu>
 			</paper-menu-button>
 			<form id="searchBarForm" action="javascript:void(0);" on-keyup="onSubmit">
@@ -83,6 +97,8 @@
 
 		properties: {
 			query: { type: String },
+			languageMap: { type: Object },
+			languageArray: { type: Array, value: function() { return []; } }
 		},
 
 		onSubmit: function( event ) {
@@ -94,6 +110,16 @@
 			} else {
 				jQuery( "#searchBarForm" ).prop( "action", "/search" );
 				jQuery( "#searchBarForm" ).submit();
+			}
+		},
+		
+		ready: function() {
+			for( var language in this.languageMap ) {
+				this.push( 'languageArray', { 
+								"link": "http://" + language.toLowerCase() + ".pratilipi.com/", 
+								"value": this.languageMap[ language ],
+								"current" : language == "${ language }"
+								} );
 			}
 		}
 
