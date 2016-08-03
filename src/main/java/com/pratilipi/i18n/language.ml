@@ -52,13 +52,13 @@ author_date_of_birth			= ജനനത്തിയ്യതി
 author_follow					= ഫോളോ  ചെയ്യൂ 
 author_unfollow					= ഫോളോ ചെയ്യേണ്ട
 author_followers				= Followers
-author_no_followers				= Sorry! This author doesn't have any followers
+author_no_followers				= ക്ഷമിക്കണം, ഈ രചയിതാവിന് ഫോളോവേര്‍സ് ഒന്നും ഇല്ല 
 author_following				= Following
-author_no_following				= Sorry! This author is not following anyone!
+author_no_following				= ക്ഷമിക്കണം, ഈ രചയിതാവ് ആരെയും ഫോളോ ചെയ്യുന്നില്ല 
 author_follow_members			= Members
 author_cannot_follow_yourself	= Yourself
-author_settings_require_first_name	= Please enter your first name!
-author_settings_require_language	= Please enter your language!
+author_settings_require_first_name	= താങ്കളുടെ പേര്  എഴുതൂ 
+author_settings_require_language	= താങ്കളുടെ ഭാഷ ചേര്‍ക്കൂ 
 
 # Pratilipi
 pratilipi_type				= തരം
