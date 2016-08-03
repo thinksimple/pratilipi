@@ -12,39 +12,62 @@
 			width: 100%;
 			display: block;
 			border-bottom: 1px solid #d3d3d3;
+			box-shadow: 0 3px 2px -2px rgba(200,200,200,0.2);
 		}
 		.vertical-align {
 			display: -webkit-flex;
 			display: flex;
 			-webkit-flex-flow: row;
 			flex-flow: row;
-			height: 60px;
+			height: 52px;
 		}
 		.vertical-align * {
 			align-self: center;
 		}
 		.pratilipi-logo {
-			text-align: right;
-			-webkit-flex-basis: 65px;
-			flex-basis: 65px;
+			-webkit-flex-basis: 46px;
+			flex-basis: 46px;
 		}
-		.pratilipi-text a {
-			font-size: 20px;
+		.pratilipi-text {
+			font-size: 18px;
 			<#if lang == "ta">
-				font-size: 16px;
+				font-size: 14px;
 				margin-left: 0px;
 			</#if>
 			<#if lang == "ml">
-				font-size: 17px;
+				font-size: 16px;
 				margin-left: 0px;
 			</#if>
 			font-weight: 700;
+			white-space: nowrap;
+			cursor: pointer;
 		}
-		
+		.pratilipi-text paper-menu {
+			width: 108px;
+			padding: 0;
+		}
+		.pratilipi-text paper-item.language-font {
+			font-size: 14px;
+			font-weight: 700;
+		}
+		a.pratilipi-black {
+			color: #333 !important;
+		}
+		form.search-form {
+			margin-top: -20px;
+		}
+		form.search-form paper-input paper-icon-button {
+			width: 32px;
+			height: 32px;
+			padding: 4px;
+		}
+		.search-input paper-icon-button.menu-icon-search-bar {
+			margin-left: -4px;
+		}
 		.button-holder {
 			flex-basis: 48px;
 			white-space: nowrap;
-			text-align: center;
+			text-align: right;
 		}
 		.button-holder a, .button-holder a:hover, .button-holder a:focus {
 			color: #4c4c4c!important;
@@ -58,8 +81,8 @@
 		}
 		.sign-in-button a span {
 			color: #4c4c4c!important;
-			font-size: 15px;
-			font-weight: 700;
+			font-size: 12px;
+			font-weight: 400;
 			margin-left: 2px;
 		}
 		.sign-in-button .btn-primary {
@@ -68,19 +91,28 @@
 			border-color: #107fe5;
 			border-radius: 0;
 			outline: none;
+			padding: 6px 8px;
 		}
 		.sign-in-button .btn-primary iron-icon {
 			width: 20px;
 			height: 20px;
 		}
 		.sign-in-button .btn-primary span {
-			font-size: 13px;
-			letter-spacing: 0.3px;
-			font-weight: 700;
+			font-size: 12px;
+			font-weight: 400;
 		}
 		@media only screen and (max-width: 767px) {
+			.vertical-align {
+				height: 48px;
+			}
+			.pratilipi-logo {
+				-webkit-flex: 1;
+				flex: 1;
+				padding-left: 20px;
+			}
 			#pratilipi-header-card {
 				border: none;
+				box-shadow: none;
 			}
 			.pratilipi-text {
 				display: none;
@@ -106,20 +138,20 @@
 				display: none;
 			}
 			.sign-in-button {
-				margin-left: 16px;
+				margin-left: 12px;
 				margin-top: 2px;
 			}
 		}
 		@media only screen and (min-width: 992px) {
-			#searchInput paper-icon-button.menu-icon-search-bar {
+			.pratilipi-text {
+				-webkit-flex-basis: 139px;
+				flex-basis: 139px;
+			}
+			.search-input paper-icon-button.menu-icon-search-bar {
 				display: none;
 			}
 		}
 		@media only screen and (min-width: 1200px) {
-			.pratilipi-text {
-				-webkit-flex-basis: 115px;
-				flex-basis: 115px;
-			}
 			.search-bar {
 				flex-grow: 1;
 			}
@@ -128,26 +160,28 @@
 			}
 			.sign-in-button {
 				position: absolute;
-				height: 60px;
-				line-height: 60px;
-				margin-left: 16px;
+				line-height: 52px;
+				margin-left: 12px;
 			}
 		}
 		
-		paper-input.search {
-	        --paper-input-container-focus-color: #797979;
-	        font-size: 14px;
+		paper-input.search-input {
+	        --paper-input-container-focus-color: #d0021b;
+	        font-size: 13px;
+			--paper-input-container-input: {
+				font-size: 16px;
+			 };
 		}
-		paper-input.search /deep/ ::-webkit-input-placeholder {
-			font-size: 14px;
+		paper-input.search-input /deep/ ::-webkit-input-placeholder {
+			font-size: 13px;
 			font-family: inherit;
 		}
-		paper-input.search /deep/ ::-moz-placeholder {
-			font-size: 14px;
+		paper-input.search-input /deep/ ::-moz-placeholder {
+			font-size: 13px;
 			font-family: inherit;
 		}
-		paper-input.search /deep/ :-ms-input-placeholder {
-			font-size: 14px;
+		paper-input.search-input /deep/ :-ms-input-placeholder {
+			font-size: 13px;
 			font-family: inherit;
 		}
 	</style>
@@ -158,15 +192,30 @@
 				<div class="vertical-align container">
 					<div class="pratilipi-logo">
 						<a href="/">
-							<iron-image sizing="contain" style="width: 56px; height: 48px;" 
+							<iron-image sizing="contain" style="width: 46px; height: 46px; margin-top: 6px;" 
 										title="${ _strings.pratilipi }" alt="${ _strings.pratilipi }" 
 										src="http://0.ptlp.co/resource-${ lang }/logo/pratilipi_logo.png"></iron-image>
 						</a>
 					</div>
 					<div class="pratilipi-text">
-						<a class="pratilipi-red" href="/">
-							${ _strings.pratilipi }
-						</a>
+						<paper-menu-button no-animations vertical-offset=36 class="language" horizontal-align="left" vertical-align="top">
+							<div class="pratilipi-red dropdown-trigger">
+								${ _strings.pratilipi }
+								<iron-icon icon="icons:arrow-drop-down"></iron-icon>
+							</div>
+							<paper-menu class="dropdown-content">
+								<template is="dom-repeat" items="{{ languageArray }}" as="language">
+									<template is="dom-if" if="{{ !language.current }}">
+										<a class="pratilipi-black" href="{{ language.link }}">
+											<paper-item class="language-font">{{ language.value }}</paper-item>
+										</a>
+									</template>
+									<template is="dom-if" if="{{ language.current }}">
+										<paper-item class="language-font pratilipi-red" selected>{{ language.value }}</paper-item>
+									</template>
+								</template>
+							</paper-menu>
+						</paper-menu-button>
 					</div>
 					<div class="button-holder menu-icon">
 						<a on-click="_openMenuNavigation">
@@ -174,10 +223,10 @@
 						</a>
 					</div>
 					<div class="search-bar">
-						<form id="searchForm" action="javascript:void(0);" style="margin: -24px 15px auto 8px;" on-keyup="onSubmit">
-							<paper-input id="searchInput" name="q" class="search" type="search" placeholder="${ _strings.search_bar_help }" onfocus="this.placeholder = ''" onblur="this.placeholder = '${ _strings.search_bar_help }'" value="{{ query::input }}">
-								<paper-icon-button suffix icon="icons:search" noink="true" on-click="onSubmit"></paper-icon-button>
-								<paper-icon-button prefix class="menu-icon-search-bar" icon="icons:menu" noink="true" on-click="_openMenuNavigation"></paper-icon-button>
+						<form id="search-form" class="search-form" action="javascript:void(0);" on-keyup="onSubmit">
+							<paper-input id="search-input" class="search-input" name="q" type="search" placeholder="${ _strings.search_bar_help }" onfocus="this.placeholder = ''" onblur="this.placeholder = '${ _strings.search_bar_help }'" value="{{ query::input }}">
+								<paper-icon-button suffix icon="icons:search" noink on-click="onSubmit"></paper-icon-button>
+								<paper-icon-button prefix class="menu-icon-search-bar" icon="icons:menu" noink on-click="_openMenuNavigation"></paper-icon-button>
 							</paper-input>
 						</form>
 					</div>
@@ -295,10 +344,20 @@
 					return;
 				var str = decodeURI( window.location.pathname );
 				if( str == "/search" ) {
-					document.querySelector( 'pratilipi-card-grid' ).setSearchQuery( jQuery( "#searchInput" ).val() );
+					document.querySelector( 'pratilipi-card-grid' ).setSearchQuery( jQuery( "#search-input" ).val() );
 				} else {
-					jQuery( "#searchForm" ).prop( "action", "/search" );
-					jQuery( "#searchForm" ).submit();
+					jQuery( "#search-form" ).prop( "action", "/search" );
+					jQuery( "#search-form" ).submit();
+				}
+			},
+
+			ready: function() {
+				for( var language in this.languageMap ) {
+					this.push( 'languageArray', { 
+									"link": "http://" + language.toLowerCase() + ".pratilipi.com/", 
+									"value": this.languageMap[ language ],
+									"current" : language == "${ language }"
+									} );
 				}
 			}
 			
