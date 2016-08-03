@@ -48,6 +48,7 @@
 					<div class="horizontal layout center">
 						<paper-slider
 								id="pageNoSlider"
+								stop-keyboard-event-propagation
 								class="flex pratilipi-slider"
 								min="1" max="{{ pageCount }}"
 								value="{{ pageNoSlider }}"
@@ -114,10 +115,9 @@
 			},
 			
 			isInputFocused: function() {
-				// Removing focus from slider
-				if( this.$.pageNoSlider != null )
-					this.$.pageNoSlider.focused = false;
-				return this.$.pageNoInputHolder.focused;
+				return this.$.pageNoSlider != null 
+							? this.$.pageNoInputHolder.focused && this.$.pageNoSlider.focused
+							: this.$.pageNoInputHolder.focused;
 			}
 			
 		});
