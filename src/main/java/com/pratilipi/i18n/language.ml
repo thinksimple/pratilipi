@@ -80,12 +80,12 @@ pratilipi_confirm_move_to_drafts_true	= അതെ, ഡ്രാഫ്റ്റ�
 pratilipi_confirm_move_to_drafts_false	= വേണ്ട, ഡ്രാഫ്റ്റുകളിലേക്ക് മാറ്റരുത്!
 pratilipi_move_to_drafts				= ഡ്രാഫ്റ്റുകളിലേക്ക് മാറ്റൂ
 pratilipi_publish_it					= പ്രസിദ്ധീകരിക്കൂ.
-pratilipi_delete_content				= Delete
+pratilipi_delete_content				= നീക്കം ചെയ്യൂ 
 pratilipi_confirm_move_to_drafts		= ഡ്രാഫ്റ്റുകളിലേക്ക് മാറ്റട്ടേ ?
 pratilipi_confirm_move_to_drafts_okay	= ശരി
 pratilipi_confirm_delete_content		= ഈ രചന നീക്കം ചെയ്യട്ടേ?
 pratilipi_confirm_delete_content_okay	= ശരി
-pratilipi_deleted_successfully			= The content has been deleted successfully!
+pratilipi_deleted_successfully			= നീക്കം ചെയ്തിരിക്കുന്നു 
 
 # Rating
 rating_rating				= റേറ്റിംഗ് 
@@ -93,7 +93,7 @@ rating_ratings				= റേറ്റിംഗ്സ്
 rating_rate_this			= ഇത് റേറ്റ് ചെയ്യൂ
 rating_your_rating			= താങ്കളുടെ റേറ്റിംഗ്
 rating_be_first_one			= ഇത് റേറ്റ് ചെയ്യുന്ന ആദ്യത്തെ ആളാകൂ!
-rating_mandatory_message	= Please enter your rating!
+rating_mandatory_message	= താങ്കളുടെ റേറ്റിംഗ് ചേര്‍ക്കൂ 
 rating_1_star				= മോശം
 rating_2_star				= കൊള്ളാം
 rating_3_star				= നല്ലത്‌
