@@ -67,19 +67,21 @@ public class PratilipiDocUtil {
 		
 		List<Object[]> pageletList = _createPageletList( pratilipi, Jsoup.parse( contentHtml ).body() );
 		
-		PratilipiContentDoc.Chapter chapter = null;
-		if( pageletList.get( 0 )[0] != PratilipiContentDoc.PageletType.HEAD_1 )
-			chapter = pcDoc.addChapter( pratilipi.getTitle() == null ? pratilipi.getTitle() : pratilipi.getTitleEn() );
-		
-		for( Object[] pagelet : pageletList ) {
-			if( pagelet[0] == PratilipiContentDoc.PageletType.HEAD_1 )
-				chapter = pcDoc.addChapter( (String) pagelet[1] );
-			else if( pagelet[0] == PratilipiContentDoc.PageletType.HEAD_2 )
-				chapter = pcDoc.addChapter( (String) pagelet[1], 1 );
-			else if( chapter.getPage( 1 ) == null )
-				chapter.addPage( (PratilipiContentDoc.PageletType) pagelet[0], pagelet[1] );
-			else
-				chapter.getPage( 1 ).addPagelet( (PratilipiContentDoc.PageletType) pagelet[0], pagelet[1] );
+		if( pageletList.size() > 0 ) {
+			PratilipiContentDoc.Chapter chapter = null;
+			if( pageletList.get( 0 )[0] != PratilipiContentDoc.PageletType.HEAD_1 )
+				chapter = pcDoc.addChapter( pratilipi.getTitle() == null ? pratilipi.getTitle() : pratilipi.getTitleEn() );
+			
+			for( Object[] pagelet : pageletList ) {
+				if( pagelet[0] == PratilipiContentDoc.PageletType.HEAD_1 )
+					chapter = pcDoc.addChapter( (String) pagelet[1] );
+				else if( pagelet[0] == PratilipiContentDoc.PageletType.HEAD_2 )
+					chapter = pcDoc.addChapter( (String) pagelet[1], 1 );
+				else if( chapter.getPage( 1 ) == null )
+					chapter.addPage( (PratilipiContentDoc.PageletType) pagelet[0], pagelet[1] );
+				else
+					chapter.getPage( 1 ).addPagelet( (PratilipiContentDoc.PageletType) pagelet[0], pagelet[1] );
+			}
 		}
 		
 		docAccessor.save( pratilipiId, pcDoc );
@@ -102,16 +104,16 @@ public class PratilipiDocUtil {
 				
 			} else if( childNode.nodeName().equals( "h1" ) ) {
 				
-				String text  = ( (Element) childNode ).text().trim();
-				if( text.isEmpty() )
+				String text = _extractText( childNode );
+				if( text == null )
 					continue;
 				pagelet = null;
 				pageletList.add( new Object[] { PratilipiContentDoc.PageletType.HEAD_1, text } );
 				
 			} else if( childNode.nodeName().equals( "h2" ) ) {
 				
-				String text  = ( (Element) childNode ).text().trim();
-				if( text.isEmpty() )
+				String text = _extractText( childNode );
+				if( text == null )
 					continue;
 				pagelet = null;
 				pageletList.add( new Object[] { PratilipiContentDoc.PageletType.HEAD_2, text } );
@@ -133,12 +135,16 @@ public class PratilipiDocUtil {
 						blobEntry.setName( fileName );
 						blobAccessor.createOrUpdateBlob( blobEntry );
 					}
-				} else {
+				} else if( imagUrl.indexOf( "name=" ) != -1 ) {
 					imageName = imagUrl.substring( imagUrl.indexOf( "name=" ) + 5 );
 					if( imageName.indexOf( '&' ) != -1 )
 						imageName = imageName.substring( 0, imageName.indexOf( '&' ) );
 					String fileName = "pratilipi/" + pratilipi.getId() + "/images/" + imageName;
 					blobEntry = blobAccessor.getBlob( fileName );
+					if( blobEntry == null ) // TODO: Remove this when all images from old resource folder are migrated to new resource location
+						blobEntry = blobAccessor.getBlob( "pratilipi-resource/" + pratilipi.getId() + "/" + imageName );
+				} else if( imagUrl.startsWith( "file:///" ) || imagUrl.startsWith( "C:" ) ) {
+					continue;
 				}
 				
 				JsonObject imgData = new JsonObject();
@@ -154,10 +160,8 @@ public class PratilipiDocUtil {
 				
 			} else {
 				
-				String text  = childNode.getClass() == TextNode.class
-						? ( (TextNode) childNode ).text().trim()
-						: ( (Element) childNode ).text().trim();
-				if( text.isEmpty() )
+				String text  = _extractText( childNode );
+				if( text == null || text.isEmpty() )
 					continue;
 				if( pagelet == null ) {
 					pagelet = new Object[] { PratilipiContentDoc.PageletType.TEXT, text };
@@ -172,6 +176,14 @@ public class PratilipiDocUtil {
 		
 		return pageletList;
 		
+	}
+	
+	private static String _extractText( Node node ) {
+		String text = node.getClass() == TextNode.class
+				? ( (TextNode) node ).text()
+				: ( (Element) node ).text();
+		text = text.replace( (char) 160, ' ' ).trim();
+		return text.isEmpty() ? null : text;
 	}
 	
 	

@@ -158,8 +158,8 @@ public class TestApi extends GenericApi {
 		
 		List<AccessTokenEntity> accessTokenList = ObjectifyService.ofy()
 				.load().type( AccessTokenEntity.class )
-				.filter( "ACCESS_TOKEN_TYPE", "USER" )
-				.limit( 1000 ).list();
+				.order( "ACCESS_TOKEN_TYPE" )
+				.limit( 10000 ).list();
 		
 		for( AccessToken accessToken : accessTokenList )
 			ObjectifyService.ofy().save().entity( accessToken );

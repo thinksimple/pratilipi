@@ -175,6 +175,9 @@ public class PratilipiProcessApi extends GenericApi {
 				if( pratilipi.getState() != PratilipiState.DELETED && pratilipiPage == null )
 					throw new InvalidArgumentException( "Page entity is missing for the Pratilipi." );
 				
+				if( pratilipi.getState() == PratilipiState.DELETED )
+					continue;
+				
 				if( pratilipi.getTitle() == null && pratilipi.getTitleEn() == null )
 					throw new InvalidArgumentException( "Title is missing for the Pratilipi." );
 					
