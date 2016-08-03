@@ -9,10 +9,10 @@
 			<a href="${ draftsUrl }"><p class="works-number"> ${ author.getContentDrafted() } ${ _strings.author_drafts }</p></a>
 		</div>
 		<div class="pull-right">
-			<a class="pull-right pratilipi-red pratilipi-view-more-link" href="${ draftsUrl }"> ${ _strings.view_more } </a>
+			<a class="pull-right pratilipi-red pratilipi-view-more-link" href="${ draftsUrl }"> <img style="height:22px;" src="http://0.ptlp.co/resource-all/icon/svg/chevron-right-red.svg"></img> </a>
 		</div>                   
 		<div class="clearfix"></div>
-		<hr>	
+		<hr class="pratilipi-margin-top-2">	
 		<#if draftedPratilipiList?has_content>
 			<#list draftedPratilipiList as pratilipi>
 				<#include "pratilipi-draft-card-mini.ftl">

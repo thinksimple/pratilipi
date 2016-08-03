@@ -25,20 +25,20 @@
 <#macro follow_author_card isGuest can_follow retUrl authorId followCount following name pageUrl imageUrl >
 	<div class="media">
 		<a class="media-left" href="${ pageUrl }">
-		    <img class="media-object img-circle pratilipi-without-margin" style="width:80px;height:80px;" src="${ imageUrl }">
+		    <img class="media-object img-circle pratilipi-without-margin" style="width:70px;height:70px;" src="${ imageUrl }">
 		</a>
-		<div class="media-body pratilipi-padding-15">
+		<div class="media-body pratilipi-padding-10">
 		    <#if isGuest == "true" >
-		    	<a class="pratilipi-red-button pull-right" href="/login?ret=${ retUrl }"><img src="http://0.ptlp.co/resource-all/icon/svg/user-plus-red.svg"></img></a>
+		    	<a class="pratilipi-red-button pull-right" href="/login?ret=${ retUrl }"><img class="width-16" src="http://0.ptlp.co/resource-all/icon/svg/user-plus-red.svg"></img></a>
 		    <#else>
 		    	<#if can_follow == "true">
 			    	<#if following == true >
 					    <button class="pratilipi-red-button pull-right" onclick="FollowAuthorPostRequest(${ authorId?c }, false)">
-							<img src="http://0.ptlp.co/resource-all/icon/svg/user-check-red.svg"></img>
+							<img class="width-16" src="http://0.ptlp.co/resource-all/icon/svg/user-check-red.svg"></img>
 						</button>
 					<#else>
 						<button class="pratilipi-red-button pull-right" onclick="FollowAuthorPostRequest(${ authorId?c }, true)">
-							<img style="width:16px;height:16px;" src="http://0.ptlp.co/resource-all/icon/svg/user-plus-red.svg"></img>
+							<img class="width-16" src="http://0.ptlp.co/resource-all/icon/svg/user-plus-red.svg"></img>
 						</button>			
 					</#if>		    		
 		    	</#if>
@@ -46,6 +46,5 @@
 		    <a href="${ pageUrl }"><h4 style="display:inline;" class="media-heading clip-content-2-lines bigger-line-height">${ name }</h4></a>
 		    <div>${ followCount } ${ _strings.author_followers }</div>  			
 		</div>
-		<br>
 	</div>
 </#macro>

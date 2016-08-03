@@ -24,20 +24,20 @@
 		<#if userAuthor.isFollowing()??>
 			<#if ( user.getId() != author.getUser().getId() ) >
 				<#if userAuthor.isFollowing() == true>
-					<button class="pratilipi-grey-button" onclick="FollowUnfollowPostRequest(false)">
-						<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+					<button class="pratilipi-red-button" onclick="FollowUnfollowPostRequest(false)">
+						<img class="width-16" src="http://0.ptlp.co/resource-all/icon/svg/user-check-red.svg"></img>
 						${ _strings.author_already_following } | ${ author.getFollowCount()?c }
 					</button>		
 				<#else>
-					<button class="pratilipi-light-blue-button" onclick="FollowUnfollowPostRequest(true)">
-						<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+					<button class="pratilipi-red-button" onclick="FollowUnfollowPostRequest(true)">
+						<img class="width-16" src="http://0.ptlp.co/resource-all/icon/svg/user-plus-red.svg"></img>
 						${ _strings.author_follow } | ${ author.getFollowCount()?c }
 					</button>
 				</#if> 
 			</#if>
 		<#else>
-			<a class="pratilipi-light-blue-button" href="/login?ret=${ author.getPageUrl() }">
-						<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+			<a class="pratilipi-red-button" href="/login?ret=${ author.getPageUrl() }">
+						<img class="width-16" src="http://0.ptlp.co/resource-all/icon/svg/user-plus-red.svg"></img>
 						${ _strings.author_follow } | ${ author.getFollowCount()?c }
 			</a>					
 		</#if>

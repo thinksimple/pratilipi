@@ -7,10 +7,10 @@
 		<a href="${ followingUrl }"><p class="works-number">${ followingList.getNumberFound() } ${ _strings.author_follow_members }</p></a>
 	</div>
 	<div class="pull-right">
-		<a class="pull-right pratilipi-red pratilipi-view-more-link" href="${ followingUrl }">${ _strings.view_more }</a>
+		<a class="pull-right pratilipi-red pratilipi-view-more-link" href="${ followingUrl }"><img style="height:22px;" src="http://0.ptlp.co/resource-all/icon/svg/chevron-right-red.svg"></img></a>
 	</div>
 	<div class="clearfix"></div>
-	<hr>	
+	<hr class="pratilipi-margin-top-2">	
 	
 	<#if followingList.getAuthorList()?has_content>
 		<#include "pratilipi-follow-author-card.ftl">

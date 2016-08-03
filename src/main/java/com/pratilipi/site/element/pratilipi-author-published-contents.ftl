@@ -15,10 +15,10 @@
 			<a href="${ publishedUrl }"><p class="works-number"> ${author.getContentPublished()} ${ _strings.author_count_works }</p></a>
 		</div>
 		<div class="pull-right">	
-			<a class="pull-right pratilipi-red pratilipi-view-more-link" href="${ publishedUrl }">${ _strings.view_more }</a>
+			<a class="pull-right pratilipi-red pratilipi-view-more-link" href="${ publishedUrl }"><img style="height:22px;" src="http://0.ptlp.co/resource-all/icon/svg/chevron-right-red.svg"></img></a>
 		</div>
 		<div class="clearfix"></div>
-		<hr>	
+		<hr class="pratilipi-margin-top-2">	
 		
 		<#if publishedPratilipiList?has_content>
 			<#include "pratilipi-card-list.ftl">
