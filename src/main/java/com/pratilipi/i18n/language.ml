@@ -282,7 +282,7 @@ month_nov	= നവംബര്‍
 month_dec	= ഡിസംബര്‍
 
 # Library
-library				= Library
+library				= ലൈബ്രറി
 my_library			= എന്‍റെ വായനശാല
 add_to_library		= എന്‍റെ ലൈബ്രറിയില്‍ ചേര്‍ക്കുക
 added_to_library	= വിജയകരമായി ലൈബ്രറിയിലേക്ക് ചേര്‍ത്തിരിക്കുന്നു 
