@@ -63,7 +63,7 @@ author_settings_require_language	= താങ്കളുടെ ഭാഷ ചേ�
 # Pratilipi
 pratilipi_type				= തരം
 pratilipi_listing_date		= ചേര്‍ത്ത ദിവസം
-pratilipi_last_updated_date	= Last Updated Date
+pratilipi_last_updated_date	= അവസാനമായി തിരുത്തിയ ദിവസം 
 pratilipi_published			= Published
 pratilipi_published_year	= പ്രസിദ്ധീകരിച്ച വര്‍ഷം
 pratilipi_summary			= സംഗ്രഹം
