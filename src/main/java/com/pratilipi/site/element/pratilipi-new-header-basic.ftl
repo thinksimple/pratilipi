@@ -1,4 +1,4 @@
-<div class="secondary-500 pratilipi-shadow pratilipi-new-header" style="display: block; padding: 5px;">
+<div class="secondary-500 pratilipi-shadow" style="display: block; padding: 5px;">
 	<div class="row" style="text-align: center; margin: 0 auto;">
 		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
 			<a href="/">
@@ -32,8 +32,7 @@
 			</a>
 		</div>
 	</div>
-	<form id="search_form">
-	  <div class="row">
+		<div class="row">
 	  	  <div class="col-xs-3">	
 	  		<div class="form-group" style="margin-bottom: 5px;">
 			  <select class="form-control" id="language" style="padding:0px;border:none;color:red;">
@@ -49,13 +48,16 @@
 			</div>
 		  </div>
 		  <div class="col-xs-9" style="padding-left: 2px;">
-		    <div class="input-group">
-		      <input type="text" class="form-control" placeholder="Search for">
-		      <span class="input-group-btn">
-		        <button class="btn btn-default" style="padding: 7px;" type="button"><img src="http://0.ptlp.co/resource-all/icon/svg/search.svg"></button>
-		      </span>
-		    </div><!-- /input-group -->
-		  </div>
-	   </div>	
-	</form> 
+			<form style="" method="get" action="/search">
+				<div class="form-group">
+					<div class="input-group">
+						<input type="text" class="form-control" name="q" placeholder="खोजिए" style="display: table-cell; width:100%;" maxlength="120">
+						<div style="background: #f5f5f5" class="input-group-addon"><button class="search-button" type="submit">
+							<img style="width: 16px; height: 16px;" src="http://0.ptlp.co/resource-all/icon/svg/search.svg">
+						</button></div>
+					</div>
+				</div>
+			</form>
+	   </div>		
+
 </div>
