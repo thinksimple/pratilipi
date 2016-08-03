@@ -14,6 +14,18 @@
 			<div class="container">
 				<#if ( ( action == "edit_profile") && author.hasAccessToUpdate() )>
 					<#include "../element/pratilipi-author-settings.ftl">
+				<#elseif action == "list_contents">
+					<#if state == "PUBLISHED">
+						<#-- Loop through contents -->
+						<#-- pratilipiList -->
+						<#-- pratilipiListPageCurr -->
+						<#-- pratilipiListPageMax -->
+					<#elseif state == "DRAFTED">
+						<#-- Loop through contents -->
+						<#-- pratilipiList -->
+						<#-- pratilipiListPageCurr -->
+						<#-- pratilipiListPageMax -->
+					</#if>
 				<#else>
 					<#include "../element/pratilipi-author-details.ftl">
 					<#include "../element/pratilipi-author-tabs.ftl">

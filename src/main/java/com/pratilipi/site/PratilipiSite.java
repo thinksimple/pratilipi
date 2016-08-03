@@ -719,6 +719,7 @@ public class PratilipiSite extends HttpServlet {
 									.getApi( PratilipiListApi.class )
 									.get( pratilipiListRequest );
 
+				dataModel.put( "state", pratilipiState.toString() );
 				dataModel.put( "pratilipiList", pratilipiListResponse.getPratilipiList() );
 				dataModel.put( "pratilipiListPageCurr", pageCurr );
 				Integer pageMax = pratilipiListResponse.getNumberFound() != null ?
