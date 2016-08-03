@@ -253,7 +253,7 @@ register_part_2					= യും
 register_part_3					= ഉം അംഗീകരിക്കുന്നു.
 
 # Event Page
-event_events					= Events
+event_events					= മത്സരങ്ങള്‍ 
 event_entries			= മത്സര എന്‍ട്രികള്‍ 
 event_name				= രചനാ മത്സരത്തിന്റെ പേര്
 event_name_en			= മത്സരത്തിന്റെ പേര് ഇംഗ്ലീഷില്‍ 
