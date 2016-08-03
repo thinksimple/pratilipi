@@ -518,10 +518,10 @@ a:hover {
  	padding: 5px !important;
 }
 .pratilipi-icon {
-	 max-width: 56px;
-	 max-height: 64px;
+	 max-width: 52px;
+	 max-height: 42px;
 	 position: absolute;
-	 left: 0;
+	 left: 20%;
 	 top: 0;
 	 right: 0;
 	 bottom: 0;
@@ -535,4 +535,11 @@ a:hover {
 }
 .pratilipi-margin-top-2 {
 	margin-top: 2px;
+}
+.pratilipi-new-header {
+	position: fixed;
+	z-index: 10;
+	width: 100%;
+	display: block;
+	border-bottom: 1px solid #d3d3d3;
 }
