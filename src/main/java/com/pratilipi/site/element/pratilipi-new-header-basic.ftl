@@ -32,4 +32,30 @@
 			</a>
 		</div>
 	</div>
+	<form id="search_form">
+	  <div class="row">
+	  	  <div class="col-xs-3" style="padding-left:2px;padding-right:2px;">	
+	  		<div class="form-group">
+			  <select class="form-control" id="language" style="padding:0px;border:none;color:red;">
+			    <option>HINDI</option>
+			    <option>TAMIL</option>
+			    <option>KANNADA</option>
+			    <option>BENGALI</option>
+			    <option>TELUGU</option>
+			    <option>GUJARATI</option>
+			    <option>MARATHI</option>
+			    <option>MALAYALAM</option>
+			  </select>
+			</div>
+		  </div>
+		  <div class="col-xs-9" style="padding-left:2px;padding-right:2px;">
+		    <div class="input-group">
+		      <input type="text" class="form-control" placeholder="Search for">
+		      <span class="input-group-btn">
+		        <button class="btn btn-default" style="padding:8px;"type="button"><img src="http://0.ptlp.co/resource-all/icon/svg/search.svg"></button>
+		      </span>
+		    </div><!-- /input-group -->
+		  </div>
+	   </div>	
+	</form> 
 </div>
