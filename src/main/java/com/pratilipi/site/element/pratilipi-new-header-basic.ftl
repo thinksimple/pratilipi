@@ -1,4 +1,4 @@
-<div class="secondary-500 pratilipi-shadow" style="display: block; padding: 5px;">
+<div class="secondary-500 pratilipi-shadow pratilipi-new-header" style="display: block; padding: 5px;">
 	<div class="row" style="text-align: center; margin: 0 auto;">
 		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
 			<a href="/">
