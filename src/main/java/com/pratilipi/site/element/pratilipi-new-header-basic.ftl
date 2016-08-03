@@ -52,7 +52,7 @@
 		    <div class="input-group">
 		      <input type="text" class="form-control" placeholder="Search for">
 		      <span class="input-group-btn">
-		        <button class="btn btn-default" style="padding: 6px;" type="button"><img src="http://0.ptlp.co/resource-all/icon/svg/search.svg"></button>
+		        <button class="btn btn-default" style="padding: 7px;" type="button"><img src="http://0.ptlp.co/resource-all/icon/svg/search.svg"></button>
 		      </span>
 		    </div><!-- /input-group -->
 		  </div>
