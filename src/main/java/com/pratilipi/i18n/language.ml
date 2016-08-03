@@ -284,12 +284,12 @@ month_dec	= ഡിസംബര്‍
 # Library
 library				= Library
 my_library			= എന്‍റെ വായനശാല
-add_to_library		= എന്‍റെ വായനശാലയിലേക്ക് കൂട്ടിച്ചേര്‍ക്കുക
-added_to_library	= Success! You have added this content to your library!
-remove_from_library	= എന്‍റെ വായനശാലയില്‍ നിന്നും ഒഴിവാക്കുക
-removed_from_library = You have removed the content from your library!
+add_to_library		= എന്‍റെ ലൈബ്രറിയില്‍ ചേര്‍ക്കുക
+added_to_library	= വിജയകരമായി ലൈബ്രറിയിലേക്ക് ചേര്‍ത്തിരിക്കുന്നു 
+remove_from_library	= എന്‍റെ ലൈബ്രറിയില്‍ നിന്ന്‍ ഒഴിവാക്കുക
+removed_from_library = വായനശാലയില്‍  നിന്നും ഒഴിവാക്കിയിരിക്കുന്നു 
 empty_library		= ക്ഷമിക്കണം! താങ്കളുടെ വായനശാലയില്‍ രചനകള്‍ ഒന്നും തന്നെ ഇല്ല, താങ്കള്‍ക്ക് വേണ്ട രചനയുടെ പേജില്‍ പോയി വായനശാലയിലേക്ക് ചേര്‍ക്കാവുന്നതാണ്.
-library_content_in_library	= Add content to Library
+library_content_in_library	= ലൈബ്രറിയിലേക്ക് രചനകള്‍ ചേര്‍ക്കൂ
 
 # Reader
 reader_goto_content_page	= രചനയുടെ പേജിലേക്ക് പോകൂ
