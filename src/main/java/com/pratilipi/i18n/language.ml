@@ -63,7 +63,7 @@ author_settings_require_language	= Please enter your language!
 # Pratilipi
 pratilipi_type				= തരം
 pratilipi_listing_date		= ചേര്‍ത്ത ദിവസം
-pratilipi_last_updated_date	= അവസാനമായി തിരുത്തിയ ദിവസം 
+pratilipi_last_updated_date	= Last Updated Date
 pratilipi_published			= Published
 pratilipi_published_year	= പ്രസിദ്ധീകരിച്ച വര്‍ഷം
 pratilipi_summary			= സംഗ്രഹം
@@ -80,12 +80,12 @@ pratilipi_confirm_move_to_drafts_true	= അതെ, ഡ്രാഫ്റ്റ�
 pratilipi_confirm_move_to_drafts_false	= വേണ്ട, ഡ്രാഫ്റ്റുകളിലേക്ക് മാറ്റരുത്!
 pratilipi_move_to_drafts				= ഡ്രാഫ്റ്റുകളിലേക്ക് മാറ്റൂ
 pratilipi_publish_it					= പ്രസിദ്ധീകരിക്കൂ.
-pratilipi_delete_content				= നീക്കം ചെയ്യൂ 
-pratilipi_confirm_move_to_drafts		=   ഡ്രാഫ്റ്റുകളിലേക്ക് മാറ്റട്ടേ ?
+pratilipi_delete_content				= Delete
+pratilipi_confirm_move_to_drafts		= ഡ്രാഫ്റ്റുകളിലേക്ക് മാറ്റട്ടേ ?
 pratilipi_confirm_move_to_drafts_okay	= ശരി
 pratilipi_confirm_delete_content		= ഈ രചന നീക്കം ചെയ്യട്ടേ?
 pratilipi_confirm_delete_content_okay	= ശരി
-pratilipi_deleted_successfully			=നീക്കം ചെയ്തിരിക്കുന്നു 
+pratilipi_deleted_successfully			= The content has been deleted successfully!
 
 # Rating
 rating_rating				= റേറ്റിംഗ് 
@@ -222,7 +222,7 @@ updated_pratilipi_info_success		= വിജയകരമായി പൂര്‍
 updated_review						= വിജയകരമായി പൂര്‍ത്തീകരിച്ചിരിക്കുന്നു !
 
 #Failure Messages
-server_error_message				= Some error Occured! Please try again!
+server_error_message				= എന്തോ സാങ്കേതിക പ്രശ്നം സംഭവിച്ചിരിക്കുന്നു. വീണ്ടും ശ്രമിക്കൂ 
 write_please_login_desktop			= You can publish contents by logging into desktop.
 
 # Author Edit Popup
