@@ -49,7 +49,7 @@
 		  </div>
 		  <div class="col-xs-9" style="padding-left: 2px;">
 			<form style="" method="get" action="/search">
-				<div class="form-group">
+				<div class="form-group" style="margin-bottom:0px;">
 					<div class="input-group">
 						<input type="text" class="form-control" name="q" placeholder="खोजिए" style="display: table-cell; width:100%;" maxlength="120">
 						<div style="background: #f5f5f5" class="input-group-addon"><button class="search-button" type="submit">
@@ -59,5 +59,5 @@
 				</div>
 			</form>
 	   </div>		
-
+	</div>
 </div>
