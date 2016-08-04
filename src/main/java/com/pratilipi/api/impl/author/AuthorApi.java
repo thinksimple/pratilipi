@@ -76,6 +76,9 @@ public class AuthorApi extends GenericApi {
 		private Language language;
 		private boolean hasLanguage;
 		
+		private String location;
+		private boolean hasLocation;
+
 		private String summary;
 		private boolean hasSummary;
 		
@@ -160,6 +163,14 @@ public class AuthorApi extends GenericApi {
 			return hasLanguage;
 		}
 		
+		public String getLocation() {
+			return location;
+		}
+
+		public boolean hasLocation() {
+			return hasLocation;
+		}
+
 		public String getSummary() {
 			return summary;
 		}
@@ -192,6 +203,7 @@ public class AuthorApi extends GenericApi {
 		private String dateOfBirth;
 		
 		private Language language;
+		private String location;
 		private String summary;
 		
 		private String pageUrl;
@@ -234,6 +246,7 @@ public class AuthorApi extends GenericApi {
 			this.dateOfBirth = authorData.getDateOfBirth();
 			
 			this.language = authorData.getLanguage();
+			this.location = authorData.getLocation();
 			this.summary = authorData.getSummary();
 			
 			this.pageUrl = authorData.getPageUrl();
@@ -275,8 +288,9 @@ public class AuthorApi extends GenericApi {
 				this.dateOfBirth = authorData.getDateOfBirth();
 				
 				this.language = authorData.getLanguage();
+				this.location = authorData.getLocation();
 				this.summary = authorData.getSummary();
-				
+
 				this.pageUrl = authorData.getPageUrl();
 				this.imageUrl = authorData.getImageUrl();
 				
@@ -383,6 +397,10 @@ public class AuthorApi extends GenericApi {
 		
 		public Language getLanguage() {
 			return language;
+		}
+		
+		public String getLocation() {
+			return location;
 		}
 		
 		public String getSummary() {

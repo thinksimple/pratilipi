@@ -159,6 +159,7 @@ public class AuthorDataUtil {
 			authorData.setFullNameEn( authorData.getNameEn() + " '" + author.getPenNameEn() + "'" );
 
 		authorData.setLanguage( author.getLanguage() );
+		authorData.setLocation( author.getLocation() );
 		authorData.setSummary( author.getSummary() );
 		
 		authorData.setPageUrl( authorPage.getUriAlias() == null ? authorPage.getUri() : authorPage.getUriAlias() );
@@ -346,6 +347,8 @@ public class AuthorDataUtil {
 		
 		if( authorData.hasLanguage() )
 			author.setLanguage( authorData.getLanguage() );
+		if( authorData.hasLocation() )
+			author.setLocation( authorData.getLocation() );
 		if( authorData.hasSummary() )
 			author.setSummary( authorData.getSummary() );
 
