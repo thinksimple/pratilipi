@@ -325,7 +325,11 @@
 					return;
 				}
 				this.set( 'writeButtonActive', false );
-				document.querySelector( 'pratilipi-write' ).createNewPratilipi();
+				var windowsize = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+				if( windowsize < 768 )
+					document.querySelector( 'pratilipi-alert' ).alert( 'You have to login via desktop to write!' );
+				else 
+					document.querySelector( 'pratilipi-write' ).createNewPratilipi();
 			},
 			
 			_gotoLibrary: function() {

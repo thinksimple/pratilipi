@@ -308,3 +308,6 @@ decrease_image_size		= Decrease image size
 reader_enjoyed_reading_part1	= Enjoyed reading the content? 
 reader_enjoyed_review_book		= Write a review
 reader_enjoyed_reading_part2	= Share it on
+
+# Notifications
+notification_notifications = Notifications

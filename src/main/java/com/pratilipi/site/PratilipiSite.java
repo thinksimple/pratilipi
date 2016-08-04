@@ -31,6 +31,7 @@ import com.pratilipi.api.impl.blogpost.BlogPostApi;
 import com.pratilipi.api.impl.blogpost.BlogPostListApi;
 import com.pratilipi.api.impl.event.EventApi;
 import com.pratilipi.api.impl.event.EventListApi;
+import com.pratilipi.api.impl.notification.NotificationListApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiListApi;
 import com.pratilipi.api.impl.user.shared.GenericUserResponse;
@@ -260,8 +261,11 @@ public class PratilipiSite extends HttpServlet {
 				dataModel = new HashMap<String, Object>();
 				dataModel.put( "title", "Share" );
 				templateName = templateFilePrefix + ( basicMode ? "ShareBasic.ftl" : "Share.ftl" );
-				
-			// Master website specific links
+			} else if( uri.equals( "/notification" ) ) {
+				dataModel = createDataModelForNotificationsPage( filterLanguage, basicMode );
+				templateName = templateFilePrefix + ( basicMode ? "NotificationBasic.ftl" : "Notification.ftl" );
+
+				// Master website specific links
 			
 			} else if( filterLanguage == null && uri.equals( "/books" ) ) {
 				dataModel = createDataModelForListPage( PratilipiType.BOOK, basicMode, displayLanguage, filterLanguage, request );
@@ -736,14 +740,17 @@ public class PratilipiSite extends HttpServlet {
 					.getApi( UserAuthorFollowApi.class )
 					.get( getRequest );
 
+			Integer followResultCount = basicMode ? 3 : 20;
 			UserAuthorFollowListApi.GetRequest followersListRequest = new UserAuthorFollowListApi.GetRequest();
 			followersListRequest.setAuthorId( authorId );
+			followersListRequest.setResultCount( followResultCount );
 			UserAuthorFollowListApi.Response followersList = ApiRegistry
 					.getApi( UserAuthorFollowListApi.class )
 					.get( followersListRequest );
 
 			UserAuthorFollowListApi.GetRequest followingListRequest = new UserAuthorFollowListApi.GetRequest();
 			followingListRequest.setUserId( authorResponse.getUser().getId() );
+			followingListRequest.setResultCount( followResultCount );
 			UserAuthorFollowListApi.Response followingList= ApiRegistry
 					.getApi( UserAuthorFollowListApi.class )
 					.get( followingListRequest );
@@ -1102,7 +1109,21 @@ public class PratilipiSite extends HttpServlet {
 		return dataModel;
 		
 	}
-	
+
+	private Map<String, Object> createDataModelForNotificationsPage( Language language, Boolean basicMode ) 
+			throws InsufficientAccessException {
+		NotificationListApi.Response response = ApiRegistry
+				.getApi( NotificationListApi.class )
+				.get( new NotificationListApi.GetRequest() );
+		
+		Map<String, Object> dataModel = new HashMap<String, Object>();
+		dataModel.put( "title", I18n.getString( "notification_notifications", language ) );
+		dataModel.put( "notificationList", response.getNotificationList() );
+		dataModel.put( "notificationListJson", new Gson().toJson( response ) );
+
+		return dataModel;
+	}
+
 	private Map<String, Object> createDataModelForListPage( PratilipiType type,
 			boolean basicMode, Language displayLanguage, Language filterLanguage,
 			HttpServletRequest request ) throws InsufficientAccessException, UnexpectedServerException {

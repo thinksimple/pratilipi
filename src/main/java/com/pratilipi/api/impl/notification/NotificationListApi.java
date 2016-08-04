@@ -23,6 +23,14 @@ public class NotificationListApi extends GenericApi {
 		private String cursor;
 		private Integer resultCount;
 
+		public void setCursor( String cursor ) {
+			this.cursor = cursor;
+		}
+
+		public void setResultCount( Integer resultCount ) {
+			this.resultCount = resultCount;
+		}
+
 	}
 	
 	public static class Response extends GenericResponse { 
@@ -39,6 +47,14 @@ public class NotificationListApi extends GenericApi {
 			for( NotificationData notificationData : notificationDataList )
 				this.notificationList.add(  new NotificationApi.Response( notificationData, NotificationListApi.class ) );
 			this.cursor = cursor;
+		}
+
+		public List<NotificationApi.Response> getNotificationList() {
+			return notificationList;
+		}
+
+		public String getCursor() {
+			return cursor;
 		}
 
 	}
