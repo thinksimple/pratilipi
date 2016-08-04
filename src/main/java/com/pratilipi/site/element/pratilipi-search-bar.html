@@ -18,6 +18,13 @@
 			flex-grow: 1;
 		}
 		.flex-container .pratilipi-text {
+			font-size: 14px;
+			<#if lang == "ta">
+				font-size: 11px;
+			</#if>
+			<#if lang == "ml">
+				font-size: 12px;
+			</#if>
 			font-weight: bold;
 			text-align: center;
 			white-space: nowrap;
@@ -39,7 +46,7 @@
 			}
 		}
 		.flex-container paper-item.language-font {
-			font-size: 14px;
+			font-size: 12px;
 			font-weight: 700;
 		}
 		a.pratilipi-black {
@@ -68,7 +75,7 @@
 	</style>
 	<template>
 		<div class="flex-container">
-			<paper-menu-button no-animations vertical-offset=36 class="language" horizontal-align="left" vertical-align="top">
+			<paper-menu-button no-animations vertical-offset=24 class="language" horizontal-align="left" vertical-align="top">
 				<div class="pratilipi-red pratilipi-text dropdown-trigger">
 					${ _strings.pratilipi }
 					<iron-icon icon="icons:arrow-drop-down"></iron-icon>
@@ -87,7 +94,7 @@
 				</paper-menu>
 			</paper-menu-button>
 			<form id="searchBarForm" action="javascript:void(0);" on-keyup="onSubmit">
-				<paper-input id="searchBarInput" name="q" class="search" type="search" placeholder="${ _strings.search }" onfocus="this.placeholder = ''" onblur="this.placeholder = '${ _strings.search }'" value="{{ query::input }}">
+				<paper-input id="searchBarInput" name="q" class="search" type="search" placeholder="${ _strings.search_bar_help }" onfocus="this.placeholder = ''" onblur="this.placeholder = '${ _strings.search_bar_help }'" value="{{ query::input }}">
 					<paper-icon-button style="width: 32px; height: 32px; padding: 4px;" suffix icon="icons:search" noink="true" on-click="onSubmit"></paper-icon-button>
 				</paper-input>
 			</form>

@@ -106,11 +106,13 @@
 						<th>${ _strings.author_since }</th>
 						<td>{{ registrationDate }}</td>
 					</tr>
+					<template is="dom-if" if="{{ hasLocation }}">
+						<tr>
+							<th>${ _strings.author_location }</th>
+							<td>{{ location }}</td>
+						</tr>
+					</template>
 					<#-- <tr>
-						<th>${ _strings.author_location }</th>
-						<td>New Delhi</td>
-					</tr>
-					<tr>
 						<th>${ _strings.author_date_of_birth }</th>
 						<td>01/01/1970</td>
 					</tr> -->
@@ -149,6 +151,8 @@
 			_authorObserver: function() {
 				this.set( 'summary', this.author == null ? null : this.author.summary );
 				this.set( 'registrationDate', this.author == null ? null : convertDate( this.author.registrationDateMillis ) );
+				this.set( 'hasLocation', this.author.location != null );
+				this.set( 'location', this.author.location );
 			},
 
 			attached: function() {

@@ -73,7 +73,10 @@
 			</div>
 			<div role="tabpanel" class="tab-pane fade" id="author-about">
 				<pratilipi-author-biography author="[[ author ]]"></pratilipi-author-biography>
-				<pratilipi-author-following author-list="{{ followingList }}" user-id="{{ userId }}"></pratilipi-author-following>
+				<#-- For Authors without user profile -->
+				<template is="dom-if" if="{{ hasUserId }}">
+					<pratilipi-author-following author-list="{{ followingList }}" user-id="{{ userId }}"></pratilipi-author-following>
+				</template>
 				<pratilipi-author-followers user-list="{{ followersList }}" author-id="{{ authorId }}"></pratilipi-author-followers>
 			</div>
 		</div>
@@ -103,6 +106,7 @@
 		
 		_authorObserver: function() {
 			this.set( 'hasAccessToUpdate', this.author.hasAccessToUpdate );
+			this.set( 'hasUserId', this.author.user != null && this.author.user.userId != null );
 			this.set( 'userId', this.author.user.userId );
 			this.set( 'authorId', this.author.authorId );
 		},
