@@ -6,7 +6,7 @@
 
 <#if ( ( user.isGuest == false ) && ( author.getUser().getId()?? ) && ( user.getId() == author.getUser().getId() ) && ( !publishedPratilipiList?has_content ) ) >
 <#else>
-	<#assign publishedUrl = "/search?authorId=" + author.getId()?c + "&state=PUBLISHED">
+	<#assign publishedUrl = "?action=list_contents&state=PUBLISHED">
 	<div class="pratilipi-shadow secondary-500 box">	
 		<div class="pull-left">
 			<a href="${ publishedUrl }"><h5 class="pratilipi-red pratilipi-no-margin">
@@ -14,9 +14,11 @@
 			</h5></a>
 			<a href="${ publishedUrl }"><p class="works-number"> ${author.getContentPublished()} ${ _strings.author_count_works }</p></a>
 		</div>
-		<div class="pull-right">	
-			<a class="pull-right pratilipi-red pratilipi-view-more-link" href="${ publishedUrl }"><img style="height:22px;" src="http://0.ptlp.co/resource-all/icon/svg/chevron-right-red.svg"></img></a>
-		</div>
+		<#if ( author.getContentPublished() > 3 )>
+			<div class="pull-right">	
+				<a class="pull-right pratilipi-red pratilipi-view-more-link" href="${ publishedUrl }"><img style="height:22px;" src="http://0.ptlp.co/resource-all/icon/svg/chevron-right-red.svg"></img></a>
+			</div>
+		</#if>	
 		<div class="clearfix"></div>
 		<hr class="pratilipi-margin-top-2">	
 		

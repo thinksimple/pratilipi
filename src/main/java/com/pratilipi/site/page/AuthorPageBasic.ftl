@@ -20,6 +20,13 @@
 						<#-- pratilipiList -->
 						<#-- pratilipiListPageCurr -->
 						<#-- pratilipiListPageMax -->
+						
+						<#assign publishedPratilipiList = pratilipiList>
+						<#include "../element/pratilipi-card-list.ftl">
+					<#-- Add page navigation -->
+						<#assign currentPage = pratilipiListPageCurr>
+						<#assign maxPage = pratilipiListPageMax>
+						<#include "../element/pratilipi-page-navigation.ftl">
 					<#elseif state == "DRAFTED">
 						<#-- Loop through contents -->
 						<#-- pratilipiList -->

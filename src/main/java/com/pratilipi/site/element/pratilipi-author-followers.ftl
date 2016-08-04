@@ -6,9 +6,11 @@
 		</h5></a>
 		<a href="${ followersUrl }"><p class="works-number">${ followersList.getNumberFound() } ${ _strings.author_follow_members }</p></a>
 	</div>
-	<div class="pull-right">
-		<a class="pull-right pratilipi-red pratilipi-view-more-link" href="${ followersUrl }"><img style="height:22px;" src="http://0.ptlp.co/resource-all/icon/svg/chevron-right-red.svg"></img> </a>
-	</div>
+	<#if ( followersList.getNumberFound() > 3 )>
+		<div class="pull-right">
+			<a class="pull-right pratilipi-red pratilipi-view-more-link" href="${ followersUrl }"><img style="height:22px;" src="http://0.ptlp.co/resource-all/icon/svg/chevron-right-red.svg"></img> </a>
+		</div>
+	</#if>	
 	<div class="clearfix"></div>
 	<hr class="pratilipi-margin-top-2">	
 
