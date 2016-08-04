@@ -15,24 +15,13 @@
 				<#if ( ( action == "edit_profile") && author.hasAccessToUpdate() )>
 					<#include "../element/pratilipi-author-settings.ftl">
 				<#elseif action == "list_contents">
+				<div class="pratilipi-shadow secondary-500 box">
 					<#if state == "PUBLISHED">
-						<#-- Loop through contents -->
-						<#-- pratilipiList -->
-						<#-- pratilipiListPageCurr -->
-						<#-- pratilipiListPageMax -->
-						
-						<#assign publishedPratilipiList = pratilipiList>
-						<#include "../element/pratilipi-card-list.ftl">
-					<#-- Add page navigation -->
-						<#assign currentPage = pratilipiListPageCurr>
-						<#assign maxPage = pratilipiListPageMax>
-						<#include "../element/pratilipi-page-navigation.ftl">
+						<#include "../element/pratilipi-published-list.ftl">
 					<#elseif state == "DRAFTED">
-						<#-- Loop through contents -->
-						<#-- pratilipiList -->
-						<#-- pratilipiListPageCurr -->
-						<#-- pratilipiListPageMax -->
+						<#include "../element/pratilipi-drafted-list.ftl">						
 					</#if>
+				</div>	
 				<#else>
 					<#include "../element/pratilipi-author-details.ftl">
 					<#include "../element/pratilipi-author-tabs.ftl">
