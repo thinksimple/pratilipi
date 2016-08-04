@@ -55,7 +55,7 @@ author_followers				= பின்தொடர்பவர்கள்
 author_no_followers				= மன்னிக்கவும்! இந்த ஆசிரியரை பின்தொடர்பவர்கள் யாருமில்லை
 author_following				= பின்தொடர்கிறீர்கள்
 author_no_following				= மன்னிக்கவும்! இந்த ஆசிரியர் யாரையும் பின்தொடரவில்லை
-author_follow_members			= Members
+author_follow_members			= நபர்கள்
 author_cannot_follow_yourself	= Yourself
 author_settings_require_first_name	= உங்கள் பெயரை எழுதவும்
 author_settings_require_language	= உங்களது மொழியை எழுதவும்!
@@ -222,15 +222,15 @@ updated_pratilipi_info_success		= வெற்றி !
 updated_review						= வெற்றி !
 
 #Failure Messages
-server_error_message				= Some error Occured! Please try again!
+server_error_message				= சிறிய தொழிநுட்பக்கோளாறு.சிறிதுநேரம் கழித்து முயற்சிக்கவும்.
 write_please_login_desktop			= உள்நுழைந்துவிட்டு எழுதவும்
 
 # Author Edit Popup
 edit_author_heading				= உங்கள் விவரத்தை திருத்த	
-edit_author_first_name			= பெயர் (தமிழில்)
-edit_author_last_name			= 
-edit_author_first_name_en		= பெயர் (ஆங்கிலத்தில்)
-edit_author_last_name_en		= 
+edit_author_first_name			= முதற்பெயர் (தமிழில்)
+edit_author_last_name			= கடைசி  பெயர் (தமிழில்) 
+edit_author_first_name_en		= முதற்பெயர் (ஆங்கிலத்தில்)
+edit_author_last_name_en		= கடைசி பெயர் (ஆங்கிலத்தில்)
 edit_author_pen_name			= புனைப்பெயர்  ( தமிழில் )
 edit_author_pen_name_en			= புனைப்பெயர்  ( ஆங்கிலத்தில்) 
 edit_author_birthday_ddmmyyyy	= பிறந்த நாள் (தேதி-மாதம்-வருடம்)
