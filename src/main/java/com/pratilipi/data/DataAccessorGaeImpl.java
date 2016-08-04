@@ -1658,8 +1658,6 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		if( userId != null )
 			query = query.filter( "USER_ID", userId );
 		
-		query = query.filter( "STATE !=", NotificationState.HIDDEN );
-		
 		query = query.order( "-LAST_UPDATED" );
 		
 		if( cursorStr != null )
