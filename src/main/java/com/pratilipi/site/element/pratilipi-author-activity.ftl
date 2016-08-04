@@ -42,7 +42,7 @@
 		    });		
 	}
 </script>
-<div role="tabpanel" class="tab-pane active" id="author-activity">
+<div role="tabpanel" class="tab-pane <#if publishedPratilipiList?has_content>active</#if>" id="author-activity">
     <#include "pratilipi-author-drafted-contents.ftl">
 	<#include "pratilipi-author-published-contents.ftl">
 </div>

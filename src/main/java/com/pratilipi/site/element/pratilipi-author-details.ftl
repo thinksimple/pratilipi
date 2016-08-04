@@ -22,7 +22,7 @@
 	<div class="clearfix"></div>
 	<div class="follow-author">
 		<#if userAuthor.isFollowing()??>
-			<#if ( ( !author.getUser()?? ) || ( user.getId() != author.getUser().getId() ) ) >
+			<#if ( ( !author.getUser().getId()?? ) || ( user.getId() != author.getUser().getId() ) ) >
 				<#if userAuthor.isFollowing() == true>
 					<button class="pratilipi-red-button" onclick="FollowUnfollowPostRequest(false)">
 						<img class="width-16" src="http://0.ptlp.co/resource-all/icon/svg/user-check-red.svg"></img>
