@@ -47,6 +47,7 @@ public interface DataAccessor {
 	User getUser( Long id );
 	User getUserByEmail( String email );
 	User getUserByFacebookId( String facebookId );
+	Map<Long, User> getUsers( List<Long> idList );
 	List<User> getUserList( List<Long> idList );
 	DataListCursorTuple<User> getUserList( String cursorStr, Integer resultCount );
 	@Deprecated
@@ -63,7 +64,7 @@ public interface DataAccessor {
 	// AUDIT_LOG Table
 	AuditLog newAuditLog();
 	AuditLog newAuditLog( String accessId, AccessType accessType, Object eventDataOld );
-	DataListCursorTuple<AuditLog> getAuditLogList( String cursor, Integer resultCount );
+	DataListCursorTuple<AuditLog> getAuditLogList( Date minCreationDate, String cursor, Integer resultCount );
 
 	
 	// PAGE Table

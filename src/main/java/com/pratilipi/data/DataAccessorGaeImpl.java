@@ -130,6 +130,14 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return id == null || id.isEmpty() ? null : ObjectifyService.ofy().load().type( clazz ).id( id ).now();
 	}
 	
+	private <P extends GenericOfyType,Q extends P, R> Map<R, P> getEntities( Class<Q> clazz, List<R> idList ) {
+		Map<R, Q> entityMap = ObjectifyService.ofy().load().type( clazz ).ids( idList );
+		Map<R, P> returnMap = new HashMap<>( entityMap.size() );
+		for( R id : idList )
+			returnMap.put( id, entityMap.get( id ) );
+		return returnMap;
+	}
+	
 	private <P extends GenericOfyType,Q extends P, R> List<P> getEntityList( Class<Q> clazz, List<R> idList ) {
 		Map<R, Q> entityMap = ObjectifyService.ofy().load().type( clazz ).ids( idList );
 		List<P> entityList = new ArrayList<>();
@@ -285,6 +293,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 
 	@Override
+	public Map<Long, User> getUsers( List<Long> idList ) {
+		return getEntities( UserEntity.class, idList );
+	}
+	
+	@Override
 	public List<User> getUserList( List<Long> idList ) {
 		return getEntityList( UserEntity.class, idList );
 	}
@@ -431,9 +444,15 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return new AuditLogEntity( accessId, accessType, eventDataOld );
 	}
 	
-	public DataListCursorTuple<AuditLog> getAuditLogList( String cursorStr, Integer resultCount ) {
+	@Override
+	public DataListCursorTuple<AuditLog> getAuditLogList( Date minCreationDate, String cursorStr, Integer resultCount ) {
 		
 		Query<AuditLogEntity> query = ObjectifyService.ofy().load().type( AuditLogEntity.class );
+		
+		if( minCreationDate != null ) {
+			query = query.filter( "CREATION_DATE >=", minCreationDate );
+			query = query.order( "CREATION_DATE" );
+		}
 		
 		if( cursorStr != null )
 			query = query.startAt( Cursor.fromWebSafeString( cursorStr ) );

@@ -6,6 +6,7 @@ import static com.pratilipi.data.mock.PratilipiMock.PRATILIPI_TABLE;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -155,6 +156,12 @@ public class DataAccessorMockImpl implements DataAccessor {
 				return user;
 				
 		return null;
+	}
+	
+	@Override
+	public Map<Long, User> getUsers( List<Long> idList ) {
+		// TODO: Implementation
+		return new HashMap<>( 0 );
 	}
 	
 	@Override
@@ -733,7 +740,7 @@ public class DataAccessorMockImpl implements DataAccessor {
 
 
 	@Override
-	public DataListCursorTuple<AuditLog> getAuditLogList(String cursor,
+	public DataListCursorTuple<AuditLog> getAuditLogList( Date minCreationDate, String cursor,
 			Integer resultCount) {
 		// TODO Auto-generated method stub
 		return null;
