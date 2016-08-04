@@ -7,6 +7,7 @@ import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.impl.author.AuthorApi;
+import com.pratilipi.api.impl.init.InitApi;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
@@ -147,6 +148,36 @@ public class PratilipiApi extends GenericApi {
 			
 		}
 
+		public Response( PratilipiData pratilipi, Class<? extends GenericApi> clazz ) {
+			
+			if( clazz == InitApi.class || clazz == PratilipiListApi.class ) {
+				this.pratilipiId = pratilipi.getId();
+				this.title = pratilipi.getTitle() == null ? pratilipi.getTitleEn() : pratilipi.getTitle();
+				if( UxModeFilter.isAndroidApp() )
+					this.language = pratilipi.getLanguage();
+				if( pratilipi.getAuthor() != null )
+					this.author = new AuthorApi.Response( pratilipi.getAuthor(), PratilipiListApi.class );
+				if( UxModeFilter.isAndroidApp() )
+					this.summary = pratilipi.getSummary();
+				this.pageUrl = pratilipi.getPageUrl();
+				this.coverImageUrl = pratilipi.getCoverImageUrl();
+				this.readPageUrl = pratilipi.getReadPageUrl();
+				this.writePageUrl = pratilipi.getWritePageUrl();
+				if( UxModeFilter.isAndroidApp() )
+					this.contentType = pratilipi.getContentType();
+				if( UxModeFilter.isAndroidApp() )
+					this.listingDateMillis = pratilipi.getListingDate().getTime();
+				if( UxModeFilter.isAndroidApp() )
+					this.index = pratilipi.getIndex();
+				this.ratingCount = pratilipi.getRatingCount();
+				this.averageRating = pratilipi.getAverageRating();
+				this.readCount = pratilipi.getReadCount();
+				this.addedToLib = pratilipi.isAddedToLib();
+				this.hasAccessToUpdate = pratilipi.hasAccessToUpdate();
+			}
+			
+		}
+		
 		public Response( PratilipiData pratilipi, boolean listItem ) {
 			
 			this.pratilipiId = pratilipi.getId();

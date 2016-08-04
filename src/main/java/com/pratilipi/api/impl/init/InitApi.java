@@ -49,7 +49,7 @@ public class InitApi extends GenericApi {
 				this.listPageUrl = listPageUrl;
 				this.pratilipiList = new ArrayList<PratilipiApi.Response>( pratilipiList.size() );
 				for( PratilipiData pratilipiData : pratilipiList )
-					this.pratilipiList.add( new PratilipiApi.Response( pratilipiData, true ) );
+					this.pratilipiList.add( new PratilipiApi.Response( pratilipiData, InitApi.class ) );
 			}
 		
 		}

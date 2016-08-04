@@ -16,6 +16,7 @@ import com.pratilipi.common.type.PratilipiType;
 import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.client.PratilipiData;
+import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.util.PratilipiDataUtil;
 
 @SuppressWarnings("serial")
@@ -95,7 +96,7 @@ public class PratilipiListApi extends GenericApi {
 		public Response( List<PratilipiData> pratilipiList, String cursor, Long numberFound ) {
 			this.pratilipiList = new ArrayList<>( pratilipiList.size() ); 
 			for( PratilipiData pratilipi : pratilipiList )
-				this.pratilipiList.add( new PratilipiApi.Response( pratilipi, true ) );
+				this.pratilipiList.add( new PratilipiApi.Response( pratilipi, PratilipiListApi.class ) );
 			this.cursor = cursor;
 			this.numberFound = numberFound;
 		}
