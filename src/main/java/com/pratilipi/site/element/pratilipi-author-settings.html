@@ -6,6 +6,11 @@
 			display: block;
 		}
 
+		.pratilipi-logo {
+			width: 64px;
+			height: 64px;
+		}
+
 		textarea {
 			display: block;
 			width: 100%;
@@ -16,14 +21,14 @@
 			--paper-dropdown-menu-focus-color: #107FE5;
 			--paper-dropdown-menu-input-color: #333;
 			--paper-input-container-input: {
-				font-family: Helvetica,'Noto Sans Tamil', sans-serif;
+				font-family: inherit;
 			};
 			--paper-input-container-underline: {
 				background: #107FE5;
 			};
 			--paper-input-container-label: {
 				font-size: 15px;
-				font-family: Helvetica,'Noto Sans Tamil', sans-serif;
+				font-family: inherit;
 				text-align: left;
 				color: #107FE5;
 			};
@@ -39,7 +44,7 @@
 
 		paper-menu paper-item {
 			font-size: 15px;
-			font-family: Helvetica,'Noto Sans Tamil', sans-serif;
+			font-family: inherit;
 			color: #333;
 			white-space: nowrap;
 		}
@@ -56,29 +61,30 @@
 						<paper-icon-button noink icon="close" data-dismiss="modal"></paper-icon-button>
 					</div>
 
-					<img title="${ _strings.pratilipi }" alt="${ _strings.pratilipi }" src="http://0.ptlp.co/resource-${ lang }/logo/pratilipi_logo.png" />
+					<img class="pratilipi-logo" title="${ _strings.pratilipi }" alt="${ _strings.pratilipi }" src="http://0.ptlp.co/resource-${ lang }/logo/pratilipi_logo.png" />
+					<h6 class="text-center">{{ author.fullName }}</h6>
 
 					<div class="row">
 						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-							<pratilipi-input label="${ _strings.edit_author_first_name }" value="{{ firstName::input }}"></pratilipi-input>
+							<pratilipi-input icon="social:person" label="${ _strings.edit_author_first_name }" value="{{ firstName::input }}"></pratilipi-input>
 						</div>
 						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 							<pratilipi-input label="${ _strings.edit_author_last_name }" value="{{ lastName::input }}"></pratilipi-input>
 						</div>
 						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-							<pratilipi-input label="${ _strings.edit_author_first_name_en }" value="{{ firstNameEn::input }}"></pratilipi-input>
+							<pratilipi-input icon="social:person-outline" label="${ _strings.edit_author_first_name_en }" value="{{ firstNameEn::input }}"></pratilipi-input>
 						</div>
 						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 							<pratilipi-input label="${ _strings.edit_author_last_name_en }" value="{{ lastNameEn::input }}"></pratilipi-input>
 						</div>
 						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-							<pratilipi-input label="${ _strings.edit_author_pen_name }" value="{{ penName::input }}"></pratilipi-input>
+							<pratilipi-input icon="editor:format-quote" label="${ _strings.edit_author_pen_name }" value="{{ penName::input }}"></pratilipi-input>
 						</div>
 						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 							<pratilipi-input label="${ _strings.edit_author_pen_name_en }" value="{{ penNameEn::input }}"></pratilipi-input>
 						</div>
 						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-							<paper-dropdown-menu id="authorGender" noink label="${ _strings.gender }">
+							<paper-dropdown-menu id="authorGender" no-animations noink label="${ _strings.gender }">
 								<paper-menu noink selected="[[ selectedGender ]]" class="dropdown-content" style="white-space: nowrap; width: auto;">
 									<paper-item value="MALE">${ _strings.gender_male }</paper-item>
 									<paper-item value="FEMALE">${ _strings.gender_female }</paper-item>
@@ -87,13 +93,13 @@
 							</paper-dropdown-menu>
 						</div>
 						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-							<pratilipi-input label="${ _strings.author_location }" value="{{ location::input }}"></pratilipi-input>
+							<pratilipi-input icon="social:location-city" label="${ _strings.author_location }" value="{{ location::input }}"></pratilipi-input>
 						</div>
 						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-							<pratilipi-input type="date" label="${ _strings.edit_author_birthday_ddmmyyyy }" always-float-label value="{{ dateOfBirth::input }}"></pratilipi-input>
+							<pratilipi-input type="date" icon="icons:date-range" label="${ _strings.edit_author_birthday_ddmmyyyy }" always-float-label value="{{ dateOfBirth::input }}"></pratilipi-input>
 						</div>
 						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-							<paper-dropdown-menu id="authorLanguage" noink label="${ _strings.edit_author_language }">
+							<paper-dropdown-menu id="authorLanguage" no-animations noink label="${ _strings.edit_author_language }">
 								<paper-menu noink selected="[[ selectedLanguage ]]" class="dropdown-content" style="white-space: nowrap; width: auto;">
 									<paper-item value="BENGALI">${ _strings.language_bn }</paper-item>
 									<paper-item value="GUJARATI">${ _strings.language_gu }</paper-item>
@@ -144,6 +150,7 @@
 
 			properties: {
 				author: { type: Object },
+				user: { type: Object },
 
 				// Specific to input fields
 				authorId: { type: String },
@@ -179,47 +186,47 @@
 			},
 
 			process: function( author ) {
-				this.message = null;
-				this.authorId = author.authorId;
-				this.firstName = author.firstName;
-				this.lastName = author.lastName;
-				this.penName = author.penName;
-				this.firstNameEn = author.firstNameEn;
-				this.lastNameEn = author.lastNameEn;
-				this.penNameEn = author.penNameEn;
-				this.dateOfBirth = author.dateOfBirth == null ? null : this._setDateProcess( author.dateOfBirth );
-				this.location = author.location;
-				this.summary = author.summary;				
+				this.set( 'message', null );
+				this.set( 'authorId', author.authorId );
+				this.set( 'firstName', author.firstName );
+				this.set( 'lastName', author.lastName );
+				this.set( 'penName', author.penName );
+				this.set( 'firstNameEn', author.firstNameEn );
+				this.set( 'lastNameEn', author.lastNameEn );
+				this.set( 'penNameEn', author.penNameEn );
+				this.set( 'dateOfBirth', author.dateOfBirth == null ? null : this._setDateProcess( author.dateOfBirth ) );
+				this.set( 'location', author.location );
+				this.set( 'summary', author.summary );
 
 				// paper-dropdown-menu for language
-				this.language = author.language == null ? "${ language?upper_case }" : author.language;
-				this.selectedLanguage = null;
+				this.set( 'language', author.language );
+				this.set( 'selectedLanguage', null );
 				if( this.language == "BENGALI" )
-					this.selectedLanguage = 0;
+					this.set( 'selectedLanguage', 0 );
 				else if( this.language == "GUJARATI" )
-					this.selectedLanguage = 1;
+					this.set( 'selectedLanguage', 1 );
 				else if( this.language == "HINDI" )
-					this.selectedLanguage = 2;
+					this.set( 'selectedLanguage', 2 );
 				else if( this.language == "MALAYALAM" )
-					this.selectedLanguage = 3;
+					this.set( 'selectedLanguage', 3 );
 				else if( this.language == "MARATHI" )
-					this.selectedLanguage = 4;
+					this.set( 'selectedLanguage', 4 );
 				else if( this.language == "TAMIL" )
-					this.selectedLanguage = 5;
+					this.set( 'selectedLanguage', 5 );
 				else if( this.language == "TELUGU" )
-					this.selectedLanguage = 6;
+					this.set( 'selectedLanguage', 6 );
 				else if( this.language == "KANNADA" )
-					this.selectedLanguage = 7;
+					this.set( 'selectedLanguage', 7 );
 
 				// paper-dropdown-menu for language
-				this.gender = author.gender == null ? null : author.gender.toUpperCase();
-				this.selectedGender = null;
+				this.set( 'gender', author.gender == null ? null : author.gender.toUpperCase() );
+				this.set( 'selectedGender', null );
 				if( this.gender == "MALE" )
-					this.selectedGender = 0;
+					this.set( 'selectedGender', 0 );
 				else if( this.gender == "FEMALE" )
-					this.selectedGender = 1; 
+					this.set( 'selectedGender', 1 );
 				else if( this.gender == "OTHER" )
-					this.selectedGender = 2;
+					this.set( 'selectedGender', 2 );
 			},
 
 			editAuthor: function() {

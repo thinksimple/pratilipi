@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.jsoup.Jsoup;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.pratilipi.api.shared.GenericRequest;
@@ -158,9 +160,15 @@ public class AuthorDataUtil {
 		else if( authorData.getNameEn() != null && author.getPenNameEn() != null )
 			authorData.setFullNameEn( authorData.getNameEn() + " '" + author.getPenNameEn() + "'" );
 
+		String summary = author.getSummary();
+		if( summary != null ) {
+			summary = Jsoup.parse( summary.replaceAll( "(?i)<br[^>]*>|\\n", "LINE_BREAK" ) ).text();
+			summary = summary.replaceAll( "LINE_BREAK", "\n" ).trim();
+		}
+
 		authorData.setLanguage( author.getLanguage() );
 		authorData.setLocation( author.getLocation() );
-		authorData.setSummary( author.getSummary() );
+		authorData.setSummary( summary );
 		
 		authorData.setPageUrl( authorPage.getUriAlias() == null ? authorPage.getUri() : authorPage.getUriAlias() );
 		authorData.setImageUrl( createAuthorImageUrl( author ) );

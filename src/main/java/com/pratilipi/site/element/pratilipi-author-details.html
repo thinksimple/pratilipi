@@ -60,7 +60,8 @@
 			margin: 0 auto;
 			border-radius: 5px;
 			font-weight: 400;
-			font-size: 15px;
+			font-size: 13px;
+			letter-spacing: 0;
 		}
 		.follow-author button.pratilipi-grey-button {
 			display: block;
@@ -78,12 +79,37 @@
 			margin-top: -4px;
 			margin-right: 3px;
 		}
+		.user-logout-container span {
+			font-size: 14px;
+			color: #FFF;
+			font-weight: 700;
+			margin-bottom: 4px;
+			display: block;
+		}
+		.user-logout-container .pratilipi-light-blue-button {
+			display: block;
+			margin: 0 auto;
+			border-radius: 5px;
+			font-weight: 400;
+			font-size: 14px;
+			letter-spacing: 0;
+		}
+		.user-logout-container .pratilipi-light-blue-button iron-icon {
+			width: 20px;
+			height: 20px;
+			margin-top: -2px;
+		}
 		.edit-profile {
 			position: absolute;
 			top: 16px;
 			right: 64px;
 		}
-		.edit-profile paper-fab {
+		.edit-account-info {
+			position: absolute;
+			top: 16px;
+			right: 108px;
+		}
+		.edit-profile paper-fab, .edit-account-info paper-fab {
 			width: 24px;
 			height: 24px;
 			--paper-fab-background: #F5F5F5;
@@ -134,6 +160,9 @@
 				<div class="edit-profile">
 					<paper-fab icon="icons:settings" on-click="editAuthorProfile"></paper-fab>
 				</div>
+				<div class="edit-account-info">
+					<paper-fab icon="icons:perm-identity" on-click="openAccountSettings"></paper-fab>
+				</div>
 			</template>
 			
 			<div class="share-author">
@@ -161,9 +190,9 @@
 						<template is="dom-if" if="{{ imageUploaded }}">
 							<paper-spinner active></paper-spinner>
 						</template>
-						<iron-icon icon="icons:cloud-upload"></iron-icon>
+						<iron-icon icon="image:photo-camera"></iron-icon>
 						<div class="pratilipi-file-upload-caption" on-click="_chooseFile">
-							<iron-icon icon="icons:cloud-upload"></iron-icon>
+							<iron-icon icon="image:photo-camera"></iron-icon>
 						</div>
 					</div>
 				</template>
@@ -185,6 +214,15 @@
 								${ _strings.author_unfollow }{{ followCountAbbr }}
 							</button>
 						</template>
+					</div>
+				</template>
+				<template is="dom-if" if="{{ !hasAccessToFollow }}">
+					<div class="user-logout-container">
+						<span>{{ followCount }}&nbsp;${ _strings.author_followers }</span>
+						<button class="pratilipi-light-blue-button" on-click="logoutUser">
+							<iron-icon icon="social:mood-bad"></iron-icon>
+							${ _strings.user_sign_out }
+						</button>
 					</div>
 				</template>
 			</div>
@@ -329,7 +367,11 @@
 		editAuthorProfile: function() {
 			this.domHost.editAuthorProfile();
 		},
-		
+
+		openAccountSettings: function() {
+			document.querySelector( 'pratilipi-edit-account' ).open();
+		},
+
 		shareAuthorOnFacebook: function() {
 			window.open( "http://www.facebook.com/sharer.php?u=" + "http://${ domain }" + this.author.pageUrl 
 					+ ( this.author.pageUrl.indexOf( '?' ) == -1 ? encodeURIComponent( "?" ) : encodeURIComponent( "&" ) )
@@ -372,7 +414,11 @@
 			if( ! ( fileName.match( ".*\.jpg" ) || fileName.match( ".*\.png" ) ) ) return; // Only jpg and png
 			document.getElementById( "uploadAuthorImage" ).submit();
 			this.imageUploaded = true;
-		}
+		},
+
+		logoutUser: function() {
+			document.querySelector( 'pratilipi-user' ).logOut();
+		} 
 
 	});
 	</script>
