@@ -1,7 +1,7 @@
 <#assign publishedPratilipiList = pratilipiList>
 <div class="pull-left">
 	<h5 class="pratilipi-red pratilipi-no-margin">
-		${ _strings.author_published_works }
+		${ author.getName() }
 	</h5>
 	<p class="works-number"> ${author.getContentPublished()} ${ _strings.author_count_works }</p>
 </div>

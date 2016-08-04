@@ -1,7 +1,4 @@
 <script>
-	function roundOffRating(n) {
-	    return (Math.round(n*2)/2).toFixed(1);
-	};
 </script>
 
 <#if ( ( user.isGuest == false ) && ( author.getUser().getId()?? ) && ( user.getId() == author.getUser().getId() ) && ( !publishedPratilipiList?has_content ) ) >

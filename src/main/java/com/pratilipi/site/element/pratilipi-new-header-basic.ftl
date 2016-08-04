@@ -35,7 +35,7 @@
 		<div class="row">
 	  	  <div class="col-xs-3">	
 	  		<div class="form-group" style="margin-bottom: 5px;">
-			  <select class="form-control" id="language" style="padding:0px;border:none;color:red;height:30px;">
+			  <select class="form-control" id="language" style="box-shadow:none;padding:0px;border:none;color:red;height:30px;">
 			    <option>HINDI</option>
 			    <option>TAMIL</option>
 			    <option>KANNADA</option>

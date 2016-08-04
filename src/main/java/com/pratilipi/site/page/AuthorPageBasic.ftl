@@ -30,6 +30,10 @@
 		</div>
 		<#include "../element/pratilipi-footer.ftl">
 		<script>
+			function roundOffRating(n) {
+			    return (Math.round(n*2)/2).toFixed(1);
+			};
+			
 			function gotoShare( pageUrl, utmSource, pos ) {
 			
 				var language = "${ language }".toLowerCase();
