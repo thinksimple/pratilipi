@@ -113,7 +113,6 @@
 	
 	<datastore-index kind="NOTIFICATION" ancestor="false" source="manual">
 		<property name="USER_ID" direction="asc"/>
-		<property name="TYPE" direction="asc"/>
 		<property name="LAST_UPDATED" direction="desc"/>
 	</datastore-index>
 
