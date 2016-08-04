@@ -1,3 +1,17 @@
+<script>	
+	function logout() {
+		$.ajax({
+			type: 'get',
+			url: '/api/user/logout',
+			success: function( response ) {
+				location.reload();
+			},
+			error: function () {
+				alert( "Logout Failed!" );
+			}
+		});
+	}
+</script>	
 <div class="pratilipi-block cover-image pratilipi-shadow secondary-500 box" style="background-image: url('http://trendymods.com/wp-content/uploads/2015/10/facebook-cover-photos-ideas-5.jpg')">
 	<div class="">
 		<div class="edit-profile pull-right">
@@ -33,7 +47,9 @@
 						<img class="width-16" src="http://0.ptlp.co/resource-all/icon/svg/user-plus-red.svg"></img>
 						${ _strings.author_follow } | ${ author.getFollowCount()?c }
 					</button>
-				</#if> 
+				</#if>
+			<#elseif ( ( author.getUser().getId()?? ) && ( user.getId() == author.getUser().getId() ) ) >
+				<a class="pratilipi-red-button" onclick="logout()">
 			</#if>
 		<#else>
 			<a class="pratilipi-red-button" href="/login?ret=${ author.getPageUrl() }">

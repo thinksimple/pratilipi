@@ -26,7 +26,7 @@
 			</a>
 		</div>				
 		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-			<a style="display: block;" <#if user.isGuest == true>href="/login?ret=${ requestUrl }"<#else>href="/account?ret=${ requestUrl }"</#if>>
+			<a style="display: block;" <#if user.isGuest == true>href="/login?ret=${ requestUrl }"<#else>href="${ user.getAuthor().getPageUrl() }"</#if>>
 				<img style="width: 24px; height: 24px; margin: 10px auto;" 
 					<#if user.isGuest == true>src="http://0.ptlp.co/resource-all/icon/svg/user.svg"<#else>src="${ user.getProfileImageUrl() }"</#if> />
 			</a>
