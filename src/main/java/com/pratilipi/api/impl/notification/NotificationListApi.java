@@ -35,7 +35,7 @@ public class NotificationListApi extends GenericApi {
 		private Response() {}
 		
 		public Response( List<NotificationData> notificationDataList, String cursor ) {
-			this.notificationList = new ArrayList<>( notificationList.size() );
+			this.notificationList = new ArrayList<>( notificationDataList.size() );
 			for( NotificationData notificationData : notificationDataList )
 				this.notificationList.add(  new NotificationApi.Response( notificationData, NotificationListApi.class ) );
 			this.cursor = cursor;
