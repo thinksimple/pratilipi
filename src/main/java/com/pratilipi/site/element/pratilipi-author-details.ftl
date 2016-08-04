@@ -49,7 +49,7 @@
 					</button>
 				</#if>
 			<#elseif ( ( author.getUser().getId()?? ) && ( user.getId() == author.getUser().getId() ) ) >
-				<a class="pratilipi-red-button" onclick="logout()"></a>
+				<a class="pratilipi-red-button" onclick="logout()">Logout</a>
 			</#if>
 		<#else>
 			<a class="pratilipi-red-button" href="/login?ret=${ author.getPageUrl() }">
