@@ -4,7 +4,7 @@
 	};
 </script>
 
-<#if ( ( user.isGuest == false ) && ( user.getId() == author.getUser().getId() ) && ( !publishedPratilipiList?has_content ) ) >
+<#if ( ( user.isGuest == false ) && ( author.getUser().getId()?? ) && ( user.getId() == author.getUser().getId() ) && ( !publishedPratilipiList?has_content ) ) >
 <#else>
 	<#assign publishedUrl = "/search?authorId=" + author.getId()?c + "&state=PUBLISHED">
 	<div class="pratilipi-shadow secondary-500 box">	

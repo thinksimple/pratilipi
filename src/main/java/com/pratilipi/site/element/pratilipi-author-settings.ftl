@@ -35,6 +35,7 @@
 	            		firstNameEn: form.find("#first_name_en").val(),
 	            		lastNameEn: form.find("#last_name_en").val(),
 	            		penNameEn: form.find("#pen_name_en").val(),
+	            		location: form.find("#location").val(),
 	            		gender: form.find('input[name=gender]:checked').val(),
 	            		dateOfBirth: processDateOfBirth( form.find( "#date_of_birth" ).val() ),
 	            		language: form.find("#language").val(),
@@ -173,11 +174,21 @@
 					value="${ author.getPenNameEn() }"
 				</#if>			
 			>
-		</div>			
+		</div>
+					
 		<div class="form-group">
 			<label for="date_of_birth">Date of Birth</label>
 			<input type="date" class="form-control" id="date_of_birth">
 		</div>
+		
+		<div class="form-group">
+			<label for="location">Location:</label>
+			<input type="text" class="form-control" id="location" 
+				<#if author.getLocation()?? >
+					value="${ author.getLocation() }"
+				</#if>			
+			>
+		</div>		
 		
 		<div class="form-group">
 			<label for="gender">Gender</label><br>

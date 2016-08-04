@@ -25,6 +25,9 @@
 	<#if author.getDateOfBirth()?? && author.getDateOfBirth() != "" >
 		<p id="birth-date-${ author.getId()?c }"><span class="pratilipi-bold">${ _strings.author_date_of_birth }:</span> &nbsp; &nbsp; </p>
 	</#if>
+	<#if author.getLocation()?? && author.getLocation() != "" >
+		<p><span class="pratilipi-bold">${ _strings.author_location }:</span> &nbsp; &nbsp; ${ author.getLocation() }</p>
+	</#if>	
 	<#if author.getSummary()?? && author.getSummary() != "" >
 		<p class="pratilipi-bold">${ _strings.pratilipi_summary }: </p>
 		<p> ${ author.getSummary() }</p>

@@ -1,4 +1,4 @@
-<div class="secondary-500 pratilipi-shadow pratilipi-new-header" style="display: block; padding: 0px;">
+<div class="secondary-500 pratilipi-shadow pratilipi-new-header" style="display: block; padding: 0px 5px 0px 5px;">
 	<div class="row" style="text-align: center; margin: 0 auto;">
 		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
 			<a href="/">
@@ -34,7 +34,7 @@
 	</div>
 		<div class="row">
 	  	  <div class="col-xs-3">	
-	  		<div class="form-group" style="margin-bottom: 3px;">
+	  		<div class="form-group" style="margin-bottom: 5px;">
 			  <select class="form-control" id="language" style="padding:0px;border:none;color:red;height:30px;">
 			    <option>HINDI</option>
 			    <option>TAMIL</option>
