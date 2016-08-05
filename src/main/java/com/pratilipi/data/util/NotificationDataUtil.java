@@ -61,7 +61,7 @@ public class NotificationDataUtil {
 			
 			NotificationData notificationData = new NotificationData( notification.getId() );
 			
-			if( notification.getType() == NotificationType.AUTHOR_FOLLOW ) {
+			if( notification.getType() == NotificationType.PRATILIPI_ADD ) {
 				
 				Author author = dataAccessor.getAuthor( notification.getSourceIdLong() );
 				AuthorData authorData = AuthorDataUtil.createAuthorData( author );
