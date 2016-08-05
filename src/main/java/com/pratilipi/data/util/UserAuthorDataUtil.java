@@ -141,9 +141,11 @@ public class UserAuthorDataUtil {
 					userIdList,
 					author.getId() );
 			
-			for( UserAuthor userAuthor : userAuthorList )
-				if( userAuthor != null && userAuthor.isFollowing() )
-					authorDataList.get( authorIdList.indexOf( userAuthor.getAuthorId() ) ).getUser().setFollowing( true );
+			if( userAuthorList != null ) {
+				for( UserAuthor userAuthor : userAuthorList )
+					if( userAuthor != null && userAuthor.isFollowing() )
+						authorDataList.get( authorIdList.indexOf( userAuthor.getAuthorId() ) ).getUser().setFollowing( true );
+			}
 			
 		}
 
