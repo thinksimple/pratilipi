@@ -115,8 +115,8 @@
 	});
 </script>
 <div class="pratilipi-shadow secondary-500 box">
-		<button class="pull-left pratilipi-grey-button pratilipi-without-margin" onclick="redirectToPreviousPage()" >${ _strings.cancel }</button>
-		<button class="pull-right pratilipi-light-blue-button pratilipi-without-margin" onclick="validateSettingsForm()">${ _strings.edit_author_save_changes }</button>
+		<button class="pull-left pratilipi-grey-button pratilipi-without-margin" onclick="redirectToPreviousPage()" ><img style="width:16px;height:16px;" src="http://0.ptlp.co/resource-all/icon/svg/cross.svg"></button>
+		<button class="pull-right pratilipi-red-button pratilipi-without-margin" onclick="validateSettingsForm()"><img style="width:16px;height:16px;" src="http://0.ptlp.co/resource-all/icon/svg/checkmark-red.svg"></button>
 		<h3 class="text-center pratilipi-red" style="margin-top: 10px;"> ${ _strings.edit_author_heading } </h3>
 </div>
 <div class="pratilipi-shadow secondary-500 box">
