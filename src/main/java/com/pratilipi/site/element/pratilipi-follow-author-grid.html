@@ -13,13 +13,13 @@
 		.author-follow .author-follow-header {
 			padding-top: 8px;
 		}
-		.author-follow .author-follow-header h5 {
+		.author-follow .author-follow-header h6 {
 			font-weight: 700;
 			text-align: center;
 			margin-bottom: 12px;
 		}
 		.author-follow .author-follow-header .follow-text {
-			font-size: 15px;
+			font-size: 14px;
 		}
 		.author-follow .more-button {
 			margin-top: 16px;
@@ -28,10 +28,9 @@
 		    text-align: center;
 		    color: #0C68BD;
 		    cursor: pointer;
-		    font-size: 16px;
-		    font-weight: 700;
-		    letter-spacing: 0.3px;
-		    line-height: 16px;
+		    font-size: 14px;
+			font-weight: 700;
+			line-height: 14px;
 		    text-shadow: 0px 1px 2px #FFFFFF;
 		}
 		.author-follow .empty-list-message {
@@ -73,7 +72,7 @@
 	<template>
 		<div class="secondary-500 pratilipi-shadow author-follow">
 			<div class="author-follow-header">
-				<h5 class="pratilipi-red">{{ title }}</h5>
+				<h6 class="pratilipi-red">{{ title }}</h6>
 				<template is="dom-if" if="{{ !emptyList }}">
 					<div class="follow-text text-center">{{ numberFound }} ${ _strings.author_follow_members }</div>
 				</template>

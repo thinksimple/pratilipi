@@ -11,7 +11,7 @@
 	${ resource }
 </#list>
 <link rel='import' href='http://0.ptlp.co/resource-all/pratilipi.polymer.elements.html'>
-<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?38'>
+<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?39'>
 
 <#-- Custom Stylesheet -->
 <link type="text/css" rel="stylesheet" href="/resources/style.css?201607">
