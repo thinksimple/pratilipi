@@ -17,6 +17,7 @@ import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.gae.AccessTokenEntity;
+import com.pratilipi.data.type.gae.AppPropertyEntity;
 import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.NotificationEntity;
 import com.pratilipi.data.type.gae.PageEntity;
@@ -158,7 +159,7 @@ public class TestApi extends GenericApi {
 
 		
 		ObjectifyService.ofy().delete().entities( ObjectifyService.ofy().load().type( NotificationEntity.class ).list() );
-		ObjectifyService.ofy().delete().entity( ObjectifyService.ofy().load().type( AppProperty.class ).id( "Api.AuditLogProcess" ).now() );
+		ObjectifyService.ofy().delete().entity( ObjectifyService.ofy().load().type( AppPropertyEntity.class ).id( "Api.AuditLogProcess" ).now() );
 		
 		return new GenericResponse();
 		
