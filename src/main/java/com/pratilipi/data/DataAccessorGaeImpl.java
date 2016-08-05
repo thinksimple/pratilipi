@@ -1669,7 +1669,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 				.type( NotificationEntity.class )
 				.filter( "USER_ID", userId )
 				.filter( "TYPE", type )
-				.filter( "SOURCE_ID", sourceId )
+				.filter( "SOURCE_ID", sourceId.toString() )
 				.order( "-LAST_UPDATED" )
 				.first().now();
 	

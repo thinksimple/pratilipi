@@ -133,6 +133,7 @@ public class UserAuthorDataUtil {
 		if( author != null ) {
 			
 			List<Long> userIdList = new ArrayList<>( authorDataList.size() );
+			List<UserData> userDatalList = new ArrayList<>( authorDataList.size() );
 			for( AuthorData authorData : authorDataList )
 				if( authorData.getUser().getId() != null )
 					userIdList.add( authorData.getUser().getId() );
@@ -141,11 +142,9 @@ public class UserAuthorDataUtil {
 					userIdList,
 					author.getId() );
 			
-			if( userAuthorList != null ) {
-				for( UserAuthor userAuthor : userAuthorList )
-					if( userAuthor != null && userAuthor.isFollowing() )
-						authorDataList.get( authorIdList.indexOf( userAuthor.getAuthorId() ) ).getUser().setFollowing( true );
-			}
+			for( UserAuthor userAuthor : userAuthorList )
+				if( userAuthor != null && userAuthor.isFollowing() )
+					userDatalList.get( userIdList.indexOf( userAuthor.getUserId() ) ).setFollowing( true );
 			
 		}
 

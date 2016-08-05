@@ -97,7 +97,7 @@ public class AuditLogProcessApi extends GenericApi {
 				
 				Notification notification = dataAccessor.getNotification( author.getUserId(), NotificationType.AUTHOR_FOLLOW, authorId );
 				
-				if( notification == null || ( following && _isToday( notification.getCreationDate() ) ) )
+				if( notification == null || ( following && ! _isToday( notification.getCreationDate() ) ) )
 					notification = dataAccessor.newNotification(
 							author.getUserId(),
 							NotificationType.AUTHOR_FOLLOW,
@@ -107,11 +107,11 @@ public class AuditLogProcessApi extends GenericApi {
 					notification.addDataId( userId, auditLog.getId() );
 					if( notification.getState() == NotificationState.READ )
 						notification.setState( NotificationState.UNREAD );
+					notification.setLastUpdated( new Date() );
 				} else {
 					notification.removeDataId( userId, auditLog.getId() );
+					// Do NOT update lastUpdated date.
 				}
-				
-				notification.setLastUpdated( new Date() );
 				
 				notification = dataAccessor.createOrUpdateNotification( notification );
 				
@@ -131,10 +131,10 @@ public class AuditLogProcessApi extends GenericApi {
 	}
 	
 	private boolean _isToday( Date date ) {
-		Long time = date.getTime();
+		Long time = new Date().getTime();
 		time = time - time % TimeUnit.DAYS.toMillis( 1 ); // 00:00 AM GMT
 		time = time - TimeUnit.MINUTES.toMillis( 330 ); // 00:00 AM IST
-		return date.after( new Date( time ) );
+		return date.getTime() > time;
 	}
 	
 }
