@@ -232,5 +232,4 @@
 		  	</textarea>
 		</div>
 	</form>
-	<a class="pratilipi-light-blue-button" href="/updatepassword">${ _strings.user_reset_password}</a>
 </div>

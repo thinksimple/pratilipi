@@ -21,7 +21,9 @@
 					<#elseif state == "DRAFTED">
 						<#include "../element/pratilipi-drafted-list.ftl">						
 					</#if>
-				</div>	
+				</div>
+				<#elseif action=="account">
+					<#include "../element/pratilipi-my-account.ftl">	
 				<#else>
 					<#include "../element/pratilipi-author-details.ftl">
 					<#include "../element/pratilipi-author-tabs.ftl">

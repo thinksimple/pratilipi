@@ -306,7 +306,7 @@ a.pratilipi-dark-blue-button:hover, a.pratilipi-dark-blue-button:focus {
 .edit-profile {
 	position: relative;
 	top: 16px;
-	right: 35px;
+	right: 10px;
 }
 
 .numbers {
@@ -316,13 +316,13 @@ a.pratilipi-dark-blue-button:hover, a.pratilipi-dark-blue-button:focus {
 .my-account {
 	position: relative;
 	top: 16px;
-	right: 105px;	
+	right: 80px;	
 }
 
 .share-author {
 	position: relative;
 	top: 16px;
-	right: -35px;
+	right: -60px;
 }
 
 .profile-picture {
@@ -547,4 +547,15 @@ a:hover {
 	width: 100%;
 	display: block;
 	border-bottom: 1px solid #d3d3d3;
+}
+.followers-text {
+	font-size: 16px;
+	color: #FFF;
+	font-weight: 700;
+	margin-bottom: 4px;
+	text-align: center;
+	display: block;
+	margin-top: 10px;
+	text-shadow: 4px 1px 4px rgba(0, 0, 0, 0.50);
+	letter-spacing: 1.13px;
 }
