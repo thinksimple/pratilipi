@@ -96,7 +96,7 @@
 								<div>{{ numberFound }} ${ _strings.author_follow_members }</div>
 							</template>
 						</div>
-						<template is="dom-if" if="{{ !hasFollowing }}">
+						<template is="dom-if" if="{{ noFollowing }}">
 							<paper-card class="follow-grid">
 								<div class="alert-message">
 									<iron-icon icon="icons:info-outline"></iron-icon>
@@ -190,7 +190,8 @@
 			attached: function() {
 				this.set( 'guestUser', this.user.isGuest );
 				var followObject = this.querySelector( 'pratilipi-author-following' ).processAuthorListObject( this.followingObject );
-				this.set( 'hasFollowing', ! this.user.isGuest && followObject.numberFound > 0 );
+				this.set( 'hasFollowing', ! this.user.isGuest && followObject != null && followObject.numberFound != null && followObject.numberFound > 0 );
+				this.set( 'noFollowing', ! this.user.isGuest && ( followObject == null || followObject.numberFound == null || followObject.numberFound == 0 ) );
 				this._processFollowObject( followObject );
 			},
 
