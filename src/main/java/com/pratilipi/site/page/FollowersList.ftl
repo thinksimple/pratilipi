@@ -10,8 +10,8 @@
 	<body>
 		<pratilipi-followers-list-page 
 			user-data='${ userJson }'
-			author='${ authorJson }'
-			followers-object='${ followersObjectJson }'
+			author='${ authorJson! }'
+			followers-object='${ followersObjectJson! }'
 			pratilipi-types='${ pratilipiTypesJson }'
 			navigation-list='${ navigationList }'
 			language-map='${ languageMap }'></pratilipi-followers-list-page>
