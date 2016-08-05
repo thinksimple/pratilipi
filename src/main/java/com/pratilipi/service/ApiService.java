@@ -18,6 +18,7 @@ import com.pratilipi.api.impl.pratilipi.PratilipiApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiCoverApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiListApi;
+import com.pratilipi.api.impl.test.TestApi;
 import com.pratilipi.api.impl.user.UserApi;
 import com.pratilipi.api.impl.user.UserEmailApi;
 import com.pratilipi.api.impl.user.UserLoginApi;
@@ -39,6 +40,8 @@ import com.pratilipi.api.impl.vote.VoteApi;
 public class ApiService extends GenericService {
 	
 	static {
+		
+		ApiRegistry.register( TestApi.class );						// *.pratilipi.com
 		
 		ApiRegistry.register( UserLoginApi.class );					// *.pratilipi.com
 		ApiRegistry.register( UserLoginFacebookApi.class );			// *.pratilipi.com

@@ -13,11 +13,12 @@ import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.Language;
-import com.pratilipi.data.type.AccessToken;
+import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.gae.AccessTokenEntity;
 import com.pratilipi.data.type.gae.AuthorEntity;
+import com.pratilipi.data.type.gae.NotificationEntity;
 import com.pratilipi.data.type.gae.PageEntity;
 import com.pratilipi.data.type.gae.PratilipiEntity;
 import com.pratilipi.data.type.gae.UserAuthorEntity;
@@ -156,13 +157,8 @@ public class TestApi extends GenericApi {
 		}*/
 
 		
-		List<AccessTokenEntity> accessTokenList = ObjectifyService.ofy()
-				.load().type( AccessTokenEntity.class )
-				.order( "ACCESS_TOKEN_TYPE" )
-				.limit( 10000 ).list();
-		
-		for( AccessToken accessToken : accessTokenList )
-			ObjectifyService.ofy().save().entity( accessToken );
+		ObjectifyService.ofy().delete().entities( ObjectifyService.ofy().load().type( NotificationEntity.class ).list() );
+		ObjectifyService.ofy().delete().entity( ObjectifyService.ofy().load().type( AppProperty.class ).id( "Api.AuditLogProcess" ) );
 		
 		return new GenericResponse();
 		

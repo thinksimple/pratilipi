@@ -39,8 +39,6 @@ public class UserDataUtil {
 	private static final Logger logger =
 			Logger.getLogger( UserDataUtil.class.getName() );
 
-	private static final Long USER_ID_SYSTEM = 5636632866717696L;
-
 	
 	public static boolean hasAccessToAddUserData( UserData userData ) {
 		return UserAccessUtil.hasUserAccess(

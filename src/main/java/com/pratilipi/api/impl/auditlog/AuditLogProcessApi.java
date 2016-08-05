@@ -1,9 +1,7 @@
 package com.pratilipi.api.impl.auditlog;
 
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gson.Gson;
@@ -18,9 +16,11 @@ import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.NotificationState;
 import com.pratilipi.common.type.NotificationType;
 import com.pratilipi.common.type.PratilipiState;
+import com.pratilipi.common.util.SystemProperty;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
+import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
@@ -51,8 +51,6 @@ public class AuditLogProcessApi extends GenericApi {
 				10000 );
 		
 		
-		List<Notification> notificationList = new LinkedList<>();
-		
 		Gson gson = new Gson();
 		for( AuditLog auditLog : auditLogDataListCursorTuple.getDataList() ) {
 			
@@ -62,6 +60,10 @@ public class AuditLogProcessApi extends GenericApi {
 				
 				PratilipiState pratilipiState = PratilipiState.valueOf( entityData.get( "STATE" ).getAsString() );
 				if( pratilipiState != PratilipiState.PUBLISHED )
+					continue;
+				
+				AccessToken accessToken = dataAccessor.getAccessToken( auditLog.getAccessId() );
+				if( accessToken.getUserId().equals( SystemProperty.SYSTEM_USER_ID ) )
 					continue;
 				
 				Long pratilipiId = entityData.get( "PRATILIPI_ID" ).getAsLong();
@@ -77,7 +79,7 @@ public class AuditLogProcessApi extends GenericApi {
 					if( notification.getState() == NotificationState.READ )
 						notification.setState( NotificationState.UNREAD );
 					notification.setLastUpdated( new Date() );
-					notificationList.add( notification );
+					notification = dataAccessor.createOrUpdateNotification( notification );
 					followerUserIdList.remove( notification.getUserId() );
 				}
 				
@@ -88,7 +90,7 @@ public class AuditLogProcessApi extends GenericApi {
 							authorId );
 					notification.addDataId( pratilipiId, auditLog.getId() );
 					notification.setLastUpdated( new Date() );
-					notificationList.add( notification );
+					notification = dataAccessor.createOrUpdateNotification( notification );
 				}
 				
 			} else if( auditLog.getAccessType() == AccessType.USER_AUTHOR_FOLLOWING ) {
@@ -118,16 +120,12 @@ public class AuditLogProcessApi extends GenericApi {
 				
 				notification.setLastUpdated( new Date() );
 				
-				notificationList.add( notification );
+				notification = dataAccessor.createOrUpdateNotification( notification );
 				
 			} // End of if( auditLog.getAccessType() == AccessType.USER_AUTHOR_FOLLOWING )
 			
 		} // End of for
 		
-		
-		notificationList = dataAccessor.createOrUpdateNotificationList( notificationList );
-		logger.log( Level.INFO, "Created/updated " + notificationList.size() + " notifications." );
-
 		
 		// Updating AppProperty.
 		if( auditLogDataListCursorTuple.getDataList().size() > 0 ) {

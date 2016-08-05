@@ -4,6 +4,8 @@ import com.google.apphosting.api.ApiProxy;
 
 public class SystemProperty {
 
+	public static final Long SYSTEM_USER_ID = 5636632866717696L;
+
 	public static final String DATASOURCE;
 	public static final String BLOBSERVICE_GCS_BUCKET;
 	public static final String BLOBSERVICE_GCS_BUCKET_BACKUP;
