@@ -26,9 +26,14 @@ public class NotificationEntity implements Notification {
 	
 	@Index
 	private NotificationType TYPE;
-
-	private Object DATA;
 	
+	@Index
+	private String SOURCE_ID;
+
+	@Index
+	private List<Long> DATA_IDS;
+	
+	@Index
 	private List<Long> AUDIT_LOG_IDS;
 	
 	@Index
@@ -91,27 +96,72 @@ public class NotificationEntity implements Notification {
 		this.TYPE = type;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public <T> T getData() {
-		return (T) DATA;
+	public String getSourceId() {
+		return SOURCE_ID;
+	}
+	
+	@Override
+	public void setSourceId( Long sourceId ) {
+		this.SOURCE_ID = sourceId == null ? null : sourceId.toString();
+	}
+	
+	@Override
+	public void setSourceId( String sourceId ) {
+		this.SOURCE_ID = sourceId;
+	}
+	
+	@Override
+	public List<Long> getDataIds() {
+		return DATA_IDS == null ? new ArrayList<Long>( 0 ) : DATA_IDS;
 	}
 
 	@Override
-	public void setData( Object data ) {
-		this.DATA = data;
-	}
-	
-	@Override
 	public List<Long> getAuditLogIds() {
-		return AUDIT_LOG_IDS;
+		return AUDIT_LOG_IDS == null ? new ArrayList<Long>( 0 ) : AUDIT_LOG_IDS;
 	}
 	
 	@Override
-	public void addAuditLogId( Long auditLogId ) {
-		if( this.AUDIT_LOG_IDS == null )
+	public void addDataId( Long dataId, Long auditLogId ) {
+		
+		if( this.DATA_IDS == null ) {
+			this.DATA_IDS = new ArrayList<>( 1 );
+			this.DATA_IDS.add( dataId );
+		} else if( this.DATA_IDS.contains( dataId ) ) {
+			// Do Nothing !
+		} else {
+			this.DATA_IDS.add( dataId );
+		}
+		
+		_addAuditLogId( auditLogId );
+		
+	}
+	
+	@Override
+	public void removeDataId( Long dataId, Long auditLogId ) {
+		
+		if( this.DATA_IDS == null ) {
+			this.DATA_IDS = new ArrayList<>( 1 );
+			this.DATA_IDS.add( dataId );
+		} else if( this.DATA_IDS.contains( dataId ) ) {
+			this.DATA_IDS.remove( dataId );
+		} else {
+			// Do Nothing !
+		}
+		
+		_addAuditLogId( auditLogId );
+		
+	}
+	
+	private void _addAuditLogId( Long auditLogId ) {
+		if( this.AUDIT_LOG_IDS == null ) {
 			this.AUDIT_LOG_IDS = new ArrayList<>( 1 );
-		this.AUDIT_LOG_IDS.add( auditLogId );
+			this.AUDIT_LOG_IDS.add( auditLogId );
+		} else if( this.AUDIT_LOG_IDS.contains( auditLogId ) ) {
+			// Do Nothing !
+		} else {
+			this.AUDIT_LOG_IDS.add( auditLogId );
+		}
 	}
 	
 	@Override

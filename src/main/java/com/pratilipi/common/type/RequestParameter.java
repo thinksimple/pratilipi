@@ -16,7 +16,8 @@ public enum RequestParameter {
 	USER_ID_FOLLOWING( "uId" ),
 	AUTHOR_ID( "authorId" ),
 	PRATILIPI_STATE( "state" ),
-	RESULT_COUNT( "count" )
+	RESULT_COUNT( "count" ),
+	NOTIFICATION_ID( "notifId" ),
 	;
 	
 	

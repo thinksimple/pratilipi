@@ -20,14 +20,21 @@ public interface Notification extends GenericOfyType {
 	
 	void setType( NotificationType notificationType );
 	
-	<T> T getData();
+	String getSourceId();
 	
-	void setData( Object data );
+	void setSourceId( Long sourceId );
+	
+	void setSourceId( String sourceId );
+
+	
+	List<Long> getDataIds();
 
 	List<Long> getAuditLogIds();
 	
-	void addAuditLogId( Long auditLogId );
+	void addDataId( Long dataId, Long auditLogId );
 		
+	void removeDataId( Long dataId, Long auditLogId );
+	
 	NotificationState getState();
 	
 	void setState( NotificationState state );

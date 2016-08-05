@@ -7,13 +7,13 @@ import java.util.Map;
 
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.type.NotificationType;
+import com.pratilipi.common.type.RequestParameter;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.client.NotificationData;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.type.Notification;
-import com.pratilipi.data.type.User;
 import com.pratilipi.filter.AccessTokenFilter;
 
 public class NotificationDataUtil {
@@ -32,38 +32,39 @@ public class NotificationDataUtil {
 			throw new InsufficientAccessException();
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		DataListCursorTuple<Notification> notificationListCursorTuple = dataAccessor.getNotificationList( userId, cursor, resultCount );
+		DataListCursorTuple<Notification> notificationListCursorTuple =
+				dataAccessor.getNotificationList( userId, cursor, resultCount );
 		
-		List<Long> userIdList = new LinkedList<>(); // TODO: change it to list set
+		List<Long> userIdList = new LinkedList<>();
+		for( Notification notification : notificationListCursorTuple.getDataList() )
+			if( notification.getType() == NotificationType.AUTHOR_FOLLOW )
+				userIdList.addAll( notification.getDataIds() );
+		
+		Map<Long, UserData> users = UserDataUtil.createUserDataList( userIdList, true );
+		
+		List<NotificationData> notificationDataList = new ArrayList<>( notificationListCursorTuple.getDataList().size() );
 		for( Notification notification : notificationListCursorTuple.getDataList() ) {
-			if( notification.getType() == NotificationType.AUTHOR_FOLLOW ) {
-				userIdList.add( notification.getUserId() );
-				if( notification.getData() != null )
-					userIdList.addAll( (List<Long>) notification.getData() );
-			}
-		}
-		
-		Map<Long, User> users = dataAccessor.getUsers( userIdList );
-		
-		List<NotificationData> notifications = new ArrayList<>( notificationListCursorTuple.getDataList().size() );
-		for( Notification notification : notificationListCursorTuple.getDataList() ) {
-			if( notification.getData() == null )
-				continue;
-			String notificationStr = "";
-			for( Long uId : (List<Long>) notification.getData() ) {
-				UserData user = UserDataUtil.createUserData( users.get( uId ) );
-				notificationStr += "<b>" + user.getDisplayName() + "</b>, ";
-			}
-			notificationStr = notificationStr.substring( 0, notificationStr.length() - 2 )
-					+ " followed you.";
+			
 			NotificationData notificationData = new NotificationData( notification.getId() );
-			notificationData.setMessage( notificationStr );
-			notificationData.setSourceUrl( "/followers" );
-			notifications.add( notificationData );
+			
+			if( notification.getType() == NotificationType.AUTHOR_FOLLOW ) {
+				if( notification.getDataIds().size() > 0 ) {
+					String notificationMsg = "";
+					for( Long followerUserId : notification.getDataIds() )
+						notificationMsg += "<b>" + users.get( followerUserId ).getDisplayName() + "</b>, ";
+					notificationMsg = notificationMsg.substring( 0, notificationMsg.length() - 2 );
+					notificationMsg += " followed you.";
+					notificationData.setMessage( notificationMsg );
+				}
+				notificationData.setSourceUrl( "/followers?" + RequestParameter.NOTIFICATION_ID + "=" + notification.getId() );
+			}
+			
+			notificationDataList.add( notificationData );
+			
 		}
 		
 		return new DataListCursorTuple<>(
-				notifications,
+				notificationDataList,
 				notificationListCursorTuple.getCursor() );
 		
 	}
