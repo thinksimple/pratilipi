@@ -4,7 +4,7 @@
 			overflow-y: initial !important
 		}
 		.modal-body {
-			height: 250px;
+			height: 100%;
 			overflow-y: auto;
 		}
 		.vertical-alignment-helper {
@@ -23,6 +23,15 @@
 			height: inherit;
 			margin: 0 auto;
 			pointer-events: all;
+		}
+		.number-found {
+			font-size: 14px;
+			margin-top: 3px;
+		}
+		.close-button {
+			position: absolute;
+			right: 4px;
+			top: 8px;
 		}
 		@media only screen and (max-width: 768px) {
 			.modal-body {
@@ -58,8 +67,9 @@
 				<div class="modal-dialog vertical-align-center">
 					<div class="modal-content">
 						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">${ _strings.cancel }</span></button>
-							<h4 class="modal-title">{{ title }}</h4>
+							<paper-icon-button class="close-button" icon="icons:close" data-dismiss="modal"></paper-icon-button>
+							<h6 class="modal-title pratilipi-red">{{ title }}</h6>
+							<div class="number-found">{{ numberFound }} ${ _strings.author_follow_members }</div>
 						</div>
 						<div class="modal-body">
 							<template is="dom-repeat" items="{{ followList }}">

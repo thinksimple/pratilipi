@@ -1,6 +1,6 @@
 <#include "pratilipi-author-drafted-contents.html">
 <#include "pratilipi-author-published-contents.html">
-<#include "pratilipi-author-library-contents.html">
+<#-- <#include "pratilipi-author-library-contents.html"> -->
 <#include "pratilipi-author-biography.html">
 <#include "pratilipi-author-following.html">
 <#include "pratilipi-author-followers.html">
@@ -12,11 +12,12 @@
 			margin-bottom: 12px;
 		}
 		.nav-tabs>li>a {
-			font-size: 15px;
+			font-size: 14px;
 			font-weight: 700;
 			line-height: 32px;
 			border: none;
 			color: #333;
+			letter-spacing: 0;
 		}
 		.nav-tabs, .nav-tabs>li>a:hover {
 			border-bottom: none;
@@ -26,7 +27,7 @@
 			background: none;
 		}
 		.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
-			border-bottom: 2px solid #D0021B;
+			border-bottom: 3px solid #D0021B;
 			border-top: none;
 			border-left: none;
 			border-right: none;
@@ -50,8 +51,8 @@
 	<template>
 		<div class="secondary-500 pratilipi-shadow">
 			<ul class="nav nav-tabs" role="tablist">
-				<li style="width: 50%;" role="presentation" class="active">	<a href="#author-activity" 	class="text-center" aria-controls="author-activity" role="tab" data-toggle="tab">${ _strings.author_activity }</a>	</li>
-				<li style="width: 50%;" role="presentation">				<a href="#author-about" 	class="text-center" aria-controls="author-about" 	role="tab" data-toggle="tab">${ _strings.author_about }</a>		</li>
+				<li id="author-activity-tab" style="width: 50%;" role="presentation" class="active">	<a href="#author-activity" 	class="text-center" aria-controls="author-activity" role="tab" data-toggle="tab">${ _strings.author_activity }</a>	</li>
+				<li id="author-about-tab" style="width: 50%;" role="presentation">				<a href="#author-about" 	class="text-center" aria-controls="author-about" 	role="tab" data-toggle="tab">${ _strings.author_about }</a>		</li>
 			</ul>
 		</div>
 		<div class="tab-content">
@@ -66,9 +67,11 @@
 						pratilipi-list-object="[[ publishedPratilipiList ]]" 
 						author="[[ author ]]"></pratilipi-author-published-contents>
 
+				<#--
 				<template is="dom-if" if="{{ hasAccessToUpdate }}">
 					<pratilipi-author-library-contents></pratilipi-author-library-contents>
 				</template>
+				-->
 
 			</div>
 			<div role="tabpanel" class="tab-pane fade" id="author-about">
@@ -150,6 +153,14 @@
 				console.log( response );
 			}
 			this.async( function() { window.location.reload(); }, 2000 );
+		},
+
+		ready: function() {
+			if( ( this.publishedPratilipiList == null || this.publishedPratilipiList.numberFound == 0 )
+					&& ! this.hasAccessToUpdate ) {
+				jQuery( this.querySelector( '#author-activity-tab' ) ).removeClass( 'active' );
+				jQuery( this.querySelector( '#author-about-tab' ) ).addClass( 'active' );
+			}
 		}
 		
 	});
