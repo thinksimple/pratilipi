@@ -13,11 +13,9 @@ import com.pratilipi.common.type.RequestParameter;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
-import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.client.NotificationData;
 import com.pratilipi.data.client.PratilipiData;
 import com.pratilipi.data.client.UserData;
-import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Notification;
 import com.pratilipi.filter.AccessTokenFilter;
 
@@ -44,7 +42,7 @@ public class NotificationDataUtil {
 		List<Long> pratilipiIdList = new LinkedList<>();
 		for( Notification notification : notificationListCursorTuple.getDataList() ) {
 			if( notification.getType() == NotificationType.PRATILIPI_ADD ) {
-				pratilipiIdList.addAll( notification.getDataIds() );
+				pratilipiIdList.add( notification.getSourceIdLong() );
 			} else if( notification.getType() == NotificationType.AUTHOR_FOLLOW ) {
 				userIdList.addAll( notification.getDataIds() );
 			}
@@ -63,19 +61,9 @@ public class NotificationDataUtil {
 			
 			if( notification.getType() == NotificationType.PRATILIPI_ADD ) {
 				
-				Author author = dataAccessor.getAuthor( notification.getSourceIdLong() );
-				AuthorData authorData = AuthorDataUtil.createAuthorData( author );
-				
-				if( notification.getDataIds().size() > 0 ) {
-					String notificationMsg = "";
-					for( int i = notification.getDataIds().size() - 1; i >= 0; i-- )
-						notificationMsg += "<b>" + pratilipis.get( notification.getDataIds().get( i ) ).getTitle() + "</b>, ";
-					notificationMsg = notificationMsg.substring( 0, notificationMsg.length() - 2 );
-					notificationMsg = notificationMsg + " published by <b>" + authorData.getName() + "</b>.";
-					notificationData.setMessage( notificationMsg );
-				}
-				
-				notificationData.setSourceUrl( authorData.getPageUrl() );
+				PratilipiData pratilipiData = pratilipis.get( notification.getSourceIdLong() );
+				notificationData.setMessage( "<b>" + pratilipiData.getTitle() + "</b> published by <b>" + pratilipiData.getAuthor().getName() + "</b>." );
+				notificationData.setSourceUrl( pratilipiData.getPageUrl() );
 			
 			} else 	if( notification.getType() == NotificationType.AUTHOR_FOLLOW ) {
 				

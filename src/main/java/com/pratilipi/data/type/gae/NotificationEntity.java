@@ -138,7 +138,7 @@ public class NotificationEntity implements Notification {
 			this.DATA_IDS.add( dataId );
 		}
 		
-		_addAuditLogId( auditLogId );
+		addAuditLogId( auditLogId );
 		
 	}
 	
@@ -154,11 +154,12 @@ public class NotificationEntity implements Notification {
 			// Do Nothing !
 		}
 		
-		_addAuditLogId( auditLogId );
+		addAuditLogId( auditLogId );
 		
 	}
 	
-	private void _addAuditLogId( Long auditLogId ) {
+	@Override
+	public void addAuditLogId( Long auditLogId ) {
 		if( this.AUDIT_LOG_IDS == null ) {
 			this.AUDIT_LOG_IDS = new ArrayList<>( 1 );
 			this.AUDIT_LOG_IDS.add( auditLogId );

@@ -37,6 +37,8 @@ public interface Notification extends GenericOfyType {
 		
 	void removeDataId( Long dataId, Long auditLogId );
 	
+	void addAuditLogId( Long auditLogId );
+		
 	NotificationState getState();
 	
 	void setState( NotificationState state );

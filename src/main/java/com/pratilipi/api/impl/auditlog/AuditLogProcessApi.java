@@ -2,6 +2,7 @@ package com.pratilipi.api.impl.auditlog;
 
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 import com.google.gson.Gson;
@@ -70,25 +71,17 @@ public class AuditLogProcessApi extends GenericApi {
 				Long authorId = entityData.get( "AUTHOR_ID" ).getAsLong();
 				
 				List<Long> followerUserIdList = dataAccessor.getUserAuthorFollowList( null, authorId, null, null, null ).getDataList();
-				List<Notification> existingNotificationList = dataAccessor.getNotificationList( null, NotificationType.PRATILIPI_ADD, pratilipiId, null, null ).getDataList();
 				
-				for( Notification notification : existingNotificationList ) {
-					if( ! followerUserIdList.contains( notification.getUserId() ) )
-						continue;
-					notification.addDataId( pratilipiId, auditLog.getId() );
-					if( notification.getState() == NotificationState.READ )
-						notification.setState( NotificationState.UNREAD );
-					notification.setLastUpdated( new Date() );
-					notification = dataAccessor.createOrUpdateNotification( notification );
+				List<Notification> existingNotificationList = dataAccessor.getNotificationList( null, NotificationType.PRATILIPI_ADD, pratilipiId, null, null ).getDataList();
+				for( Notification notification : existingNotificationList )
 					followerUserIdList.remove( notification.getUserId() );
-				}
 				
 				for( Long followerUserId : followerUserIdList ) {
 					Notification notification = dataAccessor.newNotification(
 							followerUserId,
 							NotificationType.PRATILIPI_ADD,
-							authorId );
-					notification.addDataId( pratilipiId, auditLog.getId() );
+							pratilipiId );
+					notification.addAuditLogId( auditLog.getId() );
 					notification.setLastUpdated( new Date() );
 					notification = dataAccessor.createOrUpdateNotification( notification );
 				}
@@ -104,7 +97,7 @@ public class AuditLogProcessApi extends GenericApi {
 				
 				Notification notification = dataAccessor.getNotification( author.getUserId(), NotificationType.AUTHOR_FOLLOW, authorId );
 				
-				if( notification == null || ( following && notification.getDataIds().size() >= 10 ) )
+				if( notification == null || ( following && _isToday( notification.getCreationDate() ) ) )
 					notification = dataAccessor.newNotification(
 							author.getUserId(),
 							NotificationType.AUTHOR_FOLLOW,
@@ -135,6 +128,13 @@ public class AuditLogProcessApi extends GenericApi {
 		
 		return new GenericResponse();
 		
+	}
+	
+	private boolean _isToday( Date date ) {
+		Long time = date.getTime();
+		time = time - time % TimeUnit.DAYS.toMillis( 1 ); // 00:00 AM GMT
+		time = time - TimeUnit.MINUTES.toMillis( 330 ); // 00:00 AM IST
+		return date.after( new Date( time ) );
 	}
 	
 }
