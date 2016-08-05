@@ -1,6 +1,6 @@
 <#if author.getUser().getId()?? >
 	<div class="pratilipi-shadow secondary-500 box">	
-		<#assign followingUrl = "/following?uId=" + author.getUser().getId()?c >
+		<#assign followingUrl = "/following?uId=" + author.getUser().getId()?c + "&ret=" + requestUrl >
 		<div class="pull-left">
 			<a href="${ followingUrl }"><h5 class="pratilipi-red pratilipi-no-margin">
 				${ _strings.author_following }
