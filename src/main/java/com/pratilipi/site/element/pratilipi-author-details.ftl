@@ -1,25 +1,15 @@
-<script>	
-	function logout() {
-		$.ajax({
-			type: 'get',
-			url: '/api/user/logout',
-			success: function( response ) {
-				location.reload();
-			},
-			error: function () {
-				alert( "Logout Failed!" );
-			}
-		});
-	}
-</script>	
 <div class="pratilipi-block cover-image pratilipi-shadow secondary-500 box" style="background-image: url('http://trendymods.com/wp-content/uploads/2015/10/facebook-cover-photos-ideas-5.jpg')">
 	<div class="">
+		<div class="my-account pull-right">
+		    <a href="?action=account&ret=${ author.getPageUrl() }" class="icon">
+		    	<span class="glyph-white-background badge badge-circle"><img src="http://0.ptlp.co/resource-all/icon/svg/user.svg"></span>
+			</a>			
+		</div>	
 		<div class="edit-profile pull-right">
 		    <a href="?action=edit_profile&ret=${ author.getPageUrl() }" class="icon">
 		    	<span class="glyph-white-background badge badge-circle"><img src="http://0.ptlp.co/resource-all/icon/svg/cog.svg"></span>
-			</a>
-			
-		</div>
+			</a>			
+		</div>		
 		<div class="share-author pull-right">
 			<a onclick="gotoShare( '${ author.getPageUrl() }', 'author_page' )" class="icon">
 				<span class="glyph-white-background badge badge-circle"><img src="http://0.ptlp.co/resource-all/icon/svg/share2.svg"></span>
@@ -49,7 +39,7 @@
 					</button>
 				</#if>
 			<#elseif ( ( author.getUser().getId()?? ) && ( user.getId() == author.getUser().getId() ) ) >
-				<a class="pratilipi-red-button" onclick="logout()">Logout</a>
+				<p> ${ author.getFollowCount() } &nbsp; ${_strings.author_followers } </p>
 			</#if>
 		<#else>
 			<a class="pratilipi-red-button" href="/login?ret=${ author.getPageUrl() }">

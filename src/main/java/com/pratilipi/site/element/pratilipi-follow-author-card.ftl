@@ -33,8 +33,8 @@
 		    <#else>
 		    	<#if can_follow == "true">
 			    	<#if following == true >
-					    <button class="pratilipi-red-button pull-right" onclick="FollowAuthorPostRequest(${ authorId?c }, false)">
-							<img class="width-16" src="http://0.ptlp.co/resource-all/icon/svg/user-check-red.svg"></img>
+					    <button class="pratilipi-red-button pull-right" style="background: #d0021b;" onclick="FollowAuthorPostRequest(${ authorId?c }, false)">
+							<img class="width-16" src="http://0.ptlp.co/resource-all/icon/svg/user-check-white-red.svg"></img>
 						</button>
 					<#else>
 						<button class="pratilipi-red-button pull-right" onclick="FollowAuthorPostRequest(${ authorId?c }, true)">

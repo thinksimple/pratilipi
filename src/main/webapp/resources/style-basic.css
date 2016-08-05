@@ -306,18 +306,23 @@ a.pratilipi-dark-blue-button:hover, a.pratilipi-dark-blue-button:focus {
 .edit-profile {
 	position: relative;
 	top: 16px;
-	right: 55px;
+	right: 35px;
 }
 
 .numbers {
 	font-size: 20px;
 	font-weight: 500;
 }
+.my-account {
+	position: relative;
+	top: 16px;
+	right: 105px;	
+}
 
 .share-author {
 	position: relative;
 	top: 16px;
-	right: -20px;
+	right: -35px;
 }
 
 .profile-picture {
