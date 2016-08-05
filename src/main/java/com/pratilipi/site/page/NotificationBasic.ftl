@@ -16,7 +16,6 @@
 						<h5 class="pratilipi-red pratilipi-bold pratilipi-no-margin">
 							${ _strings.notification_notifications }
 						</h5>
-						<p class="works-number">${ followingList.getNumberFound() } ${ _strings.author_follow_members }</p>
 					</div>
 					<div class="pull-right">
 					  	<a style="cursor: pointer;">
