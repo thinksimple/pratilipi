@@ -69,7 +69,8 @@
 			},
 			
 			attached: function() {
-				this._pushToFollowList( this.processAuthorListObject( this.authorList ) );
+				if( this.authorList != null )
+					this._pushToFollowList( this.processAuthorListObject( this.authorList ) );
 			},
 			
 			loadMore: function() {
