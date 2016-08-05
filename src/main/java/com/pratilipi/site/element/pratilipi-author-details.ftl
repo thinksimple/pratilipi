@@ -1,15 +1,17 @@
 <div class="pratilipi-block cover-image pratilipi-shadow secondary-500 box" style="background-image: url('http://trendymods.com/wp-content/uploads/2015/10/facebook-cover-photos-ideas-5.jpg')">
 	<div class="">
+	<#if author.hasAccessToUpdate()==true >
 		<div class="my-account pull-right">
 		    <a href="?action=account&ret=${ author.getPageUrl() }" class="icon">
 		    	<span class="glyph-white-background badge badge-circle"><img src="http://0.ptlp.co/resource-all/icon/svg/user.svg"></span>
 			</a>			
-		</div>	
+		</div>		
 		<div class="edit-profile pull-right">
 		    <a href="?action=edit_profile&ret=${ author.getPageUrl() }" class="icon">
 		    	<span class="glyph-white-background badge badge-circle"><img src="http://0.ptlp.co/resource-all/icon/svg/cog.svg"></span>
 			</a>			
-		</div>		
+		</div>
+	</#if>			
 		<div class="share-author pull-right">
 			<a onclick="gotoShare( '${ author.getPageUrl() }', 'author_page' )" class="icon">
 				<span class="glyph-white-background badge badge-circle"><img src="http://0.ptlp.co/resource-all/icon/svg/share2.svg"></span>
