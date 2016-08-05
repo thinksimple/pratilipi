@@ -1,12 +1,14 @@
 <dom-module id="pratilipi-author-following">
 
 	<template>
-		<pratilipi-follow-author-grid 
-			follow-list="{{ followList }}"
-			number-found="{{ numberFound }}"
-			title="${ _strings.author_following }"
-			empty-list-message="${ _strings.author_no_following }"
-			is-finished="{{ isFinished }}"></pratilipi-follow-author-grid>
+		<template is="dom-if" if="{{ !noDisplay }}">
+			<pratilipi-follow-author-grid 
+				follow-list="{{ followList }}"
+				number-found="{{ numberFound }}"
+				title="${ _strings.author_following }"
+				empty-list-message="${ _strings.author_no_following }"
+				is-finished="{{ isFinished }}"></pratilipi-follow-author-grid>
+		</template>
 
 		<iron-ajax
 				id="UserAuthorFollowListApi"
@@ -31,7 +33,8 @@
 				followList: { type: Array, value: function() { return []; } },
 				cursor: { type: String },
 				numberFound: { type: Number },
-				isFinished: { type: Boolean, value: false }
+				isFinished: { type: Boolean, value: false },
+				noDisplay: { type: Boolean, value: false }
 			},
 			
 			processAuthorListObject: function( authorListObject ) {
