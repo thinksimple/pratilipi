@@ -40,7 +40,7 @@
 				<#if userAuthor.isFollowing() == true>
 					<button class="pratilipi-red-button" onclick="FollowUnfollowPostRequest(false)">
 						<img class="width-16" src="http://0.ptlp.co/resource-all/icon/svg/user-check-red.svg"></img>
-						${ _strings.author_already_following } | ${ author.getFollowCount()?c }
+						${ _strings.author_unfollow } | ${ author.getFollowCount()?c }
 					</button>		
 				<#else>
 					<button class="pratilipi-red-button" onclick="FollowUnfollowPostRequest(true)">
