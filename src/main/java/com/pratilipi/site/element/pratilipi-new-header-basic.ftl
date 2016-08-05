@@ -11,7 +11,7 @@
 			</a>
 		</div>
 		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-			<a style="display: block;" href="/">
+			<a style="display: block;" onclick="showPopup()" >
 				<img style="width: 24px; height: 24px; margin: 10px auto;" src="http://0.ptlp.co/resource-all/icon/svg/pencil-header-grey.svg" />
 			</a>
 		</div>
@@ -61,3 +61,8 @@
 	   </div>		
 	</div>
 </div>
+<script>
+	function showPopup() {
+	window.alert("Please login through your desktop to write contents.");
+	}
+</script>
