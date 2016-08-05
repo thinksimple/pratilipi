@@ -1,0 +1,192 @@
+<#include "pratilipi-author-followers.html">
+
+<dom-module id="pratilipi-followers-list-page">
+	<style>
+		:host {
+			display: block;
+		}
+		.pratilipi-header {
+			position: fixed;
+			width: 100%;
+			z-index: 10;
+		}
+		@media only screen and (max-width: 767px) {
+			main {
+				padding-top: 85px;
+			}
+		}
+		@media only screen and (min-width: 768px) {
+			main {
+				padding-top: 52px;
+			}
+		}
+		paper-card.follow-grid {
+			margin-top: 4px;
+			margin-bottom: 6px;
+			--paper-card-header: { display: none };
+		}
+		.card-heading {
+			padding: 12px 16px;
+		}
+		.card-heading h6 {
+			margin: 0;
+			margin-bottom: 6px;
+		}
+		.card-heading div {
+			font-size: 13px;
+		}
+		.load-more-button {
+			margin-top: 4px;
+			background: #F1F8FB;
+			padding: 18px;
+			text-align: center;
+			color: #0C68BD;
+			cursor: pointer;
+			font-size: 14px;
+			font-weight: 700;
+			line-height: 14px;
+			text-shadow: 0px 1px 2px #FFFFFF;
+			border: 1px solid #0C68BD;
+			border-radius: 4px;
+		}
+		paper-spinner.pratilipi-spinner {
+			line-height: 52px;
+			--paper-spinner-layer-1-color: #D0021B;
+			--paper-spinner-layer-2-color: #107FE5;
+			--paper-spinner-layer-3-color: #D0021B;
+			--paper-spinner-layer-4-color: #107FE5;
+		}
+	</style>
+	
+	<template>
+		<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
+		<pratilipi-edit-account user='[[ user ]]'></pratilipi-edit-account>
+		<pratilipi-write pratilipi-types='[[ pratilipiTypes ]]'></pratilipi-write>
+		<pratilipi-alert></pratilipi-alert>
+
+		<div class="pratilipi-header">
+   			<pratilipi-new-header language-map="[[ languageMap ]]" user='[[ user ]]'></pratilipi-new-header>
+   		</div>
+   		<main>
+   			<div class="parent-container margin-top-bottom">
+				<div class="container">
+					<pratilipi-navigation
+							class='pull-left hidden-xs hidden-sm'
+							navigation-list='[[ navigationList ]]'
+							></pratilipi-navigation>
+					<#-- Navigation & Search bar for extra-small & small screens. -->
+					<pratilipi-navigation-drawer with-backdrop navigation-list='[[ navigationList ]]'></pratilipi-navigation-drawer>
+					<div style="overflow:hidden">
+						<pratilipi-author-followers no-display></pratilipi-author-followers>
+						<div class="secondary-500 pratilipi-shadow card-heading">
+							<h6 class="pratilipi-red">${ _strings.author_followers }</h6>
+							<div>{{ numberFound }} ${ _strings.author_follow_members }</div>
+						</div>
+						<paper-card class="row follow-grid secondary-500 pratilipi-shadow">
+							<template is="dom-repeat" items="{{ followList }}">
+								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+									<pratilipi-follow-author follow-object="{{ item }}"></pratilipi-follow-author>
+								</div>
+							</template>
+						</paper-card>
+						<template is="dom-if" if="{{ hasMore }}">
+							<template is="dom-if" if="{{ !isLoading }}">
+								<div class="load-more-button" on-click="_loadMore">${ _strings.load_more_contents }...</div>
+							</template>
+						</template>
+						<template is="dom-if" if="{{ isLoading }}">
+							<paper-spinner class="pratilipi-spinner pratilipi-spinner-center" active></paper-spinner>
+						</template>
+					</div>
+				</div>
+			</div>
+   		</main>
+		<footer>
+   			<pratilipi-footer></pratilipi-footer>
+		</footer>
+		<div class="scroll-top-button">
+			<a id="scrollToTop" on-click="scrollToTop"><img src="http://0.ptlp.co/resource-all/icon/footer/arrow_up_transparent_64.png"/></a>
+		</div>
+		<iron-ajax
+				id="UserAuthorFollowListApi"
+				url="/api/userauthor/follow/list"
+				method="GET"
+				content-type="application/json"
+				handle-as="json"
+				on-response="_userAuthorFollowListApiResponse"
+				on-error="_userAuthorFollowListApiError"
+				></iron-ajax>
+	</template>
+
+	<script>
+		Polymer({
+
+			is: 'pratilipi-followers-list-page',
+			
+			properties: {
+				userData: { type: Object },
+				author: { type: Object },
+				followersObject: { type: Object },
+				followList: { type: Array, value: function() { return []; } },
+				cursor: { type: String },
+				numberFound: { type: Number },
+				isLoading: { type: Boolean, value: false },
+				pratilipiTypes: { types: Object },
+				navigationList: { type: Array },
+				languageMap: { type: Object },
+				lastScrollTop: { type: Number, value: 0 }
+			},
+			
+			ready: function() {
+				jQuery( '#scrollToTop' ).css( "display", "none" );
+			},
+			
+			_processFollowObject: function( followObject ) {
+				var followList = followObject.followList;
+				for( var i = 0; i < followList.length; i++ )
+					this.push( 'followList', followList[i] );
+				this.set( 'cursor', followObject.cursor );
+				this.set( 'numberFound', followObject.numberFound );
+				this.set( 'hasMore', followList.length == 20 && followObject.cursor != null );
+			},
+
+			attached: function() {
+				var followObject = this.querySelector( 'pratilipi-author-followers' ).processUserListObject( this.followersObject );
+				this._processFollowObject( followObject );
+			},
+
+			_loadMore: function() {
+				this.set( 'isLoading', true );
+				this.$.UserAuthorFollowListApi.params.authorId = this.author.authorId;
+				this.$.UserAuthorFollowListApi.params.cursor = this.cursor;
+				this.$.UserAuthorFollowListApi.generateRequest();
+			},
+
+			_userAuthorFollowListApiResponse: function( response ) {
+				this.set( 'isLoading', false );
+				this._processFollowObject( this.querySelector( 'pratilipi-author-followers' ).processUserListObject( response.detail.response ) );
+			},
+
+			_userAuthorFollowListApiError: function( response ) {
+				this.set( 'isLoading', false );
+			},
+
+			scrollToTop: function() {
+				$( 'html, body' ).animate( { scrollTop : 0 },800 );
+			},
+			
+			scrollHandler: function( st ) {
+				if( st > this.lastScrollTop || st < 100 )
+					jQuery( '#scrollToTop' ).fadeOut();
+				else
+					jQuery( '#scrollToTop' ).fadeIn();
+			
+				this.lastScrollTop = st;
+			
+			}
+
+		});
+
+	</script>
+
+</dom-module>
