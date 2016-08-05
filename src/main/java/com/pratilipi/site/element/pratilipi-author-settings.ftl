@@ -116,13 +116,13 @@
 </script>
 <div class="pratilipi-shadow secondary-500 box">
 		<button class="pull-left pratilipi-grey-button pratilipi-without-margin" onclick="redirectToPreviousPage()" >Cancel</button>
-		<button class="pull-right pratilipi-light-blue-button pratilipi-without-margin" onclick="validateSettingsForm()">Save</button>
-		<h3 class="text-center pratilipi-red" style="margin-top: 10px;"> Edit Profile </h3>
+		<button class="pull-right pratilipi-light-blue-button pratilipi-without-margin" onclick="validateSettingsForm()">${ _strings.edit_author_save_changes }</button>
+		<h3 class="text-center pratilipi-red" style="margin-top: 10px;"> ${ _strings.edit_author_heading } </h3>
 </div>
 <div class="pratilipi-shadow secondary-500 box">
 	<form id="user_settings_form">
 		<div class="form-group">
-			<label for="first_name">First Name(Vernacular)</label>
+			<label for="first_name">${ _strings.edit_author_first_name }</label>
 			<input type="text" class="form-control" id="first_name" 
 			<#if author.getFirstName()?? >
 				value="${ author.getFirstName() }"
@@ -132,7 +132,7 @@
 		
 		
 		<div class="form-group">
-			<label for="first_name_en">First Name(English)</label>
+			<label for="first_name_en">${ _strings.edit_author_first_name_en }</label>
 			<input type="text" class="form-control" id="first_name_en" 
 			<#if author.getFirstNameEn()?? >
 				value="${ author.getFirstNameEn() }"
@@ -141,7 +141,7 @@
 		</div>		
 		
 		<div class="form-group">
-			<label for="last_name">Last Name(Vernacular)</label>
+			<label for="last_name">${ _strings.edit_author_last_name }</label>
 			<input type="text" class="form-control" id="last_name" 
 				<#if author.getLastName()?? >
 					value="${ author.getLastName() }"
@@ -151,7 +151,7 @@
 
 		
 		<div class="form-group">
-			<label for="last_name_en">Last Name(English)</label>
+			<label for="last_name_en">${ _strings.edit_author_last_name_en }</label>
 			<input type="text" class="form-control" id="last_name_en" 
 				<#if author.getLastNameEn()?? >
 					value="${ author.getLastNameEn() }"
@@ -160,7 +160,7 @@
 		</div>	
 			
 		<div class="form-group">
-			<label for="pen_name">Pen Name(Vernacular)</label>
+			<label for="pen_name">${ _strings.edit_author_pen_name }</label>
 			<input type="text" class="form-control" id="pen_name" 
 				<#if author.getPenName()?? >
 					value="${ author.getPenName() }"
@@ -168,7 +168,7 @@
 			>
 		</div>	
 		<div class="form-group">
-			<label for="pen_name_en">Pen Name(English)</label>
+			<label for="pen_name_en">${ _strings.edit_author_pen_name_en }</label>
 			<input type="text" class="form-control" id="pen_name_en" 
 				<#if author.getPenNameEn()?? >
 					value="${ author.getPenNameEn() }"
@@ -177,7 +177,7 @@
 		</div>
 					
 		<div class="form-group">
-			<label for="date_of_birth">Date of Birth</label>
+			<label for="date_of_birth">${ _strings.edit_author_birthday_ddmmyyyy }</label>
 			<input type="date" class="form-control" id="date_of_birth">
 		</div>
 		
@@ -210,7 +210,7 @@
 		</div>
 			
 		<div class="form-group">
-		  <label for="language">Language:</label>
+		  <label for="language">${ _strings.edit_author_language }:</label>
 		  <select class="form-control" id="language">
 		    <option value="HINDI">${ _strings.language_hi }</option>
 		    <option value="TAMIL">${ _strings.language_ta }</option>
@@ -224,7 +224,7 @@
 		</div>
 
 		<div class="form-group">
-		  	<label for="biography">Biography:</label>
+		  	<label for="biography">${ _strings.edit_author_summary }:</label>
 		  	<textarea rows="10" class="form-control" id="biography">
 		  		<#if author.getSummary()?? >
 					${ author.getSummary() }
