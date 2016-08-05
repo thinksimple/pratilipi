@@ -102,6 +102,11 @@ public class NotificationEntity implements Notification {
 	}
 	
 	@Override
+	public Long getSourceIdLong() {
+		return SOURCE_ID == null ? null : Long.parseLong( SOURCE_ID );
+	}
+	
+	@Override
 	public void setSourceId( Long sourceId ) {
 		this.SOURCE_ID = sourceId == null ? null : sourceId.toString();
 	}

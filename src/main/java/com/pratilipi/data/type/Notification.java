@@ -22,6 +22,8 @@ public interface Notification extends GenericOfyType {
 	
 	String getSourceId();
 	
+	Long getSourceIdLong();
+	
 	void setSourceId( Long sourceId );
 	
 	void setSourceId( String sourceId );

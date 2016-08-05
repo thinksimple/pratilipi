@@ -9,6 +9,7 @@ import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
+import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.client.NotificationData;
 import com.pratilipi.data.util.NotificationDataUtil;
@@ -61,7 +62,7 @@ public class NotificationListApi extends GenericApi {
 	
 	
 	@Get
-	public Response get( GetRequest request ) throws InsufficientAccessException {
+	public Response get( GetRequest request ) throws InsufficientAccessException, UnexpectedServerException {
 		
 		DataListCursorTuple<NotificationData> notificationListCursorTuple = NotificationDataUtil.getNotificationList(
 				AccessTokenFilter.getAccessToken().getUserId(),

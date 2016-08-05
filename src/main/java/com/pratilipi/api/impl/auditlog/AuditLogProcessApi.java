@@ -1,6 +1,8 @@
 package com.pratilipi.api.impl.auditlog;
 
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,6 +17,7 @@ import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.NotificationState;
 import com.pratilipi.common.type.NotificationType;
+import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
@@ -47,30 +50,63 @@ public class AuditLogProcessApi extends GenericApi {
 				(String) appProperty.getValue(),
 				10000 );
 		
-		int count = 0;
+		
+		List<Notification> notificationList = new LinkedList<>();
 		
 		Gson gson = new Gson();
 		for( AuditLog auditLog : auditLogDataListCursorTuple.getDataList() ) {
 			
-			if( auditLog.getAccessType() == AccessType.USER_AUTHOR_FOLLOWING ) {
+			JsonObject entityData = gson.fromJson( auditLog.getEventDataNew(), JsonElement.class ).getAsJsonObject();
+			
+			if( auditLog.getAccessType() == AccessType.PRATILIPI_UPDATE ) {
 				
-				JsonObject jsonObject = gson.fromJson( auditLog.getEventDataNew(), JsonElement.class ).getAsJsonObject();
-				Long userId = jsonObject.get( "USER_ID" ).getAsLong(); // Follower
-				Long authorId = jsonObject.get( "AUTHOR_ID" ).getAsLong(); // Followed
-				boolean following = jsonObject.get( "FOLLOWING" ).getAsBoolean();
+				PratilipiState pratilipiState = PratilipiState.valueOf( entityData.get( "STATE" ).getAsString() );
+				if( pratilipiState != PratilipiState.PUBLISHED )
+					continue;
+				
+				Long pratilipiId = entityData.get( "PRATILIPI_ID" ).getAsLong();
+				Long authorId = entityData.get( "AUTHOR_ID" ).getAsLong();
+				
+				List<Long> followerUserIdList = dataAccessor.getUserAuthorFollowList( null, authorId, null, null, null ).getDataList();
+				List<Notification> existingNotificationList = dataAccessor.getNotificationList( null, NotificationType.PRATILIPI_ADD, pratilipiId, null, null ).getDataList();
+				
+				for( Notification notification : existingNotificationList ) {
+					if( ! followerUserIdList.contains( notification.getUserId() ) )
+						continue;
+					notification.addDataId( pratilipiId, auditLog.getId() );
+					if( notification.getState() == NotificationState.READ )
+						notification.setState( NotificationState.UNREAD );
+					notification.setLastUpdated( new Date() );
+					notificationList.add( notification );
+					followerUserIdList.remove( notification.getUserId() );
+				}
+				
+				for( Long followerUserId : followerUserIdList ) {
+					Notification notification = dataAccessor.newNotification(
+							followerUserId,
+							NotificationType.PRATILIPI_ADD,
+							authorId );
+					notification.addDataId( pratilipiId, auditLog.getId() );
+					notification.setLastUpdated( new Date() );
+					notificationList.add( notification );
+				}
+				
+			} else if( auditLog.getAccessType() == AccessType.USER_AUTHOR_FOLLOWING ) {
+				
+				Long userId = entityData.get( "USER_ID" ).getAsLong(); // Follower
+				Long authorId = entityData.get( "AUTHOR_ID" ).getAsLong(); // Followed
+				boolean following = entityData.get( "FOLLOWING" ).getAsBoolean();
 				Author author = dataAccessor.getAuthor( authorId );
 				if( author.getUserId() == null ) // Followed
 					continue;
-				Notification notification = dataAccessor.getNotification( author.getUserId(), NotificationType.AUTHOR_FOLLOW );
 				
-				if( notification == null || ( following && notification.getDataIds().size() >= 10 ) ) {
-					notification = dataAccessor.newNotification();
-					notification.setUserId( author.getUserId() ); // Followed
-					notification.setType( NotificationType.AUTHOR_FOLLOW );
-					notification.setSourceId( authorId ); // Followed
-					notification.setState( NotificationState.UNREAD );
-					notification.setCreationDate( new Date() );
-				}
+				Notification notification = dataAccessor.getNotification( author.getUserId(), NotificationType.AUTHOR_FOLLOW, authorId );
+				
+				if( notification == null || ( following && notification.getDataIds().size() >= 10 ) )
+					notification = dataAccessor.newNotification(
+							author.getUserId(),
+							NotificationType.AUTHOR_FOLLOW,
+							authorId );
 
 				if( following ) {
 					notification.addDataId( userId, auditLog.getId() );
@@ -82,20 +118,22 @@ public class AuditLogProcessApi extends GenericApi {
 				
 				notification.setLastUpdated( new Date() );
 				
-				notification = dataAccessor.createOrUpdateNotification( notification );
-				count++;
+				notificationList.add( notification );
 				
 			} // End of if( auditLog.getAccessType() == AccessType.USER_AUTHOR_FOLLOWING )
 			
 		} // End of for
+		
+		
+		notificationList = dataAccessor.createOrUpdateNotificationList( notificationList );
+		logger.log( Level.INFO, "Created/updated " + notificationList.size() + " notifications." );
+
 		
 		// Updating AppProperty.
 		if( auditLogDataListCursorTuple.getDataList().size() > 0 ) {
 			appProperty.setValue( auditLogDataListCursorTuple.getCursor() );
 			appProperty = dataAccessor.createOrUpdateAppProperty( appProperty );
 		}
-		
-		logger.log( Level.INFO, "Created/updated " + count + " notifications." );
 		
 		return new GenericResponse();
 		

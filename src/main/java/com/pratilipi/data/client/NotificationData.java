@@ -1,5 +1,7 @@
 package com.pratilipi.data.client;
 
+import com.pratilipi.common.type.NotificationState;
+
 public class NotificationData {
 
 	private Long notificationId;
@@ -7,6 +9,8 @@ public class NotificationData {
 	private String message;
 	
 	private String sourceUrl;
+	
+	private NotificationState state;
 	
 	
 	public NotificationData() {}
@@ -40,4 +44,12 @@ public class NotificationData {
 		this.sourceUrl = sourceUrl;
 	}
 
+	public NotificationState getState() {
+		return state;
+	}
+	
+	public void setState( NotificationState state ) {
+		this.state = state;
+	}
+	
 }

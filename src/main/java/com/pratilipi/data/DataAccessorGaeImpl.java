@@ -130,7 +130,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return id == null || id.isEmpty() ? null : ObjectifyService.ofy().load().type( clazz ).id( id ).now();
 	}
 	
-	private <P extends GenericOfyType,Q extends P, R> Map<R, P> getEntities( Class<Q> clazz, List<R> idList ) {
+	private <P extends GenericOfyType, Q extends P, R> Map<R, P> getEntities( Class<Q> clazz, List<R> idList ) {
 		Map<R, Q> entityMap = ObjectifyService.ofy().load().type( clazz ).ids( idList );
 		Map<R, P> returnMap = new HashMap<>( entityMap.size() );
 		for( R id : idList )
@@ -138,7 +138,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return returnMap;
 	}
 	
-	private <P extends GenericOfyType,Q extends P, R> List<P> getEntityList( Class<Q> clazz, List<R> idList ) {
+	private <P extends GenericOfyType, Q extends P, R> List<P> getEntityList( Class<Q> clazz, List<R> idList ) {
 		Map<R, Q> entityMap = ObjectifyService.ofy().load().type( clazz ).ids( idList );
 		List<P> entityList = new ArrayList<>();
 		for( R id : idList )
@@ -205,6 +205,18 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		
 	}
 
+	private <T extends GenericOfyType> List<T> createOrUpdateEntityList( List<T> entityList ) {
+		
+		if( entityList.size() != 0 ) {
+			Map<Key<T>, T> map = ObjectifyService.ofy().save().entities( entityList ).now();
+			for( Key<T> key : map.keySet() )
+				map.get( key ).setKey( key );
+		}
+		
+		return entityList;
+		
+	}
+	
 	private void deleteEntity( GenericOfyType entity ) {
 		ObjectifyService.ofy().delete().entity( entity ).now();
 	}
@@ -1634,29 +1646,53 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	// NOTIFICATION Table
 	
+	@Override
 	public Notification newNotification() {
 		return new NotificationEntity();
 	}
 	
 	@Override
-	public Notification getNotification( Long userId, NotificationType type ) {
+	public Notification newNotification( Long userId, NotificationType type, Long sourceId ) {
+		Notification notification = new NotificationEntity();
+		notification.setUserId( userId );
+		notification.setType( type );
+		notification.setSourceId( sourceId );
+		notification.setState( NotificationState.UNREAD );
+		notification.setCreationDate( new Date() );
+		return notification;
+	}
+
+	@Override
+	public Notification getNotification( Long userId, NotificationType type, Long sourceId ) {
 
 		return ObjectifyService.ofy().load()
 				.type( NotificationEntity.class )
 				.filter( "USER_ID", userId )
 				.filter( "TYPE", type )
+				.filter( "SOURCE_ID", sourceId )
 				.order( "-LAST_UPDATED" )
 				.first().now();
 	
 	}
 	
 	@Override
-	public DataListCursorTuple<Notification> getNotificationList( Long userId, String cursorStr, Integer resultCount ) {
+	public DataListCursorTuple<Notification> getNotificationList( Long userId, NotificationType type, Long sourceId, String cursorStr, Integer resultCount ) {
+		return getNotificationList( userId, type, sourceId.toString(), cursorStr, resultCount );
+	}
+	
+	@Override
+	public DataListCursorTuple<Notification> getNotificationList( Long userId, NotificationType type, String sourceId, String cursorStr, Integer resultCount ) {
 	
 		Query<NotificationEntity> query = ObjectifyService.ofy().load().type( NotificationEntity.class );
 		
 		if( userId != null )
 			query = query.filter( "USER_ID", userId );
+		
+		if( type != null )
+			query = query.filter( "TYPE", type );
+		
+		if( sourceId != null )
+			query = query.filter( "SOURCE_ID", sourceId );
 		
 		query = query.order( "-LAST_UPDATED" );
 		
@@ -1694,4 +1730,9 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return createOrUpdateEntity( notification );
 	}
 
+	@Override
+	public List<Notification> createOrUpdateNotificationList( List<Notification> notificationList ) {
+		return createOrUpdateEntityList( notificationList );
+	}
+	
 }

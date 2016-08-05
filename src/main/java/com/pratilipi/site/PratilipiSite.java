@@ -1111,7 +1111,7 @@ public class PratilipiSite extends HttpServlet {
 	}
 
 	private Map<String, Object> createDataModelForNotificationsPage( Language language, Boolean basicMode ) 
-			throws InsufficientAccessException {
+			throws InsufficientAccessException, UnexpectedServerException {
 		NotificationListApi.Response response = ApiRegistry
 				.getApi( NotificationListApi.class )
 				.get( new NotificationListApi.GetRequest() );

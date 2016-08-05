@@ -791,26 +791,41 @@ public class DataAccessorMockImpl implements DataAccessor {
 		return null;
 	}
 
-
 	@Override
-	public Notification getNotification(Long userId, NotificationType type) {
+	public Notification newNotification( Long userId, NotificationType type, Long sourceId ) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-
 	@Override
-	public DataListCursorTuple<Notification> getNotificationList(Long userId,
-			String cursor, Integer resultCount) {
+	public Notification getNotification( Long userId, NotificationType type, Long sourceId ) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@Override
+	public DataListCursorTuple<Notification> getNotificationList( Long userId, NotificationType type, Long sourceId, String cursor, Integer resultCount ) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public DataListCursorTuple<Notification> getNotificationList( Long userId, NotificationType type, String sourceId, String cursor, Integer resultCount ) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
 	public Notification createOrUpdateNotification(Notification notification) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public List<Notification> createOrUpdateNotificationList( List<Notification> notificationList ) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 }
