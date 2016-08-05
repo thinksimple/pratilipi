@@ -39,7 +39,7 @@
 					</button>
 				</#if>
 			<#elseif ( ( author.getUser().getId()?? ) && ( user.getId() == author.getUser().getId() ) ) >
-				<p class="followers-text"> ${ author.getFollowCount() } &nbsp; ${_strings.author_followers } </p>
+				<p class="followers-text"> ${ author.getFollowCount() } ${_strings.author_followers } </p>
 			</#if>
 		<#else>
 			<a class="pratilipi-red-button" href="/login?ret=${ author.getPageUrl() }">
