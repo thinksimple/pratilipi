@@ -187,19 +187,30 @@ public class PratilipiSite extends HttpServlet {
 				templateName = templateFilePrefix + "PasswordUpdateBasic.ftl";
 				
 			} else if( uri.equals( "/followers" ) ) {
-				Long authorId = Long.parseLong( request.getParameter( RequestParameter.AUTHOR_ID_FOLLOWERS.getName() ) );
+				Long authorId = null;
+				if( request.getParameter( RequestParameter.AUTHOR_ID_FOLLOWERS.getName() ) != null ) {
+					authorId = Long.parseLong( request.getParameter( RequestParameter.AUTHOR_ID_FOLLOWERS.getName() ) );
+				} else {
+					Long userId = AccessTokenFilter.getAccessToken().getUserId();
+					authorId = dataAccessor.getAuthorByUserId( userId ).getId(); 
+				}
 				Integer currentPage = 	request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() ) != null &&
 										! request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() ).trim().isEmpty() ? 
 						Integer.parseInt( request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() ) ) : 1;
-				dataModel = createDataModelForFollowersPage( authorId, currentPage, filterLanguage );
-				templateName = templateFilePrefix + "FollowersListBasic.ftl";
+				dataModel = createDataModelForFollowersPage( authorId, currentPage, filterLanguage, basicMode );
+				templateName = templateFilePrefix + ( basicMode ? "FollowersListBasic.ftl" : "FollowersList.ftl" );
 			} else if( uri.equals( "/following" ) ) {
-				Long userId = Long.parseLong( request.getParameter( RequestParameter.USER_ID_FOLLOWING.getName() ) );
+				Long userId = null;
+				if( request.getParameter( RequestParameter.USER_ID_FOLLOWING.getName() ) != null )
+					userId = Long.parseLong( request.getParameter( RequestParameter.USER_ID_FOLLOWING.getName() ) ); 
+				else
+					userId = AccessTokenFilter.getAccessToken().getUserId();
+
 				Integer currentPage = 	request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() ) != null &&
 										! request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() ).trim().isEmpty() ? 
 						Integer.parseInt( request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() ) ) : 1;
-				dataModel = createDataModelForFollowingPage( userId, currentPage, filterLanguage );
-				templateName = templateFilePrefix + "FollowingListBasic.ftl";
+				dataModel = createDataModelForFollowingPage( userId, currentPage, filterLanguage, basicMode );
+				templateName = templateFilePrefix + ( basicMode ? "FollowingListBasic.ftl" : "FollowingList.ftl" );
 			} else if( page != null && page.getType() == PageType.PRATILIPI ) {
 				resourceList.addAll( createFbOpenGraphTags( page.getPrimaryContentId() ) );
 				dataModel = createDataModelForPratilipiPage( page.getPrimaryContentId(), basicMode, request );
@@ -819,7 +830,7 @@ public class PratilipiSite extends HttpServlet {
 		
 	}
 
-	public Map<String, Object> createDataModelForFollowersPage( Long authorId, Integer currPage, Language language ) 
+	public Map<String, Object> createDataModelForFollowersPage( Long authorId, Integer currPage, Language language, Boolean basicMode ) 
 			throws InsufficientAccessException {
 
 		AuthorApi.GetRequest authorApiGetRequest = new AuthorApi.GetRequest();
@@ -838,17 +849,24 @@ public class PratilipiSite extends HttpServlet {
 				.get( followersListRequest );
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
+		Gson gson = new Gson();
 		dataModel.put( "title", I18n.getString( "author_followers", language ) + " | " + createAuthorPageTitle( authorResponse ) );
-		dataModel.put( "author", authorResponse );
-		dataModel.put( "followersList", followersList );
-		dataModel.put( "followersListJson", new Gson().toJson( followersList ) );
-		dataModel.put( "currPage", currPage );
-		dataModel.put( "maxPage", followersList.getNumberFound() % resultCount == 0 ? 
-				followersList.getNumberFound() / resultCount :  followersList.getNumberFound() / resultCount + 1 );
+		if( basicMode ) {
+			dataModel.put( "author", authorResponse );
+			dataModel.put( "followersList", followersList );
+			dataModel.put( "currPage", currPage );
+			dataModel.put( "maxPage", followersList.getNumberFound() % resultCount == 0 ? 
+					followersList.getNumberFound() / resultCount :  followersList.getNumberFound() / resultCount + 1 );
+		} else {
+			dataModel.put( "authorJson", gson.toJson( authorResponse ) );
+			dataModel.put( "followersObjectJson", gson.toJson( followersList ) );
+		}
+
 		return dataModel;
+
 	}
 
-	public Map<String, Object> createDataModelForFollowingPage( Long userId, Integer currPage, Language language ) 
+	public Map<String, Object> createDataModelForFollowingPage( Long userId, Integer currPage, Language language, Boolean basicMode ) 
 			throws InsufficientAccessException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -870,13 +888,19 @@ public class PratilipiSite extends HttpServlet {
 				.get( followingListRequest );
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
+		Gson gson = new Gson();
 		dataModel.put( "title", I18n.getString( "author_following", language ) + " | " + createAuthorPageTitle( authorResponse ) );
-		dataModel.put( "author", authorResponse );
-		dataModel.put( "followingList", followingList );
-		dataModel.put( "followingListJson", new Gson().toJson( followingList ) );
-		dataModel.put( "currPage", currPage );
-		dataModel.put( "maxPage", followingList.getNumberFound() % resultCount == 0 ? 
-				followingList.getNumberFound() / resultCount :  followingList.getNumberFound() / resultCount + 1 );
+		if( basicMode ) {
+			dataModel.put( "author", authorResponse );
+			dataModel.put( "followingList", followingList );
+			dataModel.put( "currPage", currPage );
+			dataModel.put( "maxPage", followingList.getNumberFound() % resultCount == 0 ? 
+					followingList.getNumberFound() / resultCount :  followingList.getNumberFound() / resultCount + 1 );
+		} else {
+			dataModel.put( "authorJson", gson.toJson( authorResponse ) );
+			dataModel.put( "followingObjectJson", gson.toJson( followingList ) );
+		}
+
 		return dataModel;
 	}
 
