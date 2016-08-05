@@ -307,3 +307,6 @@ decrease_image_size		= ছবির আকার ছোট করুন
 reader_enjoyed_reading_part1	= রচনাটি পাঠ করে আনন্দ উপভোগ করুন
 reader_enjoyed_review_book		= রিভিউ লিখুন
 reader_enjoyed_reading_part2	= এটি শেয়ার করুন
+
+# Notifications
+notification_notifications = Notifications

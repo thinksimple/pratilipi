@@ -307,3 +307,6 @@ decrease_image_size		             = ಚಿತ್ರದ ಘಾತ್ರ ಕುಗ
 reader_enjoyed_reading_part1	     = ಬರಹವನ್ನು ಓದಿ ಎಂಜಾಯ್ ಮಾಡಿದಿರಾ?
 reader_enjoyed_review_book		     = ಪ್ರತಿಕ್ರಿಯೆ ಬರೆಯಿರಿ 
 reader_enjoyed_reading_part2	     = ಶೇರ್ ಮಾಡಿ 
+
+# Notifications
+notification_notifications = Notifications

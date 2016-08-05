@@ -307,3 +307,6 @@ decrease_image_size		= ફોટો નાનો કરો
 reader_enjoyed_reading_part1	= વાંચવાની મજા આવી?
 reader_enjoyed_review_book		= રીવ્યુ લખો 
 reader_enjoyed_reading_part2	= શેર કરો 
+
+# Notifications
+notification_notifications = Notifications

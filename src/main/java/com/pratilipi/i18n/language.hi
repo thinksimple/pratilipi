@@ -307,3 +307,6 @@ decrease_image_size		= चित्र कद घटाए
 reader_enjoyed_reading_part1	= क्या आपको यह रचना पसंद आई?
 reader_enjoyed_review_book		= टिप्पणी लिखें 
 reader_enjoyed_reading_part2	= शेयर करे 
+
+# Notifications
+notification_notifications = Notifications

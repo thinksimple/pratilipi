@@ -307,3 +307,6 @@ decrease_image_size		= ചിത്രത്തിന്റെ വലിപ്�
 reader_enjoyed_reading_part1	= ഈ രചന ഇഷ്ടപ്പെട്ടോ ? 
 reader_enjoyed_review_book		= ഒരു റിവ്യൂ എഴുതൂ
 reader_enjoyed_reading_part2	= ഷെയര്‍ ചെയ്യൂ
+
+# Notifications
+notification_notifications = Notifications

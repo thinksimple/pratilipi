@@ -307,3 +307,6 @@ decrease_image_size		= ఛాయాచిత్రం పరిమాణాన�
 reader_enjoyed_reading_part1	= రచనలు చదవడాన్ని ఆస్వాదిస్తున్నారా?
 reader_enjoyed_review_book		= సమీక్ష రాయండి
 reader_enjoyed_reading_part2	= షేర్ చేయండి
+
+# Notifications
+notification_notifications = Notifications

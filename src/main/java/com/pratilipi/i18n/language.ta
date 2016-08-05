@@ -307,3 +307,6 @@ decrease_image_size		= படத்தை சிறியதாக்க
 reader_enjoyed_reading_part1	= படைப்பு பிடித்திருந்ததா?
 reader_enjoyed_review_book		= படைப்பு குறித்து உங்களது கருத்துகளை பகிர்ந்து கொள்ளவும்
 reader_enjoyed_reading_part2	= பகிர
+
+# Notifications
+notification_notifications = Notifications
