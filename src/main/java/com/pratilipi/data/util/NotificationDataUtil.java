@@ -62,7 +62,13 @@ public class NotificationDataUtil {
 			if( notification.getType() == NotificationType.PRATILIPI_ADD ) {
 				
 				PratilipiData pratilipiData = pratilipis.get( notification.getSourceIdLong() );
-				notificationData.setMessage( "<b>" + pratilipiData.getTitle() + "</b> published by <b>" + pratilipiData.getAuthor().getName() + "</b>." );
+				String pratilipiTitle = pratilipiData.getTitle() == null
+						? pratilipiData.getTitleEn()
+						: pratilipiData.getTitle();
+				String authorName = pratilipiData.getAuthor().getName() == null
+						? pratilipiData.getAuthor().getNameEn()
+						: pratilipiData.getAuthor().getName();
+				notificationData.setMessage( "<b>" + pratilipiTitle + "</b> published by <b>" + authorName + "</b>." );
 				notificationData.setSourceUrl( pratilipiData.getPageUrl() );
 			
 			} else 	if( notification.getType() == NotificationType.AUTHOR_FOLLOW ) {
