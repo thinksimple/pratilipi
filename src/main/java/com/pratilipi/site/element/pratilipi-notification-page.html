@@ -1,0 +1,85 @@
+<#include "pratilipi-notification-grid.html">
+
+<dom-module id="pratilipi-notification-page">
+
+	<style>
+		:host {
+			display: block;
+		}
+		.pratilipi-header {
+			position: fixed;
+			width: 100%;
+			z-index: 10;
+		}
+		@media only screen and (max-width: 767px) {
+			main {
+				padding-top: 85px;
+			}
+		}
+		@media only screen and (min-width: 768px) {
+			main {
+				padding-top: 52px;
+			}
+		}
+		
+	</style>
+
+	<template>
+		<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
+		<pratilipi-edit-account user='[[ user ]]'></pratilipi-edit-account>
+		<pratilipi-write pratilipi-types='[[ pratilipiTypes ]]'></pratilipi-write>
+		<pratilipi-alert></pratilipi-alert>
+
+		<div class="pratilipi-header">
+   			<pratilipi-new-header language-map="[[ languageMap ]]" user='[[ user ]]'></pratilipi-new-header>
+   		</div>
+   		<main>
+   			<div class="parent-container margin-top-bottom">
+				<div class="container">
+					<pratilipi-navigation
+							class='pull-left hidden-xs hidden-sm'
+							navigation-list='[[ navigationList ]]'
+							></pratilipi-navigation>
+					<#-- Navigation & Search bar for extra-small & small screens. -->
+					<pratilipi-navigation-drawer with-backdrop navigation-list='[[ navigationList ]]'></pratilipi-navigation-drawer>
+					<div style="overflow:hidden">
+						<pratilipi-notification-grid 
+							notification-object="{{ notificationObject }}"></pratilipi-notification-grid>
+					</div>
+				</div>
+			</div>
+   		</main>
+		<footer>
+   			<pratilipi-footer></pratilipi-footer>
+		</footer>
+		<div class="scroll-top-button">
+			<a id="scrollToTop" on-click="scrollToTop"><img src="http://0.ptlp.co/resource-all/icon/footer/arrow_up_transparent_64.png"/></a>
+		</div>
+	</template>
+
+	<script>
+		Polymer({
+
+			is: 'pratilipi-notification-page',
+
+			properties: {
+				userData: { type: Object },
+				notificationObject: { type: Object },
+				navigationList: { type: Array },
+				pratilipiTypes: { types: Object },
+				languageMap: { type: Object },
+				lastScrollTop: { type: Number, value: 0 }
+			},
+
+			scrollHandler: function( st ) {
+				if( st > this.lastScrollTop || st < 100 )
+					jQuery( '#scrollToTop' ).fadeOut();
+				else
+					jQuery( '#scrollToTop' ).fadeIn();
+				this.lastScrollTop = st;
+			}
+
+		});
+	</script>
+
+</dom-module>

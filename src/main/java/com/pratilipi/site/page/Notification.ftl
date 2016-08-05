@@ -8,15 +8,16 @@
 		<#assign mainPage="pratilipi-notification-page">
 		<#include "meta/Head.ftl">
 
-		<link rel='import' href='/elements.${lang}/pratilipi-notification-page.html'>
+		<link rel='import' href='/elements.${lang}/pratilipi-notification-page.html?201608'>
 	</head>
 
 	<body>
 		<pratilipi-notification-page 
 			user-data='${ userJson }'
-			notification-list='${ notificationListJson }'
+			notification-object='${ notificationListJson }'
 			pratilipi-types='${ pratilipiTypesJson }'
-			navigation-list='${ navigationList }'></pratilipi-notification-page>
+			navigation-list='${ navigationList }'
+			language-map='${ languageMap }'></pratilipi-notification-page>
 	</body>
 
 </html>

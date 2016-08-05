@@ -311,7 +311,7 @@
 				this.set( 'displayName', this.user.displayName );
 				this.set( 'profileImageUrl', this.user.profileImageUrl != null ? 
 													( this.user.profileImageUrl + ( this.user.profileImageUrl.indexOf( '?' ) == -1 ? '?' : '&' ) + "width=48" )
-													: null );
+													: "http://0.ptlp.co/author/image?width=48" );
 			},
 			
 			_logIn: function() {
@@ -338,7 +338,14 @@
 				else
 					window.location.href = "/library";
 			},
-			
+
+			_notifications: function() {
+				if( this.user.isGuest )
+					document.querySelector( 'pratilipi-user' ).logIn( true );
+				else
+					window.location.href = "/notification";
+			},
+
 			_openMenuNavigation: function() {
 				document.querySelector( 'pratilipi-navigation-drawer' ).show();
 			},

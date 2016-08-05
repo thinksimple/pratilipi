@@ -1,0 +1,63 @@
+<dom-module id="pratilipi-notification-snippet">
+
+	<style>
+		:host {
+			display: block;
+			width: 100%;
+			cursor: pointer;
+			margin-bottom: 4px;
+		}
+		.notification {
+			width: 100%;
+			display: -ms-flexbox;
+			display: -webkit-flex;
+			display: flex;
+			-ms-flex-direction: row;
+			-webkit-flex-direction: row;
+			flex-direction: row;
+			padding: 20px;
+			border-radius: 4px;
+			background-color: white;
+			border: 1px solid #d3d3d3;
+			font-size: 13px;
+		}
+		.notification:hover {
+			border: 1px solid #c4c4c4;
+		}
+	</style>
+
+	<template>
+		<div class="notification" on-click="_redirectToActionEvent">
+			<div class="notification-message"></div>
+		</div>
+	</template>
+		
+
+	<script>
+		Polymer({
+
+			is: 'pratilipi-notification-snippet',
+
+			properties: {
+				notification: { type: Object, observer: "_notificationObserver" },
+				notificationId: { type: String },
+				message: { type: String },
+				sourceUrl: { type: String }
+			},
+
+			_notificationObserver: function() {
+				this.set( 'notificationId', this.notification.notificationId );
+				this.set( 'message', this.notification.message );
+				this.set( 'sourceUrl', this.notification.sourceUrl );
+
+				jQuery( this.querySelector( '.notification-message' ) ).html( this.message );
+			},
+
+			_redirectToActionEvent: function() {
+				window.location.href = this.sourceUrl;
+			}
+
+		});
+	</script>
+
+</dom-module>
