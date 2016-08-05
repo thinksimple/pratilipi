@@ -13,10 +13,10 @@
 			<a href="${ pratilipi.getPageUrl() }"><h4 class="media-heading clip-content-1-line bigger-line-height pratilipi-card-heading pratilipi-without-margin">${ pratilipi.getTitle()!pratilipi.getTitleEn() } &nbsp; </h4></a>
 		    <div>
 			    <#if ( pratilipi.getReadCount() > 0 ) >
-			    	<span>${ pratilipi.getReadCount() }<img src="http://0.ptlp.co/resource-all/icon/svg/user.svg" style="width:13px;height:13px;"></span>
+			    	<span style="color: #696969;">${ pratilipi.getReadCount() }<img src="http://0.ptlp.co/resource-all/icon/svg/eye-dark-grey.svg" style="width:13px;height:13px;"></span>
 			    </#if>
 			    <#if ( pratilipi.getAverageRating() >= 1 ) >
-			    	<span id="book-rating-${ pratilipi.getId()?c }"> <img src="http://0.ptlp.co/resource-all/icon/svg/star-full.svg" style="width:13px;height:13px;"></span>
+			    	<span style="color: #696969;" id="book-rating-${ pratilipi.getId()?c }"> <img src="http://0.ptlp.co/resource-all/icon/svg/star-full-dark-grey.svg" style="width:13px;height:13px;"></span>
 			    </#if>			    
 		    </div>
 		 </div>

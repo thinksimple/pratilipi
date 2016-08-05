@@ -20,7 +20,7 @@
 						<p class="works-number">${ followingList.getNumberFound() } ${ _strings.author_follow_members }</p>
 					</div>
 					<div class="pull-right">
-					  	<a style="cursor: pointer;" href="${ author.getPageUrl() }">
+					  	<a style="cursor: pointer;" onclick="goBack()">
 							<img style="width: 20px;height: 20px;" src="http://0.ptlp.co/resource-all/icon/svg/cross.svg">
 					  	</a>
 					</div>					
@@ -48,4 +48,19 @@
 		</div>
 		<#include "../element/pratilipi-footer.ftl">
 	</body>
+	<script>
+		function getUrlParameter( key ) {
+		   if( key = ( new RegExp( '[?&]' +encodeURIComponent( key ) + '=([^&]*)' ) ).exec( location.search ) )
+		      return decodeURIComponent( key[1] );
+		   else
+			   return null;
+		}	
+		
+		function goBack() {
+			if( getUrlParameter( "ret" ) != null )
+				window.location.href =  getUrlParameter( "ret" );
+			else
+				window.location.href = "/";
+		}
+	</script>	
 </html>

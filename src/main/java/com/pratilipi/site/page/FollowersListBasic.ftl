@@ -58,8 +58,8 @@
 		}	
 		
 		function goBack() {
-			if( getUrlParameters( "ret" ) != null )
-				window.location.href =  getUrlParameters( "ret" );
+			if( getUrlParameter( "ret" ) != null )
+				window.location.href =  getUrlParameter( "ret" );
 			else
 				window.location.href = "/";
 		}
