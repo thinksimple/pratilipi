@@ -1,5 +1,5 @@
 <div class="pratilipi-shadow secondary-500 box">
-	<#assign followersUrl = "/followers?aId=" + author.getId()?c >	
+	<#assign followersUrl = "/followers?aId=" + author.getId()?c + "&ret=" + requestUrl >	
 	<div class="pull-left">
 		<a href="${ followersUrl }"><h5 class="pratilipi-red pratilipi-no-margin">
 			 ${ _strings.author_followers }

@@ -5,6 +5,11 @@
 	</h5>
 	<p class="works-number"> ${author.getContentPublished()} ${ _strings.author_count_works }</p>
 </div>
+<div class="pull-right">
+  	<a style="cursor: pointer;" href="${ author.getPageUrl() }">
+		<img style="width: 20px;height: 20px;" src="http://0.ptlp.co/resource-all/icon/svg/cross.svg">
+  	</a>
+</div>
 <div class="clearfix"></div>
 <hr class="pratilipi-margin-top-2">	
 

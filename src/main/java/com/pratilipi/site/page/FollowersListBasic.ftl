@@ -19,6 +19,11 @@
 						</h5>
 						<p class="works-number">${ followersList.getNumberFound() } ${ _strings.author_follow_members }</p>
 					</div>
+					<div class="pull-right">
+					  	<a style="cursor: pointer;" onclick="goBack()">
+							<img style="width: 20px;height: 20px;" src="http://0.ptlp.co/resource-all/icon/svg/cross.svg">
+					  	</a>
+					</div>		
 					<div class="clearfix"></div>
 					<hr>
 					<#if followersList.getUserList()?has_content>
@@ -44,4 +49,19 @@
 		</div>
 		<#include "../element/pratilipi-footer.ftl">
 	</body>
+	<script>
+		function getUrlParameter( key ) {
+		   if( key = ( new RegExp( '[?&]' +encodeURIComponent( key ) + '=([^&]*)' ) ).exec( location.search ) )
+		      return decodeURIComponent( key[1] );
+		   else
+			   return null;
+		}	
+		
+		function goBack() {
+			if( getUrlParameters( "ret" ) != null )
+				window.location.href =  getUrlParameters( "ret" );
+			else
+				window.location.href = "/";
+		}
+	</script>
 </html>
