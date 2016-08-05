@@ -133,10 +133,13 @@ public class UserAuthorDataUtil {
 		if( author != null ) {
 			
 			List<Long> userIdList = new ArrayList<>( authorDataList.size() );
-			List<UserData> userDatalList = new ArrayList<>( authorDataList.size() );
-			for( AuthorData authorData : authorDataList )
-				if( authorData.getUser().getId() != null )
+			List<UserData> userDataList = new ArrayList<>( authorDataList.size() );
+			for( AuthorData authorData : authorDataList ) {
+				if( authorData.getUser().getId() != null ) {
 					userIdList.add( authorData.getUser().getId() );
+					userDataList.add( authorData.getUser() );
+				}
+			}
 			
 			List<UserAuthor> userAuthorList = dataAccessor.getUserAuthorList(
 					userIdList,
@@ -144,7 +147,7 @@ public class UserAuthorDataUtil {
 			
 			for( UserAuthor userAuthor : userAuthorList )
 				if( userAuthor != null && userAuthor.isFollowing() )
-					userDatalList.get( userIdList.indexOf( userAuthor.getUserId() ) ).setFollowing( true );
+					userDataList.get( userIdList.indexOf( userAuthor.getUserId() ) ).setFollowing( true );
 			
 		}
 
