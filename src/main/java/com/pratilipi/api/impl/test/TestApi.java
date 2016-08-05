@@ -158,7 +158,7 @@ public class TestApi extends GenericApi {
 
 		
 		ObjectifyService.ofy().delete().entities( ObjectifyService.ofy().load().type( NotificationEntity.class ).list() );
-		ObjectifyService.ofy().delete().entity( ObjectifyService.ofy().load().type( AppProperty.class ).id( "Api.AuditLogProcess" ) );
+		ObjectifyService.ofy().delete().entity( ObjectifyService.ofy().load().type( AppProperty.class ).id( "Api.AuditLogProcess" ).now() );
 		
 		return new GenericResponse();
 		
