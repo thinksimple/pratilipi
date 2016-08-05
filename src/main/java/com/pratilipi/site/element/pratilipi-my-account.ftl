@@ -22,5 +22,5 @@
 	<div class="clearfix"></div>
 	<hr class="pratilipi-margin-top-2">	
 	<a class="pratilipi-red-button" href="/updatepassword">${ _strings.user_reset_password}</a>
-	<a class="pratilipi-red-button" onclick="logout()">Logout</a>			
+	<div style="margin-top: 5px;"><a class="pratilipi-red-button" onclick="logout()">Logout</a></div>			
 </div>
