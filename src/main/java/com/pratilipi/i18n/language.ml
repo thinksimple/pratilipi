@@ -34,7 +34,7 @@ _pratilipi_type_magazines	= ആനുകാലികങ്ങള്‍
 # Author
 author_about					= രചയിതാവിനെക്കുറിച്ച്
 author_language					= ഭാഷ
-author_since					= പ്രസിദ്ധീകരിക്കാന്‍ തുടങ്ങിയത്
+author_since					= പ്രതിലിപിയില്‍ 
 author_count_works				= കൃതികള്‍
 author_count_reads				= വായിച്ചവര്‍
 author_count_likes				= ലൈക്സ്‌
@@ -44,8 +44,8 @@ author_drafts					= ഡ്രാഫ്റ്റുകള്
 author_published_works			= പ്രസിദ്ധീകരിച്ച രചനകള്‍
 author_add_new_content			= പുതിയ രചനകള്‍ ചേര്‍ക്കൂ
 author_no_contents_published	= ക്ഷമിക്കണം!  ഈ രചയിതാവ് രചനകള് ഒന്നും തന്നെ പ്രസിദ്ധീകരിച്ചിട്ടില്ല.
-author_activity					= Activity
-author_about					= രചയിതാവിനെക്കുറിച്ച്
+author_activity					= ആക്റ്റിവിറ്റീസ്
+author_about					= വിവരങ്ങള്‍ 
 author_biography				= വിവരണം 
 author_location					= സ്ഥലം
 author_date_of_birth			= ജനനത്തിയ്യതി
@@ -309,4 +309,4 @@ reader_enjoyed_review_book		= ഒരു റിവ്യൂ എഴുതൂ
 reader_enjoyed_reading_part2	= ഷെയര്‍ ചെയ്യൂ
 
 # Notifications
-notification_notifications = Notifications
+notification_notifications = നോട്ടിഫിക്കേഷനുകള്‍
