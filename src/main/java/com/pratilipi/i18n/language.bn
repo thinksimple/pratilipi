@@ -37,7 +37,7 @@ author_language		  =  ভাষা
 author_since				=  প্রতিলিপির সঙ্গে
 author_count_works			=  প্রকাশিত সাহিত্য
 author_count_reads			=  পাঠক দ্বারা পঠিত
-author_count_likes			=  পছন্দ করেছেন
+author_count_likes			=  পঠিত
 author_edit_profile			=  প্রোফাইল সম্পাদনা
 author_update_image				= চিত্র আপলোড
 author_drafts			=  অপ্রকাশিত রচনাসমূহ
@@ -309,4 +309,4 @@ reader_enjoyed_review_book		= রিভিউ লিখুন
 reader_enjoyed_reading_part2	= এটি শেয়ার করুন
 
 # Notifications
-notification_notifications = Notifications
+notification_notifications = প্রজ্ঞাপন
