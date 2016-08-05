@@ -37,7 +37,7 @@ author_language		= ભાષા
 author_since			= પ્રતિલિપિ સાથે
 author_count_works		= પ્રકાશિત સાહિત્ય  
 author_count_reads		= વાચક સંખ્યા   	
-author_count_likes		= વાચકોની પસંદ સંખ્યા
+author_count_likes		= પસંદ સંખ્યા 
 author_edit_profile		= પ્રોફાઈલ સુધારો
 author_update_image		= ફોટો અપલોડ કરો
 author_drafts			= અપ્રકાશિત રચનાઓ 
@@ -309,4 +309,4 @@ reader_enjoyed_review_book		= રીવ્યુ લખો
 reader_enjoyed_reading_part2	= શેર કરો 
 
 # Notifications
-notification_notifications = Notifications
+notification_notifications = સૂચનાઓ
