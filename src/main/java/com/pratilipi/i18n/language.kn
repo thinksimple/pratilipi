@@ -82,9 +82,9 @@ pratilipi_move_to_drafts				            = ಅಪ್ರಕಟಿತಗೊಳಿ�
 pratilipi_publish_it					              = ಪ್ರಕಟಿಸಿ!
 pratilipi_delete_content				            = ಡಿಲೀಟ್ ಮಾಡಿ 
 pratilipi_confirm_move_to_drafts		        = ನೀವು ಈ ಬರಹವನ್ನು ಅಪ್ರಕಟಿತಗೊಳಿಸಲು ಬಯಸುವಿರಾ?
-pratilipi_confirm_move_to_drafts_okay	      = ಸರಿ 
+pratilipi_confirm_move_to_drafts_okay	      = ಹೌದು  
 pratilipi_confirm_delete_content          	= ನೀವು ಈ ಬರಹವನ್ನು ಡಿಲೀಟ್ ಮಾಡಲು ಬಯಸುವಿರಾ?
-pratilipi_confirm_delete_content_okay	      = ಸರಿ 
+pratilipi_confirm_delete_content_okay	      = ಹೌದು 
 pratilipi_deleted_successfully			        = ಈ ಬರಹವು ಯಶಸ್ವಿಯಾಗಿ ಡಿಲೀಟ್ ಆಗಿರುತ್ತದೆ!
 
 # Rating          
