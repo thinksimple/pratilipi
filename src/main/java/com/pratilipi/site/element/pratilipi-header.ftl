@@ -62,6 +62,20 @@
 	</div>
 </div>
 <script>
+	$( document ).ready(function() {
+	  // Handler for .ready() called.
+	  	function generateLanguageOptions() {
+			var $select = $("#language");
+			var language_map = ${ languageMap };
+			$.each(language_map, function( key, value ) {
+			  console.log(key);
+			  console.log(value);
+			  	var $option = $("<option>").html(value);
+			  	$select.append( $option );
+			});
+		}
+		generateLanguageOptions();
+	});
 	function showPopup() {
 		window.alert("Please login through your desktop to write contents.");
 	}
