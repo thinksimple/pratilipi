@@ -10,7 +10,7 @@
 
 	<body>
 		<#include "../element/pratilipi-header.ftl">
-		<div class="parent-container" style="padding-top: 80px;">
+		<div class="parent-container" style="">
 			<div class="container">
 				<#if ( ( action == "edit_profile") && author.hasAccessToUpdate() )>
 					<#include "../element/pratilipi-author-settings.ftl">
