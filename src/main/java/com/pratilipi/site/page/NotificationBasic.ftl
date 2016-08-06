@@ -12,14 +12,14 @@
 			<div class="container">
 				<div class="pratilipi-shadow secondary-500 box">
 					<div class="pull-left">
+						<a style="cursor: pointer;">
+							<img style="width: 20px;height: 20px;" onclick="goBack()" src="http://0.ptlp.co/resource-all/icon/svg/cross.svg">
+					  	</a>	
+					</div>
+					<div class="center-heading">
 						<h5 class="pratilipi-red pratilipi-bold pratilipi-no-margin">
 							${ _strings.notification_notifications }
 						</h5>
-					</div>
-					<div class="pull-right">
-					  	<a style="cursor: pointer;">
-							<img style="width: 20px;height: 20px;" onclick="goBack()" src="http://0.ptlp.co/resource-all/icon/svg/cross.svg">
-					  	</a>
 					</div>					
 					<div class="clearfix"></div>
 					<hr>				

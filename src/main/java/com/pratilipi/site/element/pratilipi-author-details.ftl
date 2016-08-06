@@ -12,7 +12,7 @@
 			</a>			
 		</div>
 	</#if>			
-		<div class="share-author pull-right">
+		<div class="share-author pull-right" <#if user.isGuest()>style="right:10px;"</#if> >
 			<a onclick="gotoShare( '${ author.getPageUrl() }', 'author_page' )" class="icon">
 				<span class="glyph-white-background badge badge-circle"><img src="http://0.ptlp.co/resource-all/icon/svg/share2.svg"></span>
 			</a>
