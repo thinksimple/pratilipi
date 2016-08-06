@@ -74,7 +74,7 @@
 	$( "#select-language" ).change(function() {
 		console.log(this);
 		var $this = $(this);
-		window.location = ( "http://" + $this.val() + ".pratilipi.com" + window.location.pathname );
+		window.location = ( "http://" + $this.val() + ".pratilipi.com" );
 		
 	});
 	function showPopup() {
