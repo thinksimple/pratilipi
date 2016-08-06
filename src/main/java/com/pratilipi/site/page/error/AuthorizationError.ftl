@@ -9,11 +9,11 @@
 	<body>
 		<dom-module id="pratilipi-authorization-error">
 			<template>
-				<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
-				<pratilipi-write pratilipi-types='[[ pratilipiTypes ]]'></pratilipi-write>
+				<pratilipi-user user='{{ user }}' user-data='${ userJson }'></pratilipi-user>
+				<pratilipi-write pratilipi-types='${ pratilipiTypesJson }'></pratilipi-write>
 				<pratilipi-alert></pratilipi-alert>
 				<div class="pratilipi-header">
-		   			<pratilipi-new-header language-map="language-map='${ languageMap }' user='[[ user ]]'></pratilipi-new-header>
+		   			<pratilipi-new-header language-map='${ languageMap }' user='[[ user ]]'></pratilipi-new-header>
 		   		</div>
 		   		<main>
 					<div class="parent-container margin-top-bottom">
