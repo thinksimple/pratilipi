@@ -219,9 +219,6 @@
 				<template is="dom-if" if="{{ !hasAccessToFollow }}">
 					<div class="user-logout-container">
 						<span>{{ followCount }}&nbsp;${ _strings.author_followers }</span>
-						<button class="pratilipi-light-blue-button" on-click="logoutUser">
-							${ _strings.user_sign_out }
-						</button>
 					</div>
 				</template>
 			</div>
@@ -413,11 +410,7 @@
 			if( ! ( fileName.match( ".*\.jpg" ) || fileName.match( ".*\.png" ) ) ) return; // Only jpg and png
 			document.getElementById( "uploadAuthorImage" ).submit();
 			this.imageUploaded = true;
-		},
-
-		logoutUser: function() {
-			document.querySelector( 'pratilipi-user' ).logOut();
-		} 
+		}
 
 	});
 	</script>
