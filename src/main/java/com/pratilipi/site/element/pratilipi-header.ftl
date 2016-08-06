@@ -36,6 +36,7 @@
 	  	  <div class="col-xs-3">	
 	  		<div class="form-group" style="margin-bottom: 5px;">
 			  <select class="form-control" id="select-language" style="box-shadow:none;padding:0px;border:none;color:red;height:30px;">
+			  	<option selected disabled>${ _strings.pratilipi }</option>
 			  </select>
 			</div>
 		  </div>
@@ -69,7 +70,6 @@
 			});
 		}
 		generateLanguageOptions();
-		$("select-language").val("${_strings.pratilipi}");
 	});
 	$( "#select-language" ).change(function() {
 		console.log(this);
