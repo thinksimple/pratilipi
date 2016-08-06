@@ -1,8 +1,10 @@
 package com.pratilipi.api.impl.test;
 
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.google.appengine.api.datastore.QueryResultIterator;
 import com.googlecode.objectify.ObjectifyService;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
@@ -11,15 +13,14 @@ import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
+import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.Language;
-import com.pratilipi.data.type.AppProperty;
+import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.gae.AccessTokenEntity;
-import com.pratilipi.data.type.gae.AppPropertyEntity;
 import com.pratilipi.data.type.gae.AuthorEntity;
-import com.pratilipi.data.type.gae.NotificationEntity;
 import com.pratilipi.data.type.gae.PageEntity;
 import com.pratilipi.data.type.gae.PratilipiEntity;
 import com.pratilipi.data.type.gae.UserAuthorEntity;
@@ -57,7 +58,7 @@ public class TestApi extends GenericApi {
 	
 	
 	@Get
-	public GenericResponse get( GetRequest request ) throws InsufficientAccessException, InvalidArgumentException {
+	public GenericResponse get( GetRequest request ) throws InsufficientAccessException, InvalidArgumentException, UnexpectedServerException {
 		
 /*		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( 5830554839678976L );
@@ -158,8 +159,17 @@ public class TestApi extends GenericApi {
 		}*/
 
 		
-		ObjectifyService.ofy().delete().entities( ObjectifyService.ofy().load().type( NotificationEntity.class ).list() );
-		ObjectifyService.ofy().delete().entity( ObjectifyService.ofy().load().type( AppPropertyEntity.class ).id( "Api.AuditLogProcess" ).now() );
+		QueryResultIterator<AuthorEntity> iterator = ObjectifyService.ofy().load().type( AuthorEntity.class ).iterator();
+		while( iterator.hasNext() ) {
+			Author author = iterator.next();
+			if( author.hasCustomImage() )
+				continue;
+			if( DataAccessorFactory.getBlobAccessor().getBlob( "author-image/original/" + author.getId() ) == null )
+				continue;
+			logger.log( Level.INFO, "Setting custom cover for " + author.getId() );
+			author.setCustomImage( true );
+			ObjectifyService.ofy().save().entity( author );
+		}
 		
 		return new GenericResponse();
 		
