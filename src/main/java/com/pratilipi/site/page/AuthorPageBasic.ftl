@@ -9,7 +9,7 @@
 	</head>
 
 	<body>
-		<#include "../element/pratilipi-new-header-basic.ftl">
+		<#include "../element/pratilipi-header.ftl">
 		<div class="parent-container" style="padding-top: 80px;">
 			<div class="container">
 				<#if ( ( action == "edit_profile") && author.hasAccessToUpdate() )>
