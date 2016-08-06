@@ -78,9 +78,9 @@
 				<pratilipi-author-biography author="[[ author ]]"></pratilipi-author-biography>
 				<#-- For Authors without user profile -->
 				<template is="dom-if" if="{{ hasUserId }}">
-					<pratilipi-author-following author-list="{{ followingList }}" user-id="{{ userId }}"></pratilipi-author-following>
+					<pratilipi-author-following author="[[ author ]]" author-list="{{ followingList }}" user-id="{{ userId }}"></pratilipi-author-following>
 				</template>
-				<pratilipi-author-followers user-list="{{ followersList }}" author-id="{{ authorId }}"></pratilipi-author-followers>
+				<pratilipi-author-followers author="[[ author ]]" user-list="{{ followersList }}" author-id="{{ authorId }}"></pratilipi-author-followers>
 			</div>
 		</div>
 		<iron-ajax
@@ -155,11 +155,10 @@
 			this.async( function() { window.location.reload(); }, 2000 );
 		},
 
-		ready: function() {
+		attached: function() {
 			if( ( this.publishedPratilipiList == null || this.publishedPratilipiList.numberFound == 0 )
 					&& ! this.hasAccessToUpdate ) {
-				jQuery( this.querySelector( '#author-activity-tab' ) ).removeClass( 'active' );
-				jQuery( this.querySelector( '#author-about-tab' ) ).addClass( 'active' );
+				jQuery( '.nav-tabs a[href="#author-about"]' ).tab( 'show' );
 			}
 		}
 		

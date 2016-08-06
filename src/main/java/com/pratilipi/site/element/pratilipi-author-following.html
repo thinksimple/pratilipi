@@ -28,6 +28,7 @@
 			is: 'pratilipi-author-following',
 			
 			properties: {
+				author: { type: Object, observer: "_authorObserver" },
 				userId: { type: String },
 				authorList: { type: Object },
 				followList: { type: Array, value: function() { return []; } },
@@ -35,6 +36,12 @@
 				numberFound: { type: Number },
 				isFinished: { type: Boolean, value: false },
 				noDisplay: { type: Boolean, value: false }
+			},
+
+			_authorObserver: function() {
+				/* numberFound will be null only before dom-ready is called */
+				if( this.numberFound == null ) return;
+				this.resetList();
 			},
 			
 			processAuthorListObject: function( authorListObject ) {
@@ -65,16 +72,25 @@
 					this.push( 'followList', followList[i] );
 				this.set( 'cursor', followListObject.cursor );
 				this.set( 'numberFound', followListObject.numberFound );
-				this.set( 'isFinished', followList.length < 20 ? true : false );
+				this.set( 'isFinished', followListObject.cursor == null || followList.length < 20 );
 			},
 			
 			attached: function() {
 				if( this.authorList != null )
 					this._pushToFollowList( this.processAuthorListObject( this.authorList ) );
 			},
-			
+
+			resetList: function() {
+				this.set( 'followList', [] );
+				this.set( 'cursor', null );
+				this.set( 'numberFound', 0 );
+				this.set( 'isFinished', false );
+				this.loadMore();
+			},
+
 			loadMore: function() {
 				this.$.UserAuthorFollowListApi.params.userId = this.userId;
+				this.$.UserAuthorFollowListApi.params.cursor = this.cursor;
 				this.$.UserAuthorFollowListApi.generateRequest();
 			},
 
