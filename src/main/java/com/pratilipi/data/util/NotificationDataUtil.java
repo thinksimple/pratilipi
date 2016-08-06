@@ -82,7 +82,7 @@ public class NotificationDataUtil {
 					notificationData.setMessage( notificationMsg );
 				}
 				
-				notificationData.setSourceUrl( "/followers?" + RequestParameter.NOTIFICATION_ID + "=" + notification.getId() );
+				notificationData.setSourceUrl( "/followers?" + RequestParameter.NOTIFICATION_ID.getName() + "=" + notification.getId() );
 			
 			}
 			
