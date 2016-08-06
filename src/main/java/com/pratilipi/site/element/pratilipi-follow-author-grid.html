@@ -123,7 +123,7 @@
 			is: 'pratilipi-follow-author-grid',
 
 			properties: {
-				followList: { type: Array, observer: "updateReducedFollowList" },
+				followList: { type: Array },
 				reducedFollowList: { type: Array, value: function() { return []; } },
 				numberFound: { type: Number },
 				title: { type: String },
@@ -134,9 +134,10 @@
 
 			updateReducedFollowList: function() {
 				var itemsToShow = 4;
+				this.set( 'reducedFollowList', [] );
 				for( var i = 0; i < Math.min( this.followList.length, itemsToShow ); i++ )
 					this.push( 'reducedFollowList', this.followList[i] );
-				this.set( 'showModalButton', this.followList.length > itemsToShow ? true : false );
+				this.set( 'showModalButton', this.followList.length > itemsToShow );
 				this.set( 'emptyList', this.followList.length == 0 ? true : false );
 			},
 

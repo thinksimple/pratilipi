@@ -35,7 +35,10 @@
 				cursor: { type: String },
 				numberFound: { type: Number },
 				isFinished: { type: Boolean, value: false },
-				noDisplay: { type: Boolean, value: false }
+				noDisplay: { type: Boolean, value: false },
+
+				// local variable
+				refreshFollowList: { type: Boolean, value: false }
 			},
 
 			_authorObserver: function() {
@@ -85,6 +88,7 @@
 				this.set( 'cursor', null );
 				this.set( 'numberFound', 0 );
 				this.set( 'isFinished', false );
+				this.set( 'refreshFollowList', true );
 				this.loadMore();
 			},
 
@@ -96,6 +100,10 @@
 
 			_userAuthorFollowListApiResponse: function( response ) {
 				this._pushToFollowList( this.processAuthorListObject( response.detail.response ) );
+				if( this.refreshFollowList ) {
+					this.set( 'refreshFollowList', false );
+					this.querySelector( 'pratilipi-follow-author-grid' ).updateReducedFollowList();
+				}
 			},
 
 			_userAuthorFollowListApiError: function( response ) {
