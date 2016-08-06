@@ -35,15 +35,7 @@
 		<div class="row">
 	  	  <div class="col-xs-3">	
 	  		<div class="form-group" style="margin-bottom: 5px;">
-			  <select class="form-control" id="language" style="box-shadow:none;padding:0px;border:none;color:red;height:30px;">
-			    <option>HINDI</option>
-			    <option>TAMIL</option>
-			    <option>KANNADA</option>
-			    <option>BENGALI</option>
-			    <option>TELUGU</option>
-			    <option>GUJARATI</option>
-			    <option>MARATHI</option>
-			    <option>MALAYALAM</option>
+			  <select class="form-control" id="select-language" style="box-shadow:none;padding:0px;border:none;color:red;height:30px;">
 			  </select>
 			</div>
 		  </div>
@@ -65,16 +57,25 @@
 	$( document ).ready(function() {
 	  // Handler for .ready() called.
 	  	function generateLanguageOptions() {
-			var $select = $("#language");
+			var $select = $("#select-language");
 			var language_map = ${ languageMap };
 			$.each(language_map, function( key, value ) {
 			  console.log(key);
 			  console.log(value);
-			  	var $option = $("<option>").html(value);
+			  	var $option = $("<option>",{
+			  		value: value.toLowerCase(),
+			  	}).html(value);
 			  	$select.append( $option );
 			});
 		}
 		generateLanguageOptions();
+		$("select-language").val("${_strings.pratilipi}");
+	});
+	$( "#select-language" ).change(function() {
+		console.log(this);
+		var $this = $(this);
+		window.location = ( "http://" + $this.val() + ".pratilipi.com" + window.location.pathname );
+		
 	});
 	function showPopup() {
 		window.alert("Please login through your desktop to write contents.");
