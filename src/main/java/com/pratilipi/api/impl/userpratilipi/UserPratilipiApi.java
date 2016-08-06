@@ -190,7 +190,7 @@ public class UserPratilipiApi extends GenericApi {
 				AccessTokenFilter.getAccessToken().getUserId(),
 				request.pratilipiId );
 
-		return new Response( userPratilipiData );
+		return userPratilipiData == null ? new Response() : new Response( userPratilipiData );
 		
 	}		
 

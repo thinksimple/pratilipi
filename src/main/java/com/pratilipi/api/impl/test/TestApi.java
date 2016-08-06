@@ -1,5 +1,6 @@
 package com.pratilipi.api.impl.test;
 
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,7 +17,9 @@ import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.Language;
+import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.gae.AccessTokenEntity;
@@ -159,6 +162,17 @@ public class TestApi extends GenericApi {
 		}*/
 
 		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+
+		
+		// Fetching AppProperty
+		String appPropertyId = "Api.Test";
+		AppProperty appProperty = dataAccessor.getAppProperty( appPropertyId );
+		if( appProperty == null ) {
+			appProperty = dataAccessor.newAppProperty( appPropertyId );
+			appProperty.setValue( new Date( 0 ) );
+		}
+
 		QueryResultIterator<AuthorEntity> iterator = ObjectifyService.ofy().load().type( AuthorEntity.class ).iterator();
 		while( iterator.hasNext() ) {
 			Author author = iterator.next();
@@ -169,6 +183,9 @@ public class TestApi extends GenericApi {
 			logger.log( Level.INFO, "Setting custom cover for " + author.getId() );
 			author.setCustomImage( true );
 			ObjectifyService.ofy().save().entity( author );
+			try {
+				Thread.sleep( 10 );
+			} catch (InterruptedException e) { }
 		}
 		
 		return new GenericResponse();
