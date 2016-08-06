@@ -54,30 +54,31 @@
 			font-weight: 700;
 			text-shadow: 4px 1px 4px rgba(0,0,0,0.50);
 		}
-		.follow-author button.pratilipi-light-blue-button {
-			display: block;
-			margin: 0 auto;
-			border-radius: 5px;
-			font-weight: 400;
-			font-size: 13px;
-			letter-spacing: 0;
+		.follow-author {
+			clear: both;
 		}
-		.follow-author button.pratilipi-grey-button {
+		.follow-author button {
 			display: block;
 			margin: 0 auto;
-			border-radius: 5px;
 			font-weight: 400;
 			font-size: 13px;
 			letter-spacing: 0;
+			border-radius: 4px;
+			background: #FFFFFF;
+			color: #d0021b;
+			border: 1px solid #d0021b;
 			-webkit-box-shadow: none;
 			-moz-box-shadow: none;
 			box-shadow: none;
+			outline: none;
+			padding: 4px 8px;
 		}
-		.follow-author iron-icon {
+		.follow-author button iron-icon {
 			width: 20px;
 			height: 20px;
+			color: inherit;
 			margin-top: -4px;
-			margin-right: 3px;
+			margin-right: 1px;
 		}
 		.user-logout-container span {
 			font-size: 14px;
@@ -203,14 +204,14 @@
 				<template is="dom-if" if="{{ hasAccessToFollow }}">
 					<div class="follow-author">
 						<template is="dom-if" if="{{ !following }}">
-							<button class="pratilipi-light-blue-button" on-click="followAuthor">
+							<button class="pratilipi-author-follow-button" on-click="followAuthor">
 								<iron-icon icon="social:person-add"></iron-icon>
 								${ _strings.author_follow }{{ followCountAbbr }}
 							</button>
 						</template>
 						<template is="dom-if" if="{{ following }}">
-							<button class="pratilipi-grey-button" on-click="unFollowAuthor">
-								<iron-icon icon="icons:remove-circle"></iron-icon>
+							<button class="pratilipi-author-unfollow-button" on-click="unFollowAuthor">
+								<iron-icon icon="icons:done"></iron-icon>
 								${ _strings.author_unfollow }{{ followCountAbbr }}
 							</button>
 						</template>
@@ -309,13 +310,15 @@
 		},
 		
 		_disableFollowButtons: function() {
-			jQuery( this.querySelector( '.follow-author-button .pratilipi-light-blue-button' ) ).prop( 'disabled', true );
-			jQuery( this.querySelector( '.follow-author-button .pratilipi-grey-button' ) ).prop( 'disabled', true );
+			this.async( function() {
+				jQuery( this.querySelector( '.follow-author .pratilipi-author-follow-button' ) ).prop( 'disabled', true );
+				jQuery( this.querySelector( '.follow-author .pratilipi-author-unfollow-button' ) ).prop( 'disabled', true );
+			});
 		},
 
 		_enableFollowButtons: function() {
-			jQuery( this.querySelector( '.follow-author-button .pratilipi-light-blue-button' ) ).prop( 'disabled', false );
-			jQuery( this.querySelector( '.follow-author-button .pratilipi-grey-button' ) ).prop( 'disabled', false );
+			jQuery( this.querySelector( '.follow-author .pratilipi-author-follow-button' ) ).prop( 'disabled', false );
+			jQuery( this.querySelector( '.follow-author .pratilipi-author-unfollow-button' ) ).prop( 'disabled', false );
 		},
 
 		_postFollowApi: function( following ) {
@@ -337,7 +340,7 @@
 		},
 		
 		_swapFollowButton: function() {
-			this.set( 'following', this.following ? false : true );
+			this.set( 'following', ! this.following );
 			this.set( 'followCount', this.following ? this.followCount + 1 : this.followCount - 1 );
 		},
 		
