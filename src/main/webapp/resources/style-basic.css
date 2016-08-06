@@ -207,6 +207,23 @@ table tr td {
 	outline: none;
 }
 
+.pratilipi-red-background-button {
+	background: #d0021b;
+	border: 1px solid #d0021b;
+	box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.50);
+	border-radius: 5px;
+	font-size: 13px;
+	color: #ffffff;
+	letter-spacing: 0.3px;
+	line-height: 16px;
+	text-shadow: 0px 1px 2px #FFFFFF;
+	display: inline-block;
+	padding: 10px;
+	margin-right: 10px;
+	magin-top: 5px;
+	outline: none;
+}
+
 a.pratilipi-light-blue-button:hover, a.pratilipi-light-blue-button:focus
 	{
 	color: #0C68BD;
@@ -562,4 +579,7 @@ a:hover {
 .center-heading {
 	text-align: center;
 	margin-top: 5px;
+}
+.align-text-center {
+	text-align: center;
 }
