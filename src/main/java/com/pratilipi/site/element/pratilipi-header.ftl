@@ -63,7 +63,7 @@
 			  console.log(key);
 			  console.log(value);
 			  	var $option = $("<option>",{
-			  		value: value.toLowerCase(),
+			  		value: key.toLowerCase(),
 			  	}).html(value);
 			  	$select.append( $option );
 			});
