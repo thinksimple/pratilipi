@@ -8,7 +8,7 @@
 		<#assign mainPage="pratilipi-home-page">
 		<#include "meta/Head.ftl">
 
-		<link rel='import' href='/elements.${lang}/pratilipi-home-page.html?20160624'>
+		<link rel='import' href='/elements.${lang}/pratilipi-home-page.html?201608'>
 		<link rel='import' href='/elements.${lang}/pratilipi-${ language?lower_case }-carousel.html?20160725'>
 	</head>
 
@@ -17,7 +17,8 @@
 			user-data='${ userJson }'
 			sections-list='${ sectionsJson }'
 			pratilipi-types='${ pratilipiTypesJson }'
-			navigation-list='${ navigationList }'></pratilipi-home-page>
+			navigation-list='${ navigationList }'
+			language-map='${ languageMap }'></pratilipi-home-page>
 	</body>
 
 </html>

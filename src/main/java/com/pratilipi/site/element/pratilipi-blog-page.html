@@ -18,15 +18,15 @@
 	</style>
 
 	<template>
-		<header class="nav-down">
-			<pratilipi-header user='[[ user ]]'></pratilipi-header>
-		</header>
-		<main>
-			<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
-			<pratilipi-edit-account user='[[ user ]]'></pratilipi-edit-account>
-			<pratilipi-write pratilipi-types='[[ pratilipiTypes ]]'></pratilipi-write>
-			<pratilipi-edit-blog></pratilipi-edit-blog>
-			<pratilipi-alert></pratilipi-alert>
+		<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
+		<pratilipi-write pratilipi-types='[[ pratilipiTypes ]]'></pratilipi-write>
+		<pratilipi-alert></pratilipi-alert>
+		<pratilipi-edit-blog></pratilipi-edit-blog>
+		
+		<div class="pratilipi-header">
+   			<pratilipi-new-header language-map="[[ languageMap ]]" user='[[ user ]]'></pratilipi-new-header>
+   		</div>
+   		<main>
 			<div class="parent-container margin-top-bottom">
 				<div class="container">
 					<pratilipi-navigation
@@ -69,6 +69,7 @@
 				navigationList: { type: Array },
 				pratilipiTypes: { types: Object },
 				showPratilipiList: { type: Boolean, value: true },
+				languageMap: { type: Object },
 				lastScrollTop: { type: Number, value: 0 },
 			},
 			

@@ -4,7 +4,7 @@
 	<head>
 		<#assign mainPage="pratilipi-pratilipi-page">
 		<#include "meta/Head.ftl">
-		<link rel='import' href='/elements.${lang}/pratilipi-pratilipi-page.html?2016072303'>
+		<link rel='import' href='/elements.${lang}/pratilipi-pratilipi-page.html?201608'>
 		<script>
 			function convertDate( date ) {
 				var d = new Date( date );
@@ -29,7 +29,8 @@
 				review-list='${ reviewListJson }'
 				cursor='${ reviewListCursor! }'
 				pratilipi-types='${ pratilipiTypesJson }'
-				navigation-list='${ navigationList }'></pratilipi-pratilipi-page>
+				navigation-list='${ navigationList }'
+				language-map='${ languageMap }'></pratilipi-pratilipi-page>
 	</body>
 	
 </html>

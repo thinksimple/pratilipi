@@ -5,13 +5,14 @@
 <dom-module id="pratilipi-author-list-page">
 
 	<template>
-		<header class="nav-down">
-    		<pratilipi-header user='[[ user ]]'></pratilipi-header>
-		</header>
-		<main>
-			<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
-			<pratilipi-edit-account user='[[ user ]]'></pratilipi-edit-account>
-			<pratilipi-write pratilipi-types='[[ pratilipiTypes ]]'></pratilipi-write>
+		<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
+		<pratilipi-write pratilipi-types='[[ pratilipiTypes ]]'></pratilipi-write>
+		<pratilipi-alert></pratilipi-alert>
+
+		<div class="pratilipi-header">
+   			<pratilipi-new-header language-map="[[ languageMap ]]" user='[[ user ]]'></pratilipi-new-header>
+   		</div>
+   		<main>
 			<div style="overflow: hidden;" class="margin-top-bottom">
 				<pratilipi-author-list
 					author-list='[[ authorList ]]'
@@ -40,6 +41,7 @@
 				pratilipiTypes: { types: Object },
 				filter: { type: Object },
 				cursor: { type: String },
+				languageMap: { type: Object },
 				lastScrollTop: { type: Number, value: 0 },
 			},
 			

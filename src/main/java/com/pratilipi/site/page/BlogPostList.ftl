@@ -7,7 +7,7 @@
 		
 		<#assign mainPage="pratilipi-blog-list-page">
 		<#include "meta/Head.ftl">
-		<link rel='import' href='/elements.${lang}/pratilipi-blog-list-page.html?201608'>
+		<link rel='import' href='/elements.${lang}/pratilipi-blog-list-page.html?20160806'>
 	</head>
 
 	<body>
@@ -19,7 +19,8 @@
 			filter='${ blogPostFilterJson }'
 			cursor='${ blogPostListCursor }'
 			pratilipi-types='${ pratilipiTypesJson }'
-			navigation-list='${ navigationList }'></pratilipi-blog-list-page>
+			navigation-list='${ navigationList }'
+			language-map='${ languageMap }'></pratilipi-blog-list-page>
     </body>
 
 </html>

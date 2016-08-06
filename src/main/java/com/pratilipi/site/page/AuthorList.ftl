@@ -4,7 +4,7 @@
 	<head>
 		<#assign mainPage="pratilipi-author-list-page">
 		<#include "meta/Head.ftl">
-		<link rel='import' href='/elements.${lang}/pratilipi-author-list-page.html?20160524'>
+		<link rel='import' href='/elements.${lang}/pratilipi-author-list-page.html?201608'>
 	</head>
 
 	<body>
@@ -13,7 +13,8 @@
 			author-list='${ authorListJson }'
 			filter='${ authorListFilterJson! }'
 			cursor='${ authorListCursor! }'
-			pratilipi-types='${ pratilipiTypesJson }'></pratilipi-author-list-page>
+			pratilipi-types='${ pratilipiTypesJson }'
+			language-map='${ languageMap }'></pratilipi-author-list-page>
 	</body>
 	
 </html>
