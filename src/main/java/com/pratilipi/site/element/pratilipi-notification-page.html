@@ -64,11 +64,22 @@
 
 			properties: {
 				userData: { type: Object },
+				user: { type: Object, observer: "_userObserver" },
+				guestUser: { type: Boolean },
 				notificationObject: { type: Object },
 				navigationList: { type: Array },
 				pratilipiTypes: { types: Object },
 				languageMap: { type: Object },
 				lastScrollTop: { type: Number, value: 0 }
+			},
+
+			_userObserver: function() {
+				if( this.guestUser == null ) return;
+				window.location.reload();
+			},
+
+			attached: function() {
+				this.set( 'guestUser', this.user.isGuest );
 			},
 
 			scrollHandler: function( st ) {
