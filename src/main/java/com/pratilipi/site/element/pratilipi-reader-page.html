@@ -38,8 +38,8 @@
     		<pratilipi-reader-footer
     			page-no="[[ pageNo ]]"
     			page-count="{{ pageCount }}"></pratilipi-reader-footer>
-    		<pratilipi-footer></pratilipi-footer>
-		</footer>
+    		<#-- <pratilipi-footer></pratilipi-footer> -->
+    	</footer>
 		<iron-ajax
 				id="AjaxPost"
 				url="/api/userpratilipi/library"
@@ -256,6 +256,20 @@
 			
 			// Ignore this
 			scrollHandler: function( st ) {},
+
+			nightReadingMode: function() {
+				if( jQuery( 'body' ).hasClass( 'night-mode' ) ) return;
+				jQuery( 'body' ).addClass( 'night-mode' );
+				/* For paper input in footer */
+				this.querySelector( 'pratilipi-reader-footer' ).readingMode( 'night-mode' );
+			},
+
+			normalReadingMode: function() {
+				if( ! jQuery( 'body' ).hasClass( 'night-mode' ) ) return;
+				jQuery( 'body' ).removeClass( 'night-mode' );
+				/* For paper input in footer */
+				this.querySelector( 'pratilipi-reader-footer' ).readingMode();
+			} 
 			
 		});
 	</script>

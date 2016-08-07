@@ -101,7 +101,7 @@ span {
 }
 
 h1, h2, h3, h4, h5, h6 {
-	color: #333;
+	color: inherit;
 	font-weight: 400;
 	margin: 5px 0px 10px 0px;
 }
@@ -633,4 +633,26 @@ a.pratilipi-new-blue-button:hover {
 	bottom: 10px;
 	color: white;
 	margin-right: 10px;
+}
+
+body.night-mode {
+	background-color: #222 !important;
+}
+body.night-mode #reader-content * {
+	color: #FFF !important;
+}
+body.night-mode #pager {
+	color: #FFF !important;
+	background-color: #222 !important;
+	border: 1px solid #fff;
+}
+body.night-mode #reader-header {
+	background: #eee !important;
+}
+body.night-mode #reader-content * {
+	color: #FFF !important;
+}
+body.night-mode #reader-alert-box {
+	border: 1px solid #fff;
+	color: #fff !important;
 }

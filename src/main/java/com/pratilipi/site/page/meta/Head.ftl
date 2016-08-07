@@ -14,7 +14,7 @@
 <link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?48'>
 
 <#-- Custom Stylesheet -->
-<link type="text/css" rel="stylesheet" href="/resources/style.css?201608">
+<link type="text/css" rel="stylesheet" href="/resources/style.css?20160808">
 
 <#include "GoogleAnalytics.ftl">
 

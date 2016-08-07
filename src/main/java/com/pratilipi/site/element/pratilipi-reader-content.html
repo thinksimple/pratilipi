@@ -30,15 +30,15 @@
 		}
 		
 		/* Bootstrap override */
-		.alert-success {
+		#reader-alert-box {
 			color: #333;
-			background-color: #ffffff;
+			background-color: inherit;
 			border-color: #333;
 		}
 
-		.alert-success .alert-link,.alert-success .alert-link:hover, .alert-success .alert-link:focus {
-			color: #107FE5;
+		#reader-alert-box .alert-link, #reader-alert-box .alert-link:hover, #reader-alert-box .alert-link:focus {
 			font-weight: inherit;
+			color: inherit;
 		}
 
 		.hvr-bounce-in {
@@ -81,9 +81,9 @@
 				<div id="reader-alert-box" class="alert alert-success hvr-bounce-in" role="alert">
 					<h3 class="text-center" style="margin-top: 24px;">${ _strings.reader_enjoyed_reading_part1 }</h3>
 					<div class="text-center" style="margin: 0 auto;">
-						<a class="pratilipi-blue" on-click="writeReview">
+						<a class="alert-link" on-click="writeReview">
 							<h6 style="margin: 15px 0px; display: inline-block;">${ _strings.reader_enjoyed_review_book }</h6>
-							<iron-icon icon="icons:create" style="margin-left: 0px; display: inline-block; width: 20px; color: #333;"></iron-icon>
+							<iron-icon icon="icons:create" style="margin-left: 0px; display: inline-block; width: 20px;"></iron-icon>
 						</a>
 					</div>
 					<div class="text-center" style="margin: 0 auto;">
