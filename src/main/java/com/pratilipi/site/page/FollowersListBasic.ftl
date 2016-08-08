@@ -17,7 +17,7 @@
 						<div style="padding: 50px 10px;" class="secondary-500 pratilipi-shadow box">
 							<img style="width: 48px; height: 48px; margin: 0px auto 20px auto; display: block;" 
 									src="https://storage.googleapis.com/devo-pratilipi.appspot.com/icomoon_24_icons/SVG/info.svg" alt="${ _strings.author_no_contents_published }" />
-							<div class="text-center">Please login to see your followers.</div>
+							<div class="text-center">Please <a href="/login?ret=/followers"> to see your followers.</div>
 						</div>
 					<#else>	
 						<div class="pull-left">
