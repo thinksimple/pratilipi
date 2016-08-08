@@ -18,19 +18,19 @@
 			}		
 			function shareOnFacebook() {
 				var url = encodeURIComponent( getUrlParameter( "url" ) );
-				url += encodeURIComponent( "&share=facebook" )
+				url += encodeURIComponent( "&utm_source=facebook" )
 				var fbUrl = ( "http://www.facebook.com/sharer.php?u=" + url );
 				window.open( fbUrl, "share", "width=600,height=500,left=70px,top=60px" );
 			}
 			function shareOnTwitter() {
 				var url = encodeURIComponent( getUrlParameter( "url" ) );
-				url += encodeURIComponent( "&share=twitter" );		
+				url += encodeURIComponent( "&utm_source=twitter" );		
 				window.open( "http://twitter.com/share?url=" + url ,
 				"share", "width=500,height=600,left=70px,top=60px" );
 			}
 			function shareOnGplus() {
 				var url = encodeURIComponent( getUrlParameter( "url" ) );
-				url += encodeURIComponent( "&share=gplus" );				
+				url += encodeURIComponent( "&utm_source=gplus" );				
 				window.open( "https://plus.google.com/share?url=" + url, "share", "width=500,height=600,left=70px,top=60px" );
 			}
 		</script>
