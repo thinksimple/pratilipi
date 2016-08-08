@@ -199,12 +199,12 @@
 						</a>
 					</div>
 					<div class="pratilipi-text">
-						<paper-menu-button no-animations vertical-offset=36 class="language" horizontal-align="left" vertical-align="top">
+						<paper-menu-button allow-outside-scroll no-animations vertical-offset=36 class="language" horizontal-align="left" vertical-align="top">
 							<div class="pratilipi-red dropdown-trigger">
 								${ _strings.pratilipi }
 								<iron-icon icon="icons:arrow-drop-down"></iron-icon>
 							</div>
-							<paper-menu class="dropdown-content">
+							<paper-menu class="dropdown-content" role="listbox">
 								<template is="dom-repeat" items="{{ languageArray }}" as="language">
 									<template is="dom-if" if="{{ !language.current }}">
 										<a class="pratilipi-black" href="{{ language.link }}">

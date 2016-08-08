@@ -9,6 +9,8 @@
 		}
 		.vertical-alignment-helper {
 			display: table;
+			padding-top: 16px;
+			padding-bottom: 16px;
 			height: 100%;
 			width: 100%;
 			pointer-events: none;
@@ -18,14 +20,18 @@
 			vertical-align: middle;
 			pointer-events: none;
 		}
+		.modal-header {
+			padding: 10px 16px;
+		}
 		.modal-content {
 			width: inherit;
 			height: inherit;
 			margin: 0 auto;
 			pointer-events: all;
+			border-radius: 0;
 		}
 		.number-found {
-			font-size: 14px;
+			font-size: 13px;
 			margin-top: 3px;
 		}
 		.close-button {
@@ -34,6 +40,9 @@
 			top: 8px;
 		}
 		@media only screen and (max-width: 768px) {
+			.vertical-alignment-helper {
+				padding: 0;
+			}
 			.modal-body {
 				width: auto;
 				height: auto;
@@ -62,7 +71,7 @@
 	</style>
 
 	<template>
-		<div class="modal fade col-xs-12" id="pratilipi-follow-author" tabindex="-1" role="dialog" aria-labelledby="pratilipiFollowAuthor" aria-hidden="true">
+		<div class="modal fade" id="pratilipi-follow-author" tabindex="-1" role="dialog" aria-labelledby="pratilipiFollowAuthor" aria-hidden="true">
 			<div class="vertical-alignment-helper">
 				<div class="modal-dialog vertical-align-center">
 					<div class="modal-content">

@@ -75,12 +75,13 @@
 	<template>
 		<div class="follow-author">
 			<div class="follow-author-image">
-				<a href="{{ pageUrl }}"><img src="{{ imageUrl }}" class="img-circle" /></a>
+				<a href="{{ pageUrl }}"><iron-image style="background-color: #ddd; width: 48px; height: 48px;" 
+					src="{{ imageUrl }}" class="img-circle pratilipi-shadow" ></iron-image></a>
 			</div>
 			<div class="follow-author-name contain-title ellipsed">
 				<a href="{{ pageUrl }}">{{ name }}</a>
 				<template is="dom-if" if="{{ showFollowCount }}">
-					<div class="follow-count">{{ followCount }}&nbsp;${ _strings.author_followers }</div>
+					<div class="follow-count">{{ followObject.followCount }}&nbsp;${ _strings.author_followers }</div>
 				</template>
 			</div>
 			<template is="dom-if" if="{{ canFollow }}">
@@ -112,7 +113,7 @@
 			is: 'pratilipi-follow-author',
 			
 			properties: {
-				followObject: { type: Object, observer: "_followObjectObserver" },
+				followObject: { type: Object, notify: true },
 
 				authorId: { type: String },
 				name: { type: String },
@@ -123,7 +124,12 @@
 				canFollow: { type: Boolean }
 			},
 			
+			observers: [
+	            '_followObjectObserver(followObject.following)'
+			],
+			
 			_followCountObserver: function() {
+				/* this.set( 'followCount', this.following ? ( this.followCount + 1 ) : ( this.followCount - 1 ) ); */
 				this.set( 'showFollowCount', this.followCount > 0 );
 			},
 			
@@ -186,8 +192,8 @@
 			},
 
 			_swapFollowingState: function() {
-				this.set( 'following', !this.following );
-				this.set( 'followCount', ( this.following ? ( this.followCount + 1 ) : ( this.followCount - 1 ) ) );
+				this.set( 'followObject.following', !this.following );
+				this.set( 'followObject.followCount', this.following ? ( this.followCount + 1 ) : ( this.followCount - 1 ) );
 			}
 
 		});

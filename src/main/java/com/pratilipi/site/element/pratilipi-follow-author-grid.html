@@ -71,6 +71,10 @@
 			padding-left: 12px;
 			padding-right: 12px;
 		}
+		.follow-grid {
+			height: 160px;
+			overflow: hidden;
+		}
 	</style>
 
 	<template>
@@ -89,7 +93,7 @@
 			<hr/>
 			<template is="dom-if" if="{{ !emptyList }}">
 				<div class="row follow-grid">
-					<template is="dom-repeat" items="{{ reducedFollowList }}">
+					<template is="dom-repeat" items="{{ followList }}">
 						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 							<pratilipi-follow-author follow-object="{{ item }}"></pratilipi-follow-author>
 						</div>
