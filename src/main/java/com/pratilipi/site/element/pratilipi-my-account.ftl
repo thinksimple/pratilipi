@@ -20,6 +20,26 @@
 			}
 		});
 	}
+	
+	function sendVerificationEmail(emailId) {
+			$.ajax({
+			type: 'get',
+			url: '/api/user/email',
+            data: { 
+					email: emailId,
+					sendEmailVerificationMail: true,        		
+            	   },
+			success: function( response ) {
+				if( getUrlParameter( "ret" ) != null )
+					window.location.href =  getUrlParameter( "ret" );
+				else
+					window.location.href = "/";
+			},
+			error: function () {
+				alert( "Logout Failed!" );
+			}
+		});
+	}
 </script>
 
 <div class="pratilipi-shadow secondary-500 box align-text-center">	
@@ -40,7 +60,7 @@
 		<#if user.getIsEmailVerified() >
 			<button class="pratilipi-red-background-button">${ _strings.edit_account_email_verified } &nbsp;<span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>		
 		<#else>
-			<button class="pratilipi-red-background-button">${ _strings.edit_account_verify_email }</button>
+			<button class="pratilipi-red-background-button" onclick="sendVerificationEmail( '${ user.getEmail() }' )">${ _strings.edit_account_verify_email }</button>
 		</#if>
 	</div>
 	<a class="pratilipi-red-button" href="/updatepassword">${ _strings.user_reset_password}</a>
