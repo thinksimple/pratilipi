@@ -589,3 +589,7 @@ a:hover {
 .align-text-center {
 	text-align: center;
 }
+.login-link {
+	color: #107FE5;
+	font-weight: 700;
+}

@@ -1,6 +1,6 @@
 <script>
 	$( document ).ready(function() {
-	  	<#if user.getIsGuest() >
+	  	<#if ( user.getIsGuest()==true ) >
 	  		window.location.href = "/";
 	  	</#if>
 	});
