@@ -23,7 +23,7 @@
 	
 	function sendVerificationEmail(emailId) {
 			$.ajax({
-			type: 'get',
+			type: 'post',
 			url: '/api/user/email',
             data: { 
 					email: emailId,
@@ -36,7 +36,7 @@
 					window.location.href = "/";
 			},
 			error: function () {
-				alert( "Logout Failed!" );
+				alert( "Email Verification Failed!" );
 			}
 		});
 	}
