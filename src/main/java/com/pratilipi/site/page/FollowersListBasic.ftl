@@ -44,6 +44,11 @@
 								<#assign local_author = local_user.getAuthor() >
 								<@follow_author_card isGuest=user.isGuest?c can_follow=can_follow_boolean retUrl=author.getPageUrl() authorId=local_author.getId() followCount=local_author.getFollowCount() following=local_author.isFollowing() name=local_user.getDisplayName() pageUrl=local_user.getProfilePageUrl() imageUrl=local_user.getProfileImageUrl()/>
 							</#list>
+							
+							<#-- Add page navigation -->
+								<#assign currentPage = currPage>
+								<#assign maxPage = maxPage>
+								<#include "../element/pratilipi-page-navigation.ftl">		
 						<#else>
 							<div style="padding: 50px 10px;" class="secondary-500 pratilipi-shadow box">
 								<img style="width: 48px; height: 48px; margin: 0px auto 20px auto; display: block;" 
@@ -53,11 +58,6 @@
 						</#if>
 					</#if>	
 				</div>
-				
-				<#-- Add page navigation -->
-				<#assign currentPage = currPage>
-				<#assign maxPage = maxPage>
-				<#include "../element/pratilipi-page-navigation.ftl">	
 
 			</div>
 		</div>
