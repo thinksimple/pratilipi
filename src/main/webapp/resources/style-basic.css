@@ -167,6 +167,11 @@ table tr td {
 	text-decoration: none !important;
 }
 
+.pratilipi-red-background-button:hover {
+	color: #ffffff !important;
+	text-decoration: none !important;
+}
+
 .pratilipi-shadow {
 	border-top: 1px solid #DDD;
 	box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.50);

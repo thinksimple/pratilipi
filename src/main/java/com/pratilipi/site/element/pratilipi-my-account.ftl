@@ -30,10 +30,7 @@
 					sendEmailVerificationMail: true,        		
             	   },
 			success: function( response ) {
-				if( getUrlParameter( "ret" ) != null )
-					window.location.href =  getUrlParameter( "ret" );
-				else
-					window.location.href = "/";
+				location.reload();
 			},
 			error: function () {
 				alert( "Email Verification Failed!" );

@@ -26,7 +26,9 @@
 					<#if notificationList?has_content >
 						<div class="list-group">
 						<#list notificationList as notification>
-							<a href="${ notification.getSourceUrl() }" style="margin-bottom:4px;" class="list-group-item">${ notification.getMessage() }</a>
+							<#if ( notification.getMessage()?? && notification.getSourceUrl()?? )
+								<a href="${ notification.getSourceUrl() }" style="margin-bottom:4px;" class="list-group-item">${ notification.getMessage() }</a>
+							</#if>	
 						</#list>
 						</div>
 					</#if>
