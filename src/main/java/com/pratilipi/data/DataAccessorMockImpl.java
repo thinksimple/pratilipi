@@ -798,7 +798,19 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 
 	@Override
+	public Notification getNotification( Long notificationId ) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
 	public Notification getNotification( Long userId, NotificationType type, Long sourceId ) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getNotificationCount( Long userId, Date minLastUpdatedDate  ) {
 		// TODO Auto-generated method stub
 		return null;
 	}

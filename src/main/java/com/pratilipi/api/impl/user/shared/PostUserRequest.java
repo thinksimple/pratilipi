@@ -10,7 +10,7 @@ public class PostUserRequest extends GenericRequest {
 	
 	private String name;
 	private boolean hasName;
-
+	
 	@Validate( regEx = REGEX_EMAIL, regExErrMsg = ERR_EMAIL_INVALID )
 	private String email;
 	private boolean hasEmail;
@@ -18,7 +18,7 @@ public class PostUserRequest extends GenericRequest {
 	@Validate( regEx = REGEX_PHONE, regExErrMsg = ERR_PHONE_INVALID )
 	private String phone;
 	private boolean hasPhone;
-
+	
 	
 	public Long getId() {
 		return userId;

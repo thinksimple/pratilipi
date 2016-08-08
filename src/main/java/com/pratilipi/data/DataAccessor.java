@@ -179,7 +179,9 @@ public interface DataAccessor {
 	// NOTIFICATION Table
 	Notification newNotification();
 	Notification newNotification( Long userId, NotificationType type, Long sourceId );
+	Notification getNotification( Long notificationId );
 	Notification getNotification( Long userId, NotificationType type, Long sourceId );
+	Integer getNotificationCount( Long userId, Date minLastUpdatedDate  );
 	DataListCursorTuple<Notification> getNotificationList( Long userId, NotificationType type, Long sourceId, String cursor, Integer resultCount  );
 	DataListCursorTuple<Notification> getNotificationList( Long userId, NotificationType type, String sourceId, String cursor, Integer resultCount  );
 	Notification createOrUpdateNotification( Notification notification );

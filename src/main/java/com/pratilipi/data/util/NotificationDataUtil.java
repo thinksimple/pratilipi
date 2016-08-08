@@ -17,6 +17,7 @@ import com.pratilipi.data.client.NotificationData;
 import com.pratilipi.data.client.PratilipiData;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.type.Notification;
+import com.pratilipi.data.type.User;
 import com.pratilipi.filter.AccessTokenFilter;
 
 public class NotificationDataUtil {
@@ -27,6 +28,18 @@ public class NotificationDataUtil {
 		
 	}
 	
+	
+	public static int getNewNotificationCount( Long userId ) throws InsufficientAccessException {
+		
+		if( ! hasAccessToListData( userId ) )
+			throw new InsufficientAccessException();
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		User user = dataAccessor.getUser( userId );
+		
+		return DataAccessorFactory.getDataAccessor().getNotificationCount( userId, user.getLastNotified() );
+		
+	}
 	
 	public static DataListCursorTuple<NotificationData> getNotificationList( Long userId, String cursor, Integer resultCount )
 			throws InsufficientAccessException, UnexpectedServerException {

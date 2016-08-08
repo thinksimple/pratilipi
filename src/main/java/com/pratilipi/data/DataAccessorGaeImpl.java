@@ -1663,6 +1663,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 
 	@Override
+	public Notification getNotification( Long notificationId ) {
+		return getEntity( NotificationEntity.class, notificationId );
+	}
+	
+	@Override
 	public Notification getNotification( Long userId, NotificationType type, Long sourceId ) {
 
 		return ObjectifyService.ofy().load()
@@ -1673,6 +1678,15 @@ public class DataAccessorGaeImpl implements DataAccessor {
 				.order( "-LAST_UPDATED" )
 				.first().now();
 	
+	}
+	
+	@Override
+	public Integer getNotificationCount( Long userId, Date minLastUpdatedDate  ) {
+		return ObjectifyService.ofy().load().type( NotificationEntity.class )
+				.filter( "USER_ID", userId )
+				.filter( "LAST_UPDATED >", minLastUpdatedDate )
+				.order( "-LAST_UPDATED" )
+				.keys().list().size();
 	}
 	
 	@Override

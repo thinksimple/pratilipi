@@ -23,6 +23,7 @@ import com.pratilipi.api.impl.user.UserEmailApi;
 import com.pratilipi.api.impl.user.UserLoginApi;
 import com.pratilipi.api.impl.user.UserLoginFacebookApi;
 import com.pratilipi.api.impl.user.UserLogoutApi;
+import com.pratilipi.api.impl.user.UserNotifiedApi;
 import com.pratilipi.api.impl.user.UserPasswordUpdateApi;
 import com.pratilipi.api.impl.user.UserRegisterApi;
 import com.pratilipi.api.impl.user.UserVerificationApi;
@@ -47,6 +48,7 @@ public class ApiService extends GenericService {
 		ApiRegistry.register( UserRegisterApi.class );				// *.pratilipi.com
 		ApiRegistry.register( UserVerificationApi.class );			// *.pratilipi.com
 		ApiRegistry.register( UserPasswordUpdateApi.class );		// *.pratilipi.com
+		ApiRegistry.register( UserNotifiedApi.class );				// *.pratilipi.com
 		
 		ApiRegistry.register( PratilipiApi.class );					// *.pratilipi.com
 		ApiRegistry.register( PratilipiListApi.class );				// *.pratilipi.com
