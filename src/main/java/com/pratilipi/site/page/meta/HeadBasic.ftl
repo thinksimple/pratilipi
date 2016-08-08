@@ -20,7 +20,7 @@
 			appId      : '293990794105516',
 			cookie     : true,
 			xfbml      : true,
-			version    : 'v2.0' 
+			version    : 'v2.6' 
 		});
 	};
 	(function(d, s, id) {
