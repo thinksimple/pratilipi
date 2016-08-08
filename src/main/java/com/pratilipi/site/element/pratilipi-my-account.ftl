@@ -37,9 +37,9 @@
 	<hr class="pratilipi-margin-top-2">	
 	<h3 style="margin-bottom: 25px;">${ user.getEmail() }</h3>
 	<#if user.getIsEmailVerified() >
-		<button class="pratilipi-red-background-button">{ _strings.edit_account_email_verified } &nbsp;<span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>		
+		<button class="pratilipi-red-background-button">${ _strings.edit_account_email_verified } &nbsp;<span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>		
 	<#else>
-		<button class="pratilipi-red-background-button">{ _strings.edit_account_verify_email }</button>
+		<button class="pratilipi-red-background-button">${ _strings.edit_account_verify_email }</button>
 	</#if>
 	<a class="pratilipi-red-button" href="/updatepassword">${ _strings.user_reset_password}</a>
 	<div style="margin-top: 5px;"><a class="pratilipi-red-background-button" onclick="logout()">${ _strings.user_sign_out}</a></div>			
