@@ -14,6 +14,7 @@
 		}
 		
 		paper-menu {
+			padding: 0;
 			--paper-menu-color: #333;
 			--paper-menu-focused-item: {
 				color: #107FE5;
@@ -59,7 +60,7 @@
 		
 		th {
 			font-weight: 400;
-			font-size: 15px;
+			font-size: 14px;
 		}
 		
 		td {
@@ -101,7 +102,7 @@
 
 	<template>
 		<paper-card>
-			<paper-menu-button class="pull-right" horizontal-align="right" vertical-align="top">
+			<paper-menu-button vertical-offset=38 class="pull-right" horizontal-align="right" vertical-align="top">
 				<iron-icon icon="social:share" class="dropdown-trigger"></iron-icon>
 				<paper-menu class="dropdown-content">
 					<paper-item on-click="sharePratilipiOnFacebook"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></paper-item>
@@ -169,11 +170,12 @@
 					</div>
 				</div>
 				<div id="pratilipi-col-right" style="padding: 20px;">
-					<h3 style="margin-top: 0px;" class="pratilipi-red">{{ title }}</h3>
+					<h5 style="margin-top: 0px;" class="pratilipi-red">{{ title }}</h5>
 					<template is="dom-if" if="{{ pratilipi.author }}">
 						<div style="display: block;">
 							<a style="display: inline-block; color: #333;" href="{{ pratilipi.author.pageUrl }}" target="_blank">
-								<h6>{{ pratilipi.author.name }}<iron-icon icon="icons:open-in-new" style="margin-left: 6px; margin-top: -4px; width: 16px; height: 16px;"></iron-icon></h6>
+								{{ pratilipi.author.name }}
+								<iron-icon icon="icons:open-in-new" style="margin-left: 6px; margin-top: -4px; width: 16px; height: 16px;"></iron-icon>
 							</a>
 						</div>
 					</template>
@@ -190,7 +192,7 @@
 						</pratilipi-rating>
 					</template>
 					
-					<h6 style="margin-top: 10px; font-weight: bold;">{{ type }}</h6>
+					<h6 style="margin-top: 10px;">{{ type }}</h6>
 					
 					<table style="margin-top: 15px; margin-bottom: 25px;">
 						<tr> <th>${ _strings.pratilipi_listing_date }</th><td>:</td><td>{{ listingDate }}</td> </tr>

@@ -15,7 +15,7 @@
 			margin-bottom: 4px;
 		}
 
-		.secondary-500 h3 {
+		.secondary-500 h5 {
 			margin: 0px;
 			padding: 10px;
 			display: inline-block;
@@ -57,7 +57,7 @@
 	
 	<template>
 		<div class="secondary-500 pratilipi-shadow">
-			<h3 class="pratilipi-red">${ _strings.review_heading }</h3>
+			<h5 class="pratilipi-red">${ _strings.review_heading }</h5>
 
 			<template is="dom-if" if="{{ user.isGuest }}">
 				<a class="pratilipi-grey-button" role="button" on-click="showReviewInput">${ _strings.review_write_a_review }</a>
