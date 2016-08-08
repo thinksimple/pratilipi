@@ -249,7 +249,7 @@
 					<div class="button-holder sign-in-text">
 						<template is="dom-if" if="{{ isGuest }}">
 							<a on-click="_logIn">
-								<iron-icon icon="icons:input"></iron-icon>
+								<iron-icon icon="social:person"></iron-icon>
 							</a>
 						</template>
 						<template is="dom-if" if="{{ !isGuest }}">
@@ -262,7 +262,7 @@
 					<div class="sign-in-button">
 						<template is="dom-if" if="{{ isGuest }}">
 							<button class="btn btn-primary" on-click="_logIn">
-								<iron-icon icon="icons:input"></iron-icon>
+								<iron-icon icon="social:person"></iron-icon>
 								<span>${ _strings.user_sign_in }</span>
 							</button>
 						</template>
