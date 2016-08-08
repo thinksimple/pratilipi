@@ -22,7 +22,7 @@
 						<#include "../element/pratilipi-drafted-list.ftl">						
 					</#if>
 				</div>
-				<#elseif action=="account">
+				<#elseif ( action=="account" && !user.getIsGuest() )>
 					<#include "../element/pratilipi-my-account.ftl">	
 				<#else>
 					<#include "../element/pratilipi-author-details.ftl">

@@ -1,9 +1,4 @@
 <script>
-	$( document ).ready(function() {
-	  	<#if ( user.getIsGuest()==true ) >
-	  		window.location.href = "/";
-	  	</#if>
-	});
 	function goBack() {
 		if( getUrlParameter( "ret" ) != null )
 			window.location.href =  getUrlParameter( "ret" );
