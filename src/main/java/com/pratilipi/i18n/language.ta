@@ -146,7 +146,7 @@ write_type					= வகை *
 write_language				= மொழித்தேர்வு
 write_summary				= படைப்பைப் பற்றி (விருப்பமிருப்பின்)
 write_create_new_content	= புதிய படைப்பை உருவாக்க
-write_on_desktop_only		= புதிய படைப்பை கணினி மூலம் மட்டுமே பதிப்பிக்கவும் 
+write_on_desktop_only		= புதிய படைப்பை பதிப்பிக்க கணினி மூலம் லாக்-இன் செய்யவும் அல்லது எங்களைத் தொடர்பு கொள்ளவும் - tamil@pratilipi.com || 9206706899
 
 # Common User Popups
 user_sign_in				= உள்நுழைக
