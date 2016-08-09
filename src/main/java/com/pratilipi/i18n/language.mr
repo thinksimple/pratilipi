@@ -146,6 +146,7 @@ write_type					= विधा
 write_language				= भाषा 
 write_summary				= थोडक्यात सारांश प्रविष्ट करा
 write_create_new_content	= पुढे जा
+write_on_desktop_only		= You have to login via desktop to write!
 
 # Common User Popups
 user_sign_in				= साइन इन करा
@@ -174,6 +175,11 @@ user_is_new					= नवीन सदस्य आहे
 user_is_registered			= वापरकर्ता नोंदणीकृत आहे
 user_email_verification		= आपण ईमेल पाठविले पुष्टी करण्यासाठी
 user_require_access			= आपण या क्रिया करण्यासाठी लॉग इन करणे आवश्यक आहे !
+user_no_followers			= Sorry! You're not being followed by anyone! 
+user_login_to_view_followers = Please login to view your followers!
+user_no_following			= Sorry! You're not following anyone!
+user_login_to_view_following = Please login to view the people you're following!
+user_login_to_view_notifications = Please login to view the notifications! 
 
 # My Account popup
 edit_account_heading		= आपले खाते
@@ -310,3 +316,4 @@ reader_enjoyed_reading_part2	= सामायिक करा
 
 # Notifications
 notification_notifications = सूचनाएँ 
+notifications_no_notifications = Sorry! You don't have any notifications right now! Please check later!

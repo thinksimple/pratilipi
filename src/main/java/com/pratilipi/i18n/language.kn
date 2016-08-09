@@ -146,6 +146,7 @@ write_type					       = ವಿಧ ಆರಿಸಿಕೊಳ್ಳಿ*
 write_language				     = ಭಾಷೆ 
 write_summary				       = ಸಾರಾಂಶ (ಐಚ್ಛಿಕ)
 write_create_new_content	 = ಹೊಸ ಬರಹ  ಸೃಷ್ಟಿಸಿ
+write_on_desktop_only		= You have to login via desktop to write!
 
 # Common User Popups  
 user_sign_in				           = ಸೈನ್ ಇನ್ ಆಗಿರಿ 
@@ -174,6 +175,11 @@ user_is_new					           = ಹೊಸಬರೇ?
 user_is_registered			       = ಈಗಾಗಲೇ ಸದಸ್ಯರಾಗಿರುವಿರಾ?
 user_email_verification		     = ಇ-ಮೇಲ್ ಪರಿಶೀಲನೆ 
 user_require_access			       = ಈ ಕಾರ್ಯ ನಿರ್ವಹಿಸಲು ನೀವು ಲಾಗಿನ್ ಆಗಬೇಕು!
+user_no_followers			= Sorry! You're not being followed by anyone! 
+user_login_to_view_followers = Please login to view your followers!
+user_no_following			= Sorry! You're not following anyone!
+user_login_to_view_following = Please login to view the people you're following!
+user_login_to_view_notifications = Please login to view the notifications! 
 
 # My Account popup  
 edit_account_heading		             = ನನ್ನ ಅಕೌಂಟನ್ನು ಎಡಿಟ್ ಮಾಡಿ 
@@ -310,3 +316,4 @@ reader_enjoyed_reading_part2	     = ಶೇರ್ ಮಾಡಿ
 
 # Notifications
 notification_notifications = ನೋಟಿಫಿಕೇಶನ್
+notifications_no_notifications = Sorry! You don't have any notifications right now! Please check later!

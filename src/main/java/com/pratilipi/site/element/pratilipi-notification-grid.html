@@ -60,13 +60,13 @@
 		<template is="dom-if" if="{{ isGuest }}">
 			<paper-card class="alert-message">
 				<iron-icon icon="icons:info-outline"></iron-icon>
-				<div>Please <a class="pratilipi-blue" on-click="_login">login</a> to view the notifications!</div>
+				<div><a class="pratilipi-blue" on-click="_login">${ _strings.user_login_to_view_notifications }</a></div>
 			</paper-card>
 		</template>
 		<template is="dom-if" if="{{ emptyNotificationList }}">
 			<paper-card class="alert-message">
 				<iron-icon icon="icons:info-outline"></iron-icon>
-				<div>Sorry! You don't have any notifications right now! Please check later!</div>
+				<div>${ _strings.notifications_no_notifications }</div>
 			</paper-card>
 		</template>
 		<template is="dom-repeat" items="{{ notificationList }}" as="notification">
@@ -136,6 +136,10 @@
 			attached: function() {
 				this.set( 'isGuest', document.querySelector( 'pratilipi-user' ).getCurrentUser().isGuest );
 				this.set( 'emptyNotificationList', ! this.isGuest && this.notificationList.length == 0 )
+			},
+
+			_login: function() {
+				document.querySelector( 'pratilipi-user' ).logIn();
 			}
 
 		});

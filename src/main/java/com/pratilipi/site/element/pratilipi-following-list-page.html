@@ -99,7 +99,7 @@
 							<paper-card class="follow-grid">
 								<div class="alert-message">
 									<iron-icon icon="icons:info-outline"></iron-icon>
-									<div>Sorry! You're not following anyone!</div>
+									<div>${ _strings.user_no_following }</div>
 								</div>
 							</paper-card>
 						</template>
@@ -107,7 +107,7 @@
 							<paper-card class="follow-grid">
 								<div class="alert-message">
 									<iron-icon icon="icons:info-outline"></iron-icon>
-									<div>Please <a class="pratilipi-blue" on-click="_login">login</a> to view the people you're following!</div>
+									<div><a class="pratilipi-blue" on-click="_login">${ _strings.user_login_to_view_following }</a></div>
 								</div>
 							</paper-card>
 						</template>

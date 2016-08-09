@@ -324,16 +324,16 @@
 			</template>
 
 			<div class="meta-container">
+				<span class="read-rating-count pull-left" style="margin-left: 8px;">
+					<iron-icon icon="icons:chrome-reader-mode"></iron-icon>
+					{{ readText }}
+				</span>
 				<template is="dom-if" if="{{ showRating }}">
-					<span class="read-rating-count pull-left" style="margin-left: 8px;">
+					<span class="read-rating-count pull-right" style="margin-right: 8px;">
 						{{ averageRating }}
 						<iron-icon icon="icons:star"></iron-icon>
 					</span>
 				</template>
-			 	<span class="read-rating-count pull-right" style="margin-right: 8px;">
-					<iron-icon icon="icons:chrome-reader-mode"></iron-icon>
-					{{ readText }}
-				</span>
 			</div>
 		</div>
 		<#-- Share Modal -->

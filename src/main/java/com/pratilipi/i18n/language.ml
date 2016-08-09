@@ -146,6 +146,7 @@ write_type					= തരം തിരഞ്ഞെടുക്കൂ
 write_language				= ഭാഷ
 write_summary				= സംഗ്രഹം (നിര്‍ബന്ധമില്ല)
 write_create_new_content	= പുതിയ രചന സൃഷ്ടിക്കൂ
+write_on_desktop_only		= You have to login via desktop to write!
 
 # Common User Popups
 user_sign_in				= സൈനിന്‍
@@ -174,6 +175,11 @@ user_is_new					= പുതിയ യൂസര്‍ ആണോ?
 user_is_registered			= പ്രതിലിപിയില്‍ നിലവിലുള്ള അംഗമാണോ?
 user_email_verification		= ഇ മെയില്‍ വെരിഫിക്കേഷന്‍
 user_require_access			= ഇത് ചെയ്യണമെങ്കില്‍ താങ്കള്‍ ലോഗ് ഇന്‍ ചെയ്യണം!
+user_no_followers			= Sorry! You're not being followed by anyone! 
+user_login_to_view_followers = Please login to view your followers!
+user_no_following			= Sorry! You're not following anyone!
+user_login_to_view_following = Please login to view the people you're following!
+user_login_to_view_notifications = Please login to view the notifications! 
 
 # My Account popup
 edit_account_heading		= എന്‍റെ അക്കൗണ്ട്‌ എഡിറ്റ്‌ ചെയ്യൂ
@@ -310,3 +316,4 @@ reader_enjoyed_reading_part2	= ഷെയര്‍ ചെയ്യൂ
 
 # Notifications
 notification_notifications = നോട്ടിഫിക്കേഷനുകള്‍
+notifications_no_notifications = Sorry! You don't have any notifications right now! Please check later!
