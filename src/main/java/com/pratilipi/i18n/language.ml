@@ -175,11 +175,11 @@ user_is_new					= പുതിയ യൂസര്‍ ആണോ?
 user_is_registered			= പ്രതിലിപിയില്‍ നിലവിലുള്ള അംഗമാണോ?
 user_email_verification		= ഇ മെയില്‍ വെരിഫിക്കേഷന്‍
 user_require_access			= ഇത് ചെയ്യണമെങ്കില്‍ താങ്കള്‍ ലോഗ് ഇന്‍ ചെയ്യണം!
-user_no_followers			= Sorry! You're not being followed by anyone! 
-user_login_to_view_followers = Please login to view your followers!
-user_no_following			= Sorry! You're not following anyone!
-user_login_to_view_following = Please login to view the people you're following!
-user_login_to_view_notifications = Please login to view the notifications! 
+user_no_followers			= ക്ഷമിക്കണം! താങ്കളെ ആരും ഫോളോ ചെയ്യുന്നില്ല! 
+user_login_to_view_followers = താങ്കളെ ഫോളോ ചെയ്യുന്നവരെ കാണാന്‍ ലോഗിന്‍ ചെയ്യുക!
+user_no_following			= ക്ഷമിക്കണം! താങ്കള്‍ ആരെയും ഫോളോ ചെയ്യുന്നില്ല!
+user_login_to_view_following = താങ്കള്‍ ഫോളോ ചെയ്യുന്നവരെ കാണാന്‍ ലോഗിന്‍ ചെയ്യുക!
+user_login_to_view_notifications = നോട്ടിഫിക്കഷനുകള്‍ കാണാന്‍ ലോഗിന്‍ ചെയ്യുക! 
 
 # My Account popup
 edit_account_heading		= എന്‍റെ അക്കൗണ്ട്‌ എഡിറ്റ്‌ ചെയ്യൂ
