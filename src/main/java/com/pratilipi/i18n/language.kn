@@ -146,7 +146,7 @@ write_type					       = ವಿಧ ಆರಿಸಿಕೊಳ್ಳಿ*
 write_language				     = ಭಾಷೆ 
 write_summary				       = ಸಾರಾಂಶ (ಐಚ್ಛಿಕ)
 write_create_new_content	 = ಹೊಸ ಬರಹ  ಸೃಷ್ಟಿಸಿ
-write_on_desktop_only		= You have to login via desktop to write! ನೀವು ಬರೆಯಲು ಡೆಸ್ಕ್ಟಾಪ್ ಮೂಲಕ ಲಾಗಿನ್ ಆಗಬೇಕು!
+write_on_desktop_only		= ನಿಮ್ಮ ಬರಹವನ್ನು ಪ್ರಕಟಿಸಲು ನೀವು ಡೆಸ್ಕ್ಟಾಪ್ ಮೂಲಕ ಲಾಗಿನ್ ಆಗಿಬೇಕು. ಹಾಗೆಯೇ, ನೀವು ನಮ್ಮನ್ನೂ ಸಂಪರ್ಕಿಸಬಹುದು - kannada@pratilipi.com / 9845990788
 
 # Common User Popups  
 user_sign_in				           = ಸೈನ್ ಇನ್ ಆಗಿರಿ 
