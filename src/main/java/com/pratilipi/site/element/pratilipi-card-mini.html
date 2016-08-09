@@ -495,23 +495,39 @@
 				this.set( 'libraryDialogOpened', true );
 				jQuery( this.querySelector( '.library-popup' ) ).modal();
 			},
-			
+
+			_getShareUrl: function( utm_source ) {
+				if( utm_source == null ) return;
+				var utm_parent = "pratilipi";
+				if( document.querySelector( 'pratilipi-author-page' ) != null )
+					utm_parent = "profile";
+				var width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+				return encodeURIComponent( 
+						"http://${ domain }" + this.pratilipi.pageUrl 
+						+ ( this.pratilipi.pageUrl.indexOf( '?' ) == -1 ? "?" : "&" )
+						+ "utm_language=${ language?lower_case }" + "&"
+						+ "utm_version=standard" + "&"
+						+ "utm_device=" + ( width < 600 ? "mobile" : "desktop" ) + "&"
+						+ "utm_parent=" + utm_parent + "&"
+						+ "utm_location=card" + "&"
+						+ "utm_action=share" + "&"
+						+ "utm_source=" + utm_source
+					);
+			},
+
 			shareOnFacebook: function() {
-				window.open( "http://www.facebook.com/sharer.php?u=" + "http://${ domain }" + this.pratilipi.pageUrl 
-						+ ( this.pratilipi.pageUrl.indexOf( '?' ) == -1 ? '?' : '&' )
-						+ "share=facebook" + "%26" + "utm_source=card_mini", "share", "width=1100,height=500,left=70px,top=60px" );
+				window.open( "http://www.facebook.com/sharer.php?u=" + this._getShareUrl( "facebook" ), 
+						"share", "width=1100,height=500,left=70px,top=60px" );
 			},
 
 			shareOnTwitter: function() {
-				window.open( "http://twitter.com/share?url=" + "http://${ domain }" + this.pratilipi.pageUrl 
-						+ ( this.pratilipi.pageUrl.indexOf( '?' ) == -1 ? '?' : '&' )
-						+ "share=twitter" + "%26" + "utm_source=card_mini", "share", "width=1100,height=500,left=70px,top=60px" );
+				window.open( "http://twitter.com/share?url=" + this._getShareUrl( "twitter" ), 
+						"share", "width=1100,height=500,left=70px,top=60px" );
 			},
 
 			shareOnGplus: function() {
-				window.open( "https://plus.google.com/share?url=" + "http://${ domain }" + this.pratilipi.pageUrl 
-						+ ( this.pratilipi.pageUrl.indexOf( '?' ) == -1 ? '?' : '&' )
-						+ "share=gplus" + "%26" + "utm_source=card_mini", "share", "width=1100,height=500,left=70px,top=60px" );
+				window.open( "https://plus.google.com/share?url=" + this._getShareUrl( "gplus" ), 
+						"share", "width=1100,height=500,left=70px,top=60px" );
 			},
 
 			switchLibraryState: function() {

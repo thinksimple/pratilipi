@@ -505,24 +505,33 @@
 				this.imageUploaded = true;
 			},
 
+			_getShareUrl: function( utm_source ) {
+				if( utm_source == null ) return;
+				var width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+				return encodeURIComponent( 
+						"http://${ domain }" + this.pratilipi.pageUrl 
+						+ ( this.pratilipi.pageUrl.indexOf( '?' ) == -1 ? "?" : "&" )
+						+ "utm_language=${ language?lower_case }" + "&"
+						+ "utm_version=standard" + "&"
+						+ "utm_device=" + ( width < 600 ? "mobile" : "desktop" ) + "&"
+						+ "utm_parent=content" + "&"
+						+ "utm_action=share" + "&"
+						+ "utm_source=" + utm_source
+					);
+			},
+
 			sharePratilipiOnFacebook: function() {
-				window.open( "http://www.facebook.com/sharer.php?u=" + "http://${ domain }" + this.pratilipi.pageUrl 
-						+ ( this.pratilipi.pageUrl.indexOf( '?' ) == -1 ? encodeURIComponent( "?" ) : encodeURIComponent( "&" ) )
-						+ "share=facebook" + encodeURIComponent( "&" ) + "utm_source=content_page",
+				window.open( "http://www.facebook.com/sharer.php?u=" + this._getShareUrl( "facebook" ), 
 						"share", "width=1100,height=500,left=70px,top=60px" );
 			},
 
 			sharePratilipiOnTwitter: function() {
-				window.open( "http://twitter.com/share?url=" + "http://${ domain }" + this.pratilipi.pageUrl 
-						+ ( this.pratilipi.pageUrl.indexOf( '?' ) == -1 ? encodeURIComponent( "?" ) : encodeURIComponent( "&" ) )
-						+ "share=twitter" + encodeURIComponent( "&" ) + "utm_source=content_page",
+				window.open( "http://twitter.com/share?url=" + this._getShareUrl( "twitter" ), 
 						"share", "width=1100,height=500,left=70px,top=60px" );
 			},
 
 			sharePratilipiOnGplus: function() {
-				window.open( "https://plus.google.com/share?url=" + "http://${ domain }" + this.pratilipi.pageUrl 
-						+ ( this.pratilipi.pageUrl.indexOf( '?' ) == -1 ? encodeURIComponent( "?" ) : encodeURIComponent( "&" ) )
-						+ "share=gplus" + encodeURIComponent( "&" ) + "utm_source=content_page",
+				window.open( "https://plus.google.com/share?url=" + this._getShareUrl( "gplus" ), 
 						"share", "width=1100,height=500,left=70px,top=60px" );
 			}
 			
