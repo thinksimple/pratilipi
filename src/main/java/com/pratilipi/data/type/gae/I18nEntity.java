@@ -75,6 +75,11 @@ public class I18nEntity implements I18n {
 
 	
 	@Override
+	public void setGroup( I18nGroup i18nGroup ) {
+		this.GROUP = i18nGroup;
+	}
+	
+	@Override
 	public String getI18nString( Language language ) {
 		switch( language ) {
 			case HINDI:

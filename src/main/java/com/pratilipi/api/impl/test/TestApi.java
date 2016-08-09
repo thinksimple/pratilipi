@@ -13,6 +13,7 @@ import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AuthorState;
+import com.pratilipi.common.type.I18nGroup;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
@@ -178,6 +179,12 @@ public class TestApi extends GenericApi {
 		I18n i18n_3 = dataAccessor.newI18n( "notification_have_followed" );
 		I18n i18n_4 = dataAccessor.newI18n( "notification_others_have_followed" );
 		I18n i18n_5 = dataAccessor.newI18n( "notification_has_published" );
+		
+		i18n_1.setGroup( I18nGroup.NOTIFICATION );
+		i18n_2.setGroup( I18nGroup.NOTIFICATION );
+		i18n_3.setGroup( I18nGroup.NOTIFICATION );
+		i18n_4.setGroup( I18nGroup.NOTIFICATION );
+		i18n_5.setGroup( I18nGroup.NOTIFICATION );
 		
 		i18n_1.setI18nString( Language.ENGLISH, "and" );
 		i18n_2.setI18nString( Language.ENGLISH, "has followed you." );
