@@ -54,7 +54,7 @@ author_unfollow					= अनुसरण करणे बंद
 author_followers				= अनुयायी 
 author_no_followers				= अनुयायी संख्या शून्य 
 author_following				= अनुसरण
-author_no_following				= क्षमस्व ! या लेखकाला एकही फोल्लोविंग नाही!
+author_no_following				= क्षमस्व! या लेखकाला एकही फोल्लोविंग नाही!
 author_follow_members			=  सदस्य
 author_cannot_follow_yourself	= तुम्ही स्वतः
 author_settings_require_first_name	= आपले नाव प्रविष्ट करा 
@@ -93,7 +93,7 @@ rating_ratings				= रेटिंग
 rating_rate_this			= रेटिंग द्या
 rating_your_rating			= तुमचे रेटिंग
 rating_be_first_one			= आपली रेटींग द्या 
-rating_mandatory_message	= Please enter your rating!
+rating_mandatory_message	= आपले रेटिंग प्रविष्ट करा.
 rating_1_star				= १
 rating_2_star				= २
 rating_3_star				= ३
@@ -146,7 +146,7 @@ write_type					= विधा
 write_language				= भाषा 
 write_summary				= थोडक्यात सारांश प्रविष्ट करा
 write_create_new_content	= पुढे जा
-write_on_desktop_only		= You have to login via desktop to write!
+write_on_desktop_only		= लिहिण्यासाठी डेस्कटॉपवर लॉगिन करणे आवश्यक आहे.
 
 # Common User Popups
 user_sign_in				= साइन इन करा
@@ -175,11 +175,11 @@ user_is_new					= नवीन सदस्य आहे
 user_is_registered			= वापरकर्ता नोंदणीकृत आहे
 user_email_verification		= आपण ईमेल पाठविले पुष्टी करण्यासाठी
 user_require_access			= आपण या क्रिया करण्यासाठी लॉग इन करणे आवश्यक आहे !
-user_no_followers			= Sorry! You're not being followed by anyone! 
-user_login_to_view_followers = Please login to view your followers!
-user_no_following			= Sorry! You're not following anyone!
-user_login_to_view_following = Please login to view the people you're following!
-user_login_to_view_notifications = Please login to view the notifications! 
+user_no_followers			= क्षमस्व! सध्या तुमची अनुयायी संख्या शून्य आहे. 
+user_login_to_view_followers = तुमचे अनुयायी पाहण्यासाठी कृपया लॉग इन करा!
+user_no_following			= तुमचे अनुयायी पाहण्यासाठी कृपया लॉग इन करा!
+user_login_to_view_following = आपल्याद्वारा होणारे अनुसरण लोकांना पाहण्यासाठी कृपया लॉग इन करा!
+user_login_to_view_notifications = सूचना पहाण्यासाठी कृपया लॉग इन करा! 
 
 # My Account popup
 edit_account_heading		= आपले खाते
@@ -259,7 +259,7 @@ register_part_2					=
 register_part_3					= 
 
 # Event Page
-event_events					= Events
+event_events					= कार्यक्रम 
 event_entries = कार्यक्रम प्रवेश
 event_name = कार्यक्रमाचे नाव
 event_name_en =कार्यक्रम शिर्षक इंग्लिश मध्ये
