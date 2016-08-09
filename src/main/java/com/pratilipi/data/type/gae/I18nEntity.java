@@ -48,6 +48,8 @@ public class I18nEntity implements I18n {
 	private String ENGLISH;
 	
 	
+	public I18nEntity() {}
+	
 	public I18nEntity( String i18nId ) {
 		this.I18N_ID = i18nId;
 	}
