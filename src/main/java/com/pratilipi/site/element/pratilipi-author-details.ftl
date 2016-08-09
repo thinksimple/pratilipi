@@ -1,15 +1,27 @@
 <script>
-	function submitForm() {
-		var form = $("#uploadAuthorImage");
-		$.ajax({
-		    type: "POST",
-		    url: "/api/author/image?authorId=${ author.getId()?c }",
-		    data: form.serialize(),
-		    success: function() {
-		        location.reload();
-		    }
-		});	
-	}
+	$(document).ready(function (e) {
+	    $('#uploadAuthorImage').on('submit',(function(e) {
+	        e.preventDefault();
+	        var formData = new FormData(this);
+	
+	        $.ajax({
+	            type:'POST',
+	            url: $(this).attr('action'),
+	            data:formData,
+	            cache:false,
+	            contentType: false,
+	            processData: false,
+	            success:function(data){
+	                console.log("success");
+	                console.log(data);
+	            },
+	            error: function(data){
+	                console.log("error");
+	                console.log(data);
+	            }
+	        });
+	    }));
+	});
 </script>
 <div class="pratilipi-block cover-image pratilipi-shadow secondary-500 box" style="background-image: url('http://0.ptlp.co/resource-all/home-page/pratilipi-banner.png')">
 	<div class="">
@@ -81,8 +93,9 @@
 		</div>
 	</div>
 	
-	<form id="uploadAuthorImage">
+	<form id="uploadAuthorImage" method="post" enctype="multipart/form-data" action="/api/author/image?authorId=${ author.getId()?c }" target="image_upload">
 		<input id="uploadAuthorImageInput" type="file" name="{{ author.getId()?c }}" accept="image/*">
-		<button onclick="submitForm()">Submit</button>
+		<input type="submit">
 	</form>
+	<iframe style="visibility:hidden;display:none" name="image_upload"></iframe>
 </div>
