@@ -1,7 +1,6 @@
 <script>
 	$(document).ready(function (e) {
 	
-		]
 		$("#uploadAuthorImageInput").hide();
 	
 	    $('#uploadAuthorImage').on('submit',(function(e) {
