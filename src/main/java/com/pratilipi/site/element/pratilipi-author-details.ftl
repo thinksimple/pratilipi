@@ -68,8 +68,8 @@
 		</div>
 	</div>
 	
-	<form id="uploadAuthorImage" method="post" enctype="multipart/form-data" action="/api/author/image?authorId=${ author.getId() }" target="upload_target">
-		<input id="uploadAuthorImageInput" type="file" name="{{ author.getId() }}" accept="image/*">
+	<form id="uploadAuthorImage" method="post" enctype="multipart/form-data" action="/api/author/image?authorId=${ author.getId()?c }" target="_blank">
+		<input id="uploadAuthorImageInput" type="file" name="{{ author.getId()?c }}" accept="image/*">
 		<input type="submit">
 	</form>
 </div>
