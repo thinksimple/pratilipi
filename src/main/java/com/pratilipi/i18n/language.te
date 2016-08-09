@@ -146,7 +146,7 @@ write_type					= వర్గాన్ని ఎంపిక చేయండి 
 write_language				= భాష
 write_summary				= సంగ్రహం (ఆప్షనల్)
 write_create_new_content	= కొత్త రచనను ప్రారంభించండి
-write_on_desktop_only		= You have to login via desktop to write!
+write_on_desktop_only		= మీరు రచనను చేయడానికి డెస్క్ టాప్ నుండే లాగిన్ అవ్వాలి
 
 # Common User Popups
 user_sign_in				= సైన్ ఇన్
@@ -175,11 +175,11 @@ user_is_new					= మీరు కొత్త సభ్యులా?
 user_is_registered			= మీరు ఇంతకు క్రితమే సభ్యత్వం తీసుకున్నారా? 
 user_email_verification		= ఈమెయిల్ ధ్రువీకరణ
 user_require_access			= ఈ పని పూర్తి చేయడానికి మీరు తప్పనిసరిగా లాగిన్ అవ్వాలి !
-user_no_followers			= Sorry! You're not being followed by anyone! 
-user_login_to_view_followers = Please login to view your followers!
-user_no_following			= Sorry! You're not following anyone!
-user_login_to_view_following = Please login to view the people you're following!
-user_login_to_view_notifications = Please login to view the notifications! 
+user_no_followers			= క్షమించండి.. మిమ్మల్ని ఎవరూ అనుసరించడంలేదు
+user_login_to_view_followers = మిమ్మల్ని అనుసరించేవారిని చూడడానికి లాగిన్ అవ్వండి
+user_no_following			= క్షమించండి.. మీరు ఎవరినీ అనుసరించడంలేదు 
+user_login_to_view_following = మిమ్మల్ని అనుసరించేవారిని చూడడానికి లాగిన్ అవ్వండి
+user_login_to_view_notifications = నోటిషికేషన్లు చూడడానికి దయచేసి లాగిన్ అవ్వండి
 
 # My Account popup
 edit_account_heading		= నా ఖాతాలో మార్పులు చేయండి
@@ -316,4 +316,4 @@ reader_enjoyed_reading_part2	= షేర్ చేయండి
 
 # Notifications
 notification_notifications = నోటిఫికేషన్లు
-notifications_no_notifications = Sorry! You don't have any notifications right now! Please check later!
+notifications_no_notifications = క్షమించండి.. ప్రస్తుతం మీకు ఎలాంటి నోటిఫికేషన్లు లేవు. దయచేసి మరల ప్రయత్నించండి
