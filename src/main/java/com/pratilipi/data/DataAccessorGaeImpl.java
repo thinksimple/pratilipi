@@ -1763,17 +1763,17 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	@Override
-	public Map<String, I18n> getI18ns( I18nGroup i18nGroup ) {
+	public Map<String, String> getI18nStrings( I18nGroup i18nGroup, Language language ) {
 		
 		List<I18nEntity> i18nList = ObjectifyService.ofy().load().type( I18nEntity.class )
 				.filter( "GROUP", i18nGroup )
 				.list();
 		
-		Map<String, I18n> i18ns = new HashMap<>( i18nList.size() );
+		Map<String, String> i18nStrings = new HashMap<>( i18nList.size() );
 		for( I18n i18n : i18nList )
-			i18ns.put( i18n.getId(), i18n );
+			i18nStrings.put( i18n.getId(), i18n.getI18nString( language ) );
 		
-		return i18ns;
+		return i18nStrings;
 		
 	}
 	

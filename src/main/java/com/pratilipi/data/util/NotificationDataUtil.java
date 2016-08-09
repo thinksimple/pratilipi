@@ -17,10 +17,10 @@ import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.client.NotificationData;
 import com.pratilipi.data.client.PratilipiData;
 import com.pratilipi.data.client.UserData;
-import com.pratilipi.data.type.I18n;
 import com.pratilipi.data.type.Notification;
 import com.pratilipi.data.type.User;
 import com.pratilipi.filter.AccessTokenFilter;
+import com.pratilipi.filter.UxModeFilter;
 
 public class NotificationDataUtil {
 	
@@ -72,7 +72,7 @@ public class NotificationDataUtil {
 		for( PratilipiData pratilipiData : pratilipiDataList )
 			pratilipis.put( pratilipiData.getId(), pratilipiData );
 		
-		Map<String, I18n> i18ns = dataAccessor.getI18ns( I18nGroup.NOTIFICATION );
+		Map<String, String> i18ns = dataAccessor.getI18nStrings( I18nGroup.NOTIFICATION, UxModeFilter.getDisplayLanguage() );
 		List<NotificationData> notificationDataList = new ArrayList<>( notificationListCursorTuple.getDataList().size() );
 		for( Notification notification : notificationListCursorTuple.getDataList() ) {
 			

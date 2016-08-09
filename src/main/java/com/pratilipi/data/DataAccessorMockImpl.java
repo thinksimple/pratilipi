@@ -851,7 +851,7 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 	
 	@Override
-	public Map<String, I18n> getI18ns( I18nGroup i18nGroup ) {
+	public Map<String, String> getI18nStrings( I18nGroup i18nGroup, Language language ) {
 		// TODO Auto-generated method stub
 		return null;
 	}
