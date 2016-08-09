@@ -46,8 +46,11 @@
 		<div class="clearfix"></div>
 	</div>
 	<div class="author-info text-center">
-		<div>
+		<div style="">
 			<img class="img-responsive img-thumbnail img-circle profile-picture" src="${ author.getImageUrl(140) }">
+			<div class="pratilipi-file-upload">
+				<img style="width:20px;height:20px;" src="http://0.ptlp.co/resource-all/icon/svg/user.svg">
+			</div>
 		</div>
 		<div class="author-name">${ author.getName()!author.getNameEn() }</div>
 	</div>
@@ -94,9 +97,8 @@
 		</div>
 	</div>
 	
-	<form id="uploadAuthorImage" method="post" enctype="multipart/form-data" action="/api/author/image?authorId=${ author.getId()?c }" target="image_upload">
+	<form id="uploadAuthorImage" method="post" enctype="multipart/form-data" action="/api/author/image?authorId=${ author.getId()?c }">
 		<input id="uploadAuthorImageInput" type="file" name="{{ author.getId()?c }}" accept="image/*">
 		<input type="submit">
 	</form>
-	<iframe style="visibility:hidden;display:none" name="image_upload"></iframe>
 </div>

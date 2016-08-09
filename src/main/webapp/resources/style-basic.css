@@ -593,3 +593,17 @@ a:hover {
 	color: #107FE5;
 	font-weight: 700;
 }
+.pratilipi-file-upload {
+	opacity: 0.7;
+    transition: opacity .13s ease-out;
+    position: absolute;
+    cursor: pointer;
+    height: 50px;
+    width: 100%;
+    bottom: 0px;
+    left: 0px;
+    background: #ea1313;
+    -webkit-font-smoothing: antialiased;
+    padding-top: 12px;
+    text-align: left;
+}
