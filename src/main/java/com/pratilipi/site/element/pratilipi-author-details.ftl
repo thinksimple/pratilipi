@@ -68,8 +68,9 @@
 		</div>
 	</div>
 	
-	<form id="uploadAuthorImage" method="post" enctype="multipart/form-data" action="/api/author/image?authorId=${ author.getId()?c }">
+	<form id="uploadAuthorImage" method="post" enctype="multipart/form-data" action="/api/author/image?authorId=${ author.getId()?c }" target="image_upload">
 		<input id="uploadAuthorImageInput" type="file" name="{{ author.getId()?c }}" accept="image/*">
 		<input type="submit">
 	</form>
+	<iframe src="demo_iframe.htm" style="visibility:hidden;display:none" name="image_upload"></iframe>
 </div>
