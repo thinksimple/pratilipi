@@ -93,7 +93,7 @@ rating_ratings		= રેટિંગ
 rating_rate_this	= રેટિંગ આપો 
 rating_your_rating	= આપનું રેટિંગ 
 rating_be_first_one	= રેટિંગ આપો 
-rating_mandatory_message	= Please enter your rating!
+rating_mandatory_message	= રેટિંગ આપો!
 rating_1_star		= ૧ 
 rating_2_star		= ૨ 
 rating_3_star		= ૩
@@ -146,7 +146,7 @@ write_type		= સાહિત્ય પ્રકાર
 write_language		= ભાષા 
 write_summary		= ટૂંકમાં સારાંશ લખો
 write_create_new_content	= આગળ વધો 
-write_on_desktop_only		= You have to login via desktop to write!
+write_on_desktop_only		= લખવા માટે ડેસ્કટોપ દ્વારા લોગ ઇન થવું જરૂરી છે!
 
 # Common User Popups
 user_sign_in	= સાઈન ઇન કરો 
@@ -175,11 +175,11 @@ user_is_new			= ઉપયોગકર્તા નવા છે -
 user_is_registered		= ઉપયોગકર્તા અગાઉથી અકાઉન્ટ ધરાવે છે - 
 user_email_verification		= આપને મોકલેલ ઈ-મેલની ચકાસણી કરો 		
 user_require_access			= આ પ્રકિયા માટે સાઈટ પર લોગ-ઇન કરો!
-user_no_followers			= Sorry! You're not being followed by anyone! 
-user_login_to_view_followers = Please login to view your followers!
-user_no_following			= Sorry! You're not following anyone!
-user_login_to_view_following = Please login to view the people you're following!
-user_login_to_view_notifications = Please login to view the notifications! 
+user_no_followers			= અત્યારે આપની ફોલો સંખ્યા શૂન્ય છે! 
+user_login_to_view_followers = ફોલોઅર્સ વિશે જાણવા માટે લોગ ઇન કરો!
+user_no_following			= અત્યારે  આપ કોઈને ફોલો નથી કરી રહ્યા!
+user_login_to_view_following = આપ જેમને ફોલો કરી રહ્યા છો તેમના વિશે જાણવા લોગ ઇન કરો!
+user_login_to_view_notifications = સૂચનાઓ જોવા  માટે લોગ ઇન કરો! 
 
 # My Account popup
 edit_account_heading		= પ્રોફાઈલમાં બદલાવ ઈચ્છો છો? 
@@ -259,7 +259,7 @@ register_part_2					= અને
 register_part_3					= .
 
 # Event Page
-event_events			= Events
+event_events			= ઈવેન્ટ્સ 
 event_entries			= ઇવેન્ટ એન્ટ્રી 
 event_name				= ઇવેન્ટ શીર્ષક 
 event_name_en			= ઇવેન્ટનું શીર્ષક અંગ્રેજીમાં 
@@ -288,7 +288,7 @@ month_nov	= નવેમ્બર
 month_dec	= ડીસેમ્બર 
 
 # Library
-library				= Library
+library				= લાઈબ્રેરી 
 my_library			= મારી લાઈબ્રેરી 
 add_to_library		= લાઈબ્રેરીમાં ઉમેરો
 added_to_library	= સફળતાપૂર્વક રચના લાયબ્રેરીમાં ઉમેરાઈ ગઈ છે!
@@ -316,4 +316,4 @@ reader_enjoyed_reading_part2	= શેર કરો
 
 # Notifications
 notification_notifications = સૂચનાઓ
-notifications_no_notifications = Sorry! You don't have any notifications right now! Please check later!
+notifications_no_notifications = અત્યારે આપ માટે કોઈ સુચના ઉપલબ્ધ નથી!
