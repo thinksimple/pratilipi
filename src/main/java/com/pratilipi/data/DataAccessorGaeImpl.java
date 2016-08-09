@@ -1756,6 +1756,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	// I18N Table
 	
 	@Override
+	public I18n newI18n( String i18nId ) {
+		return new I18nEntity( i18nId );
+	}
+	
+	@Override
 	public Map<String, I18n> getI18ns( I18nGroup i18nGroup ) {
 		
 		List<I18nEntity> i18nList = ObjectifyService.ofy().load().type( I18nEntity.class )
@@ -1768,6 +1773,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		
 		return i18ns;
 		
+	}
+	
+	@Override
+	public I18n createOrUpdateI18n( I18n i18n ) {
+		return createOrUpdateI18n( i18n );
 	}
 
 }

@@ -58,6 +58,7 @@ import com.pratilipi.data.type.gae.BlogEntity;
 import com.pratilipi.data.type.gae.BlogPostEntity;
 import com.pratilipi.data.type.gae.CommentEntity;
 import com.pratilipi.data.type.gae.EventEntity;
+import com.pratilipi.data.type.gae.I18nEntity;
 import com.pratilipi.data.type.gae.MailingListSubscriptionEntity;
 import com.pratilipi.data.type.gae.PageEntity;
 import com.pratilipi.data.type.gae.PratilipiEntity;
@@ -845,9 +846,20 @@ public class DataAccessorMockImpl implements DataAccessor {
 	// I18N Table
 	
 	@Override
+	public I18n newI18n( String i18nId ) {
+		return new I18nEntity( i18nId );
+	}
+	
+	@Override
 	public Map<String, I18n> getI18ns( I18nGroup i18nGroup ) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	@Override
+	public I18n createOrUpdateI18n( I18n i18n ) {
+		// TODO Auto-generated method stub
+		return i18n;
 	}
 	
 }

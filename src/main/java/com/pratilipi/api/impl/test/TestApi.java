@@ -1,14 +1,9 @@
 package com.pratilipi.api.impl.test;
 
-import java.nio.charset.Charset;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.appengine.api.datastore.Cursor;
-import com.google.appengine.api.datastore.QueryResultIterator;
 import com.googlecode.objectify.ObjectifyService;
-import com.googlecode.objectify.cmd.Query;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -17,21 +12,14 @@ import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
-import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.Language;
-import com.pratilipi.common.type.PratilipiContentType;
-import com.pratilipi.common.util.PratilipiContentUtil;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
-import com.pratilipi.data.type.AppProperty;
-import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
-import com.pratilipi.data.type.BlobEntry;
-import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.type.I18n;
 import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.gae.AccessTokenEntity;
-import com.pratilipi.data.type.gae.AuditLogEntity;
 import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.PageEntity;
 import com.pratilipi.data.type.gae.PratilipiEntity;
@@ -171,7 +159,7 @@ public class TestApi extends GenericApi {
 		}*/
 
 		
-		QueryResultIterator<AuditLogEntity> itr = ObjectifyService.ofy().load().type( AuditLogEntity.class )
+/*		QueryResultIterator<AuditLogEntity> itr = ObjectifyService.ofy().load().type( AuditLogEntity.class )
 				.order( "-CREATION_DATE" )
 				.iterator();
 		
@@ -181,8 +169,75 @@ public class TestApi extends GenericApi {
 				continue;
 			if( auditLog.getEventDataNew().contains( "6627432686682112" ) )
 				logger.log( Level.INFO, auditLog.getId() + "" );
-		}
+		}*/
 		
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		I18n i18n_1 = dataAccessor.newI18n( "notification_and" );
+		I18n i18n_2 = dataAccessor.newI18n( "notification_has_followed" );
+		I18n i18n_3 = dataAccessor.newI18n( "notification_have_followed" );
+		I18n i18n_4 = dataAccessor.newI18n( "notification_others_have_followed" );
+		I18n i18n_5 = dataAccessor.newI18n( "notification_has_published" );
+		
+		i18n_1.setI18nString( Language.ENGLISH, "and" );
+		i18n_2.setI18nString( Language.ENGLISH, "has followed you." );
+		i18n_3.setI18nString( Language.ENGLISH, "have followed you." );
+		i18n_4.setI18nString( Language.ENGLISH, "others have followed you." );
+		i18n_5.setI18nString( Language.ENGLISH, "has published a new content :" );
+
+		i18n_1.setI18nString( Language.HINDI, "और" );
+		i18n_2.setI18nString( Language.HINDI, "आपको फॉलो कर रहे है।" );
+		i18n_3.setI18nString( Language.HINDI, "आपको फॉलो कर रहे है।" );
+		i18n_4.setI18nString( Language.HINDI, "लोग आपको फॉलो कर रहे है।" );
+		i18n_5.setI18nString( Language.HINDI, "ने एक रचना प्रकाशित करी है : " );
+
+		i18n_1.setI18nString( Language.GUJARATI, "અને" );
+		i18n_2.setI18nString( Language.GUJARATI, "આપને ફોલો કરી રહ્યા છે." );
+		i18n_3.setI18nString( Language.GUJARATI, "આપને ફોલો કરી રહ્યા છે." );
+		i18n_4.setI18nString( Language.GUJARATI, "લોકો આપને ફોલો કરી રહ્યા છે." );
+		i18n_5.setI18nString( Language.GUJARATI, "એ એક રચના પ્રકાશિત કરી છે : " );
+
+		i18n_1.setI18nString( Language.BENGALI, "এবং" );
+		i18n_2.setI18nString( Language.BENGALI, "আপনাকে অনুসরণ করছে।" );
+		i18n_3.setI18nString( Language.BENGALI, "আপনাকে অনুসরণ করছে।" );
+		i18n_4.setI18nString( Language.BENGALI, "জন আপনাকে অনুসরণ করছে।" );
+		i18n_5.setI18nString( Language.BENGALI, "একটি রচনা প্রকাশিত করেছেন : " );
+
+		i18n_1.setI18nString( Language.KANNADA, "ಮತ್ತು" );
+		i18n_2.setI18nString( Language.KANNADA, "ನಿಮ್ಮನ್ನು ಹಿಂಬಾಲಿಸುತ್ತಿದ್ದಾರೆ" );
+		i18n_3.setI18nString( Language.KANNADA, "ನಿಮ್ಮನ್ನು ಹಿಂಬಾಲಿಸುತ್ತಿದ್ದಾರೆ" );
+		i18n_4.setI18nString( Language.KANNADA, "ಜನರು ನಿಮ್ಮನ್ನು ಹಿಂಬಾಲಿಸುತ್ತಿದ್ದಾರೆ" );
+		i18n_5.setI18nString( Language.KANNADA, "ಹೊಸ ಬರಹವೊಂದನ್ನು ಪ್ರಕಟಿಸಿದ್ದಾರೆ : " );
+
+		i18n_1.setI18nString( Language.TELUGU, "మరియు" );
+		i18n_2.setI18nString( Language.TELUGU, "మిమ్మల్ని అనుసరిస్తున్నారు" );
+		i18n_3.setI18nString( Language.TELUGU, "మిమ్మల్ని అనుసరిస్తున్నారు" );
+		i18n_4.setI18nString( Language.TELUGU, "మంది మిమ్మల్ని అనుసరిస్తున్నారు" );
+		i18n_5.setI18nString( Language.TELUGU, "కొత్త రచనను ప్రచురించారు : " );
+
+		i18n_1.setI18nString( Language.MARATHI, "आणि" );
+		i18n_2.setI18nString( Language.MARATHI, "माझे अनुसरण करत आहेत" );
+		i18n_3.setI18nString( Language.MARATHI, "माझे अनुसरण करत आहेत" );
+		i18n_4.setI18nString( Language.MARATHI, "लोक माझे अनुसरण करत आहेत" );
+		i18n_5.setI18nString( Language.MARATHI, "ने एक रचना प्रकाशित केली आहे : " );
+
+		i18n_1.setI18nString( Language.TAMIL, "மற்றும்" );
+		i18n_2.setI18nString( Language.TAMIL, "உங்களைப் பின் தொடர்கிறார்" );
+		i18n_3.setI18nString( Language.TAMIL, "உங்களைப் பின் தொடர்கிறார்" );
+		i18n_4.setI18nString( Language.TAMIL, "உங்களைப் பின் தொடர்கிறார்பேர்" );
+		i18n_5.setI18nString( Language.TAMIL, "ஒரு படைப்பைப் பதிப்பித்துள்ளார் : " );
+
+		i18n_1.setI18nString( Language.MALAYALAM, "എന്നിവരും പിന്നെ" );
+		i18n_2.setI18nString( Language.MALAYALAM, "താങ്കളെ ഫോളോ ചെയ്യുന്നു" );
+		i18n_3.setI18nString( Language.MALAYALAM, "താങ്കളെ ഫോളോ ചെയ്യുന്നു" );
+		i18n_4.setI18nString( Language.MALAYALAM, "പേരും താങ്കളെ ഫോളോ ചെയ്യുന്നു" );
+		i18n_5.setI18nString( Language.MALAYALAM, "ഒരു പുതിയ രചന പ്രസിദ്ധീകരിച്ചിരിക്കുന്നു : " );
+
+		dataAccessor.createOrUpdateI18n( i18n_1 );
+		dataAccessor.createOrUpdateI18n( i18n_2 );
+		dataAccessor.createOrUpdateI18n( i18n_3 );
+		dataAccessor.createOrUpdateI18n( i18n_4 );
+		dataAccessor.createOrUpdateI18n( i18n_5 );
 		
 		return new GenericResponse();
 		

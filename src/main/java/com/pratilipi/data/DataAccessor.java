@@ -191,6 +191,8 @@ public interface DataAccessor {
 	
 	
 	// I18N Table
+	I18n newI18n( String i18nId );
 	Map<String, I18n> getI18ns( I18nGroup i18nGroup );
+	I18n createOrUpdateI18n( I18n i18n );
 	
 }
