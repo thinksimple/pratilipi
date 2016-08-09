@@ -161,17 +161,17 @@
 			},
 
 			shareOnFacebook: function( utm_location ) {
-				window.open( "http://www.facebook.com/sharer.php?u=" + _getShareUrl( utm_location, "facebook" ),
+				window.open( "http://www.facebook.com/sharer.php?u=" + this._getShareUrl( utm_location, "facebook" ),
 						"share", "width=1100,height=500,left=70px,top=60px" );
 			},
 			
 			shareOnTwitter: function( utm_location ) {
-				window.open( "http://twitter.com/share?url=" + _getShareUrl( utm_location, "twitter" ), 
+				window.open( "http://twitter.com/share?url=" + this._getShareUrl( utm_location, "twitter" ), 
 						"share", "width=1100,height=500,left=70px,top=60px" );
 			},
 			
 			shareOnGplus: function( utm_location ) {
-				window.open( "https://plus.google.com/share?url=" + _getShareUrl( utm_location, "gplus" ), 
+				window.open( "https://plus.google.com/share?url=" + this._getShareUrl( utm_location, "gplus" ), 
 						"share", "width=1100,height=500,left=70px,top=60px" );
 			},
 			
