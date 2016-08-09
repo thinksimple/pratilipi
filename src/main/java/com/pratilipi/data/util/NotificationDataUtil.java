@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.I18nGroup;
 import com.pratilipi.common.type.NotificationType;
 import com.pratilipi.common.type.RequestParameter;
 import com.pratilipi.data.DataAccessor;
@@ -16,6 +17,7 @@ import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.client.NotificationData;
 import com.pratilipi.data.client.PratilipiData;
 import com.pratilipi.data.client.UserData;
+import com.pratilipi.data.type.I18n;
 import com.pratilipi.data.type.Notification;
 import com.pratilipi.data.type.User;
 import com.pratilipi.filter.AccessTokenFilter;
@@ -37,7 +39,7 @@ public class NotificationDataUtil {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		User user = dataAccessor.getUser( userId );
 		
-		return DataAccessorFactory.getDataAccessor().getNotificationCount( userId, user.getLastNotified() );
+		return dataAccessor.getNotificationCount( userId, user.getLastNotified() );
 		
 	}
 	
@@ -57,7 +59,10 @@ public class NotificationDataUtil {
 			if( notification.getType() == NotificationType.PRATILIPI_ADD ) {
 				pratilipiIdList.add( notification.getSourceIdLong() );
 			} else if( notification.getType() == NotificationType.AUTHOR_FOLLOW ) {
-				userIdList.addAll( notification.getDataIds() );
+				if( userIdList.size() <= 3 )
+					userIdList.addAll( notification.getDataIds() );
+				else
+					userIdList.addAll( notification.getDataIds().subList( notification.getDataIds().size() - 4, notification.getDataIds().size() ) );
 			}
 		}
 		
@@ -67,6 +72,7 @@ public class NotificationDataUtil {
 		for( PratilipiData pratilipiData : pratilipiDataList )
 			pratilipis.put( pratilipiData.getId(), pratilipiData );
 		
+		Map<String, I18n> i18ns = dataAccessor.getI18ns( I18nGroup.NOTIFICATION );
 		List<NotificationData> notificationDataList = new ArrayList<>( notificationListCursorTuple.getDataList().size() );
 		for( Notification notification : notificationListCursorTuple.getDataList() ) {
 			
@@ -81,18 +87,40 @@ public class NotificationDataUtil {
 				String authorName = pratilipiData.getAuthor().getName() == null
 						? pratilipiData.getAuthor().getNameEn()
 						: pratilipiData.getAuthor().getName();
-				notificationData.setMessage( "<b>" + pratilipiTitle + "</b> published by <b>" + authorName + "</b>." );
+				notificationData.setMessage(
+						"<b>" + pratilipiTitle + "</b> "
+						+ i18ns.get( "notification_has_published" )
+						+ " <b>" + authorName + "</b>" );
 				notificationData.setSourceUrl( pratilipiData.getPageUrl() );
 			
 			} else 	if( notification.getType() == NotificationType.AUTHOR_FOLLOW ) {
 				
-				if( notification.getDataIds().size() > 0 ) {
-					String notificationMsg = "";
-					for( Long followerUserId : notification.getDataIds() )
-						notificationMsg += "<b>" + users.get( followerUserId ).getDisplayName() + "</b>, ";
-					notificationMsg = notificationMsg.substring( 0, notificationMsg.length() - 2 );
-					notificationMsg += " followed you.";
-					notificationData.setMessage( notificationMsg );
+				if( notification.getDataIds().size() == 0 ) {
+					continue;
+				} else if( notification.getDataIds().size() == 1 ) {
+					notificationData.setMessage(
+							"<b>" + users.get( notification.getDataIds().get( 0 ) ).getDisplayName() + "</b> "
+							+ i18ns.get( "notification_has_followed" ) );
+				} else if( notification.getDataIds().size() == 2 ) {
+					notificationData.setMessage(
+							"<b>" + users.get( notification.getDataIds().get( 1 ) ).getDisplayName() + "</b> "
+							+ i18ns.get( "notification_and" )
+							+ " <b>" + users.get( notification.getDataIds().get( 0 ) ).getDisplayName() + "</b> "
+							+ i18ns.get( "notification_have_followed" ) );
+				} else if( notification.getDataIds().size() == 3 ) {
+					notificationData.setMessage(
+							"<b>" + users.get( notification.getDataIds().get( 2 ) ).getDisplayName() + "</b>, "
+							+ "<b>" + users.get( notification.getDataIds().get( 1 ) ).getDisplayName() + "</b> "
+							+ i18ns.get( "notification_and" )
+							+ " <b>" + users.get( notification.getDataIds().get( 0 ) ).getDisplayName() + "</b> "
+							+ i18ns.get( "notification_have_followed" ) );
+				} else {
+					notificationData.setMessage(
+							"<b>" + users.get( notification.getDataIds().get( notification.getDataIds().size() - 1 ) ).getDisplayName() + "</b>, "
+							+ "<b>" + users.get( notification.getDataIds().get( notification.getDataIds().size() - 2 ) ).getDisplayName() + "</b> "
+							+ i18ns.get( "notification_and" )
+							+ " " + ( notification.getDataIds().size() - 2 ) + " "
+							+ i18ns.get( "notification_others_have_followed" ) );
 				}
 				
 				notificationData.setSourceUrl( "/followers?" + RequestParameter.NOTIFICATION_ID.getName() + "=" + notification.getId() );
