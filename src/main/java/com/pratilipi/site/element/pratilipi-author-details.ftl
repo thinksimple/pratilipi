@@ -1,3 +1,16 @@
+<script>
+	function submitForm() {
+		var form = $("#uploadAuthorImage");
+		$.ajax({
+		    type: "POST",
+		    url: "/api/author/image?authorId=${ author.getId()?c }",
+		    data: form.serialize(),
+		    success: function() {
+		        location.reload();
+		    }
+		});	
+	}
+</script>
 <div class="pratilipi-block cover-image pratilipi-shadow secondary-500 box" style="background-image: url('http://0.ptlp.co/resource-all/home-page/pratilipi-banner.png')">
 	<div class="">
 	<#if author.hasAccessToUpdate()==true >
@@ -68,9 +81,8 @@
 		</div>
 	</div>
 	
-	<form id="uploadAuthorImage" method="post" enctype="multipart/form-data" action="/api/author/image?authorId=${ author.getId()?c }" target="image_upload">
+	<form id="uploadAuthorImage">
 		<input id="uploadAuthorImageInput" type="file" name="{{ author.getId()?c }}" accept="image/*">
-		<input type="submit">
+		<button onclick="submitForm()">Submit</button>
 	</form>
-	<iframe style="visibility:hidden;display:none" name="image_upload"></iframe>
 </div>
