@@ -93,7 +93,7 @@ rating_ratings				= रेटिंग
 rating_rate_this			= रेटिंग दें
 rating_your_rating			= आपकी रेटिंग
 rating_be_first_one			= अपनी रेटिंग दे
-rating_mandatory_message	= Please enter your rating!
+rating_mandatory_message	= कृपया रेटिंग दे।
 rating_1_star				= १
 rating_2_star				= २
 rating_3_star				= ३
@@ -146,7 +146,7 @@ write_type					= विधा
 write_language				= भाषा 
 write_summary				= संक्षिप्त सारांश दर्ज करें 
 write_create_new_content	= आगे बढ़ीए
-write_on_desktop_only		= You have to login via desktop to write!
+write_on_desktop_only		= लिखने के लिए डेस्कटॉप से लॉगिन करना आवश्यक है। 
 
 # Common User Popups
 user_sign_in				= साइन इन कीजिए 
@@ -175,11 +175,11 @@ user_is_new					= उपयोगकर्ता नये है
 user_is_registered			= उपयोगकर्ता पंजीकृत है
 user_email_verification		= आपको भेजे गए ईमेल की पुष्टि करें		
 user_require_access			= इस प्रक्रिया के लिए कृपया साईट पर लोग इन करें! 
-user_no_followers			= Sorry! You're not being followed by anyone! 
-user_login_to_view_followers = Please login to view your followers!
-user_no_following			= Sorry! You're not following anyone!
-user_login_to_view_following = Please login to view the people you're following!
-user_login_to_view_notifications = Please login to view the notifications! 
+user_no_followers			= फ़िलहाल आपकी अनुयायी संख्या शून्य है। 
+user_login_to_view_followers = अनुयायियों के बारे में जानने के लिए कृपया लॉग इन करें।
+user_no_following			= फ़िलहाल आप किसी का अनुसरण नहीं कर रहे हैं।
+user_login_to_view_following = आपके द्वारा हुए अनुसरण को देखने के लिए कृपया लॉग इन करें। 
+user_login_to_view_notifications = सूचनाए जानने के लिए कृपया लॉग इन करें। 
 
 # My Account popup
 edit_account_heading		= आपका अकाउंट 
@@ -259,7 +259,7 @@ register_part_2					=
 register_part_3					= 
 
 # Event Page
-event_events			= Events
+event_events			= इवेंट्स
 event_entries			= इवेंट एंट्री 
 event_name				= इवेंट शीर्षक 
 event_name_en			= इवेंट शीर्षक अंग्रेजी में 
@@ -288,7 +288,7 @@ month_nov	= नवेम्बर
 month_dec	= दिसम्बर
 
 # Library
-library				= Library
+library				= लाइब्रेरी
 my_library			= मेरी लाइब्रेरी 
 add_to_library		= लाइब्रेरी में जोड़े 
 added_to_library	= जय हो! यह साहित्य आपकी लाइब्रेरी में जोड़ दिया गया है।
@@ -316,4 +316,4 @@ reader_enjoyed_reading_part2	= शेयर करे
 
 # Notifications
 notification_notifications = सूचनाएँ
-notifications_no_notifications = Sorry! You don't have any notifications right now! Please check later!
+notifications_no_notifications = फ़िलहाल आपके लिए कोई सूचना उपलब्ध नहीं है।  
