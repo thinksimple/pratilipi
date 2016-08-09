@@ -316,4 +316,4 @@ reader_enjoyed_reading_part2	= ഷെയര്‍ ചെയ്യൂ
 
 # Notifications
 notification_notifications = നോട്ടിഫിക്കേഷനുകള്‍
-notifications_no_notifications = Sorry! You don't have any notifications right now! Please check later!
+notifications_no_notifications = ക്ഷമിക്കണം, താങ്കള്‍ക്ക് ഇപ്പോള്‍ നോട്ടിഫിക്കേഷന്‍സ് ഒന്നുമില്ല! പിന്നീട് നോക്കൂ!
