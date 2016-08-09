@@ -594,16 +594,24 @@ a:hover {
 	font-weight: 700;
 }
 .pratilipi-file-upload {
-	opacity: 0.7;
-    transition: opacity .13s ease-out;
-    position: absolute;
-    cursor: pointer;
-    height: 50px;
-    width: 100%;
+	position: absolute;
     bottom: 0px;
-    left: 0px;
+    left: 0px;	
+    height: 40px;
     background: #ea1313;
+    text-align: center;
+	opacity: 0.7;
+    transition: opacity .13s ease-out;    
+    cursor: pointer;
+    width: 100%;
     -webkit-font-smoothing: antialiased;
-    padding-top: 12px;
-    text-align: left;
+    padding-top: 10px;
+
+}
+.profile-image-parent {
+	position: relative;
+    display: inline-block;
+    margin: 20px;
+    overflow: hidden;
+    border-radius: 50%;
 }

@@ -46,10 +46,10 @@
 		<div class="clearfix"></div>
 	</div>
 	<div class="author-info text-center">
-		<div style="">
-			<img class="img-responsive img-thumbnail img-circle profile-picture" src="${ author.getImageUrl(140) }">
+		<div class="profile-image-parent">
+			<img style="margin: 0px;" class="img-responsive img-thumbnail img-circle profile-picture" src="${ author.getImageUrl(140) }">
 			<div class="pratilipi-file-upload">
-				<img style="width:20px;height:20px;" src="http://0.ptlp.co/resource-all/icon/svg/user.svg">
+				<img style="width:20px;height:20px;margin-bottom: 7px;" src="http://0.ptlp.co/resource-all/icon/svg/camera-white.svg">
 			</div>
 		</div>
 		<div class="author-name">${ author.getName()!author.getNameEn() }</div>
