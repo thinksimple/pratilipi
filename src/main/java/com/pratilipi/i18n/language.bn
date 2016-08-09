@@ -93,7 +93,7 @@ rating_ratings	=   রেটিং
 rating_rate_this		=  রেটিং দিন
 rating_your_rating	=  আপনার রেটিং
 rating_be_first_one	= আপনার রেটিং দিন।
-rating_mandatory_message	= Please enter your rating!
+rating_mandatory_message	= দয়াকরে আপনার রেটিং দিন।
 rating_1_star	=  ১
 rating_2_star	=  ২
 rating_3_star	=  ৩
@@ -146,7 +146,7 @@ write_type	=  প্রকার
 write_language	 =  ভাষা
 write_summary	 =  সংক্ষিপ্ত সারাংশ লিখুন
 write_create_new_content	=  নতুন রচনা সৃষ্টি
-write_on_desktop_only		= You have to login via desktop to write!
+write_on_desktop_only		= লেখার জন্য ডেস্কটপ থেকে লগ ইন করা আবশ্যক!
 
 # Common User Popups
 user_sign_in			= সাইন ইন করুন
@@ -175,11 +175,11 @@ user_is_new		= ব্যবহারকারী নতুন
 user_is_registered	= ব্যবহারকারী রেজিস্টার্ড
 user_email_verification		= আপনাকে পাঠানো ইমেল অনুমোদন করুন
 user_require_access			= আপনাকে এই কর্ম সঞ্চালন করার জন্য লগ ইন করতে হবে!
-user_no_followers			= Sorry! You're not being followed by anyone! 
-user_login_to_view_followers = Please login to view your followers!
-user_no_following			= Sorry! You're not following anyone!
-user_login_to_view_following = Please login to view the people you're following!
-user_login_to_view_notifications = Please login to view the notifications! 
+user_no_followers			= দুঃখিত! আপনি কারও দ্বারা অনুসৃত হচ্ছেন না।
+user_login_to_view_followers = আপনার অনুসরণকারীদের জানতে লগ ইন করুন।
+user_no_following			= দুঃখিত! আপনি কাউকে অনুসরণ করছেন না!
+user_login_to_view_following = আপনার অনুসরণকারীদের দেখার জন্য দয়াকরে লগ ইন করুন।
+user_login_to_view_notifications = বিজ্ঞপ্তি দেখতে দয়াকরে লগ ইন করুন। 
 
 # My Account popup
 edit_account_heading		=  আপনার একাউন্ট
@@ -259,7 +259,7 @@ register_part_2					=
 register_part_3					= 
 
 # Event Page
-event_events			= Events
+event_events			= ইভেন্ট
 event_entries			= ইভেন্ট এন্ট্রি
 event_name				= ইভেন্ট  নাম
 event_name_en			=  ইভেন্ট নাম ইংরাজীতে
@@ -288,7 +288,7 @@ month_nov	= নভেম্বর
 month_dec	= ডিসেম্বর
 
 # Library
-library				= Library
+library				=  লাইব্রেরী
 my_library			= আমার লাইব্রেরী
 add_to_library		= লাইব্রেরীতে এড করুন
 added_to_library	= সফল! আপনি আপনার লাইব্রেরিতে এই বিষয়বস্তুটি যোগ করেছেন
@@ -316,4 +316,4 @@ reader_enjoyed_reading_part2	= এটি শেয়ার করুন
 
 # Notifications
 notification_notifications = প্রজ্ঞাপন
-notifications_no_notifications = Sorry! You don't have any notifications right now! Please check later!
+notifications_no_notifications = দুঃখিত! এই মুহুর্তে আপনার জন্য কোন বিজ্ঞপ্তি নেই।
