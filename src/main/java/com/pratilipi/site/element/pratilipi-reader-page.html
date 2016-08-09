@@ -144,28 +144,34 @@
 					this.querySelector( 'pratilipi-review-input' ).openReviewInput( this.userpratilipi );
 				}
 			},
-			
-			shareOnFacebook: function( pos ) {
-				window.open( "http://www.facebook.com/sharer.php?u=" + "http://${ domain }" + this.pratilipi.pageUrl 
-						+ ( this.pratilipi.pageUrl.indexOf( '?' ) == -1 ? encodeURIComponent( "?" ) : encodeURIComponent( "&" ) )
-						+ "share=facebook" + ( pos != null ? encodeURIComponent( "&" ) + "pos=" + pos : "" )
-						+ encodeURIComponent( "&" ) + "utm_source=reader",
+
+			_getShareUrl: function( utm_location, utm_source ) {
+				if( utm_location == null || utm_source == null ) return;
+				return encodeURIComponent( 
+						"http://${ domain }" + this.pratilipi.pageUrl 
+						+ ( this.pratilipi.pageUrl.indexOf( '?' ) == -1 ? "?" : "&" )
+						+ "utm_language=${ language?lower_case }" + "&"
+						+ "utm_version=standard" + "&"
+						+ "utm_device=" + ( width < 600 ? "mobile" : "desktop" ) + "&"
+						+ "utm_parent=reader" + "&"
+						+ "utm_location=" + utm_location + "&"
+						+ "utm_action=share" + "&"
+						+ "utm_source=" + utm_source
+					);
+			},
+
+			shareOnFacebook: function( utm_location ) {
+				window.open( "http://www.facebook.com/sharer.php?u=" + _getShareUrl( utm_location, "facebook" ),
 						"share", "width=1100,height=500,left=70px,top=60px" );
 			},
 			
-			shareOnTwitter: function( pos ) {
-				window.open( "http://twitter.com/share?url=" + "http://${ domain }" + this.pratilipi.pageUrl 
-						+ ( this.pratilipi.pageUrl.indexOf( '?' ) == -1 ? encodeURIComponent( "?" ) : encodeURIComponent( "&" ) )
-						+ "share=twitter" + ( pos != null ? encodeURIComponent( "&" ) + "pos=" + pos : "" )
-						+ encodeURIComponent( "&" ) + "utm_source=reader",
+			shareOnTwitter: function( utm_location ) {
+				window.open( "http://twitter.com/share?url=" + _getShareUrl( utm_location, "twitter" ), 
 						"share", "width=1100,height=500,left=70px,top=60px" );
 			},
 			
-			shareOnGplus: function( pos ) {
-				window.open( "https://plus.google.com/share?url=" + "http://${ domain }" + this.pratilipi.pageUrl 
-						+ ( this.pratilipi.pageUrl.indexOf( '?' ) == -1 ? encodeURIComponent( "?" ) : encodeURIComponent( "&" ) )
-						+ "share=gplus" + ( pos != null ? encodeURIComponent( "&" ) + "pos=" + pos : "" )
-						+ encodeURIComponent( "&" ) + "utm_source=reader",
+			shareOnGplus: function( utm_location ) {
+				window.open( "https://plus.google.com/share?url=" + _getShareUrl( utm_location, "gplus" ), 
 						"share", "width=1100,height=500,left=70px,top=60px" );
 			},
 			
