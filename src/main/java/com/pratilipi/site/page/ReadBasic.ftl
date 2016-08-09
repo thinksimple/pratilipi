@@ -136,7 +136,7 @@
 				function getShareUrl( utm_location, utm_source ) {
 					if( utm_location == null || utm_source == null ) return;
 					return encodeURIComponent( 
-							"http://${ domain }" + "${ pratilipi.getPageUrl() }" 
+							"http://${ language?lower_case }.pratilipi.com" + "${ pratilipi.getPageUrl() }" 
 							+ ( "${ pratilipi.getPageUrl() }".indexOf( '?' ) == -1 ? '?' : '&' )
 							+ "utm_language=${ language?lower_case }" + "&"
 							+ "utm_version=lite" + "&"
