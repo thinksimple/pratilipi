@@ -31,7 +31,6 @@
 	    });
 	    
 	    $("#uploadAuthorImageInput").on('change', function() {
-			alert("Hello");
 			$("#uploadAuthorImage").submit();
 		});
 	});
@@ -60,9 +59,11 @@
 	<div class="author-info text-center">
 		<div class="profile-image-parent">
 			<img style="margin: 0px;" class="img-responsive img-thumbnail img-circle profile-picture" src="${ author.getImageUrl(140) }">
-			<div class="pratilipi-file-upload" >
-				<img style="width:25px;height:25px;margin-bottom: 7px;" src="http://0.ptlp.co/resource-all/icon/svg/camera-white.svg">
-			</div>
+			<#if author.hasAccessToUpdate()==true >
+				<div class="pratilipi-file-upload" >
+					<img style="width:25px;height:25px;margin-bottom: 7px;" src="http://0.ptlp.co/resource-all/icon/svg/camera-white.svg">
+				</div>
+			</#if>	
 		</div>
 		<div class="author-name">${ author.getName()!author.getNameEn() }</div>
 	</div>
