@@ -144,11 +144,13 @@ public class UserAuthorDataUtil {
 			List<UserAuthor> userAuthorList = dataAccessor.getUserAuthorList(
 					userIdList,
 					author.getId() );
-			
-			for( UserAuthor userAuthor : userAuthorList )
-				if( userAuthor != null && userAuthor.isFollowing() )
-					userDataList.get( userIdList.indexOf( userAuthor.getUserId() ) ).setFollowing( true );
-			
+
+			if( userAuthorList != null ) {
+				for( UserAuthor userAuthor : userAuthorList )
+					if( userAuthor != null && userAuthor.isFollowing() )
+						userDataList.get( userIdList.indexOf( userAuthor.getUserId() ) ).setFollowing( true );
+			}
+
 		}
 
 		
