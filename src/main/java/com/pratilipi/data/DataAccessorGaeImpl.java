@@ -1777,7 +1777,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	@Override
 	public I18n createOrUpdateI18n( I18n i18n ) {
-		return createOrUpdateI18n( i18n );
+		return createOrUpdateEntity( i18n );
 	}
 
 }
