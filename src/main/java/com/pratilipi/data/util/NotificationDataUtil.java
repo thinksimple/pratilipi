@@ -88,9 +88,9 @@ public class NotificationDataUtil {
 						? pratilipiData.getAuthor().getNameEn()
 						: pratilipiData.getAuthor().getName();
 				notificationData.setMessage(
-						"<b>" + pratilipiTitle + "</b> "
+						"<b>" + authorName + "</b> "
 						+ i18ns.get( "notification_has_published" )
-						+ " <b>" + authorName + "</b>" );
+						+ " <b>" + pratilipiTitle + "</b>" );
 				notificationData.setSourceUrl( pratilipiData.getPageUrl() );
 			
 			} else 	if( notification.getType() == NotificationType.AUTHOR_FOLLOW ) {
