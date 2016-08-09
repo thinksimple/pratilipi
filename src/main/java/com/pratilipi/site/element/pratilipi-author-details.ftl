@@ -14,6 +14,7 @@
 	            success:function(data){
 	                console.log("success");
 	                console.log(data);
+	                location.reload();
 	            },
 	            error: function(data){
 	                console.log("error");
