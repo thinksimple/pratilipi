@@ -81,7 +81,7 @@
 			<div class="follow-author-name contain-title ellipsed">
 				<a href="{{ pageUrl }}">{{ name }}</a>
 				<template is="dom-if" if="{{ showFollowCount }}">
-					<div class="follow-count">{{ followObject.followCount }}&nbsp;${ _strings.author_followers }</div>
+					<div class="follow-count">{{ followCount }}&nbsp;${ _strings.author_followers }</div>
 				</template>
 			</div>
 			<template is="dom-if" if="{{ canFollow }}">
@@ -111,38 +111,34 @@
 		Polymer({
 
 			is: 'pratilipi-follow-author',
-			
+
 			properties: {
 				followObject: { type: Object, notify: true },
 
 				authorId: { type: String },
 				name: { type: String },
 				pageUrl: { type: String },
-				followCount: { type: Number, observer: "_followCountObserver" },
+				followCount: { type: Number },
 				imageUrl: { type: String },
 				following: { type: Boolean },
 				canFollow: { type: Boolean }
 			},
-			
+
 			observers: [
 	            '_followObjectObserver(followObject.following)'
 			],
-			
-			_followCountObserver: function() {
-				/* this.set( 'followCount', this.following ? ( this.followCount + 1 ) : ( this.followCount - 1 ) ); */
-				this.set( 'showFollowCount', this.followCount > 0 );
-			},
-			
+
 			_followObjectObserver: function() {
 				this.set( 'authorId', this.followObject.authorId );
 				this.set( 'name', this.followObject.name );
 				this.set( 'pageUrl', this.followObject.pageUrl );
 				this.set( 'followCount', this.followObject.followCount );
+				this.set( 'showFollowCount', this.followObject.followCount > 0 );
 				this.set( 'imageUrl', this.followObject.imageUrl + ( this.followObject.imageUrl.indexOf( "?" ) == -1 ? "?" : "&" ) + "width=48" );
 				this.set( 'following', this.followObject.following );
 				this.set( 'canFollow', this.followObject.canFollow );
 			},
-			
+
 			_makeFollowApiCall: function( following ) {
 				if( document.querySelector( 'pratilipi-user' ).getCurrentUser().isGuest ) {
 					document.querySelector( 'pratilipi-user' ).logIn( true );
@@ -154,11 +150,11 @@
 				this.$.UserAuthorFollowApi.body = jQuery.param( body );
 				this.$.UserAuthorFollowApi.generateRequest();
 			},
-			
+
 			followAuthor: function() {
 				this._makeFollowApiCall( true );
 			},
-			
+
 			unFollowAuthor: function() {
 				this._makeFollowApiCall( false );
 			},
@@ -182,8 +178,10 @@
 			},
 
 			_disableFollowButtons: function() {
-				jQuery( this.querySelector( '.follow-author-buttons-holder .pratilipi-author-follow-button' ) ).prop( 'disabled', true );
-				jQuery( this.querySelector( '.follow-author-buttons-holder .pratilipi-author-unfollow-button' ) ).prop( 'disabled', true );
+				this.async( function() {
+					jQuery( this.querySelector( '.follow-author-buttons-holder .pratilipi-author-follow-button' ) ).prop( 'disabled', true );
+					jQuery( this.querySelector( '.follow-author-buttons-holder .pratilipi-author-unfollow-button' ) ).prop( 'disabled', true );
+				});
 			},
 
 			_enableFollowButtons: function() {
@@ -192,8 +190,8 @@
 			},
 
 			_swapFollowingState: function() {
+				this.set( 'followObject.followCount', this.following ? ( this.followCount - 1 ) : ( this.followCount + 1 ) );
 				this.set( 'followObject.following', !this.following );
-				this.set( 'followObject.followCount', this.following ? ( this.followCount + 1 ) : ( this.followCount - 1 ) );
 			}
 
 		});
