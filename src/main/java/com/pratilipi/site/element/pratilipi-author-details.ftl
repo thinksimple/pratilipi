@@ -1,6 +1,9 @@
 <script>
 	$(document).ready(function (e) {
 	
+		]
+		$("#uploadAuthorImageInput").hide();
+	
 	    $('#uploadAuthorImage').on('submit',(function(e) {
 	        e.preventDefault();
 	        var formData = new FormData(this);
@@ -109,6 +112,5 @@
 	
 	<form id="uploadAuthorImage" method="post" enctype="multipart/form-data" action="/api/author/image?authorId=${ author.getId()?c }">
 		<input id="uploadAuthorImageInput" type="file" name="{{ author.getId()?c }}" accept="image/*">
-		<input type="submit">
 	</form>
 </div>
