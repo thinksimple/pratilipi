@@ -179,6 +179,7 @@ user_no_followers			= দুঃখিত! আপনি কারও দ্বা
 user_login_to_view_followers = আপনার অনুসরণকারীদের জানতে লগ ইন করুন।
 user_no_following			= দুঃখিত! আপনি কাউকে অনুসরণ করছেন না!
 user_login_to_view_following = আপনার অনুসরণকারীদের দেখার জন্য দয়াকরে লগ ইন করুন।
+user_login_to_view_library = Please login to access your library!
 user_login_to_view_notifications = বিজ্ঞপ্তি দেখতে দয়াকরে লগ ইন করুন। 
 
 # My Account popup

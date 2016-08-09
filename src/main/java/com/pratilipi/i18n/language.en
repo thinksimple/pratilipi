@@ -179,6 +179,7 @@ user_no_followers			= Sorry! You're not being followed by anyone!
 user_login_to_view_followers = Please login to view your followers!
 user_no_following			= Sorry! You're not following anyone!
 user_login_to_view_following = Please login to view the people you're following!
+user_login_to_view_library = Please login to access your library!
 user_login_to_view_notifications = Please login to view the notifications! 
 
 # My Account popup

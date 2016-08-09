@@ -179,6 +179,7 @@ user_no_followers			                = ಕ್ಷಮಿಸಿ! ನೀವು ಇನ
 user_login_to_view_followers          = ನಿಮ್ಮ ಹಿಂಬಾಲಕರನ್ನು ನೋಡಲು ದಯವಿಟ್ಟು ಲಾಗಿನ್ ಆಗಿ!
 user_no_following			                = ಕ್ಷಮಿಸಿ! ನೀವು ಯಾರನ್ನೂ ಹಿಂಬಾಲಿಸುತ್ತಿಲ್ಲ! 
 user_login_to_view_following           = ನೀವು ಹಿಂಬಾಲಿಸುತ್ತಿರುವ ವ್ಯಕ್ತಿಗಳನ್ನು ನೋಡಲು ದಯವಿಟ್ಟು ಲಾಗಿನ್ ಆಗಿ!
+user_login_to_view_library = Please login to access your library!
 user_login_to_view_notifications       = ನೋಟಿಫಿಕೇಶನ್ಸ್ ನೋಡಲು ದಯವಿಟ್ಟು ಲಾಗಿನ್ ಆಗಿ! 
 
 # My Account popup  

@@ -179,6 +179,7 @@ user_no_followers			= क्षमस्व! सध्या तुमची अ
 user_login_to_view_followers = तुमचे अनुयायी पाहण्यासाठी कृपया लॉग इन करा!
 user_no_following			= तुमचे अनुयायी पाहण्यासाठी कृपया लॉग इन करा!
 user_login_to_view_following = आपल्याद्वारा होणारे अनुसरण लोकांना पाहण्यासाठी कृपया लॉग इन करा!
+user_login_to_view_library = Please login to access your library!
 user_login_to_view_notifications = सूचना पहाण्यासाठी कृपया लॉग इन करा! 
 
 # My Account popup
