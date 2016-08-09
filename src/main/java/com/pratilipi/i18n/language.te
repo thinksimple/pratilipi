@@ -146,7 +146,7 @@ write_type					= వర్గాన్ని ఎంపిక చేయండి 
 write_language				= భాష
 write_summary				= సంగ్రహం (ఆప్షనల్)
 write_create_new_content	= కొత్త రచనను ప్రారంభించండి
-write_on_desktop_only		= మీరు రచనను చేయడానికి డెస్క్ టాప్ నుండే లాగిన్ అవ్వాలి
+write_on_desktop_only		= మీరు మీ రచనలను ప్రచురించడానికి డెస్క్‌టాప్ ద్వారా లాగిన్ అవ్వండి లేదా telugu@pratilipi.com/9247810639 లో సంప్రదించండి
 
 # Common User Popups
 user_sign_in				= సైన్ ఇన్
@@ -229,7 +229,7 @@ updated_review						= విజయవంతంగా పూర్తయ్యి
 
 #Failure Messages
 server_error_message				= 'సాంకేతికపరమైన సమస్య.. మళ్లీ ప్రయత్నించండి
-write_please_login_desktop			= మీరు మీ రచనలను ప్రచురించడానికి డెస్క్‌టాప్ ద్వారా లాగిన్ అవ్వండి లేదా telugu@pratilipi.com/9247810639 లో సంప్రదించండి 
+write_please_login_desktop			= మీరు డెస్క్ టాప్ పై లాగిన్ అవ్వడం ద్వారా రచనలు ప్రచురించుకోవచ్చు 
 
 # Author Edit Popup
 edit_author_heading				= రచయిత సమాచారాన్ని ఎడిట్ చేయండి	
