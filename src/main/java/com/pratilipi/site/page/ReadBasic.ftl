@@ -133,23 +133,31 @@
 			</#if>
 
 			<#if action == "share" || pageNo == pageCount>
-				function shareOnFacebook( pos ) {
-					window.open( "http://www.facebook.com/sharer.php?u=" + "http://${ website_host }" + "${ pratilipi.getPageUrl() }" 
-					+ ( "${ pratilipi.getPageUrl() }".indexOf( '?' ) == -1 ? '?' : '&' ) 
-					+ "share=facebook" + ( pos != null ? encodeURIComponent( "&" ) + "pos=" + pos : "" ),
-					"share", "width=600,height=500,left=70px,top=60px" );
+				function getShareUrl( utm_location, utm_source ) {
+					if( utm_location == null || utm_source == null ) return;
+					return encodeURIComponent( 
+							"http://${ domain }" + "${ pratilipi.getPageUrl() }" 
+							+ ( "${ pratilipi.getPageUrl() }".indexOf( '?' ) == -1 ? '?' : '&' )
+							+ "utm_language=${ language?lower_case }" + "&"
+							+ "utm_version=lite" + "&"
+							+ "utm_device=mobile" + "&"
+							+ "utm_parent=reader" + "&"
+							+ "utm_location=" + utm_location + "&"
+							+ "utm_action=share" + "&"
+							+ "utm_source=" + utm_source
+						);
+				},
+				function shareOnFacebook( utm_location ) {
+					window.open( "http://www.facebook.com/sharer.php?u=" + getShareUrl( utm_location, "facebook" ),
+						"share", "width=1100,height=500,left=70px,top=60px" );
 				}
-				function shareOnTwitter( pos ) {
-					window.open( "http://twitter.com/share?url=" + "http://${ website_host }" + "${ pratilipi.getPageUrl() }"
-					+ ( "${ pratilipi.getPageUrl() }".indexOf( '?' ) == -1 ? '?' : '&' ) 
-					+ "share=twitter" + ( pos != null ? encodeURIComponent( "&" ) + "pos=" + pos : "" ),
-					"share", "width=500,height=600,left=70px,top=60px" );
+				function shareOnTwitter( utm_location ) {
+					window.open( "http://www.facebook.com/sharer.php?u=" + getShareUrl( utm_location, "twitter" ),
+						"share", "width=1100,height=500,left=70px,top=60px" );
 				}
-				function shareOnGplus( pos ) {
-					window.open( "https://plus.google.com/share?url=" + "http://${ website_host }" + "${ pratilipi.getPageUrl() }"
-					+ ( "${ pratilipi.getPageUrl() }".indexOf( '?' ) == -1 ? '?' : '&' )
-					+ "share=gplus" + ( pos != null ? encodeURIComponent( "&" ) + "pos=" + pos : "" ),
-					"share", "width=500,height=600,left=70px,top=60px" );
+				function shareOnGplus( utm_location ) {
+					window.open( "http://www.facebook.com/sharer.php?u=" + getShareUrl( utm_location, "gplus" ),
+						"share", "width=1100,height=500,left=70px,top=60px" );
 				}
 			</#if>
 		</script>
@@ -170,7 +178,7 @@
 				</a>
 			</div>
 		</#if>
-		<div class="parent-container">
+		<div style="padding-top: 0;" class="parent-container">
 			<div class="container">
 				<#if action == "index">
 					<#include "../element/pratilipi-reader-navigation.ftl">
