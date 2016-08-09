@@ -104,6 +104,9 @@
 			font-size: 12px;
 			font-weight: 400;
 		}
+		.button-outside-container {
+			display: none;
+		}
 		@media only screen and (max-width: 767px) {
 			.vertical-align {
 				height: 48px;
@@ -161,10 +164,14 @@
 			.sign-in-text, .menu-icon, .search-icon {
 				display: none;
 			}
-			.sign-in-button {
-				position: absolute !important;
+			.button-inside-container {
+				display: none;
+			}
+			.button-outside-container {
+				display: inline-block;
+				position: relative;
+				left: 12px;
 				line-height: 52px;
-				margin-left: 12px;
 			}
 		}
 		
@@ -261,7 +268,7 @@
 							</a>
 						</template>
 					</div>
-					<div class="sign-in-button">
+					<div class="sign-in-button button-inside-container">
 						<template is="dom-if" if="{{ isGuest }}">
 							<button class="btn btn-primary" on-click="_logIn">
 								<iron-icon icon="social:person"></iron-icon>
@@ -276,6 +283,21 @@
 							</a>
 						</template>
 					</div>
+				</div>
+				<div class="sign-in-button button-outside-container">
+					<template is="dom-if" if="{{ isGuest }}">
+						<button class="btn btn-primary" on-click="_logIn">
+							<iron-icon icon="social:person"></iron-icon>
+							<span>${ _strings.user_sign_in }</span>
+						</button>
+					</template>
+					<template is="dom-if" if="{{ !isGuest }}">
+						<a href="{{ profilePageUrl }}">
+							<img class="img-circle pratilipi-shadow" style="width: 32px; height: 32px;"
+								alt="{{ displayName }}" src="{{ profileImageUrl }}" />
+							<span>{{ displayName }}</span>
+						</a>
+					</template>
 				</div>
 			</div>
 		</div>
