@@ -146,7 +146,7 @@ write_type	=  প্রকার
 write_language	 =  ভাষা
 write_summary	 =  সংক্ষিপ্ত সারাংশ লিখুন
 write_create_new_content	=  নতুন রচনা সৃষ্টি
-write_on_desktop_only		= লেখার জন্য ডেস্কটপ থেকে লগ ইন করা আবশ্যক!
+write_on_desktop_only		= রচনা প্রকাশের  জন্য ডেস্কটপ থেকে লগ ইন করুন।সম্পর্কঃ bengali@pratilipi.com ফোন : (+91)9998023704
 
 # Common User Popups
 user_sign_in			= সাইন ইন করুন
