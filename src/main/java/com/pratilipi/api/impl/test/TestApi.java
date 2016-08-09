@@ -1,12 +1,14 @@
 package com.pratilipi.api.impl.test;
 
-import java.util.Date;
+import java.nio.charset.Charset;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.api.datastore.QueryResultIterator;
 import com.googlecode.objectify.ObjectifyService;
+import com.googlecode.objectify.cmd.Query;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -15,14 +17,21 @@ import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.Language;
+import com.pratilipi.common.type.PratilipiContentType;
+import com.pratilipi.common.util.PratilipiContentUtil;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.type.AppProperty;
+import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
+import com.pratilipi.data.type.BlobEntry;
+import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.gae.AccessTokenEntity;
+import com.pratilipi.data.type.gae.AuditLogEntity;
 import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.PageEntity;
 import com.pratilipi.data.type.gae.PratilipiEntity;
@@ -162,31 +171,18 @@ public class TestApi extends GenericApi {
 		}*/
 
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-
+		QueryResultIterator<AuditLogEntity> itr = ObjectifyService.ofy().load().type( AuditLogEntity.class )
+				.order( "-CREATION_DATE" )
+				.iterator();
 		
-		// Fetching AppProperty
-		String appPropertyId = "Api.Test";
-		AppProperty appProperty = dataAccessor.getAppProperty( appPropertyId );
-		if( appProperty == null ) {
-			appProperty = dataAccessor.newAppProperty( appPropertyId );
-			appProperty.setValue( new Date( 0 ) );
-		}
-
-		QueryResultIterator<AuthorEntity> iterator = ObjectifyService.ofy().load().type( AuthorEntity.class ).iterator();
-		while( iterator.hasNext() ) {
-			Author author = iterator.next();
-			if( author.hasCustomImage() )
+		while( itr.hasNext() ) {
+			AuditLog auditLog = itr.next();
+			if( auditLog.getAccessType() != AccessType.PRATILIPI_UPDATE )
 				continue;
-			if( DataAccessorFactory.getBlobAccessor().getBlob( "author-image/original/" + author.getId() ) == null )
-				continue;
-			logger.log( Level.INFO, "Setting custom cover for " + author.getId() );
-			author.setCustomImage( true );
-			ObjectifyService.ofy().save().entity( author );
-			try {
-				Thread.sleep( 10 );
-			} catch (InterruptedException e) { }
+			if( auditLog.getEventDataNew().contains( "6627432686682112" ) )
+				logger.log( Level.INFO, auditLog.getId() + "" );
 		}
+		
 		
 		return new GenericResponse();
 		
