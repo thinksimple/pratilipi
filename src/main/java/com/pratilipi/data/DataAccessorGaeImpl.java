@@ -115,6 +115,8 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		
 		ObjectifyService.register( NotificationEntity.class );
 		
+		ObjectifyService.register( I18nEntity.class );
+		
 	}
 	
 	
