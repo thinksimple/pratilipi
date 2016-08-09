@@ -146,7 +146,7 @@ write_type					= തരം തിരഞ്ഞെടുക്കൂ
 write_language				= ഭാഷ
 write_summary				= സംഗ്രഹം (നിര്‍ബന്ധമില്ല)
 write_create_new_content	= പുതിയ രചന സൃഷ്ടിക്കൂ
-write_on_desktop_only		= You have to login via desktop to write!
+write_on_desktop_only		= എഴുതാന്‍ താങ്കള്‍ കമ്പ്യൂട്ടര്‍ ഉപയോഗിച്ച് ലോഗിന്‍ ചെയ്യണം !
 
 # Common User Popups
 user_sign_in				= സൈനിന്‍
