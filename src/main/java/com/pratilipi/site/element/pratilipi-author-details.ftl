@@ -1,5 +1,6 @@
 <script>
 	$(document).ready(function (e) {
+	
 	    $('#uploadAuthorImage').on('submit',(function(e) {
 	        e.preventDefault();
 	        var formData = new FormData(this);
@@ -22,6 +23,15 @@
 	            }
 	        });
 	    }));
+	    
+	    $(".pratilipi-file-upload").on('click', function() {
+	    	$("#uploadAuthorImageInput").trigger('click');
+	    });
+	    
+	    $("#uploadAuthorImageInput").on('change', function() {
+			alert("Hello");
+			$("#uploadAuthorImage").submit();
+		});
 	});
 </script>
 <div class="pratilipi-block cover-image pratilipi-shadow secondary-500 box" style="background-image: url('http://0.ptlp.co/resource-all/home-page/pratilipi-banner.png')">
@@ -48,8 +58,8 @@
 	<div class="author-info text-center">
 		<div class="profile-image-parent">
 			<img style="margin: 0px;" class="img-responsive img-thumbnail img-circle profile-picture" src="${ author.getImageUrl(140) }">
-			<div class="pratilipi-file-upload">
-				<img style="width:20px;height:20px;margin-bottom: 7px;" src="http://0.ptlp.co/resource-all/icon/svg/camera-white.svg">
+			<div class="pratilipi-file-upload" >
+				<img style="width:25px;height:25px;margin-bottom: 7px;" src="http://0.ptlp.co/resource-all/icon/svg/camera-white.svg">
 			</div>
 		</div>
 		<div class="author-name">${ author.getName()!author.getNameEn() }</div>
