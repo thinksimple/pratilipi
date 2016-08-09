@@ -21,9 +21,11 @@
 			flex-flow: row;
 			height: 52px;
 			position: relative;
+			float: left;
 		}
 		.vertical-align * {
 			align-self: center;
+			position: relative;
 		}
 		.pratilipi-logo {
 			-webkit-flex-basis: 46px;
@@ -160,7 +162,7 @@
 				display: none;
 			}
 			.sign-in-button {
-				position: absolute;
+				position: absolute !important;
 				line-height: 52px;
 				margin-left: 12px;
 			}
@@ -254,7 +256,7 @@
 						</template>
 						<template is="dom-if" if="{{ !isGuest }}">
 							<a href="{{ profilePageUrl }}">
-								<img class="img-circle" style="width: 32px; height: 32px;"
+								<img class="img-circle pratilipi-shadow" style="width: 32px; height: 32px;"
 									alt="{{ displayName }}" src="{{ profileImageUrl }}" />
 							</a>
 						</template>
@@ -268,7 +270,7 @@
 						</template>
 						<template is="dom-if" if="{{ !isGuest }}">
 							<a href="{{ profilePageUrl }}">
-								<img class="img-circle" style="width: 32px; height: 32px;"
+								<img class="img-circle pratilipi-shadow" style="width: 32px; height: 32px;"
 									alt="{{ displayName }}" src="{{ profileImageUrl }}" />
 								<span>{{ displayName }}</span>
 							</a>

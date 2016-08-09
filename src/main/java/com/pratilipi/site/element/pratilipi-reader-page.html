@@ -147,6 +147,7 @@
 
 			_getShareUrl: function( utm_location, utm_source ) {
 				if( utm_location == null || utm_source == null ) return;
+				var width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 				return encodeURIComponent( 
 						"http://${ domain }" + this.pratilipi.pageUrl 
 						+ ( this.pratilipi.pageUrl.indexOf( '?' ) == -1 ? "?" : "&" )
