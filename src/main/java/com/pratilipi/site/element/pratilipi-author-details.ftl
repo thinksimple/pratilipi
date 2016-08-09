@@ -72,5 +72,5 @@
 		<input id="uploadAuthorImageInput" type="file" name="{{ author.getId()?c }}" accept="image/*">
 		<input type="submit">
 	</form>
-	<iframe src="demo_iframe.htm" style="visibility:hidden;display:none" name="image_upload"></iframe>
+	<iframe style="visibility:hidden;display:none" name="image_upload"></iframe>
 </div>
