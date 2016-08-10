@@ -3,19 +3,20 @@
 		paper-card.zero-results {
 			width: 100%; 
 			text-align: center; 
-			padding: 75px 15px; 
+			padding: 12px 16px;
 			margin-bottom: 10px;
+			margin-top: 6px;
 		}
 		iron-icon.zero-results-icon {
 			color: #545454; 
-			width: 100px; 
-			height: 100px;
+			width: 48px; 
+			height: 48px;
 		}
 		
-		h3.zero-results-h3 {
+		h6.zero-results-heading {
 			color: #545454; 
-			margin-top: 30px; 
-			line-height: 32px;
+			margin-top: 16px; 
+			line-height: 24px;
 		}
 		paper-spinner.pratilipi-spinner {
 			--paper-spinner-layer-1-color: #D0021B;
@@ -45,17 +46,20 @@
 					<div style="overflow: hidden">
 						<!-- In case of No results -->
 						<template is="dom-if" if="[[ zeroLibraryBooks ]]">
+							<div class="secondary-500 pratilipi-shadow pratilipi-card-grid-heading pratilipi-red">${ _strings.my_library }</div>
 							<paper-card class="zero-results">
 								<iron-icon icon="icons:info-outline" class="zero-results-icon"></iron-icon>
-								<h3 class="zero-results-h3">${ _strings.empty_library }</h3>
+								<h6 class="zero-results-heading">${ _strings.empty_library }</h6>
 							</paper-card>
 						</template>
-						<pratilipi-card-grid
-							hide-add-to-library-button
-							show-remove-from-library-button
-							heading='${ _strings.my_library }'
-							pratilipi-list='[[ pratilipiList ]]'
-							></pratilipi-card-grid>
+						<template is="dom-if" if="[[ !zeroLibraryBooks ]]">
+							<pratilipi-card-grid
+								hide-add-to-library-button
+								show-remove-from-library-button
+								heading='${ _strings.my_library }'
+								pratilipi-list='[[ pratilipiList ]]'
+								></pratilipi-card-grid>
+						</template>
 						<br class="pratilipi-break"/>
 						<!-- Spinner when Loading more books -->
 						<template is="dom-if" if="{{ isLoading }}">
