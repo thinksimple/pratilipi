@@ -24,7 +24,7 @@
 			<a style="display: block;" <#if user.isGuest == true>href="/login?ret=/notification"<#else>href="/notification?ret=${requestUrl}"</#if>>
 				<img style="width: 24px; height: 24px; margin: 10px auto;" src="http://0.ptlp.co/resource-all/icon/svg/bell-grey.svg" />
 				<#if user.isGuest == false>	
-					<span class="badge" style="position: absolute;right: 37%;top: 4%;background-color: #d0021b;">${ newNotificationCount }</span>
+					<span class="badge" style="position: absolute;right: 25%;top: 4%;background-color: #d0021b;">${ newNotificationCount }</span>
 				</#if>			
 			</a>
 		</div>				
