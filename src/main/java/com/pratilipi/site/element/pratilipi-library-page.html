@@ -44,7 +44,7 @@
 					<pratilipi-navigation-drawer with-backdrop navigation-list='[[ navigationList ]]'></pratilipi-navigation-drawer>
 					<div style="overflow: hidden">
 						<!-- In case of No results -->
-						<template is="dom-if" if="[[ zeroAuthorBooks ]]">
+						<template is="dom-if" if="[[ zeroLibraryBooks ]]">
 							<paper-card class="zero-results">
 								<iron-icon icon="icons:info-outline" class="zero-results-icon"></iron-icon>
 								<h3 class="zero-results-h3">${ _strings.empty_library }</h3>
@@ -122,7 +122,7 @@
 			},
 			
 			checkForZeroResults: function() {
-				this.zeroLibraryBooks = this.pratilipiList.length > 0 ? false : true;
+				this.set( 'zeroLibraryBooks', this.pratilipiList.length == 0 );
 			},
 			
 			attached: function() {
