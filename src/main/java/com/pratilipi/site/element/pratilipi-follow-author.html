@@ -81,7 +81,7 @@
 			<div class="follow-author-name contain-title ellipsed">
 				<a href="{{ pageUrl }}">{{ name }}</a>
 				<template is="dom-if" if="{{ showFollowCount }}">
-					<div class="follow-count">${ _strings.author_followers_count }&nbsp;-&nbsp;{{ followCount }}</div>
+					<div class="follow-count">{{ followCount }}&nbsp;${ _strings.author_followers_count }</div>
 				</template>
 			</div>
 			<template is="dom-if" if="{{ canFollow }}">
