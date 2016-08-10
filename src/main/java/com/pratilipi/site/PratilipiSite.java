@@ -295,7 +295,7 @@ public class PratilipiSite extends HttpServlet {
 				dataModel = new HashMap<String, Object>();
 				dataModel.put( "title", "Share" );
 				templateName = templateFilePrefix + ( basicMode ? "ShareBasic.ftl" : "Share.ftl" );
-			} else if( uri.equals( "/notification" ) ) {
+			} else if( uri.equals( "/notifications" ) ) {
 				dataModel = createDataModelForNotificationsPage( filterLanguage, basicMode );
 				templateName = templateFilePrefix + ( basicMode ? "NotificationBasic.ftl" : "Notification.ftl" );
 
