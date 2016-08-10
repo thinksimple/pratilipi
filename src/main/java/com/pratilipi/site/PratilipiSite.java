@@ -241,11 +241,8 @@ public class PratilipiSite extends HttpServlet {
 				
 			} else if( page != null && page.getType() == PageType.AUTHOR ) {
 				dataModel = createDataModelForAuthorPage( page.getPrimaryContentId(), basicMode, request );
-				if( SystemProperty.STAGE.equals( "gamma" ) )
-					templateName = templateFilePrefix + ( basicMode ? "AuthorPageBasic.ftl" : "AuthorPage.ftl" );
-				else
-					templateName = templateFilePrefix + ( basicMode ? "AuthorBasic.ftl" : "Author.ftl" );
-			
+				templateName = templateFilePrefix + ( basicMode ? "AuthorPageBasic.ftl" : "AuthorPage.ftl" );
+
 			} else if( page != null && page.getType() == PageType.EVENT ) {
 				dataModel = createDataModelForEventPage( page.getPrimaryContentId(), basicMode );
 				templateName = templateFilePrefix + ( basicMode ? "EventBasic.ftl" : "Event.ftl" );
@@ -731,134 +728,104 @@ public class PratilipiSite extends HttpServlet {
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		Gson gson = new Gson();
 
-		if( SystemProperty.STAGE.equals( "gamma" ) ) {
+		AuthorApi.GetRequest authorApiGetRequest = new AuthorApi.GetRequest();
+		authorApiGetRequest.setAuthorId( authorId );
+		AuthorApi.Response authorResponse = ApiRegistry
+				.getApi( AuthorApi.class )
+				.get( authorApiGetRequest );
+		dataModel.put( "title", createAuthorPageTitle( authorResponse ) );
+		if( basicMode )
+			dataModel.put( "author", authorResponse );
+		else
+			dataModel.put( "authorJson", gson.toJson( authorResponse ) );
 
-			AuthorApi.GetRequest authorApiGetRequest = new AuthorApi.GetRequest();
-			authorApiGetRequest.setAuthorId( authorId );
-			AuthorApi.Response authorResponse = ApiRegistry
-					.getApi( AuthorApi.class )
-					.get( authorApiGetRequest );
-			dataModel.put( "title", createAuthorPageTitle( authorResponse ) );
-			if( basicMode )
-				dataModel.put( "author", authorResponse );
-			else
-				dataModel.put( "authorJson", gson.toJson( authorResponse ) );
+		String action = request.getParameter( "action" ) != null ? request.getParameter( "action" ) : "author_page";
+		dataModel.put( "action", action );
 
-			String action = request.getParameter( "action" ) != null ? request.getParameter( "action" ) : "author_page";
-			dataModel.put( "action", action );
+		if( basicMode && action.equals( "list_contents" ) ) {
 
-			if( basicMode && action.equals( "list_contents" ) ) {
+			Integer pageCurr = request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() ) != null
+							? Integer.parseInt( request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() ) )
+							: 1;
 
-				Integer pageCurr = request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() ) != null
-								? Integer.parseInt( request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() ) )
-								: 1;
+			PratilipiState pratilipiState = request.getParameter( RequestParameter.PRATILIPI_STATE.getName() ) != null
+										? PratilipiState.valueOf( request.getParameter( RequestParameter.PRATILIPI_STATE.getName() ) )
+										: PratilipiState.PUBLISHED;
 
-				PratilipiState pratilipiState = request.getParameter( RequestParameter.PRATILIPI_STATE.getName() ) != null
-											? PratilipiState.valueOf( request.getParameter( RequestParameter.PRATILIPI_STATE.getName() ) )
-											: PratilipiState.PUBLISHED;
-
-				Integer resultCount = 10;
-				PratilipiListApi.GetRequest pratilipiListRequest = new PratilipiListApi.GetRequest();
-				pratilipiListRequest.setAuthorId( authorId );
-				pratilipiListRequest.setState( pratilipiState );
-				pratilipiListRequest.setResultCount( resultCount );
-				pratilipiListRequest.setOffset( ( pageCurr - 1 ) * resultCount );
-				PratilipiListApi.Response pratilipiListResponse = ApiRegistry
-									.getApi( PratilipiListApi.class )
-									.get( pratilipiListRequest );
-
-				dataModel.put( "state", pratilipiState.toString() );
-				dataModel.put( "pratilipiList", pratilipiListResponse.getPratilipiList() );
-				dataModel.put( "pratilipiListPageCurr", pageCurr );
-				Integer pageMax = pratilipiListResponse.getNumberFound() != null ?
-						(int) Math.ceil( ( (double) pratilipiListResponse.getNumberFound() ) / resultCount ) : 1;
-				dataModel.put( "pratilipiListPageMax", pageMax );
-
-				return dataModel;
-
-			}
-
-			UserAuthorFollowApi.GetRequest getRequest = new UserAuthorFollowApi.GetRequest();
-			getRequest.setAuthorId( authorId );
-			UserAuthorFollowApi.Response userAuthorResponse = ApiRegistry
-					.getApi( UserAuthorFollowApi.class )
-					.get( getRequest );
-
-			Integer followResultCount = basicMode ? 3 : 20;
-			UserAuthorFollowListApi.GetRequest followersListRequest = new UserAuthorFollowListApi.GetRequest();
-			followersListRequest.setAuthorId( authorId );
-			followersListRequest.setResultCount( followResultCount );
-			UserAuthorFollowListApi.Response followersList = ApiRegistry
-					.getApi( UserAuthorFollowListApi.class )
-					.get( followersListRequest );
-
-			UserAuthorFollowListApi.GetRequest followingListRequest = new UserAuthorFollowListApi.GetRequest();
-			followingListRequest.setUserId( authorResponse.getUser().getId() );
-			followingListRequest.setResultCount( followResultCount );
-			UserAuthorFollowListApi.Response followingList= ApiRegistry
-					.getApi( UserAuthorFollowListApi.class )
-					.get( followingListRequest );
-
-			Integer resultCount = basicMode ? 3 : 12;
-			PratilipiListApi.GetRequest publishedPratilipiListRequest = new PratilipiListApi.GetRequest();
-			publishedPratilipiListRequest.setAuthorId( authorId );
-			publishedPratilipiListRequest.setState( PratilipiState.PUBLISHED );
-			publishedPratilipiListRequest.setResultCount( resultCount );
-			PratilipiListApi.Response publishedPratilipiListResponse = ApiRegistry
-					.getApi( PratilipiListApi.class )
-					.get( publishedPratilipiListRequest );
-
-			if( basicMode ) {
-				dataModel.put( "userAuthor", userAuthorResponse );
-				dataModel.put( "followersList", followersList );
-				dataModel.put( "followingList", followingList );
-				dataModel.put( "publishedPratilipiList", publishedPratilipiListResponse.getPratilipiList() );
-			} else {
-				dataModel.put( "userAuthorJson", gson.toJson( userAuthorResponse ) );
-				dataModel.put( "followersListJson", gson.toJson( followersList ) );
-				dataModel.put( "followingListJson", gson.toJson( followingList ) );
-				dataModel.put( "publishedPratilipiListObjectJson", gson.toJson( publishedPratilipiListResponse ) );
-			}
-
-			if( basicMode && authorResponse.hasAccessToUpdate() ) {
-				PratilipiListApi.GetRequest draftedPratilipiListRequest = new PratilipiListApi.GetRequest();
-				draftedPratilipiListRequest.setAuthorId( authorId );
-				draftedPratilipiListRequest.setState( PratilipiState.DRAFTED );
-				draftedPratilipiListRequest.setResultCount( resultCount );
-				PratilipiListApi.Response draftedPratilipiListResponse = ApiRegistry
-						.getApi( PratilipiListApi.class )
-						.get( draftedPratilipiListRequest );
-				dataModel.put( "draftedPratilipiList", draftedPratilipiListResponse.getPratilipiList() );
-			}
-
-		} else { // prod 
-			AuthorApi.GetRequest authorApiGetRequest = new AuthorApi.GetRequest();
-			authorApiGetRequest.setAuthorId( authorId );
-			AuthorApi.Response authorResponse = ApiRegistry
-					.getApi( AuthorApi.class )
-					.get( authorApiGetRequest );
-
+			Integer resultCount = 10;
 			PratilipiListApi.GetRequest pratilipiListRequest = new PratilipiListApi.GetRequest();
 			pratilipiListRequest.setAuthorId( authorId );
-			pratilipiListRequest.setState( PratilipiState.PUBLISHED );
+			pratilipiListRequest.setState( pratilipiState );
+			pratilipiListRequest.setResultCount( resultCount );
+			pratilipiListRequest.setOffset( ( pageCurr - 1 ) * resultCount );
 			PratilipiListApi.Response pratilipiListResponse = ApiRegistry
-					.getApi( PratilipiListApi.class )
-					.get( pratilipiListRequest );
+								.getApi( PratilipiListApi.class )
+								.get( pratilipiListRequest );
 
-			dataModel.put( "title", createAuthorPageTitle( authorResponse ) );
-			if( basicMode ) {
-				dataModel.put( "author", authorResponse );
-				dataModel.put( "publishedPratilipiList", pratilipiListResponse.getPratilipiList() );
-				if( pratilipiListResponse.getPratilipiList().size() == 20 && pratilipiListResponse.getCursor() != null )
-					dataModel.put( "publishedPratilipiListSearchQuery", "authorId=" + authorId + "&state=" + PratilipiState.PUBLISHED );
-			} else {
-				dataModel.put( "authorJson", gson.toJson( authorResponse ) );
-				dataModel.put( "publishedPratilipiListJson", gson.toJson( pratilipiListResponse.getPratilipiList() ) );
-				dataModel.put( "publishedPratilipiListFilterJson", gson.toJson( pratilipiListRequest ) );
-				dataModel.put( "publishedPratilipiListCursor", pratilipiListResponse.getCursor() );
-			}
+			dataModel.put( "state", pratilipiState.toString() );
+			dataModel.put( "pratilipiList", pratilipiListResponse.getPratilipiList() );
+			dataModel.put( "pratilipiListPageCurr", pageCurr );
+			Integer pageMax = pratilipiListResponse.getNumberFound() != null ?
+					(int) Math.ceil( ( (double) pratilipiListResponse.getNumberFound() ) / resultCount ) : 1;
+			dataModel.put( "pratilipiListPageMax", pageMax );
+
+			return dataModel;
+
 		}
-		
+
+		UserAuthorFollowApi.GetRequest getRequest = new UserAuthorFollowApi.GetRequest();
+		getRequest.setAuthorId( authorId );
+		UserAuthorFollowApi.Response userAuthorResponse = ApiRegistry
+				.getApi( UserAuthorFollowApi.class )
+				.get( getRequest );
+
+		Integer followResultCount = basicMode ? 3 : 20;
+		UserAuthorFollowListApi.GetRequest followersListRequest = new UserAuthorFollowListApi.GetRequest();
+		followersListRequest.setAuthorId( authorId );
+		followersListRequest.setResultCount( followResultCount );
+		UserAuthorFollowListApi.Response followersList = ApiRegistry
+				.getApi( UserAuthorFollowListApi.class )
+				.get( followersListRequest );
+
+		UserAuthorFollowListApi.GetRequest followingListRequest = new UserAuthorFollowListApi.GetRequest();
+		followingListRequest.setUserId( authorResponse.getUser().getId() );
+		followingListRequest.setResultCount( followResultCount );
+		UserAuthorFollowListApi.Response followingList= ApiRegistry
+				.getApi( UserAuthorFollowListApi.class )
+				.get( followingListRequest );
+
+		Integer resultCount = basicMode ? 3 : 12;
+		PratilipiListApi.GetRequest publishedPratilipiListRequest = new PratilipiListApi.GetRequest();
+		publishedPratilipiListRequest.setAuthorId( authorId );
+		publishedPratilipiListRequest.setState( PratilipiState.PUBLISHED );
+		publishedPratilipiListRequest.setResultCount( resultCount );
+		PratilipiListApi.Response publishedPratilipiListResponse = ApiRegistry
+				.getApi( PratilipiListApi.class )
+				.get( publishedPratilipiListRequest );
+
+		if( basicMode ) {
+			dataModel.put( "userAuthor", userAuthorResponse );
+			dataModel.put( "followersList", followersList );
+			dataModel.put( "followingList", followingList );
+			dataModel.put( "publishedPratilipiList", publishedPratilipiListResponse.getPratilipiList() );
+		} else {
+			dataModel.put( "userAuthorJson", gson.toJson( userAuthorResponse ) );
+			dataModel.put( "followersListJson", gson.toJson( followersList ) );
+			dataModel.put( "followingListJson", gson.toJson( followingList ) );
+			dataModel.put( "publishedPratilipiListObjectJson", gson.toJson( publishedPratilipiListResponse ) );
+		}
+
+		if( basicMode && authorResponse.hasAccessToUpdate() ) {
+			PratilipiListApi.GetRequest draftedPratilipiListRequest = new PratilipiListApi.GetRequest();
+			draftedPratilipiListRequest.setAuthorId( authorId );
+			draftedPratilipiListRequest.setState( PratilipiState.DRAFTED );
+			draftedPratilipiListRequest.setResultCount( resultCount );
+			PratilipiListApi.Response draftedPratilipiListResponse = ApiRegistry
+					.getApi( PratilipiListApi.class )
+					.get( draftedPratilipiListRequest );
+			dataModel.put( "draftedPratilipiList", draftedPratilipiListResponse.getPratilipiList() );
+		}
+
 		return dataModel;
 		
 	}
