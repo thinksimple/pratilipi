@@ -23,7 +23,7 @@
 		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" style="position: relative;">
 			<a style="display: block;" <#if user.isGuest == true>href="/login?ret=/notification"<#else>href="/notification?ret=${requestUrl}"</#if>>
 				<img style="width: 24px; height: 24px; margin: 10px auto;" src="http://0.ptlp.co/resource-all/icon/svg/bell-grey.svg" />
-				<#if user.isGuest == true>	
+				<#if user.isGuest == false>	
 					<span class="badge" style="position: absolute;right: 37%;top: 4%;background-color: #d0021b;">${ newNotificationCount }</span>
 				</#if>			
 			</a>
@@ -31,7 +31,7 @@
 		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
 			<a style="display: block;" <#if user.isGuest == true>href="/login?ret=${ requestUrl }"<#else>href="${ user.getProfilePageUrl() }"</#if>>
 				<img style="width: 24px; height: 24px; margin: 10px auto;" 
-					<#if user.isGuest == false>src="http://0.ptlp.co/resource-all/icon/svg/user-header-grey.svg"<#else>src="${ user.getProfileImageUrl() }"</#if> />
+					<#if user.isGuest == true>src="http://0.ptlp.co/resource-all/icon/svg/user-header-grey.svg"<#else>src="${ user.getProfileImageUrl() }"</#if> />
 			</a>
 		</div>
 	</div>
