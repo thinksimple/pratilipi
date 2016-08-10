@@ -27,7 +27,7 @@
 						</div>
 						<div class="align-text-center">
 							<h5 class="pratilipi-red pratilipi-bold pratilipi-no-margin">
-								${ _strings.author_following }
+								${ _strings.author_following_heading }
 							</h5>
 							<p class="works-number align-text-center">${ followingList.getNumberFound() } ${ _strings.author_follow_members }</p>					
 						</div>					

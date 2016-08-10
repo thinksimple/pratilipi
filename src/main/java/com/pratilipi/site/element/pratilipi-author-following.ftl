@@ -3,7 +3,7 @@
 		<#assign followingUrl = "/following?uId=" + author.getUser().getId()?c + "&ret=" + requestUrl >
 		<div class="pull-left">
 			<a href="${ followingUrl }"><h5 class="pratilipi-red pratilipi-no-margin">
-				${ _strings.author_following }
+				${ _strings.author_following_heading }
 			</h5></a>
 			<a href="${ followingUrl }"><p class="works-number">${ followingList.getNumberFound() } ${ _strings.author_follow_members }</p></a>
 		</div>

@@ -83,7 +83,7 @@
 					</button>
 				</#if>
 			<#elseif ( ( author.getUser().getId()?? ) && ( user.getId() == author.getUser().getId() ) ) >
-				<p class="followers-text"> ${ author.getFollowCount() } ${_strings.author_followers } </p>
+				<p class="followers-text" style="white-space: nowrap;"> ${_strings.author_followers_count } | ${ author.getFollowCount() } </p>
 			</#if>
 		<#else>
 			<a class="pratilipi-red-button" href="/login?ret=${ author.getPageUrl() }">

@@ -2,7 +2,7 @@
 	<#assign followersUrl = "/followers?aId=" + author.getId()?c + "&ret=" + requestUrl >	
 	<div class="pull-left">
 		<a href="${ followersUrl }"><h5 class="pratilipi-red pratilipi-no-margin">
-			 ${ _strings.author_followers }
+			 ${ _strings.author_followers_heading }
 		</h5></a>
 		<a href="${ followersUrl }"><p class="works-number">${ followersList.getNumberFound() } ${ _strings.author_follow_members }</p></a>
 	</div>
