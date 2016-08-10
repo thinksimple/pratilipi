@@ -1,6 +1,6 @@
 # Do NOT edit
 pratilipi					= પ્રતિલિપિ
-home_page_title				= વાંચો ગુજરાતી વાર્તાઓ, કવિતાઓ, નવલકથાઓ, પુસ્તકો અને બીજું ઘણું
+home_page_title				= વાંચો ગુજરાતી વાર્તાઓ, કવિતાઓ, નવલકથાઓ, સામયિકો અને અન્ય સાહિત્ય 
 facebook_page				= https://www.facebook.com/pratilipiGujarati/
 twitter_page				= https://twitter.com/TeamPratilipi
 googleplus_page				= https://plus.google.com/+PratilipiTeam
@@ -123,13 +123,13 @@ comment_reply_to_comment				= જવાબ આપો
 comment_number_of_comments_singular		= જવાબો
 comment_number_of_comments_plural		= જવાબો
 comment_reply_comment_help				= જવાબો
-comment_add_comment						= કોમેન્ટ લખો
-comment_edit_comment					= કોમેન્ટ સુધારો
-comment_delete_comment					= કોમેન્ટ હટાવો 
-comment_confirm_delete_comment			= શું ખરેખર તમારે આ કોમેન્ટ રદ કરવા માગો છો?
+comment_add_comment						=  કમેન્ટ લખો
+comment_edit_comment					= કમેન્ટ  સુધારો
+comment_delete_comment					= કમેન્ટ  હટાવો 
+comment_confirm_delete_comment			= શું ખરેખર તમે કમેન્ટ  રદ કરવા માંગો છો?
 comment_confirm_delete_comment_yes		= હા 
 comment_confirm_delete_comment_no		= ના 
-comment_restore_comment					= કોમેન્ટ પુનઃસ્થાપિત કરો 
+comment_restore_comment					= કમેન્ટ  પુનઃસ્થાપિત કરો 
 comment_submit_comment					= સબમિટ કરો
 comment_cancel_comment					= રદ કરો 
 
@@ -163,11 +163,11 @@ user_sign_up_for_pratilipi	= પ્રતિલિપિ પર નવું અ
 user_sign_up_with_facebook	= ફેસબુક સાથે સાઈન અપ 
 user_forgot_password		= પાસવર્ડ યાદ નથી?
 user_reset_password		= નવો પાસવર્ડ બનાવો 
-user_reset_password_help	= આ સાઈટ પર રજીસ્ટર કરવા માટે ઉપયોગમાં લીધેલ ઈ-મેલ આઈડી પ્રદાન કરો,  જ્યાં પાસવર્ડ રીસેટ કરવાનો ઈ-મેલ આપને પ્રાપ્ત થશે.   
+user_reset_password_help	= આ સાઈટ પર રજીસ્ટર કરવા માટે ઉપયોગમાં લીધેલ ઈ- મેઈલ  આઈડી પ્રદાન કરો,  જ્યાં પાસવર્ડ રીસેટ કરવાનો ઈ- મેઈલ આપને પ્રાપ્ત થશે.
 user_current_password		= વર્તમાન પાસવર્ડ 
 user_new_password		= નવો પાસવર્ડ
 user_full_name			= પૂરું નામ લખો
-user_email			= ઈ-મેલ આઈડી પ્રદાન કરો  
+user_email			= ઈ- મેઈલ આઈડી પ્રદાન કરો  
 user_email_not_available	= ઈ-મેઈલ દર્જ થયેલ નથી!
 user_phone					= ફોન 
 user_phone_not_available	= ફોન નંબર દર્જ થયેલ નથી!
@@ -177,7 +177,7 @@ user_my_profile		= મારી પ્રોફાઈલ
 user_my_account		= સેટિંગ  
 user_is_new			= ઉપયોગકર્તા નવા છે -	
 user_is_registered		= ઉપયોગકર્તા અગાઉથી અકાઉન્ટ ધરાવે છે - 
-user_email_verification		= આપને મોકલેલ ઈ-મેલની ચકાસણી કરો 		
+user_email_verification		= આપને મોકલેલ ની ઈ- મેઈલની  ચકાસણી કરો 		
 user_require_access			= આ પ્રકિયા માટે સાઈટ પર લોગ-ઇન કરો!
 user_no_followers			= અત્યારે આપની ફોલો સંખ્યા શૂન્ય છે! 
 user_login_to_view_followers = ફોલોઅર્સ વિશે જાણવા માટે લોગ ઇન કરો!
@@ -188,8 +188,8 @@ user_login_to_view_notifications = સૂચનાઓ જોવા  માટે
 
 # My Account popup
 edit_account_heading		= પ્રોફાઈલમાં બદલાવ ઈચ્છો છો? 
-edit_account_verify_email	= ઈ-મેલની ચકાસણી કરો 	
-edit_account_email_verified	= ઈ-મેલની ચકાસણી થઇ ગઈ છે 
+edit_account_verify_email	= ઈ- મેઈલ ની ચકાસણી કરો 	
+edit_account_email_verified	= ઈ- મેઈલ ની ચકાસણી થઇ ગઈ છે 
 edit_account_change_password=  પાસવર્ડ બદલો 
 
 # Footer
@@ -239,7 +239,7 @@ updated_review						= સફળ !
 server_error_message				= ટેકનીકલ ખામી હોવાથી ફરી પ્રયત્ન કરો
 write_please_login_desktop			= રચના પ્રકાશિત કરવા માટે કમ્પ્યુટરથી લોગ ઇન કરો
 could_not_connect_server			= સર્વરથી જોડાવામાં અસફળ!
-review_authorisation_error			= આપ આ રચના પર ટીપ્પણી નહી આપી શકો!
+review_authorisation_error			= આપ આ રચના પર ટિપ્પણી  નહી આપી શકો!
 logout_failed						= લોગ આઉટ અસફળ! ફરીથી પ્રયત્ન કરો!
 
 # Author Edit Popup
@@ -302,10 +302,10 @@ month_dec	= ડીસેમ્બર
 library				= લાઈબ્રેરી 
 my_library			= મારી લાઈબ્રેરી 
 add_to_library		= લાઈબ્રેરીમાં ઉમેરો
-added_to_library	= સફળતાપૂર્વક રચના લાયબ્રેરીમાં ઉમેરાઈ ગઈ છે!
+added_to_library	= સફળતાપૂર્વક રચના લાઈબ્રેરીમાં ઉમેરાઈ ગઈ  છે!
 remove_from_library	= લાઈબ્રેરીમાંથી કાઢી નાખો
 removed_from_library = લાઈબ્રેરીમાંથી રચના રદ થઇ ગઈ છે
-empty_library		= તમારી લાઈબ્રેરીમાં પુસ્તકો નથી, રચનાઓ માંથી ઉમેરો
+empty_library		=  તમારી લાઈબ્રેરીમાં પુસ્તકો નથી, રચનાઓમાંથી ઉમેરો 
 library_content_in_library	= લાઈબ્રેરીમાં ઉમેરો 
 
 # Reader
