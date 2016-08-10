@@ -50,13 +50,15 @@ author_biography		                        = ಪರಿಚಯ
 author_location				                      = ಸ್ಥಳ 
 author_date_of_birth		                    = ಜನ್ಮ ದಿನಾಂಕ 
 author_follow					                      = ಹಿಂಬಾಲಿಸಿ 
-author_unfollow				                      = ಹಿಂಬಾಲಿಸಬೇಡಿ 
-author_followers				                    = ಹಿಂಬಾಲಕರು 
-author_no_followers				                  = ಕ್ಷಮಿಸಿ! ಈ ಲೇಖಕರಿಗೆ ಇನ್ನೂ ಯಾವ ಹಿಂಬಾಲಕರೂ ಇಲ್ಲ
-author_following				                    = ಹಿಂಬಾಲಿಸುತ್ತಿದ್ದಾರೆ
+author_unfollow				                      = ಹಿಂಬಾಲಿಸಬೇಡಿ
+author_followers_heading		= ಹಿಂಬಾಲಕರು
+author_followers_count			= ಹಿಂಬಾಲಕರು
+author_no_followers	           = ಕ್ಷಮಿಸಿ! ಈ ಲೇಖಕರಿಗೆ ಇನ್ನೂ ಯಾವ ಹಿಂಬಾಲಕರೂ ಇಲ್ಲ
+author_following_heading		= ಹಿಂಬಾಲಿಸುತ್ತಿದ್ದಾರೆ
+author_following_count			= ಹಿಂಬಾಲಿಸುತ್ತಿದ್ದಾರೆ 
 author_no_following			                  	= ಕ್ಷಮಿಸಿ! ಈ ಲೇಖಕರು ಯಾರನ್ನೂ ಹಿಂಬಾಲಿಸುತ್ತಿಲ್ಲ!
 author_follow_members			                  = ಸದಸ್ಯರು 
-author_cannot_follow_yourself	= Yourself    = 
+author_cannot_follow_yourself	= Yourself  
 author_settings_require_first_name          = ದಯವಿಟ್ಟು ನಿಮ್ಮ ಮೊದಲ ಹೆಸರನ್ನು ನಮೂದಿಸಿ!
 author_settings_require_language            = ದಯವಿಟ್ಟು ನಿಮ್ಮ ಭಾಷೆಯನ್ನು ನಮೂದಿಸಿ!
 
@@ -147,6 +149,8 @@ write_language				     = ಭಾಷೆ
 write_summary				       = ಸಾರಾಂಶ (ಐಚ್ಛಿಕ)
 write_create_new_content	 = ಹೊಸ ಬರಹ  ಸೃಷ್ಟಿಸಿ
 write_on_desktop_only		= ನಿಮ್ಮ ಬರಹವನ್ನು ಪ್ರಕಟಿಸಲು ನೀವು ಡೆಸ್ಕ್ಟಾಪ್ ಮೂಲಕ ಲಾಗಿನ್ ಆಗಿಬೇಕು. ಹಾಗೆಯೇ, ನೀವು ನಮ್ಮನ್ನೂ ಸಂಪರ್ಕಿಸಬಹುದು - kannada@pratilipi.com / 9845990788
+write_fill_title			= Please fill in the Title.
+write_select_type			= Please select the type.
 
 # Common User Popups  
 user_sign_in				           = ಸೈನ್ ಇನ್ ಆಗಿರಿ 
@@ -215,8 +219,11 @@ menu						     = ಮೆನು
 back					       = ಹಿಂದೆ ಹೋಗಿ 
 load_more_contents	 = ಇನ್ನಷ್ಟು ವಿಷಯಗಳನ್ನು ಲೋಡ್ ಮಾಡಿ 
 view_more					   = ಇನ್ನೂ ಹೆಚ್ಚು ತೋರಿಸಿ 
+fill_in_the_details			= Please fill in the details!
+accept_terms				= Please accept to our terms!
 
 # Success Messages
+success_generic_message				= Success!
 password_reset_request_success		       = ನಿಮ್ಮ ಇ-ಮೇಲ್ ಐಡಿಗೆ ಒಂದು ಮೇಲ್ ಕಳುಹಿಸಲಾಗಿರುತ್ತದೆ. 
 user_login_success					             = ಯಶಸ್ವಿ! 
 user_register_success				             = ಯಶಸ್ವಿ! 
@@ -231,6 +238,9 @@ updated_review						               = ಯಶಸ್ವಿ!
 #Failure Messages
 server_error_message				             = ಏನೋ ಸಮಸ್ಯೆ ಆಗಿದೆ! ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ!
 write_please_login_desktop			         = ಡೆಸ್ಕ್ಟಾಪಿನಲ್ಲಿ ಲಾಗಿನ್ ಆಗುವ ಮೂಲಕ ನೀವು ಬರಹಗಳನ್ನು ಪ್ರಕಟಿಸಬಹುದು 
+could_not_connect_server			= Could not connect to server !
+review_authorisation_error			= Sorry! You are not authorized to review for this content!
+logout_failed						= Logout failed! Please try again!
 
 # Author Edit Popup
 edit_author_heading				       = ಲೇಖಕರ ಮಾಹಿತಿಯನ್ನು ಎಡಿಟ್ ಮಾಡಿ 

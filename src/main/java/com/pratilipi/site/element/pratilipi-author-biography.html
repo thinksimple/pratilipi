@@ -112,10 +112,12 @@
 							<td>{{ location }}</td>
 						</tr>
 					</template>
-					<#-- <tr>
-						<th>${ _strings.author_date_of_birth }</th>
-						<td>01/01/1970</td>
-					</tr> -->
+					<template is="dom-if" if="{{ hasDateOfBirth }}">
+						<tr>
+							<th>${ _strings.author_date_of_birth }</th>
+							<td>{{ dateOfBirth }}</td>
+						</tr>
+					</template>
 				</table>
 				
 				<div class="author-summary-container" id="author-summary-container">
@@ -153,6 +155,8 @@
 				this.set( 'registrationDate', this.author == null ? null : convertDate( this.author.registrationDateMillis ) );
 				this.set( 'hasLocation', this.author.location != null );
 				this.set( 'location', this.author.location );
+				this.set( 'hasDateOfBirth', this.author.dateOfBirth != null );
+				this.set( 'dateOfBirth', this.author.dateOfBirth );
 			},
 
 			attached: function() {

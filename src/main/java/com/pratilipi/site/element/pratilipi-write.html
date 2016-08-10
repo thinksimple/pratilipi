@@ -258,12 +258,12 @@
 			onSubmit: function( event ) {
 				
 				if( this.title == null || this.title.trim() == "" ) {
-					this.message = "Please fill in the Title.";
+					this.message = "${ _strings.write_fill_title }";
 					return;
 				}
 				
 				if( this.type == null ) {
-					this.message = "Please select the type.";
+					this.message = "${ _strings.write_select_type }";
 					return;
 				}
 
@@ -332,7 +332,7 @@
 				if( event.detail.request.xhr.status === 400 || event.detail.request.xhr.status === 401 || event.detail.request.xhr.status === 500 && event.detail.request.xhr.response.message != null )
 					this.message = event.detail.request.xhr.response.message;
 				else
-					this.message = "Some Error occurred! Please try Again."
+					this.message = "${ _strings.server_error_message }"
 			}
  			
 		});

@@ -30,7 +30,7 @@
 		},
 		
 		alert: function( message, isSuccessMessage, timeout ) {
-			this.message = message != null ? message : "Success!";
+			this.message = message != null ? message : "${ _strings.success_generic_message }";
 			this.isSuccessMessage = isSuccessMessage != null ? isSuccessMessage : true;
 			this.timeout = timeout != null ? timeout : 2500;
 			this.open();

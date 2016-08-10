@@ -99,16 +99,16 @@
 				this.message = null;
 				
 				if( this.params.name == null || this.params.email == null || this.params.password == null || this.params.name.trim() == "" || this.params.email.trim() == "" ) {
-					this.message = "Please fill in the details!";
+					this.message = "${ _strings.fill_in_the_details }";
 					return;
 				}
 
 				if( !document.getElementById( "acceptTerms" ).checked ) {
-					this.message = "Please accept to our terms!";
+					this.message = "${ _strings.accept_terms }";
 					return;
 				}
 				
-				this.message = "Working ...";
+				this.message = "${ _strings.working }";
 				jQuery( '#registerButton' ).prop( 'disabled', true );
 				
 				this.$.AjaxPost.body = jQuery.param( this.params );
@@ -117,7 +117,7 @@
 			
 			_handleAjaxPostResponse: function( event ) {
 				if( event.detail.xhr.status == 0 ) {
-					this.message = "Could not connect to server !";
+					this.message = "${ _strings.could_not_connect_server }";
 				} else {
 					this.message = "${ _strings.user_register_success }";
 					this.async( function() {

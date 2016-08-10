@@ -51,9 +51,11 @@ author_location					= ప్రాంతం
 author_date_of_birth			= పుట్టినతేదీ
 author_follow					= అనుసరించండి
 author_unfollow					= అనుసరించవద్దు
-author_followers				= అనుచరులు
+author_followers_heading		= అనుచరులు
+author_followers_count			= అనుచరులు
 author_no_followers				= క్షమించండి.. ఈ రచయితను ఎవరూ అనుసరించడం లేదు
-author_following				= అనుసరిస్తున్నారు
+author_following_heading		= అనుసరిస్తున్నారు
+author_following_count			= అనుసరిస్తున్నారు
 author_no_following				= క్షమించండి.. ఈ రచయిత ఎవరినీ అనుసరించడం లేదు
 author_follow_members			= సభ్యులు
 author_cannot_follow_yourself	= మీరు
@@ -147,6 +149,8 @@ write_language				= భాష
 write_summary				= సంగ్రహం (ఆప్షనల్)
 write_create_new_content	= కొత్త రచనను ప్రారంభించండి
 write_on_desktop_only		= మీరు మీ రచనలను ప్రచురించడానికి డెస్క్‌టాప్ ద్వారా లాగిన్ అవ్వండి లేదా telugu@pratilipi.com/9247810639 లో సంప్రదించండి
+write_fill_title			= Please fill in the Title.
+write_select_type			= Please select the type.
 
 # Common User Popups
 user_sign_in				= సైన్ ఇన్
@@ -215,8 +219,11 @@ menu						= పట్టిక
 back						= వెనక్కి
 load_more_contents			= మరిన్ని రచనలు లోడ్ చేయండి
 view_more					= మరింత సమాచారం కోసం..
+fill_in_the_details			= Please fill in the details!
+accept_terms				= Please accept to our terms!
 
 # Success Messages
+success_generic_message				= Success!
 password_reset_request_success		= మీ ఈమెయిల్ ఐడీకి మెయిల్ పంపించడం జరిగింది! 
 user_login_success					= విజయవంతంగా లాగిన్ అయ్యారు! 
 user_register_success				= విజయవంతంగా సభ్యత్వాన్ని పొందారు!
@@ -231,6 +238,9 @@ updated_review						= విజయవంతంగా పూర్తయ్యి
 #Failure Messages
 server_error_message				= 'సాంకేతికపరమైన సమస్య.. మళ్లీ ప్రయత్నించండి
 write_please_login_desktop			= మీరు డెస్క్ టాప్ పై లాగిన్ అవ్వడం ద్వారా రచనలు ప్రచురించుకోవచ్చు 
+could_not_connect_server			= Could not connect to server !
+review_authorisation_error			= Sorry! You are not authorized to review for this content!
+logout_failed						= Logout failed! Please try again!
 
 # Author Edit Popup
 edit_author_heading				= రచయిత సమాచారాన్ని ఎడిట్ చేయండి	

@@ -50,10 +50,12 @@ author_biography				= परिचय
 author_location					= स्थान
 author_date_of_birth			= जन्म तिथि
 author_follow					= फ़ॉलो
-author_unfollow					= अनफ़ॉलो    
-author_followers				= अनुयायी 
+author_unfollow					= अनफ़ॉलो
+author_followers_heading		= अनुयायी
+author_followers_count			= अनुयायी
 author_no_followers				= अनुयायी संख्या शून्य
-author_following				= अनुसरण 
+author_following_heading		= अनुसरण
+author_following_count			= अनुसरण    
 author_no_following				= अनुसरण संख्या शून्य
 author_follow_members			= सदस्य 
 author_cannot_follow_yourself	= आपके बारे में 
@@ -147,6 +149,8 @@ write_language				= भाषा
 write_summary				= संक्षिप्त सारांश दर्ज करें 
 write_create_new_content	= आगे बढ़ीए
 write_on_desktop_only		= रचना प्रकाशन के लिए डेस्कटॉप से लॉग इन करें। संपर्क : hindi@pratilipi.com फ़ोन: ९७८९३१६७०० 
+write_fill_title			= Please fill in the Title.
+write_select_type			= Please select the type.
 
 # Common User Popups
 user_sign_in				= साइन इन कीजिए 
@@ -215,8 +219,11 @@ menu						= श्रेणी
 back						= वापस जाएँं 
 load_more_contents			= और  देखें
 view_more					= और देखें 
+fill_in_the_details			= Please fill in the details!
+accept_terms				= Please accept to our terms!
  
 # Success Messages
+success_generic_message				= Success!
 password_reset_request_success		= पासवर्ड रीसेट सफल  हुआ
 user_login_success					= लॉग –इन सफल  हुआ
 user_register_success				= पंजीकरण सफल हुआ
@@ -231,6 +238,9 @@ updated_review						= प्रक्रिया संपन्न
 #Failure Messages
 server_error_message				= तकनिकी ख़ामी पाई गई है, पुनः प्रयास करें।
 write_please_login_desktop			= प्रकाशन की प्रक्रिया के लिए कंप्यूटर/लैपटॉप से लॉगिन करें। 
+could_not_connect_server			= Could not connect to server !
+review_authorisation_error			= Sorry! You are not authorized to review for this content!
+logout_failed						= Logout failed! Please try again!
 
 # Author Edit Popup
 edit_author_heading				= लेखक परिचय संपादित करें 

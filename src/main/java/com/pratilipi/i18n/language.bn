@@ -51,9 +51,11 @@ author_location					= অবস্থান
 author_date_of_birth			= জন্মতারিখ 
 author_follow					= অনুসরণ
 author_unfollow					= অননুসরণ   
-author_followers				= অনুগামী
+author_followers_heading		= অনুগামী
+author_followers_count			= অনুগামী
 author_no_followers				= অনুগামী সংখ্যা শূন্য
-author_following				= অনুসরণ  
+author_following_heading		= অনুসরণ
+author_following_count			= অনুসরণ
 author_no_following				= অনুসরণ সংখ্যা শূন্য
 author_follow_members			= সদস্যসমূহ
 author_cannot_follow_yourself	= আপনার সম্বন্ধে
@@ -147,6 +149,8 @@ write_language	 =  ভাষা
 write_summary	 =  সংক্ষিপ্ত সারাংশ লিখুন
 write_create_new_content	=  নতুন রচনা সৃষ্টি
 write_on_desktop_only		= রচনা প্রকাশের  জন্য ডেস্কটপ থেকে লগ ইন করুন।সম্পর্কঃ bengali@pratilipi.com ফোন : (+91)9998023704
+write_fill_title			= Please fill in the Title.
+write_select_type			= Please select the type.
 
 # Common User Popups
 user_sign_in			= সাইন ইন করুন
@@ -215,8 +219,11 @@ menu						=  শ্রেণী
 back						=  ব্যাক করুন
 load_more_contents			= আরও দেখুন
 view_more					= আরও দেখুন
+fill_in_the_details			= Please fill in the details!
+accept_terms				= Please accept to our terms!
 
 # Success Messages
+success_generic_message				= Success!
 password_reset_request_success	 = পাসওয়ার্ড রিসেট সফল হয়েছে
 user_login_success			=  লগ-ইন সফল
 user_register_success			=  রেজিস্টার সফল
@@ -231,6 +238,9 @@ updated_review						= প্রক্রিয়া সম্পন্ন
 #Failure Messages
 server_error_message				= কিছু ত্রুটি ঘটেছে! অনুগ্রহপূর্বক আবার চেষ্টা করুন!
 write_please_login_desktop			= আপনি ডেস্কটপে লগ-ইন দ্বারা বিষয়বস্তু প্রকাশ করতে পারেন
+could_not_connect_server			= Could not connect to server !
+review_authorisation_error			= Sorry! You are not authorized to review for this content!
+logout_failed						= Logout failed! Please try again!
 
 # Author Edit Popup
 edit_author_heading		=  সম্পদিত করুন

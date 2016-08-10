@@ -235,7 +235,7 @@
 			},
 			
 			_handleAjaxPostError: function( event ) {
-				document.querySelector( 'pratilipi-alert' ).alert( "Sorry, Some error happened while adding/removing to/from library! Please try again.", false );
+				document.querySelector( 'pratilipi-alert' ).alert( "${ _strings.server_error_message }", false );
 			},
 			
 			goToLibrary: function() {

@@ -51,9 +51,11 @@ author_location					= സ്ഥലം
 author_date_of_birth			= ജനനത്തിയ്യതി
 author_follow					= ഫോളോ  ചെയ്യൂ 
 author_unfollow					= ഫോളോ ചെയ്യേണ്ട
-author_followers				= ഫോളോവേഴ്സ്
-author_no_followers				= ക്ഷമിക്കണം, ഈ രചയിതാവിന് ഫോളോവേര്‍സ് ഒന്നും ഇല്ല 
-author_following				= ഫോളോ ചെയ്യുന്നത് 
+author_followers_heading		= ഫോളോവേഴ്സ്
+author_followers_count			= ഫോളോവേഴ്സ്
+author_no_followers				= ക്ഷമിക്കണം, ഈ രചയിതാവിന് ഫോളോവേര്‍സ് ഒന്നും ഇല്ല
+author_following_heading		= ഫോളോ ചെയ്യുന്നത്
+author_following_count			= ഫോളോ ചെയ്യുന്നത്
 author_no_following				= ക്ഷമിക്കണം, ഈ രചയിതാവ് ആരെയും ഫോളോ ചെയ്യുന്നില്ല 
 author_follow_members			= പേര്‍
 author_cannot_follow_yourself	= Yourself
@@ -147,6 +149,8 @@ write_language				= ഭാഷ
 write_summary				= സംഗ്രഹം (നിര്‍ബന്ധമില്ല)
 write_create_new_content	= പുതിയ രചന സൃഷ്ടിക്കൂ
 write_on_desktop_only		= രചനകള്‍ പ്രസിദ്ധീകരിക്കാന്‍ താങ്കള്‍ കമ്പ്യൂട്ടര്‍ ഉപയോഗിച്ച് ലോഗിന്‍ ചെയ്യുക, അല്ലെങ്കില്‍ ഞങ്ങളെ ബന്ധപ്പെടുക malayalam@pratilipi.com/ 9036506463
+write_fill_title			= Please fill in the Title.
+write_select_type			= Please select the type.
 
 # Common User Popups
 user_sign_in				= സൈനിന്‍
@@ -215,8 +219,11 @@ menu						= മെനു
 back						= പുറകിലേക്ക് പോവുക
 load_more_contents			= കൂടുതല്‍ രചനകള്‍ കാണിക്കുക.
 view_more					= കൂടുതല്‍ കാണൂ
+fill_in_the_details			= Please fill in the details!
+accept_terms				= Please accept to our terms!
 
 # Success Messages
+success_generic_message				= Success!
 password_reset_request_success		= താങ്കളുടെ ഇ മെയില്‍ ഐ ഡി യിലേക്ക് ഒരു മെയില്‍ അയച്ചിരിക്കുന്നു! 
 user_login_success					= വിജയകരമായി പൂര്‍ത്തീകരിച്ചിരിക്കുന്നു !
 user_register_success				=വിജയകരമായി പൂര്‍ത്തീകരിച്ചിരിക്കുന്നു !
@@ -231,6 +238,9 @@ updated_review						= വിജയകരമായി പൂര്‍ത്തീ
 #Failure Messages
 server_error_message				= എന്തോ സാങ്കേതിക പ്രശ്നം സംഭവിച്ചിരിക്കുന്നു. വീണ്ടും ശ്രമിക്കൂ 
 write_please_login_desktop			= You can publish contents by logging into desktop.
+could_not_connect_server			= Could not connect to server !
+review_authorisation_error			= Sorry! You are not authorized to review for this content!
+logout_failed						= Logout failed! Please try again!
 
 # Author Edit Popup
 edit_author_heading				= രചയിതാവിനെക്കുറിച്ചുള്ള വിവരങ്ങള്‍ തിരുത്തുക.	

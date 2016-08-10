@@ -51,9 +51,11 @@ author_location					= સ્થાન
 author_date_of_birth			= જન્મ તારીખ
 author_follow					= ફોલો
 author_unfollow					= અનફોલો
-author_followers				= અનુયાયી
+author_followers_heading		= અનુયાયી
+author_followers_count			= અનુયાયી
 author_no_followers				= અનુયાયી સંખ્યા શૂન્ય
-author_following				= અનુસરણ
+author_following_heading		= અનુસરણ
+author_following_count			= અનુસરણ
 author_no_following				= અનુસરણ સંખ્યા શૂન્ય 
 author_follow_members			= સદસ્ય
 author_cannot_follow_yourself	=  તમારા વિશે
@@ -147,6 +149,8 @@ write_language		= ભાષા
 write_summary		= ટૂંકમાં સારાંશ લખો
 write_create_new_content	= આગળ વધો 
 write_on_desktop_only		= સાહિત્ય પ્રકાશિત કરવા માટે ડેસ્કટોપ દ્વારા લોગ ઇન કરો. સંપર્ક : gujarati@pratilipi.com ફોન:(+૯૧)૯૪૨૮૧ ૧૩૬૫૦ 
+write_fill_title			= Please fill in the Title.
+write_select_type			= Please select the type.
 
 # Common User Popups
 user_sign_in	= સાઈન ઇન કરો 
@@ -215,8 +219,11 @@ menu				= સૂચિ
 back				= પાછા જાઓ 
 load_more_contents			= વધુ રચનાઓ  તરફ 
 view_more					= વધુ જુઓ 
+fill_in_the_details			= Please fill in the details!
+accept_terms				= Please accept to our terms!
 
 # Success Messages
+success_generic_message				= Success!
 password_reset_request_success		= પાસવર્ડ રીસેટ સફળ થયું
 user_login_success				= લોગ-ઈન પ્રવેશ સફળ થયો
 user_register_success				= રજીસ્ટ્રેશન સફળ થયું
@@ -231,6 +238,9 @@ updated_review						= સફળ !
 #Failure Messages
 server_error_message				= ટેકનીકલ ખામી હોવાથી ફરી પ્રયત્ન કરો
 write_please_login_desktop			= રચના પ્રકાશિત કરવા માટે કમ્પ્યુટરથી લોગ ઇન કરો
+could_not_connect_server			= Could not connect to server !
+review_authorisation_error			= Sorry! You are not authorized to review for this content!
+logout_failed						= Logout failed! Please try again!
 
 # Author Edit Popup
 edit_author_heading				= લેખક પરિચય સુધારો

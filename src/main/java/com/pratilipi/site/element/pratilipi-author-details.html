@@ -219,7 +219,7 @@
 				</template>
 				<template is="dom-if" if="{{ !hasAccessToFollow }}">
 					<div class="user-logout-container">
-						<span>{{ followCount }}&nbsp;${ _strings.author_followers }</span>
+						<span>${ _strings.author_followers_count }&nbsp;|&nbsp;{{ followCount }}</span>
 					</div>
 				</template>
 			</div>

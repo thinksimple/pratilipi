@@ -51,9 +51,11 @@ author_location					= ठिकाण
 author_date_of_birth			= जन्म तिथि 
 author_follow					= अनुसरण करा
 author_unfollow					= अनुसरण करणे बंद
-author_followers				= अनुयायी 
-author_no_followers				= अनुयायी संख्या शून्य 
-author_following				= अनुसरण
+author_followers_heading		= अनुयायी
+author_followers_count			= अनुयायी
+author_no_followers				= अनुयायी संख्या शून्य
+author_following_heading		= अनुसरण
+author_following_count			= अनुसरण
 author_no_following				= क्षमस्व! या लेखकाला एकही फोल्लोविंग नाही!
 author_follow_members			=  सदस्य
 author_cannot_follow_yourself	= तुम्ही स्वतः
@@ -147,6 +149,8 @@ write_language				= भाषा
 write_summary				= थोडक्यात सारांश प्रविष्ट करा
 write_create_new_content	= पुढे जा
 write_on_desktop_only		=  रचना प्रकाशनसाठी डेस्कटॉप वरून लॉगिन करा. संपर्क : marathi@pratilipi.com फोन : (+९१)८२७५६०२२१८ 
+write_fill_title			= Please fill in the Title.
+write_select_type			= Please select the type.
 
 # Common User Popups
 user_sign_in				= साइन इन करा
@@ -215,8 +219,11 @@ menu						= श्रेणी
 back						= परत जा
 load_more_contents			= सर्व मजकूर पहा
 view_more					= सर्व मजकूर पहा
+fill_in_the_details			= Please fill in the details!
+accept_terms				= Please accept to our terms!
 
 # Success Messages
+success_generic_message				= Success!
 password_reset_request_success		= पासवर्ड रीसेट यशस्वी आहे
 user_login_success					= लॉग-इन यशस्वी आहे
 user_register_success				= नोंदणी यशस्वी आहे
@@ -231,6 +238,9 @@ updated_review						= यशस्वी
 #Failure Messages
 server_error_message				= काही त्रुटी आली ! कृपया पुन्हा प्रयत्न करा!
 write_please_login_desktop			= तुम्हाला डेस्कटॉपवरील मध्ये लॉग इन करून सामुग्री प्रकाशित करू शकता.
+could_not_connect_server			= Could not connect to server !
+review_authorisation_error			= Sorry! You are not authorized to review for this content!
+logout_failed						= Logout failed! Please try again!
 
 # Author Edit Popup
 edit_author_heading				= लेखक परिचय संपादित करां 

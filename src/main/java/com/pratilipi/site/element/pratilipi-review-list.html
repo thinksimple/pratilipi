@@ -178,7 +178,7 @@
 				} else if( this.userpratilipi != null && this.userpratilipi.hasAccessToReview ) {
 					this.querySelector( 'pratilipi-review-input' ).openReviewInput( this.userpratilipi );
 				} else {
-					alert( "Sorry! You are not authorized to review for this content!" );
+					alert( "${ _strings.review_authorisation_error }" );
 				}
 			},
 			

@@ -268,7 +268,7 @@
 			
 			_handleAjaxPostResponse: function( event ) {
 				if( event.detail.xhr.status == 0 ) {
-					document.querySelector( 'pratilipi-alert' ).alert( "Could not connect to server! Please try again!", false );
+					document.querySelector( 'pratilipi-alert' ).alert( "${ _strings.could_not_connect_server }", false );
 					this._handleAjaxPostError();
 					return;
 				}
@@ -278,7 +278,7 @@
 				if( event != null && event.detail.request.xhr.response.message != null )
 					document.querySelector( 'pratilipi-alert' ).alert( event.detail.request.xhr.response.message, false );
 				else
-					document.querySelector( 'pratilipi-alert' ).alert( "Some exception occured at the server! Please try again!", false );
+					document.querySelector( 'pratilipi-alert' ).alert( "${ _strings.server_error_message }", false );
 				// Reverting it
 				this.likeDislikeReview();
 			},
