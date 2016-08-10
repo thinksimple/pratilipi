@@ -78,6 +78,6 @@
 		
 	});
 	function showPopup() {
-		window.alert("Please login through your desktop to write contents.");
+		window.alert( "${ _strings.write_on_desktop_only }" );
 	}
 </script>
