@@ -149,8 +149,8 @@ write_language		= ભાષા
 write_summary		= ટૂંકમાં સારાંશ લખો
 write_create_new_content	= આગળ વધો 
 write_on_desktop_only		= સાહિત્ય પ્રકાશિત કરવા માટે ડેસ્કટોપ દ્વારા લોગ ઇન કરો. સંપર્ક : gujarati@pratilipi.com ફોન:(+૯૧)૯૪૨૮૧ ૧૩૬૫૦ 
-write_fill_title			= Please fill in the Title.
-write_select_type			= Please select the type.
+write_fill_title			= શીર્ષક 
+write_select_type			= પ્રકાર 
 
 # Common User Popups
 user_sign_in	= સાઈન ઇન કરો 
@@ -183,7 +183,7 @@ user_no_followers			= અત્યારે આપની ફોલો સંખ�
 user_login_to_view_followers = ફોલોઅર્સ વિશે જાણવા માટે લોગ ઇન કરો!
 user_no_following			= અત્યારે  આપ કોઈને ફોલો નથી કરી રહ્યા!
 user_login_to_view_following = આપ જેમને ફોલો કરી રહ્યા છો તેમના વિશે જાણવા લોગ ઇન કરો!
-user_login_to_view_library = Please login to access your library!
+user_login_to_view_library = લાઈબ્રેરીમાં જવા માટે લોગ ઇન કરવું જરૂરી છે.
 user_login_to_view_notifications = સૂચનાઓ જોવા  માટે લોગ ઇન કરો! 
 
 # My Account popup
@@ -219,11 +219,11 @@ menu				= સૂચિ
 back				= પાછા જાઓ 
 load_more_contents			= વધુ રચનાઓ  તરફ 
 view_more					= વધુ જુઓ 
-fill_in_the_details			= Please fill in the details!
-accept_terms				= Please accept to our terms!
+fill_in_the_details			= માહિતી પૂરી પાડો.
+accept_terms				=  પ્રકાશિત કરવા માટેની શરતો માન્ય કરો.
 
 # Success Messages
-success_generic_message				= Success!
+success_generic_message				= સફળ થયું !
 password_reset_request_success		= પાસવર્ડ રીસેટ સફળ થયું
 user_login_success				= લોગ-ઈન પ્રવેશ સફળ થયો
 user_register_success				= રજીસ્ટ્રેશન સફળ થયું
@@ -238,9 +238,9 @@ updated_review						= સફળ !
 #Failure Messages
 server_error_message				= ટેકનીકલ ખામી હોવાથી ફરી પ્રયત્ન કરો
 write_please_login_desktop			= રચના પ્રકાશિત કરવા માટે કમ્પ્યુટરથી લોગ ઇન કરો
-could_not_connect_server			= Could not connect to server !
-review_authorisation_error			= Sorry! You are not authorized to review for this content!
-logout_failed						= Logout failed! Please try again!
+could_not_connect_server			= સર્વરથી જોડાવામાં અસફળ!
+review_authorisation_error			= આપ આ રચના પર ટીપ્પણી નહી આપી શકો!
+logout_failed						= લોગ આઉટ અસફળ! ફરીથી પ્રયત્ન કરો!
 
 # Author Edit Popup
 edit_author_heading				= લેખક પરિચય સુધારો
