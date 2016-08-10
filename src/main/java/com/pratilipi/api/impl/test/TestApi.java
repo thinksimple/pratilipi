@@ -231,7 +231,7 @@ public class TestApi extends GenericApi {
 		i18n_1.setI18nString( Language.TAMIL, "மற்றும்" );
 		i18n_2.setI18nString( Language.TAMIL, "உங்களைப் பின் தொடர்கிறார்" );
 		i18n_3.setI18nString( Language.TAMIL, "உங்களைப் பின் தொடர்கிறார்" );
-		i18n_4.setI18nString( Language.TAMIL, "உங்களைப் பின் தொடர்கிறார்பேர்" );
+		i18n_4.setI18nString( Language.TAMIL, "பேர் உங்களைப் பின் தொடர்கிறார்" );
 		i18n_5.setI18nString( Language.TAMIL, "ஒரு படைப்பைப் பதிப்பித்துள்ளார் : " );
 
 		i18n_1.setI18nString( Language.MALAYALAM, "എന്നിവരും പിന്നെ" );
