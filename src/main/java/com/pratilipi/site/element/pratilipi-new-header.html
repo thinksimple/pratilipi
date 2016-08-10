@@ -75,9 +75,11 @@
 		.button-holder a, .button-holder a:hover, .button-holder a:focus {
 			color: #4c4c4c!important;
 		}
-		.button-holder a iron-icon {
+		.button-holder iron-icon {
+			color: #4c4c4c!important;
 			height: 28px;
 			width: 28px;
+			cursor: pointer;
 		}
 		.sign-in-button {
 			white-space: nowrap;
@@ -196,6 +198,12 @@
 		}
 		paper-badge.pratilipi-red {
 			--paper-badge-background: #d0021b;
+			--paper-badge-width: 16px;
+			--paper-badge-height: 16px;
+			--paper-badge-margin-left: 4px;
+			--paper-badge: {
+				position: static;
+			}
 		}
 	</style>
 
@@ -232,11 +240,8 @@
 					</div>
 					<div class="button-holder menu-icon">
 						<a on-click="_openMenuNavigation">
-							<iron-icon id="pratilipi-header-notification-badge" icon="icons:menu"></iron-icon>
+							<iron-icon icon="icons:menu"></iron-icon>
 						</a>
-						<template is="dom-if" if="{{ showNotificationCount }}">
-							<paper-badge for="pratilipi-header-notification-badge" label="{{ newNotificationCount }}" class="pratilipi-red"></paper-badge>
-						</template>
 					</div>
 					<div class="search-bar">
 						<form id="search-form" class="search-form" action="javascript:void(0);" on-keyup="onSubmit">
@@ -256,11 +261,19 @@
 							<iron-icon icon="icons:book"></iron-icon>
 						</a>
 					</div>
-					<div class="button-holder">
-						<a on-click="_notifications">
-							<iron-icon icon="social:notifications"></iron-icon>
-						</a>
-					</div>
+					<template is="dom-if" if="{{ showNotificationCount }}">
+						<div class="button-holder" style="margin-top: 19px;">
+							<div style="display: inline-block">
+								<iron-icon id="header-notification-icon-badge" on-click="_notifications" icon="social:notifications"></iron-icon>
+								<paper-badge for="header-notification-icon-badge" label="{{ newNotificationCount }}" class="pratilipi-red"></paper-badge>
+							</div>
+						</div>
+					</template>
+					<template is="dom-if" if="{{ !showNotificationCount }}">
+						<div class="button-holder">
+							<iron-icon on-click="_notifications" icon="social:notifications"></iron-icon>
+						</div>
+					</template>
 					<div class="button-holder sign-in-text">
 						<template is="dom-if" if="{{ isGuest }}">
 							<a on-click="_logIn">
@@ -332,7 +345,8 @@
 				profilePageUrl: { type: String },
 				profileImageUrl: { type: String },
 				displayName: { type: String },
-				
+				newNotificationCount: { type: Number },
+				showNotificationCount: { type: Boolean, value: false },
 				writeButtonActive: { type: Boolean, value: false },
 				languageMap: { type: Object },
 				languageArray: { type: Array, value: function() { return []; } }
