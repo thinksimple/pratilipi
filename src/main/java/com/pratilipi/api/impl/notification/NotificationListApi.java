@@ -56,6 +56,10 @@ public class NotificationListApi extends GenericApi {
 			return notificationList;
 		}
 
+		public Integer getNewNotificationCount() {
+			return newNotificationCount;
+		}
+
 		public String getCursor() {
 			return cursor;
 		}

@@ -419,6 +419,16 @@ public class PratilipiSite extends HttpServlet {
 			}
 		}
 
+		if( basicMode && AccessTokenFilter.getAccessToken().getUserId() != null && AccessTokenFilter.getAccessToken().getUserId() != 0L ) {
+			Integer newNotificationCount = null;
+			try {
+				newNotificationCount = ApiRegistry.getApi( NotificationListApi.class ).get( new NotificationListApi.GetRequest() ).getNewNotificationCount();
+				dataModel.put( "newNotificationCount", newNotificationCount );
+			} catch ( InsufficientAccessException | UnexpectedServerException e ) {
+				e.printStackTrace();
+			}
+		}
+
 		dataModel.put( "ga_userId", userData.getId().toString() );
 		dataModel.put( "ga_website", UxModeFilter.getWebsite().toString() );
 		dataModel.put( "ga_websiteMode", UxModeFilter.isBasicMode() ? "Basic" : "Standard" );
