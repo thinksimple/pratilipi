@@ -223,7 +223,7 @@ fill_in_the_details			= ദയവായി വിവരങ്ങള്‍ ചേ
 accept_terms				= ദയവായി നിബന്ധനകള്‍ അംഗീകരിക്കുക!
 
 # Success Messages
-success_generic_message				= Success!
+success_generic_message				= വിജയകരമായി പൂര്‍ത്തീകരിച്ചിരിക്കുന്നു! 
 password_reset_request_success		= താങ്കളുടെ ഇ മെയില്‍ ഐ ഡി യിലേക്ക് ഒരു മെയില്‍ അയച്ചിരിക്കുന്നു! 
 user_login_success					= വിജയകരമായി പൂര്‍ത്തീകരിച്ചിരിക്കുന്നു !
 user_register_success				=വിജയകരമായി പൂര്‍ത്തീകരിച്ചിരിക്കുന്നു !
@@ -238,7 +238,7 @@ updated_review						= വിജയകരമായി പൂര്‍ത്തീ
 #Failure Messages
 server_error_message				= എന്തോ സാങ്കേതിക പ്രശ്നം സംഭവിച്ചിരിക്കുന്നു. വീണ്ടും ശ്രമിക്കൂ 
 write_please_login_desktop			= You can publish contents by logging into desktop.
-could_not_connect_server			= Could not connect to server !
+could_not_connect_server			= സെര്‍വറുമായി ബന്ധം സ്ഥാപിക്കാനാവുന്നില്ല! 
 review_authorisation_error			= Sorry! You are not authorized to review for this content!
 logout_failed						= Logout failed! Please try again!
 
