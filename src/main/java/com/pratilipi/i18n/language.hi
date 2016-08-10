@@ -149,8 +149,8 @@ write_language				= भाषा
 write_summary				= संक्षिप्त सारांश दर्ज करें 
 write_create_new_content	= आगे बढ़ीए
 write_on_desktop_only		= रचना प्रकाशन के लिए डेस्कटॉप से लॉग इन करें। संपर्क : hindi@pratilipi.com फ़ोन: ९७८९३१६७०० 
-write_fill_title			= Please fill in the Title.
-write_select_type			= Please select the type.
+write_fill_title			= शीर्षक
+write_select_type			= श्रेणी 
 
 # Common User Popups
 user_sign_in				= साइन इन कीजिए 
@@ -183,7 +183,7 @@ user_no_followers			= फ़िलहाल आपकी अनुयायी स�
 user_login_to_view_followers = अनुयायियों के बारे में जानने के लिए कृपया लॉग इन करें।
 user_no_following			= फ़िलहाल आप किसी का अनुसरण नहीं कर रहे हैं।
 user_login_to_view_following = आपके द्वारा हुए अनुसरण को देखने के लिए कृपया लॉग इन करें। 
-user_login_to_view_library = Please login to access your library!
+user_login_to_view_library = लाइब्रेरी में जाने के लिए लॉग इन होना आवश्यक है। 
 user_login_to_view_notifications = सूचनाए जानने के लिए कृपया लॉग इन करें। 
 
 # My Account popup
@@ -219,11 +219,11 @@ menu						= श्रेणी
 back						= वापस जाएँं 
 load_more_contents			= और  देखें
 view_more					= और देखें 
-fill_in_the_details			= Please fill in the details!
-accept_terms				= Please accept to our terms!
+fill_in_the_details			= जानकारी उपलब्ध कराए
+accept_terms				= प्रकाशन शर्तों की पुष्टि करें 
  
 # Success Messages
-success_generic_message				= Success!
+success_generic_message				= सफल हुआ 
 password_reset_request_success		= पासवर्ड रीसेट सफल  हुआ
 user_login_success					= लॉग –इन सफल  हुआ
 user_register_success				= पंजीकरण सफल हुआ
@@ -238,9 +238,9 @@ updated_review						= प्रक्रिया संपन्न
 #Failure Messages
 server_error_message				= तकनिकी ख़ामी पाई गई है, पुनः प्रयास करें।
 write_please_login_desktop			= प्रकाशन की प्रक्रिया के लिए कंप्यूटर/लैपटॉप से लॉगिन करें। 
-could_not_connect_server			= Could not connect to server !
-review_authorisation_error			= Sorry! You are not authorized to review for this content!
-logout_failed						= Logout failed! Please try again!
+could_not_connect_server			= सर्वर से जुड़ने में असफलता।
+review_authorisation_error			= आप इस रचना को टिप्पणी नहीं दे सकते है। 
+logout_failed						= लॉग आउट असफल। कृपया पुनः प्रयास करें। 
 
 # Author Edit Popup
 edit_author_heading				= लेखक परिचय संपादित करें 
