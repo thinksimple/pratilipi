@@ -1,61 +1,61 @@
 # Do NOT edit
-pratilipi					= ಪ್ರತಿಲಿಪಿ
-home_page_title				= ಕನ್ನಡ, ಹಿಂದಿ, ಗುಜರಾತಿ, ತಮಿಳು, ತೆಲುಗು, ಮಲಯಾಳಂ,ಮರಾಟಿ, ಬೆಂಗಾಲಿ ಕಥೆ, ಕವನ ಮತ್ತು ಪುಸ್ತಕಗಳನ್ನು ಓದಿರಿ.
+pratilipi					                          = ಪ್ರತಿಲಿಪಿ
+home_page_title				                      = ಕನ್ನಡ, ಹಿಂದಿ, ಗುಜರಾತಿ, ತಮಿಳು, ತೆಲುಗು, ಮಲಯಾಳಂ,ಮರಾಟಿ, ಬೆಂಗಾಲಿ ಕಥೆ, ಕವನ ಮತ್ತು ಪುಸ್ತಕಗಳನ್ನು ಓದಿರಿ.
 facebook_page				= https://www.facebook.com/pratilipi.kannada
 twitter_page				= https://twitter.com/TeamPratilipi
 googleplus_page				= https://plus.google.com/+PratilipiTeam
 linkedin_page				= https://www.linkedin.com/company/pratilipi
 
 # Language   
-language_choose_language	 = ಭಾಷೆ ಆಯ್ಕೆ ಮಾಡಿಕೊಳ್ಳಿ
-language_all				       = ಎಲ್ಲಾ ಭಾಷೆಗಳು
-language_hi					       = ಹಿಂದಿ
-language_gu					       = ಗುಜರಾತಿ
-language_ta					       = ತಮಿಳು
-language_mr					       = ಮರಾಟಿ
-language_ml					       = ಮಲಯಾಳಂ
-language_bn					       = ಬೆಂಗಾಲಿ
-language_en					       = ಇಂಗ್ಲಿಷ್
-language_te					       = ತೆಲುಗು 
-language_kn				         = ಕನ್ನಡ
+language_choose_language	                  = ಭಾಷೆ ಆಯ್ಕೆ ಮಾಡಿಕೊಳ್ಳಿ
+language_all				                        = ಎಲ್ಲಾ ಭಾಷೆಗಳು
+language_hi					                        = ಹಿಂದಿ
+language_gu					                        = ಗುಜರಾತಿ
+language_ta					                        = ತಮಿಳು
+language_mr					                        = ಮರಾಟಿ
+language_ml					                        = ಮಲಯಾಳಂ
+language_bn					                        = ಬೆಂಗಾಲಿ
+language_en					                        = ಇಂಗ್ಲಿಷ್
+language_te					                        = ತೆಲುಗು 
+language_kn				                          = ಕನ್ನಡ
 
 # Pratilipi Types     
-_pratilipi_type_book	          = ಪುಸ್ತಕ
-_pratilipi_type_books		        = ಪುಸ್ತಕಗಳು 
-_pratilipi_type_poem		        = ಕವಿತೆ
-_pratilipi_type_poems	          = ಕವಿತೆಗಳು 
-_pratilipi_type_story		        = ಕಥೆ
-_pratilipi_type_stories		      = ಕಥೆಗಳು 
-_pratilipi_type_article		      = ಲೇಖನ
-_pratilipi_type_articles	      = ಲೇಖನಗಳು 
-_pratilipi_type_magazine	      = ನಿಯತಕಾಲಿಕೆ 
-_pratilipi_type_magazines	      = ನಿಯತಕಾಲಿಕೆಗಳು 
+_pratilipi_type_book	                      = ಪುಸ್ತಕ
+_pratilipi_type_books		                    = ಪುಸ್ತಕಗಳು 
+_pratilipi_type_poem		                    = ಕವಿತೆ
+_pratilipi_type_poems	                      = ಕವಿತೆಗಳು 
+_pratilipi_type_story		                    = ಕಥೆ
+_pratilipi_type_stories		                  = ಕಥೆಗಳು 
+_pratilipi_type_article		                  = ಲೇಖನ
+_pratilipi_type_articles	                  = ಲೇಖನಗಳು 
+_pratilipi_type_magazine	                  = ನಿಯತಕಾಲಿಕೆ 
+_pratilipi_type_magazines	                  = ನಿಯತಕಾಲಿಕೆಗಳು 
 
 # Author  
-author_about				           = ಲೇಖಕರ ಕುರಿತು  
-author_language					       = ಭಾಷೆ 
-author_since					         = ಪ್ರತಿಲಿಪಿಯೊಂದಿಗೆ 
-author_count_works				     = ಪ್ರಕಟಿತ ಸಾಹಿತ್ಯ
-author_count_reads			       = ಓದುಗರು 
-author_count_likes				     = ಮೆಚ್ಚುಗೆಗಳು 
-author_edit_profile				     = ನನ್ನ ಪ್ರೊಫೈಲನ್ನು ಎಡಿಟ್ ಮಾಡಿ 
-author_update_image				     = ಫೋಟೋ ಅಪ್ಲೋಡ್ ಮಾಡಿ 
-author_drafts					         = ಅಪ್ರಕಟಿತ ಬರಹಗಳು 
-author_published_works			   = ಪ್ರಕಟಿತ ಬರಹಗಳು 
-author_add_new_content		     = ಹೊಸ ಬರಹವನ್ನು ಸೇರಿಸಿ 
-author_no_contents_published	 = ಕ್ಷಮಿಸಿ! ಈ ಲೇಖಕರ ಪ್ರಕಟಿತ ಪುಸ್ತಕಗಳು ಯಾವುವೂ ಇಲ್ಲ!
+author_about				                        = ಲೇಖಕರ ಕುರಿತು  
+author_language					                    = ಭಾಷೆ 
+author_since					                      = ಪ್ರತಿಲಿಪಿಯೊಂದಿಗೆ 
+author_count_works				                  = ಪ್ರಕಟಿತ ಸಾಹಿತ್ಯ
+author_count_reads			                    = ಓದುಗರು 
+author_count_likes				                  = ಮೆಚ್ಚುಗೆಗಳು 
+author_edit_profile				                  = ನನ್ನ ಪ್ರೊಫೈಲನ್ನು ಎಡಿಟ್ ಮಾಡಿ 
+author_update_image				                  = ಫೋಟೋ ಅಪ್ಲೋಡ್ ಮಾಡಿ 
+author_drafts					                      = ಅಪ್ರಕಟಿತ ಬರಹಗಳು 
+author_published_works			                = ಪ್ರಕಟಿತ ಬರಹಗಳು 
+author_add_new_content		                  = ಹೊಸ ಬರಹವನ್ನು ಸೇರಿಸಿ 
+author_no_contents_published	              = ಕ್ಷಮಿಸಿ! ಈ ಲೇಖಕರ ಪ್ರಕಟಿತ ಪುಸ್ತಕಗಳು ಯಾವುವೂ ಇಲ್ಲ!
 author_activity			                        = ಬರಹಗಳು 
 author_about				                        = ಲೇಖಕರ ಕುರಿತು 
 author_biography		                        = ಪರಿಚಯ  
 author_location				                      = ಸ್ಥಳ 
 author_date_of_birth		                    = ಜನ್ಮ ದಿನಾಂಕ 
 author_follow					                      = ಹಿಂಬಾಲಿಸಿ 
-author_unfollow				                      = ಹಿಂಬಾಲಿಸಬೇಡಿ
-author_followers_heading		= ಹಿಂಬಾಲಕರು
-author_followers_count			= ಹಿಂಬಾಲಕರು
-author_no_followers	           = ಕ್ಷಮಿಸಿ! ಈ ಲೇಖಕರಿಗೆ ಇನ್ನೂ ಯಾವ ಹಿಂಬಾಲಕರೂ ಇಲ್ಲ
-author_following_heading		= ಹಿಂಬಾಲಿಸುತ್ತಿದ್ದಾರೆ
-author_following_count			= ಹಿಂಬಾಲಿಸುತ್ತಿದ್ದಾರೆ 
+author_unfollow				                      = ಈಗಾಗಲೇ  ಹಿಂಬಾಲಿಸುತ್ತಿದ್ದೀರಿ
+author_followers_heading		                = ಹಿಂಬಾಲಕರು
+author_followers_count			                = ಹಿಂಬಾಲಕರು
+author_no_followers	                        = ಕ್ಷಮಿಸಿ! ಈ ಲೇಖಕರಿಗೆ ಇನ್ನೂ ಯಾವ ಹಿಂಬಾಲಕರೂ ಇಲ್ಲ
+author_following_heading		                = ಹಿಂಬಾಲಿಸುತ್ತಿದ್ದಾರೆ
+author_following_count			                = ಹಿಂಬಾಲಿಸುತ್ತಿದ್ದಾರೆ 
 author_no_following			                  	= ಕ್ಷಮಿಸಿ! ಈ ಲೇಖಕರು ಯಾರನ್ನೂ ಹಿಂಬಾಲಿಸುತ್ತಿಲ್ಲ!
 author_follow_members			                  = ಸದಸ್ಯರು 
 author_cannot_follow_yourself	= Yourself  
@@ -63,19 +63,19 @@ author_settings_require_first_name          = ದಯವಿಟ್ಟು ನಿಮ
 author_settings_require_language            = ದಯವಿಟ್ಟು ನಿಮ್ಮ ಭಾಷೆಯನ್ನು ನಮೂದಿಸಿ!
 
 # Pratilipi   
-pratilipi_type				            = ವಿಧ 
-pratilipi_listing_date		        = ಪ್ರಕಟಿತ ದಿನಾಂಕ
-pratilipi_last_updated_date		    = ಕೊನೆಯದಾಗಿ ನವೀಕರಿಸಲ್ಪಟ್ಟ ದಿನಾಂಕ 
-pratilipi_published			          = ಪ್ರಕಟಗೊಂಡಿದೆ
-pratilipi_published_year	        = ಪ್ರಕಟಿತ ವರ್ಷ 
-pratilipi_summary			            = ಸಾರಾಂಶ
-pratilipi_edit_info			          = ಮಾಹಿತಿ ಎಡಿಟ್ ಮಾಡಿ 
-pratilipi_edit_content		        = ವಿಷಯ ಎಡಿಟ್ ಮಾಡಿ 
-pratilipi_update_cover		        = ಫೋಟೋ ಅಪ್ಲೋಡ್ ಮಾಡಿ 
-pratilipi_count_reads		          = ಓದುಗರು 
-pratilipi_count_reviews	          = ಪ್ರತಿಕ್ರಿಯೆಗಳು
-pratilipi_count_likes		          = ಮೆಚ್ಚುಗೆಗಳು 
-pratilipi_no_reviews		          = ಕ್ಷಮಿಸಿ! ಈ ಬರಹಕ್ಕೆ ಯಾವುದೇ ಪ್ರತಿಕ್ರಿಯೆಗಳಿಲ್ಲ! 
+pratilipi_type				                      = ವಿಧ 
+pratilipi_listing_date		                  = ಪ್ರಕಟಿತ ದಿನಾಂಕ
+pratilipi_last_updated_date		              = ಕೊನೆಯದಾಗಿ ನವೀಕರಿಸಲ್ಪಟ್ಟ ದಿನಾಂಕ 
+pratilipi_published			                    = ಪ್ರಕಟಗೊಂಡಿದೆ
+pratilipi_published_year	                  = ಪ್ರಕಟಿತ ವರ್ಷ 
+pratilipi_summary			                      = ಸಾರಾಂಶ
+pratilipi_edit_info			                    = ಮಾಹಿತಿ ಎಡಿಟ್ ಮಾಡಿ 
+pratilipi_edit_content		                  = ವಿಷಯ ಎಡಿಟ್ ಮಾಡಿ 
+pratilipi_update_cover		                  = ಫೋಟೋ ಅಪ್ಲೋಡ್ ಮಾಡಿ 
+pratilipi_count_reads		                    = ಓದುಗರು 
+pratilipi_count_reviews	                    = ಪ್ರತಿಕ್ರಿಯೆಗಳು
+pratilipi_count_likes		                    = ಮೆಚ್ಚುಗೆಗಳು 
+pratilipi_no_reviews		                    = ಕ್ಷಮಿಸಿ! ಈ ಬರಹಕ್ಕೆ ಯಾವುದೇ ಪ್ರತಿಕ್ರಿಯೆಗಳಿಲ್ಲ! 
 pratilipi_confirm_move_to_drafts_title	    = ಅಪ್ರಕಟಿತಗೊಳ್ಳುತ್ತಿದೆ
 pratilipi_confirm_move_to_drafts_body	      = ಈ ಬರಹವನ್ನು ನೀವು ನಿಸ್ಸಂದೇಹವಾಗಿ ಅಪ್ರಕಟಿತಗೊಳಿಸುವಿರಾ?
 pratilipi_confirm_move_to_drafts_true	      = ಹೌದು, ಅಪ್ರಕಟಿತಗೊಳಿಸಿ!
@@ -90,101 +90,101 @@ pratilipi_confirm_delete_content_okay	      = ಹೌದು
 pratilipi_deleted_successfully			        = ಈ ಬರಹವು ಯಶಸ್ವಿಯಾಗಿ ಡಿಲೀಟ್ ಆಗಿರುತ್ತದೆ!
 
 # Rating          
-rating_rating				       = ರೇಟಿಂಗ್
-rating_ratings				     = ರೇಟಿಂಗ್ಸ್
-rating_rate_this			     = ರೇಟಿಂಗ್ ನೀಡಿ!
-rating_your_rating			   = ನಿಮ್ಮ ರೇಟಿಂಗ್
-rating_be_first_one			   = ಇದಕ್ಕೆ ರೇಟಿಂಗ್ ನೀಡಲು ಮುಂದಾಗಿ!
-rating_mandatory_message	 = ದಯವಿಟ್ಟು ನಿಮ್ಮ ರೇಟಿಂಗ್ ನಮೂದಿಸಿ!
-rating_1_star			         = ಚೆನ್ನಾಗಿಲ್ಲ 
-rating_2_star			         = ಪರವಾಗಿಲ್ಲ  
-rating_3_star				       = ಚೆನ್ನಾಗಿದೆ 
-rating_4_star				       = ತುಂಬಾ ಚೆನ್ನಾಗಿದೆ 
-rating_5_star				       = ಸಖತ್
+rating_rating				                        = ರೇಟಿಂಗ್
+rating_ratings				                      = ರೇಟಿಂಗ್ಸ್
+rating_rate_this			                      = ರೇಟಿಂಗ್ ನೀಡಿ!
+rating_your_rating			                    = ನಿಮ್ಮ ರೇಟಿಂಗ್
+rating_be_first_one			                    = ಇದಕ್ಕೆ ರೇಟಿಂಗ್ ನೀಡಲು ಮುಂದಾಗಿ!
+rating_mandatory_message	                  = ದಯವಿಟ್ಟು ನಿಮ್ಮ ರೇಟಿಂಗ್ ನಮೂದಿಸಿ!
+rating_1_star			                          = ಚೆನ್ನಾಗಿಲ್ಲ 
+rating_2_star			                          = ಪರವಾಗಿಲ್ಲ  
+rating_3_star				                        = ಚೆನ್ನಾಗಿದೆ 
+rating_4_star				                        = ತುಂಬಾ ಚೆನ್ನಾಗಿದೆ 
+rating_5_star				                        = ಸಖತ್
 
 # Review 
-review_heading			           = ಪ್ರತಿಕ್ರಿಯೆಗಳು 
-review_write_a_review	         = ಪ್ರತಿಕ್ರಿಯೆ ಬರೆಯಿರಿ 
-review_title			             = ಪ್ರತಿಕ್ರಿಯೆಯ ಶೀರ್ಷಿಕೆ
-review_title_help			         = ಉದಾ:  ಸಖತ್ ಕಥೆ! 
-review_content				         = ನಿಮ್ಮ ಪ್ರತಿಕ್ರಿಯೆ 
-review_content_help		         = ನಿಮ್ಮ ಅನುಭವಗಳನ್ನು ಹಂಚಿಕೊಳ್ಳಿ. ಹೇಗೆ ಈ ಬರಹ ನಿಮ್ಮಲ್ಲಿ ಆಸಕ್ತಿ ಕೆರಳಿಸಿತು? ಯಾವ ಅಂಶ ನಿಮ್ಮನ್ನು ಸ್ಫೂರ್ತಿಗೊಳಿಸಿತು? ಅದರಿಂದ ನೀವು ಏನನ್ನು ಕಲಿತಿರಿ? ಒಳ್ಳೆಯದನ್ನು ಆಯ್ಕೆ ಮಾಡಿಕೊಳ್ಳಲು ನೀವು ಇತರರಿಗೆ ನೆರವಾಗುತ್ತಿದ್ದೀರಿ!
-review_submit_review	         = ಸಬ್ಮಿಟ್ ಮಾಡಿ 
-review_edit_review			       = ಪ್ರತಿಕ್ರಿಯೆಯನ್ನು ಎಡಿಟ್ ಮಾಡಿ 
-review_delete_review		       = ಪ್ರತಿಕ್ರಿಯೆಯನ್ನು ಡಿಲೀಟ್ ಮಾಡಿ 
-review_delete_review_confirm	 = ನಿಸ್ಸಂದೇಹವಾಗಿ ನೀವು ನಿಮ್ಮ ಪ್ರತಿಕ್ರಿಯೆಯನ್ನು ಡಿಲೀಟ್ ಮಾಡುವಿರಾ?
-review_delete_okay			       = ಹೌದು, ಪ್ರತಿಕ್ರಿಯೆಯನ್ನು ಡಿಲೀಟ್ ಮಾಡಿ!
-review_delete_cancel		       = ಇಲ್ಲ, ಬೇಡ!
-review_helpful				         = ಈ ಪ್ರತಿಕ್ರಿಯೆ ನಿಮಗೆ ಸಹಾಯಕವಾಗಿತ್ತೆ?
-review_see_all_reviews		     = ಎಲ್ಲಾ ಪ್ರತಿಕ್ರಿಯೆಗಳನ್ನು ನೋಡಿ 
+review_heading			                        = ಪ್ರತಿಕ್ರಿಯೆಗಳು 
+review_write_a_review	                      = ಪ್ರತಿಕ್ರಿಯೆ ಬರೆಯಿರಿ 
+review_title			                          = ಪ್ರತಿಕ್ರಿಯೆಯ ಶೀರ್ಷಿಕೆ
+review_title_help			                      = ಉದಾ:  ಸಖತ್ ಕಥೆ! 
+review_content				                      = ನಿಮ್ಮ ಪ್ರತಿಕ್ರಿಯೆ 
+review_content_help		                      = ನಿಮ್ಮ ಅನುಭವಗಳನ್ನು ಹಂಚಿಕೊಳ್ಳಿ. ಹೇಗೆ ಈ ಬರಹ ನಿಮ್ಮಲ್ಲಿ ಆಸಕ್ತಿ ಕೆರಳಿಸಿತು? ಯಾವ ಅಂಶ ನಿಮ್ಮನ್ನು ಸ್ಫೂರ್ತಿಗೊಳಿಸಿತು? ಅದರಿಂದ ನೀವು ಏನನ್ನು ಕಲಿತಿರಿ? ಒಳ್ಳೆಯದನ್ನು ಆಯ್ಕೆ ಮಾಡಿಕೊಳ್ಳಲು ನೀವು ಇತರರಿಗೆ ನೆರವಾಗುತ್ತಿದ್ದೀರಿ!
+review_submit_review	                      = ಸಬ್ಮಿಟ್ ಮಾಡಿ 
+review_edit_review			                    = ಪ್ರತಿಕ್ರಿಯೆಯನ್ನು ಎಡಿಟ್ ಮಾಡಿ 
+review_delete_review		                    = ಪ್ರತಿಕ್ರಿಯೆಯನ್ನು ಡಿಲೀಟ್ ಮಾಡಿ 
+review_delete_review_confirm	              = ನಿಸ್ಸಂದೇಹವಾಗಿ ನೀವು ನಿಮ್ಮ ಪ್ರತಿಕ್ರಿಯೆಯನ್ನು ಡಿಲೀಟ್ ಮಾಡುವಿರಾ?
+review_delete_okay			                    = ಹೌದು, ಪ್ರತಿಕ್ರಿಯೆಯನ್ನು ಡಿಲೀಟ್ ಮಾಡಿ!
+review_delete_cancel		                    = ಇಲ್ಲ, ಬೇಡ!
+review_helpful				                      = ಈ ಪ್ರತಿಕ್ರಿಯೆ ನಿಮಗೆ ಸಹಾಯಕವಾಗಿತ್ತೆ?
+review_see_all_reviews		                  = ಎಲ್ಲಾ ಪ್ರತಿಕ್ರಿಯೆಗಳನ್ನು ನೋಡಿ 
 
 # Comments
-comment_reply_to_comment				              = ಪ್ರತಿಕ್ರಿಯೆ 
-comment_number_of_comments_singular	        	= ಪ್ರತಿಕ್ರಿಯೆಗಳು 
-comment_number_of_comments_plural	          	= ಪ್ರತಿಕ್ರಿಯೆಗಳು 
-comment_reply_comment_help			            	= ಪ್ರತಿಕ್ರಿಯಿಸಲು ಇಲ್ಲಿ ಟೈಪ್ ಮಾಡಿ 
-comment_add_comment					                	= ಕಾಮೆಂಟ್ ಸೇರಿಸಿ 
-comment_edit_comment				                	= ಕಾಮೆಂಟ್ ಎಡಿಟ್ ಮಾಡಿ 
-comment_delete_comment				              	= ಕಾಮೆಂಟ್ ಡಿಲೀಟ್ ಮಾಡಿ 
-comment_confirm_delete_comment		           	= ನೀವು ನಿಸ್ಸಂದೇಹವಾಗಿ ಈ ಕಾಮೆಂಟನ್ನು ಡಿಲೀಟ್ ಮಾಡುವಿರಾ?
-comment_confirm_delete_comment_yes	        	= ಹೌದು 
-comment_confirm_delete_comment_no	          	= ಇಲ್ಲ 
-comment_restore_comment				              	= ಕಾಮೆಂಟನ್ನು ರೀಸ್ಟೋರ್ ಮಾಡಿ 
-comment_submit_comment				              	= ಸಬ್ಮಿಟ್ ಮಾಡಿ 
-comment_cancel_comment				              	= ರದ್ದುಪಡಿಸಿ 
+comment_reply_to_comment				            = ಪ್ರತಿಕ್ರಿಯೆ 
+comment_number_of_comments_singular	        = ಪ್ರತಿಕ್ರಿಯೆಗಳು 
+comment_number_of_comments_plural	          = ಪ್ರತಿಕ್ರಿಯೆಗಳು 
+comment_reply_comment_help			            = ಪ್ರತಿಕ್ರಿಯಿಸಲು ಇಲ್ಲಿ ಟೈಪ್ ಮಾಡಿ 
+comment_add_comment					                = ಕಾಮೆಂಟ್ ಸೇರಿಸಿ 
+comment_edit_comment				                = ಕಾಮೆಂಟ್ ಎಡಿಟ್ ಮಾಡಿ 
+comment_delete_comment				              = ಕಾಮೆಂಟ್ ಡಿಲೀಟ್ ಮಾಡಿ 
+comment_confirm_delete_comment		          = ನೀವು ನಿಸ್ಸಂದೇಹವಾಗಿ ಈ ಕಾಮೆಂಟನ್ನು ಡಿಲೀಟ್ ಮಾಡುವಿರಾ?
+comment_confirm_delete_comment_yes	        = ಹೌದು 
+comment_confirm_delete_comment_no	          = ಇಲ್ಲ 
+comment_restore_comment				              = ಕಾಮೆಂಟನ್ನು ರೀಸ್ಟೋರ್ ಮಾಡಿ 
+comment_submit_comment				              = ಸಬ್ಮಿಟ್ ಮಾಡಿ 
+comment_cancel_comment				              = ರದ್ದುಪಡಿಸಿ 
 
 # Search  
-search 						         = ಹುಡುಕಿ 
-search_bar_help				     = ಪುಸ್ತಕಗಳು, ಕಥೆಗಳು, ಕವಿತೆಗಳು ಮತ್ತು ಇನ್ನಿತರ ಪ್ರಕಾರದ ಬರಹಗಳಿಗಾಗಿ ಹುಡುಕಾಟ ನಡೆಸಿ
-search_results				     = ಹುಡುಕಾಟದ ಫಲಿತಾಂಶಗಳು 
-search_no_results_found		 = ಕ್ಷಮಿಸಿ! ನಿಮ್ಮ ಹುಡುಕಾಟದ ಪ್ರಶ್ನೆಗಳಿಗೆ ಯಾವುದೇ ಫಲಿತಾಂಶ ಲಭ್ಯವಿಲ್ಲ.
+search 						                          = ಹುಡುಕಿ 
+search_bar_help				                      = ಪುಸ್ತಕಗಳು, ಕಥೆಗಳು, ಕವಿತೆಗಳು ಮತ್ತು ಇನ್ನಿತರ ಪ್ರಕಾರದ ಬರಹಗಳಿಗಾಗಿ ಹುಡುಕಾಟ ನಡೆಸಿ
+search_results				                      = ಹುಡುಕಾಟದ ಫಲಿತಾಂಶಗಳು 
+search_no_results_found		                  = ಕ್ಷಮಿಸಿ! ನಿಮ್ಮ ಹುಡುಕಾಟದ ಪ್ರಶ್ನೆಗಳಿಗೆ ಯಾವುದೇ ಫಲಿತಾಂಶ ಲಭ್ಯವಿಲ್ಲ.
 
 # Write
-write_heading				       = ಹೊಸ ಬರಹವನ್ನು ಸೇರಿಸಿ 
-write_help					       = ನೀವು ಪ್ರತಿಲಿಪಿಯಲ್ಲಿ ಬರೆಯಬಹುದು!
-write_title					       = ಶೀರ್ಷಿಕೆ* 
-write_title_en				     = ಶೀರ್ಷಿಕೆ (ಇಂಗ್ಲಿಷ್) 
-write_type					       = ವಿಧ ಆರಿಸಿಕೊಳ್ಳಿ*
-write_language				     = ಭಾಷೆ 
-write_summary				       = ಸಾರಾಂಶ (ಐಚ್ಛಿಕ)
-write_create_new_content	 = ಹೊಸ ಬರಹ  ಸೃಷ್ಟಿಸಿ
-write_on_desktop_only		= ನಿಮ್ಮ ಬರಹವನ್ನು ಪ್ರಕಟಿಸಲು ನೀವು ಡೆಸ್ಕ್ಟಾಪ್ ಮೂಲಕ ಲಾಗಿನ್ ಆಗಿಬೇಕು. ಹಾಗೆಯೇ, ನೀವು ನಮ್ಮನ್ನೂ ಸಂಪರ್ಕಿಸಬಹುದು - kannada@pratilipi.com / 9845990788
-write_fill_title			= Please fill in the Title.
-write_select_type			= Please select the type.
+write_heading				                          = ಹೊಸ ಬರಹವನ್ನು ಸೇರಿಸಿ 
+write_help					                          = ನೀವೂ ಪ್ರತಿಲಿಪಿಯಲ್ಲಿ ಬರೆಯಬಹುದು!
+write_title					                          = ಶೀರ್ಷಿಕೆ* 
+write_title_en				                        = ಶೀರ್ಷಿಕೆ (ಇಂಗ್ಲಿಷ್) 
+write_type					                          = ವಿಧ ಆರಿಸಿಕೊಳ್ಳಿ*
+write_language				                        = ಭಾಷೆ 
+write_summary				                          = ಸಾರಾಂಶ (ಐಚ್ಛಿಕ)
+write_create_new_content	                    = ಹೊಸ ಬರಹ  ಸೃಷ್ಟಿಸಿ
+write_on_desktop_only	    	                  = ನಿಮ್ಮ ಬರಹವನ್ನು ಪ್ರಕಟಿಸಲು ನೀವು ಡೆಸ್ಕ್ಟಾಪ್ ಮೂಲಕ ಲಾಗಿನ್ ಆಗಿಬೇಕು. ಹಾಗೆಯೇ, ನೀವು ನಮ್ಮನ್ನೂ ಸಂಪರ್ಕಿಸಬಹುದು - kannada@pratilipi.com / 9845990788
+write_fill_title			                        = ದಯವಿಟ್ಟು ಶೀರ್ಷಿಕೆಯನ್ನು ನೀಡಿ 
+write_select_type		      	                  = ದಯವಿಟ್ಟು ವಿಧ ಆರಿಸಿಕೊಳ್ಳಿ 
 
 # Common User Popups  
-user_sign_in				           = ಸೈನ್ ಇನ್ ಆಗಿರಿ 
-user_to_sign_in				         = ಸೈನ್ ಇನ್ ಆಗಲು 
-user_sign_in_with_facebook	   = ಫೇಸ್ಬುಕ್ನೊಂದಿಗೆ ಸೈನ್ ಇನ್ ಆಗಿರಿ 
-user_sign_in_to_pratilipi	     = ಪ್ರತಿಲಿಪಿಗೆ ಸೈನ್ ಇನ್ ಆಗಿರಿ 
-user_sign_out				           = ಸೈನ್ ಔಟ್ 
-user_sign_up				             =  ಸೈನ್ ಅಪ್!
-user_sign_up_for_pratilipi	     =  ಪ್ರತಿಲಿಪಿಗೆ ಸೈನ್ ಅಪ್ ಆಗಿರಿ 
-user_sign_up_with_facebook	     =  ಫೇಸ್ಬುಕ್ನೊಂದಿಗೆ ಸೈನ್ ಅಪ್ ಆಗಿರಿ 
-user_forgot_password		         =  ಪಾಸ್ವರ್ಡ್ ಮರೆತಿರುವಿರಾ? 
-user_reset_password			         =  ಪಾಸ್ವರ್ಡ್ ರೀಸೆಟ್ ಮಾಡಿ 
-user_reset_password_help	       =  ದಯವಿಟ್ಟು ನೀವು ಸೈನ್ ಅಪ್ ಆಗಿರುವ ಇ-ಮೇಲ್ ವಿಳಾಸವನ್ನು ದಾಖಲಿಸಿ. ನಿಮ್ಮ ಪಾಸ್ವರ್ಡ್ ರೀಸೆಟ್ ಗೊಳಿಸಲು ನಾವು ನಿಮಗೆ ಒಂದು ಲಿಂಕ್ ಕಳುಹಿಸುತ್ತೇವೆ.
-user_current_password		       = ಈಗಿನ ಪಾಸ್ವರ್ಡ್
-user_new_password			         = ಹೊಸ ಪಾಸ್ವರ್ಡ್
-user_full_name				         = ಪೂರ್ತಿ ಹೆಸರು 
-user_email					           = ಇ-ಮೇಲ್ 
-user_email_not_available	     = ಇ-ಮೇಲ್ ಲಭ್ಯವಿಲ್ಲ
-user_phone				             = ಫೋನ್ 
-user_phone_not_available	     = ಫೋನ್ ನಂಬರ್ ಲಭ್ಯವಿಲ್ಲ!
-user_password				           = ಪಾಸ್ವರ್ಡ್
-user_confirm_password		       = ಪಾಸ್ವರ್ಡ್ ಖಚಿತಪಡಿಸಿ 
-user_my_profile				         = ನನ್ನ ಪ್ರೊಫೈಲ್
-user_my_account			           = ನನ್ನ ಅಕೌಂಟ್
-user_is_new					           = ಹೊಸಬರೇ? 
-user_is_registered			       = ಈಗಾಗಲೇ ಸದಸ್ಯರಾಗಿರುವಿರಾ?
-user_email_verification		     = ಇ-ಮೇಲ್ ಪರಿಶೀಲನೆ 
-user_require_access			       = ಈ ಕಾರ್ಯ ನಿರ್ವಹಿಸಲು ನೀವು ಲಾಗಿನ್ ಆಗಬೇಕು!
-user_no_followers			                = ಕ್ಷಮಿಸಿ! ನೀವು ಇನ್ನೂ ಯಾರಿಂದಲೂ ಹಿಂಬಾಲಿಸಲ್ಪಡುತ್ತಿಲ್ಲ!
-user_login_to_view_followers          = ನಿಮ್ಮ ಹಿಂಬಾಲಕರನ್ನು ನೋಡಲು ದಯವಿಟ್ಟು ಲಾಗಿನ್ ಆಗಿ!
-user_no_following			                = ಕ್ಷಮಿಸಿ! ನೀವು ಯಾರನ್ನೂ ಹಿಂಬಾಲಿಸುತ್ತಿಲ್ಲ! 
-user_login_to_view_following           = ನೀವು ಹಿಂಬಾಲಿಸುತ್ತಿರುವ ವ್ಯಕ್ತಿಗಳನ್ನು ನೋಡಲು ದಯವಿಟ್ಟು ಲಾಗಿನ್ ಆಗಿ!
-user_login_to_view_library = Please login to access your library!
-user_login_to_view_notifications       = ನೋಟಿಫಿಕೇಶನ್ಸ್ ನೋಡಲು ದಯವಿಟ್ಟು ಲಾಗಿನ್ ಆಗಿ! 
+user_sign_in				                          = ಸೈನ್ ಇನ್ ಆಗಿ
+user_to_sign_in				                        = ಸೈನ್ ಇನ್ ಆಗಲು 
+user_sign_in_with_facebook	                  = ಫೇಸ್ಬುಕ್ನೊಂದಿಗೆ ಸೈನ್ ಇನ್ ಆಗಿ
+user_sign_in_to_pratilipi	                    = ಪ್ರತಿಲಿಪಿಗೆ ಸೈನ್ ಇನ್ ಆಗಿ
+user_sign_out				                          = ಸೈನ್ ಔಟ್ 
+user_sign_up				                          =  ಸೈನ್ ಅಪ್!
+user_sign_up_for_pratilipi	                  =  ಪ್ರತಿಲಿಪಿಗೆ ಸೈನ್ ಅಪ್ ಆಗಿ
+user_sign_up_with_facebook	                  =  ಫೇಸ್ಬುಕ್ನೊಂದಿಗೆ ಸೈನ್ ಅಪ್ ಆಗಿ
+user_forgot_password		                      =  ಪಾಸ್ವರ್ಡ್ ಮರೆತಿರುವಿರಾ? 
+user_reset_password			                      =  ಪಾಸ್ವರ್ಡ್ ರೀಸೆಟ್ ಮಾಡಿ 
+user_reset_password_help	                    =  ದಯವಿಟ್ಟು ನೀವು ಸೈನ್ ಅಪ್ ಆಗಿರುವ ಇ-ಮೇಲ್ ವಿಳಾಸವನ್ನು ದಾಖಲಿಸಿ. ನಿಮ್ಮ ಪಾಸ್ವರ್ಡ್ ರೀಸೆಟ್ ಗೊಳಿಸಲು ನಾವು ನಿಮಗೆ ಒಂದು ಲಿಂಕ್ ಕಳುಹಿಸುತ್ತೇವೆ.
+user_current_password		                      = ಈಗಿನ ಪಾಸ್ವರ್ಡ್
+user_new_password			                        = ಹೊಸ ಪಾಸ್ವರ್ಡ್
+user_full_name				                        = ಪೂರ್ತಿ ಹೆಸರು 
+user_email					                          = ಇ-ಮೇಲ್ 
+user_email_not_available	                    = ಇ-ಮೇಲ್ ಲಭ್ಯವಿಲ್ಲ
+user_phone				                            = ಫೋನ್ 
+user_phone_not_available	                    = ಫೋನ್ ನಂಬರ್ ಲಭ್ಯವಿಲ್ಲ!
+user_password				                          = ಪಾಸ್ವರ್ಡ್
+user_confirm_password		                      = ಪಾಸ್ವರ್ಡ್ ಖಚಿತಪಡಿಸಿ 
+user_my_profile				                        = ನನ್ನ ಪ್ರೊಫೈಲ್
+user_my_account			                          = ನನ್ನ ಅಕೌಂಟ್
+user_is_new					                          = ಹೊಸಬರೇ? 
+user_is_registered			                      = ಈಗಾಗಲೇ ಸದಸ್ಯರಾಗಿರುವಿರಾ?
+user_email_verification		                    = ಇ-ಮೇಲ್ ಪರಿಶೀಲನೆ 
+user_require_access			                      = ಈ ಕಾರ್ಯ ನಿರ್ವಹಿಸಲು ನೀವು ಲಾಗಿನ್ ಆಗಬೇಕು!
+user_no_followers			                        = ಕ್ಷಮಿಸಿ! ನೀವು ಇನ್ನೂ ಯಾರಿಂದಲೂ ಹಿಂಬಾಲಿಸಲ್ಪಡುತ್ತಿಲ್ಲ!
+user_login_to_view_followers                  = ನಿಮ್ಮ ಹಿಂಬಾಲಕರನ್ನು ನೋಡಲು ದಯವಿಟ್ಟು ಲಾಗಿನ್ ಆಗಿ!
+user_no_following			                        = ಕ್ಷಮಿಸಿ! ನೀವು ಯಾರನ್ನೂ ಹಿಂಬಾಲಿಸುತ್ತಿಲ್ಲ! 
+user_login_to_view_following                  = ನೀವು ಹಿಂಬಾಲಿಸುತ್ತಿರುವ ವ್ಯಕ್ತಿಗಳನ್ನು ನೋಡಲು ದಯವಿಟ್ಟು ಲಾಗಿನ್ ಆಗಿ!
+user_login_to_view_library                    = ಪುಸ್ತಕ ಭಂಡಾರಕ್ಕೆ ಪ್ರವೇಶ ಪಡೆಯಲು ದಯವಿಟ್ಟು ಲಾಗಿನ್ ಆಗಿ!
+user_login_to_view_notifications              = ನೋಟಿಫಿಕೇಶನ್ಸ್ ನೋಡಲು ದಯವಿಟ್ಟು ಲಾಗಿನ್ ಆಗಿ! 
 
 # My Account popup  
 edit_account_heading		             = ನನ್ನ ಅಕೌಂಟನ್ನು ಎಡಿಟ್ ಮಾಡಿ 
@@ -198,32 +198,32 @@ footer_about_us				                  = ನಮ್ಮ ಬಗ್ಗೆ
 footer_work_with_us			                = ನಮ್ಮ ಜೊತೆ ಕಾರ್ಯ ನಿರ್ವಹಿಸಿ 
 footer_blog					                    = ಬ್ಲಾಗ್
 footer_privacy_policy		                = ಗೌಪ್ಯತಾ ನೀತಿ 
-footer_terms_of_service	                = ನಿಯಮಗಳು
+footer_terms_of_service	                = ನಿಯಮಗಳಿಗೆ 
 footer_contact_email		                = kannada@pratilipi.com 
 footer_contact_10_digit_number		      = 9845990788
 
 # Common Words
-okay					       = ಸರಿ
-cancel						   = ರದ್ದುಗೊಳಿಸಿ
-save_changes				 = ಬದಲಾವಣೆಗಳನ್ನು ಸಂರಕ್ಷಿಸಿ 
-show_more				     = ಇನ್ನೂ ಹೆಚ್ಚು ತೋರಿಸಿ
-show_less					   = ಕಡಿಮೆ ತೋರಿಸಿ 
-read						     = ಓದಿರಿ 
-write						     = ಬರೆಯಿರಿ 
-free					       = ಉಚಿತ! 
-saving					     = ಸಂರಕ್ಷಿತಗೊಳ್ಳುತ್ತಿದೆ...
-working					     = ಕಾರ್ಯ ನಿರ್ವಹಿಸುತ್ತಿದೆ...
-update						   = ಅಪ್ಡೇಟ್
-share					       = ಶೇರ್ 
-menu						     = ಮೆನು 
-back					       = ಹಿಂದೆ ಹೋಗಿ 
-load_more_contents	 = ಇನ್ನಷ್ಟು ವಿಷಯಗಳನ್ನು ಲೋಡ್ ಮಾಡಿ 
-view_more					   = ಇನ್ನೂ ಹೆಚ್ಚು ತೋರಿಸಿ 
-fill_in_the_details			= Please fill in the details!
-accept_terms				= Please accept to our terms!
+okay					                          = ಸರಿ
+cancel						                      = ರದ್ದುಗೊಳಿಸಿ
+save_changes				                    = ಬದಲಾವಣೆಗಳನ್ನು ಸಂರಕ್ಷಿಸಿ 
+show_more				                        = ಇನ್ನೂ ಹೆಚ್ಚು ತೋರಿಸಿ
+show_less					                      = ಕಡಿಮೆ ತೋರಿಸಿ 
+read						                        = ಓದಿರಿ 
+write						                        = ಬರೆಯಿರಿ 
+free					                          = ಉಚಿತ! 
+saving					                        = ಸಂರಕ್ಷಿತಗೊಳ್ಳುತ್ತಿದೆ...
+working					                        = ಕಾರ್ಯ ನಿರ್ವಹಿಸುತ್ತಿದೆ...
+update						                      = ಅಪ್ಡೇಟ್
+share					                          = ಶೇರ್ 
+menu						                        = ಮೆನು 
+back					                          = ಹಿಂದೆ ಹೋಗಿ 
+load_more_contents	                    = ಇನ್ನಷ್ಟು ವಿಷಯಗಳನ್ನು ಲೋಡ್ ಮಾಡಿ 
+view_more					                      = ಇನ್ನೂ ಹೆಚ್ಚು ತೋರಿಸಿ 
+fill_in_the_details			                = ದಯವಿಟ್ಟು ವಿವರಗಳನ್ನು ನೀಡಿ!
+accept_terms				                    = ದಯವಿಟ್ಟು ನಮ್ಮ ನಿಯಮಗಳಿಗೆ ಒಪ್ಪಿಗೆ ಸೂಚಿಸಿ!
 
 # Success Messages
-success_generic_message				= Success!
+success_generic_message				           = ಯಶಸ್ವಿ!
 password_reset_request_success		       = ನಿಮ್ಮ ಇ-ಮೇಲ್ ಐಡಿಗೆ ಒಂದು ಮೇಲ್ ಕಳುಹಿಸಲಾಗಿರುತ್ತದೆ. 
 user_login_success					             = ಯಶಸ್ವಿ! 
 user_register_success				             = ಯಶಸ್ವಿ! 
@@ -236,11 +236,11 @@ updated_pratilipi_info_success		       = ಯಶಸ್ವಿ!
 updated_review						               = ಯಶಸ್ವಿ!
 
 #Failure Messages
-server_error_message				             = ಏನೋ ಸಮಸ್ಯೆ ಆಗಿದೆ! ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ!
-write_please_login_desktop			         = ಡೆಸ್ಕ್ಟಾಪಿನಲ್ಲಿ ಲಾಗಿನ್ ಆಗುವ ಮೂಲಕ ನೀವು ಬರಹಗಳನ್ನು ಪ್ರಕಟಿಸಬಹುದು 
-could_not_connect_server			= Could not connect to server !
-review_authorisation_error			= Sorry! You are not authorized to review for this content!
-logout_failed						= Logout failed! Please try again!
+server_error_message				              = ಏನೋ ಸಮಸ್ಯೆ ಆಗಿದೆ! ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ!
+write_please_login_desktop			          = ಡೆಸ್ಕ್ಟಾಪಿನಲ್ಲಿ ಲಾಗಿನ್ ಆಗುವ ಮೂಲಕ ನೀವು ಬರಹಗಳನ್ನು ಪ್ರಕಟಿಸಬಹುದು 
+could_not_connect_server		             	=  ಸರ್ವರ್'ಗೆ ಕನೆಕ್ಟ್ ಮಾಡಲು ಆಗುತ್ತಿಲ್ಲ!
+review_authorisation_error		          	= ಕ್ಷಮಿಸಿ! ನೀವು ಈ ಬರಹಕ್ಕೆ ಪ್ರತಿಕ್ರಿಯಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ!
+logout_failed					                  	= ಲಾಗೌಟ್ ವಿಫಲವಾಯಿತು!ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ!
 
 # Author Edit Popup
 edit_author_heading				       = ಲೇಖಕರ ಮಾಹಿತಿಯನ್ನು ಎಡಿಟ್ ಮಾಡಿ 
@@ -265,38 +265,38 @@ edit_pratilipi_summary			    = ಸಾರಾಂಶ ((ಐಚ್ಛಿಕ)
 edit_pratilipi_save_changes		  = ಬದಲಾವಣೆಗಳನ್ನು ಸಂರಕ್ಷಿಸಿ
 
 # Register Form
-register_part_1					= By registering, you agree to the = 
-register_part_2					= and
-register_part_3					= .
+register_part_1				        	= ನೋಂದಾಯಿಸಿಕೊಳ್ಳುವ ಮೂಲಕ ನೀವು ನಮ್ಮ 
+register_part_2				        	= ಮತ್ತು 
+register_part_3				         	= ಒಪ್ಪಿಕೊಳ್ಳುತ್ತೀರಿ 
 
 # Event Page
-event_events				    	= ಕಾರ್ಯಕ್ರಮಗಳು 
-event_entries			         = ಕಾರ್ಯಕ್ರಮ ನಮೂದುಗಳು 
-event_name				         = ಕಾರ್ಯಕ್ರಮದ ಹೆಸರು 
-event_name_en			         = ಆಂಗ್ಲ ಭಾಷೆಯಲ್ಲಿ ಕಾರ್ಯಕ್ರಮದ ಹೆಸರು 
-event_description		       = ಕಾರ್ಯಕ್ರಮ ವಿವರಣೆ  
-event_entries_url_list	   = URL ಪಟ್ಟಿ ನಮೂದುಗಳು 
-event_save_changes		     = ಬದಲಾವಣೆಗಳನ್ನು ಸಂರಕ್ಷಿಸಿ
+event_events				           	  = ಕಾರ್ಯಕ್ರಮಗಳು 
+event_entries			                = ಕಾರ್ಯಕ್ರಮ ನಮೂದುಗಳು 
+event_name				                = ಕಾರ್ಯಕ್ರಮದ ಹೆಸರು 
+event_name_en			                = ಆಂಗ್ಲ ಭಾಷೆಯಲ್ಲಿ ಕಾರ್ಯಕ್ರಮದ ಹೆಸರು 
+event_description		              = ಕಾರ್ಯಕ್ರಮ ವಿವರಣೆ  
+event_entries_url_list	          = URL ಪಟ್ಟಿ ನಮೂದುಗಳು 
+event_save_changes		            = ಬದಲಾವಣೆಗಳನ್ನು ಸಂರಕ್ಷಿಸಿ
 
 # Gender
-gender				   = ಲಿಂಗ 
-gender_male			 = ಪುರುಷ 
-gender_female		 = ಮಹಿಳೆ 
-gender_other		 = ಇತರೆ
+gender				                    = ಲಿಂಗ 
+gender_male		                	  = ಪುರುಷ 
+gender_female		                  = ಮಹಿಳೆ 
+gender_other		                  = ಇತರೆ
 
 # Months
-month_jan	       = ಜನವರಿ 
-month_feb	       = ಫೆಬ್ರವರಿ
-month_mar        = ಮಾರ್ಚ್
-month_apr        = ಏಪ್ರಿಲ್ 
-month_may	       = ಮೇ
-month_jun        = ಜೂನ್ 
-month_jul	       = ಜುಲೈ 
-month_aug	       = ಆಗಸ್ಟ್ 
-month_sep	       = ಸೆಪ್ಟೆಂಬರ್
-month_oct        = ಅಕ್ಟೋಬರ್ 
-month_nov	       = ನವೆಂಬರ್ 
-month_dec        = ಡಿಸೆಂಬರ್ 
+month_jan	                    = ಜನವರಿ 
+month_feb	                    = ಫೆಬ್ರವರಿ
+month_mar                     = ಮಾರ್ಚ್
+month_apr                     = ಏಪ್ರಿಲ್ 
+month_may	                    = ಮೇ
+month_jun                     = ಜೂನ್ 
+month_jul	                    = ಜುಲೈ 
+month_aug	                    = ಆಗಸ್ಟ್ 
+month_sep	                    = ಸೆಪ್ಟೆಂಬರ್
+month_oct                     = ಅಕ್ಟೋಬರ್ 
+month_nov	                    = ನವೆಂಬರ್ 
+month_dec                     = ಡಿಸೆಂಬರ್ 
 
 # Library
 library				= Library       = ಪುಸ್ತಕ ಭಂಡಾರ 
@@ -321,10 +321,10 @@ increase_image_size		             = ಚಿತ್ರದ ಘಾತ್ರ ಹಿಗ
 decrease_image_size		             = ಚಿತ್ರದ ಘಾತ್ರ ಕುಗ್ಗಿಸಿ 
 
 # Enjoyed Reading the content? Write a review or Share it on
-reader_enjoyed_reading_part1	     = ಬರಹವನ್ನು ಓದಿ ಎಂಜಾಯ್ ಮಾಡಿದಿರಾ?
-reader_enjoyed_review_book		     = ಪ್ರತಿಕ್ರಿಯೆ ಬರೆಯಿರಿ 
-reader_enjoyed_reading_part2	     = ಶೇರ್ ಮಾಡಿ 
+reader_enjoyed_reading_part1	            = ಬರಹವನ್ನು ಓದಿ ಎಂಜಾಯ್ ಮಾಡಿದಿರಾ?
+reader_enjoyed_review_book		            = ಪ್ರತಿಕ್ರಿಯೆ ಬರೆಯಿರಿ 
+reader_enjoyed_reading_part2	            = ಶೇರ್ ಮಾಡಿ 
 
 # Notifications
-notification_notifications = ನೋಟಿಫಿಕೇಶನ್
-notifications_no_notifications  = ಕ್ಷಮಿಸಿ!ಸದ್ಯ ನಿಮಗೆ ಯಾವ ನೋಟಿಫಿಕೇಶನ್ಗಳೂ ಇಲ್ಲ! ದಯವಿಟ್ಟು ನಂತರ ಪರಿಶೀಲಿಸಿ!
+notification_notifications                = ಸೂಚನೆ 
+notifications_no_notifications            = ಕ್ಷಮಿಸಿ!ಸದ್ಯ ನಿಮಗೆ ಯಾವ ಸೂಚನೆಗಳೂ ಇಲ್ಲ! ದಯವಿಟ್ಟು ನಂತರ ಪರಿಶೀಲಿಸಿ!
