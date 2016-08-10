@@ -131,7 +131,7 @@ comment_confirm_delete_comment_yes      		= అవును
 comment_confirm_delete_comment_no		        = కాదు
 comment_restore_comment					            = వ్యాఖ్యను రీస్టోర్ చేయండి
 comment_submit_comment					            = ప్రచురించండి
-comment_cancel_comment					            = తొలగించండి
+comment_cancel_comment	                    = తొలగించండి
 
 # Search
 search 						        = వెతకండి 
