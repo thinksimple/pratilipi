@@ -194,6 +194,9 @@
 			font-size: 13px;
 			font-family: inherit;
 		}
+		paper-badge.pratilipi-red {
+			--paper-badge-background: #d0021b;
+		}
 	</style>
 
 	<template>
@@ -229,8 +232,11 @@
 					</div>
 					<div class="button-holder menu-icon">
 						<a on-click="_openMenuNavigation">
-							<iron-icon icon="icons:menu"></iron-icon>
+							<iron-icon id="pratilipi-header-notification-badge" icon="icons:menu"></iron-icon>
 						</a>
+						<template is="dom-if" if="{{ showNotificationCount }}">
+							<paper-badge for="pratilipi-header-notification-badge" label="{{ newNotificationCount }}" class="pratilipi-red"></paper-badge>
+						</template>
 					</div>
 					<div class="search-bar">
 						<form id="search-form" class="search-form" action="javascript:void(0);" on-keyup="onSubmit">
@@ -302,6 +308,14 @@
 			</div>
 		</div>
 		<pratilipi-search-bar language-map="{{ languageMap }}" query="{{ query }}" class="visible-xs hidden-sm hidden-md hidden-lg"></pratilipi-search-bar>
+		<iron-ajax
+				id="NotificationListApi"
+				url="/api/notification/list"
+				method="GET"
+				content-type="application/json"
+				handle-as="json"
+				on-response="_notificationListApiResponse"
+				></iron-ajax>
 	</template>
 
 
@@ -337,6 +351,10 @@
 				this.set( 'profileImageUrl', this.user.profileImageUrl != null ? 
 													( this.user.profileImageUrl + ( this.user.profileImageUrl.indexOf( '?' ) == -1 ? '?' : '&' ) + "width=48" )
 													: "http://0.ptlp.co/author/image?width=48" );
+				if( ! this.user.isGuest )
+					this.getNotificationCount();
+				else
+					this.set( 'showNotificationCount', false );
 			},
 			
 			_logIn: function() {
@@ -395,6 +413,17 @@
 									"current" : language == "${ language }"
 									} );
 				}
+			},
+			
+			getNotificationCount: function() {
+				this.$.NotificationListApi.generateRequest();
+			},
+
+			_notificationListApiResponse: function( response ) {
+				this.set( 'newNotificationCount', response.detail.response.newNotificationCount );
+				this.set( 'showNotificationCount', response.detail.response != null
+						&& response.detail.response.newNotificationCount != null 
+						&& response.detail.response.newNotificationCount > 0 );
 			}
 			
 		});
