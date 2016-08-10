@@ -59,10 +59,10 @@ public class NotificationDataUtil {
 			if( notification.getType() == NotificationType.PRATILIPI_ADD ) {
 				pratilipiIdList.add( notification.getSourceIdLong() );
 			} else if( notification.getType() == NotificationType.AUTHOR_FOLLOW ) {
-				if( userIdList.size() <= 3 )
+				if( notification.getDataIds().size() <= 3 )
 					userIdList.addAll( notification.getDataIds() );
 				else
-					userIdList.addAll( notification.getDataIds().subList( notification.getDataIds().size() - 4, notification.getDataIds().size() ) );
+					userIdList.addAll( notification.getDataIds().subList( notification.getDataIds().size() - 3, notification.getDataIds().size() ) );
 			}
 		}
 		

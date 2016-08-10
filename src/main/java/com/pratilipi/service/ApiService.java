@@ -42,7 +42,7 @@ public class ApiService extends GenericService {
 	
 	static {
 		
-		ApiRegistry.register( TestApi.class );					// *.pratilipi.com
+		ApiRegistry.register( TestApi.class );						// *.pratilipi.com
 		
 		ApiRegistry.register( UserLoginApi.class );					// *.pratilipi.com
 		ApiRegistry.register( UserLoginFacebookApi.class );			// *.pratilipi.com
