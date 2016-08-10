@@ -149,8 +149,8 @@ write_language				= भाषा
 write_summary				= थोडक्यात सारांश प्रविष्ट करा
 write_create_new_content	= पुढे जा
 write_on_desktop_only		=  रचना प्रकाशनसाठी डेस्कटॉप वरून लॉगिन करा. संपर्क : marathi@pratilipi.com फोन : (+९१)८२७५६०२२१८ 
-write_fill_title			= Please fill in the Title.
-write_select_type			= Please select the type.
+write_fill_title			=  शीर्षक
+write_select_type			= श्रेणी 
 
 # Common User Popups
 user_sign_in				= साइन इन करा
@@ -183,7 +183,7 @@ user_no_followers			= क्षमस्व! सध्या तुमची अ
 user_login_to_view_followers = तुमचे अनुयायी पाहण्यासाठी कृपया लॉग इन करा!
 user_no_following			= तुमचे अनुयायी पाहण्यासाठी कृपया लॉग इन करा!
 user_login_to_view_following = आपल्याद्वारा होणारे अनुसरण लोकांना पाहण्यासाठी कृपया लॉग इन करा!
-user_login_to_view_library = Please login to access your library!
+user_login_to_view_library = लाइब्रेरी मध्ये जाण्या करिता लॉगिन होणे आवश्यक आहे 
 user_login_to_view_notifications = सूचना पहाण्यासाठी कृपया लॉग इन करा! 
 
 # My Account popup
@@ -219,11 +219,11 @@ menu						= श्रेणी
 back						= परत जा
 load_more_contents			= सर्व मजकूर पहा
 view_more					= सर्व मजकूर पहा
-fill_in_the_details			= Please fill in the details!
-accept_terms				= Please accept to our terms!
+fill_in_the_details			= कृपया, माहिती उपलब्ध करावी 
+accept_terms				= कृपया, प्रकाशन च्या अटींची पूर्तता करा
 
 # Success Messages
-success_generic_message				= Success!
+success_generic_message				= यशस्वी झालात!
 password_reset_request_success		= पासवर्ड रीसेट यशस्वी आहे
 user_login_success					= लॉग-इन यशस्वी आहे
 user_register_success				= नोंदणी यशस्वी आहे
@@ -238,9 +238,9 @@ updated_review						= यशस्वी
 #Failure Messages
 server_error_message				= काही त्रुटी आली ! कृपया पुन्हा प्रयत्न करा!
 write_please_login_desktop			= तुम्हाला डेस्कटॉपवरील मध्ये लॉग इन करून सामुग्री प्रकाशित करू शकता.
-could_not_connect_server			= Could not connect to server !
-review_authorisation_error			= Sorry! You are not authorized to review for this content!
-logout_failed						= Logout failed! Please try again!
+could_not_connect_server			= सर्वर शी जोडण्याचा प्रयत्न असफल झाला 
+review_authorisation_error			= माफ करा ! तुम्ही या रचनेवर टिप्पणी लिहण्यास अधिकृत नाही . 
+logout_failed						= लॉग आउट असफल! कृपया पुन्हा प्रयत्न करा. 
 
 # Author Edit Popup
 edit_author_heading				= लेखक परिचय संपादित करां 
