@@ -172,6 +172,10 @@
 
 			_userObserver: function() {
 				this.set( 'guestUser', this.user.isGuest );
+				var followObject = this.querySelector( 'pratilipi-author-followers' ).processUserListObject( this.followersObject );
+				this.set( 'hasFollowers', ! this.user.isGuest && followObject != null && followObject.numberFound != null && followObject.numberFound > 0 );
+				this.set( 'noFollowers', ! this.user.isGuest && ( followObject == null || followObject.numberFound == null || followObject.numberFound == 0 ) );
+				this._processFollowObject( followObject );
 				if( this.userLoaded == null ) {
 					this.userLoaded = true;
 					return;
@@ -190,13 +194,6 @@
 				this.set( 'cursor', followObject.cursor );
 				this.set( 'numberFound', followObject.numberFound );
 				this.set( 'hasMore', followList.length == 20 && followObject.cursor != null );
-			},
-
-			attached: function() {
-				var followObject = this.querySelector( 'pratilipi-author-followers' ).processUserListObject( this.followersObject );
-				this.set( 'hasFollowers', ! this.user.isGuest && followObject != null && followObject.numberFound != null && followObject.numberFound > 0 );
-				this.set( 'noFollowers', ! this.user.isGuest && ( followObject == null || followObject.numberFound == null || followObject.numberFound == 0 ) );
-				this._processFollowObject( followObject );
 			},
 
 			_loadMore: function() {

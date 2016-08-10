@@ -4,7 +4,7 @@
 	<head>
 		<#assign mainPage="pratilipi-following-list-page">
 		<#include "meta/Head.ftl">
-		<link rel='import' href='/elements.${lang}/pratilipi-following-list-page.html?20160810'>
+		<link rel='import' href='/elements.${lang}/pratilipi-following-list-page.html?2016081002'>
 	</head>
 
 	<body>
