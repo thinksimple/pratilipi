@@ -34,6 +34,7 @@ import com.pratilipi.api.impl.event.EventListApi;
 import com.pratilipi.api.impl.notification.NotificationListApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiListApi;
+import com.pratilipi.api.impl.user.UserNotifiedApi;
 import com.pratilipi.api.impl.user.shared.GenericUserResponse;
 import com.pratilipi.api.impl.userauthor.UserAuthorFollowApi;
 import com.pratilipi.api.impl.userauthor.UserAuthorFollowListApi;
@@ -882,7 +883,7 @@ public class PratilipiSite extends HttpServlet {
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		Gson gson = new Gson();
-		dataModel.put( "title", I18n.getString( "author_followers", language ) + " | " + createAuthorPageTitle( authorResponse ) );
+		dataModel.put( "title", I18n.getString( "author_followers_heading", language ) + " | " + createAuthorPageTitle( authorResponse ) );
 		if( basicMode ) {
 			dataModel.put( "author", authorResponse );
 			dataModel.put( "followersList", followersList );
@@ -921,7 +922,7 @@ public class PratilipiSite extends HttpServlet {
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		Gson gson = new Gson();
-		dataModel.put( "title", I18n.getString( "author_following", language ) + " | " + createAuthorPageTitle( authorResponse ) );
+		dataModel.put( "title", I18n.getString( "author_following_heading", language ) + " | " + createAuthorPageTitle( authorResponse ) );
 		if( basicMode ) {
 			dataModel.put( "author", authorResponse );
 			dataModel.put( "followingList", followingList );
@@ -1168,10 +1169,15 @@ public class PratilipiSite extends HttpServlet {
 
 	private Map<String, Object> createDataModelForNotificationsPage( Language language, Boolean basicMode ) 
 			throws InsufficientAccessException, UnexpectedServerException {
+
 		NotificationListApi.Response response = ApiRegistry
 				.getApi( NotificationListApi.class )
 				.get( new NotificationListApi.GetRequest() );
-		
+
+		UserNotifiedApi.PostRequest request = new UserNotifiedApi.PostRequest();
+		request.setLastNotificationId( response.getNotificationList().get(0).getNotificationId() );
+		ApiRegistry.getApi( UserNotifiedApi.class ).post( request );
+
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", I18n.getString( "notification_notifications", language ) );
 		dataModel.put( "notificationList", response.getNotificationList() );

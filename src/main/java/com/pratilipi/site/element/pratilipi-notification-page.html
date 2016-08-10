@@ -65,6 +65,7 @@
 			properties: {
 				userData: { type: Object },
 				user: { type: Object, observer: "_userObserver" },
+				userLoaded: { type: Boolean },
 				guestUser: { type: Boolean },
 				notificationObject: { type: Object },
 				navigationList: { type: Array },
@@ -74,12 +75,12 @@
 			},
 
 			_userObserver: function() {
-				if( this.guestUser == null ) return;
-				window.location.reload();
-			},
-
-			attached: function() {
 				this.set( 'guestUser', this.user.isGuest );
+				if( this.userLoaded == null ) {
+					this.userLoaded = true;
+					return;
+				}
+				window.location.reload();
 			},
 
 			scrollHandler: function( st ) {

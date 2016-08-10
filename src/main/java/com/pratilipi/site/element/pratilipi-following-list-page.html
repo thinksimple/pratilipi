@@ -155,6 +155,7 @@
 			properties: {
 				userData: { type: Object },
 				user: { type: Object, observer: "_userObserver" },
+				userLoaded: { type: Boolean },
 				guestUser: { type: Boolean },
 				author: { type: Object },
 				followingObject: { type: Object },
@@ -169,7 +170,11 @@
 			},
 			
 			_userObserver: function() {
-				if( this.guestUser == null ) return;
+				this.set( 'guestUser', this.user.isGuest );
+				if( this.userLoaded == null ) {
+					this.userLoaded = true;
+					return;
+				}
 				window.location.reload();
 			},
 
@@ -187,7 +192,6 @@
 			},
 
 			attached: function() {
-				this.set( 'guestUser', this.user.isGuest );
 				var followObject = this.querySelector( 'pratilipi-author-following' ).processAuthorListObject( this.followingObject );
 				this.set( 'hasFollowing', ! this.user.isGuest && followObject != null && followObject.numberFound != null && followObject.numberFound > 0 );
 				this.set( 'noFollowing', ! this.user.isGuest && ( followObject == null || followObject.numberFound == null || followObject.numberFound == 0 ) );
