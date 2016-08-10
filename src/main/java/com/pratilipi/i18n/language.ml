@@ -237,10 +237,10 @@ updated_review						= വിജയകരമായി പൂര്‍ത്തീ
 
 #Failure Messages
 server_error_message				= എന്തോ സാങ്കേതിക പ്രശ്നം സംഭവിച്ചിരിക്കുന്നു. വീണ്ടും ശ്രമിക്കൂ 
-write_please_login_desktop			= You can publish contents by logging into desktop.
+write_please_login_desktop			= രചനകള്‍ പ്രസിദ്ധീകരിക്കാന്‍ താങ്കള്‍ കമ്പ്യൂട്ടര്‍ ഉപയോഗിച്ച് ലോഗിന്‍ ചെയ്യുക, അല്ലെങ്കില്‍ ഞങ്ങളെ ബന്ധപ്പെടുക malayalam@pratilipi.com/ 9036506463
 could_not_connect_server			= സെര്‍വറുമായി ബന്ധം സ്ഥാപിക്കാനാവുന്നില്ല! 
 review_authorisation_error			= Sorry! You are not authorized to review for this content!
-logout_failed						= Logout failed! Please try again!
+logout_failed						= ലോഗൌട്ട് ആയിട്ടില്ല! വീണ്ടും ശ്രമിക്കൂ!
 
 # Author Edit Popup
 edit_author_heading				= രചയിതാവിനെക്കുറിച്ചുള്ള വിവരങ്ങള്‍ തിരുത്തുക.	
