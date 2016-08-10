@@ -44,7 +44,7 @@
 		    	</#if>
 		    </#if>	
 		    <a href="${ pageUrl }"><h4 style="display:inline;" class="media-heading clip-content-2-lines bigger-line-height">${ name }</h4></a>
-		    <div style="white-space: nowrap;">${ _strings.author_followers_count } | ${ followCount }</div>  			
+		    <div style="white-space: nowrap;">${ followCount } ${ _strings.author_followers_count }</div>  			
 		</div>
 	</div>
 </#macro>
