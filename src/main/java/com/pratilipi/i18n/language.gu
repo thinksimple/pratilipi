@@ -304,17 +304,17 @@ my_library			= મારી લાઈબ્રેરી
 add_to_library		= લાઈબ્રેરીમાં ઉમેરો
 added_to_library	= સફળતાપૂર્વક રચના લાયબ્રેરીમાં ઉમેરાઈ ગઈ છે!
 remove_from_library	= લાઈબ્રેરીમાંથી કાઢી નાખો
-removed_from_library = લાયબ્રેરીમાંથી રચના રદ થઇ ગઈ છે
+removed_from_library = લાઈબ્રેરીમાંથી રચના રદ થઇ ગઈ છે
 empty_library		= તમારી લાઈબ્રેરીમાં પુસ્તકો નથી, રચનાઓ માંથી ઉમેરો
-library_content_in_library	= લાયબ્રેરીમાં ઉમેરો 
+library_content_in_library	= લાઈબ્રેરીમાં ઉમેરો 
 
 # Reader
 reader_goto_content_page	= સારાંશ જુઓ 
 reader_goto_author_profile = લેખકની પ્રોફાઈલ જુઓ 
 reader_goto_home_page	= હોમ પેજ પર જાઓ 
-share_on_facebook		= ફેસબક પર શેર કરો 
+share_on_facebook		= ફેસબુક પર શેર કરો 
 share_on_twitter		= ટ્વીટર પર શેર કરો 
-share_on_gplus			= ગુગલ પ્લસ પર શેર કરો 
+share_on_gplus			=  ગૂગલ-પ્લસ પર શેર કરો 
 increase_font_size		= અક્ષર મોટા કરો 
 decrease_font_size		= અક્ષર નાના કરો 
 increase_image_size		= ફોટો મોટો કરો 
