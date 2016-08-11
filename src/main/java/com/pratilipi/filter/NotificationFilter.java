@@ -54,10 +54,9 @@ public class NotificationFilter implements Filter {
 
 			notification.setState( NotificationState.READ );
 			dataAccessor.createOrUpdateNotification( notification );
-
-			chain.doFilter( request, response );
 		}
-		
+
+		chain.doFilter( request, response );
 
 	}
 
