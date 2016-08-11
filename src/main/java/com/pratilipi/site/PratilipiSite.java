@@ -54,7 +54,6 @@ import com.pratilipi.common.type.Website;
 import com.pratilipi.common.util.FacebookApi;
 import com.pratilipi.common.util.FreeMarkerUtil;
 import com.pratilipi.common.util.PratilipiFilter;
-import com.pratilipi.common.util.SystemProperty;
 import com.pratilipi.common.util.ThirdPartyResource;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
@@ -1271,14 +1270,27 @@ public class PratilipiSite extends HttpServlet {
 
 	private List<PratilipiApi.Response> toPratilipiListResponseObject( List<Long> pratilipiIdList ) 
 			throws UnexpectedServerException {
-		List<PratilipiApi.Response> pratilipiList = new ArrayList<>( pratilipiIdList.size() );
+
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		for( Long pratilipiId : pratilipiIdList ) {
-			Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-			Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
-			pratilipiList.add( new PratilipiApi.Response( PratilipiDataUtil.createPratilipiData( pratilipi, author ) ) );
-		}
-		return pratilipiList;
+
+		List<Pratilipi> pratilipiList = dataAccessor.getPratilipiList( pratilipiIdList );
+
+		List<Long> authorIdList = new ArrayList<Long>( pratilipiList.size() );
+		for( Pratilipi pratilipi : pratilipiList )
+			authorIdList.add( pratilipi.getAuthorId() );
+
+		List<Author> authorList = dataAccessor.getAuthorList( authorIdList );
+
+		Map<Long, Author> authorMap = new HashMap<Long, Author>( authorList.size() );
+		for( Author author : authorList )
+			authorMap.put( author.getId(), author );
+
+		List<PratilipiApi.Response> responsePratilipiList = new ArrayList<>( pratilipiList.size() );
+		for( Pratilipi pratilipi : pratilipiList )
+			responsePratilipiList.add( new PratilipiApi.Response( 
+					PratilipiDataUtil.createPratilipiData( pratilipi, authorMap.get( pratilipi.getAuthorId() ) ) ) );
+		
+		return responsePratilipiList;
 	}
 
 	private List<PratilipiApi.Response> toListResponseObject( List<PratilipiData> pratilipiDataList ) {
