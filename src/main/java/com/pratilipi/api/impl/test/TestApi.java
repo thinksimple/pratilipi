@@ -167,7 +167,7 @@ public class TestApi extends GenericApi {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
-		String appPropertyId = "Api.Test";
+		String appPropertyId = "Api.Test.4802785708081152";
 		AppProperty appProperty = dataAccessor.getAppProperty( appPropertyId );
 		if( appProperty == null ) {
 			appProperty = dataAccessor.newAppProperty( appPropertyId );
