@@ -48,16 +48,24 @@
 		<filter-name>AccessTokenFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	
-	
+
+	<filter>
+		<filter-name>NotificationFilter</filter-name>
+		<filter-class>com.pratilipi.filter.NotificationFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>NotificationFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
 	<servlet>
 		<servlet-name>ApiService</servlet-name>
 		<servlet-class>com.pratilipi.service.ApiService</servlet-class>
-		<load-on-startup>1</load-on-startup>
 		<init-param>
 			<param-name>Prefix</param-name>
 			<param-value>/api</param-value>
 		</init-param>
+		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ApiService</servlet-name>
