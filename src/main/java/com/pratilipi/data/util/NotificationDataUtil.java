@@ -87,13 +87,15 @@ public class NotificationDataUtil {
 				String authorName = pratilipiData.getAuthor().getName() == null
 						? pratilipiData.getAuthor().getNameEn()
 						: pratilipiData.getAuthor().getName();
+				String sourceUrl = pratilipiData.getPageUrl() != null
+						? pratilipiData.getPageUrl() + ( pratilipiData.getPageUrl().indexOf( '?' ) == -1 ? "?" : "&" ) 
+								+ RequestParameter.NOTIFICATION_ID.getName() + "=" + notification.getId()
+						: null;
 				notificationData.setMessage(
 						"<b>" + authorName + "</b> "
 						+ i18ns.get( "notification_has_published" )
 						+ " <b>" + pratilipiTitle + "</b>" );
-				notificationData.setSourceUrl( pratilipiData.getPageUrl()
-						+ ( pratilipiData.getPageUrl().indexOf( '?' ) == -1 ? "?" : "&" ) 
-						+ RequestParameter.NOTIFICATION_ID.getName() + "=" + notification.getId() );
+				notificationData.setSourceUrl( sourceUrl );
 			
 			} else 	if( notification.getType() == NotificationType.AUTHOR_FOLLOW ) {
 				
