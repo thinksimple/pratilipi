@@ -3,6 +3,7 @@ package com.pratilipi.api.impl.notification;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.shared.GenericResponse;
+import com.pratilipi.common.type.NotificationState;
 import com.pratilipi.data.client.NotificationData;
 
 @SuppressWarnings("serial")
@@ -17,6 +18,10 @@ public class NotificationApi extends GenericApi {
 
 		private String sourceUrl;
 
+		private NotificationState state;
+
+		private Long lastUpdatedMillis;
+
 
 		@SuppressWarnings("unused")
 		private Response() {}
@@ -25,6 +30,8 @@ public class NotificationApi extends GenericApi {
 			this.notificationId = notification.getId();
 			this.message = notification.getMessage();
 			this.sourceUrl = notification.getSourceUrl();
+			this.state = notification.getState();
+			this.lastUpdatedMillis = notification.getLastUpdatedDate().getTime();
 		}
 
 		public Long getNotificationId() {
@@ -37,6 +44,14 @@ public class NotificationApi extends GenericApi {
 
 		public String getSourceUrl() {
 			return sourceUrl;
+		}
+
+		public NotificationState getState() {
+			return state;
+		}
+
+		public Long getLastUpdatedMillis() {
+			return lastUpdatedMillis;
 		}
 
 	}

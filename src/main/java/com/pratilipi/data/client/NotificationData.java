@@ -1,5 +1,7 @@
 package com.pratilipi.data.client;
 
+import java.util.Date;
+
 import com.pratilipi.common.type.NotificationState;
 
 public class NotificationData {
@@ -11,8 +13,10 @@ public class NotificationData {
 	private String sourceUrl;
 	
 	private NotificationState state;
-	
-	
+
+	private Date lastUpdatedDate;
+
+
 	public NotificationData() {}
 	
 	public NotificationData( Long id ) {
@@ -52,4 +56,12 @@ public class NotificationData {
 		this.state = state;
 	}
 	
+	public Date getLastUpdatedDate() {
+		return lastUpdatedDate;
+	}
+
+	public void setLastUpdatedDate( Date lastUpdatedDate ) {
+		this.lastUpdatedDate = lastUpdatedDate;
+	}
+
 }
