@@ -177,7 +177,7 @@ public class TestApi extends GenericApi {
 		QueryResultIterator<AuditLogEntity> itr = ObjectifyService.ofy().load().type( AuditLogEntity.class )
 				.filter( "CREATION_DATE <=", appProperty.getValue() )
 				.order( "-CREATION_DATE" )
-				.limit( 5000 )
+				.limit( 2500 )
 				.iterator();
 		
 		while( itr.hasNext() ) {
