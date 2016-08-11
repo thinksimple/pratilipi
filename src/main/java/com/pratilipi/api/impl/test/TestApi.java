@@ -1,8 +1,10 @@
 package com.pratilipi.api.impl.test;
 
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.google.appengine.api.datastore.QueryResultIterator;
 import com.googlecode.objectify.ObjectifyService;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
@@ -12,15 +14,14 @@ import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.AuthorState;
-import com.pratilipi.common.type.I18nGroup;
 import com.pratilipi.common.type.Language;
-import com.pratilipi.data.DataAccessor;
-import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
-import com.pratilipi.data.type.I18n;
 import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.gae.AccessTokenEntity;
+import com.pratilipi.data.type.gae.AuditLogEntity;
 import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.PageEntity;
 import com.pratilipi.data.type.gae.PratilipiEntity;
@@ -160,7 +161,7 @@ public class TestApi extends GenericApi {
 		}*/
 
 		
-/*		QueryResultIterator<AuditLogEntity> itr = ObjectifyService.ofy().load().type( AuditLogEntity.class )
+		QueryResultIterator<AuditLogEntity> itr = ObjectifyService.ofy().load().type( AuditLogEntity.class )
 				.order( "-CREATION_DATE" )
 				.iterator();
 		
@@ -168,12 +169,12 @@ public class TestApi extends GenericApi {
 			AuditLog auditLog = itr.next();
 			if( auditLog.getAccessType() != AccessType.PRATILIPI_UPDATE )
 				continue;
-			if( auditLog.getEventDataNew().contains( "6627432686682112" ) )
+			if( auditLog.getEventDataNew().contains( "4802785708081152" ) )
 				logger.log( Level.INFO, auditLog.getId() + "" );
-		}*/
+		}
 		
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		/*DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		I18n i18n_1 = dataAccessor.newI18n( "notification_and" );
 		I18n i18n_2 = dataAccessor.newI18n( "notification_has_followed" );
 		I18n i18n_3 = dataAccessor.newI18n( "notification_have_followed" );
@@ -244,7 +245,7 @@ public class TestApi extends GenericApi {
 		dataAccessor.createOrUpdateI18n( i18n_2 );
 		dataAccessor.createOrUpdateI18n( i18n_3 );
 		dataAccessor.createOrUpdateI18n( i18n_4 );
-		dataAccessor.createOrUpdateI18n( i18n_5 );
+		dataAccessor.createOrUpdateI18n( i18n_5 );*/
 		
 		return new GenericResponse();
 		
