@@ -178,7 +178,7 @@
 					return;
 
 				var author_summary = document.getElementById( "author-summary" );
-				jQuery( author_summary ).html( this.summary );
+				jQuery( author_summary ).html( this.summary.replace(/\n/g, "<br />") );
 				
 				// Calculating summary height
 				var height = 0;
