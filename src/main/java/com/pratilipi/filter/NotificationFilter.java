@@ -54,8 +54,14 @@ public class NotificationFilter implements Filter {
 			logger.log( Level.INFO, "UserId from AccessToken = " + userId );
 			logger.log( Level.INFO, "UserId from Notification Entity = " + notification.getUserId() );
 
-			/* Guest user or user doesn't have access */
-			if( userId == null || userId == 0L || userId != notification.getUserId() ) {
+			/* Guest user */
+			if( userId == null || userId == 0L )  {
+				dispatchResposne( response, new InvalidArgumentException( "User is not logged in to access notification." ) );
+				return;
+			}
+
+			/* user doesn't have access */
+			if( ! userId.equals( notification.getUserId() ) ) {
 				dispatchResposne( response, new InvalidArgumentException( "User does not have access to notification." ) );
 				return;
 			}
