@@ -58,7 +58,7 @@ author_following_heading		= અનુસરણ
 author_following_count			= અનુસરણ
 author_no_following				= અનુસરણ સંખ્યા શૂન્ય 
 author_follow_members			= સદસ્ય
-author_cannot_follow_yourself	=  તમારા વિશે
+author_cannot_follow_yourself	=  વ્યક્તિગત 
 author_settings_require_first_name	= પ્રથમ નામ લખો
 author_settings_require_language	= ભાષા પસંદ કરો
 
