@@ -2,6 +2,8 @@ package com.pratilipi.filter;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -22,6 +24,9 @@ import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.type.Notification;
 
 public class NotificationFilter implements Filter {
+
+	private static final Logger logger =
+			Logger.getLogger( NotificationFilter.class.getName() );
 
 	@Override
 	public void init( FilterConfig filterConfig ) throws ServletException {	}
@@ -46,6 +51,9 @@ public class NotificationFilter implements Filter {
 			Notification notification = dataAccessor.getNotification( notificationId );
 
 			Long userId = AccessTokenFilter.getAccessToken().getUserId();
+			logger.log( Level.INFO, "UserId from AccessToken = " + userId );
+			logger.log( Level.INFO, "UserId from Notification Entity = " + notification.getUserId() );
+
 			/* Guest user or user doesn't have access */
 			if( userId == null || userId == 0L || userId != notification.getUserId() ) {
 				dispatchResposne( response, new InvalidArgumentException( "User does not have access to notification." ) );
