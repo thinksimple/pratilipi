@@ -266,7 +266,7 @@
 					<template is="dom-if" if="{{ showNotificationCount }}">
 						<div class="button-holder dropdown" style="margin-top: 19px;">
 							<div style="display: inline-block">
-								<iron-icon id="header-notification-icon-badge" icon="social:notifications" on-click="_showNotifications"></iron-icon>
+								<iron-icon id="header-notification-icon-badge" icon="social:notifications" on-click="_notifications"></iron-icon>
 								<paper-badge for="header-notification-icon-badge" label="{{ newNotificationCount }}" class="pratilipi-red"></paper-badge>
 								<pratilipi-notification-popup popup-notification-list="[[popupNotificationList]]"></pratilipi-notification-popup>							
 							</div>
@@ -274,7 +274,7 @@
 					</template>
 					<template is="dom-if" if="{{ !showNotificationCount }}">
 						<div class="button-holder dropdown">
-							<iron-icon icon="social:notifications" on-click="_showNotifications"></iron-icon>
+							<iron-icon icon="social:notifications" on-click="_notifications"></iron-icon>
 						</div>
 						<pratilipi-notification-popup popup-notification-list="[[popupNotificationList]]"></pratilipi-notification-popup>
 					</template>
