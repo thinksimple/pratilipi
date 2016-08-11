@@ -266,15 +266,15 @@
 					<template is="dom-if" if="{{ showNotificationCount }}">
 						<div class="button-holder dropdown" style="margin-top: 19px;">
 							<div style="display: inline-block">
-								<iron-icon id="notification-dropdown" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" icon="social:notifications"></iron-icon>
-								<paper-badge for="notification-dropdown" label="{{ newNotificationCount }}" class="pratilipi-red"></paper-badge>
+								<iron-icon id="header-notification-icon-badge" icon="social:notifications" on-click="_showNotifications"></iron-icon>
+								<paper-badge for="header-notification-icon-badge" label="{{ newNotificationCount }}" class="pratilipi-red"></paper-badge>
 								<pratilipi-notification-popup popup-notification-list="[[popupNotificationList]]"></pratilipi-notification-popup>							
 							</div>
 						</div>
 					</template>
 					<template is="dom-if" if="{{ !showNotificationCount }}">
 						<div class="button-holder dropdown">
-							<iron-icon id="notification-dropdown" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" icon="social:notifications"></iron-icon>
+							<iron-icon icon="social:notifications" on-click="_showNotifications"></iron-icon>
 						</div>
 						<pratilipi-notification-popup popup-notification-list="[[popupNotificationList]]"></pratilipi-notification-popup>
 					</template>
@@ -407,6 +407,10 @@
 					document.querySelector( 'pratilipi-user' ).logIn( true );
 				else
 					window.location.href = "/notifications";
+			},
+			
+			_showNotifications: function() {
+				document.querySelector('pratilipi-notification-popup')._showDropdown();
 			},
 
 			_openMenuNavigation: function() {

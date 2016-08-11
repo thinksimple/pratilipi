@@ -4,11 +4,14 @@
 	</style>
 	
 	<template>
-	  <ul class="dropdown-menu" aria-labelledby="notification-dropdown">
-	      <template is="dom-repeat" items="{{popupNotificationList}}">
-	      	<li><a href="{{item.sourceUrl}}">{{item.message}}</a></li>
-		  </template>
-	  </ul>
+		<div class="dropdown">
+			<div class="dropdown-toggle" id="notification-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></div>
+			  <ul class="dropdown-menu" aria-labelledby="notification-dropdown">
+			      <template is="dom-repeat" items="{{popupNotificationList}}">
+			      	<li><a href="{{item.sourceUrl}}">{{item.message}}</a></li>
+				  </template>
+			  </ul>
+		</div>  
 	</template>
 
 	<script>
@@ -23,9 +26,13 @@
 			        notify: true
 			      }
 			},
+			_showDropdown: function() {
+				document.querySelector( '#notification-dropdown' ).dropdown('toggle');
+			}
 			
 			attached: function() {
 			},
+			
 			
 		});
 
