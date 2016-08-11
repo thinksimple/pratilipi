@@ -1,5 +1,6 @@
 package com.pratilipi.api.impl.test;
 
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,6 +18,9 @@ import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.Language;
+import com.pratilipi.data.DataAccessor;
+import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.User;
@@ -161,8 +165,19 @@ public class TestApi extends GenericApi {
 		}*/
 
 		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		
+		String appPropertyId = "Api.Test";
+		AppProperty appProperty = dataAccessor.getAppProperty( appPropertyId );
+		if( appProperty == null ) {
+			appProperty = dataAccessor.newAppProperty( appPropertyId );
+			appProperty.setValue( new Date() );
+		}
+		
 		QueryResultIterator<AuditLogEntity> itr = ObjectifyService.ofy().load().type( AuditLogEntity.class )
+				.filter( "CREATION_DATE <=", appProperty.getValue() )
 				.order( "-CREATION_DATE" )
+				.limit( 10000 )
 				.iterator();
 		
 		while( itr.hasNext() ) {
@@ -171,8 +186,10 @@ public class TestApi extends GenericApi {
 				continue;
 			if( auditLog.getEventDataNew().contains( "4802785708081152" ) )
 				logger.log( Level.INFO, auditLog.getId() + "" );
+			appProperty.setValue( auditLog.getCreationDate() );
 		}
 		
+		appProperty = dataAccessor.createOrUpdateAppProperty( appProperty );
 		
 		/*DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		I18n i18n_1 = dataAccessor.newI18n( "notification_and" );
