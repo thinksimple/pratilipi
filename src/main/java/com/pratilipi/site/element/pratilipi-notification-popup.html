@@ -4,6 +4,11 @@
 	</style>
 	
 	<template>
+	  <ul class="dropdown-menu" aria-labelledby="notification-dropdown">
+	      <template is="dom-repeat" items="{{popupNotificationList}}">
+	      	<li><a href="{{item.sourceUrl}}">{{item.message}}</a></li>
+		  </template>
+	  </ul>
 	</template>
 
 	<script>
@@ -13,6 +18,10 @@
 			is: 'pratilipi-notification-popup',
 			
 			properties: {
+				popupNotificationList: {
+			        type: Array,
+			        notify: true
+			      }
 			},
 			
 			attached: function() {

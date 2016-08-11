@@ -2,10 +2,10 @@
 	function confirmAndChangePratilipiState(bookId, state) {
 		var confirm_dialog;
 		if( state == "DELETED" ) {
-			confirm_dialog = "Are you sure you want to delete this draft?";
+			confirm_dialog = "${ _strings.pratilipi_confirm_delete_content }";
 		}
 		else if( state == "DRAFTED" ) {
-			confirm_dialog = "Are you sure you want to move this to drafts?";
+			confirm_dialog = "${ _strings.pratilipi_confirm_move_to_drafts_body }";
 		}
 		
 		var confirm_ans = window.confirm( confirm_dialog );

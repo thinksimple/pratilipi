@@ -264,17 +264,19 @@
 						</a>
 					</div>
 					<template is="dom-if" if="{{ showNotificationCount }}">
-						<div class="button-holder" style="margin-top: 19px;">
+						<div class="button-holder dropdown" style="margin-top: 19px;">
 							<div style="display: inline-block">
-								<iron-icon id="header-notification-icon-badge" on-click="_notifications" icon="social:notifications"></iron-icon>
-								<paper-badge for="header-notification-icon-badge" label="{{ newNotificationCount }}" class="pratilipi-red"></paper-badge>
+								<iron-icon id="notification-dropdown" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" icon="social:notifications"></iron-icon>
+								<paper-badge for="notification-dropdown" label="{{ newNotificationCount }}" class="pratilipi-red"></paper-badge>
+								<pratilipi-notification-popup popup-notification-list="[[popupNotificationList]]"></pratilipi-notification-popup>							
 							</div>
 						</div>
 					</template>
 					<template is="dom-if" if="{{ !showNotificationCount }}">
-						<div class="button-holder">
-							<iron-icon on-click="_notifications" icon="social:notifications"></iron-icon>
+						<div class="button-holder dropdown">
+							<iron-icon id="notification-dropdown" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" icon="social:notifications"></iron-icon>
 						</div>
+						<pratilipi-notification-popup popup-notification-list="[[popupNotificationList]]"></pratilipi-notification-popup>
 					</template>
 					<div class="button-holder sign-in-text">
 						<template is="dom-if" if="{{ isGuest }}">
@@ -326,6 +328,7 @@
 		<iron-ajax
 				id="NotificationListApi"
 				url="/api/notification/list"
+				params='{"resultCount": 5}'
 				method="GET"
 				content-type="application/json"
 				handle-as="json"
@@ -351,7 +354,8 @@
 				showNotificationCount: { type: Boolean, value: false },
 				writeButtonActive: { type: Boolean, value: false },
 				languageMap: { type: Object },
-				languageArray: { type: Array, value: function() { return []; } }
+				languageArray: { type: Array, value: function() { return []; } },
+				popupNotificationList: { type: Array, value: function() { return []; } }
 			},
 			
 			_userChanged: function() {
@@ -435,11 +439,15 @@
 				this.$.NotificationListApi.generateRequest();
 			},
 
-			_notificationListApiResponse: function( response ) {
-				this.set( 'newNotificationCount', response.detail.response.newNotificationCount );
-				this.set( 'showNotificationCount', response.detail.response != null
-						&& response.detail.response.newNotificationCount != null 
-						&& response.detail.response.newNotificationCount > 0 );
+			_notificationListApiResponse: function( ajaxResponse ) {
+				var response = ajaxResponse.detail.response;
+				this.set( 'newNotificationCount', response.newNotificationCount );
+				if( response != null && response.notificationList != null  ) {
+					this.set('popupNotificationList', response.notificationList);
+				}
+				this.set( 'showNotificationCount', response != null
+						&& response.newNotificationCount != null 
+						&& newNotificationCount > 0 );
 			}
 			
 		});
