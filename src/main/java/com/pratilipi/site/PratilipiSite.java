@@ -1285,10 +1285,14 @@ public class PratilipiSite extends HttpServlet {
 		for( Author author : authorList )
 			authorMap.put( author.getId(), author );
 
+		Map<Long, Page> pageIdList = dataAccessor.getPages( PageType.PRATILIPI, pratilipiIdList );
+
 		List<PratilipiApi.Response> responsePratilipiList = new ArrayList<>( pratilipiList.size() );
 		for( Pratilipi pratilipi : pratilipiList )
 			responsePratilipiList.add( new PratilipiApi.Response( 
-					PratilipiDataUtil.createPratilipiData( pratilipi, authorMap.get( pratilipi.getAuthorId() ) ) ) );
+							PratilipiDataUtil.createPratilipiData( pratilipi, 
+												pageIdList.get( pratilipi.getId() ), 
+												authorMap.get( pratilipi.getAuthorId() ), false ) ) );
 		
 		return responsePratilipiList;
 	}
