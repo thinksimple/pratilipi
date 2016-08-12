@@ -5,7 +5,7 @@ import java.util.List;
 import com.googlecode.objectify.ObjectifyService;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
-import com.pratilipi.api.annotation.Get;
+import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
@@ -27,9 +27,9 @@ import com.pratilipi.data.type.gae.UserPratilipiEntity;
 @Bind( uri = "/debug" )
 public class DebugApi extends GenericApi {
 	
-	public static class GetRequest extends GenericRequest {
+	public static class PostRequest extends GenericRequest {
 		Long deleteUserId;
-		String email;
+		String emailId;
 		String facebookId;
 	}
 	
@@ -44,17 +44,17 @@ public class DebugApi extends GenericApi {
 	}
 	
 	
-	@Get
-	public GenericResponse get( GetRequest request ) throws InsufficientAccessException, InvalidArgumentException, UnexpectedServerException {
+	@Post
+	public GenericResponse post( PostRequest request ) throws InsufficientAccessException, InvalidArgumentException, UnexpectedServerException {
 		
-		if( request.email != null || request.facebookId != null ) {
+		if( request.emailId != null || request.facebookId != null ) {
 			
 			List<UserEntity> userList = null;
 			
-			if( request.email != null ) {
+			if( request.emailId != null ) {
 				userList = ObjectifyService.ofy().load()
 						.type( UserEntity.class )
-						.filter( "EMAIL", request.email )
+						.filter( "EMAIL", request.emailId )
 						.filter( "STATE !=", UserState.DELETED )
 						.order( "STATE" )
 						.order( "SIGN_UP_DATE" )
