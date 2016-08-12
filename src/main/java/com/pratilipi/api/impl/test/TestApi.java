@@ -1,11 +1,18 @@
 package com.pratilipi.api.impl.test;
 
+import java.io.IOException;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.appengine.api.datastore.QueryResultIterator;
+import com.google.appengine.tools.cloudstorage.GcsService;
+import com.google.appengine.tools.cloudstorage.GcsServiceFactory;
+import com.google.appengine.tools.cloudstorage.ListOptions;
+import com.google.appengine.tools.cloudstorage.ListResult;
+import com.google.appengine.tools.cloudstorage.RetryParams;
 import com.googlecode.objectify.ObjectifyService;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
@@ -16,21 +23,12 @@ import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AccessType;
-import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.AuditLog;
-import com.pratilipi.data.type.Author;
-import com.pratilipi.data.type.User;
-import com.pratilipi.data.type.gae.AccessTokenEntity;
 import com.pratilipi.data.type.gae.AuditLogEntity;
-import com.pratilipi.data.type.gae.AuthorEntity;
-import com.pratilipi.data.type.gae.PageEntity;
-import com.pratilipi.data.type.gae.PratilipiEntity;
-import com.pratilipi.data.type.gae.UserAuthorEntity;
-import com.pratilipi.data.type.gae.UserPratilipiEntity;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/test" )
@@ -41,10 +39,6 @@ public class TestApi extends GenericApi {
 	
 	
 	public static class GetRequest extends GenericRequest {
-		Long deleteUserId;
-		String email;
-		String facebookId;
-		
 		Long pratilipiId;
 		Integer pageNo;
 		String url;
@@ -64,7 +58,7 @@ public class TestApi extends GenericApi {
 	
 	
 	@Get
-	public GenericResponse get( GetRequest request ) throws InsufficientAccessException, InvalidArgumentException, UnexpectedServerException {
+	public GenericResponse get( GetRequest request ) throws InsufficientAccessException, InvalidArgumentException, UnexpectedServerException, IOException {
 		
 /*		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( 5830554839678976L );
@@ -89,83 +83,7 @@ public class TestApi extends GenericApi {
 		appProperty = dataAccessor.createOrUpdateAppProperty( appProperty ); */
 		
 		
-/*		if( request.email != null || request.facebookId != null ) {
-			
-			List<UserEntity> userList = null;
-			
-			if( request.email != null ) {
-				userList = ObjectifyService.ofy().load()
-						.type( UserEntity.class )
-						.filter( "EMAIL", request.email )
-						.filter( "STATE !=", UserState.DELETED )
-						.order( "STATE" )
-						.order( "SIGN_UP_DATE" )
-						.list();
-			
-			} else if( request.facebookId != null ) {
-				userList = ObjectifyService.ofy().load()
-						.type( UserEntity.class )
-						.filter( "FACEBOOK_ID", request.facebookId )
-						.filter( "STATE !=", UserState.DELETED )
-						.order( "STATE" )
-						.order( "SIGN_UP_DATE" )
-						.list();
-			}
-		
-			if( userList.size() == 0 )
-				return new Response( "Could not find user for given email/facebook id !" );
-			
-			if( userList.size() == 1 )
-				return new Response( "Everythig looks well !" );
-			
-			User xUser = null;
-			for( User user : userList )
-				if( _canDelete( user ) )
-					xUser = user;
-			
-			if( xUser == null )
-				return new Response( "Its complicated !" );
-			
-			return new Response( "User (" + xUser.getId() + ") of " + userList.size() + " users can be deleted !" );
-			
-		} else if( request.deleteUserId != null ) {
-			
-			List<AuthorEntity> authorList = ObjectifyService.ofy().load()
-					.type( AuthorEntity.class )
-					.filter( "USER_ID", request.deleteUserId )
-					.filter( "STATE !=", AuthorState.DELETED )
-					.order( "STATE" )
-					.order( "REGISTRATION_DATE" )
-					.list();
-			
-			for( Author author : authorList ) {
-				List<PageEntity> pageList = ObjectifyService.ofy().load()
-						.type( PageEntity.class )
-						.filter( "PAGE_TYPE", "AUTHOR" )
-						.filter( "PRIMARY_CONTENT_ID", author.getId() )
-						.list();
-				ObjectifyService.ofy().delete().entities( pageList );
-				author.setState( AuthorState.DELETED );
-				ObjectifyService.ofy().save().entity( author );
-			}
-			
-			User user = ObjectifyService.ofy().load()
-					.type( UserEntity.class )
-					.id( request.deleteUserId )
-					.now();
-			user.setState( UserState.DELETED );
-			ObjectifyService.ofy().save().entity( user );
-			
-			return new Response( "User (" + request.deleteUserId + ") deleted !" );
-
-		} else {
-			
-			return new GenericResponse();
-			
-		}*/
-
-		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		/*DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
 		String appPropertyId = "Api.Test.4802785708081152";
 		AppProperty appProperty = dataAccessor.getAppProperty( appPropertyId );
@@ -189,7 +107,7 @@ public class TestApi extends GenericApi {
 			appProperty.setValue( auditLog.getCreationDate() );
 		}
 		
-		appProperty = dataAccessor.createOrUpdateAppProperty( appProperty );
+		appProperty = dataAccessor.createOrUpdateAppProperty( appProperty );*/
 		
 		/*DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		I18n i18n_1 = dataAccessor.newI18n( "notification_and" );
@@ -264,56 +182,25 @@ public class TestApi extends GenericApi {
 		dataAccessor.createOrUpdateI18n( i18n_4 );
 		dataAccessor.createOrUpdateI18n( i18n_5 );*/
 		
+		
+		GcsService gcsService =
+				GcsServiceFactory.createGcsService( RetryParams.getDefaultInstance() );
+		
+		ListOptions.Builder options = new ListOptions.Builder();
+		options.setPrefix( "pratilipi/" );
+		
+		ListResult result = gcsService.list( "static.pratilipi.com", options.build() );
+		
+		while( result.hasNext() ) {
+			String fileName = result.next().getName();
+			if( fileName.indexOf( "/content/" ) == - 1)
+				logger.log( Level.INFO, result.next().getName() );
+			else
+				logger.log( Level.WARNING, result.next().getName() );
+		}
+		
+		
 		return new GenericResponse();
-		
-	}
-	
-	private boolean _canDelete( User user ) {
-		
-		List<AuthorEntity> authorList = ObjectifyService.ofy().load()
-				.type( AuthorEntity.class )
-				.filter( "USER_ID", user.getId() )
-				.filter( "STATE !=", AuthorState.DELETED )
-				.order( "STATE" )
-				.order( "REGISTRATION_DATE" )
-				.list();
-		
-		List<UserPratilipiEntity> userPratilipiList = ObjectifyService.ofy().load()
-				.type( UserPratilipiEntity.class )
-				.filter( "USER_ID", user.getId() )
-				.list();
-		
-		List<UserAuthorEntity> userAuthorList = ObjectifyService.ofy().load()
-				.type( UserAuthorEntity.class )
-				.filter( "USER_ID", user.getId() )
-				.list();
-		
-		List<AccessTokenEntity> accessTokenList = ObjectifyService.ofy().load()
-				.type( AccessTokenEntity.class )
-				.filter( "USER_ID", user.getId() )
-				.list();
-		
-		return ( authorList.size() == 0 || ( authorList.size() == 1 && _canDelete( authorList.get( 0 ) ) ) )
-				&& userPratilipiList.size() == 0
-				&& userAuthorList.size() == 0
-				&& accessTokenList.size() == 0;
-		
-	}
-	
-	private boolean _canDelete( Author author ) {
-		
-		List<PratilipiEntity> pratilipiList = ObjectifyService.ofy().load()
-				.type( PratilipiEntity.class )
-				.filter( "AUTHOR_ID", author.getId() )
-				.list();
-		
-		List<PageEntity> pageList = ObjectifyService.ofy().load()
-				.type( PageEntity.class )
-				.filter( "PAGE_TYPE", "AUTHOR" )
-				.filter( "PRIMARY_CONTENT_ID", author.getId() )
-				.list();
-		
-		return pratilipiList.size() == 0 && pageList.size() <= 1;
 		
 	}
 	
