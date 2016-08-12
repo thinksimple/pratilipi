@@ -24,6 +24,9 @@
 		.notification:hover {
 			border: 1px solid #c4c4c4;
 		}
+		.notification-unread-state {
+			background-color: #e4e4e4;
+		}
 	</style>
 
 	<template>
@@ -42,15 +45,21 @@
 				notification: { type: Object, observer: "_notificationObserver" },
 				notificationId: { type: String },
 				message: { type: String },
-				sourceUrl: { type: String }
+				sourceUrl: { type: String },
+				state: {type: String}
 			},
 
 			_notificationObserver: function() {
 				this.set( 'notificationId', this.notification.notificationId );
 				this.set( 'message', this.notification.message );
 				this.set( 'sourceUrl', this.notification.sourceUrl );
+				this.set( 'state', this.notification.state );
 
 				jQuery( this.querySelector( '.notification-message' ) ).html( this.message );
+				
+				if( this.state == "UNREAD" ) {
+					jQuery( this.querySelector( '.notification' ) ).addClass( "notification-unread-state" );
+				}
 			},
 
 			_redirectToActionEvent: function() {
