@@ -70,7 +70,9 @@
 			</paper-card>
 		</template>
 		<template is="dom-repeat" items="{{ notificationList }}" as="notification">
-			<pratilipi-notification-snippet notification="{{ notification }}"></pratilipi-notification-snippet>
+			<template is="dom-if" if="{{ notification.message }}">
+				<pratilipi-notification-snippet notification="{{ notification }}"></pratilipi-notification-snippet>
+			</template>
 		</template>
 		<template is="dom-if" if="{{ hasMore }}">
 			<template is="dom-if" if="{{ !isLoading }}">

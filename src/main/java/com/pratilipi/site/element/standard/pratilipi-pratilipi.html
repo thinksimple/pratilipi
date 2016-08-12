@@ -390,9 +390,9 @@
 				this.set( 'showLastUpdatedDate', pratilipi.lastUpdatedMillis != null ? true : false );
 				this.set( 'lastUpdatedDate', pratilipi.lastUpdatedMillis != null ? convertDate( pratilipi.lastUpdatedMillis ) : null );
 				this.set( 'hasAccessToUpdate', pratilipi.hasAccessToUpdate );
-				this.set( 'canMoveToDrafts', pratilipi.state != null && pratilipi.state != "DRAFTED" );
-				this.set( 'canPublish', pratilipi.state != null && pratilipi.state != "PUBLISHED" );
-				this.set( 'canDelete', pratilipi.state != null && pratilipi.state != "DELETED" && this.state != "PUBLISHED" && false );
+				this.set( 'canMoveToDrafts', pratilipi.state != null && pratilipi.state != "DRAFTED" && pratilipi.hasAccessToUpdate );
+				this.set( 'canPublish', pratilipi.state != null && pratilipi.state != "PUBLISHED" && pratilipi.hasAccessToUpdate );
+				this.set( 'canDelete', pratilipi.state != null && pratilipi.state != "DELETED" && this.state != "PUBLISHED" && false && pratilipi.hasAccessToUpdate );
 				<#-- Explicitly setting canDelete to false - awaiting business call -->
 				<#-- Display / Dont display Summary -->
 				if( pratilipi.summary == null || pratilipi.summary.trim() == "" ) { 

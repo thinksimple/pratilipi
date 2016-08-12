@@ -8,7 +8,7 @@
 		<#assign mainPage="pratilipi-notification-page">
 		<#include "meta/Head.ftl">
 
-		<link rel='import' href='/elements.${lang}/pratilipi-notification-page.html?20160810'>
+		<link rel='import' href='/elements.${lang}/pratilipi-notification-page.html?20160812'>
 	</head>
 
 	<body>
