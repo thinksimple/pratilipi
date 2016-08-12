@@ -12,11 +12,11 @@
 	      				window.location.reload();
 	      			}
 	      			else {
-	      				alert("Sorry, something went wrong with the request.");
+	      				alert( "${ _strings.server_error_message }" );
 	      			}
 	    		},
 	            fail:function(response){
-					alert("Sorry, we could not process your request.");
+					alert( "${ _strings.server_error_message }" );
 	    		}			    		
 	    		
 	    });
