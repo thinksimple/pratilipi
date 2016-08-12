@@ -18,20 +18,20 @@
 	<#-- Show user review on top iff userpratilipi.reviewState != "DELETED" && userpratilipi.reviewState != "BLOCKED" -->
 	<#if userpratilipi.reviewState != "DELETED" && userpratilipi.reviewState != "BLOCKED">
 		<#assign review=userpratilipi>
-		<#include "../element/pratilipi-review.ftl">
+		<#include "pratilipi-review.ftl">
 	</#if>
 	
 	<#-- Check and run a loop to remove user's review from review List -->
 	<#list reviewList as review>
 		<#if review.getId() != userpratilipi.getId()>
-			<#include "../element/pratilipi-review.ftl">
+			<#include "pratilipi-review.ftl">
 		</#if>
 	</#list>
 
 <#else> <#-- User Doesn't have review -->
 	<#if reviewList?has_content>
 		<#list reviewList as review>
-			<#include "../element/pratilipi-review.ftl">
+			<#include "pratilipi-review.ftl">
 		</#list>
 	</#if>
 </#if>

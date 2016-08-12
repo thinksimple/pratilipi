@@ -57,7 +57,7 @@
 				</div>	
 			</div>
 		</div>
-		<#include "../element/pratilipi-footer.ftl">
+		<#include "../element/basic/pratilipi-footer.ftl">
 	</body>
 	
 </html>

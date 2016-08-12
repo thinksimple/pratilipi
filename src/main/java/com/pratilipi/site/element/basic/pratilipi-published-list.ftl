@@ -13,9 +13,9 @@
 <div class="clearfix"></div>
 <hr class="pratilipi-margin-top-2">	
 
-<#include "../element/pratilipi-card-list.ftl">
+<#include "pratilipi-card-list.ftl">
 
 <#-- Add page navigation -->
 <#assign currentPage = pratilipiListPageCurr>
 <#assign maxPage = pratilipiListPageMax>
-<#include "../element/pratilipi-page-navigation.ftl">
+<#include "pratilipi-page-navigation.ftl">

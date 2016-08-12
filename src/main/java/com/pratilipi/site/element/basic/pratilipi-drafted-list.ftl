@@ -18,4 +18,4 @@
 <#-- Add page navigation -->
 	<#assign currentPage = pratilipiListPageCurr>
 	<#assign maxPage = pratilipiListPageMax>
-	<#include "../element/pratilipi-page-navigation.ftl">
+	<#include "pratilipi-page-navigation.ftl">

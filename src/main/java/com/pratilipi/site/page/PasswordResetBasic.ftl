@@ -78,7 +78,7 @@
 	</head>
 
 	<body>
-		<#include "../element/pratilipi-header.ftl">
+		<#include "../element/basic/pratilipi-header.ftl">
 		<div class="parent-container">
 			<div class="container">
 
@@ -108,7 +108,7 @@
 				
 			</div>
 		</div>
-		<#include "../element/pratilipi-footer.ftl">
+		<#include "../element/basic/pratilipi-footer.ftl">
 	</body>
 	
 </html>

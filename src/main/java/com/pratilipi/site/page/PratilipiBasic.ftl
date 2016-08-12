@@ -88,7 +88,7 @@
 	</head>
 	
 	<body>
-		<#include "../element/pratilipi-header.ftl">
+		<#include "../element/basic/pratilipi-header.ftl">
 		<div class="parent-container">
 			<div class="container">
 				
@@ -115,19 +115,19 @@
 				<#-- Show review-input if reviewParam == write. Else if reviewParam == list, show complete review-list with page numbers
 						If reviewParam = pratilipi, show pratilipi page and few reviews. -->
 				<#if reviewParam == "write">
-					<#include "../element/pratilipi-review-input.ftl">
+					<#include "../element/basic/pratilipi-review-input.ftl">
 				<#elseif reviewParam == "reply">
-					<#include "../element/pratilipi-comment-input.ftl">
+					<#include "../element/basic/pratilipi-comment-input.ftl">
 				<#elseif reviewParam == "list">
-					<#include "../element/pratilipi-review-list.ftl">
+					<#include "../element/basic/pratilipi-review-list.ftl">
 					<#-- Add page navigation -->
 					<#assign currentPage = reviewListPageCurr>
 					<#assign maxPage = reviewListPageMax>
 					<#assign prefix = "?review=list&" >
-					<#include "../element/pratilipi-page-navigation.ftl">
+					<#include "../element/basic/pratilipi-page-navigation.ftl">
 				<#elseif reviewParam == "pratilipi">
-					<#include "../element/pratilipi-pratilipi.ftl">
-					<#include "../element/pratilipi-review-list.ftl">
+					<#include "../element/basic/pratilipi-pratilipi.ftl">
+					<#include "../element/basic/pratilipi-review-list.ftl">
 					<#if pratilipi.reviewCount?? >
 						<#if pratilipi.reviewCount gt 10>
 							<div style="text-align: center; margin: 20px auto;">
@@ -140,7 +140,7 @@
 				</#if>
 			</div>
 		</div>
-		<#include "../element/pratilipi-footer.ftl">
+		<#include "../element/basic/pratilipi-footer.ftl">
 	</body>
 	
 </html>

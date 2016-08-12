@@ -170,7 +170,7 @@
 
 	<body ondragstart="return false" onselectstart="return false" onContextMenu="return false" onkeydown="if ((arguments[0] || window.event).ctrlKey) return false">
 		<#if action != "index" && action != "share" && action != "setting">
-			<#include "../element/pratilipi-reader-header.ftl">
+			<#include "../element/basic/pratilipi-reader-header.ftl">
 		<#else>
 			<div class="secondary-500 pratilipi-shadow" style="display: block; padding: 5px; height: 64px;">
 				<a style="cursor: pointer; position: absolute; right: 16px; top: 20px;" onClick="history.back();return false;">
@@ -181,21 +181,21 @@
 		<div style="padding-top: 0;" class="parent-container">
 			<div class="container">
 				<#if action == "index">
-					<#include "../element/pratilipi-reader-navigation.ftl">
+					<#include "../element/basic/pratilipi-reader-navigation.ftl">
 				<#elseif action == "share">
-					<#include "../element/pratilipi-reader-social.ftl">
+					<#include "../element/basic/pratilipi-reader-social.ftl">
 				<#elseif action == "setting">
-					<#include "../element/pratilipi-reader-setting.ftl">
+					<#include "../element/basic/pratilipi-reader-setting.ftl">
 				<#else>
-					<#include "../element/pratilipi-reader-content.ftl">
+					<#include "../element/basic/pratilipi-reader-content.ftl">
 				</#if>
 				
 			</div>
 		</div>
 		<#if action != "index" && action != "share" && action != "setting">
-			<#include "../element/pratilipi-reader-footer.ftl">
+			<#include "../element/basic/pratilipi-reader-footer.ftl">
 		</#if>
-		<#include "../element/pratilipi-footer.ftl">
+		<#include "../element/basic/pratilipi-footer.ftl">
 	</body>
 	
 </html>

@@ -9,7 +9,7 @@
 	</head>
 
 	<body>
-		<#include "../element/pratilipi-header.ftl">
+		<#include "../element/basic/pratilipi-header.ftl">
 		<div class="parent-container">
 			<div class="container">
 				<div class="pratilipi-shadow secondary-500 box">
@@ -34,7 +34,7 @@
 						<div class="clearfix"></div>
 						<hr>				
 						<#if followingList.getAuthorList()?has_content>
-							<#include "../element/pratilipi-follow-author-card.ftl">
+							<#include "../element/basic/pratilipi-follow-author-card.ftl">
 							<#list followingList.getAuthorList() as local_author>
 								<#if !local_author.getUser().getId()?? || ( user.getId()?? && ( user.getId() != local_author.getUser().getId() ) ) >
 									<#assign can_follow_boolean = "true">
@@ -47,7 +47,7 @@
 							<#-- Add page navigation -->
 								<#assign currentPage = currPage>
 								<#assign maxPage = maxPage>
-								<#include "../element/pratilipi-page-navigation.ftl">
+								<#include "../element/basic/pratilipi-page-navigation.ftl">
 						<#else>
 							<div style="padding: 50px 10px;" class="secondary-500 pratilipi-shadow box">
 								<img style="width: 48px; height: 48px; margin: 0px auto 20px auto; display: block;" 
@@ -60,7 +60,7 @@
 				
 			</div>
 		</div>
-		<#include "../element/pratilipi-footer.ftl">
+		<#include "../element/basic/pratilipi-footer.ftl">
 	</body>
 	<script>
 		function getUrlParameter( key ) {

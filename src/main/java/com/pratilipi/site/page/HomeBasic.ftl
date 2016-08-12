@@ -47,7 +47,7 @@
 	</head>
 
 	<body>
-		<#include "../element/pratilipi-header.ftl">
+		<#include "../element/basic/pratilipi-header.ftl">
 		<div class="parent-container">
 			<div class="container">
 				<#list sections as section>
@@ -58,13 +58,13 @@
 						</#if>
 					</div>
 					<#list section["pratilipiList"] as pratilipi>
-						<#include "../element/pratilipi-pratilipi-card.ftl">
+						<#include "../element/basic/pratilipi-pratilipi-card.ftl">
 					</#list>
 					<div style="min-height: 10px;"></div>
 				</#list>
 			</div>
 		</div>
-		<#include "../element/pratilipi-footer.ftl">
+		<#include "../element/basic/pratilipi-footer.ftl">
 	</body>
 	
 </html>

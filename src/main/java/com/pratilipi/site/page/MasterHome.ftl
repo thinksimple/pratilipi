@@ -187,9 +187,9 @@
 
 <body>
 	<#--
-	<#include "../element/pratilipi-homepage-login.ftl">
-	<#include "../element/pratilipi-homepage-register.ftl">
-	<#include "../element/pratilipi-homepage-logout.ftl">
+	<#include "../element/basic/pratilipi-homepage-login.ftl">
+	<#include "../element/basic/pratilipi-homepage-register.ftl">
+	<#include "../element/basic/pratilipi-homepage-logout.ftl">
 	-->
 	
 	<div class="container">

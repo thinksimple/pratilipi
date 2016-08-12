@@ -6,7 +6,7 @@
 	</head>
 
 	<body>
-		<#include "../element/pratilipi-header.ftl">
+		<#include "../element/basic/pratilipi-header.ftl">
 		<div class="parent-container">
 			<div class="container">
 				<#if pratilipiListTitle??>
@@ -16,16 +16,16 @@
 				</#if>
 	
 				<#list pratilipiList as pratilipi>
-					<#include "../element/pratilipi-pratilipi-card.ftl">
+					<#include "../element/basic/pratilipi-pratilipi-card.ftl">
 				</#list>
 	
 				<#-- Add page navigation -->
 				<#assign currentPage = pratilipiListPageCurr>
 				<#assign maxPage = pratilipiListPageMax>
-				<#include "../element/pratilipi-page-navigation.ftl">
+				<#include "../element/basic/pratilipi-page-navigation.ftl">
 			</div>
 		</div>
-		<#include "../element/pratilipi-footer.ftl">
+		<#include "../element/basic/pratilipi-footer.ftl">
 	</body>
 	
 </html>
