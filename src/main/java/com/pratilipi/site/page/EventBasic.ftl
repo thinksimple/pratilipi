@@ -35,7 +35,9 @@
 							<#list pratilipiList as pratilipi>
 								<#include "../element/basic/pratilipi-pratilipi-card.ftl">
 							</#list>
-							<a href="?action=list_contents" class="pratilipi-red-button">Show More</a>
+							<div class="secondary-500 pratilipi-shadow box" style="text-align: center;">
+								<a href="?action=list_contents" class="pratilipi-red-button">Show More</a>
+							</div>
 						</#if>
 					</#if>
 				</div>
