@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.google.appengine.tools.cloudstorage.GcsFilename;
 import com.google.appengine.tools.cloudstorage.GcsService;
 import com.google.appengine.tools.cloudstorage.GcsServiceFactory;
 import com.google.appengine.tools.cloudstorage.ListOptions;
@@ -188,7 +189,8 @@ public class TestApi extends GenericApi {
 				continue;
 			if( fileName.endsWith( "/googleAnalytics" ) )
 				continue;
-			logger.log( Level.WARNING, result.next().getName() );
+//			gcsService.delete( new GcsFilename( "static.pratilipi.com", fileName ) );
+			logger.log( Level.WARNING, fileName );
 		}
 		
 		
