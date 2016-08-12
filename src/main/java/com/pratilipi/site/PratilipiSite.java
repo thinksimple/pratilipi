@@ -240,7 +240,7 @@ public class PratilipiSite extends HttpServlet {
 				
 			} else if( page != null && page.getType() == PageType.AUTHOR ) {
 				dataModel = createDataModelForAuthorPage( page.getPrimaryContentId(), basicMode, request );
-				templateName = templateFilePrefix + ( basicMode ? "AuthorPageBasic.ftl" : "AuthorPage.ftl" );
+				templateName = templateFilePrefix + ( basicMode ? "AuthorBasic.ftl" : "Author.ftl" );
 
 			} else if( page != null && page.getType() == PageType.EVENT ) {
 				dataModel = createDataModelForEventPage( page.getPrimaryContentId(), basicMode );

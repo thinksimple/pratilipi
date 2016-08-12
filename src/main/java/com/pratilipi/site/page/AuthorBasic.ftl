@@ -2,8 +2,54 @@
 <html lang="${lang}">
 
 	<head>
+		<#-- Page Description -->
+		<meta name="description" content="A platform to discover, read and share your favorite stories, poems and books in a language, device and format of your choice.">
+		
 		<#include "meta/HeadBasic.ftl">
+	</head>
+
+	<body>
+		<#include "../element/pratilipi-header.ftl">
+		<div class="parent-container" style="">
+			<div class="container">
+				<#if ( ( action == "edit_profile") && author.hasAccessToUpdate() )>
+					<#include "../element/pratilipi-author-settings.ftl">
+				<#elseif action == "list_contents">
+				<div class="pratilipi-shadow secondary-500 box">
+					<#if state == "PUBLISHED">
+						<#include "../element/pratilipi-published-list.ftl">
+					<#elseif state == "DRAFTED">
+						<#include "../element/pratilipi-drafted-list.ftl">						
+					</#if>
+				</div>
+				<#elseif ( action=="account" && !user.getIsGuest() )>
+					<#include "../element/pratilipi-my-account.ftl">	
+				<#else>
+					<#include "../element/pratilipi-author-details.ftl">
+					<#include "../element/pratilipi-author-tabs.ftl">
+				</#if>	
+			</div>
+		</div>
+		<#include "../element/pratilipi-footer.ftl">
 		<script>
+			function getUrlParameter( key ) {
+			   if( key = ( new RegExp( '[?&]' +encodeURIComponent( key ) + '=([^&]*)' ) ).exec( location.search ) )
+			      return decodeURIComponent( key[1] );
+			   else
+				   return null;
+			}
+			function roundOffRating(n) {
+			    return (Math.round(n*2)/2).toFixed(1);
+			};
+			
+			function gotoShare( pageUrl, utmParent, utmLocation ) {
+			
+				var language = "${ language }".toLowerCase();
+				var url = "http://" + language + ".pratilipi.com" + pageUrl +  "?utm_language=" + "${ language }" + "&utm_version=lite" + "&utm_device=mobile" + "&utm_parent=" + utmParent  +"&utm_location=" + utmLocation + "&utm_action=share";
+				
+				window.location.href = ( "/share?url=" + encodeURIComponent(url) );
+			}		
+			
 			function convertDate( date ) {
 				var d = new Date( date );
 				function day(d) { return (d < 10) ? '0' + d : d; }
@@ -14,42 +60,29 @@
 												return months[m]; }
 				return [ day(d.getDate()), month(d.getMonth()), d.getFullYear() ].join(' ');
 			}
+			  function FollowUnfollowPostRequest(follow){
+			    $.ajax({type: "POST",
+			            url: "/api/userauthor/follow",
+			            data: { authorId: "${ author.getId()?c }", following: follow },
+			            success:function(response){
+			            	console.log(response);
+			            	console.log(typeof response);
+			            	
+			            	var parsed_data = jQuery.parseJSON( response );
+			      			if ( parsed_data.following == follow ) {
+			      				window.location.reload();
+			      			}
+			      			else {
+			      				
+			      			}
+			    		},
+			            fail:function(response){
+							alert("Sorry, we could not process your request.");
+			    		}			    		
+			    		
+			    });
+			  }
 		</script>
-	</head>
-
-	<body>
-		<#include "../element/pratilipi-header.ftl">
-		<div class="parent-container">
-			<div class="container">
-				
-				<#include "../element/pratilipi-author.ftl">
-				
-				<div class="secondary-500 pratilipi-shadow box" style="padding: 15px 10px;">
-					<h2 class="pratilipi-red" style="margin: 0;">${ _strings.author_published_works }</h2>
-				</div>
-				<#if publishedPratilipiList?has_content>
-					<#list publishedPratilipiList as pratilipi>
-						<#include "../element/pratilipi-pratilipi-card.ftl">
-					</#list>
-				<#else>
-					<div style="padding: 50px 10px;" class="secondary-500 pratilipi-shadow box">
-						<img style="width: 48px; height: 48px; margin: 0px auto 20px auto; display: block;" 
-								src="https://storage.googleapis.com/devo-pratilipi.appspot.com/icomoon_24_icons/SVG/info.svg" alt="${ _strings.author_no_contents_published }" />
-						<div class="text-center">${ _strings.author_no_contents_published }</div>
-					</div>
-				</#if>
-				
-				
-				<#if publishedPratilipiListSearchQuery?? >
-					<div style="text-align: center; margin: 20px auto;">
-						<a style="width: 100%; display: block;" class="pratilipi-new-blue-button text-center" href="/search?${ publishedPratilipiListSearchQuery }">
-							${ _strings.load_more_contents }
-						</a>
-					</div>
-				</#if>
-			</div>
-		</div>
-		<#include "../element/pratilipi-footer.ftl">
 	</body>
 	
 </html>

@@ -4,18 +4,20 @@
 	<head>
 		<#assign mainPage="pratilipi-author-page">
 		<#include "meta/Head.ftl">
-		<link rel='import' href='/elements.${lang}/pratilipi-author-page.html?20160723'>
+		<link rel='import' href='/elements.${lang}/pratilipi-author-profile-page.html?20160811'>
 	</head>
 
 	<body>
 		<pratilipi-author-page 
 			user-data='${ userJson }'
-			author-data='${ authorJson }'
-			pratilipi-list='${ publishedPratilipiListJson }'
-			filter='${ publishedPratilipiListFilterJson! }'
-			cursor='${ publishedPratilipiListCursor! }'
+			author='${ authorJson }'
+			user-author='${ userAuthorJson }'
+			published-pratilipi-list='${ publishedPratilipiListObjectJson }'
+			following-list='${ followingListJson }'
+			followers-list='${ followersListJson }'
 			pratilipi-types='${ pratilipiTypesJson }'
-			navigation-list='${ navigationList }'></pratilipi-author-page>
+			navigation-list='${ navigationList }'
+			language-map='${ languageMap }'></pratilipi-author-page>
 	</body>
 	
 </html>
