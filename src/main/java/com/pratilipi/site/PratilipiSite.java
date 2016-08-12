@@ -243,7 +243,7 @@ public class PratilipiSite extends HttpServlet {
 				templateName = templateFilePrefix + ( basicMode ? "AuthorBasic.ftl" : "Author.ftl" );
 
 			} else if( page != null && page.getType() == PageType.EVENT ) {
-				dataModel = createDataModelForEventPage( page.getPrimaryContentId(), basicMode );
+				dataModel = createDataModelForEventPage( page.getPrimaryContentId(), basicMode, request );
 				templateName = templateFilePrefix + ( basicMode ? "EventBasic.ftl" : "Event.ftl" );
 			
 			} else if( page != null && page.getType() == PageType.BLOG ) {
@@ -945,28 +945,46 @@ public class PratilipiSite extends HttpServlet {
 		return dataModel;
 	}
 	
-	public Map<String, Object> createDataModelForEventPage( Long eventId, boolean basicMode )
+	public Map<String, Object> createDataModelForEventPage( Long eventId, boolean basicMode, HttpServletRequest request )
 			throws InsufficientAccessException, UnexpectedServerException {
 
-		EventApi.GetRequest request = new EventApi.GetRequest();
-		request.setEventId( eventId );
+		Map<String, Object> dataModel = new HashMap<String, Object>();
+		Gson gson = new Gson();
+
+		EventApi.GetRequest eventRequest = new EventApi.GetRequest();
+		eventRequest.setEventId( eventId );
 		EventApi.Response eventResponse = ApiRegistry
 											.getApi( EventApi.class )
-											.get( request );
+											.get( eventRequest );
 
+		Integer resultCount = basicMode ? 10 : 12;
 		PratilipiListApi.GetRequest pratilipiListApiRequest = new PratilipiListApi.GetRequest();
 		pratilipiListApiRequest.setEventId( eventId );
+		pratilipiListApiRequest.setResultCount( resultCount );
+
+		String action = request.getParameter( "action" ) != null ? request.getParameter( "action" ) : "event_page";
+		Integer pageCurr = null;
+		if( basicMode && action.equals( "list_contents" ) ) {
+			pageCurr = request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() ) != null
+					? Integer.parseInt( request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() ) )
+					: 1;
+			pratilipiListApiRequest.setOffset( ( pageCurr - 1 ) * resultCount );
+		}
+
 		PratilipiListApi.Response pratilipiListApiResponse = ApiRegistry
 									.getApi( PratilipiListApi.class )
 									.get( pratilipiListApiRequest );
 
-		Map<String, Object> dataModel = new HashMap<String, Object>();
-		Gson gson = new Gson();
 		dataModel.put( "title", createPageTitle( eventResponse.getName(), eventResponse.getNameEn() ) );
 
 		if( basicMode ) {
+			dataModel.put( "action", action );
 			dataModel.put( "event", eventResponse );
-			dataModel.put( "pratilipiListObject", pratilipiListApiResponse );
+			dataModel.put( "pratilipiList", pratilipiListApiResponse.getPratilipiList() );
+			dataModel.put( "pratilipiListPageCurr", pageCurr );
+			Integer pageMax = pratilipiListApiResponse.getNumberFound() != null ?
+					(int) Math.ceil( ( (double) pratilipiListApiResponse.getNumberFound() ) / resultCount ) : 1;
+			dataModel.put( "pratilipiListPageMax", pageMax );
 		} else {
 			dataModel.put( "eventJson", gson.toJson( eventResponse ) );
 			dataModel.put( "pratilipiListObjectJson", gson.toJson( pratilipiListApiResponse ) );

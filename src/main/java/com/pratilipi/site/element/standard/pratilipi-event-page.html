@@ -194,7 +194,7 @@
 
 			_pratilipiListApiResponse: function( response ) {
 				this.set( 'isLoading', false );
-				this.processPratilipiListObject( response.detail.response );
+				this._processEventObject( response.detail.response );
 			},
 
 			_pratilipiListApiError: function( response ) {
