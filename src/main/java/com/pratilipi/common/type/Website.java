@@ -30,7 +30,7 @@ public enum Website {
 	DEVO_MALAYALAM		( "malayalam.devo-pratilipi.appspot.com", "ml.devo-pratilipi.appspot.com", Language.MALAYALAM,	Language.MALAYALAM ),
 	DEVO_BENGALI		(   "bengali.devo-pratilipi.appspot.com", "bn.devo-pratilipi.appspot.com", Language.BENGALI,	Language.BENGALI ),
 
-	ALPHA				( "localhost", "localhost", Language.HINDI, Language.HINDI )
+	ALPHA	( "localhost", "localhost", Language.HINDI, Language.HINDI ),
 	;
 	
 	

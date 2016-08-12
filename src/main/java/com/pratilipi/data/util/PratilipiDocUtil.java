@@ -8,9 +8,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.apache.commons.codec.binary.Base64;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
@@ -124,26 +126,35 @@ public class PratilipiDocUtil {
 				
 				BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
 				BlobEntry blobEntry = null;
-				String imagUrl = childNode.attr( "src" );
+				String imageUrl = childNode.attr( "src" );
 				String imageName = null;
-				if( imagUrl.startsWith( "http" ) ) {
-					imageName = imagUrl.replaceAll( "[:/.?=&+]+", "_" );
-					String fileName = "pratilipi/" + pratilipi.getId() + "/content/" + imagUrl.replaceAll( "[:/.?=&+]+", "_" );
+				if( imageUrl.startsWith( "http" ) ) {
+					imageName = imageUrl.replaceAll( "[:/.?=&+]+", "_" );
+					String fileName = "pratilipi/" + pratilipi.getId() + "/content/" + imageUrl.replaceAll( "[:/.?=&+]+", "_" );
 					blobEntry = blobAccessor.getBlob( fileName );
 					if( blobEntry == null ) {
-						blobEntry = HttpUtil.doGet( imagUrl );
+						blobEntry = HttpUtil.doGet( imageUrl );
 						blobEntry.setName( fileName );
 						blobAccessor.createOrUpdateBlob( blobEntry );
 					}
-				} else if( imagUrl.indexOf( "name=" ) != -1 ) {
-					imageName = imagUrl.substring( imagUrl.indexOf( "name=" ) + 5 );
+				} else if( imageUrl.indexOf( "name=" ) != -1 ) {
+					imageName = imageUrl.substring( imageUrl.indexOf( "name=" ) + 5 );
 					if( imageName.indexOf( '&' ) != -1 )
 						imageName = imageName.substring( 0, imageName.indexOf( '&' ) );
 					String fileName = "pratilipi/" + pratilipi.getId() + "/images/" + imageName;
 					blobEntry = blobAccessor.getBlob( fileName );
 					if( blobEntry == null ) // TODO: Remove this when all images from old resource folder are migrated to new resource location
 						blobEntry = blobAccessor.getBlob( "pratilipi-resource/" + pratilipi.getId() + "/" + imageName );
-				} else if( imagUrl.startsWith( "file:///" ) || imagUrl.startsWith( "C:" ) ) {
+				} else if( imageUrl.startsWith( "data:" ) && imageUrl.indexOf( "base64" ) != -1 ) {
+					imageName = UUID.randomUUID().toString();
+					String mimeType = imageUrl.substring( 5, imageUrl.indexOf( ';' ) );
+					String base64String = imageUrl.substring( imageUrl.indexOf( "base64," ) + 7 );
+					blobEntry = blobAccessor.newBlob(
+							"pratilipi/" + pratilipi.getId() + "/images/" + imageName,
+							Base64.decodeBase64( base64String ),
+							mimeType );
+					blobAccessor.createOrUpdateBlob( blobEntry );
+				} else if( imageUrl.startsWith( "file:///" ) || imageUrl.startsWith( "C:" ) ) {
 					continue;
 				}
 				

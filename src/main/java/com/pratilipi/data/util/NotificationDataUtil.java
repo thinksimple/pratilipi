@@ -134,8 +134,7 @@ public class NotificationDataUtil {
 			}
 			
 			notificationData.setState( notification.getState() );
-			notificationData.setLastUpdatedDate( notification.getLastUpdated() != null ? 
-						notification.getLastUpdated() : notification.getCreationDate() );
+			notificationData.setLastUpdatedDate( notification.getLastUpdated() );
 			notificationDataList.add( notificationData );
 			
 		}
