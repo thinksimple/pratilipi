@@ -4,7 +4,8 @@
 	
 	<style>
 		.secondary-500 {
-			margin-bottom: 5px;
+			padding: 12px 8px;
+			margin-bottom: 6px;
 		}
 		paper-card.event-banner {
 			width: 100%;
@@ -20,6 +21,23 @@
 		}
 		paper-icon-button, iron-icon {
 			color: #107FE5;
+		}
+		paper-spinner {
+			margin: 16px auto;
+			display: block;
+			--paper-spinner-layer-1-color: #D0021B;
+			--paper-spinner-layer-2-color: #107FE5;
+			--paper-spinner-layer-3-color: #D0021B;
+			--paper-spinner-layer-4-color: #107FE5;
+		}
+		/* Bootstrap overrides */
+		.row {
+			margin-left: -8px;
+			margin-right: -8px;
+		}
+		.col-xs-4, .col-sm-3, .col-md-3, .col-lg-3 {
+			padding-left: 8px;
+			padding-right: 8px;
 		}
 	</style>
 
@@ -77,10 +95,21 @@
 						</paper-card>
 
 						<template is="dom-if" if="{{ showPratilipiList }}">
-							<pratilipi-card-grid
-								heading='${ _strings.event_entries }'
-								pratilipi-list='[[ pratilipiList ]]'
-							></pratilipi-card-grid>
+							<div class="secondary-500 pratilipi-shadow pratilipi-card-grid-heading pratilipi-red">
+								${ _strings.event_entries }
+							</div>
+							<div id="event-entries" class="secondary-500 pratilipi-shadow">
+								<div class="row text-center">
+									<template is="dom-repeat" items="{{ pratilipiList }}" as="pratilipi">
+										<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+											<pratilipi-card-mini state="PUBLISHED" pratilipi="{{ pratilipi }}"></pratilipi-card-mini>
+										</div>
+									</template>
+								</div>
+								<template is="dom-if" if="{{ isLoading }}">
+									<paper-spinner active></paper-spinner>
+								</template>
+							</div>
 						</template>
 					</div>
 				</div>
@@ -92,6 +121,15 @@
 		<div class="scroll-top-button">
 			<a id="scrollToTop" on-click="scrollToTop"><img src="http://0.ptlp.co/resource-all/icon/footer/arrow_up_transparent_64.png"/></a>
 		</div>
+		<iron-ajax
+				id="PratilipiListApi"
+				url="/api/pratilipi/list"
+				method="GET"
+				content-type="application/json"
+				handle-as="json"
+				on-response="_pratilipiListApiResponse"
+				on-error="_pratilipiListApiError"
+				></iron-ajax>
 	</template>
 		
 
@@ -102,42 +140,74 @@
 
 			properties: {
 				userData: { type: Object },
-				event: { type: Object },
-				pratilipiList: { type: Array },
+				event: { type: Object, observer: "_eventObserver" },
+				pratilipiListObject: { type: Object },
+				pratilipiList: { type: Array, value: function() { return []; } },
+				cursor: { type: String, value: null },
+				resultCount: { type: Number, value: 12 },
+				isLoading: { type: Boolean, value: false },
+				isFinished: { type: Boolean, value: false },
+				showPratilipiList: { type: Boolean },
 				navigationList: { type: Array },
 				pratilipiTypes: { types: Object },
-				showPratilipiList: { type: Boolean },
 				languageMap: { type: Object },
 				lastScrollTop: { type: Number, value: 0 },
 			},
-			
-			_processEventPage: function() {
+
+			_eventObserver: function() {
 				var jSummary = jQuery( "#pratilipi-event-description" );
 				jSummary.html( this.event.description );
-				
-				if( this.pratilipiList == null || this.pratilipiList.length == 0 )
-					this.set( 'showPratilipiList', false );
+				this.set( 'eventBannerImageUrl', this.event.bannerImageUrl + 
+						( this.event.bannerImageUrl.indexOf( '?' ) == -1 ? "?" : "&" ) + "width=1000" )
+			},
+			
+			_processEventObject: function( pratilipiListObject ) {
+				var pratilipiList = pratilipiListObject.pratilipiList != null ? pratilipiListObject.pratilipiList : [];
+				for( var i = 0; i < pratilipiList.length; i++ )
+					this.push( 'pratilipiList', pratilipiList[i] );
+				this.set( 'cursor', pratilipiListObject.cursor );
+				this.set( 'isFinished', pratilipiList.length < this.resultCount );
+			},
+			
+			loadMore: function( forceLoad ) {
+
+				if( ! forceLoad ) {
+					if( this.isLoading || this.isFinished )
+						return;
+					// Check for window height.
+					var reqHeight = jQuery( window ).scrollTop()
+							- jQuery( '#event-entries' ).position().top
+							+ 3 * jQuery( window ).height();
+					if( jQuery( '#event-entries' ).outerHeight( true ) >= reqHeight )
+						return;
+				}
+
+				this.set( 'isLoading', true );
+				this.$.PratilipiListApi.params.eventId = this.event.eventId;
+				this.$.PratilipiListApi.params.resultCount = this.resultCount;
+				if( this.cursor != null )
+					this.$.PratilipiListApi.params.cursor = this.cursor;
 				else
-					this.set( 'showPratilipiList', true );
-				
-				if( this.event.bannerImageUrl.indexOf( '?' ) == -1 )
-					this.eventBannerImageUrl = this.event.bannerImageUrl + "?" + "width=1000";
-				else
-					this.eventBannerImageUrl = this.event.bannerImageUrl + "&" + "width=1000";
+					delete this.$.PratilipiListApi.params.cursor;
+				this.$.PratilipiListApi.generateRequest();
+			},
+
+			_pratilipiListApiResponse: function( response ) {
+				this.set( 'isLoading', false );
+				this.processPratilipiListObject( response.detail.response );
+			},
+
+			_pratilipiListApiError: function( response ) {
+				this.set( 'isLoading', false );
+				var message = response.detail.request.xhr.response.message != null ? 
+						response.detail.request.xhr.response.message : "${ _strings.server_error_message }";
+				document.querySelector( 'pratilipi-alert' ).alert( message, false );
 			},
 
 			updateEvent: function( event ) {
 				if( event.pageUrl != null && event.pageUrl != window.location.pathname )
 					window.location.href = event.pageUrl;
-				
 				this.set( 'event', event );
-				this.set( 'pratilipiList', [] );
-
-				var pratilipiList = event.pratilipiUrlList.join( "\n" );
-				for( var i = 0; i < pratilipiList.length; i++ )
-					this.push( 'pratilipiList', pratilipiList[i] );
-
-				this._processEventPage();
 			},
 			
 			editEvent: function() {
@@ -150,15 +220,20 @@
 			
 			ready: function() {
 				jQuery( '#scrollToTop' ).css( "display", "none" );
-				this._processEventPage();
+				this._processEventObject( this.pratilipiListObject );
+				this.set( 'showPratilipiList', this.pratilipiList.length > 0 );
+				this.set( 'numberFound', this.pratilipiListObject.numberFound );
 			},
 			
 			scrollHandler: function( st ) {
-				if( st > this.lastScrollTop || st < 100 )
+				if( st > this.lastScrollTop || st < 100 ) {
 					jQuery( '#scrollToTop' ).fadeOut();
-				else
+					this.loadMore();
+				} else {
 					jQuery( '#scrollToTop' ).fadeIn();
+				}
 				this.lastScrollTop = st;
+				
 			},
 			
 			_chooseFile: function() {

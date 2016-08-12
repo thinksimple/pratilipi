@@ -7,14 +7,14 @@
 		
 		<#assign mainPage="pratilipi-event-page">
 		<#include "meta/Head.ftl">
-		<link rel='import' href='/elements.${lang}/pratilipi-event-page.html?20160806'>
+		<link rel='import' href='/elements.${lang}/pratilipi-event-page.html?20160812'>
 	</head>
 
 	<body>
 		<pratilipi-event-page 
 			user-data='${ userJson }'
 			event='${ eventJson }'
-			pratilipi-list='${ pratilipiListJson }'
+			pratilipi-list-object='${ pratilipiListObjectJson }'
 			pratilipi-types='${ pratilipiTypesJson }'
 			navigation-list='${ navigationList }'
 			language-map='${ languageMap }'></pratilipi-event-page>
