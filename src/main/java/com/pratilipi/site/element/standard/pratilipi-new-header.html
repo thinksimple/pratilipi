@@ -16,6 +16,13 @@
 			border-bottom: 1px solid #d3d3d3;
 			box-shadow: 0 3px 2px -2px rgba(200,200,200,0.2);
 		}
+		.notification-count {
+		    top: -23%;
+    		right: -32%;
+    		position: absolute !important;
+    		background-color: #d0021b;  
+    		padding: 3px 6px;  		
+		}
 		.vertical-align {
 			display: -webkit-flex;
 			display: flex;
@@ -263,21 +270,17 @@
 							<iron-icon icon="icons:book"></iron-icon>
 						</a>
 					</div>
-					<template is="dom-if" if="{{ showNotificationCount }}">
-						<div class="button-holder dropdown" style="margin-top: 19px;">
-							<div style="display: inline-block">
-								<iron-icon id="header-notification-icon-badge" icon="social:notifications" on-click="_notifications"></iron-icon>
-								<paper-badge for="header-notification-icon-badge" label="{{ newNotificationCount }}" class="pratilipi-red"></paper-badge>
-								<pratilipi-notification-popup popup-notification-list="[[popupNotificationList]]"></pratilipi-notification-popup>							
-							</div>
-						</div>
-					</template>
-					<template is="dom-if" if="{{ !showNotificationCount }}">
-						<div class="button-holder dropdown">
+					<div class="button-holder dropdown">
+						<div style="display: inline-block" class="dropdown">
 							<iron-icon icon="social:notifications" on-click="_notifications"></iron-icon>
+							<template is="dom-if" if="{{ showNotificationCount }}">
+								<span class="badge notification-count">{{ newNotificationCount }}</span>
+							</template>
+							<ul class="dropdown-menu" style="    position: absolute;top: 140%;" aria-labelledby="notification-dropdown">
+								<pratilipi-notification-popup popup-notification-list="[[popupNotificationList]]"></pratilipi-notification-popup>
+							</ul>							
 						</div>
-						<pratilipi-notification-popup popup-notification-list="[[popupNotificationList]]"></pratilipi-notification-popup>
-					</template>
+					</div>
 					<div class="button-holder sign-in-text">
 						<template is="dom-if" if="{{ isGuest }}">
 							<a on-click="_logIn">
