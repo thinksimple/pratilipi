@@ -9,28 +9,28 @@
 	</head>
 
 	<body>
-		<#include "../element/basic/basic/pratilipi-header.ftl">
+		<#include "../element/basic/pratilipi-header.ftl">
 		<div class="parent-container" style="">
 			<div class="container">
 				<#if ( ( action == "edit_profile") && author.hasAccessToUpdate() )>
-					<#include "../element/basic/basic/pratilipi-author-settings.ftl">
+					<#include "../element/basic/pratilipi-author-settings.ftl">
 				<#elseif action == "list_contents">
 				<div class="pratilipi-shadow secondary-500 box">
 					<#if state == "PUBLISHED">
-						<#include "../element/basic/basic/pratilipi-published-list.ftl">
+						<#include "../element/basic/pratilipi-published-list.ftl">
 					<#elseif state == "DRAFTED">
-						<#include "../element/basic/basic/pratilipi-drafted-list.ftl">						
+						<#include "../element/basic/pratilipi-drafted-list.ftl">						
 					</#if>
 				</div>
 				<#elseif ( action=="account" && !user.getIsGuest() )>
-					<#include "../element/basic/basic/pratilipi-my-account.ftl">	
+					<#include "../element/basic/pratilipi-my-account.ftl">	
 				<#else>
-					<#include "../element/basic/basic/pratilipi-author-details.ftl">
-					<#include "../element/basic/basic/pratilipi-author-tabs.ftl">
+					<#include "../element/basic/pratilipi-author-details.ftl">
+					<#include "../element/basic/pratilipi-author-tabs.ftl">
 				</#if>	
 			</div>
 		</div>
-		<#include "../element/basic/basic/pratilipi-footer.ftl">
+		<#include "../element/basic/pratilipi-footer.ftl">
 		<script>
 			function getUrlParameter( key ) {
 			   if( key = ( new RegExp( '[?&]' +encodeURIComponent( key ) + '=([^&]*)' ) ).exec( location.search ) )

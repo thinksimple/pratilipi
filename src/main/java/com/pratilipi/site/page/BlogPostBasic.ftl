@@ -16,7 +16,7 @@
 	</head>
 
 	<body>
-		<#include "../element/basic/basic/pratilipi-header.ftl">
+		<#include "../element/basic/pratilipi-header.ftl">
 			<div class="parent-container">
 				<div class="container">
 					<div class="secondary-500 pratilipi-shadow box" style="padding: 12px 10px;">
@@ -28,7 +28,7 @@
 					</div>
 				</div>
 			</div>		
-			<#include "../element/basic/basic/pratilipi-footer.ftl">
+			<#include "../element/basic/pratilipi-footer.ftl">
 	</body>
 	
 </html>
