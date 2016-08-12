@@ -130,10 +130,12 @@ public class PratilipiDocUtil {
 				String imageName = null;
 				if( imageUrl.startsWith( "http" ) ) {
 					imageName = imageUrl.replaceAll( "[:/.?=&+]+", "_" );
-					String fileName = "pratilipi/" + pratilipi.getId() + "/content/" + imageUrl.replaceAll( "[:/.?=&+]+", "_" );
+					String fileName = _createImageFullName( pratilipi.getId(), imageName );
 					blobEntry = blobAccessor.getBlob( fileName );
 					if( blobEntry == null ) {
 						blobEntry = HttpUtil.doGet( imageUrl );
+						if( ! blobEntry.getMimeType().startsWith( "image/" ) )
+							continue;
 						blobEntry.setName( fileName );
 						blobAccessor.createOrUpdateBlob( blobEntry );
 					}
@@ -141,7 +143,7 @@ public class PratilipiDocUtil {
 					imageName = imageUrl.substring( imageUrl.indexOf( "name=" ) + 5 );
 					if( imageName.indexOf( '&' ) != -1 )
 						imageName = imageName.substring( 0, imageName.indexOf( '&' ) );
-					String fileName = "pratilipi/" + pratilipi.getId() + "/images/" + imageName;
+					String fileName = _createImageFullName( pratilipi.getId(), imageName );
 					blobEntry = blobAccessor.getBlob( fileName );
 					if( blobEntry == null ) // TODO: Remove this when all images from old resource folder are migrated to new resource location
 						blobEntry = blobAccessor.getBlob( "pratilipi-resource/" + pratilipi.getId() + "/" + imageName );
@@ -150,7 +152,7 @@ public class PratilipiDocUtil {
 					String mimeType = imageUrl.substring( 5, imageUrl.indexOf( ';' ) );
 					String base64String = imageUrl.substring( imageUrl.indexOf( "base64," ) + 7 );
 					blobEntry = blobAccessor.newBlob(
-							"pratilipi/" + pratilipi.getId() + "/images/" + imageName,
+							_createImageFullName( pratilipi.getId(), imageName ),
 							Base64.decodeBase64( base64String ),
 							mimeType );
 					blobAccessor.createOrUpdateBlob( blobEntry );
@@ -187,6 +189,10 @@ public class PratilipiDocUtil {
 		
 		return pageletList;
 		
+	}
+	
+	private static String _createImageFullName( Long pratilipiId, String imageName ) {
+		return "pratilipi/" + pratilipiId + "/images/" + imageName;
 	}
 	
 	private static String _extractText( Node node ) {
