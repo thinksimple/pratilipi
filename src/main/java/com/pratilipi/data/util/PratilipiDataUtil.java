@@ -380,28 +380,35 @@ public class PratilipiDataUtil {
 			PratilipiFilter pratilipiFilter, String cursor, Integer resultCount )
 			throws InsufficientAccessException, UnexpectedServerException {
 
-		return getPratilipiDataList( null, pratilipiFilter, cursor, null, resultCount);
+		return getPratilipiDataList( null, null, pratilipiFilter, cursor, null, resultCount);
 	}
-	
+
 	@Deprecated
 	public static DataListCursorTuple<PratilipiData> getPratilipiDataList(
 			PratilipiFilter pratilipiFilter, String cursor, Integer offset, Integer resultCount )
 			throws InsufficientAccessException, UnexpectedServerException {
 
-		return getPratilipiDataList( null, pratilipiFilter, cursor, offset, resultCount);
+		return getPratilipiDataList( null, null, pratilipiFilter, cursor, offset, resultCount);
 	}
-	
+
 	@Deprecated
 	public static DataListCursorTuple<PratilipiData> getPratilipiDataList(
 			String searchQuery, PratilipiFilter pratilipiFilter,
 			String cursor, Integer resultCount )
 			throws InsufficientAccessException, UnexpectedServerException {
 		
-		return getPratilipiDataList( searchQuery, pratilipiFilter, cursor, null, resultCount );
+		return getPratilipiDataList( searchQuery, null, pratilipiFilter, cursor, null, resultCount );
 	}
-	
+
 	public static DataListCursorTuple<PratilipiData> getPratilipiDataList(
 			String searchQuery, PratilipiFilter pratilipiFilter,
+			String cursor, Integer offset, Integer resultCount )
+			throws InsufficientAccessException, UnexpectedServerException {
+		return getPratilipiDataList( searchQuery, null, pratilipiFilter, cursor, null, resultCount );
+	}
+
+	public static DataListCursorTuple<PratilipiData> getPratilipiDataList(
+			String searchQuery, Long eventId, PratilipiFilter pratilipiFilter,
 			String cursor, Integer offset, Integer resultCount )
 			throws InsufficientAccessException, UnexpectedServerException {
 		
@@ -416,12 +423,31 @@ public class PratilipiDataUtil {
 					.replaceAll( ",|\\sor\\s", " " )
 					.replaceAll( "[\\s]+", " OR " );
 
-		// Fetching Pratilipi id list from DataStore/SearchIndex
-		DataListCursorTuple<Long> pratilipiIdListCursorTuple =
-				pratilipiFilter.getListName() == null && pratilipiFilter.getState() == PratilipiState.PUBLISHED
-				? DataAccessorFactory.getSearchAccessor().searchPratilipi( searchQuery, pratilipiFilter, cursor, offset, resultCount )
-				: dataAccessor.getPratilipiIdList( pratilipiFilter, cursor, offset, resultCount );
-			
+		// Fetching Pratilipi id list from DataStore/SearchIndex/Event
+		DataListCursorTuple<Long> pratilipiIdListCursorTuple = null; 
+
+		if( pratilipiFilter.getListName() == null && pratilipiFilter.getState() == PratilipiState.PUBLISHED ) {
+			pratilipiIdListCursorTuple = DataAccessorFactory.getSearchAccessor().
+							searchPratilipi( searchQuery, pratilipiFilter, cursor, offset, resultCount );
+
+		} else if( pratilipiFilter.getListName() != null ) {
+			pratilipiIdListCursorTuple = dataAccessor.getPratilipiIdList( pratilipiFilter, cursor, offset, resultCount );
+
+		} else if( eventId != null ) {
+			List<Long> pratilipiIdList = dataAccessor.getEvent( eventId ).getPratilipiIdList();
+			offset = ( cursor == null ? 0 : Integer.parseInt( cursor ) ) + ( offset == null || offset < 0 ? 0 : offset );
+			offset = Math.min( offset, pratilipiIdList.size() );
+			resultCount = resultCount == null || resultCount > pratilipiIdList.size() - offset
+						? pratilipiIdList.size() - offset
+						: resultCount;
+
+			pratilipiIdListCursorTuple = new DataListCursorTuple<Long>( pratilipiIdList.subList( offset, offset + resultCount ), 
+															offset + resultCount + "",
+															(long) pratilipiIdList.size() );
+
+		}
+
+
 		// Creating PratilipiData list from Pratilipi id list
 		List<PratilipiData> pratilipiDataList = createPratilipiDataList(
 				pratilipiIdListCursorTuple.getDataList(),

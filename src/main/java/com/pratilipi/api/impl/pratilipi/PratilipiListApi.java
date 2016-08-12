@@ -16,7 +16,6 @@ import com.pratilipi.common.type.PratilipiType;
 import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.client.PratilipiData;
-import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.util.PratilipiDataUtil;
 
 @SuppressWarnings("serial")
@@ -27,6 +26,7 @@ public class PratilipiListApi extends GenericApi {
 
 		private String searchQuery;
 		private Long authorId;
+		private Long eventId;
 		private Language language;
 		private PratilipiType type;
 		private String listName;
@@ -45,6 +45,10 @@ public class PratilipiListApi extends GenericApi {
 
 		public void setAuthorId( Long authorId ) {
 			this.authorId = authorId;
+		}
+
+		public void setEventId( Long eventId ) {
+			this.eventId = eventId;
 		}
 
 		public void setLanguage( Language language ) {
@@ -132,6 +136,7 @@ public class PratilipiListApi extends GenericApi {
 		DataListCursorTuple<PratilipiData> pratilipiListCursorTuple =
 				PratilipiDataUtil.getPratilipiDataList(
 						request.searchQuery,
+						request.eventId,
 						pratilipiFilter,
 						request.cursor,
 						request.offset,
