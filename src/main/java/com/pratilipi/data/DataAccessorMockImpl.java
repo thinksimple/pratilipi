@@ -4,13 +4,20 @@ import static com.pratilipi.data.mock.AuthorMock.AUTHOR_TABLE;
 import static com.pratilipi.data.mock.PageMock.PAGE_TABLE;
 import static com.pratilipi.data.mock.PratilipiMock.PRATILIPI_TABLE;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.jdo.PersistenceManager;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.LineIterator;
 
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.CommentParentType;
@@ -68,6 +75,11 @@ import com.pratilipi.data.type.gae.UserPratilipiEntity;
 import com.pratilipi.data.type.gae.VoteEntity;
 
 public class DataAccessorMockImpl implements DataAccessor {
+	
+	private static final Logger logger =
+			Logger.getLogger( DataAccessorMockImpl.class.getName() );
+	
+	private static final String CURATED_DATA_FOLDER = "curated";
 
 	public PersistenceManager getPersistenceManager() {
 		return null;
@@ -313,8 +325,18 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 
 	@Override
-	public String getPratilipiListTitle( String listName, Language language ) {
-		return null;
+	public String getPratilipiListTitle( String listName, Language lang ) {
+		String fileName = "list." + lang.getCode() + "." + listName;
+		String listTitle = null;
+		try {
+			InputStream inputStream = DataAccessor.class.getResource( CURATED_DATA_FOLDER + "/" + fileName ).openStream();
+			LineIterator it = IOUtils.lineIterator( inputStream, "UTF-8" );
+			listTitle = it.nextLine().trim();
+			LineIterator.closeQuietly( it );
+		} catch( NullPointerException | IOException e ) {
+			logger.log( Level.SEVERE, "Exception while reading from " + listName + " .", e );
+		}
+		return listTitle;
 	}
 	
 	@Override
@@ -338,8 +360,8 @@ public class DataAccessorMockImpl implements DataAccessor {
 	public DataListCursorTuple<Long> getPratilipiIdList(
 			PratilipiFilter pratilipiFilter, String cursorStr, Integer offset, Integer resultCount ) {
 		
-		// TODO: Implementation
-		return null;
+		return new DataListCursorTuple<>( new ArrayList<Long>(), null );
+
 	}
 	
 	@Override
@@ -761,7 +783,7 @@ public class DataAccessorMockImpl implements DataAccessor {
 	public List<UserPratilipi> getUserPratilipiList(Long userId,
 			List<Long> pratilipiIdList) {
 		// TODO Auto-generated method stub
-		return null;
+		return new ArrayList<UserPratilipi>();
 	}
 
 
