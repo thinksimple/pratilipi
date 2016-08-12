@@ -954,16 +954,22 @@ public class PratilipiSite extends HttpServlet {
 											.getApi( EventApi.class )
 											.get( request );
 
+		PratilipiListApi.GetRequest pratilipiListApiRequest = new PratilipiListApi.GetRequest();
+		pratilipiListApiRequest.setEventId( eventId );
+		PratilipiListApi.Response pratilipiListApiResponse = ApiRegistry
+									.getApi( PratilipiListApi.class )
+									.get( pratilipiListApiRequest );
+
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		Gson gson = new Gson();
 		dataModel.put( "title", createPageTitle( eventResponse.getName(), eventResponse.getNameEn() ) );
 
 		if( basicMode ) {
 			dataModel.put( "event", eventResponse );
-			dataModel.put( "pratilipiList", toPratilipiListResponseObject( eventResponse.getPratilipiIdList() ) );
+			dataModel.put( "pratilipiListObject", pratilipiListApiResponse );
 		} else {
 			dataModel.put( "eventJson", gson.toJson( eventResponse ) );
-			dataModel.put( "pratilipiListJson", gson.toJson( toPratilipiListResponseObject( eventResponse.getPratilipiIdList() ) ) );
+			dataModel.put( "pratilipiListObjectJson", gson.toJson( pratilipiListApiResponse ) );
 		}
 		return dataModel;
 		
@@ -1265,19 +1271,6 @@ public class PratilipiSite extends HttpServlet {
 		dataModel.put( "title", title );
 		dataModel.put( "content", content.toString() );
 		return dataModel;
-	}
-
-
-	private List<PratilipiApi.Response> toPratilipiListResponseObject( List<Long> pratilipiIdList ) 
-			throws UnexpectedServerException {
-
-		List<PratilipiData> pratilipiDataList = PratilipiDataUtil.createPratilipiDataList( pratilipiIdList, true );
-		List<PratilipiApi.Response> responsePratilipiList = new ArrayList<PratilipiApi.Response>( pratilipiDataList.size() );
-		for( PratilipiData pratilipiData : pratilipiDataList )
-			responsePratilipiList.add( new PratilipiApi.Response( pratilipiData ) );
-
-		return responsePratilipiList;
-
 	}
 
 	private List<PratilipiApi.Response> toListResponseObject( List<PratilipiData> pratilipiDataList ) {
