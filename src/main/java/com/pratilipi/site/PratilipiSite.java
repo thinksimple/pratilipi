@@ -1271,30 +1271,13 @@ public class PratilipiSite extends HttpServlet {
 	private List<PratilipiApi.Response> toPratilipiListResponseObject( List<Long> pratilipiIdList ) 
 			throws UnexpectedServerException {
 
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		List<PratilipiData> pratilipiDataList = PratilipiDataUtil.createPratilipiDataList( pratilipiIdList, true );
+		List<PratilipiApi.Response> responsePratilipiList = new ArrayList<PratilipiApi.Response>( pratilipiDataList.size() );
+		for( PratilipiData pratilipiData : pratilipiDataList )
+			responsePratilipiList.add( new PratilipiApi.Response( pratilipiData ) );
 
-		List<Pratilipi> pratilipiList = dataAccessor.getPratilipiList( pratilipiIdList );
-
-		List<Long> authorIdList = new ArrayList<Long>( pratilipiList.size() );
-		for( Pratilipi pratilipi : pratilipiList )
-			authorIdList.add( pratilipi.getAuthorId() );
-
-		List<Author> authorList = dataAccessor.getAuthorList( authorIdList );
-
-		Map<Long, Author> authorMap = new HashMap<Long, Author>( authorList.size() );
-		for( Author author : authorList )
-			authorMap.put( author.getId(), author );
-
-		Map<Long, Page> pageIdList = dataAccessor.getPages( PageType.PRATILIPI, pratilipiIdList );
-
-		List<PratilipiApi.Response> responsePratilipiList = new ArrayList<>( pratilipiList.size() );
-		for( Pratilipi pratilipi : pratilipiList )
-			responsePratilipiList.add( new PratilipiApi.Response( 
-							PratilipiDataUtil.createPratilipiData( pratilipi, 
-												pageIdList.get( pratilipi.getId() ), 
-												authorMap.get( pratilipi.getAuthorId() ), false ) ) );
-		
 		return responsePratilipiList;
+
 	}
 
 	private List<PratilipiApi.Response> toListResponseObject( List<PratilipiData> pratilipiDataList ) {
