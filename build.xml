@@ -24,7 +24,7 @@
 	<!-- Create language specific copies of Site Elements -->
 	<target name="i18n">
 		<java fork="true" failonerror="yes" classname="com.pratilipi.common.util.SiteElementUtil">
-			<arg line="${src.dir}/com/pratilipi/site/element"/>
+			<arg line="${src.dir}/com/pratilipi/site/element/standard"/>
 			<arg line="${build.dir}/elements."/>
 			<classpath>
 				<path location="${build.dir}/WEB-INF/classes"/>
