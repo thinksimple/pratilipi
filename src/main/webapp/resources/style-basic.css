@@ -620,3 +620,6 @@ a:hover {
     box-shadow: 2px 2px 7px #ccc;
     background-color: white;
 }
+.notification-unread-state {
+	background-color: #e4e4e4;
+}

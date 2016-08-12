@@ -34,7 +34,7 @@
 							<div class="list-group">
 							<#list notificationList as notification>
 								<#if ( notification.getMessage()?? && notification.getSourceUrl()?? ) >
-									<a href="${ notification.getSourceUrl() }" style="margin-bottom:4px;" class="list-group-item">${ notification.getMessage() }</a>
+									<a href="${ notification.getSourceUrl() }" style="margin-bottom:4px;" class="list-group-item <#if ( notification.getState() == "UNREAD")>notification-unread-state</#if>">${ notification.getMessage() }</a>
 								</#if>	
 							</#list>
 							</div>
