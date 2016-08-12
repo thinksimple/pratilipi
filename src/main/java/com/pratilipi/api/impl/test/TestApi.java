@@ -189,6 +189,8 @@ public class TestApi extends GenericApi {
 				continue;
 			if( fileName.endsWith( "/googleAnalytics" ) )
 				continue;
+			if( fileName.indexOf( "/images/" ) != -1 )
+				continue;
 //			gcsService.delete( new GcsFilename( "static.pratilipi.com", fileName ) );
 			logger.log( Level.WARNING, fileName );
 		}
