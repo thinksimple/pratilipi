@@ -1,19 +1,14 @@
 package com.pratilipi.api.impl.test;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.appengine.api.datastore.QueryResultIterator;
 import com.google.appengine.tools.cloudstorage.GcsService;
 import com.google.appengine.tools.cloudstorage.GcsServiceFactory;
 import com.google.appengine.tools.cloudstorage.ListOptions;
 import com.google.appengine.tools.cloudstorage.ListResult;
 import com.google.appengine.tools.cloudstorage.RetryParams;
-import com.googlecode.objectify.ObjectifyService;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -22,13 +17,7 @@ import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
-import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.Language;
-import com.pratilipi.data.DataAccessor;
-import com.pratilipi.data.DataAccessorFactory;
-import com.pratilipi.data.type.AppProperty;
-import com.pratilipi.data.type.AuditLog;
-import com.pratilipi.data.type.gae.AuditLogEntity;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/test" )
@@ -193,10 +182,13 @@ public class TestApi extends GenericApi {
 		
 		while( result.hasNext() ) {
 			String fileName = result.next().getName();
-			if( fileName.indexOf( "/content/" ) == - 1)
-				logger.log( Level.INFO, result.next().getName() );
-			else
-				logger.log( Level.WARNING, result.next().getName() );
+			if( fileName.endsWith( "/content" ) )
+				continue;
+			if( fileName.endsWith( "/reviews" ) )
+				continue;
+			if( fileName.endsWith( "/googleAnalytics" ) )
+				continue;
+			logger.log( Level.WARNING, result.next().getName() );
 		}
 		
 		
