@@ -2,8 +2,6 @@ package com.pratilipi.api.impl.blogpost;
 
 import java.util.Date;
 
-import org.jsoup.Jsoup;
-
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -15,6 +13,7 @@ import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.type.BlogPostState;
+import com.pratilipi.common.util.HtmlUtil;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.client.BlogPostData;
@@ -96,7 +95,7 @@ public class BlogPostApi extends GenericApi {
 				this.title = blogPostData.getTitle();
 				this.titleEn = blogPostData.getTitleEn();
 				if( blogPostData.getContent() != null )
-					this.content = Jsoup.parse( blogPostData.getContent() ).text();
+					this.content = HtmlUtil.toPlainText( blogPostData.getContent() );
 				this.state = blogPostData.getState();
 				if( blogPostData.getCreatedBy() != null )
 					this.createdBy = new UserApi.Response( blogPostData.getCreatedBy(), clazz );

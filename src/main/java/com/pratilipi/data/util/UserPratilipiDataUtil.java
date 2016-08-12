@@ -4,13 +4,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.jsoup.Jsoup;
-
 import com.google.gson.Gson;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.UserReviewState;
+import com.pratilipi.common.util.HtmlUtil;
 import com.pratilipi.common.util.UserAccessUtil;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
@@ -59,8 +58,7 @@ public class UserPratilipiDataUtil {
 		if( review == null || review.trim().isEmpty() )
 			return reviewTitle == null || reviewTitle.trim().isEmpty() ? null : reviewTitle.trim();
 		
-		review = Jsoup.parse( review.replaceAll( "(?i)<br[^>]*>|\\n", "LINE_BREAK" ) ).text();
-		review = review.replaceAll( "LINE_BREAK", "\n" ).trim();
+		review = HtmlUtil.toPlainText( review );
 
 		return reviewTitle == null || reviewTitle.trim().isEmpty() ? review : reviewTitle + "\n\n" + review;
 

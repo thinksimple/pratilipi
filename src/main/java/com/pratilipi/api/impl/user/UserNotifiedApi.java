@@ -21,6 +21,7 @@ public class UserNotifiedApi extends GenericApi {
 		@Validate( required = true, minLong = 1L )
 		private Long lastNotificationId;
 		
+		
 		public void setLastNotificationId( Long lastNotificationId ) {
 			this.lastNotificationId = lastNotificationId;
 		}

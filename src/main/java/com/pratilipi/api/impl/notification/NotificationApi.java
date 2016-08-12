@@ -34,6 +34,7 @@ public class NotificationApi extends GenericApi {
 			this.lastUpdatedMillis = notification.getLastUpdatedDate().getTime();
 		}
 
+		
 		public Long getNotificationId() {
 			return notificationId;
 		}

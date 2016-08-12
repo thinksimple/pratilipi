@@ -2,8 +2,6 @@ package com.pratilipi.api.impl.event;
 
 import java.util.List;
 
-import org.jsoup.Jsoup;
-
 import com.google.gson.Gson;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
@@ -15,6 +13,7 @@ import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.type.Language;
+import com.pratilipi.common.util.HtmlUtil;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.client.EventData;
@@ -145,7 +144,7 @@ public class EventApi extends GenericApi {
 				this.nameEn = eventData.getNameEn();
 				this.language = eventData.getLanguage();
 				if( eventData.getDescription() != null )
-					this.description = Jsoup.parse( eventData.getDescription() ).text();
+					this.description = HtmlUtil.toPlainText( eventData.getDescription() );
 				this.pratilipiUrlList = eventData.getPratilipiUrlList();
 				this.pageUrl = eventData.getPageUrl();
 				this.bannerImageUrl = eventData.getBannerImageUrl();

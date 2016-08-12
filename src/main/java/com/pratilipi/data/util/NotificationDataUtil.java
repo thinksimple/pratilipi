@@ -10,6 +10,7 @@ import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.I18nGroup;
 import com.pratilipi.common.type.NotificationType;
+import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.RequestParameter;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
@@ -81,26 +82,27 @@ public class NotificationDataUtil {
 			if( notification.getType() == NotificationType.PRATILIPI_ADD ) {
 				
 				PratilipiData pratilipiData = pratilipis.get( notification.getSourceIdLong() );
-				String pratilipiTitle = pratilipiData.getTitle() == null
-						? pratilipiData.getTitleEn()
-						: pratilipiData.getTitle();
-				String authorName = pratilipiData.getAuthor().getName() == null
-						? pratilipiData.getAuthor().getNameEn()
-						: pratilipiData.getAuthor().getName();
-				String sourceUrl = pratilipiData.getPageUrl() != null
-						? pratilipiData.getPageUrl() + ( pratilipiData.getPageUrl().indexOf( '?' ) == -1 ? "?" : "&" ) 
-								+ RequestParameter.NOTIFICATION_ID.getName() + "=" + notification.getId()
-						: null;
-				notificationData.setMessage(
-						"<b>" + authorName + "</b> "
-						+ i18ns.get( "notification_has_published" )
-						+ " <b>" + pratilipiTitle + "</b>" );
-				notificationData.setSourceUrl( sourceUrl );
+				if( pratilipiData.getState() ==  PratilipiState.PUBLISHED ) {
+					String pratilipiTitle = pratilipiData.getTitle() == null
+							? pratilipiData.getTitleEn()
+							: pratilipiData.getTitle();
+					String authorName = pratilipiData.getAuthor().getName() == null
+							? pratilipiData.getAuthor().getNameEn()
+							: pratilipiData.getAuthor().getName();
+					notificationData.setMessage(
+							"<b>" + authorName + "</b> "
+							+ i18ns.get( "notification_has_published" )
+							+ " <b>" + pratilipiTitle + "</b>" );
+					notificationData.setSourceUrl(
+							pratilipiData.getPageUrl()
+							+ "?" + RequestParameter.NOTIFICATION_ID.getName()
+							+ "=" + notification.getId() );
+				}
 			
 			} else 	if( notification.getType() == NotificationType.AUTHOR_FOLLOW ) {
 				
 				if( notification.getDataIds().size() == 0 ) {
-					continue;
+					// Do nothing
 				} else if( notification.getDataIds().size() == 1 ) {
 					notificationData.setMessage(
 							"<b>" + users.get( notification.getDataIds().get( 0 ) ).getDisplayName() + "</b> "

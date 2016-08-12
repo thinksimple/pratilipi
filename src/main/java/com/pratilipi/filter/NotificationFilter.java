@@ -32,7 +32,9 @@ public class NotificationFilter implements Filter {
 		if( notificationIdStr != null && ! notificationIdStr.trim().isEmpty() ) {
 			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 			Notification notification = dataAccessor.getNotification( Long.parseLong( notificationIdStr.trim() ) );
-			if( notification != null && AccessTokenFilter.getAccessToken().getUserId().equals( notification.getUserId() ) ) {
+			if( notification != null
+					&& notification.getState() == NotificationState.UNREAD
+					&& AccessTokenFilter.getAccessToken().getUserId().equals( notification.getUserId() ) ) {
 				notification.setState( NotificationState.READ );
 				notification = dataAccessor.createOrUpdateNotification( notification );
 			}
