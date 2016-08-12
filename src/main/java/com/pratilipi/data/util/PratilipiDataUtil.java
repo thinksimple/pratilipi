@@ -404,6 +404,7 @@ public class PratilipiDataUtil {
 			String searchQuery, PratilipiFilter pratilipiFilter,
 			String cursor, Integer offset, Integer resultCount )
 			throws InsufficientAccessException, UnexpectedServerException {
+		
 		return getPratilipiDataList( searchQuery, null, pratilipiFilter, cursor, null, resultCount );
 	}
 
@@ -427,23 +428,29 @@ public class PratilipiDataUtil {
 		DataListCursorTuple<Long> pratilipiIdListCursorTuple = null; 
 
 		if( pratilipiFilter.getListName() == null && pratilipiFilter.getState() == PratilipiState.PUBLISHED ) {
-			pratilipiIdListCursorTuple = DataAccessorFactory.getSearchAccessor().
-							searchPratilipi( searchQuery, pratilipiFilter, cursor, offset, resultCount );
+			
+			pratilipiIdListCursorTuple = DataAccessorFactory.getSearchAccessor()
+					.searchPratilipi( searchQuery, pratilipiFilter, cursor, offset, resultCount );
 
 		} else if( eventId != null ) {
+			
 			List<Long> pratilipiIdList = dataAccessor.getEvent( eventId ).getPratilipiIdList();
-			offset = ( cursor == null ? 0 : Integer.parseInt( cursor ) ) + ( offset == null || offset < 0 ? 0 : offset );
+			offset = ( cursor == null ? 0 : Integer.parseInt( cursor ) )
+					+ ( offset == null || offset < 0 ? 0 : offset );
 			offset = Math.min( offset, pratilipiIdList.size() );
 			resultCount = resultCount == null || resultCount > pratilipiIdList.size() - offset
 						? pratilipiIdList.size() - offset
 						: resultCount;
 
-			pratilipiIdListCursorTuple = new DataListCursorTuple<Long>( pratilipiIdList.subList( offset, offset + resultCount ), 
-															offset + resultCount + "",
-															(long) pratilipiIdList.size() );
+			pratilipiIdListCursorTuple = new DataListCursorTuple<Long>(
+					pratilipiIdList.subList( offset, offset + resultCount ), 
+					offset + resultCount + "",
+					(long) pratilipiIdList.size() );
 
 		} else {
+			
 			pratilipiIdListCursorTuple = dataAccessor.getPratilipiIdList( pratilipiFilter, cursor, offset, resultCount );
+
 		}
 
 
