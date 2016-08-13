@@ -960,6 +960,7 @@ public class PratilipiSite extends HttpServlet {
 		Integer resultCount = basicMode ? 10 : 12;
 		PratilipiListApi.GetRequest pratilipiListApiRequest = new PratilipiListApi.GetRequest();
 		pratilipiListApiRequest.setEventId( eventId );
+		pratilipiListApiRequest.setState( PratilipiState.PUBLISHED );
 		pratilipiListApiRequest.setResultCount( resultCount );
 
 		String action = request.getParameter( "action" ) != null ? request.getParameter( "action" ) : "event_page";
@@ -981,6 +982,7 @@ public class PratilipiSite extends HttpServlet {
 			dataModel.put( "action", action );
 			dataModel.put( "event", eventResponse );
 			dataModel.put( "pratilipiList", pratilipiListApiResponse.getPratilipiList() );
+			dataModel.put( "numberFound", pratilipiListApiResponse.getNumberFound() );
 			dataModel.put( "pratilipiListPageCurr", pageCurr );
 			Integer pageMax = pratilipiListApiResponse.getNumberFound() != null ?
 					(int) Math.ceil( ( (double) pratilipiListApiResponse.getNumberFound() ) / resultCount ) : 1;

@@ -501,6 +501,10 @@
 				var utm_parent = "pratilipi";
 				if( document.querySelector( 'pratilipi-author-page' ) != null )
 					utm_parent = "profile";
+				else if( document.querySelector( 'pratilipi-event-page' ) != null )
+					utm_parent = "event";
+				else if( document.querySelector( 'pratilipi-library-page' ) != null )
+					utm_parent = "library";
 				var width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 				return encodeURIComponent( 
 						"http://${ domain }" + this.pratilipi.pageUrl 
