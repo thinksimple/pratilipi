@@ -30,16 +30,16 @@
 						
 						<#if pratilipiList ??>
 							<div class="secondary-500 box pratilipi-shadow" style="padding: 12px 10px; margin-top: 12px;">
-								<h2 class="pratilipi-red">${ _strings.event_entries }</h2>
+								<#if ( numberFound > 10 ) >
+									<a href="?action=list_contents" class="pull-right"><img style="height:22px;" src="http://0.ptlp.co/resource-all/icon/svg/chevron-right-red.svg"></img></a>
+								</#if>
+								<div class="align-text-center">
+									<h2 class="pratilipi-red">${ _strings.event_entries }</h2>
+								</div>	
 							</div>
 							<#list pratilipiList as pratilipi>
 								<#include "../element/basic/pratilipi-pratilipi-card.ftl">
-							</#list>
-							<#if ( numberFound > 10 ) >
-								<div class="secondary-500 pratilipi-shadow box" style="text-align: center;">
-									<a href="?action=list_contents" class="pratilipi-red-button">${ _strings.show_more }</a>
-								</div>
-							</#if>	
+							</#list>	
 						</#if>
 					</#if>
 				</div>
