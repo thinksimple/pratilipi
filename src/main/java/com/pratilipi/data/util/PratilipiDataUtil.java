@@ -46,6 +46,7 @@ import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.PratilipiContentDoc;
+import com.pratilipi.data.type.PratilipiContentDoc.PageletType;
 import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
 import com.pratilipi.data.type.PratilipiReviewsDoc;
 import com.pratilipi.data.type.UserPratilipi;
@@ -660,14 +661,31 @@ public class PratilipiDataUtil {
 				index = pratilipiContentUtil.generateIndex();
 				pageCount = pratilipiContentUtil.getPageCount();
 			}
-			
-			Gson gson = new Gson();
 
-			AccessToken accessToken = AccessTokenFilter.getAccessToken();
-			AuditLog auditLog = dataAccessor.newAuditLog();
-			auditLog.setAccessId( accessToken.getId() );
-			auditLog.setAccessType( AccessType.PRATILIPI_UPDATE );
-			auditLog.setEventDataOld( gson.toJson( pratilipi ) );
+			
+			DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
+			PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( pratilipiId );
+			int wordCount = 0;
+			int imageCount = 0;
+			int chapterCount = 0;
+			for( PratilipiContentDoc.Chapter chapter : pcDoc.getChapterList() ) {
+				wordCount += chapter.getTitle().split( "[\\s]+" ).length;
+				if( chapter.getPageCount() == 0 )
+					continue;
+				chapterCount++;
+				for( PratilipiContentDoc.Page page : chapter.getPageList() )
+					for( PratilipiContentDoc.Pagelet pagelet : page.getPageletList() )
+						if( pagelet.getType() == PageletType.TEXT )
+							wordCount += ( (String) pagelet.getData() ).split( "[\\s]+" ).length;
+						else if( pagelet.getType() == PageletType.IMAGE )
+							imageCount++;
+			}
+			
+			
+			AuditLog auditLog = dataAccessor.newAuditLog(
+					AccessTokenFilter.getAccessToken().getId(),
+					AccessType.PRATILIPI_UPDATE,
+					pratilipi );
 			
 			boolean isChanged = false; 
 			if( ( pratilipi.getIndex() == null && index != null )
@@ -679,13 +697,19 @@ public class PratilipiDataUtil {
 				
 			}
 
-			if( pratilipi.getPageCount() == null || ! pratilipi.getPageCount().equals( pageCount ) ) {
+			if( pratilipi.getWordCount() != wordCount
+					|| pratilipi.getImageCount() != imageCount
+					|| pratilipi.getPageCount() != pageCount
+					|| pratilipi.getChapterCount() != chapterCount ) {
+				
+				pratilipi.setWordCount( wordCount );
+				pratilipi.setImageCount( imageCount );
 				pratilipi.setPageCount( pageCount );
+				pratilipi.setChapterCount( chapterCount );
 				isChanged = true;
+				
 			}
 
-			auditLog.setEventDataNew( gson.toJson( pratilipi ) );
-			
 			if( isChanged )
 				pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi, auditLog );
 

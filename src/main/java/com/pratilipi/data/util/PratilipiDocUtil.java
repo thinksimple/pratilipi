@@ -63,6 +63,8 @@ public class PratilipiDocUtil {
 		
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 		BlobEntry blobEntry = blobAccessor.getBlob( "pratilipi-content/pratilipi/" + pratilipiId );
+		if( blobEntry == null )
+			return;
 		String contentHtml = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
 		
 		PratilipiContentDoc pcDoc = DataAccessorFactory.getDocAccessor().newPratilipiContentDoc();
@@ -128,7 +130,15 @@ public class PratilipiDocUtil {
 				BlobEntry blobEntry = null;
 				String imageUrl = childNode.attr( "src" );
 				String imageName = null;
-				if( imageUrl.startsWith( "http" ) ) {
+				if( imageUrl.indexOf( "name=" ) != -1 ) {
+					imageName = imageUrl.substring( imageUrl.indexOf( "name=" ) + 5 );
+					if( imageName.indexOf( '&' ) != -1 )
+						imageName = imageName.substring( 0, imageName.indexOf( '&' ) );
+					String fileName = _createImageFullName( pratilipi.getId(), imageName );
+					blobEntry = blobAccessor.getBlob( fileName );
+					if( blobEntry == null ) // TODO: Remove this when all images from old resource folder are migrated to new resource location
+						blobEntry = blobAccessor.getBlob( "pratilipi-resource/" + pratilipi.getId() + "/" + imageName );
+				} else if( imageUrl.startsWith( "http" ) ) {
 					imageName = imageUrl.replaceAll( "[:/.?=&+]+", "_" );
 					String fileName = _createImageFullName( pratilipi.getId(), imageName );
 					blobEntry = blobAccessor.getBlob( fileName );
@@ -139,14 +149,6 @@ public class PratilipiDocUtil {
 						blobEntry.setName( fileName );
 						blobAccessor.createOrUpdateBlob( blobEntry );
 					}
-				} else if( imageUrl.indexOf( "name=" ) != -1 ) {
-					imageName = imageUrl.substring( imageUrl.indexOf( "name=" ) + 5 );
-					if( imageName.indexOf( '&' ) != -1 )
-						imageName = imageName.substring( 0, imageName.indexOf( '&' ) );
-					String fileName = _createImageFullName( pratilipi.getId(), imageName );
-					blobEntry = blobAccessor.getBlob( fileName );
-					if( blobEntry == null ) // TODO: Remove this when all images from old resource folder are migrated to new resource location
-						blobEntry = blobAccessor.getBlob( "pratilipi-resource/" + pratilipi.getId() + "/" + imageName );
 				} else if( imageUrl.startsWith( "data:" ) && imageUrl.indexOf( "base64" ) != -1 ) {
 					imageName = UUID.randomUUID().toString();
 					String mimeType = imageUrl.substring( 5, imageUrl.indexOf( ';' ) );
@@ -196,6 +198,7 @@ public class PratilipiDocUtil {
 	}
 	
 	private static String _extractText( Node node ) {
+		logger.log( Level.INFO, node.toString() );
 		String text = node.getClass() == TextNode.class
 				? ( (TextNode) node ).text()
 				: ( (Element) node ).text();
