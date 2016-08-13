@@ -428,13 +428,8 @@ public class PratilipiDataUtil {
 		// Fetching Pratilipi id list from DataStore/SearchIndex/Event
 		DataListCursorTuple<Long> pratilipiIdListCursorTuple = null; 
 
-		if( pratilipiFilter.getListName() == null && pratilipiFilter.getState() == PratilipiState.PUBLISHED ) {
-			
-			pratilipiIdListCursorTuple = DataAccessorFactory.getSearchAccessor()
-					.searchPratilipi( searchQuery, pratilipiFilter, cursor, offset, resultCount );
+		if( eventId != null ) {
 
-		} else if( eventId != null ) {
-			
 			List<Long> pratilipiIdList = dataAccessor.getEvent( eventId ).getPratilipiIdList();
 			offset = ( cursor == null ? 0 : Integer.parseInt( cursor ) )
 					+ ( offset == null || offset < 0 ? 0 : offset );
@@ -448,8 +443,13 @@ public class PratilipiDataUtil {
 					offset + resultCount + "",
 					(long) pratilipiIdList.size() );
 
+		} else if( pratilipiFilter.getListName() == null && pratilipiFilter.getState() == PratilipiState.PUBLISHED ) {
+
+			pratilipiIdListCursorTuple = DataAccessorFactory.getSearchAccessor()
+					.searchPratilipi( searchQuery, pratilipiFilter, cursor, offset, resultCount );
+
 		} else {
-			
+
 			pratilipiIdListCursorTuple = dataAccessor.getPratilipiIdList( pratilipiFilter, cursor, offset, resultCount );
 
 		}

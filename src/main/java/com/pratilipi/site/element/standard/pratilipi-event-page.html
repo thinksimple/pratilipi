@@ -184,7 +184,9 @@
 
 				this.set( 'isLoading', true );
 				this.$.PratilipiListApi.params.eventId = this.event.eventId;
+				this.$.PratilipiListApi.params.state = "PUBLISHED";
 				this.$.PratilipiListApi.params.resultCount = this.resultCount;
+
 				if( this.cursor != null )
 					this.$.PratilipiListApi.params.cursor = this.cursor;
 				else
