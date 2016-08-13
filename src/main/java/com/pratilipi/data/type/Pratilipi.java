@@ -65,10 +65,22 @@ public interface Pratilipi extends GenericOfyType {
 	@Deprecated
 	void setIndex( String index );
 	
+	Integer getWordCount();
+
+	void setWordCount( Integer wordCount );
+
+	Integer getImageCount();
+
+	void setImageCount( Integer imageCount );
+	
 	Integer getPageCount();
 	
 	void setPageCount( Integer pageCount );
 	
+	Integer getChapterCount();
+
+	void setChapterCount( Integer chapterCount );
+
 	
 	Long getReviewCount();
 	

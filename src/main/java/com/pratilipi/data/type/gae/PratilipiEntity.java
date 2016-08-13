@@ -71,8 +71,17 @@ public class PratilipiEntity implements Pratilipi {
 	private String INDEX;
 	
 	@Index
+	private Integer WORD_COUNT;
+	
+	@Index
+	private Integer IMAGE_COUNT;
+	
+	@Index
 	private Integer PAGE_COUNT;
 	
+	@Index
+	private Integer CHAPTER_COUNT;
+
 	
 	@Index
 	private Long REVIEW_COUNT;
@@ -249,6 +258,26 @@ public class PratilipiEntity implements Pratilipi {
 	}
 	
 	@Override
+	public Integer getWordCount() {
+		return WORD_COUNT == null ? 0 : WORD_COUNT;
+	}
+
+	@Override
+	public void setWordCount( Integer wordCount ) {
+		this.WORD_COUNT = wordCount;
+	}
+	
+	@Override
+	public Integer getImageCount() {
+		return IMAGE_COUNT == null ? 0 : IMAGE_COUNT;
+	}
+
+	@Override
+	public void setImageCount( Integer imageCount ) {
+		this.IMAGE_COUNT = imageCount;
+	}
+	
+	@Override
 	public Integer getPageCount() {
 		return PAGE_COUNT == null ? 0 : PAGE_COUNT;
 	}
@@ -258,6 +287,16 @@ public class PratilipiEntity implements Pratilipi {
 		this.PAGE_COUNT = pageCount;
 	}
 	
+	@Override
+	public Integer getChapterCount() {
+		return CHAPTER_COUNT == null ? 0 : CHAPTER_COUNT;
+	}
+
+	@Override
+	public void setChapterCount( Integer chapterCount ) {
+		this.CHAPTER_COUNT = chapterCount;
+	}
+
 	
 	@Override
 	public Long getReviewCount() {
