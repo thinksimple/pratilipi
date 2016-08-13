@@ -22,7 +22,6 @@
 				max-height: 120px; 
 				overflow: hidden;
 				padding-right: 4px;
-				text-align: justify;
 				font-size: 14px;
 				line-height: 20px;
 			}
