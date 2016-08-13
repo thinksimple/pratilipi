@@ -39,7 +39,7 @@
 								<div class="secondary-500 pratilipi-shadow box" style="text-align: center;">
 									<a href="?action=list_contents" class="pratilipi-red-button">${ _strings.show_more }</a>
 								</div>
-							<#if>	
+							</#if>	
 						</#if>
 					</#if>
 				</div>
