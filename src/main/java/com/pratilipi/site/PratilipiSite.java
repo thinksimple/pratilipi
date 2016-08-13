@@ -410,7 +410,8 @@ public class PratilipiSite extends HttpServlet {
 		Map<String, String> languageMap = new HashMap<String, String>();
 		for( Website website : Website.values() ) {
 			if( ! website.toString().contains( "GAMMA" ) && 
-					! website.toString().contains( "DEVO" ) && 
+					! website.toString().contains( "DEVO" ) &&
+					! website.toString().contains( "ALPHA" ) &&
 					website != Website.ALL_LANGUAGE ) {
 				languageMap.put( website.toString(), website.getFilterLanguage().getName() );
 			}
