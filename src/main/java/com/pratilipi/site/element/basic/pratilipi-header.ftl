@@ -36,14 +36,14 @@
 		</div>
 	</div>
 		<div class="row">
-	  	  <div class="col-xs-3">	
+	  	  <div class="pull-left" style="padding-left: 15px;padding-right: 15px;">	
 	  		<div class="form-group" style="margin-bottom: 5px;">
 			  <select class="form-control" id="select-language" style="box-shadow:none;padding:0px;border:none;color:red;height:30px;">
 			  	<option selected disabled>${ _strings.pratilipi }</option>
 			  </select>
 			</div>
 		  </div>
-		  <div class="col-xs-9" style="padding-left: 2px;">
+		  <div style="padding-left: 2px;padding-right: 15px;">
 			<form style="" method="get" action="/search">
 				<div class="form-group" style="margin-bottom:0px;">
 					<div class="input-group">
