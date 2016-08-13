@@ -74,7 +74,7 @@ public class PratilipiDocUtil {
 		if( pageletList.size() > 0 ) {
 			PratilipiContentDoc.Chapter chapter = null;
 			if( pageletList.get( 0 )[0] != PratilipiContentDoc.PageletType.HEAD_1 )
-				chapter = pcDoc.addChapter( pratilipi.getTitle() == null ? pratilipi.getTitle() : pratilipi.getTitleEn() );
+				chapter = pcDoc.addChapter( pratilipi.getTitle() == null ? pratilipi.getTitleEn() : pratilipi.getTitle() );
 			
 			for( Object[] pagelet : pageletList ) {
 				if( pagelet[0] == PratilipiContentDoc.PageletType.HEAD_1 )
@@ -198,7 +198,6 @@ public class PratilipiDocUtil {
 	}
 	
 	private static String _extractText( Node node ) {
-		logger.log( Level.INFO, node.toString() );
 		String text = node.getClass() == TextNode.class
 				? ( (TextNode) node ).text()
 				: ( (Element) node ).text();
