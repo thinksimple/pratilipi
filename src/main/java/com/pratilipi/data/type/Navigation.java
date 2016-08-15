@@ -3,8 +3,6 @@ package com.pratilipi.data.type;
 import java.io.Serializable;
 import java.util.List;
 
-import com.google.gson.JsonObject;
-
 public interface Navigation extends Serializable {
 
 	@SuppressWarnings("serial")
@@ -12,9 +10,9 @@ public interface Navigation extends Serializable {
 		
 		private String name;
 		private String url;
-		private JsonObject apiRequest;
+		private String apiRequest;
 		
-		public Link( String name, String url, JsonObject apiRequest ) {
+		public Link( String name, String url, String apiRequest ) {
 			this.name = name;
 			this.url = url;
 			this.apiRequest = apiRequest;
@@ -28,7 +26,7 @@ public interface Navigation extends Serializable {
 			return url;
 		}
 		
-		public JsonObject getApiRequest() {
+		public String getApiRequest() {
 			return apiRequest;
 		}
 		

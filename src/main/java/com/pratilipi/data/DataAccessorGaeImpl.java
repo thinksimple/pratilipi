@@ -18,8 +18,6 @@ import org.apache.commons.io.LineIterator;
 import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.api.datastore.QueryResultIterator;
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.cmd.Query;
@@ -1462,11 +1460,10 @@ public class DataAccessorGaeImpl implements DataAccessor {
 				navigation = null;
 			
 			} else if( navigation != null && ! line.isEmpty() ) {
-				JsonObject apiRequest = null;
+				String apiRequest = null;
 				String url = null;
 				if( line.indexOf( '{' ) != -1 ) {
-					String apiRequestJson = line.substring( line.indexOf( '{' ) );
-					apiRequest = new Gson().fromJson( apiRequestJson, JsonElement.class ).getAsJsonObject();
+					apiRequest = line.substring( line.indexOf( '{' ) );
 					line = line.substring( 0, line.indexOf( '{' ) ).trim();
 				}
 				if( line.indexOf( '/' ) == -1 ) {
