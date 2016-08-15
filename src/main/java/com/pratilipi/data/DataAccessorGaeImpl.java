@@ -18,6 +18,8 @@ import org.apache.commons.io.LineIterator;
 import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.api.datastore.QueryResultIterator;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.cmd.Query;
@@ -1444,36 +1446,39 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 		navigationList = new ArrayList<>( lines.size() );
 		
-		Navigation navigation = new NavigationEntity();
+		Navigation navigation = null;
 		for( String line : lines ) {
 			
 			line = line.trim();
 			
-			if( navigation.getTitle() == null && line.isEmpty() )
+			if( navigation == null && line.isEmpty() )
 				continue;
 			
-			else if( navigation.getTitle() == null && ! line.isEmpty() )
-				navigation.setTitle( line );
+			else if( navigation == null && ! line.isEmpty() )
+				navigation = new NavigationEntity( line );
 			
-			else if( navigation.getTitle() != null && line.isEmpty() ) {
+			else if( navigation != null && line.isEmpty() ) {
 				navigationList.add( navigation );
-				navigation = new NavigationEntity();
+				navigation = null;
 			
-			} else if( navigation.getTitle() != null && ! line.isEmpty() ) {
-				Navigation.Link link = null;
-				if( line.indexOf( ' ' ) == -1 )
-					link = new Navigation.Link( line, line );
-				else
-					link = new Navigation.Link( 
-							line.substring( line.indexOf( ' ' ) + 1 ).trim(),
-							line.substring( 0, line.indexOf( ' ' ) )
-					);
-				navigation.addLink( link );
+			} else if( navigation != null && ! line.isEmpty() ) {
+				JsonObject apiRequest = null;
+				String url = null;
+				if( line.indexOf( '{' ) != -1 ) {
+					String apiRequestJson = line.substring( line.indexOf( '{' ) );
+					apiRequest = new Gson().fromJson( apiRequestJson, JsonElement.class ).getAsJsonObject();
+					line = line.substring( 0, line.indexOf( '{' ) ).trim();
+				}
+				if( line.indexOf( '/' ) == -1 ) {
+					url = line.substring( line.indexOf( '/' ) );
+					line = line.substring( 0, line.indexOf( '/' ) ).trim();
+				}
+				navigation.addLink( new Navigation.Link( line, url, apiRequest ) );
 			}
 			
 		}
 
-		if( navigation.getTitle() != null )
+		if( navigation != null )
 			navigationList.add( navigation );
 		
 		

@@ -1,40 +1,34 @@
-package com.pratilipi.data.type.gae;
+package com.pratilipi.data.client;
 
-import java.util.LinkedList;
 import java.util.List;
 
-import com.pratilipi.data.type.Navigation;
+import com.pratilipi.data.type.Navigation.Link;
 
-@SuppressWarnings("serial")
-public class NavigationEntity implements Navigation {
+public class NavigationData {
 
 	private String title;
 	
 	private List<Link> linkList;
 	
 	
-	public NavigationEntity( String title ) {
+	public NavigationData( String title, List<Link> linkList ) {
 		this.title = title;
-		this.linkList = new LinkedList<Link>();
+		this.linkList = linkList;
 	}
 
 	
-	@Override
 	public String getTitle() {
 		return title;
 	}
 
-	@Override
 	public void setTitle( String title ) {
 		this.title = title;
 	}
 	
-	@Override
 	public List<Link> getLinkList() {
 		return linkList;
 	}
 	
-	@Override
 	public void addLink( Link link ) {
 		this.linkList.add( link );
 	}
