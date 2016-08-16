@@ -8,7 +8,7 @@
 		<#assign mainPage="pratilipi-home-page">
 		<#include "meta/Head.ftl">
 
-		<link rel='import' href='/elements.${lang}/pratilipi-home-page.html?201608'>
+		<link rel='import' href='/elements.${lang}/pratilipi-home-page.html?20160816'>
 		<link rel='import' href='/elements.${lang}/pratilipi-${ language?lower_case }-carousel.html?20160813'>
 	</head>
 
