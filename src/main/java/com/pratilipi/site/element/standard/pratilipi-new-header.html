@@ -261,7 +261,7 @@
 						</form>
 					</div>
 					<div class="button-holder">
-						<a on-click="_write">
+						<a on-click="write">
 							<iron-icon icon="icons:create"></iron-icon>
 						</a>
 					</div>
@@ -384,7 +384,7 @@
 				document.querySelector( 'pratilipi-user' ).logIn();
 			},
 			
-			_write: function() {
+			write: function() {
 				if( this.user.isGuest ) {
 					this.set( 'writeButtonActive', true );
 					document.querySelector( 'pratilipi-user' ).logIn( true );

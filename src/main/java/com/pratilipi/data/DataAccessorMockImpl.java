@@ -35,6 +35,7 @@ import com.pratilipi.data.mock.AccessTokenMock;
 import com.pratilipi.data.mock.AppPropertyMock;
 import com.pratilipi.data.mock.AuthorMock;
 import com.pratilipi.data.mock.EventMock;
+import com.pratilipi.data.mock.NotificationMock;
 import com.pratilipi.data.mock.PageMock;
 import com.pratilipi.data.mock.PratilipiMock;
 import com.pratilipi.data.mock.UserMock;
@@ -666,7 +667,7 @@ public class DataAccessorMockImpl implements DataAccessor {
 	@Override
 	public DataListCursorTuple<Long> getUserAuthorFollowList( Long userId, Long authorId, String cursor, Integer offset, Integer resultCount ) {
 		// TODO: Implementation
-		return null;
+		return new DataListCursorTuple<Long>( new ArrayList<Long>(), cursor );
 	}
 	
 	@Override
@@ -868,7 +869,7 @@ public class DataAccessorMockImpl implements DataAccessor {
 	public List<UserAuthor> getUserAuthorList(Long userId,
 			List<Long> authorIdList) {
 		// TODO Auto-generated method stub
-		return null;
+		return new ArrayList<UserAuthor>();
 	}
 
 
@@ -876,7 +877,7 @@ public class DataAccessorMockImpl implements DataAccessor {
 	public List<UserAuthor> getUserAuthorList(List<Long> userIdList,
 			Long authorId) {
 		// TODO Auto-generated method stub
-		return null;
+		return new ArrayList<UserAuthor>(); 
 	}
 
 
@@ -901,32 +902,39 @@ public class DataAccessorMockImpl implements DataAccessor {
 
 	@Override
 	public Notification getNotification( Long notificationId ) {
-		// TODO Auto-generated method stub
+		for( Notification notification : NotificationMock.NOTIFICATION_TABLE )
+			if( notification.getId() == notificationId )
+				return notification;
 		return null;
 	}
 	
 	@Override
 	public Notification getNotification( Long userId, NotificationType type, Long sourceId ) {
-		// TODO Auto-generated method stub
+		for( Notification notification : NotificationMock.NOTIFICATION_TABLE )
+			if( notification.getUserId() == userId && notification.getType() == type && notification.getSourceIdLong() == sourceId )
+				return notification;
 		return null;
 	}
 
 	@Override
 	public Integer getNotificationCount( Long userId, Date minLastUpdatedDate  ) {
-		// TODO Auto-generated method stub
-		return null;
+		return NotificationMock.NOTIFICATION_TABLE.size();
 	}
 
 	@Override
 	public DataListCursorTuple<Notification> getNotificationList( Long userId, NotificationType type, Long sourceId, String cursor, Integer resultCount ) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Notification> notificationList = new ArrayList<Notification>();
+		for( Notification notification : NotificationMock.NOTIFICATION_TABLE )
+			notificationList.add( notification );
+		return new DataListCursorTuple<Notification>( notificationList, cursor );
 	}
 
 	@Override
 	public DataListCursorTuple<Notification> getNotificationList( Long userId, NotificationType type, String sourceId, String cursor, Integer resultCount ) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Notification> notificationList = new ArrayList<Notification>();
+		for( Notification notification : NotificationMock.NOTIFICATION_TABLE )
+			notificationList.add( notification );
+		return new DataListCursorTuple<Notification>( notificationList, cursor );
 	}
 
 	@Override
