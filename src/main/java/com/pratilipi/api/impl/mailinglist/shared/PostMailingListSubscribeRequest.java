@@ -12,7 +12,9 @@ public class PostMailingListSubscribeRequest extends GenericRequest {
 	@Validate( required = true, regEx = REGEX_EMAIL, regExErrMsg = ERR_EMAIL_INVALID )
 	private String email;
 	
-	
+	private String comment;
+
+
 	public MailingList getMailingList() {
 		return mailingList;
 	}
@@ -21,4 +23,8 @@ public class PostMailingListSubscribeRequest extends GenericRequest {
 		return email;
 	}
 	
+	public String getComment() {
+		return comment;
+	}
+
 }

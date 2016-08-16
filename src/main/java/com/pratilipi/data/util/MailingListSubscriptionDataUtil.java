@@ -15,7 +15,7 @@ import com.pratilipi.filter.AccessTokenFilter;
 
 public class MailingListSubscriptionDataUtil {
 	
-	public static void subscribe( MailingList mailingList, Long userId, String email )
+	public static void subscribe( MailingList mailingList, Long userId, String email, String comment )
 			throws InvalidArgumentException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -37,6 +37,7 @@ public class MailingListSubscriptionDataUtil {
 		mailingListSubscription.setMailingList( mailingList );
 		mailingListSubscription.setUserId( userId );
 		mailingListSubscription.setEmail( email );
+		mailingListSubscription.setComment( comment );
 		mailingListSubscription.setSubscriptionDate( new Date() );
 		
 		auditLog.setEventDataNew( gson.toJson( mailingListSubscription ) );

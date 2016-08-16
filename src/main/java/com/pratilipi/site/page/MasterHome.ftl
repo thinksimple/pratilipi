@@ -103,7 +103,7 @@
 					return;
 			}
 			var mailingList = document.getElementById( 'mailingListLanguage' ).value;
-			var lang = mailingList == "LAUNCH_ANNOUNCEMENT_OTHER" ? 
+			var comment = mailingList == "LAUNCH_ANNOUNCEMENT_OTHER" ? 
 					document.getElementById( 'mailingListLanguageInput' ).value.trim() : "";
 
 			var email = document.getElementById( 'mailingListEmail' ).value;
@@ -116,7 +116,7 @@
 				jQuery( '#mailingListLanguage' ).css( { "border": 'none' } );
 			}
 
-			if( mailingList == "LAUNCH_ANNOUNCEMENT_OTHER" && lang == "" ) {
+			if( mailingList == "LAUNCH_ANNOUNCEMENT_OTHER" && comment == "" ) {
 				jQuery( '#mailingListLanguageInput' ).css( { "border": '#FF0000 1px solid' } );
 				passed = false;
 			} else {
@@ -142,8 +142,8 @@
 					'email': email, 
 					'mailingList': mailingList,
 			};
-			if( lang != "" )
-					body[ 'language' ] = lang;
+			if( comment != "" )
+					body[ 'comment' ] = comment;
 
 			$.ajax({
 				type: 'post',

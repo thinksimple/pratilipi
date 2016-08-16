@@ -26,7 +26,9 @@ public class MailingListSubscriptionEntity implements MailingListSubscription {
 
 	@Index( IfNotNull.class )
 	private String EMAIL;
-	
+
+	private String COMMENT;
+
 	@Index
 	private Date SUBSCRIPTION_DATE;
 
@@ -86,6 +88,16 @@ public class MailingListSubscriptionEntity implements MailingListSubscription {
 	@Override
 	public void setEmail( String email ) {
 		this.EMAIL = email;
+	}
+
+	@Override
+	public String getComment() {
+		return COMMENT;
+	}
+
+	@Override
+	public void setComment( String comment ) {
+		this.COMMENT = comment;
 	}
 	
 	@Override
