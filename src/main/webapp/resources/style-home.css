@@ -426,6 +426,7 @@ a {
 	color: #fff;
 	font-size: 24px;
 	margin: 16px;
+	line-height: 28px;
 	font-weight: 400; 
 }
 .landing-page .notify-me-wrapper .notify-loader {
@@ -455,6 +456,7 @@ a {
 .landing-page .notify-me-wrapper .notify-message h2 {
 	color: #fff;
 	font-size: 26px;
+	line-height: 32px;
 	margin: 16px;
 	font-weight: 400; 
 }

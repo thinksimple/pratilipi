@@ -13,7 +13,7 @@
 	<link rel='stylesheet' href='http://f.ptlp.co/third-party/font-awesome-4.3.0/css/font-awesome.min.css'>
 	<link rel='stylesheet' href='http://b.ptlp.co/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>
 	
-	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?201607">
+	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?201608">
 
 	<#include "meta/GoogleAnalytics.ftl">
 
@@ -73,8 +73,18 @@
 				jQuery( '.pratilipi-banner' ).height( jQuery( window ).height() - 20 - diff - 108 );
 				jQuery( '.pratilipi-banner' ).css( "max-height", Math.max( jQuery( window ).height(), jQuery( '.content-wrapper' ).height() + 108 ) + "px" );
 			}
-			
+			<#-- Hiding the language input on ready -->
+			document.getElementById( 'mailingListLanguageInput' ).style.display = "none";
+			document.getElementById( "mailingListLanguage" ).addEventListener( "change", onMailingListLanguageChange, false );
 		});
+		function onMailingListLanguageChange() {
+			var val = document.getElementById( 'mailingListLanguage' ).value;
+			if( val == "LAUNCH_ANNOUNCEMENT_OTHER" ) {
+				document.getElementById( 'mailingListLanguageInput' ).style.display = "inline-block";
+			} else {
+				document.getElementById( 'mailingListLanguageInput' ).style.display = "none";
+			}
+		}
 		function validateEmail( email ) {
 			var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 			return re.test(email);
@@ -93,6 +103,9 @@
 					return;
 			}
 			var mailingList = document.getElementById( 'mailingListLanguage' ).value;
+			var lang = mailingList == "LAUNCH_ANNOUNCEMENT_OTHER" ? 
+					document.getElementById( 'mailingListLanguageInput' ).value.trim() : "";
+
 			var email = document.getElementById( 'mailingListEmail' ).value;
 			var passed = true;
 			
@@ -102,7 +115,14 @@
 			} else {
 				jQuery( '#mailingListLanguage' ).css( { "border": 'none' } );
 			}
-			
+
+			if( mailingList == "LAUNCH_ANNOUNCEMENT_OTHER" && lang == "" ) {
+				jQuery( '#mailingListLanguageInput' ).css( { "border": '#FF0000 1px solid' } );
+				passed = false;
+			} else {
+				jQuery( '#mailingListLanguage' ).css( { "border": 'none' } );
+			}
+
 			if( email.trim() == "" || !validateEmail( email ) ) {
 				jQuery( '#mailingListEmail' ).css( { "border": '#FF0000 1px solid' } );
 				passed = false;
@@ -117,17 +137,22 @@
 			jQuery( '#notify-me-wrapper' ).height( jQuery( '#notify-me-wrapper' ).height() );
 			document.getElementById( "notify-elements" ).style.display = "none";
 			document.getElementById( 'notify-loader' ).style.display = "block";
-		
+
+			var body = { 
+					'email': email, 
+					'mailingList': mailingList,
+			};
+			if( lang != "" )
+					body[ 'language' ] = lang;
+
 			$.ajax({
 				type: 'post',
 				url: '/api/mailinglist/subscribe',
-				data: { 
-					'email': email, 
-					'mailingList': mailingList
-				},
+				data: body,
 				success: function( response ) {
 					document.getElementById( 'notify-loader' ).style.display = "none";
 					document.getElementById( 'mailingListLanguage' ).value = "none";
+					document.getElementById( 'mailingListLanguageInput' ).style.display = "none";
 					document.getElementById( 'mailingListEmail' ).value = null;
 					document.getElementById( "notify-message-text" ).innerText = "Thank You! You will be notified when we launch the language!";
 					document.getElementById( "notify-message" ).style.display = "block";
@@ -349,6 +374,7 @@
 						<option value="LAUNCH_ANNOUNCEMENT_BHOJPURI">	Bhojpuri	</option>
 						<option value="LAUNCH_ANNOUNCEMENT_OTHER">		Any Other	</option>
 					</select>
+					<input class="input-field" type="text" name="mailingListLanguageInput" id="mailingListLanguageInput" placeholder="Language">
 					<input class="input-field" type="email" name="mailingListEmail" id="mailingListEmail" placeholder="Email" onKeyPress="mailingList( event, this )">
 					<button class="notify-me-btn" onClick="mailingList()">NOTIFY ME!</button>
 				</div>
