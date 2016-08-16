@@ -35,6 +35,7 @@ import com.pratilipi.data.mock.AccessTokenMock;
 import com.pratilipi.data.mock.AppPropertyMock;
 import com.pratilipi.data.mock.AuthorMock;
 import com.pratilipi.data.mock.EventMock;
+import com.pratilipi.data.mock.PageMock;
 import com.pratilipi.data.mock.PratilipiMock;
 import com.pratilipi.data.mock.UserMock;
 import com.pratilipi.data.mock.UserPratilipiMock;
@@ -67,6 +68,7 @@ import com.pratilipi.data.type.gae.CommentEntity;
 import com.pratilipi.data.type.gae.EventEntity;
 import com.pratilipi.data.type.gae.I18nEntity;
 import com.pratilipi.data.type.gae.MailingListSubscriptionEntity;
+import com.pratilipi.data.type.gae.NavigationEntity;
 import com.pratilipi.data.type.gae.PageEntity;
 import com.pratilipi.data.type.gae.PratilipiEntity;
 import com.pratilipi.data.type.gae.UserAuthorEntity;
@@ -175,14 +177,28 @@ public class DataAccessorMockImpl implements DataAccessor {
 	
 	@Override
 	public Map<Long, User> getUsers( List<Long> idList ) {
-		// TODO: Implementation
-		return new HashMap<>( 0 );
+
+		Map<Long, User> userMap = new HashMap<Long, User>();
+
+		for( Long id : idList )
+			for( User user : UserMock.USER_TABLE )
+				if( id == user.getId() )
+					userMap.put( id, user );
+
+		return userMap;
 	}
 	
 	@Override
 	public List<User> getUserList( List<Long> idList ) {
-		// TODO: Implementation
-		return new ArrayList<>( 0 );
+
+		List<User> userList = new ArrayList<User>();
+
+		for( Long id : idList )
+			for( User user : UserMock.USER_TABLE )
+				if( id == user.getId() )
+					userList.add( user );
+
+		return userList;
 	}
 	
 	@Override
@@ -300,14 +316,21 @@ public class DataAccessorMockImpl implements DataAccessor {
 
 	@Override
 	public Map<String, Page> getPages( List<String> uriList ) {
-		// TODO: Implementation
-		return null;
+		Map<String, Page> pageMap = new HashMap<String, Page>();
+		for( String uri : uriList )
+			if( getPage( uri ) != null )
+				pageMap.put( uri, getPage( uri ) );
+		return pageMap;
 	}
 	
 	@Override
 	public Map<Long, Page> getPages( PageType pageType, List<Long> primaryContentIdList ) {
-		// TODO: Implementation
-		return null;
+		Map<Long, Page> pageMap = new HashMap<Long, Page>();
+		for( Long primaryContentId : primaryContentIdList )
+			for( Page page : PageMock.PAGE_TABLE )
+				if( page.getType() == pageType && page.getPrimaryContentId() == primaryContentId )
+					pageMap.put( primaryContentId, page );
+		return pageMap;
 	}
 
 	@Override
@@ -360,7 +383,11 @@ public class DataAccessorMockImpl implements DataAccessor {
 	public DataListCursorTuple<Long> getPratilipiIdList(
 			PratilipiFilter pratilipiFilter, String cursorStr, Integer offset, Integer resultCount ) {
 		
-		return new DataListCursorTuple<>( new ArrayList<Long>(), null );
+		List<Long> pratilipiIdList = new ArrayList<Long>();
+		for( Pratilipi pratilipi : PratilipiMock.PRATILIPI_TABLE )
+			if( pratilipi.getLanguage() == pratilipiFilter.getLanguage() )
+				pratilipiIdList.add( pratilipi.getId() );
+		return new DataListCursorTuple<>( pratilipiIdList, null );
 
 	}
 	
@@ -665,8 +692,58 @@ public class DataAccessorMockImpl implements DataAccessor {
 	
 	@Override
 	public List<Navigation> getNavigationList( Language language ) {
-		// TODO Auto-generated method stub
-		return new ArrayList<Navigation>( 0 );
+				
+		ArrayList<Navigation> navigationList = null;
+
+		List<String> lines = null;
+		try {
+			String fileName = CURATED_DATA_FOLDER + "/navigation." + language.getCode();
+			InputStream inputStream = DataAccessor.class.getResource( fileName ).openStream();
+			lines = IOUtils.readLines( inputStream, "UTF-8" );
+			inputStream.close();
+		} catch( NullPointerException | IOException e ) {
+			logger.log( Level.SEVERE, "Failed to fetch " + language.getNameEn() + " navigation list.", e );
+			lines = new ArrayList<>( 0 );
+		}
+
+
+		navigationList = new ArrayList<>( lines.size() );
+		
+		Navigation navigation = null;
+		for( String line : lines ) {
+			
+			line = line.trim();
+			
+			if( navigation == null && line.isEmpty() )
+				continue;
+			
+			else if( navigation == null && ! line.isEmpty() )
+				navigation = new NavigationEntity( line );
+			
+			else if( navigation != null && line.isEmpty() ) {
+				navigationList.add( navigation );
+				navigation = null;
+			
+			} else if( navigation != null && ! line.isEmpty() ) {
+				String apiRequest = null;
+				String url = null;
+				if( line.indexOf( '{' ) != -1 ) {
+					apiRequest = line.substring( line.indexOf( '{' ) );
+					line = line.substring( 0, line.indexOf( '{' ) ).trim();
+				}
+				if( line.indexOf( '/' ) != -1 ) {
+					url = line.substring( line.indexOf( '/' ) );
+					line = line.substring( 0, line.indexOf( '/' ) ).trim();
+				}
+				navigation.addLink( new Navigation.Link( line, url, apiRequest ) );
+			}
+			
+		}
+
+		if( navigation != null )
+			navigationList.add( navigation );
+		
+		return navigationList;
 	}
 
 	
