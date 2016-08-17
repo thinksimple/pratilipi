@@ -1,8 +1,11 @@
 <dom-module id="pratilipi-notification-popup-snippet">
 
 	<style>
-		.notification-unread-state {
+		.notification-unread-state, .notification-unread-state:hover {
 			background-color: #f7f7f7;
+		}
+		.notification-read-state, .notification-read-state:hover {
+			background-color: #ffffff;
 		}
 	</style>
 
@@ -39,6 +42,9 @@
 				
 				if( this.state == "UNREAD" ) {
 					jQuery( this.querySelector( '.notification-message' ) ).addClass( "notification-unread-state" );
+				}
+				else {
+					jQuery( this.querySelector( '.notification-message' ) ).addClass( "notification-read-state" );
 				}
 			},
 

@@ -16,6 +16,13 @@
 			border-bottom: 1px solid #d3d3d3;
 			box-shadow: 0 3px 2px -2px rgba(200,200,200,0.2);
 		}
+		.notification-dropdown-menu {
+			position: absolute; 
+			top: 140%; 
+			padding: 0px;
+			border-radius: 1px;
+			margin-right: -1px;
+		}
 		.notification-count {
 			top: -23%;
 			right: -32%;
@@ -272,18 +279,26 @@
 					</div>
 					<div class="button-holder dropdown">
 						<div style="display: inline-block" class="dropdown">
-							<template is="dom-if" if="{{ isBigWindow }}">
-								<iron-icon icon="social:notifications" class="dropdown-toggle" id="notification-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" on-click="_hideNotificationCount"></iron-icon>
+							<template is="dom-if" if="{{ isGuest }}">
+								<a on-click="_logIn">
+									<iron-icon icon="social:notifications"></iron-icon>
+								</a>
 							</template>
-							<template is="dom-if" if="{{ !isBigWindow }}">
-								<a href="/notifications"><iron-icon icon="social:notifications" id="notification-dropdown" on-click="_hideNotificationCount"></iron-icon></a>
+							<template is="dom-if" if="{{ !isGuest }}">
+								<template is="dom-if" if="{{ isBigWindow }}">
+									<iron-icon icon="social:notifications" class="dropdown-toggle" id="notification-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" on-click="_hideNotificationCount"></iron-icon>
+								</template>
+								<template is="dom-if" if="{{ !isBigWindow }}">
+									<a href="/notifications"><iron-icon icon="social:notifications" id="notification-dropdown" on-click="_hideNotificationCount"></iron-icon></a>
+								</template>
+								<template is="dom-if" if="{{ showNotificationCount }}">
+									<span class="badge notification-count">{{ newNotificationCount }}</span>
+								</template>
+								<div class="dropdown-menu dropdown-menu-right list-group notification-dropdown-menu"  aria-labelledby="notification-dropdown">
+									<pratilipi-notification-popup popup-notification-list="[[ popupNotificationList ]]"></pratilipi-notification-popup>
+								</div>	
 							</template>
-							<template is="dom-if" if="{{ showNotificationCount }}">
-								<span class="badge notification-count">{{ newNotificationCount }}</span>
-							</template>
-							<div class="dropdown-menu dropdown-menu-right list-group" style="position: absolute; top: 140%; padding: 0px;" aria-labelledby="notification-dropdown">
-								<pratilipi-notification-popup popup-notification-list="[[ popupNotificationList ]]"></pratilipi-notification-popup>
-							</div>							
+						
 						</div>
 					</div>
 					<div class="button-holder sign-in-text">
@@ -346,7 +361,7 @@
 				id="NotifiedApiPost"
 				url="/api/user/notified"
 				method="POST"
-				content-type="application/json"
+				content-type="application/x-www-form-urlencoded"
 				handle-as="json"
 				on-error="_NotifiedApiPostError"
 		></iron-ajax>				
