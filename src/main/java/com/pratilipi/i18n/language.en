@@ -298,6 +298,15 @@ month_oct	= October
 month_nov	= November
 month_dec	= December
 
+#days
+day_mon = Mon
+day_tue = Tue
+day_wed = Wed
+day_thu = Thu
+day_fri = Fri
+day_sat = Sat
+day_sun = Sun
+
 # Library
 library				= Library
 my_library			= My Library
