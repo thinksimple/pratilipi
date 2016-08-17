@@ -212,13 +212,26 @@ public class DataAccessorMockImpl implements DataAccessor {
 
 	@Override
 	public User createOrUpdateUser( User user ) {
-		Long id = 0L;
+		boolean newUser = true;
 		for( User aUser : UserMock.USER_TABLE )
-			if( aUser.getId() >= id )
-				id = aUser.getId() + 1;
+			if( aUser.getId() == user.getId() )
+				newUser = false;
 		
-		( (UserEntity) user ).setId( id );
-		UserMock.USER_TABLE.add( user );
+		if( newUser ) {
+			Long id = 0L;
+			for( User aUser : UserMock.USER_TABLE )
+				if( aUser.getId() >= id )
+					id = aUser.getId() + 1;
+			( (UserEntity) user ).setId( id );
+			UserMock.USER_TABLE.add( user );
+		} else {
+			int index = -1;
+			for( int i = 0; i < UserMock.USER_TABLE.size(); i++ )
+				if( UserMock.USER_TABLE.get( i ).getId() == user.getId() )
+					index = i;
+			UserMock.USER_TABLE.set( index, user );
+		}
+
 		return user;
 	}
 
@@ -934,7 +947,7 @@ public class DataAccessorMockImpl implements DataAccessor {
 		List<Notification> notificationList = new ArrayList<Notification>();
 		for( Notification notification : NotificationMock.NOTIFICATION_TABLE )
 			notificationList.add( notification );
-		return new DataListCursorTuple<Notification>( notificationList, cursor );
+		return new DataListCursorTuple<Notification>( notificationList, "cursor" );
 	}
 
 	@Override
@@ -959,8 +972,13 @@ public class DataAccessorMockImpl implements DataAccessor {
 	
 	@Override
 	public Map<String, String> getI18nStrings( I18nGroup i18nGroup, Language language ) {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String, String> i18nStrings = new HashMap<>();
+		i18nStrings.put( "notification_and", "notification and" );
+		i18nStrings.put( "notification_has_published", "notification has published" );
+		i18nStrings.put( "notification_has_followed", "notification has followed" );
+		i18nStrings.put( "notification_have_followed", "notification have followed" );
+		i18nStrings.put( "notification_others_have_followed", "notification others have followed" );
+		return i18nStrings;
 	}
 	
 	@Override
