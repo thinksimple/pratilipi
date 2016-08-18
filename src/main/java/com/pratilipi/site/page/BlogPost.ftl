@@ -17,6 +17,8 @@
 			pratilipi-types='${ pratilipiTypesJson }'
 			navigation-list='${ navigationList }'
 			language-map='${ languageMap }'></pratilipi-blog-page>
+		<h1>Welcome {{ nametest }} !</h1>
+		<input placeholder="type your name.." ng-model="nametest" />	
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>	
     </body>
 </html>
