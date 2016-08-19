@@ -34,6 +34,7 @@ import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.data.mock.AccessTokenMock;
 import com.pratilipi.data.mock.AppPropertyMock;
 import com.pratilipi.data.mock.AuthorMock;
+import com.pratilipi.data.mock.BlogPostMock;
 import com.pratilipi.data.mock.EventMock;
 import com.pratilipi.data.mock.NotificationMock;
 import com.pratilipi.data.mock.PageMock;
@@ -552,7 +553,10 @@ public class DataAccessorMockImpl implements DataAccessor {
 
 	@Override
 	public BlogPost getBlogPost( Long id ) {
-		return null; // TODO: Implementation
+		for( BlogPost blogPost : BlogPostMock.BLOGPOST_TABLE )
+			if( blogPost.getId().equals( id ) )
+				return blogPost;
+		return null;
 	}
 	
 	@Override

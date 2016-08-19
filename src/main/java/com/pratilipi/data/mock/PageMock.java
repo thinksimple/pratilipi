@@ -1,8 +1,23 @@
 package com.pratilipi.data.mock;
 
-import static com.pratilipi.data.mock.AuthorMock.*;
-import static com.pratilipi.data.mock.EventMock.*;
-import static com.pratilipi.data.mock.PratilipiMock.*;
+import static com.pratilipi.data.mock.AuthorMock.guAuthor_1;
+import static com.pratilipi.data.mock.AuthorMock.hiAuthor_1;
+import static com.pratilipi.data.mock.AuthorMock.taAuthor_1;
+import static com.pratilipi.data.mock.EventMock.guEvent_1;
+import static com.pratilipi.data.mock.EventMock.hiEvent_1;
+import static com.pratilipi.data.mock.EventMock.taEvent_1;
+import static com.pratilipi.data.mock.BlogPostMock.guBlogPost_1;
+import static com.pratilipi.data.mock.BlogPostMock.hiBlogPost_1;
+import static com.pratilipi.data.mock.BlogPostMock.taBlogPost_1;
+import static com.pratilipi.data.mock.PratilipiMock.guPratilipi_1;
+import static com.pratilipi.data.mock.PratilipiMock.guPratilipi_2;
+import static com.pratilipi.data.mock.PratilipiMock.guPratilipi_3;
+import static com.pratilipi.data.mock.PratilipiMock.hiPratilipi_1;
+import static com.pratilipi.data.mock.PratilipiMock.hiPratilipi_2;
+import static com.pratilipi.data.mock.PratilipiMock.hiPratilipi_3;
+import static com.pratilipi.data.mock.PratilipiMock.taPratilipi_1;
+import static com.pratilipi.data.mock.PratilipiMock.taPratilipi_2;
+import static com.pratilipi.data.mock.PratilipiMock.taPratilipi_3;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -25,6 +40,10 @@ public class PageMock {
 	public static final Page guEvent_1_Page = new PageEntity( 202L );
 	public static final Page taEvent_1_Page = new PageEntity( 203L );
 	
+	public static final Page hiBlogPost_1_Page = new PageEntity( 301L );
+	public static final Page guBlogPost_1_Page = new PageEntity( 302L );
+	public static final Page taBlogPost_1_Page = new PageEntity( 303L );
+
 	public static final Page hiPratilipi_1_Page = new PageEntity( 10101L );
 	public static final Page hiPratilipi_2_Page = new PageEntity( 10102L );
 	public static final Page hiPratilipi_3_Page = new PageEntity( 10103L );
@@ -60,6 +79,10 @@ public class PageMock {
 		PAGE_TABLE.add( hiEvent_1_Page );
 		PAGE_TABLE.add( guEvent_1_Page );
 		PAGE_TABLE.add( taEvent_1_Page );
+
+		PAGE_TABLE.add( hiBlogPost_1_Page );
+		PAGE_TABLE.add( guBlogPost_1_Page );
+		PAGE_TABLE.add( taBlogPost_1_Page );
 
 		PAGE_TABLE.add( hiPratilipi_1_Page );
 		PAGE_TABLE.add( hiPratilipi_2_Page );
@@ -122,6 +145,22 @@ public class PageMock {
 		taEvent_1_Page.setUri( PageType.EVENT.getUrlPrefix() + taEvent_1.getId() );
 		taEvent_1_Page.setUriAlias( "/event/tamil-event-1" );
 		taEvent_1_Page.setPrimaryContentId( taEvent_1.getId() );
+
+
+		hiBlogPost_1_Page.setType( PageType.BLOG_POST );
+		hiBlogPost_1_Page.setUri( PageType.BLOG_POST.getUrlPrefix() + hiBlogPost_1.getId() );
+		hiBlogPost_1_Page.setUriAlias( "/blog/hindi-blog-1" );
+		hiBlogPost_1_Page.setPrimaryContentId( hiBlogPost_1.getId() );
+
+		guBlogPost_1_Page.setType( PageType.BLOG_POST );
+		guBlogPost_1_Page.setUri( PageType.BLOG_POST.getUrlPrefix() + guBlogPost_1.getId() );
+		guBlogPost_1_Page.setUriAlias( "/blog/gujarati-blog-1" );
+		guBlogPost_1_Page.setPrimaryContentId( guBlogPost_1.getId() );
+
+		taBlogPost_1_Page.setType( PageType.BLOG_POST );
+		taBlogPost_1_Page.setUri( PageType.BLOG_POST.getUrlPrefix() + taBlogPost_1.getId() );
+		taBlogPost_1_Page.setUriAlias( "/blog/tamil-blog-1" );
+		taBlogPost_1_Page.setPrimaryContentId( taBlogPost_1.getId() );
 
 		
 		hiPratilipi_1_Page.setType( PageType.PRATILIPI );
