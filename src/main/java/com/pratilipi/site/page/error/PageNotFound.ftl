@@ -25,7 +25,7 @@
 								></pratilipi-navigation>
 							<#-- Navigation & Search bar for extra-small & small screens. -->
 							<pratilipi-navigation-drawer with-backdrop navigation-list='${ navigationList }'></pratilipi-navigation-drawer>
-							<div style="overflow:hidden">
+							<div style="overflow:hidden; padding: 0 2px;">
 								<paper-card style="padding-bottom: 100px; margin-bottom: 10px;">
 									<div class="media" style="padding: 20px;">
 										<div class="media-left">
