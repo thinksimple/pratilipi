@@ -11,7 +11,9 @@ import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.data.client.NavigationData;
+import com.pratilipi.data.type.Navigation;
 import com.pratilipi.data.util.NavigationDataUtil;
+import com.pratilipi.filter.UxModeFilter;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/navigation/list" )
@@ -44,7 +46,13 @@ public class NavigationListApi extends GenericApi {
 	@Get
 	public Response get( GetRequest request ) throws UnexpectedServerException {
 		
-		return new Response( NavigationDataUtil.getNavigationDataList( request.language ) );
+		List<NavigationData> navigationList = NavigationDataUtil.getNavigationDataList( request.language );
+		if( navigationList.size() > 2 && UxModeFilter.isAndroidApp() ) {
+			for( Navigation.Link link : navigationList.get( 2 ).getLinkList() )
+				navigationList.get( 0 ).addLink( link );
+			navigationList = navigationList.subList( 0, 2 );
+		}
+		return new Response( navigationList );
 		
 	}
 
