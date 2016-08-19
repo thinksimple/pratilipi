@@ -6,11 +6,16 @@ import static com.pratilipi.data.mock.AuthorMock.taAuthor_1;
 import static com.pratilipi.data.mock.EventMock.guEvent_1;
 import static com.pratilipi.data.mock.EventMock.hiEvent_1;
 import static com.pratilipi.data.mock.EventMock.taEvent_1;
+import static com.pratilipi.data.mock.BlogMock.blog;
 import static com.pratilipi.data.mock.BlogPostMock.guBlogPost_1;
+import static com.pratilipi.data.mock.BlogPostMock.guBlogPost_2;
+import static com.pratilipi.data.mock.BlogPostMock.guBlogPost_3;
 import static com.pratilipi.data.mock.BlogPostMock.hiBlogPost_1;
 import static com.pratilipi.data.mock.BlogPostMock.hiBlogPost_2;
 import static com.pratilipi.data.mock.BlogPostMock.hiBlogPost_3;
 import static com.pratilipi.data.mock.BlogPostMock.taBlogPost_1;
+import static com.pratilipi.data.mock.BlogPostMock.taBlogPost_2;
+import static com.pratilipi.data.mock.BlogPostMock.taBlogPost_3;
 import static com.pratilipi.data.mock.PratilipiMock.guPratilipi_1;
 import static com.pratilipi.data.mock.PratilipiMock.guPratilipi_2;
 import static com.pratilipi.data.mock.PratilipiMock.guPratilipi_3;
@@ -41,12 +46,17 @@ public class PageMock {
 	public static final Page hiEvent_1_Page = new PageEntity( 201L );
 	public static final Page guEvent_1_Page = new PageEntity( 202L );
 	public static final Page taEvent_1_Page = new PageEntity( 203L );
-	
+
+	public static final Page blog_Page = new PageEntity( 300L );
 	public static final Page hiBlogPost_1_Page = new PageEntity( 301L );
 	public static final Page hiBlogPost_2_Page = new PageEntity( 302L );
 	public static final Page hiBlogPost_3_Page = new PageEntity( 303L );
 	public static final Page guBlogPost_1_Page = new PageEntity( 304L );
-	public static final Page taBlogPost_1_Page = new PageEntity( 305L );
+	public static final Page guBlogPost_2_Page = new PageEntity( 305L );
+	public static final Page guBlogPost_3_Page = new PageEntity( 306L );
+	public static final Page taBlogPost_1_Page = new PageEntity( 307L );
+	public static final Page taBlogPost_2_Page = new PageEntity( 308L );
+	public static final Page taBlogPost_3_Page = new PageEntity( 309L );
 
 	public static final Page hiPratilipi_1_Page = new PageEntity( 10101L );
 	public static final Page hiPratilipi_2_Page = new PageEntity( 10102L );
@@ -84,11 +94,16 @@ public class PageMock {
 		PAGE_TABLE.add( guEvent_1_Page );
 		PAGE_TABLE.add( taEvent_1_Page );
 
+		PAGE_TABLE.add( blog_Page );
 		PAGE_TABLE.add( hiBlogPost_1_Page );
 		PAGE_TABLE.add( hiBlogPost_2_Page );
 		PAGE_TABLE.add( hiBlogPost_3_Page );
 		PAGE_TABLE.add( guBlogPost_1_Page );
+		PAGE_TABLE.add( guBlogPost_2_Page );
+		PAGE_TABLE.add( guBlogPost_3_Page );
 		PAGE_TABLE.add( taBlogPost_1_Page );
+		PAGE_TABLE.add( taBlogPost_2_Page );
+		PAGE_TABLE.add( taBlogPost_3_Page );
 
 		PAGE_TABLE.add( hiPratilipi_1_Page );
 		PAGE_TABLE.add( hiPratilipi_2_Page );
@@ -153,6 +168,13 @@ public class PageMock {
 		taEvent_1_Page.setPrimaryContentId( taEvent_1.getId() );
 
 
+		blog_Page.setType( PageType.BLOG );
+		blog_Page.setUri( PageType.BLOG.getUrlPrefix() + blog.getId() );
+		blog_Page.setUriAlias( "/blog" );
+		blog_Page.setPrimaryContentId( blog.getId() );
+
+
+
 		hiBlogPost_1_Page.setType( PageType.BLOG_POST );
 		hiBlogPost_1_Page.setUri( PageType.BLOG_POST.getUrlPrefix() + hiBlogPost_1.getId() );
 		hiBlogPost_1_Page.setUriAlias( "/blog/hindi-blog-1" );
@@ -173,10 +195,30 @@ public class PageMock {
 		guBlogPost_1_Page.setUriAlias( "/blog/gujarati-blog-1" );
 		guBlogPost_1_Page.setPrimaryContentId( guBlogPost_1.getId() );
 
+		guBlogPost_2_Page.setType( PageType.BLOG_POST );
+		guBlogPost_2_Page.setUri( PageType.BLOG_POST.getUrlPrefix() + guBlogPost_2.getId() );
+		guBlogPost_2_Page.setUriAlias( "/blog/gujarati-blog-2" );
+		guBlogPost_2_Page.setPrimaryContentId( guBlogPost_2.getId() );
+
+		guBlogPost_3_Page.setType( PageType.BLOG_POST );
+		guBlogPost_3_Page.setUri( PageType.BLOG_POST.getUrlPrefix() + guBlogPost_3.getId() );
+		guBlogPost_3_Page.setUriAlias( "/blog/gujarati-blog-3" );
+		guBlogPost_3_Page.setPrimaryContentId( guBlogPost_3.getId() );
+
 		taBlogPost_1_Page.setType( PageType.BLOG_POST );
 		taBlogPost_1_Page.setUri( PageType.BLOG_POST.getUrlPrefix() + taBlogPost_1.getId() );
 		taBlogPost_1_Page.setUriAlias( "/blog/tamil-blog-1" );
 		taBlogPost_1_Page.setPrimaryContentId( taBlogPost_1.getId() );
+
+		taBlogPost_2_Page.setType( PageType.BLOG_POST );
+		taBlogPost_2_Page.setUri( PageType.BLOG_POST.getUrlPrefix() + taBlogPost_2.getId() );
+		taBlogPost_2_Page.setUriAlias( "/blog/tamil-blog-2" );
+		taBlogPost_2_Page.setPrimaryContentId( taBlogPost_2.getId() );
+
+		taBlogPost_3_Page.setType( PageType.BLOG_POST );
+		taBlogPost_3_Page.setUri( PageType.BLOG_POST.getUrlPrefix() + taBlogPost_3.getId() );
+		taBlogPost_3_Page.setUriAlias( "/blog/tamil-blog-3" );
+		taBlogPost_3_Page.setPrimaryContentId( taBlogPost_3.getId() );
 
 		
 		hiPratilipi_1_Page.setType( PageType.PRATILIPI );
