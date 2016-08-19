@@ -17,9 +17,9 @@
 			pratilipi-types='${ pratilipiTypesJson }'
 			navigation-list='${ navigationList }'
 			language-map='${ languageMap }'></pratilipi-blog-page>
-		<div ng-app="myApp">	
-			<h1>Welcome {{ nametest }} !</h1>
-			<input placeholder="type your name.." ng-model="nametest" />
+		<div ng-app="myApp" ng-init="name = 'Radhika'">	
+			<h1>Welcome {{ name }} !</h1>
+			<input placeholder="type your name.." ng-model="name" />
 		</div>		
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
 		<script>
