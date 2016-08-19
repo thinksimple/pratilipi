@@ -1460,10 +1460,10 @@ public class DataAccessorGaeImpl implements DataAccessor {
 				navigation = null;
 			
 			} else if( navigation != null && ! line.isEmpty() ) {
-				String apiRequest = null;
 				String url = null;
-				if( line.indexOf( '{' ) != -1 ) {
-					apiRequest = line.substring( line.indexOf( '{' ) );
+				String apiRequest = null;
+				if( line.indexOf( '{' ) != -1 && line.indexOf( '}' ) != -1 ) {
+					apiRequest = line.substring( line.indexOf( '{' ), line.indexOf( '}' ) + 1 );
 					line = line.substring( 0, line.indexOf( '{' ) ).trim();
 				}
 				if( line.indexOf( ' ' ) != -1 ) {
