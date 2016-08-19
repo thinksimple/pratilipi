@@ -5,7 +5,6 @@
 क्लासिक				/classic						{ "language":"HINDI", "state":"PUBLISHED", "listName":"classic" }
 पत्रिकाएं				/search?q=magazines				{ "language":"HINDI", "state":"PUBLISHED", "searchQuery":"magazines" }
 संपादकीय				/blog
-प्रतिलिपि कविता सम्मान		/event/pratilipi-kavita-samman	{ "language":"HINDI", "state":"PUBLISHED", "eventId":5104527041626112 }
 प्रतिलिपि कथा सम्मान		/event/pratilipi-katha-sanman	{ "language":"HINDI", "state":"PUBLISHED", "eventId":6388102090194944 }
 ऑनलाइन  स्पर्धाएं			/events
 लेखकों के साक्षात्कार			/author-interviews
