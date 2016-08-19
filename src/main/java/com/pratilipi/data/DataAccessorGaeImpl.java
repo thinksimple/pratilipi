@@ -1466,9 +1466,9 @@ public class DataAccessorGaeImpl implements DataAccessor {
 					apiRequest = line.substring( line.indexOf( '{' ) );
 					line = line.substring( 0, line.indexOf( '{' ) ).trim();
 				}
-				if( line.indexOf( '/' ) != -1 ) {
-					url = line.substring( line.indexOf( '/' ) );
-					line = line.substring( 0, line.indexOf( '/' ) ).trim();
+				if( line.indexOf( ' ' ) != -1 ) {
+					url = line.substring( 0, line.indexOf( ' ' ) ).trim();
+					line = line.substring( line.indexOf( ' ' ) + 1 ).trim();
 				}
 				navigation.addLink( new Navigation.Link( line, url, apiRequest ) );
 			}
