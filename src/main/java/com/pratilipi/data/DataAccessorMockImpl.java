@@ -20,6 +20,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
 
 import com.pratilipi.common.type.AccessType;
+import com.pratilipi.common.type.BlogPostState;
 import com.pratilipi.common.type.CommentParentType;
 import com.pratilipi.common.type.I18nGroup;
 import com.pratilipi.common.type.Language;
@@ -561,8 +562,14 @@ public class DataAccessorMockImpl implements DataAccessor {
 	
 	@Override
 	public DataListCursorTuple<BlogPost> getBlogPostList( BlogPostFilter blogPostFilter, String cursor, Integer offset, Integer resultCount ) {
-		// TODO: Implementation
-		return null;
+//		DataListCursorTuple<BlogPost>
+		List<BlogPost> blogPostList = new ArrayList<BlogPost>();
+		for( BlogPost blogPost : BlogPostMock.BLOGPOST_TABLE )
+			if( blogPost.getBlogId() == blogPostFilter.getBlogId() && 
+					blogPost.getLanguage() == blogPostFilter.getLanguage() && 
+					blogPostFilter.getState() == BlogPostState.PUBLISHED )
+				blogPostList.add( blogPost );
+		return new DataListCursorTuple<BlogPost>( blogPostList, "cursor" );
 	}
 	
 	@Override

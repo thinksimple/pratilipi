@@ -8,6 +8,8 @@ import static com.pratilipi.data.mock.EventMock.hiEvent_1;
 import static com.pratilipi.data.mock.EventMock.taEvent_1;
 import static com.pratilipi.data.mock.BlogPostMock.guBlogPost_1;
 import static com.pratilipi.data.mock.BlogPostMock.hiBlogPost_1;
+import static com.pratilipi.data.mock.BlogPostMock.hiBlogPost_2;
+import static com.pratilipi.data.mock.BlogPostMock.hiBlogPost_3;
 import static com.pratilipi.data.mock.BlogPostMock.taBlogPost_1;
 import static com.pratilipi.data.mock.PratilipiMock.guPratilipi_1;
 import static com.pratilipi.data.mock.PratilipiMock.guPratilipi_2;
@@ -41,8 +43,10 @@ public class PageMock {
 	public static final Page taEvent_1_Page = new PageEntity( 203L );
 	
 	public static final Page hiBlogPost_1_Page = new PageEntity( 301L );
-	public static final Page guBlogPost_1_Page = new PageEntity( 302L );
-	public static final Page taBlogPost_1_Page = new PageEntity( 303L );
+	public static final Page hiBlogPost_2_Page = new PageEntity( 302L );
+	public static final Page hiBlogPost_3_Page = new PageEntity( 303L );
+	public static final Page guBlogPost_1_Page = new PageEntity( 304L );
+	public static final Page taBlogPost_1_Page = new PageEntity( 305L );
 
 	public static final Page hiPratilipi_1_Page = new PageEntity( 10101L );
 	public static final Page hiPratilipi_2_Page = new PageEntity( 10102L );
@@ -81,6 +85,8 @@ public class PageMock {
 		PAGE_TABLE.add( taEvent_1_Page );
 
 		PAGE_TABLE.add( hiBlogPost_1_Page );
+		PAGE_TABLE.add( hiBlogPost_2_Page );
+		PAGE_TABLE.add( hiBlogPost_3_Page );
 		PAGE_TABLE.add( guBlogPost_1_Page );
 		PAGE_TABLE.add( taBlogPost_1_Page );
 
@@ -151,6 +157,16 @@ public class PageMock {
 		hiBlogPost_1_Page.setUri( PageType.BLOG_POST.getUrlPrefix() + hiBlogPost_1.getId() );
 		hiBlogPost_1_Page.setUriAlias( "/blog/hindi-blog-1" );
 		hiBlogPost_1_Page.setPrimaryContentId( hiBlogPost_1.getId() );
+		
+		hiBlogPost_2_Page.setType( PageType.BLOG_POST );
+		hiBlogPost_2_Page.setUri( PageType.BLOG_POST.getUrlPrefix() + hiBlogPost_2.getId() );
+		hiBlogPost_2_Page.setUriAlias( "/blog/hindi-blog-2" );
+		hiBlogPost_2_Page.setPrimaryContentId( hiBlogPost_2.getId() );
+		
+		hiBlogPost_3_Page.setType( PageType.BLOG_POST );
+		hiBlogPost_3_Page.setUri( PageType.BLOG_POST.getUrlPrefix() + hiBlogPost_3.getId() );
+		hiBlogPost_3_Page.setUriAlias( "/blog/hindi-blog-3" );
+		hiBlogPost_3_Page.setPrimaryContentId( hiBlogPost_3.getId() );
 
 		guBlogPost_1_Page.setType( PageType.BLOG_POST );
 		guBlogPost_1_Page.setUri( PageType.BLOG_POST.getUrlPrefix() + guBlogPost_1.getId() );
