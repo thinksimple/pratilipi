@@ -1,27 +1,27 @@
 कुछ नया
-/sarvadhik-pathako-ki-pasand	सर्वाधिक पाठकों की पसंद		{ "language":"HINDI", "state":"PUBLISHED", "listName":"sarvadhik-pathako-ki-pasand" }
-/premchand-sahitya				प्रेमचंद साहित्य			{ "language":"HINDI", "state":"PUBLISHED", "listName":"premchand-sahitya" }
-/nayi-prakashit-rachnaye		नई प्रकाशित रचनाएं		{ "language":"HINDI", "state":"PUBLISHED", "listName":"nayi-prakashit-rachnaye" }
-/classic 						क्लासिक				{ "language":"HINDI", "state":"PUBLISHED", "listName":"classic" }
-/search?q=magazines 			पत्रिकाएं				{ "language":"HINDI", "state":"PUBLISHED", "searchQuery":"magazines" }
-/blog 							संपादकीय
-/event/pratilipi-katha-sanman	प्रतिलिपि कथा सम्मान		{ "language":"HINDI", "state":"PUBLISHED", "eventId":6388102090194944 }
-/events							ऑनलाइन  स्पर्धाएं
-/author-interviews				लेखकों के साक्षात्कार
+/sarvadhik-pathako-ki-pasand    सर्वाधिक पाठकों की पसंद        { "language":"HINDI", "state":"PUBLISHED", "listName":"sarvadhik-pathako-ki-pasand" }
+/premchand-sahitya                प्रेमचंद साहित्य            { "language":"HINDI", "state":"PUBLISHED", "listName":"premchand-sahitya" }
+/nayi-prakashit-rachnaye        नई प्रकाशित रचनाएं        { "language":"HINDI", "state":"PUBLISHED", "listName":"nayi-prakashit-rachnaye" }
+/classic                         क्लासिक                { "language":"HINDI", "state":"PUBLISHED", "listName":"classic" }
+/search?q=magazines             पत्रिकाएं                { "language":"HINDI", "state":"PUBLISHED", "searchQuery":"magazines" }
+/blog                             संपादकीय
+/event/pratilipi-katha-sanman    प्रतिलिपि कथा सम्मान        { "language":"HINDI", "state":"PUBLISHED", "eventId":6388102090194944 }
+/events                            ऑनलाइन  स्पर्धाएं
+/author-interviews                लेखकों के साक्षात्कार
 
 
 श्रेणी
-/lovestories			प्रेम कथाएं					{ "language":"HINDI", "state":"PUBLISHED", "listName":"lovestories" }
-/suspense-aur-thriller	सस्पेंस और थ्रिलर				{ "language":"HINDI", "state":"PUBLISHED", "listName":"suspense-aur-thriller" }
-/horror 				हॉरर						{ "language":"HINDI", "state":"PUBLISHED", "listName":"horror" }
-/search?q=stories		अन्य कहानियां				{ "language":"HINDI", "state":"PUBLISHED", "searchQuery":"stories" }
-/upanyas 				उपन्यास					{ "language":"HINDI", "state":"PUBLISHED", "listName":"upanyas" }
-/hasya-vyangya 			हास्य – व्यंग्य				{ "language":"HINDI", "state":"PUBLISHED", "listName":"hasya-vyangya" }
-/search?q=poems 		काव्य – वाटिका				{ "language":"HINDI", "state":"PUBLISHED", "searchQuery":"poems" }
-/search?q=articles 		लेख						{ "language":"HINDI", "state":"PUBLISHED", "searchQuery":"articles" }
-/jivani-evam-atmakatha	जीवनी एवं आत्मकथा			{ "language":"HINDI", "state":"PUBLISHED", "listName":"jivani-evam-atmakatha" }
-/vichar-vimarsh			विचार विमर्श					{ "language":"HINDI", "state":"PUBLISHED", "listName":"vichar-vimarsh" }
-/mythology				प्राचीन साहित्य				{ "language":"HINDI", "state":"PUBLISHED", "listName":"mythology" }
-/yatra-vrutant 			यात्रा – वृत्तांत				{ "language":"HINDI", "state":"PUBLISHED", "listName":"yatra-vrutant" }
-/self-help 				स्व - विकास				{ "language":"HINDI", "state":"PUBLISHED", "listName":"self-help" }
-/swasthya-sukh 			स्वास्थ्य सुख					{ "language":"HINDI", "state":"PUBLISHED", "listName":"swasthya-sukh" }
+/lovestories            प्रेम कथाएं                    { "language":"HINDI", "state":"PUBLISHED", "listName":"lovestories" }
+/suspense-aur-thriller    सस्पेंस और थ्रिलर                { "language":"HINDI", "state":"PUBLISHED", "listName":"suspense-aur-thriller" }
+/horror                 हॉरर                        { "language":"HINDI", "state":"PUBLISHED", "listName":"horror" }
+/search?q=stories        अन्य कहानियां                { "language":"HINDI", "state":"PUBLISHED", "searchQuery":"stories" }
+/upanyas                 उपन्यास                    { "language":"HINDI", "state":"PUBLISHED", "listName":"upanyas" }
+/hasya-vyangya             हास्य – व्यंग्य                { "language":"HINDI", "state":"PUBLISHED", "listName":"hasya-vyangya" }
+/search?q=poems         काव्य – वाटिका                { "language":"HINDI", "state":"PUBLISHED", "searchQuery":"poems" }
+/search?q=articles         लेख                        { "language":"HINDI", "state":"PUBLISHED", "searchQuery":"articles" }
+/jivani-evam-atmakatha    जीवनी एवं आत्मकथा            { "language":"HINDI", "state":"PUBLISHED", "listName":"jivani-evam-atmakatha" }
+/vichar-vimarsh            विचार विमर्श                    { "language":"HINDI", "state":"PUBLISHED", "listName":"vichar-vimarsh" }
+/mythology                प्राचीन साहित्य                { "language":"HINDI", "state":"PUBLISHED", "listName":"mythology" }
+/yatra-vrutant             यात्रा – वृत्तांत                { "language":"HINDI", "state":"PUBLISHED", "listName":"yatra-vrutant" }
+/self-help                 स्व - विकास                { "language":"HINDI", "state":"PUBLISHED", "listName":"self-help" }
+/swasthya-sukh             स्वास्थ्य सुख                    { "language":"HINDI", "state":"PUBLISHED", "listName":"swasthya-sukh" }
