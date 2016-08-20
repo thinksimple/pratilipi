@@ -1,40 +1,23 @@
 <dom-module id="pratilipi-notification-snippet">
 
 	<style>
-		:host {
-			display: block;
-			width: 100%;
-			cursor: pointer;
-			margin-bottom: 4px;
+		.notification-unread-state, .notification-unread-state:hover {
+			background-color: #f7f7f7;
 		}
-		.notification {
-			width: 100%;
-			display: -ms-flexbox;
-			display: -webkit-flex;
-			display: flex;
-			-ms-flex-direction: row;
-			-webkit-flex-direction: row;
-			flex-direction: row;
-			padding: 20px;
-			border-radius: 4px;
-			background-color: white;
+		.notification-read-state, .notification-read-state:hover {
+			background-color: #ffffff;
+		}
+		.list-group-item {
 			border: 1px solid #d3d3d3;
-			font-size: 13px;
-		}
-		.notification:hover {
-			border: 1px solid #c4c4c4;
-		}
-		.notification-unread-state {
-			background-color: #e4e4e4;
+			border-top: none;
 		}
 	</style>
 
 	<template>
-		<div class="notification" on-click="_redirectToActionEvent">
-			<div class="notification-message"></div>
-		</div>
+		<a class="notification-message list-group-item" style="border-radius: 0px;" href="{{ sourceUrl }}">
+			<br><iron-icon icon="social:person" style="height: 18px;width: 18px;"></iron-icon>&nbsp;<span style="display: inline;" class="text-muted">{{ time }}</span>
+		</a>
 	</template>
-		
 
 	<script>
 		Polymer({
@@ -46,25 +29,20 @@
 				notificationId: { type: String },
 				message: { type: String },
 				sourceUrl: { type: String },
-				state: {type: String}
+				state: { type: String }
 			},
 
 			_notificationObserver: function() {
 				this.set( 'notificationId', this.notification.notificationId );
 				this.set( 'message', this.notification.message );
 				this.set( 'sourceUrl', this.notification.sourceUrl );
-				this.set( 'state', this.notification.state );
+				this.set( 'time', convertDate( this.notification.lastUpdatedMillis ) );
 
-				jQuery( this.querySelector( '.notification-message' ) ).html( this.message );
-				
-				if( this.state == "UNREAD" ) {
-					jQuery( this.querySelector( '.notification' ) ).addClass( "notification-unread-state" );
-				}
+				jQuery( this.querySelector( '.notification-message' ) ).prepend( this.message );
+				jQuery( this.querySelector( '.notification-message' ) ).addClass( this.notification.state == "UNREAD" ? 
+						"notification-unread-state" : "notification-read-state" );
+
 			},
-
-			_redirectToActionEvent: function() {
-				window.location.href = this.sourceUrl;
-			}
 
 		});
 	</script>

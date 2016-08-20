@@ -1,65 +1,58 @@
-<#include "pratilipi-notification-popup-snippet.html">
+<#include "pratilipi-notification-snippet.html">
+
 <dom-module id="pratilipi-notification-popup">
 
 	<style>
-	.view-more-button {
-		display: block;
-	    text-align: center;
-	    background-color: #d0021b;
-	    color: white;
-	    padding-top: 10px;
-	    padding-bottom: 10px;
-	    font-size: 17px;
-	    font-weight: 700;
-	    border: 1px solid #d3d3d3;
-	    letter-spacing: 0px;
-	    font-size: 15px;
-    }
+		.view-more-button {
+			display: block;
+			text-align: center;
+			color: #d0021b;
+			padding-top: 10px;
+			padding-bottom: 10px;
+			font-size: 17px;
+			font-weight: 700;
+			border: 1px solid #d3d3d3;
+			letter-spacing: 0px;
+			font-size: 15px;
+		}
 	</style>
-	
+
 	<template>
-	  	<template is="dom-repeat" items="{{ popupNotificationList }}" as="notification">
+		<template is="dom-repeat" items="{{ popupNotificationList }}" as="notification">
 			<template is="dom-if" if="{{ notification.message }}">
-				<pratilipi-notification-popup-snippet notification="{{ notification }}"></pratilipi-notification-popup-snippet>
+				<pratilipi-notification-snippet notification="{{ notification }}"></pratilipi-notification-snippet>
 			</template>
 		</template>
-		<a href="/notifications" class="view-more-button">${ _strings.view_more }</a>
+		<a href="/notifications" class="view-more-button">${ _strings.view_more }...</a>
 	</template>
 
 	<script>
-	function convertDate( date ) {
-		var d = new Date( date );
-		function weekday(d) { var days= ["${ _strings.day_sun }","${ _strings.day_mon }","${ _strings.day_tue }", "${ _strings.day_wed }", "${ _strings.day_thu }","${ _strings.day_fri }","${ _strings.day_sat }"];
-		return days[d]; }
-		function day(d) { return (d < 10) ? '0' + d : d; }
-		function getHoursMin(h, m) {
-		    var suffix = (h >= 12)? 'PM' : 'AM';
-		    var hours = h;
-		    hours = (hours > 12)? hours -12 : hours;
-		    hours = (hours == '00')? 12 : hours;
-			return ( hours + ":" + ((m < 10) ? '0' + m : m) + " " + suffix ); }
-		function month(m) { var months = ['${ _strings.month_jan }','${ _strings.month_feb }','${ _strings.month_mar }',
-		                                  '${ _strings.month_apr }','${ _strings.month_may }','${ _strings.month_jun }',
-		                                  '${ _strings.month_jul }','${ _strings.month_aug }','${ _strings.month_sep }',
-		                                  '${ _strings.month_oct }','${ _strings.month_nov }','${ _strings.month_dec }']; return months[m]; }
-		return [ weekday(d.getDay()), day(d.getDate()), month(d.getMonth()), d.getFullYear(), getHoursMin(d.getHours(), d.getMinutes()) ].join(' ');
-	}	
-																																														
+		function convertDate( date ) {
+			var d = new Date( date );
+			function weekday(d) { var days= [ "${ _strings.day_sun }", "${ _strings.day_mon }", "${ _strings.day_tue }", "${ _strings.day_wed }", "${ _strings.day_thu }", "${ _strings.day_fri }", "${ _strings.day_sat }" ];
+			return days[d]; }
+			function day(d) { return (d < 10) ? '0' + d : d; }
+			function getHoursMin( h, m ) {
+			    var suffix = ( h >= 12 ) ? '${ _strings.meridiem_pm }' : '${ _strings.meridiem_am }';
+			    var hours = h;
+			    hours = ( hours > 12 ) ? hours -12 : hours;
+			    hours = ( hours == '00' ) ? 12 : hours;
+				return ( hours + ":" + ( (m < 10) ? '0' + m : m ) + " " + suffix ); }
+			function month(m) { var months = ['${ _strings.month_jan }','${ _strings.month_feb }','${ _strings.month_mar }',
+			                                  '${ _strings.month_apr }','${ _strings.month_may }','${ _strings.month_jun }',
+			                                  '${ _strings.month_jul }','${ _strings.month_aug }','${ _strings.month_sep }',
+			                                  '${ _strings.month_oct }','${ _strings.month_nov }','${ _strings.month_dec }']; return months[m]; }
+			return [ weekday(d.getDay()), day(d.getDate()), month(d.getMonth()), d.getFullYear(), getHoursMin(d.getHours(), d.getMinutes()) ].join(' ');
+		}	
+
 		Polymer({
-			
+
 			is: 'pratilipi-notification-popup',
-			
+
 			properties: {
-				popupNotificationList: {
-			        type: Array,
-			        notify: true
-			      }
+				popupNotificationList: { type: Array, notify: true }
 			},
-			
-			attached: function() {
-			},
-			
-			
+
 		});
 
 	</script>

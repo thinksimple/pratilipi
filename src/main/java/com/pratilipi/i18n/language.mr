@@ -298,6 +298,19 @@ month_oct = ऑक्टोबर
 month_nov = नोव्हेंबर
 month_dec =डिसेंबर
 
+#days
+day_mon = Mon
+day_tue = Tue
+day_wed = Wed
+day_thu = Thu
+day_fri = Fri
+day_sat = Sat
+day_sun = Sun
+
+# Meridiem Time
+meridiem_am = AM
+meridiem_pm = PM 
+
 # Library
 library				= ग्रंथालय 
 my_library			= माझा संग्रह 

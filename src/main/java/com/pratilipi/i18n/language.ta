@@ -298,6 +298,19 @@ month_oct	= அக்டோபர்
 month_nov	= நவம்பர்
 month_dec	= டிசம்பர்
 
+#days
+day_mon = Mon
+day_tue = Tue
+day_wed = Wed
+day_thu = Thu
+day_fri = Fri
+day_sat = Sat
+day_sun = Sun
+
+# Meridiem Time
+meridiem_am = AM
+meridiem_pm = PM 
+
 # Library
 library				= நூலகம்
 my_library			= என் நூலகம்

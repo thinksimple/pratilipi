@@ -298,6 +298,19 @@ month_oct	= ઓકટોબર
 month_nov	= નવેમ્બર 
 month_dec	= ડીસેમ્બર 
 
+#days
+day_mon = Mon
+day_tue = Tue
+day_wed = Wed
+day_thu = Thu
+day_fri = Fri
+day_sat = Sat
+day_sun = Sun
+
+# Meridiem Time
+meridiem_am = AM
+meridiem_pm = PM 
+
 # Library
 library				= લાઈબ્રેરી 
 my_library			= મારી લાઈબ્રેરી 

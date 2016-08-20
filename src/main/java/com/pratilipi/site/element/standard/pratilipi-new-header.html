@@ -22,6 +22,8 @@
 			padding: 0px;
 			border-radius: 1px;
 			margin-right: -1px;
+			border-left: none;
+			border-right: none;
 		}
 		.notification-count {
 			top: -23%;
@@ -287,18 +289,17 @@
 							<template is="dom-if" if="{{ !isGuest }}">
 								<template is="dom-if" if="{{ isBigWindow }}">
 									<iron-icon icon="social:notifications" class="dropdown-toggle" id="notification-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" on-click="_hideNotificationCount"></iron-icon>
+									<div class="dropdown-menu dropdown-menu-right list-group notification-dropdown-menu"  aria-labelledby="notification-dropdown">
+										<pratilipi-notification-popup popup-notification-list="[[ popupNotificationList ]]"></pratilipi-notification-popup>
+									</div>
 								</template>
 								<template is="dom-if" if="{{ !isBigWindow }}">
-									<a href="/notifications"><iron-icon icon="social:notifications" id="notification-dropdown" on-click="_hideNotificationCount"></iron-icon></a>
+									<a href="/notifications"><iron-icon icon="social:notifications" id="notification-dropdown"></iron-icon></a>
 								</template>
 								<template is="dom-if" if="{{ showNotificationCount }}">
 									<span class="badge notification-count">{{ newNotificationCount }}</span>
 								</template>
-								<div class="dropdown-menu dropdown-menu-right list-group notification-dropdown-menu"  aria-labelledby="notification-dropdown">
-									<pratilipi-notification-popup popup-notification-list="[[ popupNotificationList ]]"></pratilipi-notification-popup>
-								</div>	
 							</template>
-						
 						</div>
 					</div>
 					<div class="button-holder sign-in-text">
@@ -358,19 +359,19 @@
 				on-response="_notificationListApiResponse"
 		></iron-ajax>
 		<iron-ajax
-				id="NotifiedApiPost"
+				id="UserNotifiedApi"
 				url="/api/user/notified"
 				method="POST"
 				content-type="application/x-www-form-urlencoded"
 				handle-as="json"
-				on-error="_NotifiedApiPostError"
+				on-error="_userNotifiedApiError"
 		></iron-ajax>				
 	</template>
 
 
 	<script>
-		$( document ).ready(function() {
-			$(document).on('click', '.dropdown-menu', function (e) {
+		$( document ).ready( function() {
+			$( document ).on( 'click', '.dropdown-menu', function (e) {
 				e.stopPropagation();
 			});
 		});
@@ -393,23 +394,22 @@
 				languageMap: { type: Object },
 				languageArray: { type: Array, value: function() { return []; } },
 				popupNotificationList: { type: Array, value: function() { return []; } },
-				isBigWindow: {type: Boolean, value: function() { var windowsize = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth; 
-																return ( windowsize > 768 );} }
+				isBigWindow: { type: Boolean }
 			},
-			
+
 			behaviors: [
 				Polymer.IronResizableBehavior
-				],
-					
+			],
+
 			listeners: {
-						'iron-resize': '_onIronResize'
-					},
-					
-			_onIronResize: function() {
-					var windowsize = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-						this.set( 'isBigWindow', windowsize > 768 );
+				'iron-resize': '_onIronResize'
 			},
-			
+
+			_onIronResize: function() {
+				var windowsize = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+				this.set( 'isBigWindow', windowsize > 768 );
+			},
+
 			_userChanged: function() {
 				if( ! this.user.isGuest && this.writeButtonActive ) {
 					this.set( 'writeButtonActive', false );
@@ -423,17 +423,18 @@
 				this.set( 'profileImageUrl', this.user.profileImageUrl != null ? 
 													( this.user.profileImageUrl + ( this.user.profileImageUrl.indexOf( '?' ) == -1 ? '?' : '&' ) + "width=48" )
 													: "http://0.ptlp.co/author/image?width=48" );
+
 			if( ! this.user.isGuest )
-					this.getNotificationCount();
-				else
-					this.set( 'showNotificationCount', false ); 
+				this.getNotificationCount();
+			else
+				this.set( 'showNotificationCount', false ); 
 
 			},
-			
+
 			_logIn: function() {
 				document.querySelector( 'pratilipi-user' ).logIn();
 			},
-			
+
 			write: function() {
 				if( this.user.isGuest ) {
 					this.set( 'writeButtonActive', true );
@@ -447,7 +448,7 @@
 				else 
 					document.querySelector( 'pratilipi-write' ).createNewPratilipi();
 			},
-			
+
 			_gotoLibrary: function() {
 				if( this.user.isGuest )
 					document.querySelector( 'pratilipi-user' ).logIn( true );
@@ -461,29 +462,24 @@
 				else
 					window.location.href = "/notifications";
 			},
-			
-			_setShowNotificationCount: function(val) {
-				this.showNotificationCount = val;
-			},
-			
+
 			_hideNotificationCount: function() {
-				if( this.showNotificationCount == true ) {
-					this._setShowNotificationCount( false );
+				if( this.showNotificationCount ) {
+					this.set( 'showNotificationCount', false );
 					var params = { lastNotificationId: this.popupNotificationList[0].notificationId };
-					this.$.NotifiedApiPost.body = jQuery.param( params );
-					this.$.NotifiedApiPost.generateRequest();
+					this.$.UserNotifiedApi.body = jQuery.param( params );
+					this.$.UserNotifiedApi.generateRequest();
 				}
-				
 			},
-			
-			_showNotifications: function() {
-				document.querySelector('pratilipi-notification-popup').showDropdown();
+
+			_userNotifiedApiError: function() {
+				this.set( 'showNotificationCount', true );
 			},
 
 			_openMenuNavigation: function() {
 				document.querySelector( 'pratilipi-navigation-drawer' ).show();
 			},
-			
+
 			onSubmit: function( event ) {
 				if( event.keyCode != null && event.keyCode != 0 && event.keyCode != 13 || this.query == null || this.query.trim() == "" )
 					return;
@@ -505,7 +501,7 @@
 									} );
 				}
 			},
-			
+
 			getNotificationCount: function() {
 				this.$.NotificationListApi.generateRequest();
 			},
@@ -513,17 +509,14 @@
 			_notificationListApiResponse: function( ajaxResponse ) {
 				var response = ajaxResponse.detail.response;
 				this.set( 'newNotificationCount', response.newNotificationCount );
-				if( response != null && response.notificationList != null  ) {
-					this.set('popupNotificationList', response.notificationList);
-				}
+				if( response != null && response.notificationList != null  )
+					this.set( 'popupNotificationList', response.notificationList );
+
 				this.set( 'showNotificationCount', response != null
 						&& response.newNotificationCount != null 
 						&& response.newNotificationCount > 0 );
-			},
-			_NotifiedApiPostError: function() {
-				this._setShowNotificationCount( true );
-			},
-			
+			}
+
 		});
 
 	</script>
