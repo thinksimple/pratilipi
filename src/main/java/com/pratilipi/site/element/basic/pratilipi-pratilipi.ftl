@@ -42,6 +42,7 @@
 		var pratilipiTypes = ${ pratilipiTypesJson };
 		$( '#pratilipiType-${ pratilipi.getId()?c }' ).html( pratilipiTypes[ "${ pratilipi.getType() }" ].name );
 		$( '#creationDate-${ pratilipi.getId()?c }' ).html( "${ _strings.pratilipi_listing_date }&nbsp;&minus;&nbsp;" + convertDate( ${ pratilipi.getListingDateMillis()?c } ) );
+		$(".fb-like").attr( "data-href", window.location.href );
 	});
 </script>
 
@@ -55,7 +56,8 @@
 	<div style="width: 150px; height: 225px; margin: 15px auto;" class="pratilipi-shadow">
 		<img src="${ pratilipi.getCoverImageUrl( 150 ) }" alt="${ pratilipi.title!pratilipi.titleEn }" title="${ pratilipi.titleEn!pratilipi.title }" />
 	</div>
-	
+	<div class="fb-like" data-layout="button" data-action="like" data-show-faces="false" data-share="false"></div>
+	<p>${ pratilipi.getFbLikeShareCount() }</p>
 	<#if pratilipi.ratingCount gt 0 >
 		<a <#if user.isGuest == true>href="/login?ret=${ pratilipi.getPageUrl() }?review=write"<#else>href="?review=write"</#if> >
 			<#assign rating=pratilipi.averageRating >
