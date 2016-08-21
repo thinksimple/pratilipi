@@ -10,6 +10,10 @@ public interface AccessToken extends GenericOfyType {
 	
 	void setUserId( Long userId );
 
+	String getFcmToken();
+	
+	void setFcmToken( String fcmToken );
+	
 	Date getLogInDate();
 	
 	void setLogInDate( Date logInDate );

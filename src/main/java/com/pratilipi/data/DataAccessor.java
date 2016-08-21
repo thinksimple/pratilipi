@@ -59,6 +59,7 @@ public interface DataAccessor {
 	// ACCESS_TOKEN Table
 	AccessToken newAccessToken();
 	AccessToken getAccessToken( String accessTokenId );
+	List<String> getFcmTokenList( Long userId );
 	AccessToken createOrUpdateAccessToken( AccessToken accessToken );
 
 	// AUDIT_LOG Table

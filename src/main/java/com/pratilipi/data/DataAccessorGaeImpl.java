@@ -401,6 +401,29 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	@Override
+	public List<String> getFcmTokenList( Long userId ) {
+	
+		if( userId == null || userId == 0L )
+			return null;
+		
+		List<AccessTokenEntity> accessTokenList = ObjectifyService.ofy().load()
+				.type( AccessTokenEntity.class )
+				.filter( "USER_ID", userId )
+				.filter( "EXPIRY >", new Date() )
+				.list();
+		
+		List<String> fcmTokenList = new ArrayList<>( accessTokenList.size() );
+		
+		for( AccessToken accessToken : accessTokenList )
+			if( accessToken.getFcmToken() != null && ! fcmTokenList.contains( accessToken.getFcmToken() ) )
+				fcmTokenList.add( accessToken.getFcmToken() );
+		
+		return fcmTokenList;
+
+	}
+
+	
+	@Override
 	public AccessToken createOrUpdateAccessToken( AccessToken accessToken ) {
 		return createOrUpdateEntity( accessToken );
 	}

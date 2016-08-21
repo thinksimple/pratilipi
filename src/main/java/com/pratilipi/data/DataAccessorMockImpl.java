@@ -261,6 +261,12 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 	
 	@Override
+	public List<String> getFcmTokenList( Long userId ) {
+		// TODO: implementation
+		return null;
+	}
+	
+	@Override
 	public AccessToken createOrUpdateAccessToken( AccessToken accessToken ) {
 		AccessTokenMock.ACCESS_TOKEN_TABLE.add( accessToken );
 		return accessToken;

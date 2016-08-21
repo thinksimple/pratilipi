@@ -8,6 +8,7 @@ import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.condition.IfNotNull;
 import com.pratilipi.data.type.AccessToken;
 
 @Cache
@@ -19,6 +20,9 @@ public class AccessTokenEntity implements AccessToken {
 	
 	@Index
 	private Long USER_ID;
+	
+	@Index( IfNotNull.class )
+	private String FCM_TOKEN;
 	
 	@Index
 	private Date LOGIN_DATE;
@@ -61,6 +65,16 @@ public class AccessTokenEntity implements AccessToken {
 	@Override
 	public void setUserId( Long userId ) {
 		this.USER_ID = userId;
+	}
+
+	@Override
+	public String getFcmToken() {
+		return FCM_TOKEN;
+	}
+
+	@Override
+	public void setFcmToken( String fcmToken ) {
+		this.FCM_TOKEN = fcmToken;
 	}
 
 	@Override
