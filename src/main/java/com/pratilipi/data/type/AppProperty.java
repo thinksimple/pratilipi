@@ -4,6 +4,8 @@ public interface AppProperty extends GenericOfyType {
 	
 	String FACEBOOK_CREDENTIALS = "Facebook.Credentials";
 	
+	String WORKER_ACCESS_TOKEN_ID = "Pratilipi.Worker.AccessTokenId";
+	
 	
 	String getId();
 	
