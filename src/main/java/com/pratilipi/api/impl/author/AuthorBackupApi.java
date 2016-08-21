@@ -35,7 +35,7 @@ public class AuthorBackupApi extends GenericApi {
 	
 	private static final String CSV_HEADER = "AuthorId,UserId,"
 			+ "FirstName,LastName,PenName,FirstNameEN,LastNameEN,PenNameEN,"
-			+ "Email,Language,HasSummary,HasImage,ContentsPublished,RegistrationDate";
+			+ "Language,HasSummary,HasImage,ContentsPublished,RegistrationDate";
 	private static final String CSV_SEPARATOR = ",";
 	private static final String LINE_SEPARATOR = "\n";
 	
