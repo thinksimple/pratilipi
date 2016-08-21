@@ -443,11 +443,6 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return createOrUpdateEntity( accessToken );
 	}
 	
-	@Override
-	public AccessToken createOrUpdateAccessToken( AccessToken newAccessToken, AccessToken oldAccessToken ) {
-		return createOrUpdateEntity( newAccessToken, oldAccessToken );
-	}
-
 	
 	// AUDIT_LOG Table
 	

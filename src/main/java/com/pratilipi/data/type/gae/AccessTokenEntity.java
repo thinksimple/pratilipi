@@ -8,7 +8,6 @@ import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
-import com.googlecode.objectify.condition.IfNotNull;
 import com.pratilipi.data.type.AccessToken;
 
 @Cache
@@ -17,9 +16,6 @@ public class AccessTokenEntity implements AccessToken {
 
 	@Id
 	private String ACCESS_TOKEN_ID;
-	
-	@Index( IfNotNull.class )
-	private String PARENT_ACCESS_TOKEN_ID;
 	
 	@Index
 	private Long USER_ID;
@@ -57,16 +53,6 @@ public class AccessTokenEntity implements AccessToken {
 		this.ACCESS_TOKEN_ID = key.getName();
 	}
 	
-	@Override
-	public String getParentId() {
-		return PARENT_ACCESS_TOKEN_ID;
-	}
-
-	@Override
-	public void setParentId( String parentId ) {
-		this.PARENT_ACCESS_TOKEN_ID = parentId;
-	}
-
 	@Override
 	public Long getUserId() {
 		return USER_ID;

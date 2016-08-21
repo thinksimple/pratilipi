@@ -42,7 +42,6 @@ public class AccessTokenDataUtil {
 			
 			AccessToken newAccessToken = dataAccessor.newAccessToken();
 
-			newAccessToken.setParentId( accessTokenId );
 			newAccessToken.setUserId( 0L );
 			newAccessToken.setExpiry( new Date( new Date().getTime() + ONE_MONTH_MILLIS ) );
 			newAccessToken.setCreationDate( new Date() );
@@ -56,18 +55,11 @@ public class AccessTokenDataUtil {
 			
 		} else {
 
-			accessToken.setExpiry( new Date() );
+			accessToken.setExpiry( new Date( new Date().getTime() + ONE_MONTH_MILLIS ) );
 			
-			AccessToken newAccessToken = dataAccessor.newAccessToken();
+			accessToken = dataAccessor.createOrUpdateAccessToken( accessToken );
 
-			newAccessToken.setParentId( accessTokenId );
-			newAccessToken.setUserId( accessToken.getUserId() );
-			newAccessToken.setExpiry( new Date( new Date().getTime() + ONE_MONTH_MILLIS ) );
-			newAccessToken.setCreationDate( new Date() );
-			
-			newAccessToken = dataAccessor.createOrUpdateAccessToken( newAccessToken, accessToken );
-
-			return newAccessToken;
+			return accessToken;
 			
 		}
 		

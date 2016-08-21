@@ -6,10 +6,6 @@ public interface AccessToken extends GenericOfyType {
 
 	String getId();
 	
-	String getParentId();
-
-	void setParentId( String parentId );
-
 	Long getUserId();
 	
 	void setUserId( Long userId );

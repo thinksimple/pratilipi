@@ -93,7 +93,7 @@ public class AccessTokenFilter implements Filter {
 				// Do Nothing.
 			}
 			
-		} else if( requestUri.equals( "/user/accesstoken" ) ) { // Used by android module.
+		} else if( requestUri.equals( "/user/accesstoken" ) ) { // Used by gamma-android & android module.
 			
 			chain.doFilter( request, response );
 			return;
