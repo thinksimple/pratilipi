@@ -1,10 +1,12 @@
 package com.pratilipi.api.impl.user;
 
+import java.util.Date;
+
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
-import com.pratilipi.api.impl.user.shared.GetUserAccessTokenRequest;
-import com.pratilipi.api.impl.user.shared.GetUserAccessTokenResponse;
+import com.pratilipi.api.shared.GenericRequest;
+import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.util.AccessTokenDataUtil;
@@ -13,17 +15,26 @@ import com.pratilipi.data.util.AccessTokenDataUtil;
 @Bind( uri= "/user/accesstoken" )
 public class UserAccessTokenApi extends GenericApi {
 
+	@SuppressWarnings("unused")
+	public static class Response extends GenericResponse {
+		
+		private String accessToken;
+		private Long expiryMills;
+
+		
+		public Response( String accessToken, Date expiry ) {
+			this.accessToken = accessToken;
+			this.expiryMills = expiry.getTime();
+		}
+		
+	}
+
+	
 	@Get
-	public GetUserAccessTokenResponse get( GetUserAccessTokenRequest request )
-			throws InvalidArgumentException {
+	public Response get( GenericRequest request ) throws InvalidArgumentException {
 		
-		AccessToken accessToken;
-		if( request.getAccessToken() == null || request.getAccessToken().isEmpty() )
-			accessToken = AccessTokenDataUtil.newUserAccessToken();
-		else
-			accessToken = AccessTokenDataUtil.renewUserAccessToken( request.getAccessToken() );
-		
-		return new GetUserAccessTokenResponse( accessToken.getId(), accessToken.getExpiry() );
+		AccessToken accessToken = AccessTokenDataUtil.newUserAccessToken();
+		return new Response( accessToken.getId(), accessToken.getExpiry() );
 		
 	}
 	
