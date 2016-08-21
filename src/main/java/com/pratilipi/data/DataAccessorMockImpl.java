@@ -272,12 +272,6 @@ public class DataAccessorMockImpl implements DataAccessor {
 		return accessToken;
 	}
 
-	@Override
-	public AccessToken createOrUpdateAccessToken( AccessToken newAccessToken, AccessToken oldAccessToken ) {
-		AccessTokenMock.ACCESS_TOKEN_TABLE.add( newAccessToken );
-		return newAccessToken;
-	}
-
 	
 	// AUDIT_LOG Table
 
