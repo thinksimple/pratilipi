@@ -13,13 +13,6 @@
 	</datastore-index>
 
 
-	<datastore-index kind="ACCESS_TOKEN" ancestor="false" source="manual">
-		<property name="USER_ID" direction="asc"/>
-		<property name="EXPIRY" direction="asc"/>
-		<property name="CREATION_DATE" direction="asc"/>
-	</datastore-index>
-
-
 	<datastore-index kind="PAGE" ancestor="false" source="manual">
 		<property name="URI" direction="asc"/>
 		<property name="CREATION_DATE" direction="asc"/>

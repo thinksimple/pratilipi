@@ -401,44 +401,6 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	@Override
-	public DataListCursorTuple<AccessToken> getAccessTokenList( Long userId, Date minExpiry, String cursorStr, Integer resultCount ) {
-		
-		Query<AccessTokenEntity> query = ObjectifyService.ofy().load().type( AccessTokenEntity.class );
-		
-		if( userId != null )
-			query = query.filter( "USER_ID", userId );
-		
-		if( minExpiry != null ) {
-			query = query.filter( "EXPIRY >=", minExpiry );
-			query = query.order( "EXPIRY" );
-		}
-		
-		query = query.order( "CREATION_DATE" );
-		
-		
-		if( cursorStr != null )
-			query = query.startAt( Cursor.fromWebSafeString( cursorStr ) );
-		
-		if( resultCount != null && resultCount > 0 )
-			query = query.limit( resultCount );
-
-		
-		List<AccessToken> accessTokenList = resultCount == null
-				? new ArrayList<AccessToken>()
-				: new ArrayList<AccessToken>( resultCount );
-		
-		
-		QueryResultIterator <AccessTokenEntity> iterator = query.iterator();
-		while( iterator.hasNext() )
-			accessTokenList.add( iterator.next() );
-		Cursor cursor = iterator.getCursor();
-				
-		
-		return new DataListCursorTuple<AccessToken>( accessTokenList, cursor == null ? null : cursor.toWebSafeString() );
-		
-	}
-	
-	@Override
 	public AccessToken createOrUpdateAccessToken( AccessToken accessToken ) {
 		return createOrUpdateEntity( accessToken );
 	}

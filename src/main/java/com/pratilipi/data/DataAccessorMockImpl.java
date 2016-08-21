@@ -261,12 +261,6 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 	
 	@Override
-	public DataListCursorTuple<AccessToken> getAccessTokenList( Long userId, Date minExpiry, String cursorStr, Integer resultCount ) {
-		// TODO: Implementation
-		return null;
-	}
-	
-	@Override
 	public AccessToken createOrUpdateAccessToken( AccessToken accessToken ) {
 		AccessTokenMock.ACCESS_TOKEN_TABLE.add( accessToken );
 		return accessToken;
