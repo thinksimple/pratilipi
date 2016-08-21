@@ -1,15 +1,10 @@
 package com.pratilipi.api.impl.test;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.appengine.tools.cloudstorage.GcsFilename;
-import com.google.appengine.tools.cloudstorage.GcsService;
-import com.google.appengine.tools.cloudstorage.GcsServiceFactory;
-import com.google.appengine.tools.cloudstorage.ListOptions;
-import com.google.appengine.tools.cloudstorage.ListResult;
-import com.google.appengine.tools.cloudstorage.RetryParams;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -19,6 +14,11 @@ import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.Language;
+import com.pratilipi.common.util.SystemProperty;
+import com.pratilipi.data.DataAccessor;
+import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.type.AccessToken;
+import com.pratilipi.data.type.AppProperty;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/test" )
@@ -172,29 +172,26 @@ public class TestApi extends GenericApi {
 		dataAccessor.createOrUpdateI18n( i18n_4 );
 		dataAccessor.createOrUpdateI18n( i18n_5 );*/
 		
+/*		List<Key<PratilipiEntity>> keys = ObjectifyService.ofy().load()
+				.type( PratilipiEntity.class )
+				.filter( "CONTENT_TYPE", PratilipiContentType.PRATILIPI )
+				.keys()
+				.list();
 		
-		GcsService gcsService =
-				GcsServiceFactory.createGcsService( RetryParams.getDefaultInstance() );
+		List<Task> taskList = new ArrayList<>( keys.size() );
+		for( Key<PratilipiEntity> key : keys )
+			taskList.add( TaskQueueFactory.newTask()
+					.setUrl( "/pratilipi/process" )
+					.addParam( "pratilipiId", key.getId() + "" )
+					.addParam( "processContent", "true" ) );
+		TaskQueueFactory.getPratilipiOfflineTaskQueue().addAll( taskList );*/
 		
-		ListOptions.Builder options = new ListOptions.Builder();
-		options.setPrefix( "pratilipi/" );
-		
-		ListResult result = gcsService.list( "static.pratilipi.com", options.build() );
-		
-		while( result.hasNext() ) {
-			String fileName = result.next().getName();
-			if( fileName.endsWith( "/content" ) )
-				continue;
-			if( fileName.endsWith( "/reviews" ) )
-				continue;
-			if( fileName.endsWith( "/googleAnalytics" ) )
-				continue;
-			if( fileName.indexOf( "/images/" ) != -1 )
-				continue;
-//			gcsService.delete( new GcsFilename( "static.pratilipi.com", fileName ) );
-			logger.log( Level.WARNING, fileName );
-		}
-		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		AccessToken accessToken = dataAccessor.getAccessTokenList( SystemProperty.SYSTEM_USER_ID, new Date(), null, 1 ).getDataList().get( 0 );
+		logger.log( Level.INFO, accessToken.getId() );
+		AppProperty appProperty = dataAccessor.newAppProperty( AppProperty.WORKER_ACCESS_TOKEN_ID );
+		appProperty.setValue( accessToken.getId() );
+		appProperty = dataAccessor.createOrUpdateAppProperty( appProperty );
 		
 		return new GenericResponse();
 		
