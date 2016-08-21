@@ -1,8 +1,6 @@
 package com.pratilipi.api.impl.test;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.pratilipi.api.GenericApi;
@@ -14,11 +12,6 @@ import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.Language;
-import com.pratilipi.common.util.SystemProperty;
-import com.pratilipi.data.DataAccessor;
-import com.pratilipi.data.DataAccessorFactory;
-import com.pratilipi.data.type.AccessToken;
-import com.pratilipi.data.type.AppProperty;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/test" )
@@ -185,14 +178,7 @@ public class TestApi extends GenericApi {
 					.addParam( "pratilipiId", key.getId() + "" )
 					.addParam( "processContent", "true" ) );
 		TaskQueueFactory.getPratilipiOfflineTaskQueue().addAll( taskList );*/
-		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		AccessToken accessToken = dataAccessor.getAccessTokenList( SystemProperty.SYSTEM_USER_ID, new Date(), null, 1 ).getDataList().get( 0 );
-		logger.log( Level.INFO, accessToken.getId() );
-		AppProperty appProperty = dataAccessor.newAppProperty( AppProperty.WORKER_ACCESS_TOKEN_ID );
-		appProperty.setValue( accessToken.getId() );
-		appProperty = dataAccessor.createOrUpdateAppProperty( appProperty );
-		
+
 		return new GenericResponse();
 		
 	}
