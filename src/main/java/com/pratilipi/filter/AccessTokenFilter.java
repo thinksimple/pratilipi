@@ -3,8 +3,6 @@ package com.pratilipi.filter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -25,24 +23,23 @@ import com.pratilipi.common.type.Website;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.type.AccessToken;
+import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.util.AccessTokenDataUtil;
 
 public class AccessTokenFilter implements Filter {
 	
-	private static final Logger logger = Logger.getLogger( AccessTokenFilter.class.getName() );
-
 	private static final ThreadLocal<AccessToken> threadLocalAccessToken = new ThreadLocal<AccessToken>();
 
 	private static boolean autoGenerate;
-	private static Long runAsUserId;
+	private static boolean isWorker = false;
 	
 	
 	@Override
 	public void init( FilterConfig config ) throws ServletException {
 		String autoGenerateParam = config.getInitParameter( "AutoGenerate" );
 		autoGenerate = autoGenerateParam != null && autoGenerateParam.equalsIgnoreCase( "true" );
-		String runAsParam = config.getInitParameter( "RunAs" );
-		runAsUserId = runAsParam == null ? null : Long.parseLong( runAsParam );
+		String moduleParam = config.getInitParameter( "Module" );
+		isWorker = moduleParam != null && moduleParam.equalsIgnoreCase( "Worker" );
 	}
 
 	@Override
@@ -69,13 +66,14 @@ public class AccessTokenFilter implements Filter {
 			if( ( accessTokenId == null || accessTokenId.isEmpty() ) && ( accessTokenCookie == null || accessTokenCookie.isEmpty() ) ) {
 				accessToken = AccessTokenDataUtil.newUserAccessToken();
 			} else {
-				try {
-					accessToken = accessTokenId != null && ! accessTokenCookie.isEmpty()
-							? AccessTokenDataUtil.renewUserAccessToken( accessTokenId )
-							: AccessTokenDataUtil.renewUserAccessToken( accessTokenCookie );
-				} catch( InvalidArgumentException e ) {
-					logger.log( Level.SEVERE, "", e );
+				accessToken = accessTokenId != null && ! accessTokenId.isEmpty()
+						? dataAccessor.getAccessToken( accessTokenId )
+						: dataAccessor.getAccessToken( accessTokenCookie );
+				if( accessToken == null || accessToken.isExpired() ) {
 					accessToken = AccessTokenDataUtil.newUserAccessToken();
+				} else if( accessToken.getExpiry().getTime() < new Date().getTime() + AccessTokenDataUtil.MIN_EXPIRY_MILLIS ) {
+					accessToken.setExpiry( new Date( new Date().getTime() + AccessTokenDataUtil.MAX_EXPIRY_MILLIS ) );
+					accessToken = dataAccessor.createOrUpdateAccessToken( accessToken );
 				}
 			}
 
@@ -84,21 +82,17 @@ public class AccessTokenFilter implements Filter {
 				setCookieValue( RequestCookie.ACCESS_TOKEN.getName(), accessTokenId, response );
 			}
 			
-		} else if( runAsUserId != null ) { // Used by worker module.
+		} else if( isWorker ) { // Used by worker module.
 
-			accessToken = dataAccessor.getAccessTokenList( runAsUserId, new Date(), null, 1 ).getDataList().get( 0 );
-			try {
-				accessToken = AccessTokenDataUtil.renewUserAccessToken( accessToken.getId() );
-			} catch( InvalidArgumentException e ) {
-				// Do Nothing.
-			}
+			accessTokenId = dataAccessor.getAppProperty( AppProperty.WORKER_ACCESS_TOKEN_ID ).getValue();
+			accessToken = dataAccessor.getAccessToken( accessTokenId );
 			
 		} else if( requestUri.equals( "/user/accesstoken" ) ) { // Used by gamma-android & android module.
 			
 			chain.doFilter( request, response );
 			return;
 	
-		} else { // Used by android module.
+		} else { // Used by gamma-android & android module.
 
 			if( accessTokenId == null ) {
 				dispatchResposne( response, new InvalidArgumentException( "Access Token is missing." ) );
@@ -112,6 +106,11 @@ public class AccessTokenFilter implements Filter {
 				dispatchResposne( response, new InsufficientAccessException( "Access Token is expired." ) );
 				return;
 
+			} else if( accessToken.getExpiry().getTime() < new Date().getTime() + AccessTokenDataUtil.MIN_EXPIRY_MILLIS ) {
+				
+				accessToken.setExpiry( new Date( new Date().getTime() + AccessTokenDataUtil.MAX_EXPIRY_MILLIS ) );
+				accessToken = dataAccessor.createOrUpdateAccessToken( accessToken );
+				
 			}
 
 		}

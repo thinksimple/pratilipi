@@ -27,8 +27,8 @@
 		<filter-name>AccessTokenFilter</filter-name>
 		<filter-class>com.pratilipi.filter.AccessTokenFilter</filter-class>
 		<init-param>
-			<param-name>RunAs</param-name>
-			<param-value>5636632866717696</param-value>
+			<param-name>Module</param-name>
+			<param-value>Worker</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>
