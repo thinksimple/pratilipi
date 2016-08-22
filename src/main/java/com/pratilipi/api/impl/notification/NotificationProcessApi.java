@@ -33,7 +33,7 @@ public class NotificationProcessApi extends GenericApi {
 		for( Notification notification : notificationList ) {
 			if( ! userIdList.contains( notification.getUserId() ) )
 				continue;
-			if( notification.getState() != NotificationState.READ )
+			if( notification.getState() != NotificationState.UNREAD )
 				continue;
 			if( notification.getFcmMsgId() != null )
 				continue;
