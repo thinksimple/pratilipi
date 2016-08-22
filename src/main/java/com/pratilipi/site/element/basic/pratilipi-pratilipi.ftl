@@ -43,6 +43,41 @@
 		$( '#pratilipiType-${ pratilipi.getId()?c }' ).html( pratilipiTypes[ "${ pratilipi.getType() }" ].name );
 		$( '#creationDate-${ pratilipi.getId()?c }' ).html( "${ _strings.pratilipi_listing_date }&nbsp;&minus;&nbsp;" + convertDate( ${ pratilipi.getListingDateMillis()?c } ) );
 		$(".fb-like").attr( "data-href", window.location.href );
+		
+		<#if pratilipi.hasAccessToUpdate()==true >
+			$("#uploadPratilipiImageInput").hide();
+		
+		    $('#uploadPratilipiImage').on('submit',(function(e) {
+		        e.preventDefault();
+		        var formData = new FormData(this);
+		
+		        $.ajax({
+		            type:'POST',
+		            url: $(this).attr('action'),
+		            data:formData,
+		            cache:false,
+		            contentType: false,
+		            processData: false,
+		            success:function(data){
+		                console.log("success");
+		                console.log(data);
+		                location.reload();
+		            },
+		            error: function(data){
+		                console.log("error");
+		                console.log(data);
+		            }
+		        });
+		    }));
+		    
+		    $(".pratilipi-file-upload").on('click', function() {
+		    	$("#uploadPratilipiImageInput").trigger('click');
+		    });
+		    
+		    $("#uploadPratilipiImageInput").on('change', function() {
+				$("#uploadPratilipiImage").submit();
+			});		
+		</#if>
 	});
 </script>
 
@@ -53,11 +88,16 @@
 		<a href="${ pratilipi.author.pageUrl }"><h4>${ pratilipi.author.name }</h4></a>
 	</#if>
 	
-	<div style="width: 150px; height: 225px; margin: 15px auto;" class="pratilipi-shadow">
+	<div style="width: 150px; height: 225px; margin: 15px auto; position: relative;" class="pratilipi-shadow">
 		<img src="${ pratilipi.getCoverImageUrl( 150 ) }" alt="${ pratilipi.title!pratilipi.titleEn }" title="${ pratilipi.titleEn!pratilipi.title }" />
+		<#if pratilipi.hasAccessToUpdate()==true >
+			<div class="pratilipi-file-upload">
+				<img style="width:25px;height:25px;margin-bottom: 7px;position: absolute;left: 15px;bottom: -4px;" src="http://0.ptlp.co/resource-all/icon/svg/camera-white.svg">
+			</div>
+		</#if>
 	</div>
 	<div class="fb-like" data-layout="button" data-action="like" data-show-faces="false" data-share="false"></div>
-	<p>${ pratilipi.getFbLikeShareCount() }</p>
+	<p style="text-align: center;margin: 10px 0 0 0;">${ pratilipi.getFbLikeShareCount() } ${ _strings.pratilipi_count_likes }</p>
 	<#if pratilipi.ratingCount gt 0 >
 		<a <#if user.isGuest == true>href="/login?ret=${ pratilipi.getPageUrl() }?review=write"<#else>href="?review=write"</#if> >
 			<#assign rating=pratilipi.averageRating >
@@ -88,6 +128,11 @@
 			</a>
 		</#if>
 	</div>
+	<#if pratilipi.hasAccessToUpdate()==true >
+		<form id="uploadPratilipiImage" method="post" enctype="multipart/form-data" action="/api/pratilipi/cover?pratilipiId=${ pratilipi.getId()?c }">
+			<input id="uploadPratilipiImageInput" type="file" name="{{ pratilipi.getId()?c }}" accept="image/*">
+		</form>
+	</#if>
 			
 </div>
 
