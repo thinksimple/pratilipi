@@ -39,6 +39,9 @@ public class NotificationEntity implements Notification {
 	@Index
 	private NotificationState STATE;
 	
+	@Index
+	private String FCM_MSG_ID;
+	
 	
 	@Index
 	private Date CREATION_DATE;
@@ -178,6 +181,16 @@ public class NotificationEntity implements Notification {
 	@Override
 	public void setState( NotificationState state ) {
 		this.STATE = state;
+	}
+	
+	@Override
+	public String getFcmMsgId() {
+		return FCM_MSG_ID;
+	}
+	
+	@Override
+	public void setFcmMsgId( String fcmMsgId ) {
+		this.FCM_MSG_ID = fcmMsgId;
 	}
 	
 	

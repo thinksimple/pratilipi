@@ -1727,6 +1727,17 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	@Override
+	public List<Notification> getNotificationListWithPendingFcm( Integer resultCount  ) {
+		Query<NotificationEntity> query = ObjectifyService.ofy().load().type( NotificationEntity.class );
+		query = query.filter( "STATE", NotificationState.UNREAD );
+		query = query.filter( "FCM_MSG_ID", null );
+		query = query.order( "LAST_UPDATED" );
+		if( resultCount != null )
+			query = query.limit( resultCount );
+		return new ArrayList<Notification>( query.list() );
+	}
+	
+	@Override
 	public Notification createOrUpdateNotification( Notification notification ) {
 		return createOrUpdateEntity( notification );
 	}
