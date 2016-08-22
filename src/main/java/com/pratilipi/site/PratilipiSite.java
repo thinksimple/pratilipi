@@ -686,6 +686,8 @@ public class PratilipiSite extends HttpServlet {
 		if( basicMode ) {
 			dataModel.put( "pratilipi", pratilipiResponse );
 			dataModel.put( "userpratilipi", userPratilipiResponse );
+			String action = request.getParameter( "action" ) != null ? request.getParameter( "action" ) : "content_page";
+			dataModel.put( "action", action );
 			String reviewParam = request.getParameter( RequestParameter.PRATILIPI_REVIEW.getName() );
 			if( reviewParam != null && reviewParam.trim().equals( "list" ) ) {
 				int reviewPageCurr = 1;
