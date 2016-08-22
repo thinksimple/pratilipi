@@ -89,7 +89,7 @@
 			<label for="title">${ _strings.edit_pratilipi_title }</label>
 			<input type="text" class="form-control" id="title" name="title" 
 			<#if pratilipi.getTitle()?? >
-				value="${ author.getTitle() }"
+				value="${ pratilipi.getTitle() }"
 			</#if>	
 			>
 		</div>
@@ -99,7 +99,7 @@
 			<label for="titleEn">${ _strings.edit_pratilipi_title_en }</label>
 			<input type="text" class="form-control" id="titleEn" name="titleEn"
 			<#if pratilipi.getTitleEn()?? >
-				value="${ author.getTitleEn() }"
+				value="${ pratilipi.getTitleEn() }"
 			</#if>	
 			>
 		</div>		
@@ -119,7 +119,7 @@
 			<label for="language">${ _strings.edit_pratilipi_language }</label>
 			<p class="form-control-static">
 				<#if pratilipi.getLanguage?? >
-					${ author.getLanguage() }
+					${ pratilipi.getLanguage() }
 				</#if>			
 			</p>	
 		</div>		
