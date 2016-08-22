@@ -114,7 +114,9 @@
 				
 				<#-- Show review-input if reviewParam == write. Else if reviewParam == list, show complete review-list with page numbers
 						If reviewParam = pratilipi, show pratilipi page and few reviews. -->
-				<#if reviewParam == "write">
+				<#if action == "edit_content">
+					<#include "../element/basic/pratilipi-edit-content.ftl">	
+				<#elsif reviewParam == "write">
 					<#include "../element/basic/pratilipi-review-input.ftl">
 				<#elseif reviewParam == "reply">
 					<#include "../element/basic/pratilipi-comment-input.ftl">
