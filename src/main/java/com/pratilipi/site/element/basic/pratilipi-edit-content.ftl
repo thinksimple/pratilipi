@@ -93,6 +93,7 @@
 </div>
 <div class="pratilipi-shadow secondary-500 box">
 	<form id="pratilipi_settings_form">
+		<input type="hidden" name="pratilipiId" id="pratilipiId" value="${ pratilipi.getId()?c }">
 		<div class="form-group">
 			<label for="title">${ _strings.edit_pratilipi_title }</label>
 			<input type="text" class="form-control" id="title" name="title" 
@@ -147,5 +148,6 @@
 				</#if>
 		  	</textarea>
 		</div>
+		
 	</form>
 </div>
