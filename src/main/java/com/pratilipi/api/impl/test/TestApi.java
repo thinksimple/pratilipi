@@ -14,7 +14,7 @@ import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
-import com.pratilipi.data.type.AppProperty;
+import com.pratilipi.data.type.AccessToken;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/test" )
@@ -184,10 +184,18 @@ public class TestApi extends GenericApi {
 		TaskQueueFactory.getPratilipiOfflineTaskQueue().addAll( taskList );*/
 
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		/*DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		AppProperty appProperty = dataAccessor.newAppProperty( AppProperty.FCM_SERVER_KEY );
 		appProperty.setValue( request.str );
-		dataAccessor.createOrUpdateAppProperty( appProperty );
+		dataAccessor.createOrUpdateAppProperty( appProperty );*/
+		
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		AccessToken accessToken = dataAccessor.getAccessToken( "17e0ff30-ed52-48fa-bd77-4f2d40a46734" );
+		if( accessToken.getFcmToken() == null )
+			accessToken.setFcmToken( "exxnvRKHVNg:APA91bEnoMMbJ1HFksyvTq5EUEsu4dBNCpG1Kwr-WxhIFycp7NQ14aN_gxs14fa2VmV2Y0vVrHHjLpP33jUAa7AmZ1PJswuJlLj4S4metE-IRYblS9JtszYPcnzOX2qxh6sVvBbwmDcK");
+		dataAccessor.createOrUpdateAccessToken( accessToken );
+		
 		
 		return new GenericResponse();
 		
