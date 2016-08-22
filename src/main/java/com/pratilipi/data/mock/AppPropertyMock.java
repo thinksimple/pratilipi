@@ -17,8 +17,8 @@ public class AppPropertyMock {
 	
 	static {
 		Map<String, String> facebookCredentials = new HashMap<String, String>();
-		facebookCredentials.put( "appId", "368844269953501" );
-		facebookCredentials.put( "appSecret", "48db3def20329db11988e19082ffd5bb" );
+		facebookCredentials.put( "appId", "540237692796510" );
+		facebookCredentials.put( "appSecret", "307beaac9c1a3393c1cc539c03832fba" );
 		fbCredAppProperty.setValue( facebookCredentials );
 		
 		APP_PROPERTY_TABLE.add( fbCredAppProperty );

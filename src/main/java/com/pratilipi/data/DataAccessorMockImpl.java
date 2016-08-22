@@ -282,8 +282,7 @@ public class DataAccessorMockImpl implements DataAccessor {
 	
 	@Override
 	public AuditLog newAuditLog() {
-		// TODO Auto-generated method stub
-		return null;
+		return new AuditLogEntity();
 	}
 	
 	
@@ -1000,6 +999,14 @@ public class DataAccessorMockImpl implements DataAccessor {
 	public I18n createOrUpdateI18n( I18n i18n ) {
 		// TODO Auto-generated method stub
 		return i18n;
+	}
+
+
+	@Override
+	public List<Notification> getNotificationListWithPendingFcm(
+			Integer resultCount) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }
