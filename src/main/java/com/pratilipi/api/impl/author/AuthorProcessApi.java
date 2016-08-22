@@ -172,11 +172,11 @@ public class AuthorProcessApi extends GenericApi {
 		}
 
 
-		// Author, having Pratilipi entites in just one language, must have the same set as his/her profile langauge.
+		// Author, having Pratilipi entities in just one language, must have the same set as his/her profile language.
 		if( langCount.keySet().size() == 1 ) {
 			Language language = langCount.keySet().iterator().next();
 			if( langCount.get( language ) > 1 && author.getLanguage() != language )
-				throw new InvalidArgumentException( "Author has " + author.getLanguage() + " as his/her profile langauge but all his/her content pieces are in " + language + "." );
+				throw new InvalidArgumentException( "Author has " + author.getLanguage() + " as his/her profile language but all his/her content pieces are in " + language + "." );
 		}
 			
 		

@@ -553,10 +553,10 @@ public class PratilipiDataUtil {
 
 		// New content piece must have language.
 		if( isNew && ( ! pratilipiData.hasLanguage() || pratilipiData.getLanguage() == null ) )
-			errorMessages.addProperty( "langauge", GenericRequest.ERR_LANGUAGE_REQUIRED );
+			errorMessages.addProperty( "language", GenericRequest.ERR_LANGUAGE_REQUIRED );
 		// Language can not be un-set or set to null.
 		else if( ! isNew && pratilipiData.hasLanguage() && pratilipiData.getLanguage() == null )
-			errorMessages.addProperty( "langauge", GenericRequest.ERR_LANGUAGE_REQUIRED );
+			errorMessages.addProperty( "language", GenericRequest.ERR_LANGUAGE_REQUIRED );
 
 		// New content piece must have type.
 		if( isNew && ( ! pratilipiData.hasType() || pratilipiData.getType() == null ) )
