@@ -13,12 +13,12 @@ import java.net.URLConnection;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.commons.io.IOUtils;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.data.DataAccessorFactory;
@@ -129,7 +129,9 @@ public class HttpUtil {
 			URL url = new URL( targetURL );
 			connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod( "POST" );
-			connection.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded" );
+			connection.setRequestProperty( "Content-Type", "application/json" );
+			for( Entry<String, String> entry : headersMap.entrySet() )
+				connection.setRequestProperty( entry.getKey(), entry.getValue() );
 			connection.setRequestProperty( "Content-Length", body.length + "" );
 			connection.setConnectTimeout( 60000 );	//60 Seconds
 			connection.setReadTimeout( 60000 );		//60 Seconds
