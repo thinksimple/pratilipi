@@ -979,6 +979,12 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 	
 	@Override
+	public List<I18n> getI18nList(I18nGroup i18nGroup) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
 	public Map<String, String> getI18nStrings( I18nGroup i18nGroup, Language language ) {
 		Map<String, String> i18nStrings = new HashMap<>();
 		i18nStrings.put( "notification_and", "notification and" );
@@ -994,7 +1000,6 @@ public class DataAccessorMockImpl implements DataAccessor {
 		// TODO Auto-generated method stub
 		return i18n;
 	}
-
 
 	@Override
 	public List<Notification> getNotificationListWithPendingFcm(

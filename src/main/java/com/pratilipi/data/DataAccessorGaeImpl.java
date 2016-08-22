@@ -1756,6 +1756,14 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	@Override
+	public List<I18n> getI18nList( I18nGroup i18nGroup ) {
+		List<I18nEntity> i18nList = ObjectifyService.ofy().load().type( I18nEntity.class )
+				.filter( "GROUP", i18nGroup )
+				.list();
+		return new ArrayList<I18n>( i18nList );
+	}
+	
+	@Override
 	public Map<String, String> getI18nStrings( I18nGroup i18nGroup, Language language ) {
 		
 		List<I18nEntity> i18nList = ObjectifyService.ofy().load().type( I18nEntity.class )

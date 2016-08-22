@@ -8,6 +8,8 @@ public class NotificationData {
 
 	private Long notificationId;
 	
+	private Long userId;
+	
 	private String message;
 	
 	private String sourceUrl;
@@ -30,6 +32,14 @@ public class NotificationData {
 
 	public void setId( Long id ) {
 		this.notificationId = id;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId( Long userId ) {
+		this.userId = userId;
 	}
 
 	public String getMessage() {

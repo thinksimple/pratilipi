@@ -13,7 +13,8 @@ import com.pratilipi.common.type.NotificationState;
 import com.pratilipi.common.util.FirebaseApi;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
-import com.pratilipi.data.type.Notification;
+import com.pratilipi.data.client.NotificationData;
+import com.pratilipi.data.util.NotificationDataUtil;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/notification/process" )
@@ -24,23 +25,22 @@ public class NotificationProcessApi extends GenericApi {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
-		List<Notification> notificationList = dataAccessor.getNotificationListWithPendingFcm( 1000 );
 		List<Long> userIdList = new LinkedList<>();
 		userIdList.add( dataAccessor.getUserByEmail( "prashant@pratilipi.com" ).getId() );
 		userIdList.add( dataAccessor.getUserByEmail( "anuja@pratilipi.com" ).getId() );
 		userIdList.add( dataAccessor.getUserByEmail( "raghu@pratilipi.com" ).getId() );
 		
-		for( Notification notification : notificationList ) {
+		
+		List<NotificationData> notificationList = NotificationDataUtil.createNotificationDataList( dataAccessor.getNotificationListWithPendingFcm( 1000 ) );
+		for( NotificationData notification : notificationList ) {
 			if( ! userIdList.contains( notification.getUserId() ) )
 				continue;
 			if( notification.getState() != NotificationState.UNREAD )
 				continue;
-			if( notification.getFcmMsgId() != null )
-				continue;
 			List<String> fcmTokenList = dataAccessor.getFcmTokenList( notification.getUserId() );
 			if( fcmTokenList.size() == 0 )
 				continue;
-			FirebaseApi.sendCloudMessage( fcmTokenList, "Test Message", notification.getId().toString() );
+			FirebaseApi.sendCloudMessage( fcmTokenList, notification.getMessage(), notification.getId().toString() );
 		}
 
 		return new GenericResponse();
