@@ -116,7 +116,7 @@
 						If reviewParam = pratilipi, show pratilipi page and few reviews. -->
 				<#if action == "edit_content">
 					<#include "../element/basic/pratilipi-edit-content.ftl">	
-				<#elsif reviewParam == "write">
+				<#elseif reviewParam == "write">
 					<#include "../element/basic/pratilipi-review-input.ftl">
 				<#elseif reviewParam == "reply">
 					<#include "../element/basic/pratilipi-comment-input.ftl">
