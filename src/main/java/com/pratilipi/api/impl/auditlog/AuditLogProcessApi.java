@@ -1,9 +1,9 @@
 package com.pratilipi.api.impl.auditlog;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -30,9 +30,6 @@ import com.pratilipi.data.type.Notification;
 @SuppressWarnings("serial")
 @Bind( uri = "/auditlog/process" )
 public class AuditLogProcessApi extends GenericApi {
-
-	private static final Logger logger =
-			Logger.getLogger( AuditLogProcessApi.class.getName() );
 
 	@Get
 	public GenericResponse get( GenericRequest request ) {
@@ -75,7 +72,8 @@ public class AuditLogProcessApi extends GenericApi {
 				List<Notification> existingNotificationList = dataAccessor.getNotificationList( null, NotificationType.PRATILIPI_ADD, pratilipiId, null, null ).getDataList();
 				for( Notification notification : existingNotificationList )
 					followerUserIdList.remove( notification.getUserId() );
-				
+
+				List<Notification> notificationList = new ArrayList<>( followerUserIdList.size() );
 				for( Long followerUserId : followerUserIdList ) {
 					Notification notification = dataAccessor.newNotification(
 							followerUserId,
@@ -83,8 +81,9 @@ public class AuditLogProcessApi extends GenericApi {
 							pratilipiId );
 					notification.addAuditLogId( auditLog.getId() );
 					notification.setLastUpdated( new Date() );
-					notification = dataAccessor.createOrUpdateNotification( notification );
+					notificationList.add( notification );
 				}
+				notificationList = dataAccessor.createOrUpdateNotificationList( notificationList );
 				
 			} else if( auditLog.getAccessType() == AccessType.USER_AUTHOR_FOLLOWING ) {
 				
