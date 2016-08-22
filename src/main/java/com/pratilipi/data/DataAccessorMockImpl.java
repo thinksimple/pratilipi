@@ -960,6 +960,12 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 
 	@Override
+	public List<Notification> getNotificationListWithPendingFcm(Integer resultCount) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
 	public Notification createOrUpdateNotification(Notification notification) {
 		// TODO Auto-generated method stub
 		return null;
