@@ -91,7 +91,7 @@
 	<div style="width: 150px; height: 225px; margin: 15px auto; position: relative;" class="pratilipi-shadow">
 		<img src="${ pratilipi.getCoverImageUrl( 150 ) }" alt="${ pratilipi.title!pratilipi.titleEn }" title="${ pratilipi.titleEn!pratilipi.title }" />
 		<#if pratilipi.hasAccessToUpdate()==true >
-			<div class="pratilipi-file-upload">
+			<div class="pratilipi-file-upload" style="margin-bottom: -2px;">
 				<img style="width:25px;height:25px;margin-bottom: 7px;position: absolute;left: 15px;bottom: -4px;" src="http://0.ptlp.co/resource-all/icon/svg/camera-white.svg">
 			</div>
 		</#if>
