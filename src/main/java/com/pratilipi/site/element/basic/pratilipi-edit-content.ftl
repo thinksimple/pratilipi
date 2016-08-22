@@ -1,4 +1,12 @@
 <script>
+	$( document ).ready(function() {
+		<#if ( pratilipi.getType()?? ) >
+		    $("#type").val("${ pratilipi.getType() }");
+	    </#if>	
+		<#if ( pratilipi.getLanguage()?? ) >
+		    $("#language").val("${ pratilipi.getLanguage() }");
+	    </#if>	        
+	});
     function isEmpty(str) {
     	return ( str.length === 0 || !str.trim() );
     }
@@ -115,17 +123,24 @@
 		  </select>
 		</div>
 		
-		<div class="form-group">
-			<label for="language">${ _strings.edit_pratilipi_language }</label>
-			<p class="form-control-static">
-				<#if pratilipi.getLanguage?? >
-					${ pratilipi.getLanguage() }
-				</#if>			
-			</p>	
-		</div>		
+		<fieldset disabled>
+			<div class="form-group">
+				<label for="language">${ _strings.edit_pratilipi_language }</label>	
+			    <select id="language" name="language" class="form-control">
+		        	<option value="HINDI">${ _strings.language_hi }</option>
+		        	<option value="GUJARATI">${ _strings.language_gu }</option>
+		        	<option value="TAMIL">${ _strings.language_ta }</option>
+		        	<option value="MARATHI">${ _strings.language_mr }</option>
+		        	<option value="MALAYALAM">${ _strings.language_ml }</option>
+		        	<option value="BENGALI">${ _strings.language_bn }</option>
+		        	<option value="TELUGU">${ _strings.language_te }</option>
+		        	<option value="KANNADA">${ _strings.language_kn }</option>
+		        </select>
+			</div>
+		</fieldset>	
 
 		<div class="form-group">
-		  	<label for="summary">${ _strings.edit_author_summary }:</label>
+		  	<label for="summary">${ _strings.edit_pratilipi_summary }:</label>
 		  	<textarea rows="10" class="form-control" id="summary" name="summary">
 		  		<#if pratilipi.getSummary()?? >
 					${ pratilipi.getSummary() }
