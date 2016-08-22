@@ -43,14 +43,16 @@
     }
 	function AjaxSubmitForm() {
 		var form = $("#pratilipi_settings_form");
-		var formData = new FormData(form[0]);
         $.ajax({
             type:'POST',
             url: '/api/pratilipi',
-            data:formData,
-            cache:false,
-            contentType: false,
-            processData: false,
+            data:{ 	pratilipiId: "${pratilipi.getId()?c }",
+            		title: form.find("#title").val() ,
+            		titleEn: form.find("#titleEn").val(),
+            		type: form.find("#type").val(),
+            		language: "${ pratilipi.getLanguage() }",
+            		summary: form.find("#summary").val(),	            		
+	               },
             success:function(data){
             	console.log(response);
             	console.log(typeof response);
