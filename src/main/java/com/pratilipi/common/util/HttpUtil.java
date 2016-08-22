@@ -18,6 +18,8 @@ import java.util.logging.Logger;
 
 import org.apache.commons.io.IOUtils;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.type.BlobEntry;
@@ -37,7 +39,7 @@ public class HttpUtil {
 		return queryStr.substring( 1 );
 	}
 
-	
+
 	public static BlobEntry doGet( String requestUrl ) 
 			throws UnexpectedServerException {
 		
@@ -100,20 +102,8 @@ public class HttpUtil {
 			
 			logger.log( Level.INFO, "Http POST Request: " + targetURL + "?" + urlParams );
 
-			// Response	
-			InputStream inputStream = connection.getInputStream();
-			BufferedReader bufferedReader = new BufferedReader( new InputStreamReader( inputStream ) );
-			String line;
-			StringBuffer responseBuffer = new StringBuffer();
-			while( ( line = bufferedReader.readLine() ) != null )
-				responseBuffer.append( line + "\n" );
-			bufferedReader.close();
-			
-			String response = URLDecoder.decode( responseBuffer.toString(), "UTF-8" );
-			
-			logger.log( Level.INFO, "Http POST Response: " + response );
-			
-			return response;
+			// Response
+			return _processPostResponse( connection );
 		
 		} catch( IOException e ) {
 			logger.log( Level.SEVERE, "Failed to execute Http Post call.", e );
@@ -125,5 +115,68 @@ public class HttpUtil {
 		}
 		
 	}
+	
+	public static String doPost( String targetURL, Map<String, String> headersMap, JsonObject jsonBody )
+			throws UnexpectedServerException {
+		
+		HttpURLConnection connection = null;
+		
+		try {
+			// Forming request parameters
+			byte[] body = jsonBody.toString().getBytes();
+			
+			// Create connection
+			URL url = new URL( targetURL );
+			connection = (HttpURLConnection) url.openConnection();
+			connection.setRequestMethod( "POST" );
+			connection.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded" );
+			connection.setRequestProperty( "Content-Length", body.length + "" );
+			connection.setConnectTimeout( 60000 );	//60 Seconds
+			connection.setReadTimeout( 60000 );		//60 Seconds
+			connection.setUseCaches( false );
+			connection.setDoInput( true );
+			connection.setDoOutput( true );
+
+			// Send request
+			OutputStream outputStream = new DataOutputStream( connection.getOutputStream() );
+			outputStream.write( body );
+			outputStream.flush();
+			outputStream.close();
+			
+			// Response
+			logger.log( Level.INFO, "Http POST Request: " + targetURL );
+
+			return _processPostResponse( connection );
+		
+		} catch( IOException e ) {
+			logger.log( Level.SEVERE, "Failed to execute Http Post call.", e );
+			throw new UnexpectedServerException();
+			
+		} finally {
+			if( connection != null ) 
+				connection.disconnect(); 
+		}
+		
+	}
+	
+	private static String _processPostResponse( HttpURLConnection connection ) throws IOException {
+		
+		InputStream inputStream = connection.getInputStream();
+		BufferedReader bufferedReader = new BufferedReader( new InputStreamReader( inputStream ) );
+		StringBuffer responseBuffer = new StringBuffer();
+		String line;
+		while( ( line = bufferedReader.readLine() ) != null )
+			responseBuffer.append( line + "\n" );
+		bufferedReader.close();
+		
+		String response = URLDecoder.decode( responseBuffer.toString(), "UTF-8" );
+		
+		logger.log( Level.INFO, "Http POST Response: " + response );
+		
+		return response;
+		
+	}
+	
+
 	
 }

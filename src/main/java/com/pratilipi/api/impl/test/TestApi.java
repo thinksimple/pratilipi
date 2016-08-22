@@ -12,6 +12,9 @@ import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.Language;
+import com.pratilipi.data.DataAccessor;
+import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.type.AppProperty;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/test" )
@@ -27,6 +30,7 @@ public class TestApi extends GenericApi {
 		String url;
 		Long blogPostId;
 		Language language;
+		String str;
 	}
 	
 	public static class Response extends GenericResponse {
@@ -179,6 +183,12 @@ public class TestApi extends GenericApi {
 					.addParam( "processContent", "true" ) );
 		TaskQueueFactory.getPratilipiOfflineTaskQueue().addAll( taskList );*/
 
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		AppProperty appProperty = dataAccessor.newAppProperty( AppProperty.FCM_SERVER_KEY );
+		appProperty.setValue( request.str );
+		dataAccessor.createOrUpdateAppProperty( appProperty );
+		
 		return new GenericResponse();
 		
 	}

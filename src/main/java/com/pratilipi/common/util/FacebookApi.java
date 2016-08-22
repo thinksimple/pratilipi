@@ -107,7 +107,7 @@ public class FacebookApi {
 
 		// Facebook might return an error response.
 		if( responseJson.getAsJsonObject().get( "error" ) != null ) {
-			logger.log( Level.SEVERE, "Facebook responded with an error message :" + responseJson.getAsJsonObject().get( "error" ).getAsJsonObject().get( "message" ) );
+			logger.log( Level.SEVERE, "Facebook responded with an error message: " + responseJson.getAsJsonObject().get( "error" ).getAsJsonObject().get( "message" ) );
 			throw new UnexpectedServerException();
 		}
 
