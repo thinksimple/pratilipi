@@ -1,6 +1,5 @@
 package com.pratilipi.api.impl.accesstoken;
 
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -13,9 +12,6 @@ import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
-import com.pratilipi.common.exception.InsufficientAccessException;
-import com.pratilipi.common.exception.InvalidArgumentException;
-import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.type.AccessToken;
@@ -33,14 +29,14 @@ public class AccessTokenCleanupApi extends GenericApi {
 	
 	
 	@Get
-	public GenericResponse get( GenericRequest request ) throws InsufficientAccessException, InvalidArgumentException, UnexpectedServerException, IOException {
+	public GenericResponse get( GenericRequest request ) {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
 		// Fetching AppProperty
 		AppProperty appProperty = dataAccessor.getAppProperty( AppProperty.API_ACCESSTOKEN_CLEANUP );
 		if( appProperty == null )
-			appProperty = dataAccessor.newAppProperty( AppProperty.API_NOTIFICATION_PROCESS );
+			appProperty = dataAccessor.newAppProperty( AppProperty.API_ACCESSTOKEN_CLEANUP );
 		
 		
 		Query<AccessTokenEntity> query = ObjectifyService.ofy().load()
