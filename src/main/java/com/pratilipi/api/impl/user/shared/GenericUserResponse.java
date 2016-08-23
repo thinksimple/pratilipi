@@ -19,6 +19,7 @@ public class GenericUserResponse extends GenericResponse {
 	
 	private String profilePageUrl;
 	private String profileImageUrl;
+	private String firebaseToken;
 
 	
 	public GenericUserResponse( UserData userData ) {
@@ -32,6 +33,7 @@ public class GenericUserResponse extends GenericResponse {
 		this.isEmailVerified = userData.getState() == UserState.ACTIVE;
 		this.profilePageUrl = userData.getProfilePageUrl();
 		this.profileImageUrl = userData.getProfileImageUrl();
+		this.firebaseToken = userData.getFirebaseToken();
 	}
 	
 	
@@ -77,5 +79,9 @@ public class GenericUserResponse extends GenericResponse {
 	public String getProfileImageUrl() {
 		return profileImageUrl;
 	}
-	
+
+	public String getFirebaseToken() {
+		return firebaseToken;
+	}
+
 }

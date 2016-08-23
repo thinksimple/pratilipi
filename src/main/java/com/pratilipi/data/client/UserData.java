@@ -51,6 +51,8 @@ public class UserData implements Serializable {
 
 	private Boolean following;
 
+	private String firebaseToken;
+
 	
 	
 	public UserData() {}
@@ -203,6 +205,15 @@ public class UserData implements Serializable {
 
 	public void setFollowing( boolean isFollowing ) {
 		this.following = isFollowing;
+	}
+
+
+	public String getFirebaseToken() {
+		return firebaseToken;
+	}
+
+	public void setFirebaseToken( String firebaseToken ) {
+		this.firebaseToken = firebaseToken;
 	}
 
 }

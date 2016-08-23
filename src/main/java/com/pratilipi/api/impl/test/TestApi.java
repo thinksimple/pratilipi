@@ -184,8 +184,6 @@ public class TestApi extends GenericApi {
 					.addParam( "pratilipiId", key.getId() + "" )
 					.addParam( "processContent", "true" ) );
 		TaskQueueFactory.getPratilipiOfflineTaskQueue().addAll( taskList );*/
-
-		FirebaseApi.test();
 		
 		return new GenericResponse();
 		

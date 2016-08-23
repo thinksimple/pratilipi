@@ -38,6 +38,9 @@ public class UserEntity implements User {
 	
 	@Index( IfNotNull.class )
 	private String VERIFICATION_TOKEN;
+
+	@Index( IfNotNull.class )
+	private String FIREBASE_TOKEN;
 	
 	@Deprecated
 	@Index( IfNotNull.class )
@@ -146,6 +149,16 @@ public class UserEntity implements User {
 	@Override
 	public void setVerificationToken( String verificationToken ) {
 		this.VERIFICATION_TOKEN = verificationToken;
+	}
+
+	@Override 
+	public String getFirebaseToken() {
+		return FIREBASE_TOKEN;
+	}
+
+	@Override
+	public void setFirebaseToken( String firebaseToken ) {
+		this.FIREBASE_TOKEN = firebaseToken;
 	}
 	
 	@Override

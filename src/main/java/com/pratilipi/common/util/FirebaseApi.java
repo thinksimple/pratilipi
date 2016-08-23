@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
@@ -27,13 +28,15 @@ public class FirebaseApi {
 
 	private static final String CLOUD_MESSAGING_API_URL = "https://fcm.googleapis.com/fcm/send";
 
+	private static String getServiceAccountJson() {
+		String json = DataAccessorFactory.getDataAccessor().getAppProperty( AppProperty.SERVICE_ACCOUNT_FIREBASE ).getValue();
+		return json.replaceAll( "\n", "\\\\n" );
+	}
+
 	private static void initialiseFirebase() {
 
 		FirebaseOptions options = null;
-		String text = DataAccessorFactory.getDataAccessor().getAppProperty( AppProperty.SERVICE_ACCOUNT_FIREBASE ).getValue();
-		text.replaceAll( "\n", "\\n" );
-		logger.log( Level.INFO, "service account firebase json = " + text );
-		InputStream stream = new ByteArrayInputStream( text.getBytes( StandardCharsets.UTF_8 ) );
+		InputStream stream = new ByteArrayInputStream( getServiceAccountJson().getBytes( StandardCharsets.UTF_8 ) );
 
 		options = new FirebaseOptions.Builder()
 				.setServiceAccount( stream )
@@ -44,10 +47,10 @@ public class FirebaseApi {
 
 	}
 
-	public static void test() {
-		if( FirebaseApp.getApps().size() == 0 ) {
+	public static String getCustomTokenForUser( Long userId ) {
+		if( FirebaseApp.getApps().size() == 0 )
 			initialiseFirebase();
-		}
+		return FirebaseAuth.getInstance().createCustomToken( userId + "" );
 	}
 
 	private static String getServerKey() {
@@ -86,9 +89,8 @@ public class FirebaseApi {
 
 	public static void setDatabaseValue( Long userId, Integer newNotificationCount ) {
 
-		if( FirebaseApp.getApps().size() == 0 ) {
+		if( FirebaseApp.getApps().size() == 0 )
 			initialiseFirebase();
-		}
 
 		DatabaseReference databaseReference = FirebaseDatabase
 			    .getInstance()

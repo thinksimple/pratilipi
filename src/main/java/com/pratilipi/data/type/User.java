@@ -33,6 +33,10 @@ public interface User extends GenericOfyType, Serializable {
 	
 	void setVerificationToken( String verificationToken );
 	
+	String getFirebaseToken();
+
+	void setFirebaseToken( String firebaseToken );
+
 	UserState getState();
 	
 	void setState( UserState userState );
