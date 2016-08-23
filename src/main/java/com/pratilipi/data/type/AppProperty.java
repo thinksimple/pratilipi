@@ -2,16 +2,17 @@ package com.pratilipi.data.type;
 
 public interface AppProperty extends GenericOfyType {
 	
+	String API_ACCESSTOKEN_CLEANUP = "Api.AccessTokenCleanup";
+	String API_NOTIFICATION_PROCESS = "Api.NotificationProcess";
+	
 	String WORKER_ACCESS_TOKEN_ID = "Module.Worker.AccessToken";
 	
-	String API_ACCESSTOKEN_CLEANUP = "Api.AccessToken.Cleanup";
-	String API_NOTIFICATION_PROCESS = "Api.Notification.Process";
+	String SERVICE_ACCOUNT_FIREBASE = "ServiceAccount.Firebase.Key";
 	
 	String FACEBOOK_CREDENTIALS = "Facebook.Credentials";
 	
 	String FCM_SERVER_KEY = "Firebase.CloudMessaging.ServerKey";
-	
-	String FIREBASE_AUTH = "Firebase.Database.ServiceKey";
+
 	
 	String getId();
 	
