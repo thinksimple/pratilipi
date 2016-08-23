@@ -63,7 +63,7 @@ public class NotificationDataUtil {
 		} else if( userIdList.size() == 2 ) {
 			return ( plainText ? "" : "<b>" ) + users.get( userIdList.get( 1 ) ).getDisplayName() + ( plainText ? " " : "</b> " )
 					+ i18ns.get( "notification_and" ).getI18nString( notificationLanguage )
-					+ ( plainText ? "" : "<b>" ) + users.get( userIdList.get( 0 ) ).getDisplayName() + ( plainText ? " " : "</b> " )
+					+ ( plainText ? " " : " <b>" ) + users.get( userIdList.get( 0 ) ).getDisplayName() + ( plainText ? " " : "</b> " )
 					+ i18ns.get( "notification_have_followed" ).getI18nString( notificationLanguage );
 		} else if( userIdList.size() == 3 ) {
 			return ( plainText ? "" : "<b>" ) + users.get( userIdList.get( 2 ) ).getDisplayName() + ( plainText ? ", " : "</b>, " )

@@ -64,6 +64,7 @@ public class NotificationProcessApi extends GenericApi {
 			else
 				notification.setFcmResponse( notification.getFcmResponse() + "\n" + fcmResponse );
 			notificationListToPersist.add( notification );
+			
 		}
 		dataAccessor.createOrUpdateNotificationList( notificationListToPersist );
 
