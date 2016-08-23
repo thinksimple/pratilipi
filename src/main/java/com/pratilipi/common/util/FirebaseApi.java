@@ -30,7 +30,8 @@ public class FirebaseApi {
 	private static void initialiseFirebase() {
 
 		FirebaseOptions options = null;
-		String text = DataAccessorFactory.getDataAccessor().getAppProperty( AppProperty.FCM_SERVER_KEY ).getValue();
+		String text = DataAccessorFactory.getDataAccessor().getAppProperty( AppProperty.SERVICE_ACCOUNT_FIREBASE ).getValue();
+		logger.log( Level.INFO, "service account firebase json = " + text );
 		InputStream stream = new ByteArrayInputStream( text.getBytes( StandardCharsets.UTF_8 ) );
 
 		options = new FirebaseOptions.Builder()
