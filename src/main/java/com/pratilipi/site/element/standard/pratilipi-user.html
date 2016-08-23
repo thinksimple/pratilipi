@@ -39,10 +39,18 @@
 	 		is: 'pratilipi-user',
 
 	 		properties: {
-				user: { type: Object, notify: true },
+				user: { type: Object, notify: true, observer: "_userChanged" },
 				userData: { type: Object }
 			},
-			
+
+			_userChanged: function() {
+				if( !this.user.isGuest ) {
+					firebaseSignInWithCustomToken( this.user.userId, this.user.firebaseToken );
+				} else {
+					firebaseUnauth();
+				}
+			},
+
 			getCurrentUser: function() {
 				return this.user;
 			},
