@@ -11,7 +11,7 @@
 	${ resource }
 </#list>
 <link rel='import' href='http://0.ptlp.co/resource-all/pratilipi.polymer.elements.html'>
-<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?83'>
+<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?84'>
 
 <#-- Custom Stylesheet -->
 <link type="text/css" rel="stylesheet" href="/resources/style.css?64">
@@ -55,4 +55,48 @@
 			$( 'header' ).removeClass( 'nav-up' ).addClass( 'nav-down' );
 		lastScrollTop = st; 
 	};
+</script>
+
+<script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
+
+<script>
+
+	var config = {
+		apiKey: "AIzaSyAAnK0-vDmY1UEcrRRbCzXgdpF2oQn-E0w",
+		authDomain: "prod-pratilipi.firebaseapp.com",
+		databaseURL: "https://prod-pratilipi.firebaseio.com",
+		storageBucket: "prod-pratilipi.appspot.com",
+	};
+
+	var app = firebase.initializeApp( config );
+	var database = app.database();
+	var auth = app.auth();
+	var storage = app.storage();
+	var databaseRef = database.ref().child( "NOTIFICATION" );
+
+	function firebaseSignInWithCustomToken( userId, token ) {
+		firebase.auth().signInWithCustomToken( token ).catch( function( error ) {
+			var errorCode = error.code;
+			var errorMessage = error.message;
+			console.log( errorCode );
+			console.log( errorMessage );
+		});
+
+		var user  = databaseRef.child( userId );
+		user.on( 'value', function( snapshot ) {
+			var snapshot = snapshot.val();
+			console.log( snapshot );
+		} );
+	}
+
+	function firebaseUnauth() {
+		auth.signOut();
+	}
+
+	<#--
+	function writeData() {
+		databaseRef.push().set( { name: "name", message: "message" } );
+	}		
+	-->
+
 </script>
