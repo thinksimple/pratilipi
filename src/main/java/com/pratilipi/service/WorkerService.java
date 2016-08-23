@@ -2,6 +2,7 @@ package com.pratilipi.service;
 
 import com.pratilipi.api.ApiRegistry;
 import com.pratilipi.api.GenericService;
+import com.pratilipi.api.impl.accesstoken.AccessTokenCleanupApi;
 import com.pratilipi.api.impl.auditlog.AuditLogProcessApi;
 import com.pratilipi.api.impl.author.AuthorBackupApi;
 import com.pratilipi.api.impl.author.AuthorProcessApi;
@@ -11,6 +12,7 @@ import com.pratilipi.api.impl.pratilipi.PratilipiBackupApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiIdfApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiProcessApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiStatsApi;
+import com.pratilipi.api.impl.test.TestApi;
 import com.pratilipi.api.impl.user.UserBackupApi;
 import com.pratilipi.api.impl.user.UserEmailApi;
 import com.pratilipi.api.impl.user.UserFacebookValidationApi;
@@ -21,6 +23,8 @@ public class WorkerService extends GenericService {
 	
 	static {
 
+		ApiRegistry.register( TestApi.class );
+		
 		ApiRegistry.register( DebugApi.class );
 		
 		ApiRegistry.register( UserProcessApi.class );
@@ -28,6 +32,7 @@ public class WorkerService extends GenericService {
 		ApiRegistry.register( UserFacebookValidationApi.class );
 		ApiRegistry.register( UserBackupApi.class );
 		
+		ApiRegistry.register( AccessTokenCleanupApi.class );
 		ApiRegistry.register( AuditLogProcessApi.class );
 		
 		ApiRegistry.register( PratilipiProcessApi.class );

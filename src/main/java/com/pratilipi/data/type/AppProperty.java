@@ -4,6 +4,7 @@ public interface AppProperty extends GenericOfyType {
 	
 	String WORKER_ACCESS_TOKEN_ID = "Module.Worker.AccessToken";
 	
+	String API_ACCESSTOKEN_CLEANUP = "Api.AccessToken.Cleanup";
 	String API_NOTIFICATION_PROCESS = "Api.Notification.Process";
 	
 	String FACEBOOK_CREDENTIALS = "Facebook.Credentials";
