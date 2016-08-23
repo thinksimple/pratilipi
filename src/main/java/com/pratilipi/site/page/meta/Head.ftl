@@ -58,6 +58,7 @@
 	var auth = app.auth();
 	var storage = app.storage();
 	var databaseRef = database.ref().child( "NOTIFICATION" );
+	var node = null;
 
 	function firebaseSignInWithCustomToken( userId, token ) {
 		firebase.auth().signInWithCustomToken( token ).catch( function( error ) {
@@ -67,21 +68,22 @@
 			console.log( errorMessage );
 		});
 
-		var user  = databaseRef.child( userId );
-		user.on( 'value', function( snapshot ) {
-			var snapshot = snapshot.val();
-			console.log( snapshot );
-		} );
+		firebase.auth().onAuthStateChanged( function( user ) {
+			if( user ) {
+				node = databaseRef.child( userId );
+				node.on( 'value', function( snapshot ) {
+					var snapshot = snapshot.val();
+					//console.log( snapshot );
+				} );
+				<#-- node.set( { name: "name", message: "message" } ); -->
+			}
+		});
+
 	}
 
 	function firebaseUnauth() {
-		auth.signOut();
+		firebase.auth().signOut();
 	}
 
-	<#--
-	function writeData() {
-		databaseRef.push().set( { name: "name", message: "message" } );
-	}		
-	-->
 
 </script>
