@@ -39,8 +39,7 @@ public class NotificationEntity implements Notification {
 	@Index
 	private NotificationState STATE;
 	
-	@Index
-	private String FCM_MSG_ID;
+	private String FCM_RESPONSE;
 	
 	
 	@Index
@@ -184,13 +183,13 @@ public class NotificationEntity implements Notification {
 	}
 	
 	@Override
-	public String getFcmMsgId() {
-		return FCM_MSG_ID;
+	public String getFcmResponse() {
+		return FCM_RESPONSE;
 	}
 	
 	@Override
-	public void setFcmMsgId( String fcmMsgId ) {
-		this.FCM_MSG_ID = fcmMsgId;
+	public void setFcmResponse( String fcmResponse ) {
+		this.FCM_RESPONSE = fcmResponse;
 	}
 	
 	

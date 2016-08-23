@@ -1002,8 +1002,7 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 
 	@Override
-	public List<Notification> getNotificationListWithPendingFcm(
-			Integer resultCount) {
+	public DataListCursorTuple<Notification> getNotificationListOrderByLastUpdated( String cursor, Integer resultCount  ) {
 		// TODO Auto-generated method stub
 		return null;
 	}

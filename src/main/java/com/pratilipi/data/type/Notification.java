@@ -43,9 +43,9 @@ public interface Notification extends GenericOfyType {
 	
 	void setState( NotificationState state );
 
-	String getFcmMsgId();
+	String getFcmResponse();
 	
-	void setFcmMsgId( String fcmMsgId );
+	void setFcmResponse( String fcmResponse );
 	
 	
 	Date getCreationDate();

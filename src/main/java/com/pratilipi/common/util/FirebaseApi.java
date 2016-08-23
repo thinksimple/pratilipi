@@ -38,23 +38,23 @@ public class FirebaseApi {
 		notificationJson.addProperty( "body", message );
 		notificationJson.addProperty( "tag", tag );
 		notificationJson.addProperty( "sound", "default" );
+		notificationJson.addProperty( "icon", "ic_notification" );
 		
 		JsonObject bodyJson = new JsonObject();
 		bodyJson.add( "registration_ids", new Gson().toJsonTree( fcmTokenList ) );
 		bodyJson.add( "notification", notificationJson );
-	
+		
 		
 		String responsePayload = HttpUtil.doPost( CLOUD_MESSAGING_API_URL, headersMap, bodyJson );
-		JsonObject responseJson = new Gson().fromJson( responsePayload, JsonElement.class ).getAsJsonObject();
-		JsonObject resultJson = responseJson.get( "results" ).getAsJsonArray().get( 0 ).getAsJsonObject();
 		
-		// Firebase might return an error response.
-		if( resultJson.get( "error" ) != null ) {
-			logger.log( Level.SEVERE, "Firebase responded with an error message: " + resultJson.get( "error" ).getAsString() );
-			throw new UnexpectedServerException();
-		}
+		
+		// Firebase might return with one or more error responses.
+		for( JsonElement resultJson : new Gson().fromJson( responsePayload, JsonElement.class ).getAsJsonObject().get( "results" ).getAsJsonArray() )
+			if( resultJson.getAsJsonObject().get( "error" ) != null )
+				logger.log( Level.SEVERE, "Firebase responded with error: " + resultJson.getAsJsonObject().get( "error" ).getAsString() );
 
-		return resultJson.get( "message_id" ).getAsString();
+		
+		return responsePayload;
 		
 	}
 	

@@ -1727,14 +1727,38 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	@Override
-	public List<Notification> getNotificationListWithPendingFcm( Integer resultCount  ) {
-		Query<NotificationEntity> query = ObjectifyService.ofy().load().type( NotificationEntity.class );
-		query = query.filter( "STATE", NotificationState.UNREAD );
-		query = query.filter( "FCM_MSG_ID", null );
-		query = query.order( "LAST_UPDATED" );
+	public DataListCursorTuple<Notification> getNotificationListOrderByLastUpdated( String cursorStr, Integer resultCount  ) {
+		
+		Query<NotificationEntity> query = ObjectifyService.ofy().load()
+				.type( NotificationEntity.class )
+				.order( "LAST_UPDATED" );
+		
+		if( cursorStr != null )
+			query = query.startAt( Cursor.fromWebSafeString( cursorStr ) );
+		
 		if( resultCount != null )
 			query = query.limit( resultCount );
-		return new ArrayList<Notification>( query.list() );
+		
+		QueryResultIterator<NotificationEntity> iterator = query.iterator();
+
+		
+		// Notification List
+		ArrayList<Notification> notificationList = resultCount == null
+				? new ArrayList<Notification>()
+				: new ArrayList<Notification>( resultCount );
+		
+		while( iterator.hasNext() )
+			notificationList.add( iterator.next() );
+		
+		
+		// Cursor
+		Cursor cursor = iterator.getCursor();
+
+		
+		return new DataListCursorTuple<Notification>(
+				notificationList,
+				cursor == null ? null : cursor.toWebSafeString() );
+		
 	}
 	
 	@Override

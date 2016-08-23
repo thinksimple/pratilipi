@@ -27,28 +27,68 @@ import com.pratilipi.filter.UxModeFilter;
 
 public class NotificationDataUtil {
 	
+	private static final Map<String, I18n> i18ns;
+	
+	static {
+		List<I18n> i18nList = DataAccessorFactory.getDataAccessor().getI18nList( I18nGroup.NOTIFICATION );
+		i18ns = new HashMap<>( i18nList.size() );
+		for( I18n i18n : i18nList )
+			i18ns.put( i18n.getId(), i18n );
+	}
+	
+	
 	public static boolean hasAccessToListData( Long userId ) {
-		
 		return AccessTokenFilter.getAccessToken().getUserId().equals( userId );
-		
 	}
 	
 	
-	public static List<NotificationData> createNotificationDataList( List<Notification> notificationList )
-			throws UnexpectedServerException {
-		return createNotificationDataList( notificationList, null );
+	private static String createNotificationMessage( PratilipiData pratilipiData, Language language, boolean plainText ) { // NotificationType == PRATILIPI_ADD
+		String pratilipiTitle = pratilipiData.getTitle() == null
+				? pratilipiData.getTitleEn()
+				: pratilipiData.getTitle();
+		String authorName = pratilipiData.getAuthor().getName() == null
+				? pratilipiData.getAuthor().getNameEn()
+				: pratilipiData.getAuthor().getName();
+		return ( plainText ? "" : "<b>" ) + authorName + ( plainText ? " " : "</b> " )
+				+ i18ns.get( "notification_has_published" ).getI18nString( language )
+				+ ( plainText ? " " : " </b>" ) + pratilipiTitle + ( plainText ? "" : "</b> " );
 	}
 	
-	public static List<NotificationData> createNotificationDataList( List<Notification> notificationList, Language language )
+	private static String createNotificationMessage( List<Long> userIdList, Map<Long, UserData> users, Language notificationLanguage, boolean plainText ) { // NotificationType == AUTHOR_FOLLOW
+		if( userIdList.size() == 0 ) {
+			return null;
+		} else if( userIdList.size() == 1 ) {
+			return ( plainText ? "" : "<b>" ) + users.get( userIdList.get( 0 ) ).getDisplayName() + ( plainText ? " " : "</b> " )
+					+ i18ns.get( "notification_has_followed" ).getI18nString( notificationLanguage );
+		} else if( userIdList.size() == 2 ) {
+			return ( plainText ? "" : "<b>" ) + users.get( userIdList.get( 1 ) ).getDisplayName() + ( plainText ? " " : "</b> " )
+					+ i18ns.get( "notification_and" ).getI18nString( notificationLanguage )
+					+ ( plainText ? "" : "<b>" ) + users.get( userIdList.get( 0 ) ).getDisplayName() + ( plainText ? " " : "</b> " )
+					+ i18ns.get( "notification_have_followed" ).getI18nString( notificationLanguage );
+		} else if( userIdList.size() == 3 ) {
+			return ( plainText ? "" : "<b>" ) + users.get( userIdList.get( 2 ) ).getDisplayName() + ( plainText ? ", " : "</b>, " )
+					+ ( plainText ? "" : "<b>" ) + users.get( userIdList.get( 1 ) ).getDisplayName() + ( plainText ? " " : "</b> " )
+					+ i18ns.get( "notification_and" ).getI18nString( notificationLanguage )
+					+ ( plainText ? " " : " <b>" ) + users.get( userIdList.get( 0 ) ).getDisplayName() + ( plainText ? " " : "</b> " )
+					+ i18ns.get( "notification_have_followed" ).getI18nString( notificationLanguage );
+		} else {
+			return ( plainText ? "" : "<b>" ) + users.get( userIdList.get( userIdList.size() - 1 ) ).getDisplayName() + ( plainText ? ", " : "</b>, " )
+					+ ( plainText ? "" : "<b>" ) + users.get( userIdList.get( userIdList.size() - 2 ) ).getDisplayName() + ( plainText ? " " : "</b> " )
+					+ i18ns.get( "notification_and" ).getI18nString( notificationLanguage )
+					+ " " + ( userIdList.size() - 2 ) + " "
+					+ i18ns.get( "notification_others_have_followed" ).getI18nString( notificationLanguage );
+		}
+	}
+	
+	
+	public static List<NotificationData> createNotificationDataList( List<Notification> notificationList, Language language, boolean plainText )
 			throws UnexpectedServerException {
-		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		
 		
 		// Pre-fetching required User and Pratilipi Entities
 		List<Long> userIdList = new LinkedList<>();
 		List<Long> pratilipiIdList = new LinkedList<>();
 		for( Notification notification : notificationList ) {
+			userIdList.add( notification.getUserId() );
 			if( notification.getType() == NotificationType.PRATILIPI_ADD ) {
 				pratilipiIdList.add( notification.getSourceIdLong() );
 			} else if( notification.getType() == NotificationType.AUTHOR_FOLLOW ) {
@@ -65,13 +105,6 @@ public class NotificationDataUtil {
 		for( PratilipiData pratilipiData : pratilipiDataList )
 			pratilipis.put( pratilipiData.getId(), pratilipiData );
 
-		
-		// Fetching string translations
-		List<I18n> i18nList = dataAccessor.getI18nList( I18nGroup.NOTIFICATION );
-		Map<String, I18n> i18ns = new HashMap<>( i18nList.size() );
-		for( I18n i18n : i18nList )
-			i18ns.put( i18n.getId(), i18n );
-		
 		
 		// Creating Notification Data list
 		List<NotificationData> notificationDataList = new ArrayList<>( notificationList.size() );
@@ -90,52 +123,13 @@ public class NotificationDataUtil {
 				
 				PratilipiData pratilipiData = pratilipis.get( notification.getSourceIdLong() );
 				if( pratilipiData.getState() ==  PratilipiState.PUBLISHED ) {
-					String pratilipiTitle = pratilipiData.getTitle() == null
-							? pratilipiData.getTitleEn()
-							: pratilipiData.getTitle();
-					String authorName = pratilipiData.getAuthor().getName() == null
-							? pratilipiData.getAuthor().getNameEn()
-							: pratilipiData.getAuthor().getName();
-					notificationData.setMessage(
-							"<b>" + authorName + "</b> "
-							+ i18ns.get( "notification_has_published" ).getI18nString( notificationLanguage )
-							+ " <b>" + pratilipiTitle + "</b>" );
-					notificationData.setSourceUrl(
-							pratilipiData.getPageUrl()
-							+ "?" + RequestParameter.NOTIFICATION_ID.getName()
-							+ "=" + notification.getId() );
+					notificationData.setMessage( createNotificationMessage( pratilipiData, notificationLanguage, plainText ) );
+					notificationData.setSourceUrl( pratilipiData.getPageUrl() + "?" + RequestParameter.NOTIFICATION_ID.getName() + "=" + notification.getId() );
 				}
 			
 			} else 	if( notification.getType() == NotificationType.AUTHOR_FOLLOW ) {
 				
-				if( notification.getDataIds().size() == 0 ) {
-					// Do nothing
-				} else if( notification.getDataIds().size() == 1 ) {
-					notificationData.setMessage(
-							"<b>" + users.get( notification.getDataIds().get( 0 ) ).getDisplayName() + "</b> "
-							+ i18ns.get( "notification_has_followed" ).getI18nString( notificationLanguage ) );
-				} else if( notification.getDataIds().size() == 2 ) {
-					notificationData.setMessage(
-							"<b>" + users.get( notification.getDataIds().get( 1 ) ).getDisplayName() + "</b> "
-							+ i18ns.get( "notification_and" ).getI18nString( notificationLanguage )
-							+ " <b>" + users.get( notification.getDataIds().get( 0 ) ).getDisplayName() + "</b> "
-							+ i18ns.get( "notification_have_followed" ).getI18nString( notificationLanguage ) );
-				} else if( notification.getDataIds().size() == 3 ) {
-					notificationData.setMessage(
-							"<b>" + users.get( notification.getDataIds().get( 2 ) ).getDisplayName() + "</b>, "
-							+ "<b>" + users.get( notification.getDataIds().get( 1 ) ).getDisplayName() + "</b> "
-							+ i18ns.get( "notification_and" ).getI18nString( notificationLanguage )
-							+ " <b>" + users.get( notification.getDataIds().get( 0 ) ).getDisplayName() + "</b> "
-							+ i18ns.get( "notification_have_followed" ).getI18nString( notificationLanguage ) );
-				} else {
-					notificationData.setMessage(
-							"<b>" + users.get( notification.getDataIds().get( notification.getDataIds().size() - 1 ) ).getDisplayName() + "</b>, "
-							+ "<b>" + users.get( notification.getDataIds().get( notification.getDataIds().size() - 2 ) ).getDisplayName() + "</b> "
-							+ i18ns.get( "notification_and" ).getI18nString( notificationLanguage )
-							+ " " + ( notification.getDataIds().size() - 2 ) + " "
-							+ i18ns.get( "notification_others_have_followed" ).getI18nString( notificationLanguage ) );
-				}
-				
+				notificationData.setMessage( createNotificationMessage( notification.getDataIds(), users, notificationLanguage, plainText ) );
 				notificationData.setSourceUrl( "/followers?" + RequestParameter.NOTIFICATION_ID.getName() + "=" + notification.getId() );
 			
 			}
@@ -180,7 +174,7 @@ public class NotificationDataUtil {
 		
 		// Return
 		return new DataListCursorTuple<>(
-				createNotificationDataList( notificationListCursorTuple.getDataList(), UxModeFilter.getDisplayLanguage() ),
+				createNotificationDataList( notificationListCursorTuple.getDataList(), UxModeFilter.getDisplayLanguage(), false ),
 				notificationListCursorTuple.getCursor() );
 		
 	}

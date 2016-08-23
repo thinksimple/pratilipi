@@ -1,6 +1,5 @@
 package com.pratilipi.api.impl.notification;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import com.pratilipi.api.GenericApi;
@@ -13,8 +12,12 @@ import com.pratilipi.common.type.NotificationState;
 import com.pratilipi.common.util.FirebaseApi;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.client.NotificationData;
+import com.pratilipi.data.type.AppProperty;
+import com.pratilipi.data.type.Notification;
 import com.pratilipi.data.util.NotificationDataUtil;
+
 
 @SuppressWarnings("serial")
 @Bind( uri = "/notification/process" )
@@ -24,28 +27,47 @@ public class NotificationProcessApi extends GenericApi {
 	public GenericResponse get( GenericRequest request ) throws UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+
+		// Fetching AppProperty
+		AppProperty appProperty = dataAccessor.getAppProperty( AppProperty.API_NOTIFICATION_PROCESS );
+		if( appProperty == null )
+			appProperty = dataAccessor.newAppProperty( AppProperty.API_NOTIFICATION_PROCESS );
+
 		
-		List<Long> userIdList = new LinkedList<>();
-		userIdList.add( dataAccessor.getUserByEmail( "prashant@pratilipi.com" ).getId() );
-		userIdList.add( dataAccessor.getUserByEmail( "anuja@pratilipi.com" ).getId() );
-		userIdList.add( dataAccessor.getUserByEmail( "raghu@pratilipi.com" ).getId() );
+		DataListCursorTuple<Notification> notificationListCursorTuple = dataAccessor.getNotificationListOrderByLastUpdated( (String) appProperty.getValue(), 1000 );
+		List<Notification> notificationList = notificationListCursorTuple.getDataList();
+		List<NotificationData> notificationDataList = NotificationDataUtil.createNotificationDataList( notificationList, null, true );
 		
-		
-		List<NotificationData> notificationList = NotificationDataUtil.createNotificationDataList( dataAccessor.getNotificationListWithPendingFcm( 1000 ) );
-		for( NotificationData notification : notificationList ) {
-			if( ! userIdList.contains( notification.getUserId() ) )
-				continue;
+		for( int i = 0; i < notificationList.size(); i++ ) {
+			Notification notification = notificationList.get( i );
 			if( notification.getState() != NotificationState.UNREAD )
+				continue;
+			NotificationData notificationData = notificationDataList.get( i );
+			if( notificationData.getMessage() == null )
 				continue;
 			List<String> fcmTokenList = dataAccessor.getFcmTokenList( notification.getUserId() );
 			if( fcmTokenList.size() == 0 )
 				continue;
-			FirebaseApi.sendCloudMessage( fcmTokenList, notification.getMessage(), notification.getId().toString() );
+			String fcmResponse = FirebaseApi.sendCloudMessage(
+					fcmTokenList,
+					notificationData.getMessage(),
+					notification.getId().toString() );
+			if( notification.getFcmResponse() == null )
+				notification.setFcmResponse( fcmResponse );
+			else
+				notification.setFcmResponse( notification.getFcmResponse() + "\n" + fcmResponse );
 		}
 
+		
+		// Updating AppProperty
+		if( notificationList.size() > 0 ) {
+			appProperty.setValue( notificationListCursorTuple.getCursor() );
+			dataAccessor.createOrUpdateAppProperty( appProperty );
+		}
+		
+		
 		return new GenericResponse();
 		
 	}
-	
 	
 }

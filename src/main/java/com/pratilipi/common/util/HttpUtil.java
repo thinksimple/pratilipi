@@ -12,6 +12,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Level;
@@ -123,7 +124,7 @@ public class HttpUtil {
 		
 		try {
 			// Forming request parameters
-			byte[] body = jsonBody.toString().getBytes();
+			byte[] body = jsonBody.toString().getBytes( Charset.forName( "UTF-8" ) );
 			
 			// Create connection
 			URL url = new URL( targetURL );
@@ -146,7 +147,7 @@ public class HttpUtil {
 			outputStream.close();
 			
 			// Response
-			logger.log( Level.INFO, "Http POST Request: " + targetURL );
+			logger.log( Level.INFO, "Http POST Request: " + targetURL + " " + jsonBody );
 
 			return _processPostResponse( connection );
 		
