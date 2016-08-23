@@ -31,6 +31,7 @@ public class FirebaseApi {
 
 		FirebaseOptions options = null;
 		String text = DataAccessorFactory.getDataAccessor().getAppProperty( AppProperty.SERVICE_ACCOUNT_FIREBASE ).getValue();
+		text.replaceAll( "\n", "\\n" );
 		logger.log( Level.INFO, "service account firebase json = " + text );
 		InputStream stream = new ByteArrayInputStream( text.getBytes( StandardCharsets.UTF_8 ) );
 
