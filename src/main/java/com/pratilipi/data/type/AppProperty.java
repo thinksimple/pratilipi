@@ -8,7 +8,7 @@ public interface AppProperty extends GenericOfyType {
 	
 	String FCM_SERVER_KEY = "Firebase.CloudMessaging.ServerKey";
 	
-	
+	String FIREBASE_AUTH = "Firebase.Database.ServiceKey";
 	
 	String getId();
 	

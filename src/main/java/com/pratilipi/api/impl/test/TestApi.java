@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
+import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
@@ -15,6 +16,7 @@ import com.pratilipi.common.type.Language;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.type.AccessToken;
+import com.pratilipi.data.type.AppProperty;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/test" )
@@ -33,6 +35,10 @@ public class TestApi extends GenericApi {
 		String str;
 	}
 	
+	public static class PostRequest extends GenericRequest { 
+		String str;
+	}
+
 	public static class Response extends GenericResponse {
 		
 		String msg;
@@ -199,6 +205,15 @@ public class TestApi extends GenericApi {
 		
 		return new GenericResponse();
 		
+	}
+	
+	@Post
+	public GenericResponse post( PostRequest request ) {
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		AppProperty appProperty = dataAccessor.newAppProperty( AppProperty.FIREBASE_AUTH );
+		appProperty.setValue( request.str );
+		dataAccessor.createOrUpdateAppProperty( appProperty );
+		return new GenericResponse();
 	}
 	
 }
