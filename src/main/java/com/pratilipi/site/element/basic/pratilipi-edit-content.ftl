@@ -53,9 +53,7 @@
             		language: "${ pratilipi.getLanguage() }",
             		summary: form.find("#summary").val(),	            		
 	               },
-            success:function(data){
-            	console.log(response);
-            	console.log(typeof response);
+            success:function(response){
             	
             	var parsed_data = jQuery.parseJSON( response );
             	console.log(parsed_data);
@@ -66,30 +64,10 @@
 				alert(message);
             }
         });
-	}
-	function getUrlParameters() {
-		var str = decodeURI( location.search.substring(1) ), 
-			res = str.split("&"), 
-			retObj = {};
-		for( var i = 0; i < res.length; i++ ){
-			var key = res[i].substring( 0, res[i].indexOf( '=' ) );
-			var value = res[i].substring( res[i].indexOf( '=' ) + 1 );
-			retObj[ key ] = value;
-		}
-		if( retObj[""] != null ) delete retObj[""];
-		return retObj;
-	}
-	    
-	function redirectToPreviousPage() {
-		var retUrl = getUrlParameters().ret;
-		if(  retUrl != null )
-			window.location.href = retUrl;
-		else
-			window.location.href = "/"; 		
 	}	
 </script>
 <div class="pratilipi-shadow secondary-500 box">
-		<button class="pull-left pratilipi-grey-button pratilipi-without-margin" onclick="redirectToPreviousPage()" ><img style="width:16px;height:16px;" src="http://0.ptlp.co/resource-all/icon/svg/cross.svg"></button>
+		<a href="${ pratilipi.getPageUrl() }" class="pull-left pratilipi-grey-button pratilipi-without-margin" ><img style="width:16px;height:16px;" src="http://0.ptlp.co/resource-all/icon/svg/cross.svg"></a>
 		<button class="pull-right pratilipi-red-button pratilipi-without-margin" onclick="validateSettingsForm()"><img style="width:16px;height:16px;" src="http://0.ptlp.co/resource-all/icon/svg/checkmark-red.svg"></button>
 		<h3 class="text-center pratilipi-red" style="margin-top: 10px;"> ${ _strings.pratilipi_edit_info } </h3>
 </div>

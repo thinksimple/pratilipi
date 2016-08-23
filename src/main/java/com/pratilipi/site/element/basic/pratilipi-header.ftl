@@ -64,8 +64,6 @@
 			var $select = $("#select-language");
 			var language_map = ${ languageMap };
 			$.each(language_map, function( key, value ) {
-			  console.log(key);
-			  console.log(value);
 			  	var $option = $("<option>",{
 			  		value: key.toLowerCase(),
 			  	}).html(value);
@@ -75,7 +73,6 @@
 		generateLanguageOptions();
 	});
 	$( "#select-language" ).change(function() {
-		console.log(this);
 		var $this = $(this);
 		window.location = ( "http://" + $this.val() + ".pratilipi.com" );
 		

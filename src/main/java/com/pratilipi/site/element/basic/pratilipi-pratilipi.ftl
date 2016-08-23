@@ -82,7 +82,11 @@
 </script>
 
 <div class="secondary-500 pratilipi-shadow box text-center">
-	<h2 class="pratilipi-red">${ pratilipi.title!pratilipi.titleEn }</h2>
+	<h2 class="pratilipi-red" style="position: relative;">${ pratilipi.title!pratilipi.titleEn }
+		<#if pratilipi.hasAccessToUpdate()==true >
+			<a href="?action=edit_content"><img src="http://0.ptlp.co/resource-all/icon/svg/cog.svg" style="position: absolute;right: 20px;width: 20px;height: 25px;top: 15px;"></a>
+		</#if>
+	</h2>
 	
 	<#if pratilipi.author?? >
 		<a href="${ pratilipi.author.pageUrl }"><h4>${ pratilipi.author.name }</h4></a>
@@ -96,8 +100,6 @@
 			</div>
 		</#if>
 	</div>
-	<div class="fb-like" data-layout="button" data-action="like" data-show-faces="false" data-share="false"></div>
-	<p style="text-align: center;margin: 10px 0 0 0;">${ pratilipi.getFbLikeShareCount() } ${ _strings.pratilipi_count_likes }</p>
 	<#if pratilipi.ratingCount gt 0 >
 		<a <#if user.isGuest == true>href="/login?ret=${ pratilipi.getPageUrl() }?review=write"<#else>href="?review=write"</#if> >
 			<#assign rating=pratilipi.averageRating >
