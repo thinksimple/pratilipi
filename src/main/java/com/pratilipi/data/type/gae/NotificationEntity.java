@@ -148,8 +148,7 @@ public class NotificationEntity implements Notification {
 	public void removeDataId( Long dataId, Long auditLogId ) {
 		
 		if( this.DATA_IDS == null ) {
-			this.DATA_IDS = new ArrayList<>( 1 );
-			this.DATA_IDS.add( dataId );
+			// Do Nothing !
 		} else if( this.DATA_IDS.contains( dataId ) ) {
 			this.DATA_IDS.remove( dataId );
 		} else {
