@@ -1,5 +1,6 @@
 package com.pratilipi.api.impl.notification;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.pratilipi.api.GenericApi;
@@ -37,26 +38,34 @@ public class NotificationProcessApi extends GenericApi {
 		DataListCursorTuple<Notification> notificationListCursorTuple = dataAccessor.getNotificationListOrderByLastUpdated( (String) appProperty.getValue(), 1000 );
 		List<Notification> notificationList = notificationListCursorTuple.getDataList();
 		List<NotificationData> notificationDataList = NotificationDataUtil.createNotificationDataList( notificationList, null, true );
-		
+
+		List<Notification> notificationListToPersist = new ArrayList<>( notificationList.size() );
 		for( int i = 0; i < notificationList.size(); i++ ) {
+			
 			Notification notification = notificationList.get( i );
+			NotificationData notificationData = notificationDataList.get( i );
+			
 			if( notification.getState() != NotificationState.UNREAD )
 				continue;
-			NotificationData notificationData = notificationDataList.get( i );
 			if( notificationData.getMessage() == null )
 				continue;
+			
 			List<String> fcmTokenList = dataAccessor.getFcmTokenList( notification.getUserId() );
 			if( fcmTokenList.size() == 0 )
 				continue;
+			
 			String fcmResponse = FirebaseApi.sendCloudMessage(
 					fcmTokenList,
 					notificationData.getMessage(),
 					notification.getId().toString() );
+			
 			if( notification.getFcmResponse() == null )
 				notification.setFcmResponse( fcmResponse );
 			else
 				notification.setFcmResponse( notification.getFcmResponse() + "\n" + fcmResponse );
+			notificationListToPersist.add( notification );
 		}
+		dataAccessor.createOrUpdateNotificationList( notificationListToPersist );
 
 		
 		// Updating AppProperty
