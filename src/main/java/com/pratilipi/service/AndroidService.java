@@ -22,6 +22,7 @@ import com.pratilipi.api.impl.user.UserLoginFacebookApi;
 import com.pratilipi.api.impl.user.UserLogoutApi;
 import com.pratilipi.api.impl.user.UserPasswordUpdateApi;
 import com.pratilipi.api.impl.user.UserRegisterApi;
+import com.pratilipi.api.impl.userauthor.UserAuthorApi;
 import com.pratilipi.api.impl.userauthor.UserAuthorFollowApi;
 import com.pratilipi.api.impl.userauthor.UserAuthorFollowListApi;
 import com.pratilipi.api.impl.userpratilipi.UserPratilipiApi;
@@ -63,6 +64,7 @@ public class AndroidService extends GenericService {
 		ApiRegistry.register( UserPratilipiReviewApi.class );
 		ApiRegistry.register( UserPratilipiReviewListApi.class );
 
+		ApiRegistry.register( UserAuthorApi.class );
 		ApiRegistry.register( UserAuthorFollowApi.class );
 		ApiRegistry.register( UserAuthorFollowListApi.class );
 
