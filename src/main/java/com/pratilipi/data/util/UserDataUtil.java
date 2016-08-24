@@ -20,7 +20,6 @@ import com.pratilipi.common.type.UserCampaign;
 import com.pratilipi.common.type.UserSignUpSource;
 import com.pratilipi.common.type.UserState;
 import com.pratilipi.common.util.FacebookApi;
-import com.pratilipi.common.util.FirebaseApi;
 import com.pratilipi.common.util.PasswordUtil;
 import com.pratilipi.common.util.UserAccessUtil;
 import com.pratilipi.data.DataAccessor;
@@ -135,7 +134,6 @@ public class UserDataUtil {
 		userData.setState( user.getState() );
 		userData.setSignUpDate( user.getSignUpDate() );
 		userData.setFollowCount( user.getFollowCount() );
-		userData.setFirebaseToken( user.getFirebaseToken() );
 		
 		if( author != null ) {
 			
@@ -455,11 +453,6 @@ public class UserDataUtil {
 		accessToken.setUserId( user.getId() );
 		accessToken.setLogInDate( new Date() );
 		accessToken = DataAccessorFactory.getDataAccessor().createOrUpdateAccessToken( accessToken );
-
-		if( user.getFirebaseToken() == null ) {
-			user.setFirebaseToken( FirebaseApi.getCustomTokenForUser( user.getId() ) );
-			DataAccessorFactory.getDataAccessor().createOrUpdateUser( user );
-		}
 
 		/*
 		while( true ) { 
