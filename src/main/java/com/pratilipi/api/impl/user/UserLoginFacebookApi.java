@@ -7,8 +7,8 @@ import java.util.List;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Post;
-import com.pratilipi.api.impl.user.shared.GenericUserResponse;
-import com.pratilipi.api.impl.user.shared.PostUserLoginFacebookRequest;
+import com.pratilipi.api.annotation.Validate;
+import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -24,8 +24,20 @@ import com.pratilipi.taskqueue.TaskQueueFactory;
 @Bind( uri= "/user/login/facebook" )  
 public class UserLoginFacebookApi extends GenericApi {
 	
+	public static class PostRequest extends GenericRequest {
+		
+		@Validate( required = true )
+		private String fbUserAccessToken;
+		
+		
+		public String getFbUserAccessToken() {
+			return this.fbUserAccessToken;
+		}
+
+	}
+	
 	@Post
-	public GenericUserResponse post( PostUserLoginFacebookRequest request )
+	public UserApi.Response post( PostRequest request )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 		
 		UserData userData = UserDataUtil.loginUser(
@@ -63,7 +75,7 @@ public class UserLoginFacebookApi extends GenericApi {
 		TaskQueueFactory.getUserTaskQueue().addAll( taskList );
 
 		
-		return new GenericUserResponse( userData );
+		return new UserApi.Response( userData, UserLoginFacebookApi.class );
 	
 	}
 

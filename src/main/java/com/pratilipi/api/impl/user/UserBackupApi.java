@@ -14,7 +14,7 @@ import com.google.gson.GsonBuilder;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
-import com.pratilipi.api.impl.user.shared.GetUserBackupRequest;
+import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.util.GsonIstDateAdapter;
@@ -37,8 +37,18 @@ public class UserBackupApi extends GenericApi {
 	private static final String LINE_SEPARATOR = "\n";
 	
 	
+	public static class GetRequest extends GenericRequest {
+		
+		private Boolean generateCsv;
+			
+		public boolean generateCsv() {
+			return generateCsv == null ? false : generateCsv;
+		}
+		
+	}
+	
 	@Get
-	public GenericResponse get( GetUserBackupRequest request ) throws UnexpectedServerException {
+	public GenericResponse get( GetRequest request ) throws UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessorBackup();

@@ -51,6 +51,7 @@ public class UserData implements Serializable {
 
 	private Boolean following;
 
+	
 	private String firebaseToken;
 
 	

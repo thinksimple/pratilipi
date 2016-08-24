@@ -3,8 +3,8 @@ package com.pratilipi.api.impl.user;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Post;
-import com.pratilipi.api.impl.user.shared.GenericUserResponse;
-import com.pratilipi.api.impl.user.shared.PostUserRegisterRequest;
+import com.pratilipi.api.annotation.Validate;
+import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -19,8 +19,35 @@ import com.pratilipi.taskqueue.TaskQueueFactory;
 @Bind( uri= "/user/register" )
 public class UserRegisterApi extends GenericApi {
 
+	public static class PostRequest extends GenericRequest {
+
+		@Validate( required = true, requiredErrMsg = ERR_NAME_REQUIRED )
+		private String name;
+
+		@Validate( required = true, requiredErrMsg = ERR_EMAIL_REQUIRED, regEx = REGEX_EMAIL, regExErrMsg = ERR_EMAIL_INVALID )
+		private String email;
+
+		@Validate( required = true, requiredErrMsg = ERR_PASSWORD_REQUIRED, regEx = REGEX_PASSWORD, regExErrMsg = ERR_PASSWORD_INVALID )
+		private String password;
+
+		
+		public String getName() {
+			return name;
+		}
+
+		public String getEmail() {
+			return email;
+		}
+
+		public String getPassword() {
+			return password;
+		}
+		
+	}
+	
+	
 	@Post
-	public GenericUserResponse post( PostUserRegisterRequest request )
+	public UserApi.Response post( PostRequest request )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
 		String firstName = request.getName().trim();
@@ -61,7 +88,7 @@ public class UserRegisterApi extends GenericApi {
 		TaskQueueFactory.getUserTaskQueue().addAll( task1, task2, task3 );
 
 		
-		return new GenericUserResponse( userData );
+		return new UserApi.Response( userData, UserRegisterApi.class );
 		
 	}
 	

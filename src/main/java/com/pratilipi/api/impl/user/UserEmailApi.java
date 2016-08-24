@@ -4,7 +4,7 @@ import com.google.gson.JsonObject;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Post;
-import com.pratilipi.api.impl.user.shared.PostUserEmailRequest;
+import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
@@ -18,8 +18,58 @@ import com.pratilipi.filter.UxModeFilter;
 @Bind( uri= "/user/email" )
 public class UserEmailApi extends GenericApi {
 	
+	public static class PostRequest extends GenericRequest {
+		
+		@Validate( minLong = 1L )
+		private Long userId;
+		
+		@Validate( regEx = REGEX_EMAIL, regExErrMsg = ERR_EMAIL_INVALID )
+		private String email;
+		
+		private Language language;
+		
+		private Boolean sendWelcomeMail;
+		
+		private Boolean sendEmailVerificationMail;
+		
+		private Boolean sendPasswordResetMail;
+		
+		private Boolean sendBirthdayMail;
+
+		
+		public Long getUserId() {
+			return userId;
+		}
+		
+		public String getEmail() {
+			return email;
+		}
+		
+		public Language getLanguage() {
+			return language;
+		}
+		
+		public boolean sendWelcomeMail() {
+			return sendWelcomeMail == null ? false : sendWelcomeMail;
+		}
+		
+		public boolean sendEmailVerificationMail() {
+			return sendEmailVerificationMail == null ? false : sendEmailVerificationMail;
+		}
+		
+		public boolean sendPasswordResetMail() { 
+			return sendPasswordResetMail == null ? false : sendPasswordResetMail;
+		}
+		
+		public boolean sendBirthdayMail() {
+			return sendBirthdayMail == null ? false : sendBirthdayMail;
+		}
+		
+	}
+	
+	
 	@Post
-	public GenericResponse post( PostUserEmailRequest request )
+	public GenericResponse post( PostRequest request )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
 		JsonObject errorMessages = new JsonObject();

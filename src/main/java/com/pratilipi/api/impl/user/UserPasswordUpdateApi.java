@@ -3,8 +3,7 @@ package com.pratilipi.api.impl.user;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Post;
-import com.pratilipi.api.impl.user.shared.GenericUserResponse;
-import com.pratilipi.api.impl.user.shared.PostUserPasswordUpdateRequest;
+import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
@@ -15,8 +14,40 @@ import com.pratilipi.data.util.UserDataUtil;
 @Bind( uri= "/user/passwordupdate" )
 public class UserPasswordUpdateApi extends GenericApi {
 	
+	public static class PostRequest extends GenericRequest {
+		
+		@Validate( regEx = REGEX_EMAIL )
+		private String email;
+		
+		private String verificationToken;
+		
+		private String password;
+		
+		@Validate( required = true, requiredErrMsg = ERR_PASSWORD_REQUIRED, regEx = REGEX_PASSWORD, regExErrMsg = ERR_PASSWORD_INVALID )
+		private String newPassword;
+		
+		
+		public String getEmail() {
+			return email;
+		}
+		
+		public String getVerificationToken() {
+			return verificationToken;
+		}
+		
+		public String getPassword() {
+			return password;
+		}
+		
+		public String getNewPassword() {
+			return newPassword;
+		}
+		
+	}
+	
+	
 	@Post
-	public GenericUserResponse post( PostUserPasswordUpdateRequest request )
+	public UserApi.Response post( PostRequest request )
 			throws InvalidArgumentException, InsufficientAccessException {
 		
 		UserData userData;
@@ -35,7 +66,7 @@ public class UserPasswordUpdateApi extends GenericApi {
 			throw new InvalidArgumentException( GenericRequest.ERR_INSUFFICIENT_ARGS );
 		}
 		
-		return new GenericUserResponse( userData );
+		return new UserApi.Response( userData, UserPasswordUpdateApi.class );
 		
 	}
 	

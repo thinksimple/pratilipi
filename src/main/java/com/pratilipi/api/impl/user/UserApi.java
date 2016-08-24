@@ -6,15 +6,15 @@ import java.util.List;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Post;
+import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.impl.author.AuthorApi;
 import com.pratilipi.api.impl.author.AuthorListApi;
 import com.pratilipi.api.impl.blogpost.BlogPostApi;
 import com.pratilipi.api.impl.blogpost.BlogPostListApi;
 import com.pratilipi.api.impl.comment.CommentApi;
-import com.pratilipi.api.impl.user.shared.GenericUserResponse;
-import com.pratilipi.api.impl.user.shared.PostUserRequest;
 import com.pratilipi.api.impl.userauthor.UserAuthorFollowListApi;
 import com.pratilipi.api.impl.userpratilipi.UserPratilipiApi;
+import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.type.UserState;
@@ -30,16 +30,65 @@ import com.pratilipi.taskqueue.TaskQueueFactory;
 @Bind( uri= "/user" )
 public class UserApi extends GenericApi {
 
+	public static class PostRequest extends GenericRequest {
+
+		@Validate( minLong = 1L )
+		private Long userId;
+		
+		private String name;
+		private boolean hasName;
+		
+		@Validate( regEx = REGEX_EMAIL, regExErrMsg = ERR_EMAIL_INVALID )
+		private String email;
+		private boolean hasEmail;
+		
+		@Validate( regEx = REGEX_PHONE, regExErrMsg = ERR_PHONE_INVALID )
+		private String phone;
+		private boolean hasPhone;
+		
+		
+		public Long getId() {
+			return userId;
+		}
+		
+		public String getName() {
+			return name;
+		}
+		
+		public boolean hasName() {
+			return hasName;
+		}
+
+		public String getEmail() {
+			return email;
+		}
+		
+		public boolean hasEmail() {
+			return hasEmail;
+		}
+		
+		public String getPhone() {
+			return phone;
+		}
+		
+		public boolean hasPhone() {
+			return hasPhone;
+		}
+		
+	}
+	
+	@SuppressWarnings("unused")
 	public static class Response {
 		
 		private Long userId;
+		@Deprecated
+		private Long authorId;
 		private AuthorApi.Response author;
 		private String displayName;
 		private String email;
 		private String phone;
 		private UserState state;
 
-		@Deprecated
 		private Boolean isGuest;
 		private Boolean isEmailVerified;
 		
@@ -49,13 +98,38 @@ public class UserApi extends GenericApi {
 		private Long followCount;
 		private Boolean following;
 		
+		private String firebaseToken;
+
 		
-		@SuppressWarnings("unused")
 		private Response() {}
+		
+		private Response( UserData userData ) {
+			this( userData, UserApi.class );
+		}
 		
 		public Response( UserData userData, Class<? extends GenericApi> clazz ) {
 			
-			if( clazz == AuthorApi.class ) {
+			if( clazz == UserApi.class
+					|| clazz == UserLoginApi.class || clazz == UserLoginFacebookApi.class
+					|| clazz == UserLogoutApi.class
+					|| clazz == UserRegisterApi.class
+					|| clazz == UserPasswordUpdateApi.class
+					|| clazz == UserVerificationApi.class ) {
+				
+				this.userId = userData.getId();
+				this.authorId = userData.getAuthor().getId();
+				this.author = new AuthorApi.Response( userData.getAuthor(), UserLoginApi.class );
+				this.displayName = userData.getDisplayName();
+				this.email = userData.getEmail();
+				this.phone = userData.getPhone();
+				this.state = userData.getState();
+				this.isGuest = userData.getState() == UserState.GUEST;
+				this.isEmailVerified = userData.getState() == UserState.ACTIVE;
+				this.profilePageUrl = userData.getProfilePageUrl();
+				this.profileImageUrl = userData.getProfileImageUrl();
+				this.firebaseToken = userData.getFirebaseToken();
+				
+			} else if( clazz == AuthorApi.class ) {
 				
 				this.userId = userData.getId();
 				
@@ -138,7 +212,7 @@ public class UserApi extends GenericApi {
 
 	
 	@Post
-	public GenericUserResponse post( PostUserRequest request )
+	public Response post( PostRequest request )
 			throws InvalidArgumentException, InsufficientAccessException {
 
 		UserData userData = new UserData( request.getId() );
@@ -212,7 +286,7 @@ public class UserApi extends GenericApi {
 		TaskQueueFactory.getAuthorTaskQueue().add( task );
 		
 		
-		return new GenericUserResponse( userData );
+		return new Response( userData );
 		
 	}
 	

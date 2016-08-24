@@ -34,8 +34,8 @@ import com.pratilipi.api.impl.event.EventListApi;
 import com.pratilipi.api.impl.notification.NotificationListApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiListApi;
+import com.pratilipi.api.impl.user.UserApi;
 import com.pratilipi.api.impl.user.UserNotifiedApi;
-import com.pratilipi.api.impl.user.shared.GenericUserResponse;
 import com.pratilipi.api.impl.userauthor.UserAuthorFollowApi;
 import com.pratilipi.api.impl.userauthor.UserAuthorFollowListApi;
 import com.pratilipi.api.impl.userpratilipi.UserPratilipiApi;
@@ -397,7 +397,7 @@ public class PratilipiSite extends HttpServlet {
 		
 		// Adding common data to the Data Model
 		UserData userData = UserDataUtil.getCurrentUser();
-		GenericUserResponse userResponse = new GenericUserResponse( userData );
+		UserApi.Response userResponse = new UserApi.Response( userData, UserApi.class );
 
 		Map<PratilipiType, Map<String, String>> pratilipiTypes = new HashMap<>();
 		for( PratilipiType pratilipiType : PratilipiType.values() ) {
