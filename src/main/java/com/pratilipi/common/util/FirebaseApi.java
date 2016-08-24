@@ -59,8 +59,9 @@ public class FirebaseApi {
 		notificationJson.addProperty( "body", message );
 		notificationJson.addProperty( "tag", tag );
 		notificationJson.addProperty( "sound", "default" );
-		notificationJson.addProperty( "icon", "ic_notification" );
-
+		notificationJson.addProperty( "icon", "pratilipi_icon" );
+		notificationJson.addProperty( "click_action", "OPEN_NOTIFICATION" );
+		
 		JsonObject bodyJson = new JsonObject();
 		bodyJson.add( "registration_ids", new Gson().toJsonTree( fcmTokenList ) );
 		bodyJson.add( "notification", notificationJson );
