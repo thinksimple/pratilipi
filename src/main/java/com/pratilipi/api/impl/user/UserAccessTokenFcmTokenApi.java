@@ -2,7 +2,7 @@ package com.pratilipi.api.impl.user;
 
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
-import com.pratilipi.api.annotation.Get;
+import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
@@ -13,7 +13,7 @@ import com.pratilipi.data.util.AccessTokenDataUtil;
 @Bind( uri= "/user/accesstoken/fcmtoken" )
 public class UserAccessTokenFcmTokenApi extends GenericApi {
 
-	public static class Request extends GenericRequest {
+	public static class PostRequest extends GenericRequest {
 		
 		@Validate( required = true )
 		private String fcmToken;
@@ -21,8 +21,8 @@ public class UserAccessTokenFcmTokenApi extends GenericApi {
 	}
 	
 	
-	@Get
-	public GenericResponse post( Request request ) throws InvalidArgumentException {
+	@Post
+	public GenericResponse post( PostRequest request ) throws InvalidArgumentException {
 		AccessTokenDataUtil.setFcmToken( request.fcmToken );
 		return new GenericResponse();
 	}
