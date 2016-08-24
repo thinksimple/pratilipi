@@ -45,9 +45,9 @@ public class NotificationProcessApi extends GenericApi {
 			Notification notification = notificationList.get( i );
 			NotificationData notificationData = notificationDataList.get( i );
 			
-			if( notification.getState() != NotificationState.UNREAD )
-				continue;
 			if( notificationData.getMessage() == null )
+				continue;
+			if( notification.getState() != NotificationState.UNREAD )
 				continue;
 			
 			List<String> fcmTokenList = dataAccessor.getFcmTokenList( notification.getUserId() );

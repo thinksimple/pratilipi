@@ -9,6 +9,7 @@ import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.impl.pratilipi.PratilipiApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiListApi;
 import com.pratilipi.api.impl.user.UserApi;
+import com.pratilipi.api.impl.user.UserLoginApi;
 import com.pratilipi.api.impl.userauthor.UserAuthorFollowListApi;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
@@ -266,7 +267,11 @@ public class AuthorApi extends GenericApi {
 		
 		public Response( AuthorData authorData, Class<? extends GenericApi> clazz ) {
 			
-			if( clazz == AuthorListApi.class ) {
+			if( clazz == UserLoginApi.class ) {
+				
+				this.authorId = authorData.getId();
+				
+			} else if( clazz == AuthorListApi.class ) {
 				
 				this.authorId = authorData.getId();
 				
