@@ -186,6 +186,26 @@ public class UserApi extends GenericApi {
 			return displayName;
 		}
 
+		public String getEmail() {
+			return email;
+		}
+
+		public String getPhone() {
+			return phone;
+		}
+
+		public UserState getState() {
+			return state;
+		}
+
+		public Boolean isGuest() {
+			return isGuest;
+		}
+
+		private Boolean isEmailVerified() {
+			return isEmailVerified;
+		}
+		
 		public String getProfilePageUrl() {
 			return profilePageUrl;
 		}
