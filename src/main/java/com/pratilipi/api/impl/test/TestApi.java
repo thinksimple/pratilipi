@@ -1,6 +1,7 @@
 package com.pratilipi.api.impl.test;
 
 import java.io.IOException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.pratilipi.api.GenericApi;
@@ -12,6 +13,8 @@ import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.Language;
+import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.type.AppProperty;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/test" )
@@ -184,6 +187,11 @@ public class TestApi extends GenericApi {
 					.addParam( "processContent", "true" ) );
 		TaskQueueFactory.getPratilipiOfflineTaskQueue().addAll( taskList );*/
 
+		String serviceAccountKey = DataAccessorFactory.getDataAccessor()
+				.getAppProperty( AppProperty.SERVICE_ACCOUNT_FIREBASE )
+				.getValue();
+		logger.log( Level.INFO, "Key = " + serviceAccountKey );
+		
 		
 		return new GenericResponse();
 		
