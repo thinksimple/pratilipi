@@ -11,7 +11,7 @@
 	${ resource }
 </#list>
 <link rel='import' href='http://0.ptlp.co/resource-all/pratilipi.polymer.elements.html'>
-<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?86'>
+<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?87'>
 
 <#-- Custom Stylesheet -->
 <link type="text/css" rel="stylesheet" href="/resources/style.css?64">
@@ -42,6 +42,8 @@
 	};
 </script>
 
+
+<#-- 
 <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
 
 <script>
@@ -76,7 +78,6 @@
 					var snapshot = snapshot.val();
 					console.log( snapshot );
 				} );
-				<#-- node.set( { name: "name", message: "message" } ); -->
 			}
 		});
 
@@ -88,3 +89,4 @@
 
 
 </script>
+-->

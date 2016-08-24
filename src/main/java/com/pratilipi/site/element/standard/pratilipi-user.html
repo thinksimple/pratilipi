@@ -44,11 +44,13 @@
 			},
 
 			_userChanged: function() {
+				<#--
 				if( !this.user.isGuest ) {
 					firebaseSignInWithCustomToken( this.user.userId, this.user.firebaseToken );
 				} else {
 					firebaseUnauth();
 				}
+				-->
 			},
 
 			getCurrentUser: function() {
