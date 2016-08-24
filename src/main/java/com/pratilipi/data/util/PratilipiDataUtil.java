@@ -1122,7 +1122,7 @@ public class PratilipiDataUtil {
 			throw new InsufficientAccessException();
 		
 		BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor()
-				.getBlob( "pratilipi/" + pratilipiId + "/content/" + name );
+				.getBlob( "pratilipi/" + pratilipiId + "/images/" + name );
 	
 		if( blobEntry == null )
 			blobEntry = DataAccessorFactory.getBlobAccessor()
