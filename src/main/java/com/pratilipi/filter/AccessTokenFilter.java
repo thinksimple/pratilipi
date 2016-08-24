@@ -18,6 +18,7 @@ import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.RequestCookie;
+import com.pratilipi.common.type.RequestHeader;
 import com.pratilipi.common.type.RequestParameter;
 import com.pratilipi.common.type.Website;
 import com.pratilipi.data.DataAccessor;
@@ -57,6 +58,7 @@ public class AccessTokenFilter implements Filter {
 		String requestUri = request.getRequestURI();
 		
 		String accessTokenId = request.getParameter( RequestParameter.ACCESS_TOKEN.getName() );
+		accessTokenId = accessTokenId == null ? null : accessTokenId.trim();
 		AccessToken accessToken;
 
 		if( autoGenerate ) { // Used by gamma, default & api modules.
@@ -94,7 +96,13 @@ public class AccessTokenFilter implements Filter {
 	
 		} else { // Used by gamma-android & android module.
 
-			if( accessTokenId == null ) {
+			// TODO: Consider only header. Ignore accessToken from request param.
+			if( accessTokenId == null || accessTokenId.isEmpty() ) {
+				accessTokenId = request.getHeader( RequestHeader.ACCESS_TOKEN.getName() );
+				accessTokenId = accessTokenId == null ? null : accessTokenId.trim();
+			}
+			
+			if( accessTokenId == null || accessTokenId.isEmpty() ) {
 				dispatchResposne( response, new InvalidArgumentException( "Access Token is missing." ) );
 				return;
 
@@ -133,7 +141,7 @@ public class AccessTokenFilter implements Filter {
 		if( cookies == null ) return null;
 		for( Cookie cookie : cookies ) {
 			if( cookie.getName().equals( cookieName ) )
-				return cookie.getValue();
+				return cookie.getValue().trim();
 		}
 		return null;
 	}
