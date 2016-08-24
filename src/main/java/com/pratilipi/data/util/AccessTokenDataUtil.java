@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.type.AccessToken;
+import com.pratilipi.filter.AccessTokenFilter;
 
 public class AccessTokenDataUtil {
 	
@@ -23,6 +24,16 @@ public class AccessTokenDataUtil {
 		
 		accessToken = dataAccessor.createOrUpdateAccessToken( accessToken );
 		return accessToken;
+	}
+	
+	
+	public static void setFcmToken( String fcmToken ) {
+		AccessToken accessToken = AccessTokenFilter.getAccessToken();
+		if( fcmToken.equals( accessToken.getFcmToken() ) )
+			return;
+		accessToken.setFcmToken( fcmToken );
+		accessToken = DataAccessorFactory.getDataAccessor()
+				.createOrUpdateAccessToken( accessToken );
 	}
 	
 }
