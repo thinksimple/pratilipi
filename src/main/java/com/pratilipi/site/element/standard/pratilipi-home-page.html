@@ -1,3 +1,6 @@
+<#if language != "ENGLISH">
+	<#include "pratilipi-${ language?lower_case }-carousel.html">
+</#if>
 <dom-module id="pratilipi-home-page">
 	<template>
 		<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>

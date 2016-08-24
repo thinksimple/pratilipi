@@ -4,7 +4,6 @@
 	<head>
 		<#assign mainPage="pratilipi-list-page">
 		<#include "meta/Head.ftl">
-		<link rel='import' href='/elements.${lang}/pratilipi-list-page.html?201608'>
 	</head>
 	
 	<body>
