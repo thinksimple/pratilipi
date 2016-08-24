@@ -19,13 +19,13 @@ public class SystemProperty {
 			DATASOURCE = "gae";
 			BLOBSERVICE_GCS_BUCKET = "static.pratilipi.com";
 			BLOBSERVICE_GCS_BUCKET_BACKUP = "backup.pratilipi.com";
-			CDN = "http://*.ptlp.co";
+			CDN = "http://0.ptlp.co";
 			STAGE = moduleId.equals( "gamma" ) || moduleId.equals( "gamma-android" ) ? "gamma" : "prod";
 		} else if( appId.equals( "devo-pratilipi" ) || appId.equals( "s~devo-pratilipi" ) ) {
 			DATASOURCE = "gae";
 			BLOBSERVICE_GCS_BUCKET = "devo-pratilipi.appspot.com";
 			BLOBSERVICE_GCS_BUCKET_BACKUP = "devo-pratilipi.appspot.com";
-			CDN = "http://*.devo.ptlp.co";
+			CDN = "http://0.devo.ptlp.co";
 			STAGE = "beta";
 		} else {
 			DATASOURCE = "mock";

@@ -9,8 +9,9 @@ public enum ThirdPartyResource {
 
 	ANGULARJS( "<script defer src='/third-party/angular-1.4.8/angular.min.js'></script>"),
 
-	BOOTSTRAP( "<script defer src='/third-party/bootstrap-3.3.4/js/bootstrap.min.js'></script>"
-			 + "<link rel='stylesheet' href='/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>" ),
+	BOOTSTRAP_CSS( "<link rel='stylesheet' href='/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>" ),
+
+	BOOTSTRAP_JS( "<script defer src='/third-party/bootstrap-3.3.4/js/bootstrap.min.js'></script>" ),
 
 	FONT_AWESOME( "<link rel='stylesheet' href='/third-party/font-awesome-4.3.0/css/font-awesome.min.css'>" ),
 
@@ -48,13 +49,13 @@ public enum ThirdPartyResource {
 
 			int indexSrc = tag.indexOf( "src='" );
 			if( indexSrc != -1 ) {
-				String domain = SystemProperty.CDN.replace( '*', tag.charAt( indexSrc + 18 ) );
+				String domain = SystemProperty.CDN;
 				tag = tag.replace( "src='", "src='" + domain );
 			}
 			
 			int indexHref = tag.indexOf( "href='" );
 			if( indexHref != -1 ) {
-				String domain = SystemProperty.CDN.replace( '*', tag.charAt( indexHref + 19 ) );
+				String domain = SystemProperty.CDN;
 				tag = tag.replace( "href='", "href='" + domain );
 			}
 			
