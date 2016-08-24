@@ -20,6 +20,7 @@ import com.pratilipi.common.type.UserCampaign;
 import com.pratilipi.common.type.UserSignUpSource;
 import com.pratilipi.common.type.UserState;
 import com.pratilipi.common.util.FacebookApi;
+import com.pratilipi.common.util.FirebaseApi;
 import com.pratilipi.common.util.PasswordUtil;
 import com.pratilipi.common.util.UserAccessUtil;
 import com.pratilipi.data.DataAccessor;
@@ -147,7 +148,7 @@ public class UserDataUtil {
 			userData.setDateOfBirth( authorData.getDateOfBirth() );
 			userData.setProfilePageUrl( authorData.getPageUrl() );
 			userData.setProfileImageUrl( authorData.getImageUrl() );
-			
+			userData.setFirebaseToken( FirebaseApi.getCustomTokenForUser( userData.getId() ) );
 		}
 		
 		return userData;
