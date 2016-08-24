@@ -11,7 +11,7 @@
 	${ resource }
 </#list>
 <link rel='import' href='http://0.ptlp.co/resource-all/pratilipi.polymer.elements.html'>
-<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?85'>
+<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?86'>
 
 <#-- Custom Stylesheet -->
 <link type="text/css" rel="stylesheet" href="/resources/style.css?64">
@@ -61,6 +61,7 @@
 	var node = null;
 
 	function firebaseSignInWithCustomToken( userId, token ) {
+		if( token == null ) return;
 		firebase.auth().signInWithCustomToken( token ).catch( function( error ) {
 			var errorCode = error.code;
 			var errorMessage = error.message;
@@ -73,7 +74,7 @@
 				node = databaseRef.child( userId );
 				node.on( 'value', function( snapshot ) {
 					var snapshot = snapshot.val();
-					//console.log( snapshot );
+					console.log( snapshot );
 				} );
 				<#-- node.set( { name: "name", message: "message" } ); -->
 			}

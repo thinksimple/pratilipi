@@ -42,7 +42,6 @@
 		var pratilipiTypes = ${ pratilipiTypesJson };
 		$( '#pratilipiType-${ pratilipi.getId()?c }' ).html( pratilipiTypes[ "${ pratilipi.getType() }" ].name );
 		$( '#creationDate-${ pratilipi.getId()?c }' ).html( "${ _strings.pratilipi_listing_date }&nbsp;&minus;&nbsp;" + convertDate( ${ pratilipi.getListingDateMillis()?c } ) );
-		$(".fb-like").attr( "data-href", window.location.href );
 		
 		<#if pratilipi.hasAccessToUpdate()==true >
 			$("#uploadPratilipiImageInput").hide();

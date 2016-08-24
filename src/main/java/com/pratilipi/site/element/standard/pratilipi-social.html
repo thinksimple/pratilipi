@@ -22,7 +22,7 @@
 	
 	<template>
 		<div style="position: absolute; margin-left: 0px;">
-			<div class="fb-like" data-href="{{ shareUrl }}" data-layout="button" data-action="like" data-show-faces="false" data-share="false"></div>
+			<div class="fb-like" data-href="{{ shareUrl }}" data-layout="button" data-action="like" data-size="small" data-show-faces="false" data-share="false"></div>
 			<template is="dom-if" if="{{ showLikeCount }}">
 				<div style="display: inline-block;
 							height: 20px;
@@ -85,7 +85,7 @@
 						var js, fjs = d.getElementsByTagName(s)[0];
 						if (d.getElementById(id)) return;
 						js = d.createElement(s); js.id = id;
-						js.src = "//connect.facebook.net/en_US/sdk.js";
+						js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.6";
 						fjs.parentNode.insertBefore(js, fjs);
 					}(document, 'script', 'facebook-jssdk'));
 				}
