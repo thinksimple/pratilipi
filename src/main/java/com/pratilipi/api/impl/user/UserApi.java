@@ -15,6 +15,7 @@ import com.pratilipi.api.impl.comment.CommentApi;
 import com.pratilipi.api.impl.userauthor.UserAuthorFollowListApi;
 import com.pratilipi.api.impl.userpratilipi.UserPratilipiApi;
 import com.pratilipi.api.shared.GenericRequest;
+import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.type.UserState;
@@ -78,7 +79,7 @@ public class UserApi extends GenericApi {
 	}
 	
 	@SuppressWarnings("unused")
-	public static class Response {
+	public static class Response extends GenericResponse {
 		
 		private Long userId;
 		@Deprecated

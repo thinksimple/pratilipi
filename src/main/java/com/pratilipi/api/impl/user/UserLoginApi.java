@@ -7,7 +7,6 @@ import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
-import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.util.UserDataUtil;
 
@@ -37,7 +36,7 @@ public class UserLoginApi extends GenericApi {
 	
 	@Post
 	public UserApi.Response post( Request request )
-			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
+			throws InvalidArgumentException, InsufficientAccessException {
 		
 		UserData userData = UserDataUtil.loginUser(
 				request.getEmail(),

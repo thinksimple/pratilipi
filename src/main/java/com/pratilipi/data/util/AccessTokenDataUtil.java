@@ -27,7 +27,7 @@ public class AccessTokenDataUtil {
 	}
 	
 	
-	public static void setFcmToken( String fcmToken ) {
+	public static void setOrUpdateFcmToken( String fcmToken ) {
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
 		if( fcmToken.equals( accessToken.getFcmToken() ) )
 			return;

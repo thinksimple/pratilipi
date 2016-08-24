@@ -23,7 +23,7 @@ public class UserAccessTokenFcmTokenApi extends GenericApi {
 	
 	@Post
 	public GenericResponse post( PostRequest request ) throws InvalidArgumentException {
-		AccessTokenDataUtil.setFcmToken( request.fcmToken );
+		AccessTokenDataUtil.setOrUpdateFcmToken( request.fcmToken );
 		return new GenericResponse();
 	}
 	
