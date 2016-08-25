@@ -5,24 +5,24 @@
 /most-read                         வாசகர் தேர்வு
 
 பிரிவுகள்
-/romance           காதல்
+/society           சமூகம்
 /cinema            சினிமா
+/family            இல்லறம்  / உறவு
+/self-help         சுயமுன்னேற்றம்
+/book-review       புத்தக விமர்சனம்
 /politics          அரசியல்
 /spiritual         ஆன்மீகம்
-/society           சமூகம்
 /horror            மர்மம் / திகில்
 /experience        அனுபவம்
-/self-help         சுயமுன்னேற்றம்
-/family            இல்லறம்  / உறவு
 /humour            நகைச்சுவை
 /history           வரலாறு
 /education         கல்வி
-/book-review       புத்தக விமர்சனம்
+/romance           காதல்
 /others            மற்றவை
 
 வகைகள்
-/articles                          கட்டுரைகள்
 /stories                           கதைகள்
+/articles                          கட்டுரைகள்
 /poems                             கவிதைகள்
 /books                             புத்தகங்கள்
 /magazines                         இதழ்கள்
