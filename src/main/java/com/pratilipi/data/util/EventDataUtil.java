@@ -77,36 +77,40 @@ public class EventDataUtil {
 	}
 
 	
-	public static EventData createEventData( Event event ) {
+	public static EventData createEventData( Event event, Boolean includePratilipiList ) {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Page eventPage = dataAccessor.getPage( PageType.EVENT, event.getId() );
-		return createEventData( event, eventPage );
+		return createEventData( event, eventPage, includePratilipiList );
 	}
-	
-	public static EventData createEventData( Event event, Page eventPage ) {
+
+	public static EventData createEventData( Event event, Page eventPage, Boolean includePratilipiList ) {
 		EventData eventData = new EventData();
 		eventData.setId( event.getId() );
 		eventData.setName( event.getName() );
 		eventData.setNameEn( event.getNameEn() );
 		eventData.setLanguage( event.getLanguage() );
 		eventData.setDescription( event.getDescription() );
-		eventData.setPratilipiIdList( event.getPratilipiIdList() );
-		if( event.getPratilipiIdList() == null || event.getPratilipiIdList().size() == 0 ) {
-			eventData.setPratilipiUrlList( new ArrayList<String>( 0 ) );
-		} else {
-			Map<Long,Page> pratilipiPages = DataAccessorFactory.getDataAccessor()
-					.getPages( PageType.PRATILIPI, event.getPratilipiIdList() );
-			List<String> pratilipiUrlList = new ArrayList<>( event.getPratilipiIdList().size() );
-			for( Long pratilipiId : event.getPratilipiIdList() ) {
-				Page pratilipiPage = pratilipiPages.get( pratilipiId );
-				if( pratilipiPage != null )
-					pratilipiUrlList.add( pratilipiPage.getUriAlias() == null ? pratilipiPage.getUri() : pratilipiPage.getUriAlias() );
-			}
-			eventData.setPratilipiUrlList( pratilipiUrlList );
-		}
 		eventData.setPageUrl( eventPage.getUriAlias() == null ? eventPage.getUri() : eventPage.getUriAlias() );
 		eventData.setBannerImageUrl( createEventBannerUrl( event ) );
 		eventData.setAccessToUpdate( hasAccessToUpdateEventData( event, null ) );
+
+		if( includePratilipiList ) {
+			eventData.setPratilipiIdList( event.getPratilipiIdList() );
+			if( event.getPratilipiIdList() == null || event.getPratilipiIdList().size() == 0 ) {
+				eventData.setPratilipiUrlList( new ArrayList<String>( 0 ) );
+			} else {
+				Map<Long,Page> pratilipiPages = DataAccessorFactory.getDataAccessor()
+						.getPages( PageType.PRATILIPI, event.getPratilipiIdList() );
+				List<String> pratilipiUrlList = new ArrayList<>( event.getPratilipiIdList().size() );
+				for( Long pratilipiId : event.getPratilipiIdList() ) {
+					Page pratilipiPage = pratilipiPages.get( pratilipiId );
+					if( pratilipiPage != null )
+						pratilipiUrlList.add( pratilipiPage.getUriAlias() == null ? pratilipiPage.getUri() : pratilipiPage.getUriAlias() );
+				}
+				eventData.setPratilipiUrlList( pratilipiUrlList );
+			}
+		}
+
 		return eventData;
 	}
 	
@@ -120,7 +124,7 @@ public class EventDataUtil {
 		
 		List<EventData> eventDataList = new ArrayList<>();
 		for( Event event : eventList )
-			eventDataList.add( createEventData( event, eventPages.get( event.getId() ) ) );
+			eventDataList.add( createEventData( event, eventPages.get( event.getId() ), false ) );
 		return eventDataList;
 	}
 	
@@ -198,7 +202,7 @@ public class EventDataUtil {
 					auditLog );
 		}		
 
-		return createEventData( event );
+		return createEventData( event, true );
 		
 	}
 	

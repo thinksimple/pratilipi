@@ -209,7 +209,7 @@ public class EventApi extends GenericApi {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Event event = dataAccessor.getEvent( request.eventId );
 		
-		EventData eventData = EventDataUtil.createEventData( event );
+		EventData eventData = EventDataUtil.createEventData( event, true );
 
 		return new Response( eventData );
 		
