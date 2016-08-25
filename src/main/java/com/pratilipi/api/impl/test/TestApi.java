@@ -188,22 +188,23 @@ public class TestApi extends GenericApi {
 					.addParam( "processContent", "true" ) );
 		TaskQueueFactory.getPratilipiOfflineTaskQueue().addAll( taskList );*/
 		
-		Long[] pratilipiIds = {
-				6741860614668288L,
-				6572405792178176L,
-				6464736464994304L,
-				6370847741706240L,
-				5509944632672256L,
-				5275944144076800L,
-				5155532227739648L,
-				4649553362944000L
+		Long[][] pratilipiIds = {
+				{ 6741860614668288L, 54L },
+				{ 6572405792178176L, 304L },
+				{ 6464736464994304L, 42L },
+				{ 6370847741706240L, 44L },
+				{ 5509944632672256L, 42L },
+				{ 5275944144076800L, 130L },
+				{ 5155532227739648L, 42L },
+				{ 4649553362944000L, 151L },
 				};
 
-		for( Long pratilipiId : pratilipiIds ) {
+		for( Long[] arr : pratilipiIds ) {
 			Pratilipi pratilipi = ObjectifyService.ofy().load().type( PratilipiEntity.class )
-					.id( pratilipiId )
+					.id( arr[0] )
 					.now();
 			pratilipi.setContentType( PratilipiContentType.IMAGE );
+			pratilipi.setPageCount( (int) (long) arr[1] );
 			ObjectifyService.ofy().save().entity( pratilipi );
 		}
 		
