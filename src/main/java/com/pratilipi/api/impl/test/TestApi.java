@@ -1,9 +1,9 @@
 package com.pratilipi.api.impl.test;
 
 import java.io.IOException;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.googlecode.objectify.ObjectifyService;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -13,8 +13,9 @@ import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.Language;
-import com.pratilipi.data.DataAccessorFactory;
-import com.pratilipi.data.type.AppProperty;
+import com.pratilipi.common.type.PratilipiContentType;
+import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.type.gae.PratilipiEntity;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/test" )
@@ -186,12 +187,25 @@ public class TestApi extends GenericApi {
 					.addParam( "pratilipiId", key.getId() + "" )
 					.addParam( "processContent", "true" ) );
 		TaskQueueFactory.getPratilipiOfflineTaskQueue().addAll( taskList );*/
-
-		String serviceAccountKey = DataAccessorFactory.getDataAccessor()
-				.getAppProperty( AppProperty.SERVICE_ACCOUNT_FIREBASE )
-				.getValue();
-		logger.log( Level.INFO, "Key = " + serviceAccountKey );
 		
+		Long[] pratilipiIds = {
+				6741860614668288L,
+				6572405792178176L,
+				6464736464994304L,
+				6370847741706240L,
+				5509944632672256L,
+				5275944144076800L,
+				5155532227739648L,
+				4649553362944000L
+				};
+
+		for( Long pratilipiId : pratilipiIds ) {
+			Pratilipi pratilipi = ObjectifyService.ofy().load().type( PratilipiEntity.class )
+					.id( pratilipiId )
+					.now();
+			pratilipi.setContentType( PratilipiContentType.IMAGE );
+			ObjectifyService.ofy().save().entity( pratilipi );
+		}
 		
 		return new GenericResponse();
 		
