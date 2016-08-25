@@ -14,7 +14,7 @@
 		<max-idle-instances>1</max-idle-instances>
 		<min-pending-latency>automatic</min-pending-latency>
 		<max-pending-latency>automatic</max-pending-latency>
-		<max-concurrent-requests>5</max-concurrent-requests>
+		<max-concurrent-requests>2</max-concurrent-requests>
 	</automatic-scaling>
 
 	<static-files>
