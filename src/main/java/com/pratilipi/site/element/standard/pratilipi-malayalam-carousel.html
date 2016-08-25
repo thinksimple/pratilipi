@@ -25,20 +25,12 @@
 					<li data-target="#carousel" data-slide-to="0" class="active"></li>
 					<li data-target="#carousel" data-slide-to="1"></li>
 					<li data-target="#carousel" data-slide-to="2"></li>
-					<li data-target="#carousel" data-slide-to="3"></li>
-					<li data-target="#carousel" data-slide-to="4"></li>
 				</ol>
 				
 				<!-- Items -->
 				<div class="carousel-inner">
 					<div class="item active">
 						<a href="/event/fr"><img src="{{ image1 }}" /></a>
-					</div>
-					<div class="item">
-						<a href="/event/ep"><img src="{{ image2 }}" /></a>
-					</div>
-					<div class="item">
-						<a on-click="write"><img src="{{ image3 }}" /></a>
 					</div>
 					<div class="item">
 						<a href="/love"><img src="{{ image4 }}" /></a>
@@ -73,8 +65,6 @@
 		
 		properties: {
 			image1: { type: Image },
-			image2: { type: Image },
-			image3: { type: Image },
 			image4: { type: Image },
 			image5: { type: Image }
 		},
@@ -85,14 +75,10 @@
 
 			if( windowsize > 560 ) {
 				this.image1 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-05.png"
-				this.image2 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-04.jpg";
-				this.image3 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-08.jpg";
 				this.image4 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-06.jpg";
 				this.image5 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-07.jpg";
 			} else {
 				this.image1 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-05-small.png" 
-				this.image2 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-04-small.jpg";
-				this.image3 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-08-small.jpg";
 				this.image4 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-06-small.jpg";
 				this.image5 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-07-small.jpg";
 			}
