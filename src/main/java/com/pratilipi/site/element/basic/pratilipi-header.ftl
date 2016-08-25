@@ -47,7 +47,7 @@
 			<form style="" method="get" action="/search">
 				<div class="form-group" style="margin-bottom:0px;">
 					<div class="input-group">
-						<input type="text" class="form-control" name="q" placeholder="${ _strings.search }" style="display: table-cell; width:100%;" maxlength="120">
+						<input type="text" class="form-control" name="q" placeholder="${ _strings.search }" style="display: table-cell; width:100%;" maxlength="120" <#if pratilipiListSearchQuery?? >value="${ pratilipiListSearchQuery }"</#if> >
 						<div style="background: #f5f5f5" class="input-group-addon"><button class="search-button" type="submit">
 							<img style="width: 16px; height: 16px;" src="http://0.ptlp.co/resource-all/icon/svg/search.svg">
 						</button></div>

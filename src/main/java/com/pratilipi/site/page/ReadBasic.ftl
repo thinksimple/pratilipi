@@ -146,7 +146,7 @@
 							+ "utm_action=share" + "&"
 							+ "utm_source=" + utm_source
 						);
-				},
+				}
 				function shareOnFacebook( utm_location ) {
 					window.open( "http://www.facebook.com/sharer.php?u=" + getShareUrl( utm_location, "facebook" ),
 						"share", "width=1100,height=500,left=70px,top=60px" );
