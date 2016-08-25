@@ -42,7 +42,7 @@
 	<div style="min-height: 1px;"></div>
 	
 	<#-- Library Section -->
-	<#if user.isGuest == true>
+	<#if user.isGuest() == true>
 		<a class="menu-item" href="/login?ret=/${ pageUrl }?id=${ pratilipi.getId()?c }%26addToLib=true%26pageNo=${ pageNo }">
 			<img src="http://0.ptlp.co/resource-all/icon/svg/folder-plus.svg"/>
 			<span>${ _strings.add_to_library }</span>
@@ -68,7 +68,7 @@
 		</#if>
 	</#if>
 	
-	<a class="menu-item" <#if user.isGuest == true>href="/login?ret=/library"<#else>href="/library"</#if>>
+	<a class="menu-item" <#if user.isGuest() == true>href="/login?ret=/library"<#else>href="/library"</#if>>
 		<img src="http://0.ptlp.co/resource-all/icon/svg/books.svg"/>
 		<span>${ _strings.my_library }</span>
 	</a>

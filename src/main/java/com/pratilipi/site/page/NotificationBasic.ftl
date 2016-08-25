@@ -11,7 +11,7 @@
 		<div class="parent-container">
 			<div class="container">
 				<div class="pratilipi-shadow secondary-500 box">
-					<#if user.getIsGuest()>
+					<#if user.isGuest()>
 						<div style="padding: 50px 10px;" class="secondary-500 pratilipi-shadow box">
 							<img style="width: 48px; height: 48px; margin: 0px auto 20px auto; display: block;" 
 									src="https://storage.googleapis.com/devo-pratilipi.appspot.com/icomoon_24_icons/SVG/info.svg" alt="${ _strings.author_no_contents_published }" />

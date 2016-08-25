@@ -26,7 +26,7 @@
 		 	</a> 
 		 </div> 
 	    <div class="align-to-bottom">
-	    	<#if user.isGuest == false>
+	    	<#if user.isGuest() == false>
 	    		<#if author.hasAccessToUpdate() >
 	    			<button type="button" class="pratilipi-red-button pratilipi-card-mini-button pratilipi-font-size-14" onclick="confirmAndChangePratilipiState( '${ pratilipi.getId()?c }', 'DRAFTED' )">${ _strings.pratilipi_move_to_drafts }</button>
 	    		</#if>

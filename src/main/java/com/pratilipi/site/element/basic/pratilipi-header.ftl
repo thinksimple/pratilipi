@@ -16,22 +16,22 @@
 			</a>
 		</div>
 		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-			<a style="display: block;" <#if user.isGuest == true>href="/login?ret=/library"<#else>href="/library"</#if>>
+			<a style="display: block;" <#if user.isGuest() == true>href="/login?ret=/library"<#else>href="/library"</#if>>
 				<img style="	width: 24px; height: 24px; margin: 10px auto;" src="http://0.ptlp.co/resource-all/icon/svg/book-grey.svg" />
 			</a>
 		</div>
 		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" style="position: relative;">
-			<a style="display: block;" <#if user.isGuest == true>href="/login?ret=/notifications"<#else>href="/notifications?ret=${requestUrl}"</#if>>
+			<a style="display: block;" <#if user.isGuest() == true>href="/login?ret=/notifications"<#else>href="/notifications?ret=${requestUrl}"</#if>>
 				<img style="width: 24px; height: 24px; margin: 10px auto;" src="http://0.ptlp.co/resource-all/icon/svg/bell-grey.svg" />
-				<#if ( ( user.isGuest == false ) && ( newNotificationCount > 0 ) ) >	
+				<#if ( ( user.isGuest() == false ) && ( newNotificationCount > 0 ) ) >	
 					<span class="badge" style="position: absolute;right: 0px;top: 4%;background-color: #d0021b;padding:4px 7px 3px 7px;">${ newNotificationCount }</span>
 				</#if>
 			</a>
 		</div>				
 		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-			<a style="display: block;" <#if user.isGuest == true>href="/login?ret=${ requestUrl }"<#else>href="${ user.getProfilePageUrl() }"</#if>>
+			<a style="display: block;" <#if user.isGuest() == true>href="/login?ret=${ requestUrl }"<#else>href="${ user.getProfilePageUrl() }"</#if>>
 				<img style="width: 24px; height: 24px; margin: 10px auto;" 
-					<#if user.isGuest == true>src="http://0.ptlp.co/resource-all/icon/svg/user-header-grey.svg"<#else>src="${ user.getProfileImageUrl() }"</#if> />
+					<#if user.isGuest() == true>src="http://0.ptlp.co/resource-all/icon/svg/user-header-grey.svg"<#else>src="${ user.getProfileImageUrl() }"</#if> />
 			</a>
 		</div>
 	</div>

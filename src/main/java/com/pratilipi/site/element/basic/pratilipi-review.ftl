@@ -29,7 +29,7 @@
 		</div>
 		<div style="text-align: justify; font-size: 15px; margin-bottom: 8px; clear: both; padding-top: 8px;">${ review.getReview() }</div>
 		<div class="reply-section">
-			<#if user.isGuest == true>
+			<#if user.isGuest() == true>
 				<a class="reply-text pratilipi-red" href="/login?ret=${ pratilipi.getPageUrl() }?review=reply%26parentId=${ review.getId() }">${ _strings.comment_reply_to_comment }</a>
 			<#else>
 				<a class="reply-text pratilipi-red" href="?review=reply&parentId=${ review.getId() }">${ _strings.comment_reply_to_comment }</a>

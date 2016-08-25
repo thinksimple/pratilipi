@@ -222,15 +222,15 @@
 			<div class="pratilipi-banner clearfix">
 				<div class="pratilipi-background"></div>
 				<#--
-				<div id="login-signup" class="login-signup pull-right" style="display: <#if user.isGuest == true>block<#else>none</#if>;">
+				<div id="login-signup" class="login-signup pull-right" style="display: <#if user.isGuest() == true>block<#else>none</#if>;">
 					<button class="login-btn" onClick="openLoginModal()">LOG IN</button>
 					<button class="signup-btn" onClick="openRegisterModal()">SIGN UP</button>
 				</div>
 				
-				<div id="user-dropdown" class="user-dropdown pull-right" style="display: <#if user.isGuest == true>none<#else>block</#if>;">
+				<div id="user-dropdown" class="user-dropdown pull-right" style="display: <#if user.isGuest() == true>none<#else>block</#if>;">
 					<div class="dropdown">
 						<button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<span id="username" class="username"><#if user.isGuest == false>Hello ${ user.getDisplayName() }</#if></span>
+						<span id="username" class="username"><#if user.isGuest() == false>Hello ${ user.getDisplayName() }</#if></span>
 						<span class="caret"></span>
 						</button>
 						<ul class="dropdown-menu pull-right">
