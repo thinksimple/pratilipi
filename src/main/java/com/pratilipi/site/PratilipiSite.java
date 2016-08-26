@@ -340,7 +340,10 @@ public class PratilipiSite extends HttpServlet {
 				dataModel.put( "title", "Reset Password" );
 				templateName = templateFilePrefix + ( basicMode ? "PasswordResetBasic.ftl" : "PasswordReset.ftl" );
 				
-				
+			} else if( uri.equals( "/writer" ) ) {
+				dataModel = new HashMap<String, Object>();
+				dataModel.put( "title", "Writer Panel" );
+				templateName = templateFilePrefix + "Writer.ftl";
 				
 			// Internal links
 				
