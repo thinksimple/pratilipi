@@ -100,20 +100,34 @@ public class FirebaseApi {
 
 		databaseReference.addListenerForSingleValueEvent( new ValueEventListener() {
 
+			private void updateNode( Long newNotificationCount, List<Long> notificationIdList ) {
+				Map<String, Object> notificationJson = new HashMap<String, Object>();
+				notificationJson.put( "newNotificationCount", newNotificationCount );
+				notificationJson.put( "notificationIdList", notificationIdList );
+				databaseReference.setValue( notificationJson );
+			}
+
+			@SuppressWarnings("unchecked")
 			@Override
 			public void onDataChange( DataSnapshot dataSnapshot ) {
-				if( dataSnapshot.getValue() == null ) {
-					List<Long> notificationIdList = new ArrayList<Long>( 1 );
-					notificationIdList.add( notificationId );
-					databaseReference.setValue( notificationIdList );
-				} else {
-					@SuppressWarnings("unchecked")
-					List<Long> notificationIdList = (List<Long>) dataSnapshot.getValue();
-					if( ! notificationIdList.contains( notificationId ) ) {
-						notificationIdList.add( notificationId );
-						databaseReference.setValue( notificationIdList );
-					}
+
+				List<Long> notificationIdList = new ArrayList<Long>();
+				Long newNotificationCount = 0L;
+
+				if( dataSnapshot.getValue() != null ) {
+					Map<String, Object> notificationJson = (Map<String, Object>) dataSnapshot.getValue();
+					newNotificationCount = (Long) notificationJson.get( "newNotificationCount" );
+					// User has been notified
+					if( newNotificationCount > 0 )
+						notificationIdList = (List<Long>) notificationJson.get( "notificationIdList" );
 				}
+
+				if( ! notificationIdList.contains( notificationId ) ) {
+					newNotificationCount = newNotificationCount + 1;
+					notificationIdList.add( notificationId );
+					updateNode( newNotificationCount, notificationIdList );
+				}
+
 			}
 
 			@Override
