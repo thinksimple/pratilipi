@@ -203,7 +203,7 @@ public class UserApi extends GenericApi {
 			return isGuest;
 		}
 
-		private Boolean getIsEmailVerified() {
+		public Boolean isEmailVerified() {
 			return isEmailVerified;
 		}
 		

@@ -54,7 +54,7 @@
 	<hr class="pratilipi-margin-top-2">	
 	<h3 style="margin-bottom: 25px;">${ user.getEmail() }</h3>
 	<div style="margin-bottom: 5px;">
-		<#if user.getIsEmailVerified() == true >
+		<#if user.isEmailVerified() == true >
 			<button class="pratilipi-red-background-button">${ _strings.edit_account_email_verified } &nbsp;<span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>		
 		<#else>
 			<button class="pratilipi-red-background-button" onclick="sendVerificationEmail( '${ user.getEmail() }' )">${ _strings.edit_account_verify_email }</button>
