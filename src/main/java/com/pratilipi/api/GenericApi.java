@@ -36,6 +36,7 @@ import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.util.SystemProperty;
 
 @SuppressWarnings("serial")
 public abstract class GenericApi extends HttpServlet {
@@ -81,6 +82,7 @@ public abstract class GenericApi extends HttpServlet {
 			HttpServletRequest request,
 			HttpServletResponse response ) throws ServletException, IOException {
 		
+		String requestUri = request.getRequestURI();
 		String method = request.getMethod();
 		Gson gson = new Gson();
 
@@ -107,7 +109,16 @@ public abstract class GenericApi extends HttpServlet {
 			queryParamsStr.append( "}" );
 
 		
-		logger.log( Level.INFO, "Request Payload: " + queryParamsStr );
+		if( SystemProperty.STAGE != SystemProperty.STAGE_PROD ) {
+			Enumeration<String> headerNames = request.getHeaderNames();
+			while( headerNames.hasMoreElements() ) {
+				String headerName = headerNames.nextElement();
+				logger.log( Level.INFO, "Header " + headerName + " = " + request.getHeader( headerName ) ) ;
+			}
+			logger.log( Level.INFO, "Request Payload: " + queryParamsStr );
+		} else if( ! requestUri.startsWith( "/user/" ) && ! requestUri.startsWith( "/api/user" ) ) {
+			logger.log( Level.INFO, "Request Payload: " + queryParamsStr );
+		}
 
 		
 		JsonObject queryParamsJson = gson.fromJson( queryParamsStr.toString(), JsonElement.class ).getAsJsonObject();
