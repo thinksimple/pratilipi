@@ -51,7 +51,10 @@ public class NotificationProcessApi extends GenericApi {
 				continue;
 			if( notification.getState() != NotificationState.UNREAD )
 				continue;
-			
+
+			// Write to Firebase Database 
+			FirebaseApi.updateUserNotificationData( notification.getId(), notification.getUserId() );
+
 			List<String> fcmTokenList = dataAccessor.getFcmTokenList( notification.getUserId() );
 			if( fcmTokenList.size() == 0 )
 				continue;

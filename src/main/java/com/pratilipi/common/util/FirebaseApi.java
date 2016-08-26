@@ -1,6 +1,7 @@
 package com.pratilipi.common.util;
 
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,11 @@ import org.apache.commons.io.IOUtils;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -27,6 +33,7 @@ public class FirebaseApi {
 	
 	private static final String CLOUD_MESSAGING_API_URL = "https://fcm.googleapis.com/fcm/send";
 	private static final String DATABASE_URL = "https://prod-pratilipi.firebaseio.com/";
+	private static final String DATABASE_NOTIFICATION_TABLE = "NOTIFICATION";
 
 	
 	private static void initialiseFirebase() {
@@ -81,6 +88,40 @@ public class FirebaseApi {
 	public static String getCustomTokenForUser( Long userId ) {
 		initialiseFirebase();
 		return FirebaseAuth.getInstance().createCustomToken( userId.toString() );
+	}
+
+	public static void updateUserNotificationData( final Long notificationId, Long userId ) {
+
+		initialiseFirebase();
+
+		final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().
+											child( DATABASE_NOTIFICATION_TABLE ).
+											child( userId.toString() );
+
+		databaseReference.addListenerForSingleValueEvent( new ValueEventListener() {
+
+			@Override
+			public void onDataChange( DataSnapshot dataSnapshot ) {
+				if( dataSnapshot.getValue() == null ) {
+					List<Long> notificationIdList = new ArrayList<Long>( 1 );
+					notificationIdList.add( notificationId );
+					databaseReference.setValue( notificationIdList );
+				} else {
+					@SuppressWarnings("unchecked")
+					List<Long> notificationIdList = (List<Long>) dataSnapshot.getValue();
+					if( ! notificationIdList.contains( notificationId ) ) {
+						notificationIdList.add( notificationId );
+						databaseReference.setValue( notificationIdList );
+					}
+				}
+			}
+
+			@Override
+			public void onCancelled( DatabaseError databaseError ) {
+				System.out.println( "The read failed: " + databaseError.getCode() );
+			}
+
+		});
 	}
 
 }
