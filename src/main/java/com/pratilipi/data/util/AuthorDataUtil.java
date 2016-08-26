@@ -95,7 +95,7 @@ public class AuthorDataUtil {
 			if( width != null )
 				url = url + "&width=" + width;
 			if( SystemProperty.CDN != null )
-				url = SystemProperty.CDN.replace( "*", ( author.getId() % 10 / 2 ) + "" ) + url;
+				url = SystemProperty.CDN.replace( "*", author.getId() % 5 + "" ) + url;
 		} else {
 			if( width != null )
 				url = url + "?width=" + width;

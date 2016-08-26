@@ -49,7 +49,7 @@ public class FirebaseApi {
 	}
 
 
-	public static String sendCloudMessage( List<String> fcmTokenList, String message, String tag )
+	public static String sendCloudMessage( List<String> fcmTokenList, String message, String tag, String clickAction )
 			throws UnexpectedServerException {
 
 		Map<String, String> headersMap = new HashMap<>();

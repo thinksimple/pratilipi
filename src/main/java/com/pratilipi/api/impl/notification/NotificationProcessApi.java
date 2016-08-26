@@ -3,6 +3,8 @@ package com.pratilipi.api.impl.notification;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.NoInitialContextException;
+
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -57,7 +59,8 @@ public class NotificationProcessApi extends GenericApi {
 			String fcmResponse = FirebaseApi.sendCloudMessage(
 					fcmTokenList,
 					notificationData.getMessage(),
-					notification.getId().toString() );
+					notification.getId().toString(),
+					notification.getType().getAndroidHandler() );
 			
 			if( notification.getFcmResponse() == null )
 				notification.setFcmResponse( fcmResponse );
