@@ -49,7 +49,7 @@ public class FirebaseApi {
 	}
 
 
-	public static String sendCloudMessage( List<String> fcmTokenList, String message, String tag, String clickAction )
+	public static String sendCloudMessage( List<String> fcmTokenList, String message, String tag, String androidHandler )
 			throws UnexpectedServerException {
 
 		Map<String, String> headersMap = new HashMap<>();
@@ -60,7 +60,7 @@ public class FirebaseApi {
 		notificationJson.addProperty( "tag", tag );
 		notificationJson.addProperty( "sound", "default" );
 		notificationJson.addProperty( "icon", "pratilipi_icon" );
-		notificationJson.addProperty( "click_action", "OPEN_NOTIFICATION" );
+		notificationJson.addProperty( "click_action", androidHandler );
 		
 		JsonObject bodyJson = new JsonObject();
 		bodyJson.add( "registration_ids", new Gson().toJsonTree( fcmTokenList ) );
