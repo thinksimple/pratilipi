@@ -316,8 +316,8 @@
 				this.title = 	this.pratilipi.title != null && this.pratilipi.title.trim() != "" ?
 								this.pratilipi.title : this.pratilipi.titleEn;
 
-				this.pratilipiContentType = this.contentType == "PRATILIPI" ? true : false;
-				this.imageContentType = this.contentType == "IMAGE" ? true : false;
+				this.pratilipiContentType = this.contentType == "PRATILIPI";
+				this.imageContentType = this.contentType == "IMAGE";
 			},
 			
 			attached: function() {

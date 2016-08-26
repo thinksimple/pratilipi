@@ -104,8 +104,9 @@
 			is: 'pratilipi-author-library-contents',
 
 			properties: {
-				pratilipiList: { type: Array, value: function() { return []; } },
+				pratilipiList: { type: Array },
 				cursor: { type: String, value: null },
+				resultCount: { type: Number, value: 12 },
 				showMore: { type: Boolean, value: false },
 				hasContent: { type: Boolean }
 			},
@@ -115,8 +116,8 @@
 				for( var i = 0; i < pratilipiList.length; i++ )
 					this.push( 'pratilipiList', pratilipiList[i] );
 				this.set( 'cursor', pratilipiListObject.cursor );
-				this.set( 'showMore', pratilipiList.length == 20 ? true : false );
-				this.set( 'hasContent', this.pratilipiList.length > 0 ? true : false );
+				this.set( 'showMore', pratilipiList.length == this.resultCount );
+				this.set( 'hasContent', this.pratilipiList.length > 0 );
 			},
 
 			ready: function() {
@@ -130,6 +131,7 @@
 					this.$.UserPratilipiLibraryListApi.params.cursor = this.cursor;
 				else
 					delete this.$.UserPratilipiLibraryListApi.params.cursor;
+				this.$.UserPratilipiLibraryListApi.params.resultCount = this.resultCount;
 				this.$.UserPratilipiLibraryListApi.generateRequest();
 			},
 

@@ -90,7 +90,7 @@
 				if( CKEDITOR != null && CKEDITOR.instances.blogContent != null )
 					CKEDITOR.instances.blogContent.setData( this.content );
 				
-				document.getElementById( "checkBlogState" ).checked = this.state == "PUBLISHED" ? true : false;
+				document.getElementById( "checkBlogState" ).checked = this.state == "PUBLISHED";
 				// Opening the modal
 				this.open();
 			},

@@ -135,7 +135,7 @@
 			attached: function() {
 				jQuery( "#pager" ).css( 'min-height', window.innerHeight + "px" );
 				this.contentMap[ this.pageNo ] = this.content;
-				this.set( 'lastPage', this.pageNo == this.pageCount ? true : false );
+				this.set( 'lastPage', this.pageNo == this.pageCount );
 
 				if( this.contentType == "IMAGE" )
 					this._setImageSize();

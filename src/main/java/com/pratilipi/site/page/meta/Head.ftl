@@ -14,7 +14,7 @@
 <#-- Polymer dependencies -->
 <script src='http://0.ptlp.co/resource-all/jquery.bootstrap.polymer.js'></script>
 <link rel='import' href='http://0.ptlp.co/resource-all/pratilipi.polymer.elements.html'>
-<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?3'>
+<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?4'>
 
 <#-- Custom Stylesheet -->
 <link type="text/css" rel="stylesheet" href="/resources/style.css?64">
@@ -40,7 +40,7 @@
 	};
 </script>
 
-
+<#--
 <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
 
 <script>
@@ -54,27 +54,24 @@
 
 	var app = firebase.initializeApp( config );
 	var database = app.database();
-	var auth = app.auth();
-	var storage = app.storage();
 	var databaseRef = database.ref().child( "NOTIFICATION" );
 	var node = null;
 
 	function firebaseSignInWithCustomToken( userId, token ) {
-		if( token == null ) return;
-		firebase.auth().signInWithCustomToken( token ).catch( function( error ) {
-			var errorCode = error.code;
-			var errorMessage = error.message;
-			console.log( errorCode );
-			console.log( errorMessage );
-		});
-
 		firebase.auth().onAuthStateChanged( function( user ) {
 			if( user ) {
+				console.log( "in" );
 				node = databaseRef.child( userId );
 				node.on( 'value', function( snapshot ) {
 					var snapshot = snapshot.val();
 					console.log( snapshot );
 				} );
+			} else {
+				console.log( "out" );
+				firebase.auth().signInWithCustomToken( token ).catch( function( error ) {
+					console.log( error.code );
+					console.log( error.message );
+				});
 			}
 		});
 
@@ -86,3 +83,4 @@
 
 
 </script>
+-->

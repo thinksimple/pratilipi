@@ -1,31 +1,6 @@
+<#include "pratilipi-author-library-contents.html">
+
 <dom-module id="pratilipi-library-page">
-	<style>
-		paper-card.zero-results {
-			width: 100%; 
-			text-align: center; 
-			padding: 12px 16px;
-			margin-bottom: 10px;
-			margin-top: 6px;
-		}
-		iron-icon.zero-results-icon {
-			color: #545454; 
-			width: 48px; 
-			height: 48px;
-		}
-		
-		h6.zero-results-heading {
-			color: #545454; 
-			margin-top: 16px; 
-			line-height: 24px;
-		}
-		paper-spinner.pratilipi-spinner {
-			--paper-spinner-layer-1-color: #D0021B;
-			--paper-spinner-layer-2-color: #107FE5;
-			--paper-spinner-layer-3-color: #D0021B;
-			--paper-spinner-layer-4-color: #107FE5;
-		}
-	</style>
-	
 	<template>
 		<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
 		<pratilipi-write pratilipi-types='[[ pratilipiTypes ]]'></pratilipi-write>
@@ -44,31 +19,8 @@
 					<!-- Navigation & Search bar for extra-small & small screens. -->
 					<pratilipi-navigation-drawer with-backdrop navigation-list='[[ navigationList ]]'></pratilipi-navigation-drawer>
 					<div style="overflow: hidden">
-						<!-- In case of No results -->
-						<template is="dom-if" if="[[ zeroLibraryBooks ]]">
-							<div class="secondary-500 pratilipi-shadow pratilipi-card-grid-heading pratilipi-red">${ _strings.my_library }</div>
-							<paper-card class="zero-results">
-								<iron-icon icon="icons:info-outline" class="zero-results-icon"></iron-icon>
-								<h6 class="zero-results-heading">${ _strings.empty_library }</h6>
-							</paper-card>
-						</template>
-						<template is="dom-if" if="[[ !zeroLibraryBooks ]]">
-							<pratilipi-card-grid
-								hide-add-to-library-button
-								show-remove-from-library-button
-								heading='${ _strings.my_library }'
-								pratilipi-list='[[ pratilipiList ]]'
-								></pratilipi-card-grid>
-						</template>
-						<br class="pratilipi-break"/>
-						<!-- Spinner when Loading more books -->
-						<template is="dom-if" if="{{ isLoading }}">
-							<paper-spinner class="pratilipi-spinner pratilipi-spinner-center" active></paper-spinner>
-						</template>
-						<!-- Show More Button in case of network call failure -->
-						<template is="dom-if" if="{{ includeShowMoreButton }}">
-							<button style="width: 100%;" class="pratilipi-new-blue-button" on-click="loadMore">${ _strings.load_more_contents }</button>
-						</template>
+						<pratilipi-author-library-contents pratilipi-list="[[ pratilipiList ]]">
+						</pratilipi-author-library-contents>
 					</div>
 				</div>
 			</div>

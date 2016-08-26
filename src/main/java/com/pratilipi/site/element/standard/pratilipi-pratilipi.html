@@ -387,7 +387,7 @@
 				this.set( 'zeroRating', false );
 				this.set( 'type', this.pratilipiTypes[ pratilipi.type.toUpperCase() ].name );
 				this.set( 'listingDate', convertDate( pratilipi.listingDateMillis ) );
-				this.set( 'showLastUpdatedDate', pratilipi.lastUpdatedMillis != null ? true : false );
+				this.set( 'showLastUpdatedDate', pratilipi.lastUpdatedMillis != null );
 				this.set( 'lastUpdatedDate', pratilipi.lastUpdatedMillis != null ? convertDate( pratilipi.lastUpdatedMillis ) : null );
 				this.set( 'hasAccessToUpdate', pratilipi.hasAccessToUpdate );
 				this.set( 'canMoveToDrafts', pratilipi.state != null && pratilipi.state != "DRAFTED" && pratilipi.hasAccessToUpdate );

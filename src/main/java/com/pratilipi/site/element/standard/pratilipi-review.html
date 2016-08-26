@@ -209,20 +209,20 @@
 				if( this.review.reviewDateMillis )
 					this.reviewDateMillis = convertDate( this.review.reviewDateMillis );
 				
-				this.showRating = this.review.rating > 0 ? true : false;
+				this.showRating = this.review.rating > 0;
 				this.commentCount = this.review.commentCount;
 				this.likeCount = this.review.likeCount;
 				this.isLiked = this.review.isLiked != null ? this.review.isLiked : false;
 			},
 			
 			_commentCountObserver: function() {
-				this.showCommentCount = this.commentCount != null && this.commentCount > 0 ? true : false;
+				this.showCommentCount = this.commentCount != null && this.commentCount > 0;
 				this.commentNumberText = this.commentCount != null && this.commentCount > 1 ? 
 										"${ _strings.comment_number_of_comments_plural }" : "${ _strings.comment_number_of_comments_singular }";  
 			},
 			
 			_likeCountObserver: function() {
-				this.showLikeCount = this.likeCount != null && this.likeCount > 0 ? true : false;
+				this.showLikeCount = this.likeCount != null && this.likeCount > 0;
 			},
 			
 			_isLikedObserver: function() {

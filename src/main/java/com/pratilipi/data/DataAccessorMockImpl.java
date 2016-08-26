@@ -644,8 +644,10 @@ public class DataAccessorMockImpl implements DataAccessor {
 			Long userId, String cursorStr,
 			Integer offset, Integer resultCount ) {
 
-		// TODO: Implementation
-		return null;
+		List<Long> idList = new ArrayList<Long>();
+		for( Pratilipi pratilipi : PratilipiMock.PRATILIPI_TABLE )
+			idList.add( pratilipi.getId() );
+		return new DataListCursorTuple<Long>( idList, "cursor" );
 	}
 	
 	@Override
