@@ -12,6 +12,11 @@ public class SystemProperty {
 	public static final String CDN;
 	public static final String STAGE;
 	
+	public static final String STAGE_ALPHA	= "alpha";
+	public static final String STAGE_BETA	= "beta";
+	public static final String STAGE_GAMMA	= "gamma";
+	public static final String STAGE_PROD	= "prod";
+
 	static {
 		String appId = ApiProxy.getCurrentEnvironment().getAppId();
 		String moduleId = ApiProxy.getCurrentEnvironment().getModuleId();
@@ -20,19 +25,19 @@ public class SystemProperty {
 			BLOBSERVICE_GCS_BUCKET = "static.pratilipi.com";
 			BLOBSERVICE_GCS_BUCKET_BACKUP = "backup.pratilipi.com";
 			CDN = "http://*.ptlp.co";
-			STAGE = moduleId.equals( "gamma" ) || moduleId.equals( "gamma-android" ) ? "gamma" : "prod";
+			STAGE = moduleId.equals( "gamma" ) || moduleId.equals( "gamma-android" ) ? STAGE_GAMMA : STAGE_PROD;
 		} else if( appId.equals( "devo-pratilipi" ) || appId.equals( "s~devo-pratilipi" ) ) {
 			DATASOURCE = "gae";
 			BLOBSERVICE_GCS_BUCKET = "devo-pratilipi.appspot.com";
 			BLOBSERVICE_GCS_BUCKET_BACKUP = "devo-pratilipi.appspot.com";
 			CDN = "http://*.devo.ptlp.co";
-			STAGE = "beta";
+			STAGE = STAGE_BETA;
 		} else {
 			DATASOURCE = "mock";
 			BLOBSERVICE_GCS_BUCKET = "localhost";
 			BLOBSERVICE_GCS_BUCKET_BACKUP = "localhost";
 			CDN = null;
-			STAGE = "alpha";
+			STAGE = STAGE_ALPHA;
 		}
 	}
 	

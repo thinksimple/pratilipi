@@ -116,7 +116,7 @@ public abstract class GenericApi extends HttpServlet {
 				logger.log( Level.INFO, "Header " + headerName + " = " + request.getHeader( headerName ) ) ;
 			}
 			logger.log( Level.INFO, "Request Payload: " + queryParamsStr );
-		} else if( ! requestUri.startsWith( "/user/" ) && ! requestUri.startsWith( "/api/user" ) ) {
+		} else if( ! requestUri.startsWith( "/user/" ) && ! requestUri.startsWith( "/api/user/" ) ) {
 			logger.log( Level.INFO, "Request Payload: " + queryParamsStr );
 		}
 
