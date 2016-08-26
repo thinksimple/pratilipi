@@ -13,6 +13,14 @@ public interface AccessToken extends GenericOfyType {
 	String getFcmToken();
 	
 	void setFcmToken( String fcmToken );
+
+	String getDeviceLocation();
+
+	void setDeviceLocation( String city, String region, String country );
+	
+	String getDeviceUserAgent();
+	
+	void setDeviceUserAgent( String userAgent );
 	
 	Date getLogInDate();
 	

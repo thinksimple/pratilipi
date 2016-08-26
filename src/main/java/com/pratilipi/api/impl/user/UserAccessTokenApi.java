@@ -8,8 +8,6 @@ import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InvalidArgumentException;
-import com.pratilipi.data.type.AccessToken;
-import com.pratilipi.data.util.AccessTokenDataUtil;
 
 @SuppressWarnings("serial")
 @Bind( uri= "/user/accesstoken" )
@@ -31,10 +29,11 @@ public class UserAccessTokenApi extends GenericApi {
 
 	
 	@Get
-	public Response get( GenericRequest request ) throws InvalidArgumentException {
+	public GenericResponse get( GenericRequest request ) throws InvalidArgumentException {
 		
-		AccessToken accessToken = AccessTokenDataUtil.newUserAccessToken();
-		return new Response( accessToken.getId(), accessToken.getExpiry() );
+		// See AccessTokenFilter for implementation.
+		
+		return new GenericResponse();
 		
 	}
 	

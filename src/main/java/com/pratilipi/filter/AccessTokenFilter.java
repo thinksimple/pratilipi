@@ -14,6 +14,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+import com.pratilipi.api.impl.user.UserAccessTokenApi;
+import com.pratilipi.api.impl.user.UserAccessTokenApi.Response;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -66,13 +69,13 @@ public class AccessTokenFilter implements Filter {
 			String accessTokenCookie = getCookieValue( RequestCookie.ACCESS_TOKEN.getName(), request );
 			
 			if( ( accessTokenId == null || accessTokenId.isEmpty() ) && ( accessTokenCookie == null || accessTokenCookie.isEmpty() ) ) {
-				accessToken = AccessTokenDataUtil.newUserAccessToken();
+				accessToken = AccessTokenDataUtil.newUserAccessToken( request );
 			} else {
 				accessToken = accessTokenId != null && ! accessTokenId.isEmpty()
 						? dataAccessor.getAccessToken( accessTokenId )
 						: dataAccessor.getAccessToken( accessTokenCookie );
 				if( accessToken == null || accessToken.isExpired() ) {
-					accessToken = AccessTokenDataUtil.newUserAccessToken();
+					accessToken = AccessTokenDataUtil.newUserAccessToken( request );
 				} else if( accessToken.getExpiry().getTime() < new Date().getTime() + AccessTokenDataUtil.MIN_EXPIRY_MILLIS ) {
 					accessToken.setExpiry( new Date( new Date().getTime() + AccessTokenDataUtil.MAX_EXPIRY_MILLIS ) );
 					accessToken = dataAccessor.createOrUpdateAccessToken( accessToken );
@@ -91,7 +94,8 @@ public class AccessTokenFilter implements Filter {
 			
 		} else if( requestUri.equals( "/user/accesstoken" ) ) { // Used by gamma-android & android module.
 			
-			chain.doFilter( request, response );
+			accessToken = AccessTokenDataUtil.newUserAccessToken( request );
+			dispatchResponse( response, new UserAccessTokenApi.Response( accessToken.getId(), accessToken.getExpiry() ) );
 			return;
 	
 		} else { // Used by gamma-android & android module.
@@ -103,15 +107,15 @@ public class AccessTokenFilter implements Filter {
 			}
 			
 			if( accessTokenId == null || accessTokenId.isEmpty() ) {
-				dispatchResposne( response, new InvalidArgumentException( "Access Token is missing." ) );
+				dispatchResponse( response, new InvalidArgumentException( "Access Token is missing." ) );
 				return;
 
 			} else if( ( accessToken = dataAccessor.getAccessToken( accessTokenId ) ) == null ) {
-				dispatchResposne( response, new InvalidArgumentException( "Access Token is invalid." ) );
+				dispatchResponse( response, new InvalidArgumentException( "Access Token is invalid." ) );
 				return;
 			
 			} else if( accessToken.isExpired() ) {
-				dispatchResposne( response, new InsufficientAccessException( "Access Token is expired." ) );
+				dispatchResponse( response, new InsufficientAccessException( "Access Token is expired." ) );
 				return;
 
 			} else if( accessToken.getExpiry().getTime() < new Date().getTime() + AccessTokenDataUtil.MIN_EXPIRY_MILLIS ) {
@@ -154,7 +158,17 @@ public class AccessTokenFilter implements Filter {
 	}
 
 	// Ref: GenericApi.dispatchApiResponse
-	private void dispatchResposne( HttpServletResponse response, Throwable ex )
+	private void dispatchResponse( HttpServletResponse response, UserAccessTokenApi.Response apiResponse )
+			throws IOException {
+		response.setContentType( "text/html" );
+		response.setCharacterEncoding( "UTF-8" );
+		PrintWriter writer = response.getWriter();
+		writer.println( new Gson().toJson( apiResponse ) );
+		writer.close();
+	}
+	
+	// Ref: GenericApi.dispatchApiResponse
+	private void dispatchResponse( HttpServletResponse response, Throwable ex )
 			throws IOException {
 		
 		response.setCharacterEncoding( "UTF-8" );

@@ -24,6 +24,12 @@ public class AccessTokenEntity implements AccessToken {
 	@Index( IfNotNull.class )
 	private String FCM_TOKEN;
 	
+	@Index( IfNotNull.class )
+	private String DEVICE_LOCATION;
+	
+	@Index( IfNotNull.class )
+	private String DEVICE_USER_AGENT;
+	
 	@Index
 	private Date LOGIN_DATE;
 	
@@ -77,6 +83,26 @@ public class AccessTokenEntity implements AccessToken {
 		this.FCM_TOKEN = fcmToken;
 	}
 
+	@Override
+	public String getDeviceLocation() {
+		return DEVICE_LOCATION;
+	}
+
+	@Override
+	public void setDeviceLocation( String city, String region, String country ) {
+		DEVICE_LOCATION = city + ", " + region + ", " + country;
+	}
+	
+	@Override
+	public String getDeviceUserAgent() {
+		return DEVICE_USER_AGENT;
+	}
+	
+	@Override
+	public void setDeviceUserAgent( String userAgent ) {
+		this.DEVICE_USER_AGENT = userAgent;
+	}
+	
 	@Override
 	public Date getLogInDate() {
 		return LOGIN_DATE;
