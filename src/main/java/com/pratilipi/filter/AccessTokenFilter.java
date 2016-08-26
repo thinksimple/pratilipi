@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.pratilipi.api.impl.user.UserAccessTokenApi;
-import com.pratilipi.api.impl.user.UserAccessTokenApi.Response;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
