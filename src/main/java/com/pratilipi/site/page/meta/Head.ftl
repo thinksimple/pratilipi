@@ -14,7 +14,7 @@
 <#-- Polymer dependencies -->
 <script src='http://0.ptlp.co/resource-all/jquery.bootstrap.polymer.js'></script>
 <link rel='import' href='http://0.ptlp.co/resource-all/pratilipi.polymer.elements.html'>
-<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?5'>
+<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?6'>
 
 <#-- Custom Stylesheet -->
 <link type="text/css" rel="stylesheet" href="/resources/style.css?64">
@@ -40,7 +40,6 @@
 	};
 </script>
 
-<#--
 <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
 
 <script>
@@ -52,35 +51,41 @@
 		storageBucket: "prod-pratilipi.appspot.com",
 	};
 
-	var app = firebase.initializeApp( config );
-	var database = app.database();
-	var databaseRef = database.ref().child( "NOTIFICATION" );
+	firebase.initializeApp( config );
+
 	var node = null;
+	var userLoggedIn = null;
+	var isGuest = null;
 
-	function firebaseSignInWithCustomToken( userId, token ) {
-		firebase.auth().onAuthStateChanged( function( user ) {
-			if( user ) {
-				console.log( "in" );
-				node = databaseRef.child( userId );
-				node.on( 'value', function( snapshot ) {
-					var snapshot = snapshot.val();
-					console.log( snapshot );
-				} );
-			} else {
-				console.log( "out" );
-				firebase.auth().signInWithCustomToken( token ).catch( function( error ) {
-					console.log( error.code );
-					console.log( error.message );
-				});
+	firebase.auth().onAuthStateChanged( function( user ) {
+		if( user ) {
+			<#-- Session expired in server but not in firebase - very rare case -->
+			if( isGuest ) {
+				firebase.auth().signOut();
+				return;
 			}
-		});
+			userLoggedIn = true;
+			node = firebase.database().ref( "NOTIFICATION" ).child( user.uid ).child( "newNotificationCount" );
+			node.on( 'value', function( snapshot ) {
+				var snapshot = snapshot.val();
+				console.log( snapshot );
+			});
+		} else {
+			userLoggedIn = false;
+			node = null;
+		}
+	});
 
+	function userChanged( user ) {
+		isGuest = user.isGuest;
+		if( userLoggedIn == null )
+			return;
+		if( user.isGuest && userLoggedIn ) {
+			firebase.auth().signOut();
+		} else if( ! user.isGuest && ! userLoggedIn ) {
+			firebase.auth().signInWithCustomToken( user.firebaseToken ).catch( function( error ) {
+				console.log( error.code + " " + error.message );
+			});
+		}
 	}
-
-	function firebaseUnauth() {
-		firebase.auth().signOut();
-	}
-
-
 </script>
--->
