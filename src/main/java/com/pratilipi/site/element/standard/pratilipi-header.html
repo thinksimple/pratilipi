@@ -495,9 +495,11 @@
 
 			_notificationListApiResponse: function( ajaxResponse ) {
 				var response = ajaxResponse.detail.response;
-				
-				if( response != null && response.notificationList != null  )
-					this.set( 'popupNotificationList', response.notificationList );
+				if( response != null && response.notificationList != null  ) {
+					this.set( 'popupNotificationList', [] );
+					for( var i = 0; i < response.notificationList.length; i++ )
+						this.push( 'popupNotificationList', response.notificationList[i] );
+				}
 			},
 
 			_notificationCountObserver: function() {
