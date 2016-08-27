@@ -14,7 +14,7 @@
 <#-- Polymer dependencies -->
 <script src='http://0.ptlp.co/resource-all/jquery.bootstrap.polymer.js'></script>
 <link rel='import' href='http://0.ptlp.co/resource-all/pratilipi.polymer.elements.html'>
-<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?9'>
+<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?10'>
 
 <#-- Custom Stylesheet -->
 <link type="text/css" rel="stylesheet" href="/resources/style.css?66">
@@ -74,6 +74,10 @@
 			firebaseLogin();
 	}
 
+	function resetNewNotificationCount() {
+		node.set( 0 );
+	}
+
 	firebase.auth().onAuthStateChanged( function( usr ) {
 		if( usr ) {
 			<#-- Session expired in server but not in firebase - very rare case -->
@@ -85,7 +89,6 @@
 			node = firebase.database().ref( "NOTIFICATION" ).child( usr.uid ).child( "newNotificationCount" );
 			node.on( 'value', function( snapshot ) {
 				var newNotificationCount = snapshot.val();
-				console.log( newNotificationCount );
 				if( newNotificationCount != null && document.querySelector( 'pratilipi-header' ) != null )
 					document.querySelector( 'pratilipi-header' ).updateNewNotificationCount( newNotificationCount );
 			});

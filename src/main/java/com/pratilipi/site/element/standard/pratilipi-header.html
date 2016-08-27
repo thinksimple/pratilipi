@@ -294,7 +294,7 @@
 									</div>
 								</template>
 								<template is="dom-if" if="{{ !isBigWindow }}">
-									<a href="/notifications"><iron-icon icon="social:notifications" id="notification-dropdown"></iron-icon></a>
+									<a on-click="_hideNotificationCount"><iron-icon icon="social:notifications" id="notification-dropdown"></iron-icon></a>
 								</template>
 								<template is="dom-if" if="{{ showNotificationCount }}">
 									<span class="badge notification-count">{{ newNotificationCount }}</span>
@@ -358,14 +358,6 @@
 				handle-as="json"
 				on-response="_notificationListApiResponse"
 		></iron-ajax>
-		<iron-ajax
-				id="UserNotifiedApi"
-				url="/api/user/notified"
-				method="POST"
-				content-type="application/x-www-form-urlencoded"
-				handle-as="json"
-				on-error="_userNotifiedApiError"
-		></iron-ajax>				
 	</template>
 
 
@@ -388,7 +380,7 @@
 				profilePageUrl: { type: String },
 				profileImageUrl: { type: String },
 				displayName: { type: String },
-				newNotificationCount: { type: Number },
+				newNotificationCount: { type: Number, observer: "_notificationCountObserver" },
 				showNotificationCount: { type: Boolean, value: false },
 				writeButtonActive: { type: Boolean, value: false },
 				languageMap: { type: Object },
@@ -424,10 +416,8 @@
 													( this.user.profileImageUrl + ( this.user.profileImageUrl.indexOf( '?' ) == -1 ? '?' : '&' ) + "width=48" )
 													: "http://0.ptlp.co/author/image?width=48" );
 
-			if( ! this.user.isGuest )
-				this.getNotificationCount();
-			else
-				this.set( 'showNotificationCount', false ); 
+			if( this.user.isGuest )
+				this.set( 'newNotificationCount', 0 ); 
 
 			},
 
@@ -464,12 +454,9 @@
 			},
 
 			_hideNotificationCount: function() {
-				if( this.showNotificationCount ) {
-					this.set( 'showNotificationCount', false );
-					var params = { lastNotificationId: this.popupNotificationList[0].notificationId };
-					this.$.UserNotifiedApi.body = jQuery.param( params );
-					this.$.UserNotifiedApi.generateRequest();
-				}
+				resetNewNotificationCount();
+				if( !this.isBigWindow )
+					window.location.href = "/notifications";
 			},
 
 			_userNotifiedApiError: function() {
@@ -502,22 +489,24 @@
 				}
 			},
 
-			getNotificationCount: function() {
+			getNotificationData: function() {
 				this.$.NotificationListApi.generateRequest();
 			},
 
 			_notificationListApiResponse: function( ajaxResponse ) {
 				var response = ajaxResponse.detail.response;
-				this.set( 'newNotificationCount', response.newNotificationCount );
+				
 				if( response != null && response.notificationList != null  )
 					this.set( 'popupNotificationList', response.notificationList );
+			},
 
-				this.set( 'showNotificationCount', response != null
-						&& response.newNotificationCount != null 
-						&& response.newNotificationCount > 0 );
+			_notificationCountObserver: function() {
+				this.set( 'showNotificationCount', this.newNotificationCount > 0 );
 			},
 
 			updateNewNotificationCount: function( newNotificationCount ) {
+				this.set( 'newNotificationCount', newNotificationCount );
+				this.getNotificationData();
 			}
 
 		});
