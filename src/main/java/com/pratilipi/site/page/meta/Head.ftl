@@ -43,7 +43,6 @@
 <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
 
 <script>
-
 	var config = {
 		apiKey: "AIzaSyAAnK0-vDmY1UEcrRRbCzXgdpF2oQn-E0w",
 		authDomain: "prod-pratilipi.firebaseapp.com",
@@ -55,37 +54,48 @@
 
 	var node = null;
 	var userLoggedIn = null;
-	var isGuest = null;
+	var user = ${ userJson };
 
-	firebase.auth().onAuthStateChanged( function( user ) {
-		if( user ) {
+	function firebaseLogin() {
+		firebase.auth().signInWithCustomToken( user.firebaseToken );
+	}
+
+	function firebaseLogout() {
+		firebase.auth().signOut();
+	}
+
+	function userChanged( usr ) {
+		user = usr;
+		if( userLoggedIn == null )
+			return;
+		if( usr.isGuest && userLoggedIn )
+			firebaseLogout();
+		else if( ! usr.isGuest && ! userLoggedIn )
+			firebaseLogin();
+	}
+
+	firebase.auth().onAuthStateChanged( function( usr ) {
+		if( usr ) {
 			<#-- Session expired in server but not in firebase - very rare case -->
-			if( isGuest ) {
-				firebase.auth().signOut();
+			if( user.isGuest ) {
+				firebaseLogout();
 				return;
 			}
 			userLoggedIn = true;
-			node = firebase.database().ref( "NOTIFICATION" ).child( user.uid ).child( "newNotificationCount" );
+			node = firebase.database().ref( "NOTIFICATION" ).child( usr.uid ).child( "newNotificationCount" );
 			node.on( 'value', function( snapshot ) {
 				var snapshot = snapshot.val();
 				console.log( snapshot );
 			});
 		} else {
+			<#-- Session expired in firebase but not in server - very rare case -->
+			if( ! user.isGuest ) {
+				firebaseLogin();
+				return;
+			}
 			userLoggedIn = false;
 			node = null;
 		}
 	});
-
-	function userChanged( user ) {
-		isGuest = user.isGuest;
-		if( userLoggedIn == null )
-			return;
-		if( user.isGuest && userLoggedIn ) {
-			firebase.auth().signOut();
-		} else if( ! user.isGuest && ! userLoggedIn ) {
-			firebase.auth().signInWithCustomToken( user.firebaseToken ).catch( function( error ) {
-				console.log( error.code + " " + error.message );
-			});
-		}
-	}
+	
 </script>
