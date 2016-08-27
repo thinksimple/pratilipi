@@ -14,10 +14,10 @@
 <#-- Polymer dependencies -->
 <script src='http://0.ptlp.co/resource-all/jquery.bootstrap.polymer.js'></script>
 <link rel='import' href='http://0.ptlp.co/resource-all/pratilipi.polymer.elements.html'>
-<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?7'>
+<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?8'>
 
 <#-- Custom Stylesheet -->
-<link type="text/css" rel="stylesheet" href="/resources/style.css?64">
+<link type="text/css" rel="stylesheet" href="/resources/style.css?65">
 
 <#include "GoogleAnalytics.ftl">
 
@@ -84,8 +84,10 @@
 			userLoggedIn = true;
 			node = firebase.database().ref( "NOTIFICATION" ).child( usr.uid ).child( "newNotificationCount" );
 			node.on( 'value', function( snapshot ) {
-				var snapshot = snapshot.val();
-				console.log( snapshot );
+				var newNotificationCount = snapshot.val();
+				console.log( newNotificationCount );
+				if( newNotificationCount != null && document.querySelector( 'pratilipi-header' ) != null )
+					document.querySelector( 'pratilipi-header' ).updateNewNotificationCount( newNotificationCount );
 			});
 		} else {
 			<#-- Session expired in firebase but not in server - very rare case -->

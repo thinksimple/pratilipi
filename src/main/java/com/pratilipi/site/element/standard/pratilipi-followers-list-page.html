@@ -3,11 +3,6 @@
 		:host {
 			display: block;
 		}
-		.pratilipi-header {
-			position: fixed;
-			width: 100%;
-			z-index: 10;
-		}
 		@media only screen and (max-width: 767px) {
 			main {
 				padding-top: 85px;
@@ -74,8 +69,8 @@
 		<pratilipi-write pratilipi-types='[[ pratilipiTypes ]]'></pratilipi-write>
 		<pratilipi-alert></pratilipi-alert>
 
-		<div class="pratilipi-header">
-   			<pratilipi-new-header language-map="[[ languageMap ]]" user='[[ user ]]'></pratilipi-new-header>
+		<div class="header">
+   			<pratilipi-header language-map="[[ languageMap ]]" user='[[ user ]]'></pratilipi-header>
    		</div>
    		<main>
    			<div class="parent-container margin-top-bottom">
