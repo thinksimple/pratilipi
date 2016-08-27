@@ -13,7 +13,7 @@ body {
 	font-size: 14px;
 	line-height: 24px; 
 }
-.header {
+.header-pos {
 	position: fixed;
 	width: 100%;
 	z-index: 10;

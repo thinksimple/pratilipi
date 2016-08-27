@@ -13,7 +13,7 @@
 				<pratilipi-user user='{{ user }}' user-data='${ userJson }'></pratilipi-user>
 				<pratilipi-write pratilipi-types='${ pratilipiTypesJson }'></pratilipi-write>
 				<pratilipi-alert></pratilipi-alert>
-				<div class="header">
+				<div class="header-pos">
 		   			<pratilipi-header language-map='${ languageMap }' user='[[ user ]]'></pratilipi-header>
 		   		</div>
 		   		<main>
