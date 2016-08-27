@@ -27,7 +27,7 @@
 	</template>
 
 	<script>
-		function convertDate( date ) {
+		function convertDateWithMinutes( date ) {
 			var d = new Date( date );
 			function weekday(d) { var days= [ "${ _strings.day_sun }", "${ _strings.day_mon }", "${ _strings.day_tue }", "${ _strings.day_wed }", "${ _strings.day_thu }", "${ _strings.day_fri }", "${ _strings.day_sat }" ];
 			return days[d]; }

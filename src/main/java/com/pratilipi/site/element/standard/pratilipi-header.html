@@ -459,10 +459,6 @@
 					window.location.href = "/notifications";
 			},
 
-			_userNotifiedApiError: function() {
-				this.set( 'showNotificationCount', true );
-			},
-
 			_openMenuNavigation: function() {
 				document.querySelector( 'pratilipi-navigation-drawer' ).show();
 			},
@@ -495,11 +491,8 @@
 
 			_notificationListApiResponse: function( ajaxResponse ) {
 				var response = ajaxResponse.detail.response;
-				if( response != null && response.notificationList != null  ) {
-					this.set( 'popupNotificationList', [] );
-					for( var i = 0; i < response.notificationList.length; i++ )
-						this.push( 'popupNotificationList', response.notificationList[i] );
-				}
+				if( response != null && response.notificationList != null  )
+					this.set( 'popupNotificationList', response.notificationList );
 			},
 
 			_notificationCountObserver: function() {
@@ -508,7 +501,9 @@
 
 			updateNewNotificationCount: function( newNotificationCount ) {
 				this.set( 'newNotificationCount', newNotificationCount );
-				this.getNotificationData();
+				if( ( newNotificationCount == 0 && this.popupNotificationList.length == 0 )
+						|| newNotificationCount > 0 )
+					this.getNotificationData();
 			}
 
 		});

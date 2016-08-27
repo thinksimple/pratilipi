@@ -15,6 +15,7 @@
 
 	<template>
 		<a class="notification-message list-group-item" style="border-radius: 0px;" href="{{ sourceUrl }}">
+			<span class="notification-message-snippet"></span>
 			<br><iron-icon icon="social:person" style="height: 18px;width: 18px;"></iron-icon>&nbsp;<span style="display: inline;" class="text-muted">{{ time }}</span>
 		</a>
 	</template>
@@ -38,7 +39,7 @@
 				this.set( 'sourceUrl', this.notification.sourceUrl );
 				this.set( 'time', convertDate( this.notification.lastUpdatedMillis ) );
 
-				jQuery( this.querySelector( '.notification-message' ) ).prepend( this.message );
+				jQuery( this.querySelector( '.notification-message-snippet' ) ).html( this.message );
 				jQuery( this.querySelector( '.notification-message' ) ).addClass( this.notification.state == "UNREAD" ? 
 						"notification-unread-state" : "notification-read-state" );
 

@@ -2,9 +2,13 @@
 	<style>
 		:host {
 			display: block;
+			margin-bottom: 4px;
 		}
-		.secondary-500 {
+		:host paper-card {
+			display: block;
+			width: 100%;
 			padding: 12px 8px;
+			--paper-card-header: { display: none };
 		}
 		h6 {
 			font-weight: 700;
@@ -61,7 +65,7 @@
 		}
 	</style>
 	<template>
-		<div class="secondary-500 pratilipi-shadow">
+		<paper-card>
 			<h6 class="text-center pratilipi-red">
 				${ _strings.my_library }
 			</h6>
@@ -85,7 +89,7 @@
 					<h6>${ _strings.empty_library }</h6>
 				</div>
 			</template>
-		</div>
+		</paper-card>
 		<iron-ajax
 				id="UserPratilipiLibraryListApi"
 				url="/api/userpratilipi/library/list"
