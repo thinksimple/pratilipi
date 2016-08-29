@@ -207,6 +207,7 @@ public class AuthorApi extends GenericApi {
 		private String location;
 		private String summary;
 		
+		private Boolean hasCustomImage;
 		private String pageUrl;
 		private String imageUrl;
 
@@ -226,48 +227,51 @@ public class AuthorApi extends GenericApi {
 		private Response() { }
 		
 		private Response( AuthorData authorData ) {
-			
-			this.authorId = authorData.getId();
-			
-			this.user = authorData.getUser() == null ? null : new UserApi.Response( authorData.getUser(), AuthorApi.class );
-			
-			this.firstName = authorData.getFirstName();
-			this.lastName = authorData.getLastName();
-			this.penName = authorData.getPenName();
-			this.name = authorData.getName();
-			this.fullName = authorData.getFullName();
-			
-			this.firstNameEn = authorData.getFirstNameEn();
-			this.lastNameEn = authorData.getLastNameEn();
-			this.penNameEn = authorData.getPenNameEn();
-			this.nameEn = authorData.getNameEn();
-			this.fullNameEn = authorData.getFullNameEn();
-			
-			this.gender = authorData.getGender();
-			this.dateOfBirth = authorData.getDateOfBirth();
-			
-			this.language = authorData.getLanguage();
-			this.location = authorData.getLocation();
-			this.summary = authorData.getSummary();
-			
-			this.pageUrl = authorData.getPageUrl();
-			this.imageUrl = authorData.getImageUrl();
-			
-			this.registrationDateMillis = authorData.getRegistrationDate().getTime();
-			
-			this.followCount = authorData.getFollowCount();
-			this.contentDrafted = authorData.getContentDrafted();
-			this.contentPublished = authorData.getContentPublished();
-			this.totalReadCount = authorData.getTotalReadCount();
-			this.totalFbLikeShareCount = authorData.getTotalFbLikeShareCount();
-
-			this.hasAccessToUpdate = authorData.hasAccessToUpdate();
-			
+			this( authorData, AuthorApi.class );
 		}
 		
 		public Response( AuthorData authorData, Class<? extends GenericApi> clazz ) {
-			
-			if( clazz == UserLoginApi.class ) {
+
+			if( clazz == AuthorApi.class || clazz == AuthorImageRemoveApi.class ) {
+				
+				this.authorId = authorData.getId();
+				
+				this.user = authorData.getUser() == null ? null : new UserApi.Response( authorData.getUser(), AuthorApi.class );
+				
+				this.firstName = authorData.getFirstName();
+				this.lastName = authorData.getLastName();
+				this.penName = authorData.getPenName();
+				this.name = authorData.getName();
+				this.fullName = authorData.getFullName();
+				
+				this.firstNameEn = authorData.getFirstNameEn();
+				this.lastNameEn = authorData.getLastNameEn();
+				this.penNameEn = authorData.getPenNameEn();
+				this.nameEn = authorData.getNameEn();
+				this.fullNameEn = authorData.getFullNameEn();
+				
+				this.gender = authorData.getGender();
+				this.dateOfBirth = authorData.getDateOfBirth();
+				
+				this.language = authorData.getLanguage();
+				this.location = authorData.getLocation();
+				this.summary = authorData.getSummary();
+				
+				this.hasCustomImage = authorData.hasCustomImage();
+				this.pageUrl = authorData.getPageUrl();
+				this.imageUrl = authorData.getImageUrl();
+				
+				this.registrationDateMillis = authorData.getRegistrationDate().getTime();
+				
+				this.followCount = authorData.getFollowCount();
+				this.contentDrafted = authorData.getContentDrafted();
+				this.contentPublished = authorData.getContentPublished();
+				this.totalReadCount = authorData.getTotalReadCount();
+				this.totalFbLikeShareCount = authorData.getTotalFbLikeShareCount();
+
+				this.hasAccessToUpdate = authorData.hasAccessToUpdate();
+				
+			} if( clazz == UserLoginApi.class ) {
 				
 				this.authorId = authorData.getId();
 				

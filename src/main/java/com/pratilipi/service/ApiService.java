@@ -4,6 +4,7 @@ import com.pratilipi.api.ApiRegistry;
 import com.pratilipi.api.GenericService;
 import com.pratilipi.api.impl.author.AuthorApi;
 import com.pratilipi.api.impl.author.AuthorImageApi;
+import com.pratilipi.api.impl.author.AuthorImageRemoveApi;
 import com.pratilipi.api.impl.author.AuthorListApi;
 import com.pratilipi.api.impl.blogpost.BlogPostApi;
 import com.pratilipi.api.impl.blogpost.BlogPostListApi;
@@ -64,6 +65,7 @@ public class ApiService extends GenericService {
 		ApiRegistry.register( AuthorApi.class );					// *.pratilipi.com
 		ApiRegistry.register( AuthorListApi.class );				// *.pratilipi.com
 		ApiRegistry.register( AuthorImageApi.class );				// *.pratilipi.com & AWS CloudFront
+		ApiRegistry.register( AuthorImageRemoveApi.class );			// *.pratilipi.com
 		
 		ApiRegistry.register( EventApi.class );						// *.pratilipi.com
 		ApiRegistry.register( EventListApi.class );					// *.pratilipi.com
