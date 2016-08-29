@@ -90,6 +90,20 @@ public class FirebaseApi {
 		return FirebaseAuth.getInstance().createCustomToken( userId.toString() );
 	}
 
+	public static void resetUserNotificationData( Long userId ) {
+
+		initialiseFirebase();
+
+		final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().
+											child( DATABASE_NOTIFICATION_TABLE ).
+											child( userId.toString() );
+
+		Map<String, Object> notificationJson = new HashMap<String, Object>();
+		notificationJson.put( "newNotificationCount", 0 );
+		notificationJson.put( "notificationIdList", new ArrayList<Long>() );
+		databaseReference.setValue( notificationJson );
+	}
+
 	public static void updateUserNotificationData( final Long notificationId, Long userId ) {
 
 		initialiseFirebase();

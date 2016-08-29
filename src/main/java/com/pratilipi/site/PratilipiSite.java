@@ -52,6 +52,7 @@ import com.pratilipi.common.type.RequestCookie;
 import com.pratilipi.common.type.RequestParameter;
 import com.pratilipi.common.type.Website;
 import com.pratilipi.common.util.FacebookApi;
+import com.pratilipi.common.util.FirebaseApi;
 import com.pratilipi.common.util.FreeMarkerUtil;
 import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.common.util.ThirdPartyResource;
@@ -1159,9 +1160,7 @@ public class PratilipiSite extends HttpServlet {
 				.getApi( NotificationListApi.class )
 				.get( new NotificationListApi.GetRequest() );
 
-		UserNotifiedApi.PostRequest request = new UserNotifiedApi.PostRequest();
-		request.setLastNotificationId( response.getNotificationList().get(0).getNotificationId() );
-		ApiRegistry.getApi( UserNotifiedApi.class ).post( request );
+		FirebaseApi.resetUserNotificationData( AccessTokenFilter.getAccessToken().getUserId() );
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", I18n.getString( "notification_notifications", language ) );
