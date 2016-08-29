@@ -445,7 +445,7 @@
 			write: function() {
 				if( this.user.isGuest ) {
 					this.set( 'writeButtonActive', true );
-					document.querySelector( 'pratilipi-user' ).logIn( true );
+					document.querySelector( 'pratilipi-user' ).logIn( true, "${ _strings.write_on_desktop_only }" );
 					return;
 				}
 				this.set( 'writeButtonActive', false );
@@ -458,14 +458,14 @@
 
 			_gotoLibrary: function() {
 				if( this.user.isGuest )
-					document.querySelector( 'pratilipi-user' ).logIn( true );
+					document.querySelector( 'pratilipi-user' ).logIn( true, "${ _strings.user_login_to_view_library }" );
 				else
 					window.location.href = "/library";
 			},
 
 			_notifications: function() {
 				if( this.user.isGuest )
-					document.querySelector( 'pratilipi-user' ).logIn( true );
+					document.querySelector( 'pratilipi-user' ).logIn( true, "${ _strings.user_login_to_view_notifications }" );
 				else
 					window.location.href = "/notifications";
 			},

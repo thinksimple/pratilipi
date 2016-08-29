@@ -63,9 +63,9 @@
 				this.querySelector( 'pratilipi-user-verification' ).close();
 			},
 
-			logIn: function( requireAccess ) {
+			logIn: function( requireAccess, customMessage ) {
 				this.closeAllElements();
-				this.querySelector( 'pratilipi-user-login' ).open( requireAccess );
+				this.querySelector( 'pratilipi-user-login' ).open( requireAccess, customMessage );
 			},
 			
 			register: function() {

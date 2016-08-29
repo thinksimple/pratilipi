@@ -148,7 +148,7 @@ write_type	=  প্রকার
 write_language	 =  ভাষা
 write_summary	 =  সংক্ষিপ্ত সারাংশ লিখুন
 write_create_new_content	=  নতুন রচনা সৃষ্টি
-write_on_desktop_only		= রচনা প্রকাশের  জন্য ডেস্কটপ থেকে লগ ইন করুন।সম্পর্কঃ bengali@pratilipi.com ফোন : (+91)9998023704
+write_on_desktop_only		= ডেস্কটপ ওয়েবসাইটে লেখার জন্য দয়াকরে লগ-ইন করুন
 write_fill_title			= শীর্ষক
 write_select_type			= শ্রেণী
 
@@ -183,8 +183,8 @@ user_no_followers			= দুঃখিত! আপনি কারও দ্বা
 user_login_to_view_followers = আপনার অনুসরণকারীদের জানতে লগ ইন করুন।
 user_no_following			= দুঃখিত! আপনি কাউকে অনুসরণ করছেন না!
 user_login_to_view_following = আপনার অনুসরণকারীদের দেখার জন্য দয়াকরে লগ ইন করুন।
-user_login_to_view_library = লাইব্রেরীতে যেতে হলে লগ ইন করা আবশ্যক।
-user_login_to_view_notifications = বিজ্ঞপ্তি দেখতে দয়াকরে লগ ইন করুন। 
+user_login_to_view_library = অসংখ্য বই লাইব্রেরীতে যোগ করার জন্য দয়াকরে লগ-ইন করুন 
+user_login_to_view_notifications = বআপনি যাদের অনুসরণ করছেন ,তাদের তথ্য পাওয়ার জন্য দয়াকরে লগ-ইন করুন 
 
 # My Account popup
 edit_account_heading		=  আপনার একাউন্ট
@@ -237,7 +237,6 @@ updated_review						= প্রক্রিয়া সম্পন্ন
 
 #Failure Messages
 server_error_message				= কিছু ত্রুটি ঘটেছে! অনুগ্রহপূর্বক আবার চেষ্টা করুন!
-write_please_login_desktop			= আপনি ডেস্কটপে লগ-ইন দ্বারা বিষয়বস্তু প্রকাশ করতে পারেন
 could_not_connect_server			= সার্ভারের সাথে সংযোগে অসফল।
 review_authorisation_error			= দুঃখিত!আপনি রিভিউ দেওয়ার জন্য অনুমোদিত নন।
 logout_failed						= লগ আউট অসফল।দয়াকরে পুনরায় প্রচেষ্টা করুন।

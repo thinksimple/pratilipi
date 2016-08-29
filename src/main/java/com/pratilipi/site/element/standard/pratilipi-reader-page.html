@@ -211,7 +211,7 @@
 			addToLibrary: function() {
 				if( this.user.isGuest ) {
 					this.addToLibClicked = true;
-					document.querySelector( 'pratilipi-user' ).logIn( true );
+					document.querySelector( 'pratilipi-user' ).logIn( true, "${ _strings.user_login_to_view_library }" );
 				} else {
 					this.$.AjaxPost.body = ( "pratilipiId=" + this.pratilipi.pratilipiId + "&" + "addedToLib=true" );
 					this.$.AjaxPost.generateRequest();
@@ -240,7 +240,7 @@
 			goToLibrary: function() {
 				if( this.user.isGuest ) {
 					this.goToLibraryBoolean = true;
-					document.querySelector( 'pratilipi-user' ).logIn( true );
+					document.querySelector( 'pratilipi-user' ).logIn( true, "${ _strings.user_login_to_view_library }" );
 				} else {
 					window.location.href = "/library";
 				}

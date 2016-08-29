@@ -59,7 +59,6 @@
 			}
 		}
 		.more-button {
-			margin-top: 16px;
 			background: #F1F8FB;
 			padding: 16px;
 			text-align: center;
@@ -83,7 +82,7 @@
 			overflow: visible;
 		}
 		.reduced-summary {
-			max-height: 200px; 
+			max-height: 46px; 
 			overflow: hidden;
 		}
 	</style>
@@ -190,7 +189,7 @@
 				height = clone.clientHeight;
 				document.body.removeChild( clone );
 				
-				if( height < 200 ) {
+				if( height < 92 ) {
 					jQuery( this.querySelector( '#author-summary' ) ).removeClass( 'complete-summary' );
 					jQuery( this.querySelector( '#author-summary' ) ).removeClass( 'reduced-summary' );
 					jQuery( this.querySelector( '#more-button' ) ).css( 'display', 'none' );

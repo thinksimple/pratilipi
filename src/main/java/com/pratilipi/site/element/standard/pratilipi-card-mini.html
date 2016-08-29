@@ -541,7 +541,7 @@
 					}, 120 );
 					this.async( function() {
 						jQuery( this.querySelector( '.library-popup' ) ).modal( 'hide' );
-						document.querySelector( 'pratilipi-user' ).logIn( true );
+						document.querySelector( 'pratilipi-user' ).logIn( true, "{ _strings.user_login_to_view_library }" );
 					}, 250 );
 					return;
 				}
