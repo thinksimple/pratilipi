@@ -37,8 +37,14 @@ public class FirebaseApi {
 
 	
 	private static void initialiseFirebase() {
-		if( FirebaseApp.getApps().size() != 0 )
+		boolean hasBeenInitialized = false;
+		for( FirebaseApp app : FirebaseApp.getApps() )
+			if( app.getName().equals( FirebaseApp.DEFAULT_APP_NAME ) )
+				hasBeenInitialized = true;
+
+		if( hasBeenInitialized )
 			return;
+
 		String serviceAccountKey = DataAccessorFactory.getDataAccessor()
 				.getAppProperty( AppProperty.SERVICE_ACCOUNT_FIREBASE )
 				.getValue();
