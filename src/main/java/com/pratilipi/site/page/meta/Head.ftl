@@ -14,7 +14,7 @@
 <#-- Polymer dependencies -->
 <script src='http://0.ptlp.co/resource-all/jquery.bootstrap.polymer.js'></script>
 <link rel='import' href='http://0.ptlp.co/resource-all/pratilipi.polymer.elements.html'>
-<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?17'>
+<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?18'>
 
 <#-- Custom Stylesheet -->
 <link type="text/css" rel="stylesheet" href="/resources/style.css?66">
@@ -82,7 +82,7 @@
 
 	firebase.auth().onAuthStateChanged( function( usr ) {
 		if( usr ) {
-			<#-- Session expired in server but not in firebase - very rare case -->
+			/* Session expired in server but not in firebase - very rare case */
 			if( user.isGuest ) {
 				firebaseLogout();
 				return;
@@ -95,7 +95,7 @@
 					document.querySelector( 'pratilipi-header' ).updateNewNotificationCount( newNotificationCount );
 			});
 		} else {
-			<#-- Session expired in firebase but not in server - very rare case -->
+			/* Session expired in firebase but not in server - very rare case */
 			if( ! user.isGuest ) {
 				firebaseLogin();
 				return;

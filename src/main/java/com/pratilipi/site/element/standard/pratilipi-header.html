@@ -434,7 +434,9 @@
 													: "http://0.ptlp.co/author/image?width=48" );
 
 			if( this.user.isGuest )
-				this.set( 'newNotificationCount', 0 ); 
+				this.set( 'newNotificationCount', 0 );
+			else
+				this.getNotificationData();
 
 			},
 
