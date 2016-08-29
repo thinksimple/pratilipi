@@ -223,6 +223,18 @@
 				position: static;
 			}
 		}
+		paper-spinner.pratilipi-spinner {
+			display: block;
+			margin: 8px auto;
+			--paper-spinner-layer-1-color: #D0021B;
+			--paper-spinner-layer-2-color: #107FE5;
+			--paper-spinner-layer-3-color: #D0021B;
+			--paper-spinner-layer-4-color: #107FE5;
+		}
+		/* Bootstrap overrides */
+		.dropdown-menu-right {
+			right: -20px;
+		}
 	</style>
 
 	<template>
@@ -289,7 +301,10 @@
 							<template is="dom-if" if="{{ !isGuest }}">
 								<template is="dom-if" if="{{ isBigWindow }}">
 									<iron-icon icon="social:notifications" class="dropdown-toggle" id="notification-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" on-click="_hideNotificationCount"></iron-icon>
-									<div class="dropdown-menu dropdown-menu-right list-group notification-dropdown-menu"  aria-labelledby="notification-dropdown">
+									<div style="min-width: 240px;" class="dropdown-menu dropdown-menu-right list-group notification-dropdown-menu"  aria-labelledby="notification-dropdown">
+										<template is="dom-if" if="{{ loadingNotifications }}">
+											<paper-spinner class="pratilipi-spinner" active></paper-spinner>
+										</template>
 										<pratilipi-notification-popup popup-notification-list="[[ popupNotificationList ]]"></pratilipi-notification-popup>
 									</div>
 								</template>
@@ -357,6 +372,7 @@
 				content-type="application/json"
 				handle-as="json"
 				on-response="_notificationListApiResponse"
+				on-error="_notificationListApiError"
 		></iron-ajax>
 	</template>
 
@@ -386,7 +402,8 @@
 				languageMap: { type: Object },
 				languageArray: { type: Array, value: function() { return []; } },
 				popupNotificationList: { type: Array, value: function() { return []; } },
-				isBigWindow: { type: Boolean }
+				isBigWindow: { type: Boolean },
+				loadingNotifications: { type: Boolean, value: false }
 			},
 
 			behaviors: [
@@ -483,16 +500,23 @@
 									"current" : language == "${ language }"
 									} );
 				}
+				this.getNotificationData();
 			},
 
 			getNotificationData: function() {
+				this.set( 'loadingNotifications', true );
 				this.$.NotificationListApi.generateRequest();
 			},
 
 			_notificationListApiResponse: function( ajaxResponse ) {
+				this.set( 'loadingNotifications', false );
 				var response = ajaxResponse.detail.response;
 				if( response != null && response.notificationList != null  )
 					this.set( 'popupNotificationList', response.notificationList );
+			},
+
+			_notificationListApiError: function( ajaxResponse ) {
+				this.set( 'loadingNotifications', false );
 			},
 
 			_notificationCountObserver: function() {
@@ -501,9 +525,7 @@
 
 			updateNewNotificationCount: function( newNotificationCount ) {
 				this.set( 'newNotificationCount', newNotificationCount );
-				if( ( newNotificationCount == 0 && this.popupNotificationList.length == 0 )
-						|| newNotificationCount > 0 )
-					this.getNotificationData();
+				this.getNotificationData();
 			}
 
 		});

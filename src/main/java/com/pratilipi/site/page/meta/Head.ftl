@@ -14,7 +14,7 @@
 <#-- Polymer dependencies -->
 <script src='http://0.ptlp.co/resource-all/jquery.bootstrap.polymer.js'></script>
 <link rel='import' href='http://0.ptlp.co/resource-all/pratilipi.polymer.elements.html'>
-<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?12'>
+<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?13'>
 
 <#-- Custom Stylesheet -->
 <link type="text/css" rel="stylesheet" href="/resources/style.css?66">
@@ -88,8 +88,8 @@
 			userLoggedIn = true;
 			node = firebase.database().ref( "NOTIFICATION" ).child( usr.uid ).child( "newNotificationCount" );
 			node.on( 'value', function( snapshot ) {
-				var newNotificationCount = snapshot.val();
-				if( newNotificationCount != null && document.querySelector( 'pratilipi-header' ) != null )
+				var newNotificationCount = snapshot.val() != null ? snapshot.val() : 0;
+				if( newNotificationCount > 0 && document.querySelector( 'pratilipi-header' ) != null )
 					document.querySelector( 'pratilipi-header' ).updateNewNotificationCount( newNotificationCount );
 			});
 		} else {
