@@ -192,7 +192,7 @@ public class TestApi extends GenericApi {
 
 		List<PratilipiEntity> pratilipiList = ObjectifyService.ofy().load()
 					.type( PratilipiEntity.class )
-					.filter( "AUTHOR_ID", 5635049061875712l )
+					.filter( "AUTHOR_ID", 5635049061875712L )
 					.list();
 		for( Pratilipi pratilipi : pratilipiList ) {
 			pratilipi.setAuthorId( 5714216063336448L );

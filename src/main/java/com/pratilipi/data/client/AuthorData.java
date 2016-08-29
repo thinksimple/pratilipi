@@ -76,6 +76,9 @@ public class AuthorData implements Serializable {
 	private boolean hasState;
 
 	
+	private Boolean hasCustomImage;
+	private boolean hasHasCustomImage;
+	
 	private String pageUrl;
 	private String imageUrl;
 
@@ -96,6 +99,13 @@ public class AuthorData implements Serializable {
 	private Boolean following;
 	private Boolean hasAccessToUpdate;
 	
+	
+	
+	public AuthorData() {}
+	
+	public AuthorData( Long authorId ) {
+		this.authorId = authorId;
+	}
 	
 	
 	public Long getId() {
@@ -345,6 +355,20 @@ public class AuthorData implements Serializable {
 		return this.hasState;
 	}
 
+	
+	public Boolean hasCustomImage() {
+		return hasCustomImage;
+	}
+	
+	public void setCustomImage( Boolean customImage ) {
+		this.hasCustomImage = customImage;
+		this.hasHasCustomImage = true;
+	}
+	
+	public boolean hasHasCustomImage() {
+		return this.hasHasCustomImage;
+	}
+	
 	
 	public String getPageUrl() {
 		return pageUrl;

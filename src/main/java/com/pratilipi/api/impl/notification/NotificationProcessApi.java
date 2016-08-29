@@ -3,8 +3,6 @@ package com.pratilipi.api.impl.notification;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.NoInitialContextException;
-
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;

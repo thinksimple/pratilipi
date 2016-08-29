@@ -163,6 +163,7 @@ public class AuthorDataUtil {
 		authorData.setLocation( author.getLocation() );
 		authorData.setSummary( HtmlUtil.toPlainText( author.getSummary() ) );
 		
+		authorData.setCustomImage( author.hasCustomImage() );
 		authorData.setPageUrl( authorPage.getUriAlias() == null ? authorPage.getUri() : authorPage.getUriAlias() );
 		authorData.setImageUrl( createAuthorImageUrl( author ) );
 
@@ -321,10 +322,11 @@ public class AuthorDataUtil {
 		Gson gson = new Gson();
 
 		
-		AuditLog auditLog = dataAccessor.newAuditLog();
-		auditLog.setAccessId( AccessTokenFilter.getAccessToken().getId() );
-		auditLog.setAccessType( isNew ? AccessType.AUTHOR_ADD : AccessType.AUTHOR_UPDATE );
-		auditLog.setEventDataOld( gson.toJson( author ) );
+		AuditLog auditLog = dataAccessor.newAuditLog(
+				AccessTokenFilter.getAccessToken().getId(),
+				isNew ? AccessType.AUTHOR_ADD : AccessType.AUTHOR_UPDATE,
+				author
+		);
 		
 		
 		if( authorData.hasFirstName() )
@@ -353,14 +355,14 @@ public class AuthorDataUtil {
 		if( authorData.hasSummary() )
 			author.setSummary( authorData.getSummary() );
 
+		if( authorData.hasHasCustomImage() )
+			author.setCustomImage( authorData.hasCustomImage() );
+		
 		if( authorData.hasState() )
 			author.setState( authorData.getState() );
 		if( isNew )
 			author.setRegistrationDate( new Date() );
 		author.setLastUpdated( new Date() );
-
-		
-		auditLog.setEventDataNew( gson.toJson( author ) );
 
 		
 		author = dataAccessor.createOrUpdateAuthor( author, auditLog );
