@@ -1160,8 +1160,6 @@ public class PratilipiSite extends HttpServlet {
 				.getApi( NotificationListApi.class )
 				.get( new NotificationListApi.GetRequest() );
 
-		FirebaseApi.resetUserNotificationData( AccessTokenFilter.getAccessToken().getUserId() );
-
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", I18n.getString( "notification_notifications", language ) );
 		dataModel.put( "notificationList", response.getNotificationList() );

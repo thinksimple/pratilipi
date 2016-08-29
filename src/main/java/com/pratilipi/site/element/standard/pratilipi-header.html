@@ -463,13 +463,6 @@
 					window.location.href = "/library";
 			},
 
-			_notifications: function() {
-				if( this.user.isGuest )
-					document.querySelector( 'pratilipi-user' ).logIn( true, "${ _strings.user_login_to_view_notifications }" );
-				else
-					window.location.href = "/notifications";
-			},
-
 			_hideNotificationCount: function() {
 				resetNewNotificationCount();
 				if( !this.isBigWindow )
