@@ -9,6 +9,13 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	<title>Writer Panel</title>
     <style>
+        html, body { 
+          margin:0; 
+          padding:0; 
+          height:100%; 
+          min-height: 100%;
+        }
+
         .horizontal-form-input {
             border: none;
             box-shadow: none;
@@ -69,7 +76,7 @@
             position: absolute;
             top: 0px;
             left: 0px;
-            height: 60px;
+            height: 50px;
             background: #999;
             text-align: center;
             opacity: 0.3;
@@ -195,19 +202,19 @@
     <div class="translucent">
     </div>
       <div class="pull-right" style="position: absolute;right: 1%;top: 1%;">
-          <button class="pratilipi-red-background-button">Publish</button>
-          <button class="btn btn-default" style="margin: 0 5px 0 5px;">Save</button>
-          <button class="btn btn-default" style="margin: 0 5px 0 5px;">Preview</button>       
+          <button class="pratilipi-red-background-button" style="padding: 6px 12px;">Publish</button>
+          <button class="btn btn-default" style="margin: 0 5px 0 5px; font-size: 13px;">Save</button>
+          <button class="btn btn-default" style="margin: 0 5px 0 5px; font-size: 13px;">Preview</button>       
           <a data-container="body" data-toggle="popover" data-content="
   <a href='#'>
     <img src='http://0.ptlp.co/resource-all/icon/svg/trash.svg' style='width:16px;height:16px;'>Delete this content
   </a>" data-html="true" data-placement="bottom" href="#"><img style="width: 58px;height: 25px;" src="http://0.ptlp.co/resource-all/icon/svg/dots-three-vertical.svg"></a>       
       </div>    
-    <div class="container">
+    <div class="container" style="height:100%;">
         <!-- panel -->
-        <div class="panel panel-default" style="margin-bottom: 5px;"> 
+        <div class="panel panel-default" style="margin-bottom: 5px;min-height: 100%;"> 
           <div class="panel-body" style="text-align: center;padding-bottom: 5px;">
-            <h1 class="book-name" style="margin-top: 5px;">Book Name</h1>
+            <h3 class="book-name" style="    margin-top: 2px;margin-bottom: 5px;">Book Name</h3>
             <form class="col-sm-10 col-sm-offset-1">
               <div class="form-group" style="position: relative;">
                 <input  class="form-control horizontal-form-input" id="subtitle" style="padding-bottom: 25px;padding-top: 20px;font-size: 25px;" placeholder="Add Subtitle">
@@ -227,12 +234,17 @@
                     <a href="#"><img src='http://0.ptlp.co/resource-all/icon/svg/camera2.svg' style='width:20px;height:20px;  margin: 0 2px 0 2px;'></a>
                 </div></div>
               </div>
-              <textarea style="border: none; margin-bottom:10px;" class="form-control horizontal-form-input" rows="20" placeholder="Tell your story here.."></textarea>               
+              <textarea style="border: none; margin-bottom:10px;" class="form-control horizontal-form-input" placeholder="Tell your story here.."></textarea>   
+           
             </form>
             <div class="clearfix"></div>
+
+        </div>            
+    </div>
+    </div>
             <!-- writer footer -->
             <div>
-                <nav aria-label="..." style="padding-top:10px;" class="col-lg-4 col-lg-offset-4 col-xs-6 col-xs-offset-3">
+                <nav aria-label="..." style="padding-top:10px;position: fixed; bottom: 0;"class="col-lg-4 col-lg-offset-4 col-xs-6 col-xs-offset-3">
                   <ul class="pager" style="margin: 0px;">
                     <li class="previous"><a class="pratilipi-red-background-button righttip" style="border-radius: 50%; padding:3px; margin-top: 0px;" data-toggle="tooltip" data-placement="left" title="Delete this Chapter" href="#"><img src="http://0.ptlp.co/resource-all/icon/svg/minus-white.svg"></a></li>
                     <a href="#"><img src="http://0.ptlp.co/resource-all/icon/svg/chevron-left.svg"></a>
@@ -243,15 +255,13 @@
                 </nav>
             </div> 
             <!-- progress bar -->
-            <div class="progress" style="height:2px;position: absolute;left: 0;right: 0;">
+            <div class="progress" style="height:2px;position: fixed;left: 0;right: 0;bottom:3%;">
               <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
                 <span class="sr-only">80% Complete (danger)</span>
               </div>
             </div>
-            <img src='http://0.ptlp.co/resource-all/icon/svg/circle-red.svg' style='left: 80%;width:15px;height:15px; position: absolute;margin: 0 2px 0 2px;'>  
-            <!-- end of progress bar                             -->
-        </div>       
-    </div>
+            <img src='http://0.ptlp.co/resource-all/icon/svg/circle-red.svg' style='left: 80%;bottom:3%;width:15px;height:15px; position: fixed;margin: 0 2px 0 2px;'>  
+            <!-- end of progress bar                             -->       
 </body>
 
 <script type="text/javascript">
@@ -261,5 +271,13 @@
     $(function () {
       $('[data-toggle="popover"]').popover();
     });
+    function h(e) {
+      $(e).css({'height':'auto','overflow-y':'hidden'}).height(e.scrollHeight);
+    }
+    $('textarea').each(function () {
+      h(this);
+    }).on('input', function () {
+      h(this);
+    });    
 </script>
 </html>
