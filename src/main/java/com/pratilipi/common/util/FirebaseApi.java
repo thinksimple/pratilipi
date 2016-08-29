@@ -94,7 +94,7 @@ public class FirebaseApi {
 
 		initialiseFirebase();
 
-		final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().
+		DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().
 											child( DATABASE_NOTIFICATION_TABLE ).
 											child( userId.toString() );
 
