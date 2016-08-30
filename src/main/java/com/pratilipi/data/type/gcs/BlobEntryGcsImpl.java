@@ -2,6 +2,7 @@ package com.pratilipi.data.type.gcs;
 
 import java.nio.ByteBuffer;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import com.google.appengine.tools.cloudstorage.GcsFileMetadata;
@@ -9,6 +10,9 @@ import com.pratilipi.data.type.BlobEntry;
 
 @SuppressWarnings("serial")
 public class BlobEntryGcsImpl implements BlobEntry {
+	
+	private static final String META_NAME = "X-Name"; // Original file name
+	
 	
 	private String fileName;
 	private byte[] data;
@@ -18,6 +22,7 @@ public class BlobEntryGcsImpl implements BlobEntry {
 	private String eTag;
 	private Date lastModified;
 	private Map<String, String> metaData;
+	
 	
 	
 	public BlobEntryGcsImpl( String fileName ) {
@@ -42,6 +47,7 @@ public class BlobEntryGcsImpl implements BlobEntry {
 	}
 
 	
+	
 	@Override
 	public String getName() {
 		return fileName;
@@ -52,6 +58,7 @@ public class BlobEntryGcsImpl implements BlobEntry {
 		this.fileName = fileName;
 	}
 
+	
 	@Override
 	public byte[] getData() {
 		return data;
@@ -66,6 +73,7 @@ public class BlobEntryGcsImpl implements BlobEntry {
 	public long getDataLength() {
 		return length;
 	}
+	
 
 	@Override
 	public String getMimeType() {
@@ -76,6 +84,20 @@ public class BlobEntryGcsImpl implements BlobEntry {
 	public void setMimeType( String mimeType ) {
 		this.mimeType = mimeType;
 	}
+	
+	
+	@Override
+	public String getMetaName() {
+		return metaData.get( META_NAME );
+	}
+	
+	@Override
+	public void setMetaName( String name ) {
+		if( metaData == null )
+			metaData = new HashMap<>( 0 );
+		metaData.put( META_NAME, name );
+	}
+	
 	
 	@Override
 	public String getCacheControl() {
@@ -92,19 +114,10 @@ public class BlobEntryGcsImpl implements BlobEntry {
 		return eTag;
 	}
 
+	
 	@Override
 	public Date getLastModified() {
 		return lastModified;
-	}
-
-	@Override
-	public Map<String, String> getMetaData() {
-		return metaData;
-	}
-
-	@Override
-	public String getMetaData( String key ) {
-		return metaData.get( key );
 	}
 
 }
