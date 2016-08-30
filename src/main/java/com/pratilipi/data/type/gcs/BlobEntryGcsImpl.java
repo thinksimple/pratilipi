@@ -11,9 +11,6 @@ import com.pratilipi.data.type.BlobEntry;
 @SuppressWarnings("serial")
 public class BlobEntryGcsImpl implements BlobEntry {
 	
-	private static final String META_NAME = "X-Name"; // Original file name
-	
-	
 	private String fileName;
 	private byte[] data;
 	private long length;

@@ -5,6 +5,9 @@ import java.util.Date;
 
 public interface BlobEntry extends Serializable {
 	
+	String META_NAME = "X-Name"; // Original file name
+	
+	
 	String getName();
 	
 	void setName( String name );

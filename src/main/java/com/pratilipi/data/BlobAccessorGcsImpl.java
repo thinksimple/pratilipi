@@ -106,6 +106,8 @@ public class BlobAccessorGcsImpl implements BlobAccessor {
 			builder.mimeType( blobEntry.getMimeType() );
 		if( blobEntry.getCacheControl() != null )
 			builder.cacheControl( blobEntry.getCacheControl() );
+		if( blobEntry.getMetaName() != null )
+			builder.addUserMetadata( BlobEntry.META_NAME, blobEntry.getMetaName() );
 		GcsFileOptions gcsFileOptions = builder.build();
 
 		try {
