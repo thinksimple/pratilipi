@@ -14,8 +14,8 @@ body {
 	line-height: 24px; 
 }
 /* Fix for known bootstrap issue */
-body.modal-open pratilipi-header .secondary-500 {
-	padding-right: 17px!important;
+body.modal-open {
+	padding: 0 !important;
 }
 .header-pos {
 	position: fixed;

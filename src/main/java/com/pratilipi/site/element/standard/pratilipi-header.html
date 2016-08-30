@@ -435,9 +435,10 @@
 
 			if( this.user.isGuest )
 				this.set( 'newNotificationCount', 0 );
-			else
-				this.getNotificationData();
+			},
 
+			_notificationCountObserver: function() {
+				this.set( 'showNotificationCount', this.newNotificationCount > 0 );
 			},
 
 			_logIn: function() {
@@ -511,10 +512,6 @@
 
 			_notificationListApiError: function( ajaxResponse ) {
 				this.set( 'loadingNotifications', false );
-			},
-
-			_notificationCountObserver: function() {
-				this.set( 'showNotificationCount', this.newNotificationCount > 0 );
 			},
 
 			updateNewNotificationCount: function( newNotificationCount ) {
