@@ -62,10 +62,6 @@ public class AuthorEntity implements Author {
 	@Index
 	private AuthorState STATE;
 	
-	@Deprecated
-	@Index
-	private Boolean CUSTOM_IMAGE;
-	
 	@Index
 	private String PROFILE_IMAGE;
 	
@@ -287,16 +283,6 @@ public class AuthorEntity implements Author {
 	@Override
 	public void setState( AuthorState state ) {
 		this.STATE = state;
-	}
-	
-	@Override
-	public Boolean hasCustomImage() {
-		return CUSTOM_IMAGE == null ? false : CUSTOM_IMAGE;
-	}
-
-	@Override
-	public void setCustomImage( Boolean customImage ) {
-		this.CUSTOM_IMAGE = customImage;
 	}
 	
 	@Override

@@ -90,23 +90,17 @@ public class AuthorDataUtil {
 	
 	public static String createAuthorProfileImageUrl( Author author, Integer width ) {
 		String url = "/author/image";
-		if( author.getProfileImage() != null ) {
+		if( author.getProfileImage() == null ) {
+			if( width != null )
+				url = url + "?width=" + width;
+			if( SystemProperty.CDN != null )
+				url = SystemProperty.CDN.replace( "*", "0" ) + url;
+		} else {
 			url = url + "?authorId=" + author.getId() + "&version=" + author.getProfileImage();
 			if( width != null )
 				url = url + "&width=" + width;
 			if( SystemProperty.CDN != null )
 				url = SystemProperty.CDN.replace( "*", author.getId() % 5 + 1 + "" ) + url;
-		} else if( author.hasCustomImage() ) {
-			url = url + "?authorId=" + author.getId() + "&version=" + author.getLastUpdated().getTime();
-			if( width != null )
-				url = url + "&width=" + width;
-			if( SystemProperty.CDN != null )
-				url = SystemProperty.CDN.replace( "*", author.getId() % 5 + 1 + "" ) + url;
-		} else {
-			if( width != null )
-				url = url + "?width=" + width;
-			if( SystemProperty.CDN != null )
-				url = SystemProperty.CDN.replace( "*", "0" ) + url;
 		}
 		return url;
 	}
@@ -191,12 +185,11 @@ public class AuthorDataUtil {
 		authorData.setLocation( author.getLocation() );
 		authorData.setSummary( HtmlUtil.toPlainText( author.getSummary() ) );
 		
-		authorData.setCustomImage( author.hasCustomImage() );
 		authorData.setPageUrl( authorPage.getUriAlias() == null ? authorPage.getUri() : authorPage.getUriAlias() );
 		authorData.setImageUrl( createAuthorProfileImageUrl( author ) );
 		authorData.setHasCoverImage( author.getCoverImage() != null );
 		authorData.setCoverImageUrl( createAuthorCoverImageUrl( author ) );
-		authorData.setHasProfileImage( author.hasCustomImage() );
+		authorData.setHasProfileImage( author.getProfileGooglePlus() != null );
 		authorData.setProfileImageUrl( createAuthorProfileImageUrl( author ) );
 
 		authorData.setRegistrationDate( author.getRegistrationDate() );
@@ -431,17 +424,12 @@ public class AuthorDataUtil {
 	public static BlobEntry getAuthorProfileImage( Long authorId, String version, Integer width )
 			throws UnexpectedServerException {
 
-		 // TODO: User version instead
-		Author author = authorId == null ? null : DataAccessorFactory.getDataAccessor().getAuthor( authorId );
-		
 		String coverImagePath = null;
 		
-		if( author != null && author.getProfileImage() != null )
-			coverImagePath = "author/" + authorId + "/images/profile/" + author.getProfileImage();
-		else if( author != null && author.hasCustomImage() )
-			coverImagePath = IMAGE_FOLDER + "/" +  authorId;
+		if( authorId != null && version != null )
+			coverImagePath = "author/" + authorId + "/images/profile/" + version;
 		else
-			coverImagePath = IMAGE_FOLDER + "/author"; // TODO: Update this path
+			coverImagePath = "author/default/images/profile";
 			
 		BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor().getBlob( coverImagePath );
 		

@@ -76,8 +76,6 @@ public class AuthorData implements Serializable {
 	private boolean hasState;
 
 	
-	private Boolean hasCustomImage;
-	
 	private String pageUrl;
 	@Deprecated
 	private String imageUrl;
@@ -359,15 +357,6 @@ public class AuthorData implements Serializable {
 		return this.hasState;
 	}
 
-	
-	public Boolean hasCustomImage() {
-		return hasCustomImage;
-	}
-	
-	public void setCustomImage( Boolean customImage ) {
-		this.hasCustomImage = customImage;
-	}
-	
 	
 	public String getPageUrl() {
 		return pageUrl;

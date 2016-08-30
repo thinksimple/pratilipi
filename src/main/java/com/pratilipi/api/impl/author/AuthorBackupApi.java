@@ -35,7 +35,7 @@ public class AuthorBackupApi extends GenericApi {
 	
 	private static final String CSV_HEADER = "AuthorId,UserId,"
 			+ "FirstName,LastName,PenName,FirstNameEN,LastNameEN,PenNameEN,"
-			+ "Language,HasSummary,HasImage,ContentsPublished,RegistrationDate";
+			+ "Language,HasSummary,ContentsPublished,RegistrationDate";
 	private static final String CSV_SEPARATOR = ",";
 	private static final String LINE_SEPARATOR = "\n";
 	
@@ -88,7 +88,6 @@ public class AuthorBackupApi extends GenericApi {
 							.append( CSV_SEPARATOR ).append( author.getPenNameEn()		== null ? "" : author.getPenNameEn() )
 							.append( CSV_SEPARATOR ).append( author.getLanguage() )
 							.append( CSV_SEPARATOR ).append( author.getSummary() != null && author.getSummary().trim().length() != 0 )
-							.append( CSV_SEPARATOR ).append( author.hasCustomImage() )
 							.append( CSV_SEPARATOR ).append( author.getContentPublished() )
 							.append( CSV_SEPARATOR ).append( csvDateFormat.format( author.getRegistrationDate() ) )
 							.append( LINE_SEPARATOR );

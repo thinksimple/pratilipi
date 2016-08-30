@@ -1,11 +1,8 @@
 package com.pratilipi.api.impl.test;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.googlecode.objectify.ObjectifyService;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -15,11 +12,6 @@ import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.Language;
-import com.pratilipi.data.BlobAccessor;
-import com.pratilipi.data.DataAccessorFactory;
-import com.pratilipi.data.type.Author;
-import com.pratilipi.data.type.BlobEntry;
-import com.pratilipi.data.type.gae.AuthorEntity;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/test" )
@@ -193,31 +185,6 @@ public class TestApi extends GenericApi {
 		TaskQueueFactory.getPratilipiOfflineTaskQueue().addAll( taskList );*/
 		
 
-		List<AuthorEntity> authorList = ObjectifyService.ofy().load()
-					.type( AuthorEntity.class )
-					.filter( "CUSTOM_IMAGE", true )
-					.limit( 100 )
-					.list();
-		
-		for( Author author : authorList ) {
-			if( ! author.hasCustomImage() ) {
-				continue;
-			} else {
-				BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-				BlobEntry blobEntry = blobAccessor.getBlob( "author-image/original/" + author.getId() );
-				if( blobEntry == null )
-					continue;
-				String profileImageName = blobEntry.getLastModified().getTime() + "";
-				blobEntry.setName( "author/" + author.getId() + "/images/profile/" + profileImageName );
-				blobAccessor.createOrUpdateBlob( blobEntry );
-				if( author.getProfileImage() == null )
-					author.setProfileImage( profileImageName );
-				author.setCustomImage( false );
-				logger.log( Level.INFO, author.getId().toString() + " " + blobEntry.getLastModified() );
-				ObjectifyService.ofy().save().entity( author );
-			}
-		}
-		
 		return new GenericResponse();
 		
 	}

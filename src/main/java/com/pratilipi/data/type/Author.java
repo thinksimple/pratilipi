@@ -78,12 +78,6 @@ public interface Author extends GenericOfyType, Serializable {
 	
 	void setState( AuthorState state );
 	
-	@Deprecated
-	Boolean hasCustomImage();
-
-	@Deprecated
-	void setCustomImage( Boolean customImage );
-
 	String getProfileImage();
 
 	void setProfileImage( String profileImage );
