@@ -24,15 +24,28 @@ public class AuthorImageApi extends GenericApi {
 
 		private Long authorId;
 
+		private String version;
+		
 		private Integer width;
 		
 	}
 	
 	public static class PostRequest extends GenericFileUploadRequest {
 
-		@Validate( required = true )
+		@Validate( required = true, minLong = 1L )
 		private Long authorId;
 
+	}
+
+	public static class Response extends GenericResponse {
+		
+		@SuppressWarnings("unused")
+		private String coverImageUrl;
+		
+		private Response( String coverImageUrl ) {
+			this.coverImageUrl = coverImageUrl;
+		}
+		
 	}
 
 	
@@ -40,8 +53,9 @@ public class AuthorImageApi extends GenericApi {
 	public GenericFileDownloadResponse get( GetRequest request )
 			throws UnexpectedServerException {
 
-		BlobEntry blobEntry = (BlobEntry) AuthorDataUtil.getAuthorImage(
+		BlobEntry blobEntry = (BlobEntry) AuthorDataUtil.getAuthorProfileImage(
 				request.authorId,
+				request.version,
 				request.width );
 		
 		return new GenericFileDownloadResponse(
@@ -55,22 +69,16 @@ public class AuthorImageApi extends GenericApi {
 	public GenericResponse post( PostRequest request )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
-		// This is to cover issue with jQuery FileUpload plug-in.
-		// When user hits "Ctrl+v", the plug-in uploads the data in clipboard as
-		// an image with file name "undefined".
-		// This can be removed as soon as Mark-4 is deprecated.
-		if( request.getName() != null && request.getName().equals( "undefined" ) )
-			throw new InvalidArgumentException( "File name 'undefined' is not allowed." );
-		
 		BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor().newBlob( request.getName() );
 		blobEntry.setData( request.getData() );
 		blobEntry.setMimeType( request.getMimeType() );
+		blobEntry.setMetaName( request.getName() );
 		
-		AuthorDataUtil.saveAuthorImage(
+		String profileImageUrl = AuthorDataUtil.saveAuthorImage(
 				request.authorId,
 				blobEntry );
 
-		return new GenericResponse();
+		return new Response( profileImageUrl );
 		
 	}		
 

@@ -84,7 +84,7 @@ public class AuthorDataUtil {
 	}
 	
 	
-	public static String createAuthorImageUrl( Author author ) {
+	public static String createAuthorProfileImageUrl( Author author ) {
 		return createAuthorImageUrl( author, null );
 	}
 	
@@ -111,7 +111,7 @@ public class AuthorDataUtil {
 	}
 	
 	public static String createAuthorCoverUrl( Author author, Integer width ) {
-		String url = "/author/image/cover";
+		String url = "/author/cover";
 		if( author.getCoverImage() == null ) {
 			if( width != null )
 				url = url + "?width=" + width;
@@ -187,11 +187,11 @@ public class AuthorDataUtil {
 		
 		authorData.setCustomImage( author.hasCustomImage() );
 		authorData.setPageUrl( authorPage.getUriAlias() == null ? authorPage.getUri() : authorPage.getUriAlias() );
-		authorData.setImageUrl( createAuthorImageUrl( author ) );
+		authorData.setImageUrl( createAuthorProfileImageUrl( author ) );
 		authorData.setHasCoverImage( author.getCoverImage() != null );
 		authorData.setCoverImageUrl( createAuthorCoverImageUrl( author ) );
 		authorData.setHasProfileImage( author.hasCustomImage() );
-		authorData.setProfileImageUrl( createAuthorImageUrl( author ) );
+		authorData.setProfileImageUrl( createAuthorProfileImageUrl( author ) );
 
 		authorData.setRegistrationDate( author.getRegistrationDate() );
 		authorData.setFollowCount( author.getFollowCount() );
@@ -425,18 +425,22 @@ public class AuthorDataUtil {
 	}
 	
 	
-	public static BlobEntry getAuthorImage( Long authorId, Integer width )
+	public static BlobEntry getAuthorProfileImage( Long authorId, String version, Integer width )
 			throws UnexpectedServerException {
 
+		 // TODO: User version instead
 		Author author = authorId == null ? null : DataAccessorFactory.getDataAccessor().getAuthor( authorId );
 		
-		BlobEntry blobEntry = null;
+		String coverImagePath = null;
 		
-		if( author != null && author.hasCustomImage() )
-			blobEntry = DataAccessorFactory.getBlobAccessor().getBlob( IMAGE_FOLDER + "/" + authorId ); // This may return null
-
-		if( blobEntry == null )
-			blobEntry = DataAccessorFactory.getBlobAccessor().getBlob( IMAGE_FOLDER + "/" + "author" );
+		if( author != null && author.getProfileImage() != null )
+			coverImagePath = "author/" + authorId + "/images/profile/" + author.getProfileImage();
+		else if( author != null && author.hasCustomImage() )
+			coverImagePath = IMAGE_FOLDER + "/" +  authorId;
+		else
+			coverImagePath = IMAGE_FOLDER + "/author"; // TODO: Update this path
+			
+		BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor().getBlob( coverImagePath );
 		
 		if( width != null )
 			blobEntry.setData( ImageUtil.resize( blobEntry.getData(), width, width ) );
@@ -445,7 +449,7 @@ public class AuthorDataUtil {
 		
 	}
 	
-	public static void saveAuthorImage( Long authorId, BlobEntry blobEntry )
+	public static String saveAuthorImage( Long authorId, BlobEntry blobEntry )
 			throws InsufficientAccessException, UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -455,26 +459,24 @@ public class AuthorDataUtil {
 			throw new InsufficientAccessException();
 
 		
+		String profileImageName = new Date().getTime() + "";
+		
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-		blobEntry.setName( IMAGE_FOLDER + "/" + authorId );
+		blobEntry.setName( "author/" + authorId + "/images/profile/" + profileImageName );
 		blobAccessor.createOrUpdateBlob( blobEntry );
 		
-
-		Gson gson = new Gson();
 		
-		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		AuditLog auditLog = dataAccessor.newAuditLog();
-		auditLog.setAccessId( accessToken.getId() );
-		auditLog.setAccessType( AccessType.AUTHOR_UPDATE );
-		auditLog.setEventDataOld( gson.toJson( author ) );
+		AuditLog auditLog = dataAccessor.newAuditLog(
+				AccessTokenFilter.getAccessToken().getId(),
+				AccessType.AUTHOR_UPDATE,
+				author );
 
-		author.setCustomImage( true );
+		author.setProfileImage( profileImageName );
 		author.setLastUpdated( new Date() );
 
-		auditLog.setEventDataNew( gson.toJson( author ) );
-		auditLog.setEventComment( "Uploaded profile image." );
-		
 		author = dataAccessor.createOrUpdateAuthor( author, auditLog );
+		
+		return createAuthorProfileImageUrl( author );
 		
 	}
 
@@ -517,8 +519,7 @@ public class AuthorDataUtil {
 		AuditLog auditLog = dataAccessor.newAuditLog(
 				AccessTokenFilter.getAccessToken().getId(),
 				AccessType.AUTHOR_UPDATE,
-				author
-		);
+				author );
 
 		author.setCoverImage( coverImageName );
 		author.setLastUpdated( new Date() );

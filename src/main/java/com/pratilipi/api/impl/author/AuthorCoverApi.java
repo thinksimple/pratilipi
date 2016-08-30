@@ -21,10 +21,8 @@ public class AuthorCoverApi extends GenericApi {
 
 	public static class GetRequest extends GenericRequest {
 
-		@Validate( required = true, minLong = 1L )
 		private Long authorId;
 		
-		@Validate( required = true )
 		private String version;
 		
 		private Integer width;
