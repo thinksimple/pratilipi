@@ -62,11 +62,15 @@ public class AuthorEntity implements Author {
 	@Index
 	private AuthorState STATE;
 	
+	@Deprecated
 	@Index
 	private Boolean CUSTOM_IMAGE;
 	
 	@Index
 	private String COVER_IMAGE;
+	
+	@Index
+	private String PROFILE_IMAGE;
 	
 
 	@Index
@@ -303,6 +307,16 @@ public class AuthorEntity implements Author {
 	@Override
 	public void setCoverImage( String coverImage ) {
 		this.COVER_IMAGE = coverImage;
+	}
+	
+	@Override
+	public String getProfileImage() {
+		return PROFILE_IMAGE;
+	}
+
+	@Override
+	public void setProfileImage( String profileImage ) {
+		this.PROFILE_IMAGE = profileImage;
 	}
 	
 	@Override
