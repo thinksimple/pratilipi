@@ -18,11 +18,16 @@
 		</script>
 		<style type="text/css" media="print"> * { visibility: hidden; display: none; } </style>
 		<style>
+			<#--
 			body {
 				-webkit-transition: all 0.5s ease;
 				-moz-transition: all 0.5s ease;
 				-o-transition: all 0.5s ease;
 				transition: all 0.5s ease;
+			}
+			-->
+			body.modal-open pratilipi-reader-header paper-card {
+				padding-right: 32px!important;
 			}
 		</style>
 		<script language=JavaScript>
