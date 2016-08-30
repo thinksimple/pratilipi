@@ -196,7 +196,7 @@ public class TestApi extends GenericApi {
 		List<AuthorEntity> authorList = ObjectifyService.ofy().load()
 					.type( AuthorEntity.class )
 					.filter( "CUSTOM_IMAGE", true )
-					.limit( 1 )
+					.limit( 100 )
 					.list();
 		
 		for( Author author : authorList ) {
@@ -208,7 +208,8 @@ public class TestApi extends GenericApi {
 				String profileImageName = blobEntry.getLastModified().getTime() + "";
 				blobEntry.setName( "author/" + author.getId() + "/images/profile/" + profileImageName );
 				blobAccessor.createOrUpdateBlob( blobEntry );
-				author.setProfileImage( profileImageName );
+				if( author.getProfileImage() == null )
+					author.setProfileImage( profileImageName );
 				author.setCustomImage( false );
 				logger.log( Level.INFO, author.getId().toString() + " " + blobEntry.getLastModified() );
 				ObjectifyService.ofy().save().entity( author );
