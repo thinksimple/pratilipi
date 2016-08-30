@@ -64,6 +64,10 @@ public class AuthorEntity implements Author {
 	
 	@Index
 	private Boolean CUSTOM_IMAGE;
+	
+	@Index
+	private String COVER_IMAGE;
+	
 
 	@Index
 	private Date REGISTRATION_DATE;
@@ -289,6 +293,16 @@ public class AuthorEntity implements Author {
 	@Override
 	public void setCustomImage( Boolean customImage ) {
 		this.CUSTOM_IMAGE = customImage;
+	}
+	
+	@Override
+	public String getCoverImage() {
+		return COVER_IMAGE;
+	}
+
+	@Override
+	public void setCoverImage( String coverImage ) {
+		this.COVER_IMAGE = coverImage;
 	}
 	
 	@Override
