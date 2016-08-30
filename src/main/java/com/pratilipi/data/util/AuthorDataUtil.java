@@ -95,13 +95,13 @@ public class AuthorDataUtil {
 			if( width != null )
 				url = url + "&width=" + width;
 			if( SystemProperty.CDN != null )
-				url = SystemProperty.CDN.replace( "*", author.getId() % 5 + "" ) + url;
+				url = SystemProperty.CDN.replace( "*", author.getId() % 5 + 1 + "" ) + url;
 		} else if( author.hasCustomImage() ) {
 			url = url + "?authorId=" + author.getId() + "&version=" + author.getLastUpdated().getTime();
 			if( width != null )
 				url = url + "&width=" + width;
 			if( SystemProperty.CDN != null )
-				url = SystemProperty.CDN.replace( "*", author.getId() % 5 + "" ) + url;
+				url = SystemProperty.CDN.replace( "*", author.getId() % 5 + 1 + "" ) + url;
 		} else {
 			if( width != null )
 				url = url + "?width=" + width;
@@ -128,7 +128,7 @@ public class AuthorDataUtil {
 			if( width != null )
 				url = url + "&width=" + width;
 			if( SystemProperty.CDN != null )
-				url = SystemProperty.CDN.replace( "*", author.getId() % 5 + "" ) + url;
+				url = SystemProperty.CDN.replace( "*", author.getId() % 5 + 1 + "" ) + url;
 		}
 		return url;
 	}

@@ -164,7 +164,7 @@ public class PratilipiSiteFilter implements Filter {
 					: requestUri.substring( requestUri.lastIndexOf( '/' ) + 1, requestUri.indexOf( '?' ) );
 			Long authorId = Long.parseLong( authorIdStr );
 			Author author = DataAccessorFactory.getDataAccessor().getAuthor( authorId );
-			response.setHeader( "Location", AuthorDataUtil.createAuthorImageUrl( author, 150 ) );
+			response.setHeader( "Location", AuthorDataUtil.createAuthorProfileImageUrl( author, 150 ) );
 		
 			
 		} else if( oldPratilipiReaderUrlRegEx.matcher( requestUri ).matches() ) { // Redirecting to new Pratilipi reader url
