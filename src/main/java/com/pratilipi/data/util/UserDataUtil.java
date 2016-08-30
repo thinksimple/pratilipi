@@ -148,7 +148,7 @@ public class UserDataUtil {
 			userData.setDateOfBirth( authorData.getDateOfBirth() );
 			userData.setProfilePageUrl( authorData.getPageUrl() );
 			userData.setProfileImageUrl( authorData.getImageUrl() );
-//			userData.setFirebaseToken( FirebaseApi.getCustomTokenForUser( userData.getId() ) );
+			userData.setFirebaseToken( FirebaseApi.getCustomTokenForUser( userData.getId() ) );
 		}
 		
 		return userData;

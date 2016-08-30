@@ -37,22 +37,33 @@ public class FirebaseApi {
 
 	
 	private static void initialiseFirebase() {
+
 		boolean hasBeenInitialized = false;
+
+		logger.log( Level.INFO, "Firebase Apps = " + FirebaseApp.getApps() );
 		for( FirebaseApp app : FirebaseApp.getApps() )
 			if( app.getName().equals( FirebaseApp.DEFAULT_APP_NAME ) )
 				hasBeenInitialized = true;
 
-		if( hasBeenInitialized )
+		if( hasBeenInitialized ) {
+			logger.log( Level.INFO, "Firebase already initialised!" );
 			return;
+		}
+
+		logger.log( Level.INFO, "Initialising Firebase..." );
 
 		String serviceAccountKey = DataAccessorFactory.getDataAccessor()
 				.getAppProperty( AppProperty.SERVICE_ACCOUNT_FIREBASE )
 				.getValue();
+
 		FirebaseOptions options = new FirebaseOptions.Builder()
 				.setServiceAccount( IOUtils.toInputStream( serviceAccountKey, StandardCharsets.UTF_8 ) )
 				.setDatabaseUrl( DATABASE_URL )
 				.build();
+
 		FirebaseApp.initializeApp( options );
+
+		logger.log( Level.INFO, "Firebase Initialised successfully!" );
 	}
 	
 	private static String getFcmServerKey() {
