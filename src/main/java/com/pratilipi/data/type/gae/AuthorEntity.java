@@ -67,10 +67,10 @@ public class AuthorEntity implements Author {
 	private Boolean CUSTOM_IMAGE;
 	
 	@Index
-	private String COVER_IMAGE;
+	private String PROFILE_IMAGE;
 	
 	@Index
-	private String PROFILE_IMAGE;
+	private String COVER_IMAGE;
 	
 
 	@Index
@@ -300,16 +300,6 @@ public class AuthorEntity implements Author {
 	}
 	
 	@Override
-	public String getCoverImage() {
-		return COVER_IMAGE;
-	}
-
-	@Override
-	public void setCoverImage( String coverImage ) {
-		this.COVER_IMAGE = coverImage;
-	}
-	
-	@Override
 	public String getProfileImage() {
 		return PROFILE_IMAGE;
 	}
@@ -317,6 +307,16 @@ public class AuthorEntity implements Author {
 	@Override
 	public void setProfileImage( String profileImage ) {
 		this.PROFILE_IMAGE = profileImage;
+	}
+	
+	@Override
+	public String getCoverImage() {
+		return COVER_IMAGE;
+	}
+
+	@Override
+	public void setCoverImage( String coverImage ) {
+		this.COVER_IMAGE = coverImage;
 	}
 	
 	@Override

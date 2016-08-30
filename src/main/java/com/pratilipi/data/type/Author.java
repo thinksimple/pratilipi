@@ -84,13 +84,13 @@ public interface Author extends GenericOfyType, Serializable {
 	@Deprecated
 	void setCustomImage( Boolean customImage );
 
-	String getCoverImage();
-	
-	void setCoverImage( String coverImage );
-	
 	String getProfileImage();
 
 	void setProfileImage( String profileImage );
+	
+	String getCoverImage();
+	
+	void setCoverImage( String coverImage );
 	
 	Date getRegistrationDate();
 	

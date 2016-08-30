@@ -16,8 +16,8 @@ import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.util.AuthorDataUtil;
 
 @SuppressWarnings("serial")
-@Bind( uri = "/author/image/cover" )
-public class AuthorImageCoverApi extends GenericApi {
+@Bind( uri = "/author/cover" )
+public class AuthorCoverApi extends GenericApi {
 
 	public static class GetRequest extends GenericRequest {
 

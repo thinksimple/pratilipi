@@ -529,10 +529,10 @@ public class AuthorDataUtil {
 		
 	}
 	
-	public static void removeAuthorImage( Long authorId, boolean profileImage, boolean coverImage )
+	public static void removeAuthorImage( Long authorId, boolean coverImage, boolean profileImage )
 			throws InsufficientAccessException, UnexpectedServerException {
 		
-		if( ! profileImage && ! coverImage )
+		if( ! coverImage && ! profileImage )
 			return;
 		
 		
@@ -550,10 +550,10 @@ public class AuthorDataUtil {
 		);
 
 		
-		if( profileImage )
-			author.setCustomImage( false );
 		if( coverImage )
 			author.setCoverImage( null );
+		if( profileImage )
+			author.setProfileImage( null );
 		author.setLastUpdated( new Date() );
 		
 		
