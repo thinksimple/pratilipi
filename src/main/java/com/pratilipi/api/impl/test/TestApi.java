@@ -205,6 +205,8 @@ public class TestApi extends GenericApi {
 			} else {
 				BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
 				BlobEntry blobEntry = blobAccessor.getBlob( "author-image/original/" + author.getId() );
+				if( blobEntry == null )
+					continue;
 				String profileImageName = blobEntry.getLastModified().getTime() + "";
 				blobEntry.setName( "author/" + author.getId() + "/images/profile/" + profileImageName );
 				blobAccessor.createOrUpdateBlob( blobEntry );
