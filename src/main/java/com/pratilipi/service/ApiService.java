@@ -3,9 +3,9 @@ package com.pratilipi.service;
 import com.pratilipi.api.ApiRegistry;
 import com.pratilipi.api.GenericService;
 import com.pratilipi.api.impl.author.AuthorApi;
-import com.pratilipi.api.impl.author.AuthorImageApi;
 import com.pratilipi.api.impl.author.AuthorCoverApi;
 import com.pratilipi.api.impl.author.AuthorCoverRemoveApi;
+import com.pratilipi.api.impl.author.AuthorImageApi;
 import com.pratilipi.api.impl.author.AuthorImageRemoveApi;
 import com.pratilipi.api.impl.author.AuthorListApi;
 import com.pratilipi.api.impl.blogpost.BlogPostApi;
@@ -22,7 +22,6 @@ import com.pratilipi.api.impl.pratilipi.PratilipiContentApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentImageApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiCoverApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiListApi;
-import com.pratilipi.api.impl.test.TestApi;
 import com.pratilipi.api.impl.user.UserApi;
 import com.pratilipi.api.impl.user.UserEmailApi;
 import com.pratilipi.api.impl.user.UserLoginApi;
@@ -45,9 +44,6 @@ import com.pratilipi.api.impl.vote.VoteApi;
 public class ApiService extends GenericService {
 	
 	static {
-		
-		ApiRegistry.register( TestApi.class );
-		
 		
 		ApiRegistry.register( UserLoginApi.class );					// *.pratilipi.com
 		ApiRegistry.register( UserLoginFacebookApi.class );			// *.pratilipi.com
