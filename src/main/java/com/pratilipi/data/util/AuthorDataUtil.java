@@ -85,12 +85,18 @@ public class AuthorDataUtil {
 	
 	
 	public static String createAuthorProfileImageUrl( Author author ) {
-		return createAuthorImageUrl( author, null );
+		return createAuthorProfileImageUrl( author, null );
 	}
 	
-	public static String createAuthorImageUrl( Author author, Integer width ) {
+	public static String createAuthorProfileImageUrl( Author author, Integer width ) {
 		String url = "/author/image";
-		if( author.hasCustomImage() ) {
+		if( author.getProfileImage() != null ) {
+			url = url + "?authorId=" + author.getId() + "&version=" + author.getProfileImage();
+			if( width != null )
+				url = url + "&width=" + width;
+			if( SystemProperty.CDN != null )
+				url = SystemProperty.CDN.replace( "*", author.getId() % 5 + "" ) + url;
+		} else if( author.hasCustomImage() ) {
 			url = url + "?authorId=" + author.getId() + "&version=" + author.getLastUpdated().getTime();
 			if( width != null )
 				url = url + "&width=" + width;
@@ -100,17 +106,17 @@ public class AuthorDataUtil {
 			if( width != null )
 				url = url + "?width=" + width;
 			if( SystemProperty.CDN != null )
-				url = SystemProperty.CDN.replace( "*", "10" ) + url;
+				url = SystemProperty.CDN.replace( "*", "0" ) + url;
 		}
 		return url;
 	}
 	
 	
 	public static String createAuthorCoverImageUrl( Author author ) {
-		return createAuthorCoverUrl( author, null );
+		return createAuthorCoverImageUrl( author, null );
 	}
 	
-	public static String createAuthorCoverUrl( Author author, Integer width ) {
+	public static String createAuthorCoverImageUrl( Author author, Integer width ) {
 		String url = "/author/cover";
 		if( author.getCoverImage() == null ) {
 			if( width != null )
@@ -344,9 +350,6 @@ public class AuthorDataUtil {
 		if( ! isNew && ! hasAccessToUpdateAuthorData( author, authorData ) )
 			throw new InsufficientAccessException();
 		
-		
-		Gson gson = new Gson();
-
 		
 		AuditLog auditLog = dataAccessor.newAuditLog(
 				AccessTokenFilter.getAccessToken().getId(),
