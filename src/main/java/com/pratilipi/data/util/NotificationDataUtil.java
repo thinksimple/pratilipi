@@ -132,7 +132,8 @@ public class NotificationDataUtil {
 				
 				notificationData.setMessage( createNotificationMessage( notification.getDataIds(), users, notificationLanguage, plainText ) );
 				notificationData.setSourceUrl( "/followers?" + RequestParameter.NOTIFICATION_ID.getName() + "=" + notification.getId() );
-				notificationData.setDisplayImageUrl( users.get( 0 ).getProfileImageUrl() );
+				if( notification.getDataIds().size() != 0 )
+					notificationData.setDisplayImageUrl( users.get( notification.getDataIds().get( 0 ) ).getProfileImageUrl() );
 			}
 			
 			notificationData.setState( notification.getState() );
