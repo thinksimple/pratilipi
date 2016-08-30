@@ -27,6 +27,8 @@ import com.pratilipi.data.type.AppProperty;
 
 public class FirebaseApi {
 
+	private static Boolean hasBeenInitialized = false;
+
 	private static final Logger logger =
 			Logger.getLogger( FirebaseApi.class.getName() );
 
@@ -36,20 +38,12 @@ public class FirebaseApi {
 	private static final String DATABASE_NOTIFICATION_TABLE = "NOTIFICATION";
 
 	
-	private static void initialiseFirebase() {
+	private synchronized static void initialiseFirebase() {
 
-		boolean hasBeenInitialized = false;
-
-		logger.log( Level.INFO, "Firebase Apps = " + FirebaseApp.getApps() );
-		for( FirebaseApp app : FirebaseApp.getApps() )
-			if( app.getName().equals( FirebaseApp.DEFAULT_APP_NAME ) )
-				hasBeenInitialized = true;
-
-		if( hasBeenInitialized ) {
-			logger.log( Level.INFO, "Firebase already initialised!" );
+		if( hasBeenInitialized )
 			return;
-		}
 
+		logger.log( Level.INFO, "Firebase Apps: " + FirebaseApp.getApps() );
 		logger.log( Level.INFO, "Initialising Firebase..." );
 
 		String serviceAccountKey = DataAccessorFactory.getDataAccessor()
@@ -62,8 +56,9 @@ public class FirebaseApi {
 				.build();
 
 		FirebaseApp.initializeApp( options );
+		hasBeenInitialized = true;
 
-		logger.log( Level.INFO, "Firebase Initialised successfully!" );
+		logger.log( Level.INFO, "Firebase has been initialised successfully!" );
 	}
 	
 	private static String getFcmServerKey() {
