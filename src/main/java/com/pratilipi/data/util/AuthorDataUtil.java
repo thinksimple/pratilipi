@@ -190,6 +190,8 @@ public class AuthorDataUtil {
 		authorData.setImageUrl( createAuthorImageUrl( author ) );
 		authorData.setHasCoverImage( author.getCoverImage() != null );
 		authorData.setCoverImageUrl( createAuthorCoverImageUrl( author ) );
+		authorData.setHasProfileImage( author.hasCustomImage() );
+		authorData.setProfileImageUrl( createAuthorImageUrl( author ) );
 
 		authorData.setRegistrationDate( author.getRegistrationDate() );
 		authorData.setFollowCount( author.getFollowCount() );
@@ -379,9 +381,6 @@ public class AuthorDataUtil {
 		if( authorData.hasSummary() )
 			author.setSummary( authorData.getSummary() );
 
-		if( authorData.hasHasCustomImage() )
-			author.setCustomImage( authorData.hasCustomImage() );
-		
 		if( authorData.hasState() )
 			author.setState( authorData.getState() );
 		if( isNew )
@@ -527,6 +526,38 @@ public class AuthorDataUtil {
 		author = dataAccessor.createOrUpdateAuthor( author, auditLog );
 		
 		return createAuthorCoverImageUrl( author );
+		
+	}
+	
+	public static void removeAuthorImage( Long authorId, boolean profileImage, boolean coverImage )
+			throws InsufficientAccessException, UnexpectedServerException {
+		
+		if( ! profileImage && ! coverImage )
+			return;
+		
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Author author = dataAccessor.getAuthor( authorId );
+
+		if( ! hasAccessToUpdateAuthorData( author, null ) )
+			throw new InsufficientAccessException();
+
+
+		AuditLog auditLog = dataAccessor.newAuditLog(
+				AccessTokenFilter.getAccessToken().getId(),
+				AccessType.AUTHOR_UPDATE,
+				author
+		);
+
+		
+		if( profileImage )
+			author.setCustomImage( false );
+		if( coverImage )
+			author.setCoverImage( null );
+		author.setLastUpdated( new Date() );
+		
+		
+		author = dataAccessor.createOrUpdateAuthor( author, auditLog );
 		
 	}
 	

@@ -207,11 +207,13 @@ public class AuthorApi extends GenericApi {
 		private String location;
 		private String summary;
 		
-		private Boolean hasCustomImage;
 		private String pageUrl;
+		@Deprecated
 		private String imageUrl;
 		private Boolean hasCoverImage;
 		private String coverImageUrl;
+		private Boolean hasProfileImage;
+		private String profileImageUrl;
 
 		private Long registrationDateMillis;
 		
@@ -234,7 +236,7 @@ public class AuthorApi extends GenericApi {
 		
 		public Response( AuthorData authorData, Class<? extends GenericApi> clazz ) {
 
-			if( clazz == AuthorApi.class || clazz == AuthorImageRemoveApi.class ) {
+			if( clazz == AuthorApi.class ) {
 				
 				this.authorId = authorData.getId();
 				
@@ -259,11 +261,12 @@ public class AuthorApi extends GenericApi {
 				this.location = authorData.getLocation();
 				this.summary = authorData.getSummary();
 				
-				this.hasCustomImage = authorData.hasCustomImage();
 				this.pageUrl = authorData.getPageUrl();
-				this.imageUrl = authorData.getImageUrl();
+				this.imageUrl = authorData.getProfileImageUrl();
 				this.hasCoverImage = authorData.hasCoverImage();
 				this.coverImageUrl = authorData.getCoverImageUrl();
+				this.hasProfileImage = authorData.hasProfileImage();
+				this.profileImageUrl = authorData.getProfileImageUrl();
 				
 				this.registrationDateMillis = authorData.getRegistrationDate().getTime();
 				
@@ -425,14 +428,26 @@ public class AuthorApi extends GenericApi {
 			return pageUrl;
 		}
 		
+		@Deprecated
 		public String getImageUrl() {
 			return imageUrl;
 		}
 		
+		@Deprecated
 		public String getImageUrl( int width ) {
 			return imageUrl.indexOf( '?' ) == -1
 					? imageUrl + "?width=" + width
 					: imageUrl + "&width=" + width;
+		}
+		
+		public String getProfileImageUrl() {
+			return profileImageUrl;
+		}
+		
+		public String getProfileImageUrl( int width ) {
+			return profileImageUrl.indexOf( '?' ) == -1
+					? profileImageUrl + "?width=" + width
+					: profileImageUrl + "&width=" + width;
 		}
 		
 		

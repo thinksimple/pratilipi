@@ -5,10 +5,10 @@ import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericFileUploadRequest;
+import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
-import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.util.AuthorDataUtil;
 
 @SuppressWarnings("serial")
@@ -19,20 +19,24 @@ public class AuthorImageRemoveApi extends GenericApi {
 
 		@Validate( required = true, minLong = 1L )
 		private Long authorId;
+		
+		private Boolean profileImage;
+		
+		private Boolean coverImage;
 
 	}
 
 	
 	@Post
-	public AuthorApi.Response post( PostRequest request )
+	public GenericResponse post( PostRequest request )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
-		AuthorData authorData = new AuthorData( request.authorId );
-		authorData.setCustomImage( false );
+		AuthorDataUtil.removeAuthorImage(
+				request.authorId,
+				request.profileImage != null && request.profileImage,
+				request.coverImage != null && request.coverImage );
 		
-		authorData = AuthorDataUtil.saveAuthorData( authorData );
-		
-		return new AuthorApi.Response( authorData, AuthorImageRemoveApi.class );
+		return new GenericResponse();
 		
 	}		
 

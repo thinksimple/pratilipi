@@ -77,12 +77,14 @@ public class AuthorData implements Serializable {
 
 	
 	private Boolean hasCustomImage;
-	private boolean hasHasCustomImage;
 	
 	private String pageUrl;
+	@Deprecated
 	private String imageUrl;
 	private Boolean hasCoverImage;
 	private String coverImageUrl;
+	private Boolean hasProfileImage;
+	private String profileImageUrl;
 
 	
 	private Long registrationDateMillis;
@@ -364,11 +366,6 @@ public class AuthorData implements Serializable {
 	
 	public void setCustomImage( Boolean customImage ) {
 		this.hasCustomImage = customImage;
-		this.hasHasCustomImage = true;
-	}
-	
-	public boolean hasHasCustomImage() {
-		return this.hasHasCustomImage;
 	}
 	
 	
@@ -414,6 +411,29 @@ public class AuthorData implements Serializable {
 
 	public void setCoverImageUrl( String coverImageUrl ) {
 		this.coverImageUrl = coverImageUrl;
+	}
+
+	
+	public Boolean hasProfileImage() {
+		return hasProfileImage;
+	}
+
+	public void setHasProfileImage( Boolean hasProfileImage ) {
+		this.hasProfileImage = hasProfileImage;
+	}
+	
+	public String getProfileImageUrl() {
+		return profileImageUrl;
+	}
+
+	public String getProfileImageUrl( int width ) {
+		return profileImageUrl.indexOf( '?' ) == -1
+				? profileImageUrl + "?width=" + width
+				: profileImageUrl + "&width=" + width;
+	}
+
+	public void setProfileImageUrl( String profileImageUrl ) {
+		this.profileImageUrl = profileImageUrl;
 	}
 
 	
