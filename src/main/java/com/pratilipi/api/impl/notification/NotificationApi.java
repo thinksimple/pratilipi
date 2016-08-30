@@ -39,7 +39,7 @@ public class NotificationApi extends GenericApi {
 			this.lastUpdatedMillis = notification.getLastUpdatedDate().getTime();
 			this.androidHandler = notification.getNotificationType() != null ? 
 					notification.getNotificationType().getAndroidHandler() : null;
-			if( this.pratilipi != null )
+			if( notification.getPratilipiData() != null )
 				this.pratilipi = new PratilipiApi.Response( notification.getPratilipiData(), NotificationApi.class );
 		}
 
