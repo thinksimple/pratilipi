@@ -8,6 +8,7 @@ import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.impl.author.AuthorApi;
 import com.pratilipi.api.impl.init.InitApi;
+import com.pratilipi.api.impl.notification.NotificationApi;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
@@ -174,6 +175,10 @@ public class PratilipiApi extends GenericApi {
 				this.readCount = pratilipi.getReadCount();
 				this.addedToLib = pratilipi.isAddedToLib();
 				this.hasAccessToUpdate = pratilipi.hasAccessToUpdate();
+			
+			} else if( clazz == NotificationApi.class ) {
+				this.pratilipiId = pratilipi.getId();
+				this.coverImageUrl = pratilipi.getCoverImageUrl();
 			}
 			
 		}

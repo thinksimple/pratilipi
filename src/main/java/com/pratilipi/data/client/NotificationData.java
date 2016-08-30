@@ -13,6 +13,8 @@ public class NotificationData {
 
 	private String message;
 
+	private PratilipiData pratilipiData;
+
 	private String sourceUrl;
 
 	private String displayImageUrl;
@@ -54,7 +56,15 @@ public class NotificationData {
 	public void setMessage( String message ) {
 		this.message = message;
 	}
-	
+
+	public PratilipiData getPratilipiData() {
+		return pratilipiData;
+	}
+
+	public void setPratilipiData( PratilipiData pratilipiData ) {
+		this.pratilipiData = pratilipiData;
+	}
+
 	public String getSourceUrl() {
 		return sourceUrl;
 	}

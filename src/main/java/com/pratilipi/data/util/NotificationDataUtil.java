@@ -125,6 +125,7 @@ public class NotificationDataUtil {
 				if( pratilipiData.getState() ==  PratilipiState.PUBLISHED ) {
 					notificationData.setMessage( createNotificationMessage( pratilipiData, notificationLanguage, plainText ) );
 					notificationData.setSourceUrl( pratilipiData.getPageUrl() + "?" + RequestParameter.NOTIFICATION_ID.getName() + "=" + notification.getId() );
+					notificationData.setPratilipiData( pratilipis.get( notification.getSourceIdLong() ) );
 					notificationData.setDisplayImageUrl( pratilipis.get( notification.getSourceIdLong() ).getAuthor().getImageUrl() );
 				}
 			

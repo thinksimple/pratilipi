@@ -5,7 +5,6 @@ import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.impl.pratilipi.PratilipiApi;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.type.NotificationState;
-import com.pratilipi.common.type.NotificationType;
 import com.pratilipi.data.client.NotificationData;
 
 @SuppressWarnings("serial")
@@ -22,11 +21,9 @@ public class NotificationApi extends GenericApi {
 		private String displayImageUrl;
 
 		private NotificationState state;
-		
-		private NotificationType notificationType;
-		private String androidNotificationType;
+		private String androidHandler;
 
-		private PratilipiApi.Response pratilipiData;
+		private PratilipiApi.Response pratilipi;
 
 		private Long lastUpdatedMillis;
 
@@ -39,10 +36,11 @@ public class NotificationApi extends GenericApi {
 			this.sourceUrl = notification.getSourceUrl();
 			this.displayImageUrl = notification.getDisplayImageUrl();
 			this.state = notification.getState();
-			this.notificationType = notification.getNotificationType();
-			this.androidNotificationType = notification.getNotificationType() != null ? 
-					notification.getNotificationType().getAndroidHandler() : null;
 			this.lastUpdatedMillis = notification.getLastUpdatedDate().getTime();
+			this.androidHandler = notification.getNotificationType() != null ? 
+					notification.getNotificationType().getAndroidHandler() : null;
+			if( this.pratilipi != null )
+				this.pratilipi = new PratilipiApi.Response( notification.getPratilipiData(), NotificationApi.class );
 		}
 
 		
@@ -68,8 +66,8 @@ public class NotificationApi extends GenericApi {
 			return state;
 		}
 
-		public PratilipiApi.Response getPratilipiData() {
-			return pratilipiData;
+		public PratilipiApi.Response getPratilipi() {
+			return pratilipi;
 		}
 
 
