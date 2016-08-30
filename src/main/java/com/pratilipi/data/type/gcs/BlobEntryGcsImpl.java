@@ -85,6 +85,8 @@ public class BlobEntryGcsImpl implements BlobEntry {
 	
 	@Override
 	public String getMetaName() {
+		if( metaData == null )
+			return null;
 		return metaData.get( META_NAME );
 	}
 	
