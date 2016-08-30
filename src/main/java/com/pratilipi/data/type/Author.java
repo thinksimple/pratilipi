@@ -84,7 +84,7 @@ public interface Author extends GenericOfyType, Serializable {
 
 	String getCoverImage();
 	
-	void setCoverImage( String customCoverImage );
+	void setCoverImage( String coverImage );
 		
 	Date getRegistrationDate();
 	

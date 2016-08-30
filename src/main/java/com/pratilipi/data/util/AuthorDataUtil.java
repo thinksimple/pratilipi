@@ -106,6 +106,28 @@ public class AuthorDataUtil {
 	}
 	
 	
+	public static String createAuthorCoverImageUrl( Author author ) {
+		return createAuthorCoverUrl( author, null );
+	}
+	
+	public static String createAuthorCoverUrl( Author author, Integer width ) {
+		String url = "/author/image/cover";
+		if( author.getCoverImage() == null ) {
+			if( width != null )
+				url = url + "?width=" + width;
+			if( SystemProperty.CDN != null )
+				url = SystemProperty.CDN.replace( "*", "0" ) + url;
+		} else {
+			url = url + "?authorId=" + author.getId() + "&version=" + author.getCoverImage();
+			if( width != null )
+				url = url + "&width=" + width;
+			if( SystemProperty.CDN != null )
+				url = SystemProperty.CDN.replace( "*", author.getId() % 5 + "" ) + url;
+		}
+		return url;
+	}
+	
+	
 	public static AuthorData createAuthorData( Author author ) {
 
 		if( author == null )
@@ -166,6 +188,8 @@ public class AuthorDataUtil {
 		authorData.setCustomImage( author.hasCustomImage() );
 		authorData.setPageUrl( authorPage.getUriAlias() == null ? authorPage.getUri() : authorPage.getUriAlias() );
 		authorData.setImageUrl( createAuthorImageUrl( author ) );
+		authorData.setHasCoverImage( author.getCoverImage() != null );
+		authorData.setCoverImageUrl( createAuthorCoverImageUrl( author ) );
 
 		authorData.setRegistrationDate( author.getRegistrationDate() );
 		authorData.setFollowCount( author.getFollowCount() );
@@ -455,6 +479,57 @@ public class AuthorDataUtil {
 		
 	}
 
+	public static BlobEntry getAuthorCoverImage( Long authorId, String version, Integer width )
+			throws UnexpectedServerException {
+		
+		String coverImagePath = null;
+		
+		if( authorId != null && version != null )
+			coverImagePath = "author/" + authorId + "/images/cover/" + version;
+		else
+			coverImagePath = "author/default/images/cover";
+		
+		BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor().getBlob( coverImagePath );
+		
+		if( width != null )
+			blobEntry.setData( ImageUtil.resize( blobEntry.getData(), width, width ) );
+		
+		return blobEntry;
+		
+	}
+	
+	public static String saveAuthorCoverImage( Long authorId, BlobEntry blobEntry )
+			throws InsufficientAccessException, UnexpectedServerException {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Author author = dataAccessor.getAuthor( authorId );
+
+		if( ! hasAccessToUpdateAuthorData( author, null ) )
+			throw new InsufficientAccessException();
+
+		
+		String coverImageName = new Date().getTime() + "";
+		
+		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
+		blobEntry.setName( "author/" + authorId + "/images/cover/" + coverImageName );
+		blobAccessor.createOrUpdateBlob( blobEntry );
+		
+
+		AuditLog auditLog = dataAccessor.newAuditLog(
+				AccessTokenFilter.getAccessToken().getId(),
+				AccessType.AUTHOR_UPDATE,
+				author
+		);
+
+		author.setCoverImage( coverImageName );
+		author.setLastUpdated( new Date() );
+		
+		author = dataAccessor.createOrUpdateAuthor( author, auditLog );
+		
+		return createAuthorCoverImageUrl( author );
+		
+	}
+	
 	
 	public static boolean createOrUpdateAuthorPageUrl( Long authorId ) {
 		

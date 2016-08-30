@@ -210,6 +210,8 @@ public class AuthorApi extends GenericApi {
 		private Boolean hasCustomImage;
 		private String pageUrl;
 		private String imageUrl;
+		private Boolean hasCoverImage;
+		private String coverImageUrl;
 
 		private Long registrationDateMillis;
 		
@@ -260,6 +262,8 @@ public class AuthorApi extends GenericApi {
 				this.hasCustomImage = authorData.hasCustomImage();
 				this.pageUrl = authorData.getPageUrl();
 				this.imageUrl = authorData.getImageUrl();
+				this.hasCoverImage = authorData.hasCoverImage();
+				this.coverImageUrl = authorData.getCoverImageUrl();
 				
 				this.registrationDateMillis = authorData.getRegistrationDate().getTime();
 				

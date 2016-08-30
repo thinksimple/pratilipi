@@ -81,6 +81,8 @@ public class AuthorData implements Serializable {
 	
 	private String pageUrl;
 	private String imageUrl;
+	private Boolean hasCoverImage;
+	private String coverImageUrl;
 
 	
 	private Long registrationDateMillis;
@@ -390,6 +392,28 @@ public class AuthorData implements Serializable {
 
 	public void setImageUrl( String imageUrl ) {
 		this.imageUrl = imageUrl;
+	}
+
+	public Boolean hasCoverImage() {
+		return hasCoverImage;
+	}
+
+	public void setHasCoverImage( Boolean hasCoverImage ) {
+		this.hasCoverImage = hasCoverImage;
+	}
+	
+	public String getCoverImageUrl() {
+		return coverImageUrl;
+	}
+
+	public String getCoverImageUrl( int width ) {
+		return coverImageUrl.indexOf( '?' ) == -1
+				? coverImageUrl + "?width=" + width
+				: coverImageUrl + "&width=" + width;
+	}
+
+	public void setCoverImageUrl( String coverImageUrl ) {
+		this.coverImageUrl = coverImageUrl;
 	}
 
 	
