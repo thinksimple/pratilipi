@@ -5,7 +5,7 @@
 /classic                         क्लासिक                { "language":"HINDI", "state":"PUBLISHED", "listName":"classic" }
 /search?q=magazines             पत्रिकाएं                { "language":"HINDI", "state":"PUBLISHED", "searchQuery":"magazines" }
 /blog                             संपादकीय
-/event/pratilipi-katha-sanman    प्रतिलिपि कथा सम्मान        { "language":"HINDI", "state":"PUBLISHED", "eventId":6388102090194944 }
+/event/ek-rishta-ankaha-sa      एक रिश्ता अनकहा सा  
 /events                            ऑनलाइन  स्पर्धाएं
 /author-interviews                लेखकों के साक्षात्कार
 
