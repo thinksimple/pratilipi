@@ -23,7 +23,9 @@ import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.type.Author;
+import com.pratilipi.data.type.UserAuthor;
 import com.pratilipi.data.util.AuthorDataUtil;
+import com.pratilipi.filter.AccessTokenFilter;
 import com.pratilipi.filter.UxModeFilter;
 import com.pratilipi.taskqueue.Task;
 import com.pratilipi.taskqueue.TaskQueueFactory;
@@ -477,6 +479,10 @@ public class AuthorApi extends GenericApi {
 		}
 		
 		
+		public void setFollowing( boolean following ) {
+			this.following = following;
+		}
+		
 		public boolean isFollowing() {
 			return following;
 		}
@@ -492,9 +498,18 @@ public class AuthorApi extends GenericApi {
 	public Response get( GetRequest request ) {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		
 		Author author = dataAccessor.getAuthor( request.authorId );
+		UserAuthor userAuthor = dataAccessor.getUserAuthor(
+				AccessTokenFilter.getAccessToken().getUserId(),
+				request.authorId );
+		
 		AuthorData authorData = AuthorDataUtil.createAuthorData( author, null, null );
-		return new Response( authorData );
+		
+		Response response = new Response( authorData );
+		response.setFollowing( userAuthor != null && userAuthor.isFollowing() );
+		
+		return response;
 		
 	}
 	
