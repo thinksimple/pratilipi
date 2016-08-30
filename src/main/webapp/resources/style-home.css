@@ -541,12 +541,16 @@ a {
 }
 .landing-page .pratilipi-footer .about-pratilipi {
 	position: relative;
+	color: #666;
 	padding-top: 10px;
 }
 .landing-page .pratilipi-footer .about-pratilipi h5 {
 	font-size: 18px;
-	color: #666;
-	margin-bottom: 10px; 
+	margin-bottom: 10px;
+	color: inherit; 
+}
+.landing-page .pratilipi-footer .about-pratilipi span {
+	display: block;
 }
 .landing-page .pratilipi-footer .about-pratilipi a {
 	display: inline-block;
@@ -554,8 +558,8 @@ a {
 .landing-page .pratilipi-footer .about-pratilipi span {
 	font-size: 14px;
 	line-height: 1.5;
-	color: #666; 
 	display: block;
+	color: #666;
 	margin-bottom: 4px;
 }
 .landing-page .pratilipi-footer .about-pratilipi .copyrights {
@@ -589,31 +593,17 @@ a {
 		text-align: left;
 		border-right: 1px solid gray;
 		padding-bottom: 40px;
+		padding-right: 12px;
 	}
 	.landing-page .pratilipi-footer .about-part-3 {
 		margin-top: 5px;
 		position: absolute;
 		display: inline-block;
 		width: 45%;
-		padding-left: 10px;
+		padding-left: 20px;
+		padding-top: 4px;
 	}
 }
-/* .landing-page .pratilipi-footer .about-part-2 {
-	padding: 10px;
-	border-right: 1px solid gray;
-	height: 128px;
-}
-.landing-page .pratilipi-footer .about-part-2 ul {
-	display: inline-block;
-	margin: 0 10px; 
-}
-.landing-page .pratilipi-footer .about-part-2 ul li {
-	margin-bottom: 10px; 
-}
-.landing-page .pratilipi-footer .about-part-2 ul li a {
-	color: #666;
-	line-height: 1.3em;
-} */
 .landing-page .pratilipi-footer .about-part-3 {
 	color: #666;
 	font-size: 16px;
@@ -629,209 +619,4 @@ a {
 .landing-page .pratilipi-footer .about-part-3 a {
 	color: #666;
 	margin-right: 16px; 
-}
-
-/* Specific to all Modal popups */
-
-.modal {
-	overflow-y: scroll!important;
-}
-
-.modal-heading {
-	margin: 0px; 
-	padding: 0px; 
-	font-weight: 700;
-}
-
-.modal-close-button {
-	float: right; 
-	margin-top: -25px; 
-	margin-right: -10px;
-}
-
-.modal.fade .modal-dialog {
-	-webkit-transform: scale(0.1);
-	-moz-transform: scale(0.1);
-	-ms-transform: scale(0.1);
-	transform: scale(0.1);
-	top: 300px;
-	opacity: 0;
-	-webkit-transition: all 0.3s;
-	-moz-transition: all 0.3s;
-	transition: all 0.3s;
-}
-
-.modal.fade.in .modal-dialog {
-	-webkit-transform: scale(1);
-	-moz-transform: scale(1);
-	-ms-transform: scale(1);
-	transform: scale(1);
-	-webkit-transform: translate3d(0, -300px, 0);
-	transform: translate3d(0, -300px, 0);
-	opacity: 1;
-}
-
-/* Transparent fullscreen modal popups */
-.modal-fullscreen {
-	background: rgba(255,255,255,.95);
-}
-
-.modal-fullscreen-heading {
-	text-align: center;
-	margin-top: 20px;
-	margin-bottom : 30px;
-	display: block;
-}
-
-.modal-fullscreen-close-button {
-	position: fixed; 
-	top: 0px; 
-	right: 16px;
-}
-
-button.close {
-	outline: none;
-}
-
-.modal-fullscreen-close-button paper-icon-button {
-	width: 40px;
-	height: 40px;
-}
-
-.modal-fullscreen .modal-dialog {
-	margin: 0;
-	margin-right: auto;
-	margin-left: auto;
-	width: 100%;
-	height: 100%;
-	display: table;
-    position: absolute;
-}
-
-.modal-fullscreen .modal-dialog .modal-center {
-	display: table-cell;
-	vertical-align: middle;
-}
-
-.modal-fullscreen .modal-dialog .modal-content {
-	background: transparent;
-	border: 0;
-	-webkit-box-shadow: none;
-	box-shadow: none;
-	position: relative;
-	margin: 0 auto;
-	margin-bottom: 32px;
-}
-
-.modal-fullscreen .modal-dialog .modal-content img {
-	margin: 20px auto;
-	display: block; 
-	max-width: 80px;
-}
-
-.modal-fullscreen .modal-dialog .modal-content input.input-field {
-	padding: 10px;
-	border: none;
-	border-bottom: solid 1px #107FE5;
-	transition: border 0.3s;
-	display: block;
-	width: 300px;
-	font-size: 16px;
-	margin-bottom: 16px;
-	margin-left: auto;
-	margin-right: auto;
-	background-color: inherit;
-	color: #333;
-}
-
-.modal-fullscreen .modal-dialog .modal-content input.input-field:focus,
-.modal-fullscreen .modal-dialog .modal-content input.input-field.focus {
-	border-bottom: solid 1px #107FE5;
-	outline: none;
-}
-
-.modal-fullscreen .modal-dialog .modal-content input.input-field::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-	color: #107FE5;
-}
-.modal-fullscreen .modal-dialog .modal-content input.input-field:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-	color: #107FE5;
-	opacity:  1;
-}
-.modal-fullscreen .modal-dialog .modal-content input.input-field::-moz-placeholder { /* Mozilla Firefox 19+ */
-	color: #107FE5;
-	opacity:  1;
-}
-.modal-fullscreen .modal-dialog .modal-content input.input-field:-ms-input-placeholder { /* Internet Explorer 10-11 */
-	color: #107FE5;
-}
-
-.modal-fullscreen .modal-footer {
-	background: rgba(255,255,255,.92);
-	display: block;
-	position: fixed;
-	height: 75px; 
-	bottom: 0px;
-	z-index: 1050;
-	width: 100%;
-	padding-top: 20px; 
-	padding-bottom: 10px;
-}
-
-.display-message-div {
-	min-height: 40px;
-	display: block;
-	text-align: center;
-}
-
-.pratilipi-blue-button {
-	border: 1px solid #107FE5;
-	background: transparent;
-	color: #107FE5;
-	min-width: 70px;
-	width: auto;
-	height: 40px;
-	text-align: center;
-	line-height: 5px;
-	padding: 15px 20px;
-	display: block;
-	outline: none;
-	margin: 0 auto;
-	border-radius: 100em;
-}
-div.social-wrap {
-	margin-top: 30px;
-	margin-bottom: 30px;
-}
-div.social-wrap button {
-	padding-left: 20px;
-	padding-right: 0px;
-	margin-left: auto;
-	margin-right: auto;
-	height: 35px;
-	background: none;
-	border: none;
-	display: block;
-	background-size: 25px 25px, cover;
-	background-position: 10px center, center center;
-	background-repeat: no-repeat, repeat;
-	border-radius: 4px;
-	color: white;
-	font-size: 14px;
-	margin-bottom: 15px;
-	width: 275px;
-	border-bottom: 2px solid transparent;
-	border-left: 1px solid transparent;
-	border-right: 1px solid transparent;
-	box-shadow: 0 4px 2px -2px gray;
-	text-shadow: rgba(0, 0, 0, .4) -1px -1px 0;
-}
-
-div.social-wrap > .facebook {
-	background-color: #3b5998;
-	background: url('http://0.ptlp.co/resource-all/icon/facebook-login/facebook_transparent_icon_25x25.png') no-repeat 10px #3b5998;
-	background: url(http://0.ptlp.co/resource-all/icon/facebook-login/facebook_transparent_icon_25x25.png), -webkit-gradient(linear, left top, left bottom, color-stop(0%, #4c74c4), color-stop(100%, #3b5998));
-	background-size: 25px 25px, cover;
-	background-position: 10px center, center center;
-	background-repeat: no-repeat, repeat;
-	outline: none;
 }

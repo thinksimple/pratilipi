@@ -8,241 +8,23 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="description" content="A platform to discover, read and share your favorite stories, poems and books in a language, device and format of your choice.">
 	
-	<script src='http://j.ptlp.co/third-party/jquery-2.1.4/jquery-2.1.4.min.js'></script>
-	<script defer src='http://b.ptlp.co/third-party/bootstrap-3.3.4/js/bootstrap.min.js'></script>
-	<link rel='stylesheet' href='http://f.ptlp.co/third-party/font-awesome-4.3.0/css/font-awesome.min.css'>
-	<link rel='stylesheet' href='http://b.ptlp.co/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>
+	<script src='http://0.ptlp.co/resource-all/jquery.bootstrap.polymer.js'></script>
+	<link rel='stylesheet' href='http://0.ptlp.co/third-party/font-awesome-4.3.0/css/font-awesome.min.css'>
+	<link rel='stylesheet' href='http://0.ptlp.co/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>
 	
-	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?201608">
+	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?1">
 
 	<#include "meta/GoogleAnalytics.ftl">
 
-	<script>
-		jQuery.ajax( {
-		  url: 'http://0.ptlp.co/resource-all/elements.vulcanized.html',
-		  cache: true,
-		} );
-	</script>
-	
-	<#-- Amplitude Tracking Code for http://www.pratilipi.com -->
-	<script type="text/javascript">
-	  (function(e,t){var n=e.amplitude||{_q:[],_iq:{}};var r=t.createElement("script");r.type="text/javascript";
-	  r.async=true;r.src="https://d24n15hnbwhuhn.cloudfront.net/libs/amplitude-3.0.1-min.gz.js";
-	  r.onload=function(){e.amplitude.runQueuedFunctions()};var i=t.getElementsByTagName("script")[0];
-	  i.parentNode.insertBefore(r,i);function s(e,t){e.prototype[t]=function(){this._q.push([t].concat(Array.prototype.slice.call(arguments,0)));
-	  return this}}var o=function(){this._q=[];return this};var a=["add","append","clearAll","prepend","set","setOnce","unset"];
-	  for(var u=0;u<a.length;u++){s(o,a[u])}n.Identify=o;var c=function(){this._q=[];return this;
-	  };var p=["setProductId","setQuantity","setPrice","setRevenueType","setEventProperties"];
-	  for(var l=0;l<p.length;l++){s(c,p[l])}n.Revenue=c;var d=["init","logEvent","logRevenue","setUserId","setUserProperties","setOptOut","setVersionName","setDomain","setDeviceId","setGlobalUserProperties","identify","clearUserProperties","setGroup","logRevenueV2","regenerateDeviceId"];
-	  function v(e){function t(t){e[t]=function(){e._q.push([t].concat(Array.prototype.slice.call(arguments,0)));
-	  }}for(var n=0;n<d.length;n++){t(d[n])}}v(n);n.getInstance=function(e){e=(!e||e.length===0?"$default_instance":e).toLowerCase();
-	  if(!n._iq.hasOwnProperty(e)){n._iq[e]={_q:[]};v(n._iq[e])}return n._iq[e]};e.amplitude=n;
-	  })(window,document);
-	
-	  amplitude.getInstance().init("db959c1578a66b007dbf8b995b57da14");
-	</script>
-		
-
-	<script>
-		window.fbAsyncInit = function() {
-			FB.init({
-				appId      : '293990794105516',
-				cookie     : true,
-				xfbml      : true,
-				version    : 'v2.6' 
-			});
-		};
-		(function(d, s, id) {
-			var js, fjs = d.getElementsByTagName(s)[0];
-			if (d.getElementById(id)) return;
-			js = d.createElement(s); js.id = id;
-			js.src = "//connect.facebook.net/en_US/sdk.js";
-			fjs.parentNode.insertBefore(js, fjs);
-		}(document, 'script', 'facebook-jssdk'));
-	</script>
-
-	<script>
-		$( document ).ready(function() {
-			<#-- Setting tiles min-height -->
-			jQuery( '.wrapper' ).css( "min-height", jQuery( window ).height() + "px" );
-			<#-- Setting banner height -->
-			if( $( window ).width() < 768 ) {
-				jQuery( '.pratilipi-banner' ).height( jQuery( window ).height() );
-			} else {
-				var diff = ( jQuery( window ).height() - jQuery( '#tiles-container' ).height() ) / 2;
-				jQuery( '.pratilipi-banner' ).height( jQuery( window ).height() - 20 - diff - 108 );
-				jQuery( '.pratilipi-banner' ).css( "max-height", Math.max( jQuery( window ).height(), jQuery( '.content-wrapper' ).height() + 108 ) + "px" );
-			}
-			<#-- Hiding the language input on ready -->
-			document.getElementById( 'mailingListLanguageInput' ).style.display = "none";
-			document.getElementById( "mailingListLanguage" ).addEventListener( "change", onMailingListLanguageChange, false );
-		});
-		function onMailingListLanguageChange() {
-			var val = document.getElementById( 'mailingListLanguage' ).value;
-			if( val == "LAUNCH_ANNOUNCEMENT_OTHER" ) {
-				document.getElementById( 'mailingListLanguageInput' ).style.display = "inline-block";
-			} else {
-				document.getElementById( 'mailingListLanguageInput' ).style.display = "none";
-			}
-		}
-		function validateEmail( email ) {
-			var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-			return re.test(email);
-		}
-		function startReading() {
-			jQuery('html, body').animate( { scrollTop: jQuery( '#wrapper' ).offset().top }, 500 );
-		}
-		function addSubscription() {
-			document.getElementById( "notify-elements" ).style.display = "block";
-			document.getElementById( "notify-message" ).style.display = "none";
-		}
-		function mailingList( e, input ) {
-			if( e != null ) {
-				var code = ( e.keyCode ? e.keyCode : e.which );
-				if( code != 13 )
-					return;
-			}
-			var mailingList = document.getElementById( 'mailingListLanguage' ).value;
-			var comment = mailingList == "LAUNCH_ANNOUNCEMENT_OTHER" ? 
-					document.getElementById( 'mailingListLanguageInput' ).value.trim() : "";
-
-			var email = document.getElementById( 'mailingListEmail' ).value;
-			var passed = true;
-			
-			if( mailingList == "none" ) {
-				jQuery( '#mailingListLanguage' ).css( { "border": '#FF0000 1px solid' } );
-				passed = false;
-			} else {
-				jQuery( '#mailingListLanguage' ).css( { "border": 'none' } );
-			}
-
-			if( mailingList == "LAUNCH_ANNOUNCEMENT_OTHER" && comment == "" ) {
-				jQuery( '#mailingListLanguageInput' ).css( { "border": '#FF0000 1px solid' } );
-				passed = false;
-			} else {
-				jQuery( '#mailingListLanguage' ).css( { "border": 'none' } );
-			}
-
-			if( email.trim() == "" || !validateEmail( email ) ) {
-				jQuery( '#mailingListEmail' ).css( { "border": '#FF0000 1px solid' } );
-				passed = false;
-			} else {
-				jQuery( '#mailingListEmail' ).css( { "border": 'none' } );
-			}
-			
-			if( !passed )
-				return;
-
-			<#-- Spinner active -->
-			jQuery( '#notify-me-wrapper' ).height( jQuery( '#notify-me-wrapper' ).height() );
-			document.getElementById( "notify-elements" ).style.display = "none";
-			document.getElementById( 'notify-loader' ).style.display = "block";
-
-			var body = { 
-					'email': email, 
-					'mailingList': mailingList,
-			};
-			if( comment != "" )
-					body[ 'comment' ] = comment;
-
-			$.ajax({
-				type: 'post',
-				url: '/api/mailinglist/subscribe',
-				data: body,
-				success: function( response ) {
-					document.getElementById( 'notify-loader' ).style.display = "none";
-					document.getElementById( 'mailingListLanguage' ).value = "none";
-					document.getElementById( 'mailingListLanguageInput' ).style.display = "none";
-					document.getElementById( 'mailingListEmail' ).value = null;
-					document.getElementById( "notify-message-text" ).innerText = "Thank You! You will be notified when we launch the language!";
-					document.getElementById( "notify-message" ).style.display = "block";
-				},
-				error: function( response ) {
-					var messageJson = jQuery.parseJSON( response.responseText );
-					var message = "";
-					if( messageJson["message"] != null )
-						message = messageJson["message"];
-					else
-						message = "Failed due to some reason! Please try again!";
-
-					document.getElementById( 'notify-loader' ).style.display = "none";
-					document.getElementById( "notify-message-text" ).innerText = message;
-					document.getElementById( "notify-message" ).style.display = "block";
-				}
-			});
-		}
-		function facebookLogin() {
-			FB.login( function( response ) {
-				$.ajax({
-			
-					type: 'post',
-					url: '/api/user/login/facebook',
-
-					data: { 
-						'fbUserAccessToken': response.authResponse.accessToken
-					},
-					
-					success: function( response ) {
-						var displayName = "Hello " + jQuery.parseJSON( response )[ "displayName" ];
-						
-						document.getElementById( "login-signup" ).style.display = "none";
-						document.getElementById( "user-dropdown" ).style.display = "block";
-						document.getElementById( "username" ).innerText = displayName;
-						
-						setTimeout( function() {
-					        jQuery( "#pratilipiUserLogin" ).modal( 'hide' );
-					        jQuery( "#pratilipiUserRegister" ).modal( 'hide' );
-						}, 1500); 
-					},
-					
-					error: function( response ) {
-						var message = jQuery.parseJSON( response.responseText );
-						var status = response.status;
-
-						if( message["message"] != null )
-							alert( "Error " + status + " : " + message["message"] ); 
-						else
-							alert( "Invalid Credentials" );
-					}
-				});
-			}, { scope: 'public_profile,email,user_birthday' } );
-		}
-	</script>
 </head>
 
 <body>
-	<#--
-	<#include "../element/basic/pratilipi-homepage-login.ftl">
-	<#include "../element/basic/pratilipi-homepage-register.ftl">
-	<#include "../element/basic/pratilipi-homepage-logout.ftl">
-	-->
-	
 	<div class="container">
 		<div class="landing-page">
 			<div class="pratilipi-banner clearfix">
+
 				<div class="pratilipi-background"></div>
-				<#--
-				<div id="login-signup" class="login-signup pull-right" style="display: <#if user.isGuest() == true>block<#else>none</#if>;">
-					<button class="login-btn" onClick="openLoginModal()">LOG IN</button>
-					<button class="signup-btn" onClick="openRegisterModal()">SIGN UP</button>
-				</div>
-				
-				<div id="user-dropdown" class="user-dropdown pull-right" style="display: <#if user.isGuest() == true>none<#else>block</#if>;">
-					<div class="dropdown">
-						<button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<span id="username" class="username"><#if user.isGuest() == false>Hello ${ user.getDisplayName() }</#if></span>
-						<span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu pull-right">
-							<li>
-								<a onClick="logout()">
-									Logout
-								</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-				-->
+
 				<div class="content-wrapper">
 
 					<div class="heading-wrapper">
@@ -389,6 +171,9 @@
 			<div class="pratilipi-footer">
 				<div class="about-pratilipi">
 					<h5>Pratilipi</h5>
+					<span>Jai&nbsp;Plaza&nbsp;Elite, #1064, 1st&nbsp;Floor, 7th&nbsp;A&nbsp;Main, 3rd&nbsp;Block&nbsp;Koramangala, Bengaluru, Karnataka&nbsp;-&nbsp;560095</span>
+					<span>CIN:&nbsp;U72200KA2015PTC079230</span>
+					<br/>
 					<a href="mailto:contact@pratilipi.com"><span>contact@pratilipi.com</span></a>
 					<br/>
 					<a href="tel:+918041710149"><span>080-41710149</span></a>
@@ -407,6 +192,118 @@
 			</div>
 		</div>
 	</div>
+	
+	<script>
+		$( document ).ready(function() {
+			<#-- Setting tiles min-height -->
+			jQuery( '.wrapper' ).css( "min-height", jQuery( window ).height() + "px" );
+			<#-- Setting banner height -->
+			if( $( window ).width() < 768 ) {
+				jQuery( '.pratilipi-banner' ).height( jQuery( window ).height() );
+			} else {
+				var diff = ( jQuery( window ).height() - jQuery( '#tiles-container' ).height() ) / 2;
+				jQuery( '.pratilipi-banner' ).height( jQuery( window ).height() - 20 - diff - 108 );
+				jQuery( '.pratilipi-banner' ).css( "max-height", Math.max( jQuery( window ).height(), jQuery( '.content-wrapper' ).height() + 108 ) + "px" );
+			}
+			<#-- Hiding the language input on ready -->
+			document.getElementById( 'mailingListLanguageInput' ).style.display = "none";
+			document.getElementById( "mailingListLanguage" ).addEventListener( "change", onMailingListLanguageChange, false );
+		});
+		function onMailingListLanguageChange() {
+			var val = document.getElementById( 'mailingListLanguage' ).value;
+			if( val == "LAUNCH_ANNOUNCEMENT_OTHER" ) {
+				document.getElementById( 'mailingListLanguageInput' ).style.display = "inline-block";
+			} else {
+				document.getElementById( 'mailingListLanguageInput' ).style.display = "none";
+			}
+		}
+		function validateEmail( email ) {
+			var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+			return re.test(email);
+		}
+		function startReading() {
+			jQuery('html, body').animate( { scrollTop: jQuery( '#wrapper' ).offset().top }, 500 );
+		}
+		function addSubscription() {
+			document.getElementById( "notify-elements" ).style.display = "block";
+			document.getElementById( "notify-message" ).style.display = "none";
+		}
+		function mailingList( e, input ) {
+			if( e != null ) {
+				var code = ( e.keyCode ? e.keyCode : e.which );
+				if( code != 13 )
+					return;
+			}
+			var mailingList = document.getElementById( 'mailingListLanguage' ).value;
+			var comment = mailingList == "LAUNCH_ANNOUNCEMENT_OTHER" ? 
+					document.getElementById( 'mailingListLanguageInput' ).value.trim() : "";
+
+			var email = document.getElementById( 'mailingListEmail' ).value;
+			var passed = true;
+			
+			if( mailingList == "none" ) {
+				jQuery( '#mailingListLanguage' ).css( { "border": '#FF0000 1px solid' } );
+				passed = false;
+			} else {
+				jQuery( '#mailingListLanguage' ).css( { "border": 'none' } );
+			}
+
+			if( mailingList == "LAUNCH_ANNOUNCEMENT_OTHER" && comment == "" ) {
+				jQuery( '#mailingListLanguageInput' ).css( { "border": '#FF0000 1px solid' } );
+				passed = false;
+			} else {
+				jQuery( '#mailingListLanguage' ).css( { "border": 'none' } );
+			}
+
+			if( email.trim() == "" || !validateEmail( email ) ) {
+				jQuery( '#mailingListEmail' ).css( { "border": '#FF0000 1px solid' } );
+				passed = false;
+			} else {
+				jQuery( '#mailingListEmail' ).css( { "border": 'none' } );
+			}
+			
+			if( !passed )
+				return;
+
+			<#-- Spinner active -->
+			jQuery( '#notify-me-wrapper' ).height( jQuery( '#notify-me-wrapper' ).height() );
+			document.getElementById( "notify-elements" ).style.display = "none";
+			document.getElementById( 'notify-loader' ).style.display = "block";
+
+			var body = { 
+					'email': email, 
+					'mailingList': mailingList,
+			};
+			if( comment != "" )
+					body[ 'comment' ] = comment;
+
+			$.ajax({
+				type: 'post',
+				url: '/api/mailinglist/subscribe',
+				data: body,
+				success: function( response ) {
+					document.getElementById( 'notify-loader' ).style.display = "none";
+					document.getElementById( 'mailingListLanguage' ).value = "none";
+					document.getElementById( 'mailingListLanguageInput' ).style.display = "none";
+					document.getElementById( 'mailingListEmail' ).value = null;
+					document.getElementById( "notify-message-text" ).innerText = "Thank You! You will be notified when we launch the language!";
+					document.getElementById( "notify-message" ).style.display = "block";
+				},
+				error: function( response ) {
+					var messageJson = jQuery.parseJSON( response.responseText );
+					var message = "";
+					if( messageJson["message"] != null )
+						message = messageJson["message"];
+					else
+						message = "Failed due to some reason! Please try again!";
+
+					document.getElementById( 'notify-loader' ).style.display = "none";
+					document.getElementById( "notify-message-text" ).innerText = message;
+					document.getElementById( "notify-message" ).style.display = "block";
+				}
+			});
+		}
+	</script>
 </body>
 
 </html>
