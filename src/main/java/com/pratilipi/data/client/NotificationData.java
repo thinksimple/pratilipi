@@ -3,18 +3,23 @@ package com.pratilipi.data.client;
 import java.util.Date;
 
 import com.pratilipi.common.type.NotificationState;
+import com.pratilipi.common.type.NotificationType;
 
 public class NotificationData {
 
 	private Long notificationId;
-	
+
 	private Long userId;
-	
+
 	private String message;
-	
+
 	private String sourceUrl;
-	
+
+	private String displayImageUrl;
+
 	private NotificationState state;
+
+	private NotificationType type;
 
 	private Date lastUpdatedDate;
 
@@ -58,6 +63,14 @@ public class NotificationData {
 		this.sourceUrl = sourceUrl;
 	}
 
+	public String getDisplayImageUrl() {
+		return displayImageUrl;
+	}
+
+	public void setDisplayImageUrl( String displayImageUrl ) {
+		this.displayImageUrl = displayImageUrl;
+	}
+
 	public NotificationState getState() {
 		return state;
 	}
@@ -65,7 +78,15 @@ public class NotificationData {
 	public void setState( NotificationState state ) {
 		this.state = state;
 	}
-	
+
+	public NotificationType getNotificationType() {
+		return type;
+	}
+
+	public void setNotificationType( NotificationType type ) {
+		this.type = type;
+	}
+
 	public Date getLastUpdatedDate() {
 		return lastUpdatedDate;
 	}

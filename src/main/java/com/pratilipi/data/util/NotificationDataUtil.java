@@ -120,21 +120,23 @@ public class NotificationDataUtil {
 				notificationLanguage = Language.ENGLISH;
 			
 			if( notification.getType() == NotificationType.PRATILIPI_ADD ) {
-				
+
 				PratilipiData pratilipiData = pratilipis.get( notification.getSourceIdLong() );
 				if( pratilipiData.getState() ==  PratilipiState.PUBLISHED ) {
 					notificationData.setMessage( createNotificationMessage( pratilipiData, notificationLanguage, plainText ) );
 					notificationData.setSourceUrl( pratilipiData.getPageUrl() + "?" + RequestParameter.NOTIFICATION_ID.getName() + "=" + notification.getId() );
+					notificationData.setDisplayImageUrl( pratilipis.get( notification.getSourceIdLong() ).getAuthor().getImageUrl() );
 				}
 			
 			} else 	if( notification.getType() == NotificationType.AUTHOR_FOLLOW ) {
 				
 				notificationData.setMessage( createNotificationMessage( notification.getDataIds(), users, notificationLanguage, plainText ) );
 				notificationData.setSourceUrl( "/followers?" + RequestParameter.NOTIFICATION_ID.getName() + "=" + notification.getId() );
-			
+				notificationData.setDisplayImageUrl( users.get( 0 ).getProfileImageUrl() );
 			}
 			
 			notificationData.setState( notification.getState() );
+			notificationData.setNotificationType( notification.getType() );
 			notificationData.setLastUpdatedDate( notification.getLastUpdated() );
 			notificationDataList.add( notificationData );
 			
