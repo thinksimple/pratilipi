@@ -105,7 +105,6 @@ a {
 	bottom: 0;
 	left: 0;
 	right: 0;
-	background: url(http://0.ptlp.co/resource-all/home-page/pratilipi-banner-compressed.jpg) no-repeat 0 0;
 	background-color: lightgrey;
 	opacity: 0.72;
 	width: 100%;
@@ -114,12 +113,14 @@ a {
 }
 @media only screen and (max-width: 840px) {
 	.landing-page .pratilipi-banner .pratilipi-background {
+		background: url(http://0.ptlp.co/resource-all/home-page/pratilipi-banner-compressed-mobile.jpg) no-repeat 0 0;
 		background-size: cover;
 		background-position-x: -128px;
 	}
 }
 @media only screen and (min-width: 840px) {
 	.landing-page .pratilipi-banner .pratilipi-background {
+		background: url(http://0.ptlp.co/resource-all/home-page/pratilipi-banner-compressed.jpg) no-repeat 0 0;
 		background-size: cover;
 		background-position: top;
 	}
@@ -618,6 +619,9 @@ a {
 }
 .landing-page .pratilipi-footer .about-part-3 .social-media-links {
 	white-space: nowrap;
+}
+.landing-page .pratilipi-footer .about-part-3 .social-media-links img {
+	width: 20px;
 }
 .landing-page .pratilipi-footer .about-part-3 a {
 	color: #666;

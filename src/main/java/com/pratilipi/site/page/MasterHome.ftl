@@ -7,7 +7,7 @@
 	<meta name="description" content="A platform to discover, read and share your favorite stories, poems and books in a language, device and format of your choice.">
 	<title>Read Hindi, Gujarati and Tamil Stories, Poems and Books</title>
 	<link rel="shortcut icon" type="image/png" href="/favicon.png">
-	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?3">
+	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?4">
 </head>
 
 <body>
@@ -173,11 +173,11 @@
 				<div class="about-part-3">
 					<span>Follow us on Social Media :</span>
 					<div class="social-media-links">
-						<a href="https://www.facebook.com/Pratilipidotcom" target="_blank"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a>
-						<a href="https://twitter.com/TeamPratilipi" target="_blank"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a>
-						<a href="https://plus.google.com/+PratilipiTeam" target="_blank"><i class="fa fa-google-plus fa-lg" aria-hidden="true"></i></a>
-						<a href="https://www.linkedin.com/company/pratilipi" target="_blank"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a>
-						<a href="https://www.quora.com/topic/Pratilipi-company" target="_blank"><img style="width: 20px; position: absolute;" src="http://0.ptlp.co/resource-all/icon/svg/quora.svg" /></a>
+						<a href="https://www.facebook.com/Pratilipidotcom" target="_blank"><img src="http://0.ptlp.co/resource-all/icon/svg/facebook-grey.svg" /></a>
+						<a href="https://twitter.com/TeamPratilipi" target="_blank"><img src="http://0.ptlp.co/resource-all/icon/svg/twitter-grey.svg" /></a>
+						<a href="https://plus.google.com/+PratilipiTeam" target="_blank"><img src="http://0.ptlp.co/resource-all/icon/svg/google-plus-grey.svg" /></a>
+						<a href="https://www.linkedin.com/company/pratilipi" target="_blank"><img src="http://0.ptlp.co/resource-all/icon/svg/linkedin-grey.svg" /></a>
+						<a href="https://www.quora.com/topic/Pratilipi-company" target="_blank"><img src="http://0.ptlp.co/resource-all/icon/svg/quora.svg" /></a>
 					</div>
 				</div>
 				<p class="copyrights">&copy;&nbsp;2015-2016 Nasadiya Tech. Pvt. Ltd.</p>
@@ -185,7 +185,6 @@
 		</div>
 	</div>
 
-	<link rel='stylesheet' href='http://0.ptlp.co/third-party/font-awesome-4.3.0/css/font-awesome.min.css'>
 	<script src='http://0.ptlp.co/third-party/jquery-2.1.4/jquery-2.1.4.min.js'></script>
 	<script>
 		$( document ).ready(function() {
