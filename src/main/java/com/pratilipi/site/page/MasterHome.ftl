@@ -3,15 +3,11 @@
 
 <head>
 	<meta charset="utf-8">
-	<link rel="shortcut icon" type="image/png" href="/favicon.png">
-	<title>Read Hindi, Gujarati and Tamil Stories, Poems and Books</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="description" content="A platform to discover, read and share your favorite stories, poems and books in a language, device and format of your choice.">
-	<link rel='stylesheet' href='http://0.ptlp.co/third-party/font-awesome-4.3.0/css/font-awesome.min.css'>
-	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?2">
-
-	<#include "meta/GoogleAnalytics.ftl">
-
+	<title>Read Hindi, Gujarati and Tamil Stories, Poems and Books</title>
+	<link rel="shortcut icon" type="image/png" href="/favicon.png">
+	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?3">
 </head>
 
 <body>
@@ -52,56 +48,56 @@
 				<ul class="tiles-container" id="tiles-container">
 					<li class="image">
 						<a href="http://hindi.pratilipi.com/">
-							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/pratilipi-hindi-compressed.jpg');">
+							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/pratilipi-hindi-compressed-s.jpg');">
 								<span class="language">हिंदी</span>
 							</div>
 						</a>
 					</li>
 					<li class="image">
 						<a href="http://tamil.pratilipi.com/">
-							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/pratilipi-tamil-compressed.png');">
+							<div class="tiles" style="background-image:url('http://1.ptlp.co/resource-all/home-page/pratilipi-tamil-compressed-s.jpg');">
 								<span class="language">தமிழ்</span>
 							</div>
 						</a>
 					</li>
 					<li class="image">
 						<a href="http://malayalam.pratilipi.com/">
-							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/pratilipi-malayalam-compressed.jpg');">
+							<div class="tiles" style="background-image:url('http://2.ptlp.co/resource-all/home-page/pratilipi-malayalam-compressed-s.jpg');">
 								<span class="language">മലയാളം</span>
 							</div>
 						</a>
 					</li>
 					<li class="image">
 						<a href="http://bengali.pratilipi.com/">
-							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/pratilipi-bengali-compressed.jpg'); background-size: cover; background-position: top;">
+							<div class="tiles" style="background-image:url('http://3.ptlp.co/resource-all/home-page/pratilipi-bengali-compressed-s.jpg'); background-size: cover; background-position: top;">
 								<span class="language">বাংলা</span>
 							</div>
 						</a>
 					</li>
 					<li class="image">
 						<a href="http://telugu.pratilipi.com/">
-							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/pratilipi-telugu-compressed.jpg');">
+							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/pratilipi-telugu-compressed-s.jpg');">
 								<span class="language">తెలుగు</span>
 							</div>
 						</a>
 					</li>
 					<li class="image">
 						<a href="http://gujarati.pratilipi.com/">
-							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/pratilipi-gujarati.jpg'); background-size: cover; background-position: top;">
+							<div class="tiles" style="background-image:url('http://1.ptlp.co/resource-all/home-page/pratilipi-gujarati-compressed-s.jpg'); background-size: cover; background-position: top;">
 								<span class="language">ગુજરાતી</span>
 							</div>
 						</a>
 					</li>
 					<li class="image">
 						<a href="http://marathi.pratilipi.com/">
-							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/pratilipi-marathi-compressed.jpg');">
+							<div class="tiles" style="background-image:url('http://2.ptlp.co/resource-all/home-page/pratilipi-marathi-compressed-s.jpg');">
 								<span class="language">मराठी</span>
 							</div>
 						</a>
 					</li>
 					<li class="image">
 						<a href="http://kannada.pratilipi.com/">
-							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/pratilipi-kannada-compressed.jpg');">
+							<div class="tiles" style="background-image:url('http://3.ptlp.co/resource-all/home-page/pratilipi-kannada-compressed-s.jpg');">
 								<span class="language">ಕನ್ನಡ</span>
 							</div>
 						</a>
@@ -188,6 +184,8 @@
 			</div>
 		</div>
 	</div>
+
+	<link rel='stylesheet' href='http://0.ptlp.co/third-party/font-awesome-4.3.0/css/font-awesome.min.css'>
 	<script src='http://0.ptlp.co/third-party/jquery-2.1.4/jquery-2.1.4.min.js'></script>
 	<script>
 		$( document ).ready(function() {
@@ -300,6 +298,7 @@
 			});
 		}
 	</script>
+	<#include "meta/GoogleAnalytics.ftl">
 </body>
 
 </html>

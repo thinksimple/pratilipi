@@ -35,6 +35,9 @@ body {
 body * {
 	font-family: inherit;
 }
+button {
+	cursor: pointer;
+}
 ol, ul {
 	list-style: none; 
 }
@@ -102,7 +105,7 @@ a {
 	bottom: 0;
 	left: 0;
 	right: 0;
-	background: url(http://0.ptlp.co/resource-all/home-page/pratilipi-banner.png) no-repeat 0 0;
+	background: url(http://0.ptlp.co/resource-all/home-page/pratilipi-banner-compressed.jpg) no-repeat 0 0;
 	background-color: lightgrey;
 	opacity: 0.72;
 	width: 100%;
