@@ -6,15 +6,13 @@
 <title>${ title }</title>
 <link rel="shortcut icon" type="image/png" href="/favicon.png">
 
-
-
 <#-- Polymer Check -->
 <script>
 function supportsPolymer() {
-  return 'content' in document.createElement('template') && 'import' in document.createElement('link') && 'registerElement' in document && document.head.createShadowRoot;
+	return 'content' in document.createElement( 'template' ) && 'import' in document.createElement( 'link' ) && 'registerElement' in document && document.head.createShadowRoot;
 }
-if(!supportsPolymer())
-	window.location = "http://${ lang }.pratilipi.com"  
+if( !supportsPolymer() )
+	window.location = "http://${ lang }.pratilipi.com";  
 </script>
 
 
