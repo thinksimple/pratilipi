@@ -12,9 +12,9 @@
 </#list>
 
 <#-- Polymer dependencies -->
-<script src='http://0.ptlp.co/resource-all/jquery.bootstrap.polymer.js'></script>
+<script src='http://0.ptlp.co/resource-all/jquery.bootstrap.polymer.firebase.js'></script>
 <link rel='import' href='http://0.ptlp.co/resource-all/pratilipi.polymer.elements.html'>
-<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?25'>
+<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?26'>
 
 <#-- Custom Stylesheet -->
 <link type="text/css" rel="stylesheet" href="/resources/style.css?68">
@@ -39,8 +39,6 @@
 		lastScrollTop = st; 
 	};
 </script>
-
-<script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
 
 <script>
 	var config = {

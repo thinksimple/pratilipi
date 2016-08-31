@@ -294,7 +294,7 @@
 					<div class="button-holder dropdown">
 						<div style="display: inline-block" class="dropdown">
 							<template is="dom-if" if="{{ isGuest }}">
-								<a on-click="_logIn">
+								<a on-click="_logInToViewNotifications">
 									<iron-icon icon="social:notifications"></iron-icon>
 								</a>
 							</template>
@@ -442,6 +442,10 @@
 			},
 
 			_logIn: function() {
+				document.querySelector( 'pratilipi-user' ).logIn();
+			},
+
+			_logInToViewNotifications: function() {
 				document.querySelector( 'pratilipi-user' ).logIn( true, "${ _strings.user_login_to_view_notifications }" );
 			},
 
