@@ -1,5 +1,3 @@
-@import url(http://fonts.googleapis.com/earlyaccess/notosanstamil.css);
-@import url(http://0.ptlp.co/resource-gu/font/shruti.css);
 @import url(https://fonts.googleapis.com/css?family=Montserrat);
 
 html, body, div, span, applet, object, iframe,
@@ -31,10 +29,12 @@ footer, header, hgroup, menu, nav, section {
 
 body {
 	line-height: 1; 
-	font-family: Avenir-Black, Montserrat, Helvetica, 'Noto Sans Tamil','Shruti';
+	font-family: Avenir-Black, Montserrat, Helvetica;
 	font-weight: 600;
 }
-
+body * {
+	font-family: inherit;
+}
 ol, ul {
 	list-style: none; 
 }

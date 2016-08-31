@@ -7,12 +7,8 @@
 	<title>Read Hindi, Gujarati and Tamil Stories, Poems and Books</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="description" content="A platform to discover, read and share your favorite stories, poems and books in a language, device and format of your choice.">
-	
-	<script src='http://0.ptlp.co/resource-all/jquery.bootstrap.polymer.js'></script>
 	<link rel='stylesheet' href='http://0.ptlp.co/third-party/font-awesome-4.3.0/css/font-awesome.min.css'>
-	<link rel='stylesheet' href='http://0.ptlp.co/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>
-	
-	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?1">
+	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?2">
 
 	<#include "meta/GoogleAnalytics.ftl">
 
@@ -56,35 +52,35 @@
 				<ul class="tiles-container" id="tiles-container">
 					<li class="image">
 						<a href="http://hindi.pratilipi.com/">
-							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/pratilipi-hindi.jpg');">
+							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/pratilipi-hindi-compressed.jpg');">
 								<span class="language">हिंदी</span>
 							</div>
 						</a>
 					</li>
 					<li class="image">
 						<a href="http://tamil.pratilipi.com/">
-							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/pratilipi-tamil.png');">
+							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/pratilipi-tamil-compressed.png');">
 								<span class="language">தமிழ்</span>
 							</div>
 						</a>
 					</li>
 					<li class="image">
 						<a href="http://malayalam.pratilipi.com/">
-							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/pratilipi-malayalam.jpg');">
+							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/pratilipi-malayalam-compressed.jpg');">
 								<span class="language">മലയാളം</span>
 							</div>
 						</a>
 					</li>
 					<li class="image">
 						<a href="http://bengali.pratilipi.com/">
-							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/pratilipi-bengali.jpg'); background-size: cover; background-position: top;">
+							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/pratilipi-bengali-compressed.jpg'); background-size: cover; background-position: top;">
 								<span class="language">বাংলা</span>
 							</div>
 						</a>
 					</li>
 					<li class="image">
 						<a href="http://telugu.pratilipi.com/">
-							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/pratilipi-telugu.jpg');">
+							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/pratilipi-telugu-compressed.jpg');">
 								<span class="language">తెలుగు</span>
 							</div>
 						</a>
@@ -98,14 +94,14 @@
 					</li>
 					<li class="image">
 						<a href="http://marathi.pratilipi.com/">
-							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/pratilipi-marathi.jpg');">
+							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/pratilipi-marathi-compressed.jpg');">
 								<span class="language">मराठी</span>
 							</div>
 						</a>
 					</li>
 					<li class="image">
 						<a href="http://kannada.pratilipi.com/">
-							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/pratilipi-kannada.jpg');">
+							<div class="tiles" style="background-image:url('http://0.ptlp.co/resource-all/home-page/pratilipi-kannada-compressed.jpg');">
 								<span class="language">ಕನ್ನಡ</span>
 							</div>
 						</a>
@@ -192,7 +188,7 @@
 			</div>
 		</div>
 	</div>
-	
+	<script src='http://0.ptlp.co/third-party/jquery-2.1.4/jquery-2.1.4.min.js'></script>
 	<script>
 		$( document ).ready(function() {
 			<#-- Setting tiles min-height -->
