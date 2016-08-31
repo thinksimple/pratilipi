@@ -2,6 +2,7 @@ package com.pratilipi.common.util;
 
 import com.google.appengine.api.images.Image;
 import com.google.appengine.api.images.ImagesService;
+import com.google.appengine.api.images.ImagesService.OutputEncoding;
 import com.google.appengine.api.images.ImagesServiceFactory;
 import com.google.appengine.api.images.Transform;
 
@@ -24,7 +25,7 @@ public class ImageUtil {
 				width < 4000 ? width : 4000,
 				4000,
 				false );
-		return imagesService.applyTransform( resize, image ).getImageData();
+		return imagesService.applyTransform( resize, image, OutputEncoding.JPEG ).getImageData();
 	}
 	
 	public static byte[] resize( byte[] imageData, int width, int height ) {
@@ -33,7 +34,7 @@ public class ImageUtil {
 				width < 4000 ? width : 4000,
 				height < 4000 ? height : 4000,
 				true );
-		return imagesService.applyTransform( resize, image ).getImageData();
+		return imagesService.applyTransform( resize, image, OutputEncoding.JPEG ).getImageData();
 	}
 	
 }
