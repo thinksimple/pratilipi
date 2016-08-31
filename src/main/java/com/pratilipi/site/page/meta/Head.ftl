@@ -6,6 +6,19 @@
 <title>${ title }</title>
 <link rel="shortcut icon" type="image/png" href="/favicon.png">
 
+
+
+<#-- Polymer Check -->
+<script>
+function supportsPolymer() {
+  return 'content' in document.createElement('template') && 'import' in document.createElement('link') && 'registerElement' in document && document.head.createShadowRoot;
+}
+console.log( supportsPoylmer() );
+if(!supportsPolymer())
+	window.location = "http://${ lang }.pratilipi.com"  
+</script>
+
+
 <#-- Third-Party Library -->
 <#list resourceList as resource>
 	${ resource }
@@ -14,7 +27,7 @@
 <#-- Polymer dependencies -->
 <script src='http://0.ptlp.co/resource-all/jquery.bootstrap.polymer.firebase.js'></script>
 <link rel='import' href='http://0.ptlp.co/resource-all/pratilipi.polymer.elements.html'>
-<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?26'>
+<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?27'>
 
 <#-- Custom Stylesheet -->
 <link type="text/css" rel="stylesheet" href="/resources/style.css?68">
