@@ -61,7 +61,8 @@ public class NotificationProcessApi extends GenericApi {
 					fcmTokenList,
 					notificationData.getMessage(),
 					notification.getId().toString(),
-					notification.getType().getAndroidHandler() );
+					notification.getType().getAndroidHandler(),
+					notification.getSourceId().toString() );
 			
 			if( notification.getFcmResponse() == null )
 				notification.setFcmResponse( fcmResponse );
