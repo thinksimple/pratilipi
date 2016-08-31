@@ -2,14 +2,28 @@ package com.pratilipi.api.impl.notification;
 
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
+import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.impl.pratilipi.PratilipiApi;
+import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
+import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.type.NotificationState;
+import com.pratilipi.data.DataAccessor;
+import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.client.NotificationData;
+import com.pratilipi.data.type.Notification;
+import com.pratilipi.filter.AccessTokenFilter;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/notification" )
 public class NotificationApi extends GenericApi {
+
+	public static class PostRequest extends GenericRequest {
+
+		private Long notificationId;
+		private NotificationState state;
+
+	}
 
 	@SuppressWarnings("unused")
 	public static class Response extends GenericResponse { 
@@ -74,6 +88,21 @@ public class NotificationApi extends GenericApi {
 		public Long getLastUpdatedMillis() {
 			return lastUpdatedMillis;
 		}
+
+	}
+
+
+	@Post
+	public Response post( PostRequest request ) throws InsufficientAccessException {
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Notification notification = dataAccessor.getNotification( request.notificationId );
+		if( !AccessTokenFilter.getAccessToken().getUserId().equals( notification.getUserId() ) )
+			throw new InsufficientAccessException();
+
+		notification.setState( request.state );
+		notification = dataAccessor.createOrUpdateNotification( notification );
+		return new Response();
 
 	}
 	
