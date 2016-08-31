@@ -111,14 +111,14 @@ a {
 	height: 100%;
 	background-repeat: no-repeat;
 }
-@media only screen and (max-width: 840px) {
+@media only screen and (max-width: 640px) {
 	.landing-page .pratilipi-banner .pratilipi-background {
 		background: url(http://0.ptlp.co/resource-all/home-page/pratilipi-banner-compressed-mobile.jpg) no-repeat 0 0;
 		background-size: cover;
 		background-position-x: -128px;
 	}
 }
-@media only screen and (min-width: 840px) {
+@media only screen and (min-width: 641px) {
 	.landing-page .pratilipi-banner .pratilipi-background {
 		background: url(http://0.ptlp.co/resource-all/home-page/pratilipi-banner-compressed.jpg) no-repeat 0 0;
 		background-size: cover;

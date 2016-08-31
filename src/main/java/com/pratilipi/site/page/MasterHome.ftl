@@ -7,7 +7,7 @@
 	<meta name="description" content="A platform to discover, read and share your favorite stories, poems and books in a language, device and format of your choice.">
 	<title>Read Hindi, Gujarati and Tamil Stories, Poems and Books</title>
 	<link rel="shortcut icon" type="image/png" href="/favicon.png">
-	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?4">
+	<link rel="stylesheet" type="text/css" href="/resources/style-home.css?5">
 </head>
 
 <body>
