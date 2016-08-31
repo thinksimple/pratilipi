@@ -16,6 +16,7 @@ import com.pratilipi.api.impl.event.EventApi;
 import com.pratilipi.api.impl.event.EventBannerApi;
 import com.pratilipi.api.impl.event.EventListApi;
 import com.pratilipi.api.impl.mailinglist.MailingListSubscribeApi;
+import com.pratilipi.api.impl.notification.NotificationApi;
 import com.pratilipi.api.impl.notification.NotificationListApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentApi;
@@ -92,7 +93,8 @@ public class ApiService extends GenericService {
 		ApiRegistry.register( VoteApi.class );						// *.pratilipi.com
 		
 		ApiRegistry.register( MailingListSubscribeApi.class );		// *.pratilipi.com
-		
+
+		ApiRegistry.register( NotificationApi.class );
 		ApiRegistry.register( NotificationListApi.class );			// *.pratilipi.com
 		
 	}

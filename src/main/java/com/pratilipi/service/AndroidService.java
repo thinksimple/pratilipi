@@ -12,6 +12,7 @@ import com.pratilipi.api.impl.comment.CommentApi;
 import com.pratilipi.api.impl.comment.CommentListApi;
 import com.pratilipi.api.impl.init.InitApi;
 import com.pratilipi.api.impl.navigation.NavigationListApi;
+import com.pratilipi.api.impl.notification.NotificationApi;
 import com.pratilipi.api.impl.notification.NotificationListApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentApi;
@@ -83,6 +84,7 @@ public class AndroidService extends GenericService {
 		ApiRegistry.register( NavigationListApi.class );
 		ApiRegistry.register( CategoryListApi.class );
 
+		ApiRegistry.register( NotificationApi.class );
 		ApiRegistry.register( NotificationListApi.class );
 		
 	}

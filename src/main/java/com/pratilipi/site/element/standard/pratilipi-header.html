@@ -248,7 +248,7 @@
 										src="http://0.ptlp.co/resource-${ lang }/logo/pratilipi_logo.png"></iron-image>
 						</a>
 					</div>
-					<div class="pratilipi-text">
+					<div class="pratilipi-text" style="height: 100%;">
 						<paper-menu-button allow-outside-scroll no-animations vertical-offset=36 class="language" horizontal-align="left" vertical-align="top">
 							<div class="pratilipi-red dropdown-trigger">
 								${ _strings.pratilipi }
@@ -442,7 +442,7 @@
 			},
 
 			_logIn: function() {
-				document.querySelector( 'pratilipi-user' ).logIn();
+				document.querySelector( 'pratilipi-user' ).logIn( true, "${ _strings.user_login_to_view_notifications }" );
 			},
 
 			write: function() {
