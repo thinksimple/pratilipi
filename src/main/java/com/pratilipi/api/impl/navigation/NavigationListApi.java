@@ -2,6 +2,9 @@ package com.pratilipi.api.impl.navigation;
 
 import java.util.List;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -46,12 +49,20 @@ public class NavigationListApi extends GenericApi {
 	@Get
 	public Response get( GetRequest request ) throws UnexpectedServerException {
 		
+		Gson gson = new Gson();
+		
 		List<NavigationData> navigationList = NavigationDataUtil.getNavigationDataList( request.language );
 		if( navigationList.size() > 2 && UxModeFilter.isAndroidApp() ) {
-			for( Navigation.Link link : navigationList.get( 2 ).getLinkList() )
+			for( Navigation.Link link : navigationList.get( 2 ).getLinkList() ) {
+				JsonObject apiRequest = gson.fromJson(
+						(String) link.getApiRequest(),
+						JsonElement.class ).getAsJsonObject();
+				link.setApiRequest( apiRequest );
 				navigationList.get( 0 ).addLink( link );
+			}
 			navigationList = navigationList.subList( 0, 2 );
 		}
+		
 		return new Response( navigationList );
 		
 	}
