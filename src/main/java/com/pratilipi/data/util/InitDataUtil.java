@@ -3,6 +3,7 @@ package com.pratilipi.data.util;
 import java.util.UUID;
 
 import com.pratilipi.common.exception.InsufficientAccessException;
+import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.Language;
@@ -40,11 +41,20 @@ public class InitDataUtil {
 	}
 
 
-	public static BlobEntry getHomeBanner( Language language, String name, Integer width ) throws UnexpectedServerException {
-		BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor().getBlob( "home/" + language.getCode() + "/banner/" + name );
+	public static BlobEntry getHomeBanner( Language language, String bannerId, Integer width )
+			throws InvalidArgumentException, UnexpectedServerException {
+		
+		BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor()
+				.getBlob( "init/bannners/" + language.getCode() + "/" + bannerId );
+		
+		if( blobEntry == null )
+			throw new InvalidArgumentException( "{ \"bannerId\":\"Invalid bannerId.\" }" );
+		
 		if( width != null )
 			blobEntry.setData( ImageUtil.resize( blobEntry.getData(), width ) );
+		
 		return blobEntry;
+		
 	}
 
 	public static void saveHomeBanner( Language language, String name, BlobEntry blobEntry )
