@@ -82,5 +82,6 @@
 			</script>
 		</dom-module>
 		<pratilipi-page-not-found-error></pratilipi-page-not-found-error>
+		<#include "meta/Foot.ftl">
 	</body>
 </html>

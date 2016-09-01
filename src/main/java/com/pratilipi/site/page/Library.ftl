@@ -15,6 +15,8 @@
 			pratilipi-types='${ pratilipiTypesJson }'
 			navigation-list='${ navigationList }'
 			language-map='${ languageMap }'></pratilipi-library-page>
+
+		<#include "meta/Foot.ftl">
 	</body>
 
 </html>

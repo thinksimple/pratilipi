@@ -15,6 +15,8 @@
 			cursor='${ authorListCursor! }'
 			pratilipi-types='${ pratilipiTypesJson }'
 			language-map='${ languageMap }'></pratilipi-author-list-page>
+
+			<#include "meta/Foot.ftl">
 	</body>
 	
 </html>

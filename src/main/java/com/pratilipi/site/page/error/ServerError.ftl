@@ -80,5 +80,6 @@
 			</script>
 		</dom-module>
 		<pratilipi-server-error></pratilipi-server-error>
+		<#include "meta/Foot.ftl">
 	</body>
 </html>

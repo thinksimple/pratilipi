@@ -43,6 +43,8 @@
 				content-type='${ contentType }'
 				index='${ indexJson }'
 				></pratilipi-pratilipi-page>
+
+		<#include "meta/Foot.ftl">
 	</body>
 	
 </html>

@@ -17,7 +17,9 @@
 			pratilipi-types='${ pratilipiTypesJson }'
 			navigation-list='${ navigationList }'
 			language-map='${ languageMap }'></pratilipi-event-page>
-	
+
+		<#include "meta/Foot.ftl">
+
     </body>
 
 

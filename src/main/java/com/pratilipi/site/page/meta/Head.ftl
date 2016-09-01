@@ -13,12 +13,12 @@
 
 <#-- External dependencies -->
 <script src='http://0.ptlp.co/resource-all/jquery.bootstrap.polymer.firebase.js'></script>
-<script src='http://0.ptlp.co/third-party/ckeditor-4.5.10-full/ckeditor.js'></script>
 <link rel='import' href='http://0.ptlp.co/resource-all/pratilipi.polymer.elements.2.html'>
-<link rel='stylesheet' href='http://0.ptlp.co/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>
+<link rel='stylesheet' href='http://1.ptlp.co/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>
+<script src='http://1.ptlp.co/third-party/ckeditor-4.5.10-full/ckeditor.js'></script>
 
 <#-- Pratilipi dependencies -->
-<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?28'>
+<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?29'>
 <link type="text/css" rel="stylesheet" href="/resources/style.css?68">
 
 <#-- Firebase Script -->

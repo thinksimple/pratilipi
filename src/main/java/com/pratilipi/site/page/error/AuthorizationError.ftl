@@ -80,5 +80,6 @@
 			</script>
 		</dom-module>
 		<pratilipi-authorization-error></pratilipi-authorization-error>
+		<#include "meta/Foot.ftl">
 	</body>
 </html>

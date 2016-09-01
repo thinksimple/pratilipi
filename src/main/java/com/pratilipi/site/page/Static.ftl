@@ -67,5 +67,6 @@
 			</script>
 		</dom-module>
 		<pratilipi-static-page></pratilipi-static-page>
+		<#include "meta/Foot.ftl">
 	</body>
 </html>
