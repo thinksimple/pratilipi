@@ -127,9 +127,9 @@ public class PratilipiSite extends HttpServlet {
 			resourceList.add( ThirdPartyResource.BOOTSTRAP_JS.getTag() );
 			resourceList.add( ThirdPartyResource.BOOTSTRAP_CSS.getTag() );
 		} else {
-			resourceList.add( ThirdPartyResource.BOOTSTRAP_CSS.getTag() );
-			resourceList.add( ThirdPartyResource.FONT_AWESOME.getTag() );
-			resourceList.add( ThirdPartyResource.CKEDITOR.getTag() );
+//			resourceList.add( ThirdPartyResource.BOOTSTRAP_CSS.getTag() );
+//			resourceList.add( ThirdPartyResource.FONT_AWESOME.getTag() );
+//			resourceList.add( ThirdPartyResource.CKEDITOR.getTag() );
 		}
 
 
