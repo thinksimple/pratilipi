@@ -1,6 +1,6 @@
 <#-- Polymer Check -->
 <script>
-	function supportsPolymer() { return 'content' in document.createElement( 'template' ) && 'registerElement' in document }
+	function supportsPolymer() { return 'content' in document.createElement( 'template' ) && 'registerElement' in document && document.querySelector( '${ mainPage }' ) != null }
 	if( ! supportsPolymer() ) window.location = "http://${ lang }.pratilipi.com";  
 </script>
 
