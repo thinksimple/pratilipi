@@ -36,6 +36,7 @@ public class NavigationListApi extends GenericApi {
 	
 	public static class Response extends GenericResponse {
 
+		@SuppressWarnings("unused")
 		private List<NavigationData> navigationList;
 		
 		
@@ -52,15 +53,24 @@ public class NavigationListApi extends GenericApi {
 		Gson gson = new Gson();
 		
 		List<NavigationData> navigationList = NavigationDataUtil.getNavigationDataList( request.language );
-		if( navigationList.size() > 2 && UxModeFilter.isAndroidApp() ) {
-			for( Navigation.Link link : navigationList.get( 2 ).getLinkList() ) {
-				JsonObject apiRequest = gson.fromJson(
-						(String) link.getApiRequest(),
-						JsonElement.class ).getAsJsonObject();
-				link.setApiRequest( apiRequest );
-				navigationList.get( 0 ).addLink( link );
+		
+		if( UxModeFilter.isAndroidApp() ) {
+			
+			for( NavigationData navigationData : navigationList ) {
+				for( Navigation.Link link : navigationData.getLinkList() ) {
+					JsonObject apiRequest = gson.fromJson(
+							(String) link.getApiRequest(),
+							JsonElement.class ).getAsJsonObject();
+					link.setApiRequest( apiRequest );
+				}
 			}
-			navigationList = navigationList.subList( 0, 2 );
+		
+			if( navigationList.size() > 2 ) {
+				for( Navigation.Link link : navigationList.get( 2 ).getLinkList() )
+					navigationList.get( 0 ).addLink( link );
+				navigationList = navigationList.subList( 0, 2 );
+			}
+
 		}
 		
 		return new Response( navigationList );
