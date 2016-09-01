@@ -82,6 +82,10 @@
 			--paper-spinner-layer-3-color: #D0021B;
 			--paper-spinner-layer-4-color: #107FE5;
 		}
+		img.social-icons {
+			width: 18px;
+			height: 18px;
+		}
 		
 		.summary-container {
 			padding: 10px 20px 20px 20px;
@@ -105,9 +109,9 @@
 			<paper-menu-button vertical-offset=38 class="pull-right" horizontal-align="right" vertical-align="top">
 				<iron-icon icon="social:share" class="dropdown-trigger"></iron-icon>
 				<paper-menu class="dropdown-content">
-					<paper-item on-click="sharePratilipiOnFacebook"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></paper-item>
-					<paper-item on-click="sharePratilipiOnTwitter"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></paper-item>
-					<paper-item on-click="sharePratilipiOnGplus"><i class="fa fa-google-plus fa-lg" aria-hidden="true"></i></paper-item>
+					<paper-item on-click="sharePratilipiOnFacebook"><img class="social-icons" src="http://0.ptlp.co/resource-all/icon/svg/facebook-333.svg" /></paper-item>
+					<paper-item on-click="sharePratilipiOnTwitter"><img class="social-icons" src="http://0.ptlp.co/resource-all/icon/svg/twitter-333.svg" /></paper-item>
+					<paper-item on-click="sharePratilipiOnGplus"><img class="social-icons" src="http://0.ptlp.co/resource-all/icon/svg/google-plus-333.svg" /></paper-item>
 				</paper-menu>
 			</paper-menu-button>
 			<template is="dom-if" if="{{ hasAccessToUpdate }}">

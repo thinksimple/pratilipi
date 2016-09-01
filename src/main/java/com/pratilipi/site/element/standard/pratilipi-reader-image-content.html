@@ -1,8 +1,15 @@
 <dom-module id="pratilipi-reader-image-content">
 
 	<style>
-		
-				
+		.social-icons {
+			white-space: nowrap; 
+			display: inline-block;
+		}
+		.social-icons img {
+			width: 21px;
+			height: 21px;
+			margin-left: 12px;
+		}
 	</style>
 	
 	
@@ -22,10 +29,10 @@
 					</div>
 					<div class="text-center" style="margin: 0 auto;">
 						<h6 style="margin: 15px 0px; display: inline-block;">${ _strings.reader_enjoyed_reading_part2 } : </h6>
-						<div style="white-space: nowrap; display: inline-block;">  
-							<i class="fa fa-facebook fa-lg fb" on-click="shareOnFacebook"></i>
-							<i class="fa fa-twitter fa-lg tw" on-click="shareOnTwitter"></i>
-							<i class="fa fa-google-plus fa-lg google" on-click="shareOnGplus"></i>
+						<div class="social-icons">
+							<img src="http://0.ptlp.co/resource-all/icon/svg/facebook-333.svg" on-click="shareOnFacebook" />
+							<img src="http://0.ptlp.co/resource-all/icon/svg/twitter-333.svg" on-click="shareOnTwitter" />
+							<img src="http://0.ptlp.co/resource-all/icon/svg/google-plus-333.svg" on-click="shareOnGplus" />  
 						</div>
 					</div>
 				</div>

@@ -40,6 +40,11 @@
 		paper-icon-button {
 			color: #333;
 		}
+		.social-share img {
+			width: 19px;
+			height: 19px;
+			margin-right: 4px;
+		}
 	</style>
 
 	<template>
@@ -190,13 +195,13 @@
 						</div>
 						
 						<!-- Share widget -->
-						<div class="dropdown" style="display: inline-block;">
+						<div class="dropdown social-share" style="display: inline-block;">
 							<paper-icon-button noink icon="social:share" data-toggle="dropdown"></paper-icon-button>
 							<ul class="dropdown-menu pull-right" style="right: -49px;">
 								<li>
 									<a style="padding: 5px; margin: 0;">
 										<paper-item on-click="shareOnFacebook">
-											<paper-icon-item style="width: 24px"><i class="fa fa-facebook fa-sm fb"></i></paper-icon-item>
+											<paper-icon-item><img src="http://0.ptlp.co/resource-all/icon/svg/facebook-333.svg"/></paper-icon-item>
 											&nbsp;&nbsp;
 											<paper-item-body>${ _strings.share_on_facebook }</paper-item-body>
 										</paper-item>
@@ -205,7 +210,7 @@
 								<li>
 									<a style="padding: 5px; margin: 0;">
 										<paper-item on-click="shareOnTwitter">
-											<paper-icon-item style="width: 24px"><i class="fa fa-twitter fa-sm tw"></i></paper-icon-item>
+											<paper-icon-item><img src="http://0.ptlp.co/resource-all/icon/svg/twitter-333.svg"/></paper-icon-item>
 											&nbsp;&nbsp;
 											<paper-item-body>${ _strings.share_on_twitter }</paper-item-body>
 										</paper-item>
@@ -214,7 +219,7 @@
 								<li>
 									<a style="padding: 5px; margin: 0;">
 										<paper-item on-click="shareOnGplus">
-											<paper-icon-item style="width: 24px"><i class="fa fa-google-plus fa-sm google"></i></paper-icon-item>
+											<paper-icon-item><img src="http://0.ptlp.co/resource-all/icon/svg/google-plus-333.svg"/></paper-icon-item>
 											&nbsp;&nbsp;
 											<paper-item-body>${ _strings.share_on_gplus }</paper-item-body>
 										</paper-item>
