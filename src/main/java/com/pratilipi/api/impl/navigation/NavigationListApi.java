@@ -58,6 +58,8 @@ public class NavigationListApi extends GenericApi {
 			
 			for( NavigationData navigationData : navigationList ) {
 				for( Navigation.Link link : navigationData.getLinkList() ) {
+					if( link.getApiRequest() == null )
+						continue;
 					JsonObject apiRequest = gson.fromJson(
 							(String) link.getApiRequest(),
 							JsonElement.class ).getAsJsonObject();
