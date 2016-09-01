@@ -2,7 +2,7 @@ package com.pratilipi.common.type;
 
 public enum AccessType {
 
-	HOME_UPDATE( "Update Home" ),
+	INIT_UPDATE( "Update Home" ),
 	
 	USER_ADD   ( "Add User" ),
 	USER_UPDATE( "Update User" ),

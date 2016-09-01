@@ -13,7 +13,7 @@ public class UserAccessUtil {
 			AccessType.VOTE };
 	
 	private static final AccessType[] ADMIN_ACCESS = {
-			AccessType.HOME_UPDATE,
+			AccessType.INIT_UPDATE,
 			AccessType.PRATILIPI_LIST, AccessType.PRATILIPI_ADD, AccessType.PRATILIPI_UPDATE,
 			AccessType.PRATILIPI_READ_META, AccessType.PRATILIPI_READ_CONTENT,
 			AccessType.AUTHOR_LIST, AccessType.AUTHOR_ADD, AccessType.AUTHOR_UPDATE,

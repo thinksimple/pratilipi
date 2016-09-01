@@ -2,6 +2,8 @@ package com.pratilipi.data;
 
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.data.type.CommentDoc;
+import com.pratilipi.data.type.InitBannerDoc;
+import com.pratilipi.data.type.InitDoc;
 import com.pratilipi.data.type.PratilipiContentDoc;
 import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
 import com.pratilipi.data.type.PratilipiReviewsDoc;
@@ -14,7 +16,11 @@ public interface DocAccessor {
 	
 	// Comment Doc
 	CommentDoc newCommentDoc();
+
 	
+	InitDoc newInitDoc();
+	
+	InitBannerDoc newInitBannerDoc( String bannerId, String title, String actionUrl );
 
 
 	// Pratilipi Content Doc

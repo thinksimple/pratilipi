@@ -9,11 +9,15 @@ import com.google.gson.JsonSyntaxException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.CommentDoc;
+import com.pratilipi.data.type.InitBannerDoc;
+import com.pratilipi.data.type.InitDoc;
 import com.pratilipi.data.type.PratilipiContentDoc;
 import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
 import com.pratilipi.data.type.PratilipiReviewsDoc;
 import com.pratilipi.data.type.UserPratilipiDoc;
 import com.pratilipi.data.type.doc.CommentDocImpl;
+import com.pratilipi.data.type.doc.InitBannerDocImpl;
+import com.pratilipi.data.type.doc.InitDocImpl;
 import com.pratilipi.data.type.doc.PratilipiContentDocImpl;
 import com.pratilipi.data.type.doc.PratilipiGoogleAnalyticsDocImpl;
 import com.pratilipi.data.type.doc.PratilipiReviewsDocImpl;
@@ -45,8 +49,20 @@ public class DocAccessorImpl implements DocAccessor {
 	public CommentDoc newCommentDoc() {
 		return new CommentDocImpl();
 	}
-		
+	
 
+
+	@Override
+	public InitDoc newInitDoc() {
+		return new InitDocImpl();
+	}
+
+
+	@Override
+	public InitBannerDoc newInitBannerDoc( String bannerId, String title, String actionUrl ) {
+		return new InitBannerDocImpl( bannerId, title, actionUrl );
+	}
+	
 
 	// Pratilipi Content Doc
 	public PratilipiContentDoc newPratilipiContentDoc() {
@@ -128,5 +144,6 @@ public class DocAccessorImpl implements DocAccessor {
 			throw new UnexpectedServerException();
 		}
 	}
-	
+
+
 }
