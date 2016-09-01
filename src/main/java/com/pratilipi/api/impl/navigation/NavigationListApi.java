@@ -73,6 +73,9 @@ public class NavigationListApi extends GenericApi {
 				navigationList = navigationList.subList( 0, 2 );
 			}
 
+			NavigationData navigationData = navigationList.remove( 0 );
+			navigationList.add( navigationData );
+		
 		}
 		
 		return new Response( navigationList );
