@@ -14,9 +14,13 @@ import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.PratilipiType;
 import com.pratilipi.common.util.PratilipiFilter;
+import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.client.PratilipiData;
+import com.pratilipi.data.type.Event;
+import com.pratilipi.data.util.EventDataUtil;
 import com.pratilipi.data.util.PratilipiDataUtil;
+import com.pratilipi.filter.UxModeFilter;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/pratilipi/list" )
@@ -87,14 +91,16 @@ public class PratilipiListApi extends GenericApi {
 
 	}
 	
+	@SuppressWarnings("unused")
 	public static class Response extends GenericResponse { 
 
+		private String bannerUrl;
+		private String description;
 		private List<PratilipiApi.Response> pratilipiList;
 		private String cursor;
 		private Long numberFound;
 
 		
-		@SuppressWarnings("unused")
 		private Response() {}
 		
 		public Response( List<PratilipiData> pratilipiList, String cursor, Long numberFound ) {
@@ -106,6 +112,14 @@ public class PratilipiListApi extends GenericApi {
 		}
 
 
+		private void setBannerUrl( String bannerUrl ) {
+			this.bannerUrl = bannerUrl;
+		}
+		
+		private void setDescription( String description ) {
+			this.description = description;
+		}
+		
 		public List<PratilipiApi.Response> getPratilipiList() {
 			return pratilipiList;
 		}
@@ -142,11 +156,21 @@ public class PratilipiListApi extends GenericApi {
 						request.offset,
 						request.resultCount == null ? 20 : request.resultCount );
 
+		
 		// Preparing & returning response object.
-		return new Response(
+		
+		Response response = new Response(
 				pratilipiListCursorTuple.getDataList(),
 				pratilipiListCursorTuple.getCursor(),
 				pratilipiListCursorTuple.getNumberFound() );
+		
+		if( UxModeFilter.isAndroidApp() && request.eventId != null && request.cursor == null ) {
+			Event event = DataAccessorFactory.getDataAccessor().getEvent( request.eventId );
+			response.setBannerUrl( EventDataUtil.createEventBannerUrl( event ) );
+			response.setDescription( event.getDescription() );
+		}
+		
+		return response;
 		
 	}
 

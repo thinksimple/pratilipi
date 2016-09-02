@@ -98,7 +98,7 @@ public class InitDataUtil {
 				docAccessor.newInitBannerDoc( "pratilipi-bengali-carousel-26.jpg", null, "/bhoutik-galpo" ),
 				docAccessor.newInitBannerDoc( "pratilipi-bengali-carousel-27.jpg", null, "/rahashyogalpo" ),
 				docAccessor.newInitBannerDoc( "pratilipi-bengali-carousel-28.jpg", null, "/aleek-kahini" ),
-				docAccessor.newInitBannerDoc( "pratilipi-bengali-carousel-28.jpg", null, "/events" ),
+				docAccessor.newInitBannerDoc( "pratilipi-bengali-carousel-29.jpg", null, "/events" ),
 		};
 			
 		InitDoc bnInitDoc = docAccessor.newInitDoc();
