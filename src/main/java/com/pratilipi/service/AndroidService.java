@@ -10,6 +10,7 @@ import com.pratilipi.api.impl.author.AuthorImageRemoveApi;
 import com.pratilipi.api.impl.category.CategoryListApi;
 import com.pratilipi.api.impl.comment.CommentApi;
 import com.pratilipi.api.impl.comment.CommentListApi;
+import com.pratilipi.api.impl.contact.ContactApi;
 import com.pratilipi.api.impl.init.InitApi;
 import com.pratilipi.api.impl.init.InitBannerApi;
 import com.pratilipi.api.impl.navigation.NavigationListApi;
@@ -80,6 +81,8 @@ public class AndroidService extends GenericService {
 		ApiRegistry.register( CommentListApi.class );
 		
 		ApiRegistry.register( VoteApi.class );
+		
+		ApiRegistry.register( ContactApi.class );
 		
 		ApiRegistry.register( NavigationListApi.class );
 		ApiRegistry.register( CategoryListApi.class );

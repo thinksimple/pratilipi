@@ -22,6 +22,7 @@ import org.apache.commons.io.LineIterator;
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.BlogPostState;
 import com.pratilipi.common.type.CommentParentType;
+import com.pratilipi.common.type.ContactTeam;
 import com.pratilipi.common.type.I18nGroup;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.MailingList;
@@ -51,6 +52,9 @@ import com.pratilipi.data.type.Blog;
 import com.pratilipi.data.type.BlogPost;
 import com.pratilipi.data.type.Category;
 import com.pratilipi.data.type.Comment;
+import com.pratilipi.data.type.Conversation;
+import com.pratilipi.data.type.ConversationMessage;
+import com.pratilipi.data.type.ConversationUser;
 import com.pratilipi.data.type.Event;
 import com.pratilipi.data.type.I18n;
 import com.pratilipi.data.type.MailingListSubscription;
@@ -69,6 +73,9 @@ import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.BlogEntity;
 import com.pratilipi.data.type.gae.BlogPostEntity;
 import com.pratilipi.data.type.gae.CommentEntity;
+import com.pratilipi.data.type.gae.ConversationEntity;
+import com.pratilipi.data.type.gae.ConversationMessageEntity;
+import com.pratilipi.data.type.gae.ConversationUserEntity;
 import com.pratilipi.data.type.gae.EventEntity;
 import com.pratilipi.data.type.gae.I18nEntity;
 import com.pratilipi.data.type.gae.MailingListSubscriptionEntity;
@@ -845,6 +852,33 @@ public class DataAccessorMockImpl implements DataAccessor {
 	@Override
 	public Vote createOrUpdateVote( Vote vote, AuditLog auditLog ) {
 		return vote; 
+	}
+	
+	
+	// CONVERSATION* Tables
+	
+	public Conversation newConversation( ContactTeam team, Long userId ) {
+		return new ConversationEntity( team + "-" + userId );
+	}
+	
+	public Conversation getConversation( ContactTeam team, Long userId ) {
+		return null;
+	}
+	
+	public ConversationUser newConversationUser( String conversationId, Long userid ) {
+		return new ConversationUserEntity( conversationId, userid );
+	}
+	
+	public ConversationMessage newConversationMessage() {
+		return new ConversationMessageEntity();
+	}
+	
+	public Conversation createOrUpdateConversation( Conversation conversation, List<ConversationUser> conversationUserList ) {
+		return conversation;
+	}
+	
+	public Conversation createOrUpdateConversation( Conversation conversation, ConversationMessage conversationMessage ) {
+		return conversation;
 	}
 	
 	

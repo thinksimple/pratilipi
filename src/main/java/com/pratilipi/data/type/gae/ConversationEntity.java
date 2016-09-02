@@ -1,11 +1,13 @@
 package com.pratilipi.data.type.gae;
 
+import java.util.Date;
 import java.util.UUID;
 
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.pratilipi.common.type.ContactTeam;
 import com.pratilipi.data.type.Conversation;
 
 @Cache
@@ -17,9 +19,17 @@ public class ConversationEntity implements Conversation {
 	
 	private String TITLE;
 	
+	private Date CREATION_DATE;
+	
+	private Date LAST_UPDATED;
+	
 	
 	public ConversationEntity() {
 		this.CONVERSATION_ID = UUID.randomUUID().toString();
+	}
+	
+	public ConversationEntity( String id ) {
+		this.CONVERSATION_ID = id;
 	}
 	
 	public ConversationEntity( Long userId_1, Long userId_2 ) {
@@ -59,6 +69,26 @@ public class ConversationEntity implements Conversation {
 	@Override
 	public void setTitle( String title ) {
 		this.TITLE = title;
+	}
+
+	@Override
+	public Date getCreationDate() {
+		return CREATION_DATE;
+	}
+	
+	@Override
+	public void setCreationDate( Date creationDate ) {
+		this.CREATION_DATE = creationDate;
+	}
+	
+	@Override
+	public Date getLastUpdated() {
+		return LAST_UPDATED;
+	}
+	
+	@Override
+	public void setLastUpdated( Date lastUpdated ) {
+		this.LAST_UPDATED = lastUpdated;
 	}
 	
 }

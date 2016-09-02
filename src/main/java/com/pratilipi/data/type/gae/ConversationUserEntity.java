@@ -9,7 +9,7 @@ import com.pratilipi.data.type.ConversationUser;
 
 @Cache
 @Entity( name = "CONVERSATION_USER" )
-public class CoversationUserEntity implements ConversationUser {
+public class ConversationUserEntity implements ConversationUser {
 
 	@Id
 	private String CONVERSATION_USER_ID; // CONVERSATION_ID-USER_ID
@@ -21,9 +21,9 @@ public class CoversationUserEntity implements ConversationUser {
 	private Long USER_ID;
 	
 	
-	public CoversationUserEntity() {}
+	public ConversationUserEntity() {}
 	
-	public CoversationUserEntity( String conversationId, Long userId ) {
+	public ConversationUserEntity( String conversationId, Long userId ) {
 		this.CONVERSATION_USER_ID = CONVERSATION_ID + "-" + USER_ID;
 		this.CONVERSATION_ID = conversationId;
 		this.USER_ID = userId;

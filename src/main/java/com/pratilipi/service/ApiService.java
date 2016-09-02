@@ -12,6 +12,7 @@ import com.pratilipi.api.impl.blogpost.BlogPostApi;
 import com.pratilipi.api.impl.blogpost.BlogPostListApi;
 import com.pratilipi.api.impl.comment.CommentApi;
 import com.pratilipi.api.impl.comment.CommentListApi;
+import com.pratilipi.api.impl.contact.ContactApi;
 import com.pratilipi.api.impl.event.EventApi;
 import com.pratilipi.api.impl.event.EventBannerApi;
 import com.pratilipi.api.impl.event.EventListApi;
@@ -48,7 +49,7 @@ public class ApiService extends GenericService {
 	
 	static {
 		
-		ApiRegistry.register( InitBannerApi.class );				// *.pratilipi.com
+		ApiRegistry.register( InitBannerApi.class );				// *.pratilipi.com & AWS CloudFront
 		ApiRegistry.register( InitBannerListApi.class );			// *.pratilipi.com
 		
 		ApiRegistry.register( UserLoginApi.class );					// *.pratilipi.com
@@ -70,7 +71,7 @@ public class ApiService extends GenericService {
 		ApiRegistry.register( AuthorListApi.class );				// *.pratilipi.com
 		ApiRegistry.register( AuthorImageApi.class );				// *.pratilipi.com & AWS CloudFront
 		ApiRegistry.register( AuthorImageRemoveApi.class );			// *.pratilipi.com
-		ApiRegistry.register( AuthorCoverApi.class );				// *.pratilipi.com
+		ApiRegistry.register( AuthorCoverApi.class );				// *.pratilipi.com & AWS CloudFront
 		ApiRegistry.register( AuthorCoverRemoveApi.class );			// *.pratilipi.com
 		
 		ApiRegistry.register( EventApi.class );						// *.pratilipi.com
@@ -96,6 +97,8 @@ public class ApiService extends GenericService {
 		ApiRegistry.register( CommentListApi.class );				// *.pratilipi.com
 		
 		ApiRegistry.register( VoteApi.class );						// *.pratilipi.com
+		
+		ApiRegistry.register( ContactApi.class );					// *.pratilipi.com
 		
 		ApiRegistry.register( MailingListSubscribeApi.class );		// *.pratilipi.com
 
