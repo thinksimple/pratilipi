@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.CommentParentType;
+import com.pratilipi.common.type.ContactTeam;
 import com.pratilipi.common.type.I18nGroup;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.MailingList;
@@ -24,6 +25,9 @@ import com.pratilipi.data.type.Blog;
 import com.pratilipi.data.type.BlogPost;
 import com.pratilipi.data.type.Category;
 import com.pratilipi.data.type.Comment;
+import com.pratilipi.data.type.Conversation;
+import com.pratilipi.data.type.ConversationMessage;
+import com.pratilipi.data.type.ConversationUser;
 import com.pratilipi.data.type.Event;
 import com.pratilipi.data.type.I18n;
 import com.pratilipi.data.type.MailingListSubscription;
@@ -169,6 +173,15 @@ public interface DataAccessor {
 	List<Vote> getVoteListByReference( ReferenceType referenceType, Long referenceId );
 	List<Vote> getVoteListByReference( ReferenceType referenceType, String referenceId );
 	Vote createOrUpdateVote( Vote vote, AuditLog auditLog );
+	
+	
+	// CONVERSATION* Tables
+	Conversation newConversation( ContactTeam team, Long userId );
+	Conversation getConversation( ContactTeam team, Long userId );
+	ConversationUser newConversationUser( String conversationId, Long userid );
+	ConversationMessage newConversationMessage();
+	Conversation createOrUpdateConversation( Conversation conversation, List<ConversationUser> conversationUserList );
+	Conversation createOrUpdateConversation( Conversation conversation, ConversationMessage conversationMessage );
 	
 	
 	// MAILING_LIST_SUBSCRIPTION Table

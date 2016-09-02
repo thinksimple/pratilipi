@@ -24,6 +24,7 @@ import com.googlecode.objectify.cmd.Query;
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.CommentParentType;
+import com.pratilipi.common.type.ContactTeam;
 import com.pratilipi.common.type.I18nGroup;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.MailingList;
@@ -45,6 +46,9 @@ import com.pratilipi.data.type.Blog;
 import com.pratilipi.data.type.BlogPost;
 import com.pratilipi.data.type.Category;
 import com.pratilipi.data.type.Comment;
+import com.pratilipi.data.type.Conversation;
+import com.pratilipi.data.type.ConversationMessage;
+import com.pratilipi.data.type.ConversationUser;
 import com.pratilipi.data.type.Event;
 import com.pratilipi.data.type.GenericOfyType;
 import com.pratilipi.data.type.I18n;
@@ -65,6 +69,9 @@ import com.pratilipi.data.type.gae.BlogEntity;
 import com.pratilipi.data.type.gae.BlogPostEntity;
 import com.pratilipi.data.type.gae.CategoryEntity;
 import com.pratilipi.data.type.gae.CommentEntity;
+import com.pratilipi.data.type.gae.ConversationEntity;
+import com.pratilipi.data.type.gae.ConversationMessageEntity;
+import com.pratilipi.data.type.gae.ConversationUserEntity;
 import com.pratilipi.data.type.gae.EventEntity;
 import com.pratilipi.data.type.gae.I18nEntity;
 import com.pratilipi.data.type.gae.MailingListSubscriptionEntity;
@@ -110,6 +117,10 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		
 		ObjectifyService.register( CommentEntity.class );
 		ObjectifyService.register( VoteEntity.class );
+		
+		ObjectifyService.register( ConversationEntity.class );
+		ObjectifyService.register( ConversationUserEntity.class );
+		ObjectifyService.register( ConversationMessageEntity.class );
 		
 		ObjectifyService.register( MailingListSubscriptionEntity.class );
 		
@@ -1607,6 +1618,41 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return createOrUpdateEntity( vote, auditLog );
 	}
 
+	
+	// CONVERSATION* Tables
+	
+	public Conversation newConversation( ContactTeam team, Long userId ) {
+		return new ConversationEntity( team + "-" + userId );
+	}
+	
+	public Conversation getConversation( ContactTeam team, Long userId ) {
+		return getEntity( ConversationEntity.class, team + "-" + userId );
+	}
+	
+	public ConversationUser newConversationUser( String conversationId, Long userid ) {
+		return new ConversationUserEntity( conversationId, userid );
+	}
+	
+	public ConversationMessage newConversationMessage() {
+		return new ConversationMessageEntity();
+	}
+	
+	public Conversation createOrUpdateConversation( Conversation conversation, List<ConversationUser> conversationUserList ) {
+		List<GenericOfyType> entityList = new ArrayList<>( 1 + conversationUserList.size() );
+		entityList.add( conversation );
+		entityList.addAll( conversationUserList );
+		entityList = createOrUpdateEntityList( entityList );
+		return (Conversation) entityList.get( 0 );
+	}
+	
+	public Conversation createOrUpdateConversation( Conversation conversation, ConversationMessage conversationMessage ) {
+		List<GenericOfyType> entityList = new ArrayList<>( 2 );
+		entityList.add( conversation );
+		entityList.add( conversationMessage );
+		entityList = createOrUpdateEntityList( entityList );
+		return (Conversation) entityList.get( 0 );
+	}
+	
 	
 	// MAILING_LIST_SUBSCRIPTION Table
 
