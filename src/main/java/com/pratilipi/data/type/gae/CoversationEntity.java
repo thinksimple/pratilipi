@@ -1,0 +1,58 @@
+package com.pratilipi.data.type.gae;
+
+import java.util.UUID;
+
+import com.googlecode.objectify.Key;
+import com.pratilipi.data.type.Conversation;
+
+public class CoversationEntity implements Conversation {
+
+	private String CONVERSATION_ID; // USER_ID_1-USER_ID_2 or UUID
+	
+	private String TITLE;
+	
+	
+	public CoversationEntity() {
+		this.CONVERSATION_ID = UUID.randomUUID().toString();
+	}
+	
+	public CoversationEntity( Long userId_1, Long userId_2 ) {
+		if( userId_1 < userId_2 )
+			this.CONVERSATION_ID = userId_1 + "-" + userId_2;
+		else
+			this.CONVERSATION_ID = userId_2 + "-" + userId_1;
+	}
+	
+	
+	@Override
+	public String getId() {
+		return CONVERSATION_ID;	
+	}
+	
+	public void setId( String id ) {
+		this.CONVERSATION_ID = id;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> Key<T> getKey() {
+		return getId() == null ? null : (Key<T>) Key.create( getClass(), getId() );
+	}
+	
+	@Override
+	public <T> void setKey( Key<T> key ) {
+		this.CONVERSATION_ID = key.getName();
+	}
+
+	
+	@Override
+	public String getTitle() {
+		return TITLE;
+	}
+	
+	@Override
+	public void setTitle( String title ) {
+		this.TITLE = title;
+	}
+	
+}
