@@ -3,10 +3,16 @@ package com.pratilipi.data.type.gae;
 import java.util.UUID;
 
 import com.googlecode.objectify.Key;
+import com.googlecode.objectify.annotation.Cache;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
 import com.pratilipi.data.type.Conversation;
 
+@Cache
+@Entity( name = "CONVERSATION" )
 public class CoversationEntity implements Conversation {
 
+	@Id
 	private String CONVERSATION_ID; // USER_ID_1-USER_ID_2 or UUID
 	
 	private String TITLE;
