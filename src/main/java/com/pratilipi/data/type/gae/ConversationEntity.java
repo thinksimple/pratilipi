@@ -10,7 +10,7 @@ import com.pratilipi.data.type.Conversation;
 
 @Cache
 @Entity( name = "CONVERSATION" )
-public class CoversationEntity implements Conversation {
+public class ConversationEntity implements Conversation {
 
 	@Id
 	private String CONVERSATION_ID; // USER_ID_1-USER_ID_2 or UUID
@@ -18,11 +18,11 @@ public class CoversationEntity implements Conversation {
 	private String TITLE;
 	
 	
-	public CoversationEntity() {
+	public ConversationEntity() {
 		this.CONVERSATION_ID = UUID.randomUUID().toString();
 	}
 	
-	public CoversationEntity( Long userId_1, Long userId_2 ) {
+	public ConversationEntity( Long userId_1, Long userId_2 ) {
 		if( userId_1 < userId_2 )
 			this.CONVERSATION_ID = userId_1 + "-" + userId_2;
 		else
