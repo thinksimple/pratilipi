@@ -1,24 +1,24 @@
 విషయసూచిక
-/new కొత్త రచనలు
-/recommended తప్పక చదవాల్సినవి
-/mostread పాఠకులకు ప్రత్యేకం
-/event/lb లేఖారచన పోటీ 
-/event/frday ఫ్రెండ్ షిప్ డే కంటెస్ట్
-/blog బ్లాగు
+/new              కొత్త రచనలు             App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"new" }
+/recommended      తప్పక చదవాల్సినవి        App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"recommended" }
+/mostread         పాఠకులకు ప్రత్యేకం         App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"mostread" }
+/event/lb         లేఖారచన పోటీ           App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "eventId":5659096691769344 }
+/event/frday      ఫ్రెండ్ షిప్ డే కంటెస్ట్      App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "eventId":6004824194678784 }
+/blog             బ్లాగు                  App#BlogPostList::{ "language":"TELUGU", "blogId":5683739602452480 }
 
 విభాగాలు
-/children  బాల సాహిత్యం
-/ministories మినీకథలు'
-/love  ప్రేమ
-/women  మహిళ
-/classics  క్లాసిక్స్
-/life  జీవితం
-/nature  ప్రకృతి
-/social  సామాజికం
-/spiritual  ఆధ్యాత్మికం
+/children         బాల సాహిత్యం            App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"children" }
+/ministories      మినీకథలు'              App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"ministories" }
+/love             ప్రేమ                   App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"love" }
+/women            మహిళ                  App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"women" }
+/classics         క్లాసిక్స్                   App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"classics" }
+/life             జీవితం                App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"life" }
+/nature           ప్రకృతి                 App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"nature" }
+/social           సామాజికం              App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"social" }
+/spiritual        ఆధ్యాత్మికం             App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"spiritual" }
 
 గ్రంథాలయం
-/stories కథలు
-/poems కవితలు
-/articles వ్యాసాలు
-/books పుస్తకాలు
+/stories          కథలు                App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"stories" }
+/poems            కవితలు               App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"poems" }
+/articles         వ్యాసాలు               App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"articles" }
+/books            పుస్తకాలు              App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"books" }

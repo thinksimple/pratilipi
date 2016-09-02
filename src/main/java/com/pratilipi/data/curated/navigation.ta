@@ -1,31 +1,31 @@
 பிரபலமானவை
-/event/friend                      நட்பு போட்டி
-/featured                          பரிந்துரை
-/new                               புதியவை
-/most-read                         வாசகர் தேர்வு
+/event/friend                நட்பு போட்டி          App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "eventId":4982906788249600 }
+/featured                    பரிந்துரை            App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"featured" }
+/new                         புதியவை             App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"new" }
+/most-read                   வாசகர் தேர்வு        App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"most-read" }
 
 பிரிவுகள்
-/society           சமூகம்
-/cinema            சினிமா
-/family            இல்லறம்  / உறவு
-/self-help         சுயமுன்னேற்றம்
-/book-review       புத்தக விமர்சனம்
-/politics          அரசியல்
-/spiritual         ஆன்மீகம்
-/horror            மர்மம் / திகில்
-/experience        அனுபவம்
-/humour            நகைச்சுவை
-/history           வரலாறு
-/education         கல்வி
-/romance           காதல்
-/others            மற்றவை
-/blog              வலைப்பதிவுகள்
+/society                     சமூகம்               App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"society" }
+/cinema                      சினிமா               App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"cinema" }
+/family                      இல்லறம்  / உறவு      App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"family" }
+/self-help                   சுயமுன்னேற்றம்         App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"self-help" }
+/book-review                 புத்தக விமர்சனம்        App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"book-review" }
+/politics                    அரசியல்             App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"politics" }
+/spiritual                   ஆன்மீகம்            App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"spiritual" }
+/horror                      மர்மம் / திகில்       App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"horror" }
+/experience                  அனுபவம்            App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"experience" }
+/humour                      நகைச்சுவை         App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"humour" }
+/history                     வரலாறு           App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"history" }
+/education                   கல்வி             App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"education" }
+/romance                     காதல்             App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"romance" }
+/others                      மற்றவை           App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"others" }
+/blog                        வலைப்பதிவுகள்      App#BlogPostList::{ "language":"TAMIL", "blogId":5683739602452480 }
 
 வகைகள்
-/stories                           கதைகள்
-/articles                          கட்டுரைகள்
-/poems                             கவிதைகள்
-/books                             புத்தகங்கள்
-/magazines                         இதழ்கள்
-/nationalised-books                நாட்டுடைமை நூல்கள்
-/events                            போட்டிகள்
+/stories                     கதைகள்          App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"stories" }
+/articles                    கட்டுரைகள்        App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"articles" }
+/poems                       கவிதைகள்         App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"poems" }
+/books                       புத்தகங்கள்         App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"books" }
+/magazines                   இதழ்கள்           App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"magazines" }
+/nationalised-books          நாட்டுடைமை நூல்கள்   App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"nationalised-books" }
+/events                      போட்டிகள்          App#EventList::{ "language":"TAMIL" }
