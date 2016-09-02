@@ -119,7 +119,7 @@ public class InitDataUtil {
 			throws InvalidArgumentException, UnexpectedServerException {
 		
 		BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor()
-				.getBlob( "init/bannners/" + language.getCode() + "/" + bannerId );
+				.getBlob( "init/banners/" + language.getCode() + "/" + bannerId );
 		
 		if( blobEntry == null )
 			throw new InvalidArgumentException( "{ \"bannerId\":\"Invalid bannerId.\" }" );
