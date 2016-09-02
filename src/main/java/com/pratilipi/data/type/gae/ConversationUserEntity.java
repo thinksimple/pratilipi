@@ -24,7 +24,7 @@ public class ConversationUserEntity implements ConversationUser {
 	public ConversationUserEntity() {}
 	
 	public ConversationUserEntity( String conversationId, Long userId ) {
-		this.CONVERSATION_USER_ID = CONVERSATION_ID + "-" + USER_ID;
+		this.CONVERSATION_USER_ID = conversationId + "-" + userId;
 		this.CONVERSATION_ID = conversationId;
 		this.USER_ID = userId;
 	}
