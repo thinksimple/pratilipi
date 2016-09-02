@@ -8,8 +8,6 @@ import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
-import com.pratilipi.common.exception.InvalidArgumentException;
-import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.data.client.InitBannerData;
 import com.pratilipi.data.util.InitDataUtil;
@@ -41,11 +39,8 @@ public class InitBannerListApi extends GenericApi {
 	
 	
 	@Get
-	public GenericResponse get( GetRequest request )
-			throws InvalidArgumentException, UnexpectedServerException {
-		
+	public GenericResponse get( GetRequest request ) {
 		return new Response( InitDataUtil.getInitBannerList( request.language ) );
-		
 	}
 	
 }

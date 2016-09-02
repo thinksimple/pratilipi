@@ -139,6 +139,7 @@ public class InitDataUtil {
 			initBannerData.setTitle( initBanner.getTitle() );
 			initBannerData.setImageUrl( createInitBannerUrl( language, initBanner.getId() ) );
 			initBannerData.setActionUrl( initBanner.getActionUrl() );
+			initBannerDataList.add( initBannerData );
 		}
 		return initBannerDataList;
 	}
