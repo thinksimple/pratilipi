@@ -131,14 +131,11 @@ public class UxModeFilter implements Filter {
 			
 			// Figuring out Browser capability
 			
-			boolean basicBrowser = false;
+			boolean basicBrowser = true;
 			
 			if( isWebApp ) {
 				
-				if( userAgent == null || userAgent.isEmpty() ) {
-					basicBrowser = true;
-					
-				} else if( userAgent.contains( "OPR" ) ) { // Opera
+				if( userAgent.contains( "OPR" ) ) { // Opera
 					/*
 					 * Opera on Microsoft Windows 8.1
 					 *   "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.65 Safari/537.36 OPR/26.0.1656.24"
@@ -149,20 +146,6 @@ public class UxModeFilter implements Filter {
 					int version = Integer.parseInt( userAgentSubStr.substring( 0, userAgentSubStr.indexOf( "." ) ) );
 					basicBrowser = version <= 22; // Not sure whether Polymer 1.0 is supported in older versions or not
 	
-				} else if( userAgent.contains( "Opera" ) && userAgent.contains( "Opera Mobi" ) ) { // Opera Classic
-					/*
-					 * Opera Classic on Android 4.3
-					 *   "Opera/9.80 (Android 4.3; Linux; Opera Mobi/ADR-1411061201) Presto/2.11.355 Version/12.10"
-					 */
-					basicBrowser = true; // Not sure whether Polymer 1.0 is supported or not
-					
-				} else if( userAgent.contains( "Opera" ) && userAgent.contains( "Opera Mini" ) ) { // Opera Mini
-					/*
-					 * Opera Mini on Android 4.3
-					 *   "Opera/9.80 (Android; Opera Mini/7.6.40077/35.5706; U; en) Presto/2.8.119 Version/11.10"
-					 */
-					basicBrowser = true; // Polymer 1.0 is not supported !
-					
 				} else if( userAgent.contains( "Chrome" ) && ! userAgent.contains( "(Chrome)" ) ) { // Google Chrome
 					/*
 					 * Google Chrome on Microsoft Windows 8.1
@@ -174,13 +157,6 @@ public class UxModeFilter implements Filter {
 					int version = Integer.parseInt( userAgentSubStr.substring( 0, userAgentSubStr.indexOf( "." ) ) );
 					basicBrowser = version <= 35; // Not sure whether Polymer 1.0 is supported or not
 				
-				} else if( userAgent.contains( "UCBrowser" ) ) { // UCBrowser
-					/*
-					 * UCBrowser on Android 4.3
-					 *   "Mozilla/5.0 (Linux; U; Android 4.3; en-US; GT-I9300 Build/JSS15J) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 UCBrowser/10.0.1.512 U3/0.8.0 Mobile Safari/533.1"
-					 */
-					basicBrowser = true; // Polymer 1.0 not supported !
-					
 				} else if( userAgent.contains( "Firefox" ) ) { // Mozilla Firefox
 					/*
 					 * Mozilla Firefox on Microsoft 8.1
