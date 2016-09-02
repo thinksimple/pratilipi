@@ -27,7 +27,9 @@ public class InitBannerListApi extends GenericApi {
 	
 	public static class Response extends GenericResponse {
 		
+		@SuppressWarnings("unused")
 		private List<InitBannerData> bannerList;
+		
 		
 		private Response() {}
 		
