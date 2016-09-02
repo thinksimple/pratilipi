@@ -21,7 +21,7 @@ public class ConversationDataUtil {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
 		User user = dataAccessor.getUser( userId );
-		if( user == null || ( user.getState() != UserState.ACTIVE || user.getState() != UserState.REGISTERED ) )
+		if( user == null || ( user.getState() != UserState.ACTIVE && user.getState() != UserState.REGISTERED ) )
 			throw new InsufficientAccessException();
 		
 		Conversation conversation = dataAccessor.getConversation( team, userId );
