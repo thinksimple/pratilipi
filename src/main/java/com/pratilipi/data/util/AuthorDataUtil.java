@@ -522,7 +522,7 @@ public class AuthorDataUtil {
 	}
 	
 	public static void removeAuthorImage( Long authorId, boolean coverImage, boolean profileImage )
-			throws InsufficientAccessException, UnexpectedServerException {
+			throws InsufficientAccessException {
 		
 		if( ! coverImage && ! profileImage )
 			return;
