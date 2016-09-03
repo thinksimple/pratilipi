@@ -198,6 +198,7 @@ public class InitDataUtil {
 			initBannerData.setImageUrl( createInitBannerUrl( language, initBanner.getId() ) );
 			initBannerData.setActionUrl( initBanner.getActionUrl() );
 			Navigation.Link link = links.get( initBanner.getActionUrl() );
+			initBannerData.setTitle( link.getName() );
 			initBannerData.setApiName( link.getApiName() );
 			initBannerData.setApiRequest( (String) link.getApiRequest() );
 			initBannerDataList.add( initBannerData );

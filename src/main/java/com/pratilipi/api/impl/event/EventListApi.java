@@ -8,7 +8,6 @@ import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
-import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.data.client.EventData;
 import com.pratilipi.data.util.EventDataUtil;
@@ -50,7 +49,7 @@ public class EventListApi extends GenericApi {
 
 	
 	@Get
-	public GetResponse get( GetRequest request ) throws InsufficientAccessException {
+	public GetResponse get( GetRequest request ) {
 		
 		List<EventData> eventList =
 				EventDataUtil.getEventDataList( request.language );
