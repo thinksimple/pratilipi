@@ -4,17 +4,16 @@ import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.annotation.Validate;
-import com.pratilipi.api.shared.GenericFileUploadRequest;
+import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
-import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.data.util.AuthorDataUtil;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/author/cover/remove" )
 public class AuthorCoverRemoveApi extends GenericApi {
 
-	public static class PostRequest extends GenericFileUploadRequest {
+	public static class PostRequest extends GenericRequest {
 
 		@Validate( required = true, minLong = 1L )
 		private Long authorId;
@@ -23,8 +22,7 @@ public class AuthorCoverRemoveApi extends GenericApi {
 
 	
 	@Post
-	public GenericResponse post( PostRequest request )
-			throws InsufficientAccessException, UnexpectedServerException {
+	public GenericResponse post( PostRequest request ) throws InsufficientAccessException {
 
 		AuthorDataUtil.removeAuthorImage( request.authorId, true, false );
 		return new GenericResponse();
