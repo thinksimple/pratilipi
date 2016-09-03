@@ -208,8 +208,9 @@ public class UxModeFilter implements Filter {
 					 */
 					basicBrowser = false;
 	
+				} else { // Unknown browsers
+					basicBrowser = true;
 				}
-				
 			}
 			
 
