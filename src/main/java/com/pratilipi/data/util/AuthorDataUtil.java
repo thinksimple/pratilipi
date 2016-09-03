@@ -189,7 +189,7 @@ public class AuthorDataUtil {
 		authorData.setImageUrl( createAuthorProfileImageUrl( author ) );
 		authorData.setHasCoverImage( author.getCoverImage() != null );
 		authorData.setCoverImageUrl( createAuthorCoverImageUrl( author ) );
-		authorData.setHasProfileImage( author.getProfileGooglePlus() != null );
+		authorData.setHasProfileImage( author.getProfileImage() != null );
 		authorData.setProfileImageUrl( createAuthorProfileImageUrl( author ) );
 
 		authorData.setRegistrationDate( author.getRegistrationDate() );
