@@ -148,20 +148,7 @@ public class NotificationDataUtil {
 		return notificationDataList;
 		
 	}
-	
-	
-	public static int getNewNotificationCount( Long userId ) throws InsufficientAccessException {
-		
-		if( ! hasAccessToListData( userId ) )
-			throw new InsufficientAccessException();
-		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		User user = dataAccessor.getUser( userId );
-		
-		return user != null ? dataAccessor.getNotificationCount( userId, user.getLastNotified() ) : 0;
-		
-	}
-	
+
 	public static DataListCursorTuple<NotificationData> getNotificationList( Long userId, String cursor, Integer resultCount )
 			throws InsufficientAccessException, UnexpectedServerException {
 		

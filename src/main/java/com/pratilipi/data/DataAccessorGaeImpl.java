@@ -1716,15 +1716,6 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	@Override
-	public Integer getNotificationCount( Long userId, Date minLastUpdatedDate  ) {
-		return ObjectifyService.ofy().load().type( NotificationEntity.class )
-				.filter( "USER_ID", userId )
-				.filter( "LAST_UPDATED >", minLastUpdatedDate )
-				.order( "-LAST_UPDATED" )
-				.keys().list().size();
-	}
-	
-	@Override
 	public DataListCursorTuple<Notification> getNotificationList( Long userId, NotificationType type, Long sourceId, String cursorStr, Integer resultCount ) {
 		return getNotificationList( userId, type, sourceId.toString(), cursorStr, resultCount );
 	}

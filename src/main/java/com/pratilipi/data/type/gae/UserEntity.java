@@ -65,9 +65,6 @@ public class UserEntity implements User {
 	@Index
 	private Long FOLLOW_COUNT;
 	
-	@Index
-	private Date LAST_NOTIFIED;
-
 
 	public UserEntity() {}
 	
@@ -247,16 +244,6 @@ public class UserEntity implements User {
 	@Override
 	public void setFollowCount( Long followCount ) {
 		this.FOLLOW_COUNT = followCount;
-	}
-
-	@Override
-	public Date getLastNotified() {
-		return LAST_NOTIFIED == null ? SIGN_UP_DATE : LAST_NOTIFIED;
-	}
-	
-	@Override
-	public void setLastNotified( Date lastNotified ) {
-		this.LAST_NOTIFIED = lastNotified;
 	}
 
 }

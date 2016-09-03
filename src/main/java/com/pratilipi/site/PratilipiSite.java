@@ -35,7 +35,6 @@ import com.pratilipi.api.impl.notification.NotificationListApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiListApi;
 import com.pratilipi.api.impl.user.UserApi;
-import com.pratilipi.api.impl.user.UserNotifiedApi;
 import com.pratilipi.api.impl.userauthor.UserAuthorFollowApi;
 import com.pratilipi.api.impl.userauthor.UserAuthorFollowListApi;
 import com.pratilipi.api.impl.userpratilipi.UserPratilipiApi;
@@ -52,7 +51,6 @@ import com.pratilipi.common.type.RequestCookie;
 import com.pratilipi.common.type.RequestParameter;
 import com.pratilipi.common.type.Website;
 import com.pratilipi.common.util.FacebookApi;
-import com.pratilipi.common.util.FirebaseApi;
 import com.pratilipi.common.util.FreeMarkerUtil;
 import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.common.util.ThirdPartyResource;
@@ -405,16 +403,6 @@ public class PratilipiSite extends HttpServlet {
 					! website.toString().contains( "ALPHA" ) &&
 					website != Website.ALL_LANGUAGE ) {
 				languageMap.put( website.toString(), website.getFilterLanguage().getName() );
-			}
-		}
-
-		if( basicMode && AccessTokenFilter.getAccessToken().getUserId() != null && AccessTokenFilter.getAccessToken().getUserId() != 0L ) {
-			Integer newNotificationCount = null;
-			try {
-				newNotificationCount = ApiRegistry.getApi( NotificationListApi.class ).get( new NotificationListApi.GetRequest() ).getNewNotificationCount();
-				dataModel.put( "newNotificationCount", newNotificationCount );
-			} catch ( InsufficientAccessException | UnexpectedServerException e ) {
-				e.printStackTrace();
 			}
 		}
 

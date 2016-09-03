@@ -976,11 +976,6 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 
 	@Override
-	public Integer getNotificationCount( Long userId, Date minLastUpdatedDate  ) {
-		return NotificationMock.NOTIFICATION_TABLE.size();
-	}
-
-	@Override
 	public DataListCursorTuple<Notification> getNotificationList( Long userId, NotificationType type, Long sourceId, String cursor, Integer resultCount ) {
 		List<Notification> notificationList = new ArrayList<Notification>();
 		for( Notification notification : NotificationMock.NOTIFICATION_TABLE )

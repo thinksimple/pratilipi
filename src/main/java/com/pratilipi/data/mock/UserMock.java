@@ -31,7 +31,6 @@ public class UserMock {
 		user_1.setSignUpDate( new Date() );
 		user_1.setSignUpSource( UserSignUpSource.WEBSITE_M6_FACEBOOK );
 		user_1.setState( UserState.ACTIVE );
-		user_1.setLastNotified( new Date() );
 		
 		user_2.setEmail( "user-two@pratilipi.com" );
 		user_2.setPassword( "8EilZIQ04Vuf5sbYrp16FV4Z+3IE36ciZUyOeUc8mQA=$7iAI9oWvfqriubH34iWulvkQlAtc5bsLpIc6LuHYUlQ=" ); // password
@@ -40,7 +39,6 @@ public class UserMock {
 		user_2.setSignUpDate( new Date() );
 		user_2.setSignUpSource( UserSignUpSource.WEBSITE_M6 );
 		user_2.setState( UserState.REGISTERED );
-		user_2.setLastNotified( new Date() );
 
 		user_3.setEmail( "user-three@pratilipi.com" );
 		user_3.setPassword( "8EilZIQ04Vuf5sbYrp16FV4Z+3IE36ciZUyOeUc8mQA=$7iAI9oWvfqriubH34iWulvkQlAtc5bsLpIc6LuHYUlQ=" ); // password
@@ -49,7 +47,6 @@ public class UserMock {
 		user_3.setSignUpDate( new Date() );
 		user_3.setSignUpSource( UserSignUpSource.ANDROID_APP );
 		user_3.setState( UserState.ACTIVE );
-		user_3.setLastNotified( new Date() );
 	}
 	
 }

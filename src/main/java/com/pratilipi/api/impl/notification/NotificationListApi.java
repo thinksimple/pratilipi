@@ -37,27 +37,21 @@ public class NotificationListApi extends GenericApi {
 	public static class Response extends GenericResponse { 
 
 		private List<NotificationApi.Response> notificationList;
-		private Integer newNotificationCount;
 		private String cursor;
 
-		
+
 		@SuppressWarnings("unused")
 		private Response() {}
-		
-		public Response( List<NotificationData> notificationDataList, Integer newNotificationCount, String cursor ) {
+
+		public Response( List<NotificationData> notificationDataList, String cursor ) {
 			this.notificationList = new ArrayList<>( notificationDataList.size() );
 			for( NotificationData notificationData : notificationDataList )
 				this.notificationList.add(  new NotificationApi.Response( notificationData, NotificationListApi.class ) );
-			this.newNotificationCount = newNotificationCount;
 			this.cursor = cursor;
 		}
 
 		public List<NotificationApi.Response> getNotificationList() {
 			return notificationList;
-		}
-
-		public Integer getNewNotificationCount() {
-			return newNotificationCount;
 		}
 
 		public String getCursor() {
@@ -77,7 +71,6 @@ public class NotificationListApi extends GenericApi {
 		
 		return new Response(
 				notificationListCursorTuple.getDataList(),
-				NotificationDataUtil.getNewNotificationCount( AccessTokenFilter.getAccessToken().getUserId() ),
 				notificationListCursorTuple.getCursor() );
 		
 	}
