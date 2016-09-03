@@ -2,6 +2,8 @@ package com.pratilipi.api.impl.init;
 
 import java.util.List;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -32,6 +34,9 @@ public class InitBannerListApi extends GenericApi {
 		private Response() {}
 		
 		private Response( List<InitBannerData> bannerList ) {
+			Gson gson = new Gson();
+			for( InitBannerData banner : bannerList )
+				banner.setApiRequest( gson.fromJson( (String) banner.getApiRequest(), JsonElement.class ).getAsJsonObject() );
 			this.bannerList = bannerList;
 		}
 		

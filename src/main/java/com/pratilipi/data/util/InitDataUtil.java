@@ -22,6 +22,7 @@ import com.pratilipi.data.client.InitBannerData;
 import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.InitBannerDoc;
 import com.pratilipi.data.type.InitDoc;
+import com.pratilipi.data.type.Navigation;
 import com.pratilipi.filter.AccessTokenFilter;
 
 public class InitDataUtil {
@@ -181,16 +182,29 @@ public class InitDataUtil {
 	}
 
 	public static List<InitBannerData> getInitBannerList( Language language ) {
+		
 		List<InitBannerDoc> initBanners = langInitDocs.get( language ).getBanners();
 		List<InitBannerData> initBannerDataList = new ArrayList<>( initBanners.size() );
+
+		List<Navigation> navigationList = DataAccessorFactory.getDataAccessor().getNavigationList( language );
+		Map<String, Navigation.Link> links = new HashMap<>();
+		for( Navigation navigation : navigationList )
+			for( Navigation.Link link : navigation.getLinkList() )
+				links.put( link.getUrl(), link );
+		
 		for( InitBannerDoc initBanner : initBanners ) {
 			InitBannerData initBannerData = new InitBannerData( initBanner.getId() );
 			initBannerData.setTitle( initBanner.getTitle() );
 			initBannerData.setImageUrl( createInitBannerUrl( language, initBanner.getId() ) );
 			initBannerData.setActionUrl( initBanner.getActionUrl() );
+			Navigation.Link link = links.get( initBanner.getActionUrl() );
+			initBannerData.setApiName( link.getApiName() );
+			initBannerData.setApiRequest( (String) link.getApiRequest() );
 			initBannerDataList.add( initBannerData );
 		}
+		
 		return initBannerDataList;
+	
 	}
 	
 	public static void saveInitBanner( Language language, String name, BlobEntry blobEntry )
