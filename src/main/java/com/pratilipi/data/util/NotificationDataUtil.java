@@ -158,7 +158,7 @@ public class NotificationDataUtil {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		User user = dataAccessor.getUser( userId );
 		
-		return dataAccessor.getNotificationCount( userId, user.getLastNotified() );
+		return user != null ? dataAccessor.getNotificationCount( userId, user.getLastNotified() ) : 0;
 		
 	}
 	
