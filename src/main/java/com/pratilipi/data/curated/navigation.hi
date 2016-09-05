@@ -21,6 +21,7 @@
 /search?q=articles       लेख                              App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "searchQuery":"articles" }
 /jivani-evam-atmakatha   जीवनी एवं आत्मकथा     App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"jivani-evam-atmakatha" }
 /vichar-vimarsh          विचार विमर्श                 App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"vichar-vimarsh" }
+/childhood-stories       बाल-साहित्य            App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"childhood-stories" }
 /mythology               प्राचीन साहित्य               App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"mythology" }
 /yatra-vrutant           यात्रा – वृत्तांत               App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"yatra-vrutant" }
 /self-help               स्व - विकास               App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"self-help" }
