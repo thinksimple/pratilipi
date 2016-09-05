@@ -6,7 +6,7 @@
 </div>
 <div class="align-text-center">
 	<h5 class="pratilipi-red pratilipi-no-margin">
-		${ author.getName() }
+		${ author.getName() ! author.getNameEn() }
 	</h5>
 	<p class="works-number align-text-center"> ${author.getContentPublished()} ${ _strings.author_count_works }</p>
 </div>
