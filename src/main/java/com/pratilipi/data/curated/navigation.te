@@ -8,12 +8,10 @@
 
 విభాగాలు
 /children         బాల సాహిత్యం            App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"children" }
-/ministories      మినీకథలు'              App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"ministories" }
+/ministories      మినీకథలు'             App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"ministories" }
 /love             ప్రేమ                   App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"love" }
 /women            మహిళ                  App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"women" }
-/classics         క్లాసిక్స్                   App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"classics" }
 /life             జీవితం                App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"life" }
-/nature           ప్రకృతి                 App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"nature" }
 /social           సామాజికం              App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"social" }
 /spiritual        ఆధ్యాత్మికం             App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"spiritual" }
 
