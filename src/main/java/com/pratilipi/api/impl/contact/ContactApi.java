@@ -17,10 +17,17 @@ public class ContactApi extends GenericApi {
 
 	public static class PostRequest extends GenericRequest {
 
-		@Validate(required = true)
+		@Validate( required = true )
 		private ContactTeam team;
 
-		@Validate(required = true)
+		private String name;
+		
+		@Validate( regEx = REGEX_EMAIL, regExErrMsg = ERR_EMAIL_INVALID )
+		private String email;
+		
+		private String phone;
+		
+		@Validate( required = true )
 		private String message;
 
 	}
@@ -32,6 +39,9 @@ public class ContactApi extends GenericApi {
 		ConversationDataUtil.saveMessage(
 				request.team,
 				AccessTokenFilter.getAccessToken().getUserId(),
+				request.name,
+				request.email,
+				request.phone,
 				request.message );
 		
 		return new GenericResponse();

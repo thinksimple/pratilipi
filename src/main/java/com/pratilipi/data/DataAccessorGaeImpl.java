@@ -1625,13 +1625,27 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return new ConversationEntity( team + "-" + userId );
 	}
 	
+	public Conversation newConversation( ContactTeam team, String email ) {
+		return new ConversationEntity( team + "-" + email );
+	}
+	
 	public Conversation getConversation( ContactTeam team, Long userId ) {
 		return getEntity( ConversationEntity.class, team + "-" + userId );
 	}
 	
-	public ConversationUser newConversationUser( String conversationId, Long userid ) {
-		return new ConversationUserEntity( conversationId, userid );
+	public Conversation getConversation( ContactTeam team, String email ) {
+		return getEntity( ConversationEntity.class, team + "-" + email );
 	}
+	
+	
+	public ConversationUser newConversationUser( String conversationId, Long userId ) {
+		return new ConversationUserEntity( conversationId, userId );
+	}
+	
+	public ConversationUser newConversationUser( String conversationId, String email ) {
+		return new ConversationUserEntity( conversationId, email );
+	}
+	
 	
 	public ConversationMessage newConversationMessage() {
 		return new ConversationMessageEntity();

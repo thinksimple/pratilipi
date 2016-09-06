@@ -16,23 +16,45 @@ import com.pratilipi.data.type.User;
 
 public class ConversationDataUtil {
 	
-	public static void saveMessage( ContactTeam team, Long userId, String message ) throws InsufficientAccessException {
+	public static void saveMessage( ContactTeam team, Long userId,
+			String name, String email, String phone,
+			String message ) throws InsufficientAccessException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
 		User user = dataAccessor.getUser( userId );
-		if( user == null || ( user.getState() != UserState.ACTIVE && user.getState() != UserState.REGISTERED ) )
-			throw new InsufficientAccessException();
-		
 		Conversation conversation = dataAccessor.getConversation( team, userId );
-		if( conversation == null ) {
+		if( conversation == null )
+			dataAccessor.getConversation( team, email );
+		
+		
+		if( conversation != null ) {
+			// Do Nothing !
+		} else if( user != null && user.getState() != UserState.ACTIVE && user.getState() != UserState.REGISTERED ) { // && conversation == null
 			conversation = dataAccessor.newConversation( team, userId );
 			conversation.setCreationDate( new Date() );
+			ConversationUser conversationUser = dataAccessor.newConversationUser( conversation.getId(), userId );
+			conversationUser.setName( name );
+			conversationUser.setEmail( email );
+			conversationUser.setPhone( phone );
 			List<ConversationUser> conversationUserList = new ArrayList<>( team.getUserIds().length + 1 );
+			conversationUserList.add( conversationUser );
 			for( Long recipientUserId : team.getUserIds() )
 				conversationUserList.add( dataAccessor.newConversationUser( conversation.getId(), recipientUserId ) );
-			conversationUserList.add( dataAccessor.newConversationUser( conversation.getId(), userId ) );
 			conversation = dataAccessor.createOrUpdateConversation( conversation, conversationUserList );
+		} else if( email != null ) { // && conversation == null
+			conversation = dataAccessor.newConversation( team, email );
+			conversation.setCreationDate( new Date() );
+			ConversationUser conversationUser = dataAccessor.newConversationUser( conversation.getId(), email );
+			conversationUser.setName( name );
+			conversationUser.setPhone( phone );
+			List<ConversationUser> conversationUserList = new ArrayList<>( team.getUserIds().length + 1 );
+			conversationUserList.add( conversationUser );
+			for( Long recipientUserId : team.getUserIds() )
+				conversationUserList.add( dataAccessor.newConversationUser( conversation.getId(), recipientUserId ) );
+			conversation = dataAccessor.createOrUpdateConversation( conversation, conversationUserList );
+		} else {
+			throw new InsufficientAccessException();
 		}
 		
 		conversation.setLastUpdated( new Date() );

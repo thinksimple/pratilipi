@@ -177,8 +177,13 @@ public interface DataAccessor {
 	
 	// CONVERSATION* Tables
 	Conversation newConversation( ContactTeam team, Long userId );
+	Conversation newConversation( ContactTeam team, String email );
 	Conversation getConversation( ContactTeam team, Long userId );
+	Conversation getConversation( ContactTeam team, String email );
+
 	ConversationUser newConversationUser( String conversationId, Long userid );
+	ConversationUser newConversationUser( String conversationId, String email );
+	
 	ConversationMessage newConversationMessage();
 	Conversation createOrUpdateConversation( Conversation conversation, List<ConversationUser> conversationUserList );
 	Conversation createOrUpdateConversation( Conversation conversation, ConversationMessage conversationMessage );

@@ -7,7 +7,6 @@ import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
-import com.pratilipi.common.type.ContactTeam;
 import com.pratilipi.data.type.Conversation;
 
 @Cache

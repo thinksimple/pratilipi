@@ -861,13 +861,27 @@ public class DataAccessorMockImpl implements DataAccessor {
 		return new ConversationEntity( team + "-" + userId );
 	}
 	
+	public Conversation newConversation( ContactTeam team, String email ) {
+		return new ConversationEntity( team + "-" + email );
+	}
+	
 	public Conversation getConversation( ContactTeam team, Long userId ) {
 		return null;
 	}
 	
+	public Conversation getConversation( ContactTeam team, String email ) {
+		return null;
+	}
+
+	
 	public ConversationUser newConversationUser( String conversationId, Long userid ) {
 		return new ConversationUserEntity( conversationId, userid );
 	}
+	
+	public ConversationUser newConversationUser( String conversationId, String email ) {
+		return new ConversationUserEntity( conversationId, email );
+	}
+	
 	
 	public ConversationMessage newConversationMessage() {
 		return new ConversationMessageEntity();
