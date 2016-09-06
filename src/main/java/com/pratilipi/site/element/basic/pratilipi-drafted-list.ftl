@@ -5,7 +5,7 @@
 </div>
 <div class="align-text-center">
 	<h5 class="pratilipi-no-margin pratilipi-red">
-		${ author.getName() }
+		${ author.getName() ! author.getNameEn() }
 	</h5>
 	<p class="works-number align-text-center"> ${ author.getContentDrafted() } ${ _strings.author_drafts }</p>
 </div>	                   
