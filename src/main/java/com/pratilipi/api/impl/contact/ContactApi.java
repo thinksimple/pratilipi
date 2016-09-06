@@ -1,5 +1,6 @@
 package com.pratilipi.api.impl.contact;
 
+import com.google.gson.JsonObject;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Post;
@@ -20,6 +21,7 @@ public class ContactApi extends GenericApi {
 		@Validate( required = true )
 		private ContactTeam team;
 
+
 		private String name;
 		
 		@Validate( regEx = REGEX_EMAIL, regExErrMsg = ERR_EMAIL_INVALID )
@@ -27,9 +29,12 @@ public class ContactApi extends GenericApi {
 		
 		private String phone;
 		
+		
 		@Validate( required = true )
 		private String message;
 
+		private JsonObject data;
+		
 	}
 
 	
@@ -42,7 +47,8 @@ public class ContactApi extends GenericApi {
 				request.name,
 				request.email,
 				request.phone,
-				request.message );
+				request.message,
+				request.data );
 		
 		return new GenericResponse();
 

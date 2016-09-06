@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.google.gson.JsonObject;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.type.ContactTeam;
 import com.pratilipi.common.type.UserState;
@@ -18,7 +19,7 @@ public class ConversationDataUtil {
 	
 	public static void saveMessage( ContactTeam team, Long userId,
 			String name, String email, String phone,
-			String message ) throws InvalidArgumentException {
+			String message, JsonObject data ) throws InvalidArgumentException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
@@ -63,6 +64,7 @@ public class ConversationDataUtil {
 		conversationMessage.setConversationId( conversation.getId() );
 		conversationMessage.setCreatorId( userId );
 		conversationMessage.setMessage( message );
+		conversationMessage.setData( data );
 		conversationMessage.setCreationDate( new Date() );
 		
 		conversation = dataAccessor.createOrUpdateConversation( conversation, conversationMessage );

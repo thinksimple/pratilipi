@@ -2,6 +2,9 @@ package com.pratilipi.data.type.gae;
 
 import java.util.Date;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
@@ -23,6 +26,8 @@ public class ConversationMessageEntity implements ConversationMessage {
 	private Long CREATOR_ID;
 	
 	private String MESSAGE;
+	
+	private String DATA;
 	
 	@Index
 	private Date CREATION_DATE;
@@ -77,6 +82,16 @@ public class ConversationMessageEntity implements ConversationMessage {
 	@Override
 	public void setMessage( String message ) {
 		this.MESSAGE = message;
+	}
+	
+	@Override
+	public JsonObject getData() {
+		return new Gson().fromJson( DATA, JsonElement.class ).getAsJsonObject();
+	}
+
+	@Override
+	public void setData( JsonObject data ) {
+		this.DATA = data == null ? null : data.toString();
 	}
 	
 	@Override
