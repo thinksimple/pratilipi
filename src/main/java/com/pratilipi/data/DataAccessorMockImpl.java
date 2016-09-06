@@ -857,40 +857,44 @@ public class DataAccessorMockImpl implements DataAccessor {
 	
 	// CONVERSATION* Tables
 	
+	@Override
 	public Conversation newConversation( ContactTeam team, Long userId ) {
 		return new ConversationEntity( team + "-" + userId );
 	}
 	
+	@Override
 	public Conversation newConversation( ContactTeam team, String email ) {
 		return new ConversationEntity( team + "-" + email );
 	}
 	
+	@Override
 	public Conversation getConversation( ContactTeam team, Long userId ) {
 		return null;
 	}
 	
+	@Override
 	public Conversation getConversation( ContactTeam team, String email ) {
 		return null;
 	}
 
 	
+	@Override
 	public ConversationUser newConversationUser( String conversationId, Long userid ) {
 		return new ConversationUserEntity( conversationId, userid );
 	}
 	
-	public ConversationUser newConversationUser( String conversationId, String email ) {
-		return new ConversationUserEntity( conversationId, email );
-	}
 	
-	
+	@Override
 	public ConversationMessage newConversationMessage() {
 		return new ConversationMessageEntity();
 	}
 	
+	@Override
 	public Conversation createOrUpdateConversation( Conversation conversation, List<ConversationUser> conversationUserList ) {
 		return conversation;
 	}
 	
+	@Override
 	public Conversation createOrUpdateConversation( Conversation conversation, ConversationMessage conversationMessage ) {
 		return conversation;
 	}

@@ -7,6 +7,8 @@ import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.condition.IfNotNull;
 import com.pratilipi.data.type.Conversation;
 
 @Cache
@@ -14,9 +16,21 @@ import com.pratilipi.data.type.Conversation;
 public class ConversationEntity implements Conversation {
 
 	@Id
-	private String CONVERSATION_ID; // USER_ID_1-USER_ID_2 or UUID
+	private String CONVERSATION_ID; // USER_ID_1-USER_ID_2 or TEAM-USER_ID or UUID
 	
 	private String TITLE;
+
+	@Index( IfNotNull.class )
+	private Long CREATOR; // USER_ID
+	
+	@Index( IfNotNull.class )
+	private String CREATOR_NAME;
+	
+	@Index( IfNotNull.class )
+	private String CREATOR_EMAIL;
+	
+	@Index( IfNotNull.class )
+	private String CREATOR_PHONE;
 	
 	private Date CREATION_DATE;
 	
@@ -68,6 +82,46 @@ public class ConversationEntity implements Conversation {
 	@Override
 	public void setTitle( String title ) {
 		this.TITLE = title;
+	}
+
+	@Override
+	public Long getCreator() {
+		return CREATOR;
+	}
+	
+	@Override
+	public void setCreator( Long creator ) {
+		this.CREATOR = creator;
+	}
+	
+	@Override
+	public String getCreatorName() {
+		return CREATOR_NAME;
+	}
+	
+	@Override
+	public void setCreatorName( String creatorName ) {
+		this.CREATOR_NAME = creatorName;
+	}
+	
+	@Override
+	public String getCreatorEmail() {
+		return CREATOR_EMAIL;
+	}
+	
+	@Override
+	public void setCreatorEmail( String creatorEmail ) {
+		this.CREATOR_EMAIL = creatorEmail;
+	}
+	
+	@Override
+	public String getCreatorPhone() {
+		return CREATOR_PHONE;
+	}
+	
+	@Override
+	public void setCreatorPhone( String creatorPhone ) {
+		this.CREATOR_PHONE = creatorPhone;
 	}
 
 	@Override

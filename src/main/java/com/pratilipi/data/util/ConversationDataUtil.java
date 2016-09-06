@@ -33,24 +33,23 @@ public class ConversationDataUtil {
 			// Do Nothing !
 		} else if( user != null && ( user.getState() == UserState.ACTIVE || user.getState() == UserState.REGISTERED ) ) { // && conversation == null
 			conversation = dataAccessor.newConversation( team, userId );
+			conversation.setCreator( userId );
+			conversation.setCreatorName( name );
+			conversation.setCreatorEmail( email );
+			conversation.setCreatorPhone( phone );
 			conversation.setCreationDate( new Date() );
-			ConversationUser conversationUser = dataAccessor.newConversationUser( conversation.getId(), userId );
-			conversationUser.setName( name );
-			conversationUser.setEmail( email );
-			conversationUser.setPhone( phone );
 			List<ConversationUser> conversationUserList = new ArrayList<>( team.getUserIds().length + 1 );
-			conversationUserList.add( conversationUser );
+			conversationUserList.add( dataAccessor.newConversationUser( conversation.getId(), userId ) );
 			for( Long recipientUserId : team.getUserIds() )
 				conversationUserList.add( dataAccessor.newConversationUser( conversation.getId(), recipientUserId ) );
 			conversation = dataAccessor.createOrUpdateConversation( conversation, conversationUserList );
 		} else if( email != null ) { // && conversation == null
 			conversation = dataAccessor.newConversation( team, email );
+			conversation.setCreatorName( name );
+			conversation.setCreatorEmail( email );
+			conversation.setCreatorPhone( phone );
 			conversation.setCreationDate( new Date() );
-			ConversationUser conversationUser = dataAccessor.newConversationUser( conversation.getId(), email );
-			conversationUser.setName( name );
-			conversationUser.setPhone( phone );
 			List<ConversationUser> conversationUserList = new ArrayList<>( team.getUserIds().length + 1 );
-			conversationUserList.add( conversationUser );
 			for( Long recipientUserId : team.getUserIds() )
 				conversationUserList.add( dataAccessor.newConversationUser( conversation.getId(), recipientUserId ) );
 			conversation = dataAccessor.createOrUpdateConversation( conversation, conversationUserList );

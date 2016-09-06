@@ -10,6 +10,22 @@ public interface Conversation extends GenericOfyType {
 	
 	void setTitle( String title );
 	
+	Long getCreator();
+	
+	void setCreator( Long creator );
+	
+	String getCreatorName();
+	
+	void setCreatorName( String creatorName );
+	
+	String getCreatorEmail();
+	
+	void setCreatorEmail( String creatorEmail );
+	
+	String getCreatorPhone();
+	
+	void setCreatorPhone( String creatorPhone );
+	
 	Date getCreationDate();
 	
 	void setCreationDate( Date creationDate );

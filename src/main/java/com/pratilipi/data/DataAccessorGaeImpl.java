@@ -1621,36 +1621,39 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	// CONVERSATION* Tables
 	
+	@Override
 	public Conversation newConversation( ContactTeam team, Long userId ) {
 		return new ConversationEntity( team + "-" + userId );
 	}
 	
+	@Override
 	public Conversation newConversation( ContactTeam team, String email ) {
 		return new ConversationEntity( team + "-" + email );
 	}
 	
+	@Override
 	public Conversation getConversation( ContactTeam team, Long userId ) {
 		return getEntity( ConversationEntity.class, team + "-" + userId );
 	}
 	
+	@Override
 	public Conversation getConversation( ContactTeam team, String email ) {
 		return getEntity( ConversationEntity.class, team + "-" + email );
 	}
 	
 	
+	@Override
 	public ConversationUser newConversationUser( String conversationId, Long userId ) {
 		return new ConversationUserEntity( conversationId, userId );
 	}
 	
-	public ConversationUser newConversationUser( String conversationId, String email ) {
-		return new ConversationUserEntity( conversationId, email );
-	}
 	
-	
+	@Override
 	public ConversationMessage newConversationMessage() {
 		return new ConversationMessageEntity();
 	}
 	
+	@Override
 	public Conversation createOrUpdateConversation( Conversation conversation, List<ConversationUser> conversationUserList ) {
 		List<GenericOfyType> entityList = new ArrayList<>( 1 + conversationUserList.size() );
 		entityList.add( conversation );
@@ -1659,6 +1662,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return (Conversation) entityList.get( 0 );
 	}
 	
+	@Override
 	public Conversation createOrUpdateConversation( Conversation conversation, ConversationMessage conversationMessage ) {
 		List<GenericOfyType> entityList = new ArrayList<>( 2 );
 		entityList.add( conversation );

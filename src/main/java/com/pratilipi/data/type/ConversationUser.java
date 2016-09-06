@@ -12,16 +12,4 @@ public interface ConversationUser extends GenericOfyType {
 	
 	void setUserId( Long userId );
 
-	String getName();
-	
-	void setName( String name );
-	
-	String getEmail();
-	
-	void setEmail( String email );
-	
-	String getPhone();
-	
-	void setPhone( String phone );
-	
 }

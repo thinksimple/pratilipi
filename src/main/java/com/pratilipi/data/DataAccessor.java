@@ -182,7 +182,6 @@ public interface DataAccessor {
 	Conversation getConversation( ContactTeam team, String email );
 
 	ConversationUser newConversationUser( String conversationId, Long userid );
-	ConversationUser newConversationUser( String conversationId, String email );
 	
 	ConversationMessage newConversationMessage();
 	Conversation createOrUpdateConversation( Conversation conversation, List<ConversationUser> conversationUserList );
