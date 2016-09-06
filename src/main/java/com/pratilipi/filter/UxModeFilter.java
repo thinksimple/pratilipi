@@ -206,11 +206,10 @@ public class UxModeFilter implements Filter {
 					 * Apple Safari on Microsoft Windows 8.1
 					 *   "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/534.57.2 (KHTML, like Gecko) Version/5.1.7 Safari/534.57.2"
 					 */
-					basicBrowser = userAgent.contains( "Android" );
+					basicBrowser = false;
 	
-				} else { // Unknown browsers
-					// basicBrowser = true;
 				}
+				
 			}
 			
 

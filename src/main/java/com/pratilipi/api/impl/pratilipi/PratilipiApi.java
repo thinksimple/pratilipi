@@ -152,6 +152,7 @@ public class PratilipiApi extends GenericApi {
 		public Response( PratilipiData pratilipi, Class<? extends GenericApi> clazz ) {
 			
 			if( clazz == InitApi.class || clazz == PratilipiListApi.class ) {
+				
 				this.pratilipiId = pratilipi.getId();
 				this.title = pratilipi.getTitle() == null ? pratilipi.getTitleEn() : pratilipi.getTitle();
 				if( UxModeFilter.isAndroidApp() )
@@ -177,8 +178,10 @@ public class PratilipiApi extends GenericApi {
 				this.hasAccessToUpdate = pratilipi.hasAccessToUpdate();
 			
 			} else if( clazz == NotificationApi.class ) {
+				
 				this.pratilipiId = pratilipi.getId();
 				this.coverImageUrl = pratilipi.getCoverImageUrl();
+			
 			}
 			
 		}
