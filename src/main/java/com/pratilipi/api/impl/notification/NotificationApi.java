@@ -3,7 +3,6 @@ package com.pratilipi.api.impl.notification;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Post;
-import com.pratilipi.api.impl.pratilipi.PratilipiApi;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
@@ -31,13 +30,14 @@ public class NotificationApi extends GenericApi {
 		private Long notificationId;
 
 		private String message;
-		private String sourceUrl;
 		private String displayImageUrl;
 
 		private NotificationState state;
 		private String androidHandler;
 
-		private PratilipiApi.Response pratilipi;
+		private Long sourceId;
+		private String sourceUrl;
+		private String sourceImageUrl;
 
 		private Long lastUpdatedMillis;
 
@@ -53,8 +53,10 @@ public class NotificationApi extends GenericApi {
 			this.lastUpdatedMillis = notification.getLastUpdatedDate().getTime();
 			this.androidHandler = notification.getNotificationType() != null ? 
 					notification.getNotificationType().getAndroidHandler() : null;
-			if( notification.getPratilipiData() != null )
-				this.pratilipi = new PratilipiApi.Response( notification.getPratilipiData(), NotificationApi.class );
+			if( notification.getPratilipiData() != null ) {
+				this.sourceId = notification.getPratilipiData().getId();
+				this.sourceImageUrl = notification.getPratilipiData().getCoverImageUrl();
+			}
 		}
 
 		
@@ -67,10 +69,6 @@ public class NotificationApi extends GenericApi {
 			return message;
 		}
 
-		public String getSourceUrl() {
-			return sourceUrl;
-		}
-
 		public String getDisplayImageUrl() {
 			return displayImageUrl;
 		}
@@ -80,8 +78,13 @@ public class NotificationApi extends GenericApi {
 			return state;
 		}
 
-		public PratilipiApi.Response getPratilipi() {
-			return pratilipi;
+
+		public String getSourceUrl() {
+			return sourceUrl;
+		}
+
+		public String getSourceImageUrl() {
+			return sourceImageUrl;
 		}
 
 

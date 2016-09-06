@@ -25,18 +25,22 @@
 					<li data-target="#carousel" data-slide-to="0" class="active"></li>
 					<li data-target="#carousel" data-slide-to="1"></li>
 					<li data-target="#carousel" data-slide-to="2"></li>
+					<li data-target="#carousel" data-slide-to="3"></li>
 				</ol>
 				
 				<!-- Items -->
 				<div class="carousel-inner">
 					<div class="item active">
-						<a href="/event/fr"><img src="{{ image1 }}" /></a>
+						<a href="/event/katha"><img src="{{ image1 }}" /></a>
 					</div>
 					<div class="item">
-						<a href="/love"><img src="{{ image4 }}" /></a>
+						<a href="/event/fr"><img src="{{ image2 }}" /></a>
 					</div>
 					<div class="item">
-						<a href="/memory"><img src="{{ image5 }}" /></a>
+						<a href="/love"><img src="{{ image3 }}" /></a>
+					</div>
+					<div class="item">
+						<a href="/memory"><img src="{{ image4 }}" /></a>
 					</div>
 				</div> 
 				<a href="#carousel" class="left carousel-control" data-slide="prev">
@@ -65,8 +69,9 @@
 		
 		properties: {
 			image1: { type: Image },
-			image4: { type: Image },
-			image5: { type: Image }
+			image2: { type: Image },
+			image3: { type: Image },
+			image4: { type: Image }
 		},
 		
 		_onIronResize: function() {
@@ -74,13 +79,15 @@
 			var windowsize = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 
 			if( windowsize > 560 ) {
-				this.image1 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-05.png"
-				this.image4 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-06.jpg";
-				this.image5 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-07.jpg";
+				this.image1 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-09.jpg"
+				this.image2 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-05.png"
+				this.image3 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-06.jpg";
+				this.image4 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-07.jpg";
 			} else {
-				this.image1 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-05-small.png" 
-				this.image4 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-06-small.jpg";
-				this.image5 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-07-small.jpg";
+				this.image1 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-09-small.jpg"
+				this.image2 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-05-small.png" 
+				this.image3 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-06-small.jpg";
+				this.image4 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-07-small.jpg";
 			}
 		},
 		

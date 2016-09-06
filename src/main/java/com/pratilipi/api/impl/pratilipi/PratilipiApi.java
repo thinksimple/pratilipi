@@ -176,14 +176,8 @@ public class PratilipiApi extends GenericApi {
 				this.readCount = pratilipi.getReadCount();
 				this.addedToLib = pratilipi.isAddedToLib();
 				this.hasAccessToUpdate = pratilipi.hasAccessToUpdate();
-			
-			} else if( clazz == NotificationApi.class ) {
-				
-				this.pratilipiId = pratilipi.getId();
-				this.coverImageUrl = pratilipi.getCoverImageUrl();
-			
 			}
-			
+
 		}
 		
 		public Response( PratilipiData pratilipi, boolean listItem ) {
