@@ -31,7 +31,7 @@ public class ConversationDataUtil {
 		
 		if( conversation != null ) {
 			// Do Nothing !
-		} else if( user != null && ( user.getState() == UserState.ACTIVE && user.getState() == UserState.REGISTERED ) ) { // && conversation == null
+		} else if( user != null && ( user.getState() == UserState.ACTIVE || user.getState() == UserState.REGISTERED ) ) { // && conversation == null
 			conversation = dataAccessor.newConversation( team, userId );
 			conversation.setCreationDate( new Date() );
 			ConversationUser conversationUser = dataAccessor.newConversationUser( conversation.getId(), userId );
