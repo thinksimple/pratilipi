@@ -209,7 +209,7 @@ public class UxModeFilter implements Filter {
 					basicBrowser = userAgent.contains( "Android" );
 	
 				} else { // Unknown browsers
-					basicBrowser = true;
+					// basicBrowser = true;
 				}
 			}
 			
