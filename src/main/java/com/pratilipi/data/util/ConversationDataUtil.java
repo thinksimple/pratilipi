@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.pratilipi.common.exception.InsufficientAccessException;
+import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.type.ContactTeam;
 import com.pratilipi.common.type.UserState;
 import com.pratilipi.data.DataAccessor;
@@ -18,7 +18,7 @@ public class ConversationDataUtil {
 	
 	public static void saveMessage( ContactTeam team, Long userId,
 			String name, String email, String phone,
-			String message ) throws InsufficientAccessException {
+			String message ) throws InvalidArgumentException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
@@ -30,7 +30,7 @@ public class ConversationDataUtil {
 		
 		if( conversation != null ) {
 			// Do Nothing !
-		} else if( user != null && user.getState() != UserState.ACTIVE && user.getState() != UserState.REGISTERED ) { // && conversation == null
+		} else if( user != null && ( user.getState() == UserState.ACTIVE && user.getState() == UserState.REGISTERED ) ) { // && conversation == null
 			conversation = dataAccessor.newConversation( team, userId );
 			conversation.setCreationDate( new Date() );
 			ConversationUser conversationUser = dataAccessor.newConversationUser( conversation.getId(), userId );
@@ -54,7 +54,7 @@ public class ConversationDataUtil {
 				conversationUserList.add( dataAccessor.newConversationUser( conversation.getId(), recipientUserId ) );
 			conversation = dataAccessor.createOrUpdateConversation( conversation, conversationUserList );
 		} else {
-			throw new InsufficientAccessException();
+			throw new InvalidArgumentException( "Valid 'email' is required." );
 		}
 		
 		conversation.setLastUpdated( new Date() );

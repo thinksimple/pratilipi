@@ -6,7 +6,7 @@ import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
-import com.pratilipi.common.exception.InsufficientAccessException;
+import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.type.ContactTeam;
 import com.pratilipi.data.util.ConversationDataUtil;
 import com.pratilipi.filter.AccessTokenFilter;
@@ -34,7 +34,7 @@ public class ContactApi extends GenericApi {
 
 	
 	@Post
-	public GenericResponse post( PostRequest request ) throws InsufficientAccessException {
+	public GenericResponse post( PostRequest request ) throws InvalidArgumentException {
 
 		ConversationDataUtil.saveMessage(
 				request.team,
