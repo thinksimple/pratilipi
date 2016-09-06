@@ -7,9 +7,7 @@
 <link rel="shortcut icon" type="image/png" href="/favicon.png">
 
 <#-- Third-Party Library and Facebook OG Tags-->
-<#list resourceList as resource>
-	${ resource }
-</#list>
+<#list resourceList as resource>${ resource }</#list>
 
 <#-- DNS Prefetch -->
 <#list 0..4 as i>
