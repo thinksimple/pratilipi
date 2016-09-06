@@ -8,7 +8,6 @@ import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.impl.author.AuthorApi;
 import com.pratilipi.api.impl.init.InitApi;
-import com.pratilipi.api.impl.notification.NotificationApi;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;

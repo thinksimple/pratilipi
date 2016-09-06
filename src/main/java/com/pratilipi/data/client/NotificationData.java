@@ -11,17 +11,19 @@ public class NotificationData {
 
 	private Long userId;
 
+	private NotificationType type;
+	
 	private String message;
-
-	private PratilipiData pratilipiData;
-
+	
+	private String sourceId;
+	
 	private String sourceUrl;
+	
+	private String sourceImageUrl;
 
 	private String displayImageUrl;
 
 	private NotificationState state;
-
-	private NotificationType type;
 
 	private Date lastUpdatedDate;
 
@@ -49,6 +51,14 @@ public class NotificationData {
 		this.userId = userId;
 	}
 
+	public NotificationType getNotificationType() {
+		return type;
+	}
+
+	public void setNotificationType( NotificationType type ) {
+		this.type = type;
+	}
+
 	public String getMessage() {
 		return message;
 	}
@@ -57,12 +67,12 @@ public class NotificationData {
 		this.message = message;
 	}
 
-	public PratilipiData getPratilipiData() {
-		return pratilipiData;
+	public String getSourceId() {
+		return sourceId;
 	}
 
-	public void setPratilipiData( PratilipiData pratilipiData ) {
-		this.pratilipiData = pratilipiData;
+	public void setSourceId( String sourceId ) {
+		this.sourceId = sourceId;
 	}
 
 	public String getSourceUrl() {
@@ -71,6 +81,14 @@ public class NotificationData {
 
 	public void setSourceUrl( String sourceUrl ) {
 		this.sourceUrl = sourceUrl;
+	}
+
+	public String getSourceImageUrl() {
+		return sourceImageUrl;
+	}
+
+	public void setSourceImageUrl( String sourceImageUrl ) {
+		this.sourceImageUrl = sourceImageUrl;
 	}
 
 	public String getDisplayImageUrl() {
@@ -87,14 +105,6 @@ public class NotificationData {
 	
 	public void setState( NotificationState state ) {
 		this.state = state;
-	}
-
-	public NotificationType getNotificationType() {
-		return type;
-	}
-
-	public void setNotificationType( NotificationType type ) {
-		this.type = type;
 	}
 
 	public Date getLastUpdatedDate() {

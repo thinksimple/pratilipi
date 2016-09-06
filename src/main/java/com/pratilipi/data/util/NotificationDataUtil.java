@@ -10,6 +10,7 @@ import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.I18nGroup;
 import com.pratilipi.common.type.Language;
+import com.pratilipi.common.type.NotificationState;
 import com.pratilipi.common.type.NotificationType;
 import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.RequestParameter;
@@ -21,7 +22,6 @@ import com.pratilipi.data.client.PratilipiData;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.type.I18n;
 import com.pratilipi.data.type.Notification;
-import com.pratilipi.data.type.User;
 import com.pratilipi.filter.AccessTokenFilter;
 import com.pratilipi.filter.UxModeFilter;
 
@@ -41,6 +41,9 @@ public class NotificationDataUtil {
 		return AccessTokenFilter.getAccessToken().getUserId().equals( userId );
 	}
 	
+	public static boolean hasAccessToUpdateData( Notification notification ) {
+		return notification.getUserId().equals( AccessTokenFilter.getAccessToken().getUserId() );
+	}
 	
 	private static String createNotificationMessage( PratilipiData pratilipiData, Language language, boolean plainText ) { // NotificationType == PRATILIPI_ADD
 		String pratilipiTitle = pratilipiData.getTitle() == null
@@ -125,8 +128,8 @@ public class NotificationDataUtil {
 				if( pratilipiData.getState() ==  PratilipiState.PUBLISHED ) {
 					notificationData.setMessage( createNotificationMessage( pratilipiData, notificationLanguage, plainText ) );
 					notificationData.setSourceUrl( pratilipiData.getPageUrl() + "?" + RequestParameter.NOTIFICATION_ID.getName() + "=" + notification.getId() );
-					notificationData.setPratilipiData( pratilipis.get( notification.getSourceIdLong() ) );
-					notificationData.setDisplayImageUrl( pratilipis.get( notification.getSourceIdLong() ).getAuthor().getImageUrl() );
+					notificationData.setSourceImageUrl( pratilipiData.getCoverImageUrl() );
+					notificationData.setDisplayImageUrl( pratilipiData.getAuthor().getImageUrl() );
 				}
 			
 			} else 	if( notification.getType() == NotificationType.AUTHOR_FOLLOW ) {
@@ -135,8 +138,10 @@ public class NotificationDataUtil {
 				notificationData.setSourceUrl( "/followers?" + RequestParameter.NOTIFICATION_ID.getName() + "=" + notification.getId() );
 				if( notification.getDataIds().size() != 0 )
 					notificationData.setDisplayImageUrl( users.get( notification.getDataIds().get( notification.getDataIds().size() - 1 ) ).getProfileImageUrl() );
+			
 			}
 			
+			notificationData.setSourceId( notification.getSourceId() );
 			notificationData.setState( notification.getState() );
 			notificationData.setNotificationType( notification.getType() );
 			notificationData.setLastUpdatedDate( notification.getLastUpdated() );
@@ -169,5 +174,23 @@ public class NotificationDataUtil {
 				notificationListCursorTuple.getCursor() );
 		
 	}
+	
+	
+	public static void saveNotificationState( Long notificationId, NotificationState state )
+			throws InsufficientAccessException {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Notification notification = dataAccessor.getNotification( notificationId );
+		if( notification.getState() == state )
+			return;
+		
+		if( ! hasAccessToUpdateData( notification ) )
+			throw new InsufficientAccessException();
+
+		notification.setState( state );
+		notification = dataAccessor.createOrUpdateNotification( notification );
+		
+	}
+	
 	
 }
