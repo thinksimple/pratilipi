@@ -1,11 +1,11 @@
 പ്രസിദ്ധമായവ 
 /most-read     കൂടുതൽ  വായിക്കപ്പെട്ടവ     App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"most-read" }
 /recommended   നിര്‍ദ്ദേശിക്കപ്പെട്ടവ           App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"recommended" }
-/blog          ബ്ലോഗുകള്‍               App#BlogPostList::{ "language":"MALAYALAM", "blogId":5683739602452480 } 
+/event/katha   കഥാപൂരണം
 /event/fr      ചങ്ങാതി                 App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "eventId":6046056954462208 }
 /event/ep      എഴുത്തുപെട്ടി             App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "eventId":6207939288236032 }
 /new           പുതിയവ                 App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"new" } 
-
+/blog          ബ്ലോഗുകള്‍               App#BlogPostList::{ "language":"MALAYALAM", "blogId":5683739602452480 } 
 
 
 വിഭാഗങ്ങൾ 
