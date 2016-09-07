@@ -32,8 +32,10 @@
 	}
 
 	function resetNewNotificationCount() {
-		if( newNotificationCount != 0 )
+		if( newNotificationCount != 0 && user.userId != 0 ) {
+			node = firebase.database().ref( "NOTIFICATION" ).child( user.userId ).child( "newNotificationCount" );
 			node.set( 0 );
+		}
 	}
 
 	firebase.auth().onAuthStateChanged( function( usr ) {

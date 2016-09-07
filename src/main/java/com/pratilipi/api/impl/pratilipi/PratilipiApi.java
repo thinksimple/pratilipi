@@ -36,7 +36,11 @@ public class PratilipiApi extends GenericApi {
 
 		@Validate( required = true, minLong = 1L )
 		private Long pratilipiId;
-		
+
+
+		public void setPratilipiId( Long pratilipiId ) {
+			this.pratilipiId = pratilipiId;
+		}
 	}
 	
 	@SuppressWarnings("unused")
