@@ -24,5 +24,8 @@
 <link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?35'>
 <link type="text/css" rel="stylesheet" href="/resources/style.css?68">
 
+<#-- Google Analytics -->
+<#include "GoogleAnalytics.ftl">
+
 <#-- Firebase Script -->
 <#include "Firebase.ftl">

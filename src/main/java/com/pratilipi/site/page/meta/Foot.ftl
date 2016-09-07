@@ -1,5 +1,3 @@
-<#include "GoogleAnalytics.ftl">
-
 <script>
 	var didScroll;
 	var lastScrollTop = 0;
