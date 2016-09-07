@@ -94,13 +94,13 @@ public class NotificationApi extends GenericApi {
 
 
 	@Post
-	public GenericRequest post( PostRequest request ) throws InsufficientAccessException {
+	public GenericResponse post( PostRequest request ) throws InsufficientAccessException {
 
 		NotificationDataUtil.saveNotificationState(
 				request.notificationId,
 				request.state );
 		
-		return new GenericRequest();
+		return new GenericResponse();
 
 	}
 	
