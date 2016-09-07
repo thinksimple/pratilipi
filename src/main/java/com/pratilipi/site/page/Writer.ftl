@@ -48,8 +48,8 @@
             /*width: 82%;*/
             width: 100%;
             /*padding-left: 0px;*/
-            padding-left: 4%;
-            padding-right:4%;
+            padding-left: 5%;
+            padding-right:5%;
             z-index: 1;
             border-bottom: 1px solid #ddd;
             /*visibility:hidden;*/
@@ -59,9 +59,9 @@
         #editor.affix {
             position: fixed !important;
             top: 47px !important;
-            left: 9%;
+            left: 7%;
             margin-top: 0px !important;
-            width: 82%;
+            width: 86.75%;
             padding-left: 0px;
 /*[]            z-index: 1;*/
             background: white;
@@ -244,12 +244,25 @@
                 text-align: left;
             }
         }
+
+        @media only screen and (max-width: 1200px) {
+            #header1.affix {
+                padding-left: 4%;
+                padding-right: 4%;
+            }
+        }
         @media only screen and (max-width: 598px) {
             .small-screen-hidden {
                 display: none;
             }
-            #editor.affix div  {
-                width: 100%;
+            #editor {
+                padding: 2px 0 0 0;
+            }
+            #chapter-content {
+                margin-top: 50px !important;
+            }
+            #editor div  {
+                width: 100% !important;
                 padding: 7px 0 !important;
             }  
             #toc_button {
@@ -259,6 +272,15 @@
             .editor-action {
                 width: 9% !important;
             }
+        }
+        @media only screen and (min-width: 768px) {
+            #subtitle {
+                width: 50% !important;
+            }
+            #editor{
+                float: right;
+            }
+
         }
         @media only screen and (min-width: 599px) {
             .big-screen-hidden {
@@ -332,7 +354,7 @@
               <button class="pratilipi-red-background-button" style="padding: 6px 12px;margin-right:0;">Publish</button>
               <button class="btn btn-default small-screen-hidden" style="margin: 0 5px 0 5px; font-size: 13px;">Save</button>
               <button class="btn btn-default small-screen-hidden" style="margin: 0 0px 0 5px; font-size: 13px;">Preview</button>       
-               <img style="width: 25px;height: 25px;margin-right:-12px;" src="http://0.ptlp.co/resource-all/icon/svg/dots-three-vertical.svg" class="big-screen-hidden" data-container="body" data-toggle="popover" data-content="
+               <img style="width: 48px;height: 25px;margin-right:-12px;" src="http://0.ptlp.co/resource-all/icon/svg/dots-three-vertical.svg" class="big-screen-hidden" data-container="body" data-toggle="popover" data-content="
       <a href='#' class='pratilipi-red'>
         Preview
       </a><hr style='margin: 1px 0;'><a href='#' class='pratilipi-red'>
@@ -345,30 +367,30 @@
         <div class="panel panel-default" style="margin-bottom: 5px;min-height: 100%;margin-top:12px;"> 
             <div class="panel-body" style="text-align: center;padding: 0 0 0 5px;">
             
-                <form style="    width: 90%;margin-left: auto;margin-right: auto;">
+                <form style="    width: 95%;margin-left: auto;margin-right: auto;">
                 <div class="editor-wrapper">
-                  <div class="form-group" style="position: relative;">
-                    <input  class="form-control horizontal-form-input" id="subtitle" style="padding-bottom: 25px;padding-top: 20px;font-size: 25px;border-bottom: 1px solid #ddd;" placeholder="Add Chapter Name">
+                  <div class="form-group" style="">
+                    <input  class="col-sm-6 form-control horizontal-form-input" id="subtitle" style="padding-bottom: 25px;padding-top: 20px;font-size: 25px;border-bottom: 1px solid #ddd;" placeholder="Add Chapter Name">
                     <!-- editing panel -->
-                    <div id="editor" style="position: absolute;right: 1%;top: 5%;">
+                    <div id="editor" class="">
                         <div style="background-color: #ddd;padding: 7px;">
           
-                            <a href="#"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/bold.svg' style='width:9%;height:20px;'></a>
-                            <a href="#"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/italic.svg' style='width:9%;height:20px;'></a>
-                            <a href="#"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/underline.svg' style='width:9%;height:20px;'></a>
+                            <a href="#"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/bold.svg' style='width:30px;height:20px;'></a>
+                            <a href="#"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/italic.svg' style='width:30px;height:20px;'></a>
+                            <a href="#"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/underline.svg' style='width:30px;height:20px;'></a>
                             |
-                            <a href="#"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/paragraph-left.svg' style='width:9%;height:20px;'></a>
-                            <a href="#"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/paragraph-center.svg' style='width:9%;height:20px;'></a>
-                            <a href="#"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/paragraph-right.svg' style='width:9%;height:20px;'></a>
+                            <a href="#"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/paragraph-left.svg' style='width:30px;height:20px;'></a>
+                            <a href="#"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/paragraph-center.svg' style='width:30px;height:20px;'></a>
+                            <a href="#"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/paragraph-right.svg' style='width:30px;height:20px;'></a>
                             |
-                            <a href="#"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/quotes-left.svg' style='width:9%;height:20px;'></a>
-                            <a href="#"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/attachment.svg' style='width:9%;height:20px;'></a>
-                            <a href="#"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/camera2.svg' style='width:9%;height:20px;'></a>
+                            <a href="#"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/quotes-left.svg' style='width:30px;height:20px;'></a>
+                            <a href="#"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/attachment.svg' style='width:30px;height:20px;'></a>
+                            <a href="#"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/camera2.svg' style='width:30px;height:20px;'></a>
                         </div>
                     </div>
                   </div>
                 </div>  
-                  <textarea id="chapter-content" style="border: none; margin-bottom:10px; margin-top:10px;" class="form-control horizontal-form-input" placeholder="Tell your story here.."></textarea>  
+                  <textarea id="chapter-content" style="border: none; margin-bottom:10px; margin-top:10px;padding-left:0;padding-right:0;" class="form-control horizontal-form-input" placeholder="Tell your story here.."></textarea>  
 
                
                 </form>
@@ -503,7 +525,15 @@
                 top: 50,
                 // bottom: 0
             }
-        });         
+        }); 
+
+        $('#header1').on('affixed.bs.affix', function(e) {
+            $("#chapter-content").css("margin-top","50px");
+        });
+        $('#header1').on('affixed-top.bs.affix', function(e) {
+            $("#chapter-content").css("margin-top","10px");
+        });
+                        
     };
 
     MainWriterPanel.prototype.setWrappersHeight = function() {
