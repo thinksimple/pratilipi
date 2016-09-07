@@ -18,7 +18,7 @@
 /upanyas                 उपन्यास                        App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"upanyas" }
 /hasya-vyangya           हास्य – व्यंग्य               App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"hasya-vyangya" }
 /search?q=poems          काव्य – वाटिका           App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "searchQuery":"poems" }
-/gazals                  बज़्म ए महफ़िल         App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "searchQuery":"gazals" }
+/gazals                  बज़्म-ए-महफ़िल      App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "searchQuery":"gazals" }
 /search?q=articles       लेख                              App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "searchQuery":"articles" }
 /jivani-evam-atmakatha   जीवनी एवं आत्मकथा     App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"jivani-evam-atmakatha" }
 /vichar-vimarsh          विचार विमर्श                 App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"vichar-vimarsh" }
