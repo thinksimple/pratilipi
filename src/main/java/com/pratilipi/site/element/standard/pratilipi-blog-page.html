@@ -38,7 +38,7 @@
 					<div style="overflow:hidden; padding: 0 2px;">
 						<div class="secondary-500 pratilipi-shadow pratilipi-card-grid-heading pratilipi-red">
 							{{ title }}
-							<div style="display: inline-block;" class="fb-like" data-href="http://www.pratilipi.com/blogpost/{{ blogpost.blogPostId }}" data-layout="button" data-action="like" data-size="small" data-show-faces="false" data-share="false"></div>
+							<div style="display: inline-block;" class="fb-like" data-href="http://www.pratilipi.com/blogpost/{{ blogpost.blogPostId }}" data-layout="button_count" data-action="like" data-size="small" data-show-faces="false" data-share="false"></div>
 							<template is="dom-if" if="{{ blogpost.hasAccessToUpdate }}">
 								<paper-icon-button class="pull-right" style="margin-top: -8px;" on-click="editBlogpost" icon="create" noink></paper-icon-button>
 							</template>
