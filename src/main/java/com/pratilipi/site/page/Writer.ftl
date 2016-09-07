@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	<script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -16,6 +18,75 @@
           min-height: 100%;
         }
 
+/*        #header1, #editor
+        {
+           -webkit-backface-visibility: hidden;
+        }*/
+        
+        .editor-old{
+            position: fixed !important;
+            top: 0;
+            left: 0;
+            margin-top: 0px !important;
+            width: 100%;
+            padding-left: 0px;
+            z-index: 1;
+            border-bottom: 1px solid #ddd;
+
+        }
+        #header1.affix-top {
+            /*display:block;*/
+            /*visibility: visible !important;*/
+        }        
+        #header1.affix {
+            position: fixed !important;
+            top: 0;
+            /*left: 9%;*/
+            left:0;
+            right: 0;
+            margin-top: 0px !important;
+            /*width: 82%;*/
+            width: 100%;
+            /*padding-left: 0px;*/
+            padding-left: 4%;
+            padding-right:4%;
+            z-index: 1;
+            border-bottom: 1px solid #ddd;
+            /*visibility:hidden;*/
+
+        }        
+
+        #editor.affix {
+            position: fixed !important;
+            top: 47px !important;
+            left: 9%;
+            margin-top: 0px !important;
+            width: 82%;
+            padding-left: 0px;
+/*[]            z-index: 1;*/
+            background: white;
+            border-bottom: 1px solid #ddd;
+        }   
+
+        #editor.affix div {
+            width: auto;
+            float: right;
+            margin-bottom: 10px;
+            margin-top: 10px;
+        } 
+
+        #editor.affix-top {
+            top: 0px !important;
+        }    
+        #toc_button,#toc_button:active,#toc_button:focus,#toc_button:visited,#toc_button:hover {
+            background: white;
+           /* border-color: #ddd !important;*/
+           outline: 0 none;
+
+        }
+        .open #toc_button {
+            border-radius: 4px 4px 0 0;
+        }        
         .horizontal-form-input {
             border: none;
             box-shadow: none;
@@ -72,6 +143,9 @@
             font-size: 20px;
             text-shadow: none;
         } 
+        .pratilipi-red {
+            color: #d0021b;
+        }
         .translucent {
             position: absolute;
             top: 0px;
@@ -86,6 +160,7 @@
             padding-top: 5px;
             background: linear-gradient(black, #f9f9f9);
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            z-index: 1;
         }
         /* base CSS element */
         div.lefttip, div.righttip {
@@ -160,12 +235,39 @@
             right:-8px;
 
             top:20%;
-        }        
+        }    
+        .book-name {
+            text-align: center;
+        }    
         @media only screen and (max-width: 992px) {
             .book-name {
                 text-align: left;
             }
-        }        
+        }
+        @media only screen and (max-width: 598px) {
+            .small-screen-hidden {
+                display: none;
+            }
+            #editor.affix div  {
+                width: 100%;
+                padding: 7px 0 !important;
+            }  
+            #toc_button {
+                padding-left: 0;
+                padding-right: 0;
+            }
+            .editor-action {
+                width: 9% !important;
+            }
+        }
+        @media only screen and (min-width: 599px) {
+            .big-screen-hidden {
+                display: none;
+            }
+        }  
+        .popover-content {
+            min-width: 100px;
+        }                      
 
         /* arrows - :before and :after */
 /*        .tip:before {
@@ -199,78 +301,217 @@
     </style>
 </head>
 <body>
-    <div class="translucent">
-    </div>
-      <div class="pull-right" style="position: absolute;right: 1%;top: 1%;">
-          <button class="pratilipi-red-background-button" style="padding: 6px 12px;">Publish</button>
-          <button class="btn btn-default" style="margin: 0 5px 0 5px; font-size: 13px;">Save</button>
-          <button class="btn btn-default" style="margin: 0 5px 0 5px; font-size: 13px;">Preview</button>       
-          <a data-container="body" data-toggle="popover" data-content="
-  <a href='#'>
-    <img src='http://0.ptlp.co/resource-all/icon/svg/trash.svg' style='width:16px;height:16px;'>Delete this content
-  </a>" data-html="true" data-placement="bottom" href="#"><img style="width: 58px;height: 25px;" src="http://0.ptlp.co/resource-all/icon/svg/dots-three-vertical.svg"></a>       
-      </div>    
-    <div class="container" style="height:100%;">
-        <!-- panel -->
-        <div class="panel panel-default" style="margin-bottom: 5px;min-height: 100%;"> 
-          <div class="panel-body" style="text-align: center;padding-bottom: 5px;">
-            <h3 class="book-name" style="    margin-top: 2px;margin-bottom: 5px;">Book Name</h3>
-            <form class="col-sm-10 col-sm-offset-1">
-              <div class="form-group" style="position: relative;">
-                <input  class="form-control horizontal-form-input" id="subtitle" style="padding-bottom: 25px;padding-top: 20px;font-size: 25px;" placeholder="Add Subtitle">
-                <!-- editing panel -->
-                <div style="position: absolute;right: 1%;top: 5%;"><div style="background-color: #ddd;padding: 7px;">
-  
-                    <a href="#"><img src='http://0.ptlp.co/resource-all/icon/svg/bold.svg' style='width:20px;height:20px;  margin: 0 2px 0 2px;'></a>
-                    <a href="#"><img src='http://0.ptlp.co/resource-all/icon/svg/italic.svg' style='width:20px;height:20px;  margin: 0 2px 0 2px;'></a>
-                    <a href="#"><img src='http://0.ptlp.co/resource-all/icon/svg/underline.svg' style='width:20px;height:20px;  margin: 0 2px 0 2px;'></a>
-                    |
-                    <a href="#"><img src='http://0.ptlp.co/resource-all/icon/svg/paragraph-left.svg' style='width:20px;height:20px;  margin: 0 2px 0 2px;'></a>
-                    <a href="#"><img src='http://0.ptlp.co/resource-all/icon/svg/paragraph-center.svg' style='width:20px;height:20px;  margin: 0 2px 0 2px;'></a>
-                    <a href="#"><img src='http://0.ptlp.co/resource-all/icon/svg/paragraph-right.svg' style='width:20px;height:20px;  margin: 0 2px 0 2px;'></a>
-                    |
-                    <a href="#"><img src='http://0.ptlp.co/resource-all/icon/svg/quotes-left.svg' style='width:20px;height:20px;  margin: 0 2px 0 2px;'></a>
-                    <a href="#"><img src='http://0.ptlp.co/resource-all/icon/svg/attachment.svg' style='width:20px;height:20px;  margin: 0 2px 0 2px;'></a>
-                    <a href="#"><img src='http://0.ptlp.co/resource-all/icon/svg/camera2.svg' style='width:20px;height:20px;  margin: 0 2px 0 2px;'></a>
-                </div></div>
-              </div>
-              <textarea style="border: none; margin-bottom:10px;" class="form-control horizontal-form-input" placeholder="Tell your story here.."></textarea>   
-           
-            </form>
-            <div class="clearfix"></div>
+   
 
-        </div>            
+   
+    
+    <div class="container" style="height:100%;">
+    <div class="header-wrapper">
+        <div id="header1" style="background: white;padding-bottom: 10px;">
+            <div class="dropdown" id="toc_container" style="display: inline;">
+              <div class="dropdown-toggle" id="table_of_contents_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="display:inline;">  
+                  <button class="btn btn-default" id="toc_button" style="margin-top: 4px;">
+                      <img style="width: 28px;height: 20px;" src="http://0.ptlp.co/resource-all/icon/svg/list2.svg">
+                      <h4 style="margin-top: 10px;margin-bottom: 5px;display:inline;">Book Name</h4>
+                      <!-- Book Name               -->
+                      <!-- <button style="border:none;background:white;"> -->
+                        <!-- <img style="width: 48px;height: 20px;" src="http://0.ptlp.co/resource-all/icon/svg/chevron-right.svg" alt=""> -->
+                      <!-- </button> -->
+                      
+                      <!-- <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> -->
+                      <img style="width: 28px;height: 20px;" src="http://0.ptlp.co/resource-all/icon/svg/angle-down.svg" alt="">
+                  </button>
+              </div> 
+              <ul class="dropdown-menu" aria-labelledby="table_of_contents_dropdown" style="margin-top:13px;border-radius: 0 0 4px 4px;">
+                <li class="text-center"><strong>Table of Contents</strong></li>
+                <li role="separator" class="divider"></li>
+              </ul>
+            </div>
+          <!-- <div class="pull-left"></div>   -->
+          <div class="pull-right">
+              <button class="pratilipi-red-background-button" style="padding: 6px 12px;margin-right:0;">Publish</button>
+              <button class="btn btn-default small-screen-hidden" style="margin: 0 5px 0 5px; font-size: 13px;">Save</button>
+              <button class="btn btn-default small-screen-hidden" style="margin: 0 0px 0 5px; font-size: 13px;">Preview</button>       
+               <img style="width: 25px;height: 25px;margin-right:-12px;" src="http://0.ptlp.co/resource-all/icon/svg/dots-three-vertical.svg" class="big-screen-hidden" data-container="body" data-toggle="popover" data-content="
+      <a href='#' class='pratilipi-red'>
+        Preview
+      </a><hr style='margin: 1px 0;'><a href='#' class='pratilipi-red'>
+        Save
+      </a>" data-html="true" data-placement="bottom" >      
+          </div>                
+        </div>
+    </div>     
+        <!-- panel -->
+        <div class="panel panel-default" style="margin-bottom: 5px;min-height: 100%;margin-top:12px;"> 
+            <div class="panel-body" style="text-align: center;padding: 0 0 0 5px;">
+            
+                <form style="    width: 90%;margin-left: auto;margin-right: auto;">
+                <div class="editor-wrapper">
+                  <div class="form-group" style="position: relative;">
+                    <input  class="form-control horizontal-form-input" id="subtitle" style="padding-bottom: 25px;padding-top: 20px;font-size: 25px;border-bottom: 1px solid #ddd;" placeholder="Add Chapter Name">
+                    <!-- editing panel -->
+                    <div id="editor" style="position: absolute;right: 1%;top: 5%;">
+                        <div style="background-color: #ddd;padding: 7px;">
+          
+                            <a href="#"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/bold.svg' style='width:9%;height:20px;'></a>
+                            <a href="#"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/italic.svg' style='width:9%;height:20px;'></a>
+                            <a href="#"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/underline.svg' style='width:9%;height:20px;'></a>
+                            |
+                            <a href="#"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/paragraph-left.svg' style='width:9%;height:20px;'></a>
+                            <a href="#"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/paragraph-center.svg' style='width:9%;height:20px;'></a>
+                            <a href="#"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/paragraph-right.svg' style='width:9%;height:20px;'></a>
+                            |
+                            <a href="#"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/quotes-left.svg' style='width:9%;height:20px;'></a>
+                            <a href="#"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/attachment.svg' style='width:9%;height:20px;'></a>
+                            <a href="#"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/camera2.svg' style='width:9%;height:20px;'></a>
+                        </div>
+                    </div>
+                  </div>
+                </div>  
+                  <textarea id="chapter-content" style="border: none; margin-bottom:10px; margin-top:10px;" class="form-control horizontal-form-input" placeholder="Tell your story here.."></textarea>  
+
+               
+                </form>
+                <div class="clearfix"></div>
+                       
+            </div>            
+        </div>
     </div>
-    </div>
-            <!-- writer footer -->
-            <div>
-                <nav aria-label="..." style="padding-top:10px;position: fixed; bottom: 0;"class="col-lg-4 col-lg-offset-4 col-xs-6 col-xs-offset-3">
-                  <ul class="pager" style="margin: 0px;">
-                    <li class="previous"><a class="pratilipi-red-background-button righttip" style="border-radius: 50%; padding:3px; margin-top: 0px;" data-toggle="tooltip" data-placement="left" title="Delete this Chapter" href="#"><img src="http://0.ptlp.co/resource-all/icon/svg/minus-white.svg"></a></li>
+        <div style="padding-top:10px;position: fixed; bottom: 0;right: 0;left: 0;background: whitesmoke;">         <!-- writer footer -->    
+            <div class="col-lg-4 col-lg-offset-4 col-xs-6 col-xs-offset-3 text-center">
                     <a href="#"><img src="http://0.ptlp.co/resource-all/icon/svg/chevron-left.svg"></a>
                     <p style="display: inline;font-size: 20px;padding: 10px;"><input class="horizontal-form-input" type="text" value="12" style="width: 25px;">/25</p>   
                     <a href="#"><img src="http://0.ptlp.co/resource-all/icon/svg/chevron-right.svg"></a>
-                    <li class="next"><a class="pratilipi-red-background-button lefttip"  data-toggle="tooltip" data-placement="right" title="New Chapter" style="border-radius: 50%; padding: 3px;margin-top: 0px;" href="#"><img src="http://0.ptlp.co/resource-all/icon/svg/plus-white.svg"></a></li>
-                  </ul>
-                </nav>
-            </div> 
+                <div class="clearfix"></div>
+            </div>
             <!-- progress bar -->
             <div class="progress" style="height:2px;position: fixed;left: 0;right: 0;bottom:3%;">
               <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
                 <span class="sr-only">80% Complete (danger)</span>
               </div>
             </div>
-            <img src='http://0.ptlp.co/resource-all/icon/svg/circle-red.svg' style='left: 80%;bottom:3%;width:15px;height:15px; position: fixed;margin: 0 2px 0 2px;'>  
-            <!-- end of progress bar                             -->       
+            <img src='http://0.ptlp.co/resource-all/icon/svg/circle-red.svg' style='left: 80%;bottom:5%;width:15px;height:15px; position: fixed;'>  
+            <!-- end of progress bar                             --> 
+        </div>               
+       
 </body>
 
 <script type="text/javascript">
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip('');
+
+
+    $(document).ready(function() {  
+      var mainWriterPanelObject = new MainWriterPanel();
+      mainWriterPanelObject.init();
     });
-    $(function () {
-      $('[data-toggle="popover"]').popover();
-    });
+
+    var Chapter = function (ch_object) {
+        this.name = ch_object.name;
+        this.$ListDomElement = null;
+    }
+
+    Chapter.prototype.getListDomElement = function () {
+        if ( this.$ListDomElement ) {
+            return this.$ListDomElement;
+        }
+
+        this.$ListDomElement = $("<li>");
+        var $name = $("<a>", {
+            href: "#"
+        }).text(this.name);
+
+        var $delete = $("<img>", {
+            "class": "pull-right",
+             src: "http://0.ptlp.co/resource-all/icon/svg/trash.svg"
+        }).data("relatedObject", this).css({width: "20px", height: "20px"});
+
+        $name.append( $delete );
+        this.$ListDomElement.append($name)
+        console.log(this.$ListDomElement);
+        return this.$ListDomElement;        
+
+    } 
+
+    var TableOfContents = function(toc_container) {
+        this.toc_container = toc_container;
+        this.$dropdown_menu_list = toc_container.find(".dropdown-menu");
+        this.chapters = [];
+        console.log(this.chapters);
+
+    }
+
+    TableOfContents.prototype.init = function () {
+        this.setListWidth();
+        this.populateChapters();
+        this.addNewChapterButton();
+    }
+
+    TableOfContents.prototype.setListWidth = function() {
+        // setting height of dropdown ul equal to height of the trigger div
+        this.$dropdown_menu_list.width( this.toc_container.find("#table_of_contents_dropdown").width() - 2);
+    };
+
+    TableOfContents.prototype.populateChapters = function() {
+        var _this = this;
+        console.log(this);
+        this.ajaxChaptersList = [{ name: "Untitled 1"},{ name: "Untitled 2"},{ name: "Untitled 3"},{ name: "Untitled 1"},{ name: "Untitled 2"},{ name: "Untitled 3"},{ name: "Untitled 1"},{ name: "Untitled 2"},{ name: "Untitled 3"},{ name: "Untitled 1"},{ name: "Untitled 2"},{ name: "Untitled 3"}    ];
+        $.each(this.ajaxChaptersList, function(index, chapter) {
+            var ch = new Chapter( chapter );
+            _this.chapters.push(ch);
+            _this.$dropdown_menu_list.append( ch.getListDomElement() );
+        });
+    };
+
+    TableOfContents.prototype.addNewChapterButton = function() {
+        var $divider = $("<li>", {
+            role: "separator",
+            "class": "divider"
+        });
+
+        var $boldNewChapter = $("<strong>").text(" + New Chapter");
+        var $aNewChapter = $("<a>", {
+            href: "#"
+        }).append( $boldNewChapter );
+        var $liNewChapter = $("<li>", {
+            "class": "text-center"
+        }).append( $aNewChapter );
+
+        this.$dropdown_menu_list.append( $divider ).append( $liNewChapter );
+    };
+
+    var MainWriterPanel = function() {
+    };
+
+
+    MainWriterPanel.prototype.init = function() {
+        this.addAffixClasses();
+        this.setWrappersHeight();
+
+        var toc_container = $("#toc_container");
+        this.table_of_contents_object = new TableOfContents(toc_container);
+        this.table_of_contents_object.init();
+    };
+
+    MainWriterPanel.prototype.addAffixClasses = function() {
+        $('#editor').affix({
+            offset: {
+                top: 50,
+                // bottom: 0
+            }
+        });
+        $('#header1').affix({
+            offset: {
+                top: 50,
+                // bottom: 0
+            }
+        });         
+    };
+
+    MainWriterPanel.prototype.setWrappersHeight = function() {
+        $(".editor-wrapper").height($("#editor").height());
+        $(".header-wrapper").height($("#header1").height());
+         $('[data-toggle="popover"]').popover();
+    };
+
     function h(e) {
       $(e).css({'height':'auto','overflow-y':'hidden'}).height(e.scrollHeight);
     }
@@ -278,6 +519,6 @@
       h(this);
     }).on('input', function () {
       h(this);
-    });    
+    }); 
 </script>
 </html>
