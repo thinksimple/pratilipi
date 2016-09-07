@@ -134,10 +134,19 @@ public class PratilipiDocUtil {
 					imageName = imageUrl.substring( imageUrl.indexOf( "name=" ) + 5 );
 					if( imageName.indexOf( '&' ) != -1 )
 						imageName = imageName.substring( 0, imageName.indexOf( '&' ) );
+					imageName = imageName.replace( "%20", " " );
 					String fileName = _createImageFullName( pratilipi.getId(), imageName );
 					blobEntry = blobAccessor.getBlob( fileName );
 					if( blobEntry == null ) // TODO: Remove this when all images from old resource folder are migrated to new resource location
 						blobEntry = blobAccessor.getBlob( "pratilipi-resource/" + pratilipi.getId() + "/" + imageName );
+					if( blobEntry == null && imageUrl.indexOf( "pratilipiId=" ) != -1 ) { // TODO: Remove this when all images from old resource folder are migrated to new resource location
+						String pratilipiIdStr = imageUrl.substring( imageUrl.indexOf( "pratilipiId=" ) + 12 );
+						if( pratilipiIdStr.indexOf( '&' ) != -1 )
+							pratilipiIdStr = pratilipiIdStr.substring( 0, pratilipiIdStr.indexOf( '&' ) );
+						blobEntry = blobAccessor.getBlob( "pratilipi-resource/" + pratilipiIdStr + "/" + imageName );
+						blobEntry.setName( fileName );
+						blobAccessor.createOrUpdateBlob( blobEntry );
+					}
 				} else if( imageUrl.startsWith( "http" ) ) {
 					imageName = imageUrl.replaceAll( "[:/.?=&+]+", "_" );
 					String fileName = _createImageFullName( pratilipi.getId(), imageName );
@@ -198,6 +207,10 @@ public class PratilipiDocUtil {
 	}
 	
 	private static String _extractText( Node node ) {
+		logger.log( Level.INFO, node.getClass().getName() );
+		logger.log( Level.INFO, node.toString() );
+		if( node.getClass() == org.jsoup.nodes.Comment.class )
+			return null;
 		String text = node.getClass() == TextNode.class
 				? ( (TextNode) node ).text()
 				: ( (Element) node ).text();
