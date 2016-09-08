@@ -21,4 +21,5 @@
 /jivancharitra     जीवन चरित्र            App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"jivancharitra" }
 /samaj-prabodhan   समाज प्रबोधन         App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"samaj-prabodhan" }
 /sair-sapata       भटकंती                  App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"sair-sapata" }
+/bhavishya         भविष्य                App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"bhavishya" }
 /swadishta-pakkala स्वादिष्ट पाककला    App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"swadishta-pakkala" }
