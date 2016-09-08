@@ -46,13 +46,16 @@
             right: 0;
             margin-top: 0px !important;
             /*width: 82%;*/
-            width: 100%;
+            /*width: 100%;*/
             /*padding-left: 0px;*/
-            padding-left: 5%;
-            padding-right:5%;
+            /*padding-left: 5%;*/
+            /*padding-right:5%;*/
             z-index: 1;
             border-bottom: 1px solid #ddd;
-            /*visibility:hidden;*/
+            padding-right: 0px;
+            padding-left: 0px;
+            margin-right: auto;
+            margin-left: auto;
 
         }        
 
@@ -247,8 +250,8 @@
 
         @media only screen and (max-width: 1200px) {
             #header1.affix {
-                padding-left: 4%;
-                padding-right: 4%;
+                /*padding-left: 4%;*/
+                /*padding-right: 4%;*/
             }
         }
         @media only screen and (max-width: 598px) {
@@ -287,6 +290,38 @@
                 display: none;
             }
         }  
+
+        /*media queries for header on being scrolled*/
+        @media only screen and (max-width: 768px) {
+            #header1.affix {
+                width: -moz-calc(100% - 30px);
+                width: -webkit-calc(100% - 30px);
+                width: calc(100% - 30px);
+            }
+        }        
+        @media only screen and (min-width: 768px) {
+            #header1.affix {
+                width: 720px;
+            }
+        } 
+        @media only screen and (min-width: 992px) {
+            #header1.affix {
+                width: 940px;
+            }
+        }                
+        @media only screen and (min-width: 1200px) {
+            #header1.affix {
+                width: 1140px;
+            }
+        }
+   
+
+        #header1.affix {
+/*            padding-right: 0px;
+            padding-left: 0px;
+            margin-right: auto;
+            margin-left: auto;*/
+        }        
         .popover-content {
             min-width: 100px;
         }                      
@@ -399,7 +434,7 @@
             </div>            
         </div>
     </div>
-        <div style="padding-top:10px;position: fixed; bottom: 0;right: 0;left: 0;background: whitesmoke;">         <!-- writer footer -->    
+        <div id="pagination" style="padding-top: 0.25%;;position: fixed; bottom: 0;right: 0;left: 0;background: whitesmoke;">         <!-- writer footer -->    
             <div class="col-lg-4 col-lg-offset-4 col-xs-6 col-xs-offset-3 text-center">
                     <a href="#"><img src="http://0.ptlp.co/resource-all/icon/svg/chevron-left.svg"></a>
                     <p style="display: inline;font-size: 20px;padding: 10px;"><input class="horizontal-form-input" type="text" value="12" style="width: 25px;">/25</p>   
@@ -407,12 +442,12 @@
                 <div class="clearfix"></div>
             </div>
             <!-- progress bar -->
-            <div class="progress" style="height:2px;position: fixed;left: 0;right: 0;bottom:3%;">
+            <div class="progress" style="height:2px;position: absolute;left: 0;right: 0;top:0%">
               <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
                 <span class="sr-only">80% Complete (danger)</span>
               </div>
             </div>
-            <img src='http://0.ptlp.co/resource-all/icon/svg/circle-red.svg' style='left: 80%;bottom:5%;width:15px;height:15px; position: fixed;'>  
+            <img src='http://0.ptlp.co/resource-all/icon/svg/circle-red.svg' style='left: 80%;top:-15%;width:15px;height:15px; position: absolute;'>  
             <!-- end of progress bar                             --> 
         </div>               
        
@@ -550,5 +585,13 @@
     }).on('input', function () {
       h(this);
     }); 
+
+    $('body').on('focusin', 'input, textarea', function(event) {
+     $("#pagination").hide();
+    });
+    $('body').on('blur', 'input, textarea', function(event) {
+        // if(navigator.userAgent.indexOf('Android') > -1 && ...){
+            $("#pagination").show();
+    });    
 </script>
 </html>
