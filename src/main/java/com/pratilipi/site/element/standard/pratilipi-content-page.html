@@ -6,7 +6,7 @@
 		paper-card {
 			display: block;
 			width: 100%;
-			padding: 8px 16px;
+			padding: 20px 16px;
 			margin-top: 6px;
 			margin-bottom: 6px;
 			--paper-card-header: { display: none };
@@ -22,6 +22,12 @@
 			--paper-input-container-label: {
 				color:#333;
 			}
+			--paper-dropdown-menu-input: {
+				--paper-input-container-color: #333;
+				--paper-input-container-focus-color: #333;
+				--paper-input-container-invalid-color: #333;
+				--paper-input-container-input-color: #333;
+			};
 			--paper-input-container-input: {
 				font-family: inherit;
 			};
@@ -97,7 +103,9 @@
 								</div>
 							</div>
 							<div class="display-message-div"><p>{{ message }}</p></div>
-							<button id="pratilipiWriteButton" class="pratilipi-dark-blue-button" type="button" on-click="onSubmit">${ _strings.write_create_new_content }</button>
+							<div style="text-align: right;">
+								<button id="pratilipiWriteButton" class="pratilipi-dark-blue-button" type="button" on-click="onSubmit">${ _strings.write_create_new_content }</button>
+							</div>
 						</paper-card>
 					</div>
 				</div>
@@ -273,35 +281,15 @@
 			},
 
 			_handleAjaxPostResponse: function( event ) {
-				
 				var pratilipi = event.detail.response;
-				
-				if( this.createPratilipi )
-					this.message = "${ _strings.content_created_success }";
-				else if( this.editPratilipi ) 
-					this.message = "${ _strings.updated_pratilipi_info_success }";
-					
-				jQuery( '#pratilipiWriteButton' ).prop( 'disabled', false );
-				
-				if( this.createPratilipi ) {
-					// Redirect to writer with return option to pratilipi page
-					this.async( function() {
-						this.clearAndClose();
-						window.location.href = pratilipi.writePageUrl + "&ret=" + pratilipi.pageUrl;
-					}, 1000 );
-				} else if( this.editPratilipi ) {
-					document.querySelector( 'pratilipi-pratilipi' ).updatePratilipi( pratilipi );
-					this.async( function() {
-						this.clearAndClose();
-					}, 1000 );
-				}
+				this.message = "${ _strings.content_created_success }";
+				window.location.href = pratilipi.writePageUrl + "&ret=" + pratilipi.pageUrl;
 			},
 
 			_handleAjaxPostError: function( event ) {
 				jQuery( '#pratilipiWriteButton' ).prop( 'disabled', false );
-				
 				this.message = null;
-				if( event.detail.request.xhr.status === 400 || event.detail.request.xhr.status === 401 || event.detail.request.xhr.status === 500 && event.detail.request.xhr.response.message != null )
+				if( event.detail.request.xhr.response.message != null )
 					this.message = event.detail.request.xhr.response.message;
 				else
 					this.message = "${ _strings.server_error_message }"
