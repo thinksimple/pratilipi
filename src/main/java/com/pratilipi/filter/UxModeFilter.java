@@ -201,14 +201,17 @@ public class UxModeFilter implements Filter {
 					 */
 					basicBrowser = false;
 					
-				} else if ( userAgent.contains( "Safari" ) ) { // Apple Safari
+				} else if( userAgent.contains( "Safari" ) ) { // Apple Safari
 					/*
 					 * Apple Safari on Microsoft Windows 8.1
 					 *   "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/534.57.2 (KHTML, like Gecko) Version/5.1.7 Safari/534.57.2"
 					 */
 					basicBrowser = false;
 	
-				}
+				} else if( userAgent.startsWith( "facebookexternalhit/1.1" ) ) { // Facebook Scraping requests
+					basicBrowser = false;
+					
+				} 
 				
 			}
 			
