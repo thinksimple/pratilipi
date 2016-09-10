@@ -207,8 +207,6 @@ public class PratilipiDocUtil {
 	}
 	
 	private static String _extractText( Node node ) {
-		logger.log( Level.INFO, node.getClass().getName() );
-		logger.log( Level.INFO, node.toString() );
 		if( node.getClass() == org.jsoup.nodes.Comment.class )
 			return null;
 		String text = node.getClass() == TextNode.class
