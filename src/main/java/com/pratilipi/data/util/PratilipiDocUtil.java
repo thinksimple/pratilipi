@@ -191,7 +191,7 @@ public class PratilipiDocUtil {
 					pagelet = new Object[] { PratilipiContentDoc.PageletType.TEXT, text };
 					pageletList.add( pagelet );
 				} else {
-					pagelet = new Object[] { PratilipiContentDoc.PageletType.TEXT, pagelet[1] + " " + text };
+					pagelet[1] = pagelet[1] + " " + text;
 				}
 				
 			}
