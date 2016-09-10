@@ -980,13 +980,13 @@ public class PratilipiDataUtil {
 		for( Long pratilipiId : pratilipiIdList ) {
 			Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 			if( pratilipi.getState() != PratilipiState.PUBLISHED )
-				return;
+				continue;
 			
 			Page page = dataAccessor.getPage( PageType.PRATILIPI, pratilipiId );
 			String uri = page.getUriAlias() == null ? page.getUri() : page.getUriAlias();
 			FacebookApi.postScrapeRequest( "http://" + pratilipi.getLanguage().getHostName() + uri );
 		}
-				
+		
 	}
 	
 	
