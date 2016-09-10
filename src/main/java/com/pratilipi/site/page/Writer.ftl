@@ -62,10 +62,14 @@
         #editor.affix {
             position: fixed !important;
             top: 47px !important;
-            left: 7%;
+            /*left: 7%;*/
             margin-top: 0px !important;
             width: 86.75%;
             padding-left: 0px;
+            left: 0;
+            right: 0;
+            margin-left: auto;
+            margin-right: auto;
 /*[]            z-index: 1;*/
             background: white;
             border-bottom: 1px solid #ddd;
@@ -254,7 +258,7 @@
                 /*padding-right: 4%;*/
             }
         }
-        @media only screen and (max-width: 598px) {
+        @media only screen and (max-width: 600px) {
             .small-screen-hidden {
                 display: none;
             }
@@ -285,34 +289,58 @@
             }
 
         }
-        @media only screen and (min-width: 599px) {
+        @media only screen and (min-width:601px) {
             .big-screen-hidden {
                 display: none;
             }
         }  
 
-        /*media queries for header on being scrolled*/
+        /*media queries for header and editor on being scrolled*/
         @media only screen and (max-width: 768px) {
             #header1.affix {
                 width: -moz-calc(100% - 30px);
                 width: -webkit-calc(100% - 30px);
                 width: calc(100% - 30px);
             }
+            #editor.affix {
+                width: -moz-calc(100% * 0.95);
+                width: -webkit-calc(100% * 0.95);
+                width: calc( (100% - 30px) * 0.95);
+            }            
         }        
         @media only screen and (min-width: 768px) {
             #header1.affix {
                 width: 720px;
             }
+            #editor.affix {
+                --widthA: 720px;
+                width: -moz-calc(var(--widthA)*0.95);
+                width: -webkit-calc(var(--widthA)*0.95);
+                width: calc(var(--widthA)*0.95);
+            }            
+
         } 
         @media only screen and (min-width: 992px) {
             #header1.affix {
                 width: 940px;
             }
+            #editor.affix {
+                --widthA: 940px;
+                width: -moz-calc(var(--widthA)*0.95);
+                width: -webkit-calc(var(--widthA)*0.95);
+                width: calc(var(--widthA)*0.95);
+            }            
         }                
         @media only screen and (min-width: 1200px) {
             #header1.affix {
                 width: 1140px;
             }
+            #editor.affix {
+                --widthA: 1140px;
+                width: -moz-calc(var(--widthA)*0.95);
+                width: -webkit-calc(var(--widthA)*0.95);
+                width: calc(var(--widthA)*0.95);
+            }            
         }
    
 
@@ -370,21 +398,16 @@
                   <button class="btn btn-default" id="toc_button" style="margin-top: 4px;">
                       <img style="width: 28px;height: 20px;" src="http://0.ptlp.co/resource-all/icon/svg/list2.svg">
                       <h4 style="margin-top: 10px;margin-bottom: 5px;display:inline;">Book Name</h4>
-                      <!-- Book Name               -->
-                      <!-- <button style="border:none;background:white;"> -->
-                        <!-- <img style="width: 48px;height: 20px;" src="http://0.ptlp.co/resource-all/icon/svg/chevron-right.svg" alt=""> -->
-                      <!-- </button> -->
-                      
-                      <!-- <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> -->
                       <img style="width: 28px;height: 20px;" src="http://0.ptlp.co/resource-all/icon/svg/angle-down.svg" alt="">
                   </button>
               </div> 
               <ul class="dropdown-menu" aria-labelledby="table_of_contents_dropdown" style="margin-top:13px;border-radius: 0 0 4px 4px;">
+                <li class="text-center"><strong class="pratilipi-red">Book Settings</strong></li>
+                <li role="separator" class="divider"></li>
                 <li class="text-center"><strong>Table of Contents</strong></li>
                 <li role="separator" class="divider"></li>
               </ul>
             </div>
-          <!-- <div class="pull-left"></div>   -->
           <div class="pull-right">
               <button class="pratilipi-red-background-button" style="padding: 6px 12px;margin-right:0;">Publish</button>
               <button class="btn btn-default small-screen-hidden" style="margin: 0 5px 0 5px; font-size: 13px;">Save</button>
@@ -524,9 +547,12 @@
             "class": "divider"
         });
 
-        var $boldNewChapter = $("<strong>").text(" + New Chapter");
+        var $boldNewChapter = $("<strong>", {
+            "class": "pratilipi-red"
+        })
+        .text(" + New Chapter");
         var $aNewChapter = $("<a>", {
-            href: "#"
+            href: "#", 
         }).append( $boldNewChapter );
         var $liNewChapter = $("<li>", {
             "class": "text-center"
@@ -587,11 +613,16 @@
     }); 
 
     $('body').on('focusin', 'input, textarea', function(event) {
-     $("#pagination").hide();
+        if(navigator.userAgent.indexOf('Android') > -1 ){
+            $("#pagination").hide();
+            // $("#header1").hide();
+        }        
     });
     $('body').on('blur', 'input, textarea', function(event) {
-        // if(navigator.userAgent.indexOf('Android') > -1 && ...){
+        if(navigator.userAgent.indexOf('Android') > -1 ){
             $("#pagination").show();
+            // $("#header1").show();
+        }    
     });    
 </script>
 </html>
