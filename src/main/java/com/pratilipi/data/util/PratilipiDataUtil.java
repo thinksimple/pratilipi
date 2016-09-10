@@ -983,10 +983,8 @@ public class PratilipiDataUtil {
 				return;
 			
 			Page page = dataAccessor.getPage( PageType.PRATILIPI, pratilipiId );
-			if( pratilipi.getLanguage() == Language.GUJARATI || pratilipi.getLanguage() == Language.TAMIL)
-				FacebookApi.postScrapeRequest( "http://" + pratilipi.getLanguage().getHostName() + page.getUri() );
-			else
-				FacebookApi.postScrapeRequest( "http://" + Website.ALL_LANGUAGE.getHostName() + page.getUri() );
+			String uri = page.getUriAlias() == null ? page.getUri() : page.getUriAlias();
+			FacebookApi.postScrapeRequest( "http://" + pratilipi.getLanguage().getHostName() + uri );
 		}
 				
 	}
