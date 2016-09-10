@@ -714,7 +714,9 @@ public class PratilipiDataUtil {
 				pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi, auditLog );
 
 		} else {
-			throw new InvalidArgumentException( "Index generation for " + pratilipi.getContentType() + " content type is not yet supported." );
+			
+			// throw new InvalidArgumentException( "Index generation for " + pratilipi.getContentType() + " content type is not yet supported." );
+		
 		}
 		
 	}
@@ -1201,7 +1203,8 @@ public class PratilipiDataUtil {
 			
 		} else {
 			
-			throw new InvalidArgumentException( "Keywords generation for " + pratilipi.getContentType() + " content type is not yet supported." );
+			return false;
+			// throw new InvalidArgumentException( "Keywords generation for " + pratilipi.getContentType() + " content type is not yet supported." );
 		
 		}
 		

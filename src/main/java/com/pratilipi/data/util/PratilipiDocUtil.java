@@ -25,6 +25,7 @@ import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.CommentParentType;
 import com.pratilipi.common.type.CommentState;
 import com.pratilipi.common.type.PageType;
+import com.pratilipi.common.type.PratilipiContentType;
 import com.pratilipi.common.type.ReferenceType;
 import com.pratilipi.common.type.UserReviewState;
 import com.pratilipi.common.type.VoteParentType;
@@ -61,31 +62,52 @@ public class PratilipiDocUtil {
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
 		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
 		
-		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-		BlobEntry blobEntry = blobAccessor.getBlob( "pratilipi-content/pratilipi/" + pratilipiId );
-		if( blobEntry == null )
-			return;
-		String contentHtml = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
-		
 		PratilipiContentDoc pcDoc = DataAccessorFactory.getDocAccessor().newPratilipiContentDoc();
 		
-		List<Object[]> pageletList = _createPageletList( pratilipi, Jsoup.parse( contentHtml ).body() );
+		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 		
-		if( pageletList.size() > 0 ) {
-			PratilipiContentDoc.Chapter chapter = null;
-			if( pageletList.get( 0 )[0] != PratilipiContentDoc.PageletType.HEAD_1 )
-				chapter = pcDoc.addChapter( pratilipi.getTitle() == null ? pratilipi.getTitleEn() : pratilipi.getTitle() );
+		if( pratilipi.getContentType() == PratilipiContentType.PRATILIPI ) {
+		
+			BlobEntry blobEntry = blobAccessor.getBlob( "pratilipi-content/pratilipi/" + pratilipiId );
+			if( blobEntry == null )
+				return;
+			String contentHtml = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
 			
-			for( Object[] pagelet : pageletList ) {
-				if( pagelet[0] == PratilipiContentDoc.PageletType.HEAD_1 )
-					chapter = pcDoc.addChapter( (String) pagelet[1] );
-				else if( pagelet[0] == PratilipiContentDoc.PageletType.HEAD_2 )
-					chapter = pcDoc.addChapter( (String) pagelet[1], 1 );
-				else if( chapter.getPage( 1 ) == null )
-					chapter.addPage( (PratilipiContentDoc.PageletType) pagelet[0], pagelet[1] );
-				else
-					chapter.getPage( 1 ).addPagelet( (PratilipiContentDoc.PageletType) pagelet[0], pagelet[1] );
+			List<Object[]> pageletList = _createPageletList( pratilipi, Jsoup.parse( contentHtml ).body() );
+			
+			if( pageletList.size() > 0 ) {
+				PratilipiContentDoc.Chapter chapter = null;
+				if( pageletList.get( 0 )[0] != PratilipiContentDoc.PageletType.HEAD_1 )
+					chapter = pcDoc.addChapter( pratilipi.getTitle() == null ? pratilipi.getTitleEn() : pratilipi.getTitle() );
+				
+				for( Object[] pagelet : pageletList ) {
+					if( pagelet[0] == PratilipiContentDoc.PageletType.HEAD_1 )
+						chapter = pcDoc.addChapter( (String) pagelet[1] );
+					else if( pagelet[0] == PratilipiContentDoc.PageletType.HEAD_2 )
+						chapter = pcDoc.addChapter( (String) pagelet[1], 1 );
+					else if( chapter.getPage( 1 ) == null )
+						chapter.addPage( (PratilipiContentDoc.PageletType) pagelet[0], pagelet[1] );
+					else
+						chapter.getPage( 1 ).addPagelet( (PratilipiContentDoc.PageletType) pagelet[0], pagelet[1] );
+				}
 			}
+			
+		} else if( pratilipi.getContentType() == PratilipiContentType.IMAGE ) {
+			
+			for( int i = 1; i <= pratilipi.getPageCount(); i++ ) {
+				
+				BlobEntry blobEntry = blobAccessor.getBlob( "pratilipi-content/image/" + pratilipiId + "/" + i );
+				
+				JsonObject imgData = new JsonObject();
+				imgData.addProperty( "name", i + "" );
+				imgData.addProperty( "height", ImageUtil.getHeight( blobEntry.getData() ) );
+				imgData.addProperty( "width", ImageUtil.getWidth( blobEntry.getData() ) );
+				
+				PratilipiContentDoc.Chapter chapter = pcDoc.addChapter( null );
+				chapter.addPage( PratilipiContentDoc.PageletType.IMAGE, imgData );
+				
+			}
+			
 		}
 		
 		docAccessor.save( pratilipiId, pcDoc );
