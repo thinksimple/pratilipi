@@ -81,7 +81,13 @@ public class PratilipiContentApi extends GenericApi {
 				request.pageNo,
 				contentType );
 
-		if( contentType == PratilipiContentType.PRATILIPI ) {
+		if( UxModeFilter.isAndroidApp() ) {
+			return new Response(
+					request.pratilipiId,
+					request.chapterNo,
+					request.pageNo,
+					content );
+		} else if( contentType == PratilipiContentType.PRATILIPI ) {
 			return new Response(
 					request.pratilipiId,
 					request.chapterNo,

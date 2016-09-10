@@ -1005,28 +1005,28 @@ public class PratilipiDataUtil {
 		
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
 
-		if( contentType == PratilipiContentType.PRATILIPI ) {
+		if( UxModeFilter.isAndroidApp() ) {
+			
+			DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
+			PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( pratilipiId );
+			if( pcDoc == null )
+				return null;
+			else if( chapterNo == null )
+				return pcDoc;
+			else if( chapterNo != null && pageNo == null )
+				return pcDoc.getChapter( chapterNo );
+			else
+				return pcDoc.getChapter( chapterNo ).getPage( pageNo );
+			
+		} if( contentType == PratilipiContentType.PRATILIPI ) {
 
-			if( UxModeFilter.isAndroidApp() ) {
-				DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
-				PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( pratilipiId );
-				if( pcDoc == null )
-					return null;
-				else if( chapterNo == null )
-					return pcDoc;
-				else if( chapterNo != null && pageNo == null )
-					return pcDoc.getChapter( chapterNo );
-				else
-					return pcDoc.getChapter( chapterNo ).getPage( pageNo );
-			} else {
-				BlobEntry blobEntry = blobAccessor.getBlob( CONTENT_FOLDER + "/" + pratilipiId );
-				if( blobEntry == null )
-					return null;
-				String contentHtml = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
-				PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( pratilipi, contentHtml );
-				contentHtml = pratilipiContentUtil.getContent( chapterNo != null ? chapterNo : pageNo );
-				return contentHtml;
-			}
+			BlobEntry blobEntry = blobAccessor.getBlob( CONTENT_FOLDER + "/" + pratilipiId );
+			if( blobEntry == null )
+				return null;
+			String contentHtml = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
+			PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( pratilipi, contentHtml );
+			contentHtml = pratilipiContentUtil.getContent( chapterNo != null ? chapterNo : pageNo );
+			return contentHtml;
 			
 		} else if( contentType == PratilipiContentType.IMAGE ) {
 			
