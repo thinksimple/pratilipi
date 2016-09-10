@@ -1,3 +1,4 @@
 /src/main/webapp/third-party
 /src/main/webapp/WEB-INF/classes
 /target/
+/PrivateKey.p12
