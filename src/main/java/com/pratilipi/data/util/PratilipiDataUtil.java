@@ -1130,7 +1130,7 @@ public class PratilipiDataUtil {
 		
 		if( blobEntry == null )
 			blobEntry = DataAccessorFactory.getBlobAccessor()
-					.getBlob( "pratilipi-content/" + pratilipiId + "/image/" + name );
+					.getBlob( "pratilipi-content/image/" + pratilipiId + "/" + name );
 		
 		if( width != null )
 			blobEntry.setData( ImageUtil.resize( blobEntry.getData(), width ) );
