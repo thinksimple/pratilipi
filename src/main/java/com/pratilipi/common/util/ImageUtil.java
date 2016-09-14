@@ -3,6 +3,7 @@ package com.pratilipi.common.util;
 import com.google.appengine.api.images.Image;
 import com.google.appengine.api.images.ImagesService;
 import com.google.appengine.api.images.ImagesService.OutputEncoding;
+import com.pratilipi.data.type.BlobEntry;
 import com.google.appengine.api.images.ImagesServiceFactory;
 import com.google.appengine.api.images.Transform;
 
@@ -38,17 +39,19 @@ public class ImageUtil {
 		return imagesService.applyTransform( resize, image, OutputEncoding.JPEG ).getImageData();
 	}
 	
-	public static byte[] resize( byte[] imageData, String imageMimeType, int width, int height ) {
-		Image image = ImagesServiceFactory.makeImage( imageData );
+	public static BlobEntry resize( BlobEntry blobEntry, int width, int height ) {
+		Image image = ImagesServiceFactory.makeImage( blobEntry.getData() );
 		Transform resize = ImagesServiceFactory.makeResize(
 				width < 4000 ? width : 4000,
 				height < 4000 ? height : 4000,
 				true );
-		if( imageMimeType.equalsIgnoreCase( "image/png" ) )
+		if( blobEntry.getMimeType().equalsIgnoreCase( "image/png" ) ) {
 			image = imagesService.applyTransform( resize, image, OutputEncoding.PNG );
-		else
+		} else {
 			image = imagesService.applyTransform( resize, image, OutputEncoding.JPEG );
-		return image.getImageData();
+			blobEntry.setMimeType( "image/jpeg" );
+		}
+		return blobEntry;
 	}
 	
 }

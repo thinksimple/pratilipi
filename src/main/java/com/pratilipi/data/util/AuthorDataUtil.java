@@ -434,7 +434,7 @@ public class AuthorDataUtil {
 		BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor().getBlob( coverImagePath );
 		
 		if( width != null )
-			blobEntry.setData( ImageUtil.resize( blobEntry.getData(), width, width ) );
+			blobEntry = ImageUtil.resize( blobEntry, width, width );
 		
 		return blobEntry;
 		
@@ -484,7 +484,7 @@ public class AuthorDataUtil {
 		BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor().getBlob( coverImagePath );
 		
 		if( width != null )
-			blobEntry.setData( ImageUtil.resize( blobEntry.getData(), width, width ) );
+			blobEntry = ImageUtil.resize( blobEntry, width, width );
 		
 		return blobEntry;
 		
