@@ -27,7 +27,8 @@ public class ImageUtil {
 				false );
 		return imagesService.applyTransform( resize, image, OutputEncoding.JPEG ).getImageData();
 	}
-	
+
+	@Deprecated
 	public static byte[] resize( byte[] imageData, int width, int height ) {
 		Image image = ImagesServiceFactory.makeImage( imageData );
 		Transform resize = ImagesServiceFactory.makeResize(
@@ -35,6 +36,19 @@ public class ImageUtil {
 				height < 4000 ? height : 4000,
 				true );
 		return imagesService.applyTransform( resize, image, OutputEncoding.JPEG ).getImageData();
+	}
+	
+	public static byte[] resize( byte[] imageData, String imageMimeType, int width, int height ) {
+		Image image = ImagesServiceFactory.makeImage( imageData );
+		Transform resize = ImagesServiceFactory.makeResize(
+				width < 4000 ? width : 4000,
+				height < 4000 ? height : 4000,
+				true );
+		if( imageMimeType.equalsIgnoreCase( "image/png" ) )
+			image = imagesService.applyTransform( resize, image, OutputEncoding.PNG );
+		else
+			image = imagesService.applyTransform( resize, image, OutputEncoding.JPEG );
+		return image.getImageData();
 	}
 	
 }

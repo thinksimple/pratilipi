@@ -600,7 +600,7 @@ public class PratilipiDataUtil {
 			blobEntry = DataAccessorFactory.getBlobAccessor().getBlob( COVER_FOLDER + "/" + "pratilipi" );
 		
 		if( width != null )
-			blobEntry.setData( ImageUtil.resize( blobEntry.getData(), width, (int) ( 1.5 * width ) ) );
+			blobEntry.setData( ImageUtil.resize( blobEntry.getData(), blobEntry.getMimeType(), width, (int) ( 1.5 * width ) ) );
 		
 		return blobEntry;
 		
