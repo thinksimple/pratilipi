@@ -159,7 +159,7 @@
 		}
 	</style>
 	<template>
-		<paper-card class="cover-image pratilipi-shadow" style="background-image: url('/api/author/cover')">
+		<paper-card class="cover-image pratilipi-shadow" style="background-image: url({{ author.coverImageUrl }})">
 		
 			<template is="dom-if" if="{{ hasAccessToUpdate }}">
 				<div class="edit-profile">

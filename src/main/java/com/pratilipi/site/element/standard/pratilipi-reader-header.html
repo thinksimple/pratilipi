@@ -45,6 +45,18 @@
 			height: 19px;
 			margin-right: 4px;
 		}
+		paper-fab.reading-mode {
+			display: inline-block;
+			width: 32px; 
+			height: 32px;
+			padding: 3px;
+			margin-top: 6px;
+			margin-left: 4px;
+			--paper-fab-iron-icon: {
+				width: 20px;
+				height: 20px;
+			} 
+		}
 	</style>
 
 	<template>
@@ -108,19 +120,22 @@
 									<#--
 									<li>
 										<a style="padding: 5px; margin: 0;">
-											<paper-item on-click="normalReadingMode">
-												<paper-icon-item><iron-icon icon="editor:format-color-text"></iron-icon></paper-icon-item>
-												&nbsp;&nbsp;
-												<paper-item-body>Normal Reading Mode</paper-item-body>
-											</paper-item>
-										</a>
-									</li>
-									<li>
-										<a style="padding: 5px; margin: 0;">
-											<paper-item on-click="nightReadingMode">
-												<paper-icon-item><iron-icon icon="editor:format-color-text"></iron-icon></paper-icon-item>
-												&nbsp;&nbsp;
-												<paper-item-body>Night Reading Mode</paper-item-body>
+											<paper-item>
+												<paper-item-body>
+													<div style="font-size: 13px;">Background</div>
+													<div class="text-center">
+														<paper-fab mini noink 
+																	class="reading-mode" 
+																	style="background-color: #FFF; color: #000;" 
+																	icon="editor:format-color-text" 
+																	on-click="normalReadingMode"></paper-fab>
+														<paper-fab mini noink 
+																	class="reading-mode" 
+																	style="background-color: #000; color: #FFF;" 
+																	icon="editor:format-color-text" 
+																	on-click="nightReadingMode"></paper-fab>
+													</div>
+												</paper-item-body>
 											</paper-item>
 										</a>
 									</li>

@@ -102,9 +102,16 @@
 					this.set( 'hideIndexButton', true );
 
 				this.set( 'addedToLib', this.userpratilipi != null ? this.userpratilipi.addedToLib : false );
+
 			},
-			
-			
+
+			attached: function() {
+				if( getCookie( "PREFERRED_READING_MODE" ) == "NORMAL_MODE" || getCookie( "PREFERRED_READING_MODE" ) == "" )
+					this.normalReadingMode();
+				else if( getCookie( "PREFERRED_READING_MODE" ) == "NIGHT_MODE" )
+					this.nightReadingMode();
+			},
+
 			// Setting Page Number
 			setPageNo: function( pageNo ) {
 				if( pageNo != this.pageNo && pageNo >= 1 && pageNo <= this.pageCount ) {
@@ -268,6 +275,8 @@
 				jQuery( 'body' ).addClass( 'night-mode' );
 				/* For paper input in footer */
 				this.querySelector( 'pratilipi-reader-footer' ).readingMode( 'night-mode' );
+				/* Setting cookie */
+				setCookie( "PREFERRED_READING_MODE", "NIGHT_MODE", 30, "/read" );
 			},
 
 			normalReadingMode: function() {
@@ -275,6 +284,8 @@
 				jQuery( 'body' ).removeClass( 'night-mode' );
 				/* For paper input in footer */
 				this.querySelector( 'pratilipi-reader-footer' ).readingMode();
+				/* Setting cookie */
+				setCookie( "PREFERRED_READING_MODE", "NORMAL_MODE", 30, "/read" );
 			} 
 			
 		});
