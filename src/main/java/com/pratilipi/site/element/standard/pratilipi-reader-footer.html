@@ -23,6 +23,13 @@
 			--paper-input-container-invalid-color: #fff !important;
 			--paper-input-container-input-color: #fff !important;
 		}
+		paper-input.sepia-mode {
+			color: #181715 !important;
+			--paper-input-container-color: #181715 !important;
+			--paper-input-container-focus-color: #181715 !important;
+			--paper-input-container-invalid-color: #181715 !important;
+			--paper-input-container-input-color: #181715 !important;
+		}
 	</style>
 
 
@@ -132,10 +139,17 @@
 			},
 
 			readingMode: function( class_name ) {
-				if( class_name == null )
+				if( class_name == 'normal-mode' ) {
 					jQuery( this.querySelector( '#pageNoInputHolder' ) ).removeClass( 'night-mode' );
-				else
-					jQuery( this.querySelector( '#pageNoInputHolder' ) ).addClass( class_name );
+					jQuery( this.querySelector( '#pageNoInputHolder' ) ).removeClass( 'sepia-mode' );
+				} else if( class_name == 'night-mode' ) {
+					jQuery( this.querySelector( '#pageNoInputHolder' ) ).removeClass( 'sepia-mode' );
+					jQuery( this.querySelector( '#pageNoInputHolder' ) ).addClass( 'night-mode' );
+				} else if( class_name == 'sepia-mode' ) {
+					jQuery( this.querySelector( '#pageNoInputHolder' ) ).removeClass( 'night-mode' );
+					jQuery( this.querySelector( '#pageNoInputHolder' ) ).addClass( 'sepia-mode' );
+				}
+
 				this.updateStyles();
 			}
 			

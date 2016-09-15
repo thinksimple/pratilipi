@@ -110,6 +110,8 @@
 					this.normalReadingMode();
 				else if( getCookie( "PREFERRED_READING_MODE" ) == "NIGHT_MODE" )
 					this.nightReadingMode();
+				else if( getCookie( "PREFERRED_READING_MODE" ) == "SEPIA_MODE" )
+					this.sepiaReadingMode();
 			},
 
 			// Setting Page Number
@@ -270,8 +272,17 @@
 			// Ignore this
 			scrollHandler: function( st ) {},
 
+			normalReadingMode: function() {
+				jQuery( 'body' ).removeClass( 'night-mode' );
+				jQuery( 'body' ).removeClass( 'sepia-mode' );
+				/* For paper input in footer */
+				this.querySelector( 'pratilipi-reader-footer' ).readingMode( 'normal-mode' );
+				/* Setting cookie */
+				setCookie( "PREFERRED_READING_MODE", "NORMAL_MODE", 30, "/read" );
+			},
+
 			nightReadingMode: function() {
-				if( jQuery( 'body' ).hasClass( 'night-mode' ) ) return;
+				jQuery( 'body' ).removeClass( 'sepia-mode' );
 				jQuery( 'body' ).addClass( 'night-mode' );
 				/* For paper input in footer */
 				this.querySelector( 'pratilipi-reader-footer' ).readingMode( 'night-mode' );
@@ -279,14 +290,14 @@
 				setCookie( "PREFERRED_READING_MODE", "NIGHT_MODE", 30, "/read" );
 			},
 
-			normalReadingMode: function() {
-				if( ! jQuery( 'body' ).hasClass( 'night-mode' ) ) return;
+			sepiaReadingMode: function() {
 				jQuery( 'body' ).removeClass( 'night-mode' );
+				jQuery( 'body' ).addClass( 'sepia-mode' );
 				/* For paper input in footer */
-				this.querySelector( 'pratilipi-reader-footer' ).readingMode();
+				this.querySelector( 'pratilipi-reader-footer' ).readingMode( 'sepia-mode' );
 				/* Setting cookie */
-				setCookie( "PREFERRED_READING_MODE", "NORMAL_MODE", 30, "/read" );
-			} 
+				setCookie( "PREFERRED_READING_MODE", "SEPIA_MODE", 30, "/read" );
+			}
 			
 		});
 	</script>

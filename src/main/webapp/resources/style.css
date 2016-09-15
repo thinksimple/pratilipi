@@ -648,6 +648,7 @@ body.night-mode #reader-content * {
 body.night-mode #pager {
 	color: #FFF !important;
 	background-color: #222 !important;
+	box-shadow: none;
 	/* border: 1px solid #fff; */
 }
 body.night-mode #reader-header {
@@ -663,4 +664,26 @@ body.night-mode #reader-alert-box {
 body.night-mode pratilipi-reader-content #social-icons img {
 	background: whitesmoke !important;
 	padding: 2px !important;
+}
+
+body.sepia-mode {
+	background-color: #F4ECD8 !important;
+}
+body.sepia-mode #reader-content * {
+	color: #181715 !important;
+}
+body.sepia-mode #pager {
+	color: #181715 !important;
+	background-color: #F4ECD8 !important;
+	box-shadow: none;
+}
+body.sepia-mode #reader-header {
+	background: #c3bcac !important;
+}
+body.sepia-mode #reader-content * {
+	color: #181715 !important;
+}
+body.sepia-mode #reader-alert-box {
+	border: 1px solid #181715;
+	color: #181715 !important;
 }

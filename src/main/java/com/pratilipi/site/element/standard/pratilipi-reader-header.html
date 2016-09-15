@@ -47,11 +47,11 @@
 		}
 		paper-fab.reading-mode {
 			display: inline-block;
-			width: 32px; 
-			height: 32px;
-			padding: 3px;
+			width: 30px;
+			height: 30px;
+			padding: 2px;
 			margin-top: 6px;
-			margin-left: 4px;
+			margin-right: 8px;
 			--paper-fab-iron-icon: {
 				width: 20px;
 				height: 20px;
@@ -125,14 +125,19 @@
 													<div class="text-center">
 														<paper-fab mini noink 
 																	class="reading-mode" 
-																	style="background-color: #FFF; color: #000;" 
+																	style="background-color: #FFF; color: #333;" 
 																	icon="editor:format-color-text" 
 																	on-click="normalReadingMode"></paper-fab>
 														<paper-fab mini noink 
 																	class="reading-mode" 
-																	style="background-color: #000; color: #FFF;" 
+																	style="background-color: #222; color: #FFF;" 
 																	icon="editor:format-color-text" 
 																	on-click="nightReadingMode"></paper-fab>
+														<paper-fab mini noink 
+																	class="reading-mode" 
+																	style="background-color: #F4ECD8; color: #181715;" 
+																	icon="editor:format-color-text" 
+																	on-click="sepiaReadingMode"></paper-fab>
 													</div>
 												</paper-item-body>
 											</paper-item>
@@ -408,6 +413,10 @@
 
 			nightReadingMode: function() {
 				document.querySelector( 'pratilipi-reader-page' ).nightReadingMode();
+			},
+
+			sepiaReadingMode: function() {
+				document.querySelector( 'pratilipi-reader-page' ).sepiaReadingMode();
 			}
 			
 		});
