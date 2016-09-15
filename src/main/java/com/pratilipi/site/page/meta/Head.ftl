@@ -21,7 +21,7 @@
 <script src='http://1.ptlp.co/third-party/ckeditor-4.5.10-full/ckeditor.js'></script>
 
 <#-- Pratilipi dependencies -->
-<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?38'>
+<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?39'>
 <link type="text/css" rel="stylesheet" href="/resources/style.css?69">
 
 <#-- Google Analytics -->

@@ -159,7 +159,7 @@
 		}
 	</style>
 	<template>
-		<paper-card class="cover-image pratilipi-shadow" style="background-image: url({{ author.coverImageUrl }})">
+		<paper-card class="cover-image pratilipi-shadow" style="background-image: url({{ coverImageUrl }})">
 		
 			<template is="dom-if" if="{{ hasAccessToUpdate }}">
 				<div class="edit-profile">
@@ -291,6 +291,7 @@
 			this.set( 'hasAccessToUpdate', this.author.hasAccessToUpdate );
 			this.set( 'name', this.author.name != null ? this.author.name : this.author.nameEn );
 			this.set( 'imageUrl', this.author.imageUrl + ( this.author.imageUrl.indexOf( '?' ) == -1 ? "?" : "&" ) + "width=150" );
+			this.set( 'coverImageUrl', this.author.coverImageUrl );
 			this.set( 'followCount', this.author.followCount != null ? this.author.followCount : 0 );
 			this.set( 'contentPublished', commaSeparatedNumber( this.author.contentPublished ) );
 			this.set( 'totalReadCount', commaSeparatedNumber( this.author.totalReadCount ) );
