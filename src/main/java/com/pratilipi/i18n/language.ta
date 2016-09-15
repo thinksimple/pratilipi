@@ -331,6 +331,7 @@ increase_font_size		= எழுத்துக்களை பெரியதா
 decrease_font_size		= எழுத்துக்களை சிறியதாக்க
 increase_image_size		= படத்தை பெரியதாக்க 
 decrease_image_size		= படத்தை சிறியதாக்க 
+reader_background		= பின்னணி
 
 # Enjoyed Reading the content? Write a review or Share it on
 reader_enjoyed_reading_part1	= படைப்பு பிடித்திருந்ததா?

@@ -331,6 +331,7 @@ increase_font_size		= Increase font size
 decrease_font_size		= Decrease font size
 increase_image_size		= Increase image size
 decrease_image_size		= Decrease image size
+reader_background		= Background
 
 # Enjoyed Reading the content? Write a review or Share it on
 reader_enjoyed_reading_part1	= Enjoyed reading the content? 

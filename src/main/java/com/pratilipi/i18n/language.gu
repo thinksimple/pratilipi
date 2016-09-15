@@ -331,6 +331,7 @@ increase_font_size		= અક્ષર મોટા કરો
 decrease_font_size		= અક્ષર નાના કરો 
 increase_image_size		= ફોટો મોટો કરો 
 decrease_image_size		= ફોટો નાનો કરો 
+reader_background		= પૃષ્ઠભૂમિ
 
 # Enjoyed Reading the content? Write a review or Share it on
 reader_enjoyed_reading_part1	= વાંચવાની મજા આવી?

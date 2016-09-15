@@ -331,6 +331,7 @@ increase_font_size		             = ಫಾಂಟ್ ಘಾತ್ರ ಹಿಗ್�
 decrease_font_size		             = ಫಾಂಟ್ ಘಾತ್ರ ಕುಗ್ಗಿಸಿ 
 increase_image_size		             = ಚಿತ್ರದ ಘಾತ್ರ ಹಿಗ್ಗಿಸಿ 
 decrease_image_size		             = ಚಿತ್ರದ ಘಾತ್ರ ಕುಗ್ಗಿಸಿ 
+reader_background					= ಹಿನ್ನೆಲೆ
 
 # Enjoyed Reading the content? Write a review or Share it on
 reader_enjoyed_reading_part1	            = ಬರಹವನ್ನು ಓದಿ ಎಂಜಾಯ್ ಮಾಡಿದಿರಾ?

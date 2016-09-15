@@ -331,6 +331,7 @@ increase_font_size		= अक्षर बढ़ाए
 decrease_font_size		= अक्षर घटाए
 increase_image_size		= चित्र कद बढ़ाए
 decrease_image_size		= चित्र कद घटाए
+reader_background		= पृष्ठभूमि
 
 # Enjoyed Reading the content? Write a review or Share it on
 reader_enjoyed_reading_part1	= क्या आपको यह रचना पसंद आई?

@@ -331,6 +331,7 @@ increase_font_size		= ফন্টের আকার বাড়ান
 decrease_font_size		=  ফন্টের আকার ছোট করুন
 increase_image_size		= ছবির আকার বড় করুন
 decrease_image_size		= ছবির আকার ছোট করুন
+reader_background		= পটভূমি
 
 # Enjoyed Reading the content? Write a review or Share it on
 reader_enjoyed_reading_part1	= রচনাটি পাঠ করে আনন্দ উপভোগ করুন

@@ -331,6 +331,7 @@ increase_font_size		= फॉन्ट आकार वाढवा
 decrease_font_size		= फॉन्ट आकार कमी करा
 increase_image_size		= प्रतिमा आकार वाढवा
 decrease_image_size		=  प्रतिमा आकार घटवा
+reader_background		= पार्श्वभूमी
 
 # Enjoyed Reading the content? Write a review or Share it on
 reader_enjoyed_reading_part1	= सामग्री वाचन आनंद लुटा ? 
