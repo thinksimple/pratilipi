@@ -51,6 +51,7 @@ public class ImageUtil {
 			image = imagesService.applyTransform( resize, image, OutputEncoding.JPEG );
 			blobEntry.setMimeType( "image/jpeg" );
 		}
+		blobEntry.setData( image.getImageData() );
 		return blobEntry;
 	}
 	
