@@ -3,14 +3,12 @@
 /featured                    பரிந்துரை            App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"featured" }
 /new                         புதியவை             App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"new" }
 /most-read                   வாசகர் தேர்வு        App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"most-read" }
-/fiveminstories              ஐந்து நிமிடக்கதைகள்
-/ministories                 குட்டிக்கதைகள்
+/fiveminstories              ஐந்து நிமிடக்கதைகள்  App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"fiveminstories" } 
+/ministories                 குட்டிக்கதைகள்       App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"ministories" } 
 
 பிரிவுகள்
 /horror                      மர்மம் / திகில்       App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"horror" }
-/society                     சமூகம்               App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"society" }
 /experience                  அனுபவம்            App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"experience" }
-/romance                     காதல்             App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"romance" }
 /spiritual                   ஆன்மீகம்            App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"spiritual" }
 /cinema                      சினிமா               App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"cinema" }
 /family                      இல்லறம்  / உறவு      App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"family" }
