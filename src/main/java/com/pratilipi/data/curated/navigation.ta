@@ -5,6 +5,8 @@
 /most-read                   வாசகர் தேர்வு        App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"most-read" }
 
 பிரிவுகள்
+/fiveminstories              ஐந்து நிமிடக்கதைகள்
+/ministories                 குட்டிக்கதைகள்
 /horror                      மர்மம் / திகில்       App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"horror" }
 /society                     சமூகம்               App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"society" }
 /experience                  அனுபவம்            App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"experience" }
