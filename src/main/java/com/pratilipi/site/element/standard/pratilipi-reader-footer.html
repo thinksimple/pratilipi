@@ -16,6 +16,13 @@
 			--paper-fab-background: #FFF;
 			--paper-fab-keyboard-focus-background: #FFF;
 		}
+		paper-input.normal-mode {
+			color: #333 !important;
+			--paper-input-container-color: #333 !important;
+			--paper-input-container-focus-color: #333 !important;
+			--paper-input-container-invalid-color: #333 !important;
+			--paper-input-container-input-color: #333 !important;
+		}
 		paper-input.night-mode {
 			color: #fff !important;
 			--paper-input-container-color: #fff !important;
@@ -142,10 +149,13 @@
 				if( class_name == 'normal-mode' ) {
 					jQuery( this.querySelector( '#pageNoInputHolder' ) ).removeClass( 'night-mode' );
 					jQuery( this.querySelector( '#pageNoInputHolder' ) ).removeClass( 'sepia-mode' );
+					jQuery( this.querySelector( '#pageNoInputHolder' ) ).addClass( 'normal-mode' );
 				} else if( class_name == 'night-mode' ) {
+					jQuery( this.querySelector( '#pageNoInputHolder' ) ).removeClass( 'normal-mode' );
 					jQuery( this.querySelector( '#pageNoInputHolder' ) ).removeClass( 'sepia-mode' );
 					jQuery( this.querySelector( '#pageNoInputHolder' ) ).addClass( 'night-mode' );
 				} else if( class_name == 'sepia-mode' ) {
+					jQuery( this.querySelector( '#pageNoInputHolder' ) ).removeClass( 'normal-mode' );
 					jQuery( this.querySelector( '#pageNoInputHolder' ) ).removeClass( 'night-mode' );
 					jQuery( this.querySelector( '#pageNoInputHolder' ) ).addClass( 'sepia-mode' );
 				}

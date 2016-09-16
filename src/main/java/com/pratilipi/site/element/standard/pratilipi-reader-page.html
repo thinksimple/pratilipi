@@ -275,6 +275,7 @@
 			normalReadingMode: function() {
 				jQuery( 'body' ).removeClass( 'night-mode' );
 				jQuery( 'body' ).removeClass( 'sepia-mode' );
+				jQuery( 'body' ).addClass( 'normal-mode' );
 				/* For paper input in footer */
 				this.querySelector( 'pratilipi-reader-footer' ).readingMode( 'normal-mode' );
 				/* Setting cookie */
@@ -282,6 +283,7 @@
 			},
 
 			nightReadingMode: function() {
+				jQuery( 'body' ).removeClass( 'normal-mode' );
 				jQuery( 'body' ).removeClass( 'sepia-mode' );
 				jQuery( 'body' ).addClass( 'night-mode' );
 				/* For paper input in footer */
@@ -291,6 +293,7 @@
 			},
 
 			sepiaReadingMode: function() {
+				jQuery( 'body' ).removeClass( 'normal-mode' );
 				jQuery( 'body' ).removeClass( 'night-mode' );
 				jQuery( 'body' ).addClass( 'sepia-mode' );
 				/* For paper input in footer */

@@ -639,6 +639,28 @@ a.pratilipi-new-blue-button:hover {
 	margin-right: 10px;
 }
 
+body.normal-mode {
+	background-color: #FFF !important;
+}
+body.normal-mode #reader-content * {
+	color: #333 !important;
+}
+body.normal-mode #pager {
+	color: #333 !important;
+	background-color: #FFF !important;
+	box-shadow: none;
+}
+body.normal-mode #reader-header {
+	background: #f5f5f5 !important;
+}
+body.normal-mode #reader-content * {
+	color: #333 !important;
+}
+body.normal-mode #reader-alert-box {
+	border: 1px solid #333;
+	color: #333 !important;
+}
+
 body.night-mode {
 	background-color: #222 !important;
 }
