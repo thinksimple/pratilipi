@@ -331,7 +331,7 @@ increase_font_size		= അക്ഷരങ്ങളുടെ വലിപ്പം
 decrease_font_size		= അക്ഷരങ്ങളുടെ വലിപ്പം കുറയ്ക്കൂ
 increase_image_size		= ചിത്രത്തിന്റെ  വലിപ്പം കൂട്ടൂ 
 decrease_image_size		= ചിത്രത്തിന്റെ വലിപ്പം കുറയ്ക്കൂ
-reader_background		= Background
+reader_background		= പശ്ചാത്തല നിറം 
 
 # Enjoyed Reading the content? Write a review or Share it on
 reader_enjoyed_reading_part1	= ഈ രചന ഇഷ്ടപ്പെട്ടോ ? 
