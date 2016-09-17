@@ -1,9 +1,10 @@
 new
-lives
+series
+satire
+society
 mystery
 women
-most-read
-recommended
+
 
 
 
