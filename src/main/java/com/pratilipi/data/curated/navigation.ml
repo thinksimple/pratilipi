@@ -18,6 +18,7 @@
 /series        തുടര്‍ക്കഥകള്‍            App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"series" }
 /society       സമൂഹം                  App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"society" }
 /satire        ആക്ഷേപഹാസ്യം         App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"satire" }   
+/letters       കത്തുകള്‍                App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"letters" }
 
 സാഹിത്യ രൂപങ്ങൾ 
 /stories       കഥകൾ                App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"stories" } 
