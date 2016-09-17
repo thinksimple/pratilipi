@@ -134,7 +134,9 @@ public class PratilipiApi extends GenericApi {
 			this.coverImageUrl = pratilipiData.getCoverImageUrl();
 			this.readPageUrl = pratilipiData.getReadPageUrl();
 			this.writePageUrl = pratilipiData.getWritePageUrl();
-			
+			if( UxModeFilter.isAndroidApp() )
+				this.contentType = pratilipiData.getContentType();
+
 			this.type = pratilipiData.getType();
 			this.state = pratilipiData.getState();
 			
