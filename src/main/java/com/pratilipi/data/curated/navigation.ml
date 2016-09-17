@@ -19,6 +19,7 @@
 /society       സമൂഹം                  App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"society" }
 /satire        ആക്ഷേപഹാസ്യം         App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"satire" }   
 /letters       കത്തുകള്‍                App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"letters" }
+/non-fiction   നോണ്‍ ഫിക്ഷന്‍         App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"non-fiction" }
 
 സാഹിത്യ രൂപങ്ങൾ 
 /stories       കഥകൾ                App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"stories" } 
