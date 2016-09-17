@@ -16,6 +16,7 @@
 /lives         ജീവിതങ്ങള്‍               App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"lives" }
 /classics      ക്ലാസ്സിക്സ്                 App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"classics" }
 /series        തുടര്‍ക്കഥകള്‍            App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"series" }
+/society       സമൂഹം                  App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"society" }
 
 സാഹിത്യ രൂപങ്ങൾ 
 /stories       കഥകൾ                App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"stories" } 
