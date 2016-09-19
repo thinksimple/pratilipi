@@ -173,7 +173,7 @@ public class PratilipiSite extends HttpServlet {
 				dataModel.put( "title", "Create Content" );
 				templateName = templateFilePrefix + "Content.ftl";
 
-			} else if( uri.equals( "/edit-content" ) ) {
+			} else if( uri.equals( "/edit-content" ) ) { // Standard Mode only
 
 				Long pratilipiId = Long.parseLong( request.getParameter( RequestParameter.PRATILIPI_ID.getName() ) );
 				PratilipiApi.GetRequest pratilipiRequest = new PratilipiApi.GetRequest();
@@ -355,6 +355,13 @@ public class PratilipiSite extends HttpServlet {
 			} else if( uri.equals( "/pratilipi-write" ) ) {
 				dataModel = new HashMap<String, Object>();
 				dataModel.put( "title", "Writer Panel" );
+
+				if( request.getParameter( "action" ) != null )
+					dataModel.put( "action", request.getParameter( "action" ) );
+
+				if( request.getParameter( RequestParameter.READER_CONTENT_ID.getName() ) != null )
+					dataModel.put( "pratilipiId", Long.parseLong( request.getParameter( RequestParameter.READER_CONTENT_ID.getName() ) ) );
+
 				templateName = templateFilePrefix + "Writer.ftl";
 				
 			// Internal links
