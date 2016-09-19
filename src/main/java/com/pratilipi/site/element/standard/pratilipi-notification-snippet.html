@@ -11,12 +11,30 @@
 			border: 1px solid #d3d3d3;
 			border-top: none;
 		}
+		.vertical-align {
+			display: -webkit-flex;
+			display: flex;
+			-webkit-flex-flow: row;
+			flex-flow: row;
+		}
+		.vertical-align span {
+			align-self: center;
+			float: right;
+		}
 	</style>
 
 	<template>
 		<a class="notification-message list-group-item" style="border-radius: 0px;" href="{{ sourceUrl }}">
-			<span class="notification-message-snippet"></span>
-			<br><iron-icon icon="social:person" style="height: 18px;width: 18px;"></iron-icon>&nbsp;<span style="display: inline;" class="text-muted">{{ time }}</span>
+			<span class="vertical-align">
+				<span style="margin-right: 12px;">
+					<img class="img-circle pratilipi-shadow pull-left" src="{{ displayImageUrl }}" />
+				</span>
+				<span>
+					<span style="white-space: normal;" class="notification-message-snippet"></span>
+					<br/>
+					<span style="float: left;"><iron-icon icon="social:person" style="height: 18px;width: 18px;"></iron-icon>&nbsp;<span class="text-muted">{{ time }}</span></span>
+				</span>
+			</span>
 		</a>
 	</template>
 
@@ -37,6 +55,7 @@
 				this.set( 'notificationId', this.notification.notificationId );
 				this.set( 'message', this.notification.message );
 				this.set( 'sourceUrl', this.notification.sourceUrl );
+				this.set( 'displayImageUrl', this.notification.displayImageUrl + ( this.notification.displayImageUrl.indexOf( "?" ) == -1 ? "?" : "&" ) + "width=48" );
 				this.set( 'time', convertDate( this.notification.lastUpdatedMillis ) );
 
 				jQuery( this.querySelector( '.notification-message-snippet' ) ).html( this.message );
