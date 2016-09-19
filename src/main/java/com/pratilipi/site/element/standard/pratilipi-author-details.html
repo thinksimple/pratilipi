@@ -110,10 +110,11 @@
 			top: 16px;
 			right: 108px;
 		}
-		.edit-profile paper-fab, .edit-account-info paper-fab {
-			width: 24px;
-			height: 24px;
+		paper-fab {
+			width: 36px!important;
+			height: 36px!important;
 			--paper-fab-background: #F5F5F5;
+			--paper-fab-keyboard-focus-background: #F5F5F5;
 			--paper-fab-iron-icon: {
 				color: #333;
 			}
@@ -122,15 +123,6 @@
 			position: absolute;
 			top: 8px;
 			right: 8px;
-		}
-		.share-author paper-menu-button paper-fab {
-			width: 12px;
-			height: 12px;
-			--paper-fab-background: #F5F5F5;
-			--paper-fab-keyboard-focus-background: #F5F5F5;
-			--paper-fab-iron-icon: {
-				color: #333;
-			}
 		}
 		.share-author paper-menu-button paper-menu {
 			padding: 0;
@@ -163,16 +155,16 @@
 		
 			<template is="dom-if" if="{{ hasAccessToUpdate }}">
 				<div class="edit-profile">
-					<paper-fab icon="icons:settings" on-click="editAuthorProfile"></paper-fab>
+					<paper-fab mini icon="icons:settings" on-click="editAuthorProfile"></paper-fab>
 				</div>
 				<div class="edit-account-info">
-					<paper-fab icon="icons:perm-identity" on-click="openAccountSettings"></paper-fab>
+					<paper-fab mini icon="icons:perm-identity" on-click="openAccountSettings"></paper-fab>
 				</div>
 			</template>
 			
 			<div class="share-author">
 				<paper-menu-button no-animations vertical-offset=48 noink horizontal-align="right" vertical-align="top">
-					<paper-fab icon="social:share" class="dropdown-trigger"></paper-fab>
+					<paper-fab icon="social:share" mini class="dropdown-trigger"></paper-fab>
 					<paper-menu class="dropdown-content">
 						<paper-item on-click="shareAuthorOnFacebook"><img src="http://0.ptlp.co/resource-all/icon/svg/facebook-333.svg" /></paper-item>
 						<paper-item on-click="shareAuthorOnTwitter"><img src="http://0.ptlp.co/resource-all/icon/svg/twitter-333.svg" /></paper-item>
