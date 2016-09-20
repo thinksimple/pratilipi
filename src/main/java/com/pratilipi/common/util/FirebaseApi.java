@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,8 +18,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -166,6 +170,53 @@ public class FirebaseApi {
 			}
 
 		});
+	}
+	
+	public static void updateUserNotificationData() {
+
+		initialiseFirebase();
+
+		Random ra = new Random();
+		String node = ra.nextDouble() < 0.5 ? "555" : "565";
+		DatabaseReference upvotesRef = FirebaseDatabase.getInstance().getReference().child( "TEST" ).child( node );
+		upvotesRef.runTransaction( new Transaction.Handler() {
+			@Override
+			public Transaction.Result doTransaction( MutableData mutableData ) {
+				Random r = new Random();
+				if( mutableData.getValue() != null ) {
+					JsonObject jsn = new Gson().fromJson( mutableData.getValue().toString(), JsonElement.class ).getAsJsonObject();
+					Integer newNotifCount = jsn.get( "newNotificationCount" ).getAsInt();
+					List<Long> notificationIdList = new ArrayList<Long>();
+					JsonArray jArray = jsn.get( "notificationIdList" ).getAsJsonArray();
+					for( int i=0; i < jArray.size(); i++ )
+						notificationIdList.add( Long.parseLong( jArray.get(i).getAsString() ) );
+					notificationIdList.add( r.nextLong() );
+					Map<String, Object> notificationJson = new HashMap<String, Object>();
+					notificationJson.put( "newNotificationCount", newNotifCount + 1 );
+					notificationJson.put( "notificationIdList", notificationIdList );
+					mutableData.setValue( notificationJson );
+				} else {
+					Map<String, Object> notificationJson = new HashMap<String, Object>();
+					notificationJson.put( "newNotificationCount", 1 );
+					List<Long> notificationIdList = new ArrayList<Long>();
+					notificationIdList.add( r.nextLong() );
+					notificationJson.put( "notificationIdList", notificationIdList );
+					mutableData.setValue( notificationJson );
+				}
+
+				return Transaction.success( mutableData );
+			}
+
+			@Override
+			public void onComplete( DatabaseError databaseError, boolean committed, DataSnapshot dataSnapshot ) {
+				if( committed ) {
+					logger.log( Level.INFO, "Transaction completed successfully on : " + dataSnapshot.toString() );
+				} else {
+					logger.log( Level.SEVERE, "Transaction failed. Error code : " + databaseError.getCode() );
+				}
+					
+			}
+		} );
 	}
 
 }
