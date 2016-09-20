@@ -362,6 +362,9 @@ public class PratilipiSite extends HttpServlet {
 				if( request.getParameter( RequestParameter.READER_CONTENT_ID.getName() ) != null )
 					dataModel.put( "pratilipiId", Long.parseLong( request.getParameter( RequestParameter.READER_CONTENT_ID.getName() ) ) );
 
+				if( request.getParameter( RequestParameter.AUTHOR_ID.getName() ) != null )
+					dataModel.put( "authorId", Long.parseLong( request.getParameter( RequestParameter.AUTHOR_ID.getName() ) ) );
+
 				templateName = templateFilePrefix + "Writer.ftl";
 				
 			// Internal links
