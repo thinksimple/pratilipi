@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,7 +19,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
-import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -124,99 +122,77 @@ public class FirebaseApi {
 		databaseReference.setValue( notificationJson );
 	}
 
-	public static void updateUserNotificationData( final Long notificationId, Long userId ) {
+	public static void updateUserNotificationData( Map<Long, List<Long>> userIdNotificationIdMap ) {
 
 		initialiseFirebase();
 
-		final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().
-											child( DATABASE_NOTIFICATION_TABLE ).
-											child( userId.toString() );
+		for( Map.Entry<Long, List<Long>> entry : userIdNotificationIdMap.entrySet() ) {
 
-		databaseReference.addListenerForSingleValueEvent( new ValueEventListener() {
+			Long userId = entry.getKey();
+			final List<Long> notifIdList = entry.getValue();
 
-			private void updateNode( Long newNotificationCount, List<Long> notificationIdList ) {
-				Map<String, Object> notificationJson = new HashMap<String, Object>();
-				notificationJson.put( "newNotificationCount", newNotificationCount );
-				notificationJson.put( "notificationIdList", notificationIdList );
-				databaseReference.setValue( notificationJson );
-			}
+			DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().
+					child( DATABASE_NOTIFICATION_TABLE ).
+					child( userId.toString() );
 
-			@SuppressWarnings("unchecked")
-			@Override
-			public void onDataChange( DataSnapshot dataSnapshot ) {
 
-				List<Long> notificationIdList = new ArrayList<Long>();
-				Long newNotificationCount = 0L;
+			databaseReference.runTransaction( new Transaction.Handler() {
 
-				if( dataSnapshot.getValue() != null ) {
-					Map<String, Object> notificationJson = (Map<String, Object>) dataSnapshot.getValue();
-					newNotificationCount = (Long) notificationJson.get( "newNotificationCount" );
-					// User has been notified
-					if( newNotificationCount > 0 )
-						notificationIdList = (List<Long>) notificationJson.get( "notificationIdList" );
-				}
+				@Override
+				public Transaction.Result doTransaction( MutableData mutableData ) {
 
-				if( ! notificationIdList.contains( notificationId ) ) {
-					newNotificationCount = newNotificationCount + 1;
-					notificationIdList.add( notificationId );
-					updateNode( newNotificationCount, notificationIdList );
-				}
-
-			}
-
-			@Override
-			public void onCancelled( DatabaseError databaseError ) {
-				System.out.println( "The read failed: " + databaseError.getCode() );
-			}
-
-		});
-	}
-	
-	public static void updateUserNotificationData() {
-
-		initialiseFirebase();
-
-		Random ra = new Random();
-		String node = ra.nextDouble() < 0.5 ? "555" : "565";
-		DatabaseReference upvotesRef = FirebaseDatabase.getInstance().getReference().child( "TEST" ).child( node );
-		upvotesRef.runTransaction( new Transaction.Handler() {
-			@Override
-			public Transaction.Result doTransaction( MutableData mutableData ) {
-				Random r = new Random();
-				if( mutableData.getValue() != null ) {
-					JsonObject jsn = new Gson().fromJson( mutableData.getValue().toString(), JsonElement.class ).getAsJsonObject();
-					Integer newNotifCount = jsn.get( "newNotificationCount" ).getAsInt();
+					Boolean isChanged = false;
+					Integer newNotificationCount = 0;
 					List<Long> notificationIdList = new ArrayList<Long>();
-					JsonArray jArray = jsn.get( "notificationIdList" ).getAsJsonArray();
-					for( int i=0; i < jArray.size(); i++ )
-						notificationIdList.add( Long.parseLong( jArray.get(i).getAsString() ) );
-					notificationIdList.add( r.nextLong() );
-					Map<String, Object> notificationJson = new HashMap<String, Object>();
-					notificationJson.put( "newNotificationCount", newNotifCount + 1 );
-					notificationJson.put( "notificationIdList", notificationIdList );
-					mutableData.setValue( notificationJson );
-				} else {
-					Map<String, Object> notificationJson = new HashMap<String, Object>();
-					notificationJson.put( "newNotificationCount", 1 );
-					List<Long> notificationIdList = new ArrayList<Long>();
-					notificationIdList.add( r.nextLong() );
-					notificationJson.put( "notificationIdList", notificationIdList );
-					mutableData.setValue( notificationJson );
+
+					if( mutableData.getValue() != null ) {
+
+						JsonObject jsn = new Gson().fromJson( mutableData.getValue().toString(), JsonElement.class ).getAsJsonObject();
+						newNotificationCount = jsn.get( "newNotificationCount" ).getAsInt();
+
+						if( newNotificationCount > 0 ) {
+							JsonArray jArray = jsn.get( "notificationIdList" ).getAsJsonArray();
+							for( int i=0; i < jArray.size(); i++ )
+								notificationIdList.add( Long.parseLong( jArray.get(i).getAsString() ) );
+						}
+
+					}
+
+					for( Long notifId : notifIdList ) {
+						if( ! notificationIdList.contains( notifId ) ) {
+							notificationIdList.add( notifId );
+							newNotificationCount ++;
+							isChanged = true;
+						}
+					}
+
+					if( isChanged ) {
+						Map<String, Object> notificationJson = new HashMap<String, Object>();
+						notificationJson.put( "newNotificationCount", newNotificationCount );
+						notificationJson.put( "notificationIdList", notificationIdList );
+						mutableData.setValue( notificationJson );
+						return Transaction.success( mutableData );
+					} else {
+						return Transaction.abort();
+					}
+
 				}
 
-				return Transaction.success( mutableData );
-			}
+				@Override
+				public void onComplete( DatabaseError databaseError, boolean committed, DataSnapshot dataSnapshot ) {
 
-			@Override
-			public void onComplete( DatabaseError databaseError, boolean committed, DataSnapshot dataSnapshot ) {
-				if( committed ) {
-					logger.log( Level.INFO, "Transaction completed successfully on : " + dataSnapshot.toString() );
-				} else {
-					logger.log( Level.SEVERE, "Transaction failed. Error code : " + databaseError.getCode() );
+					if( committed ) {
+						logger.log( Level.INFO, "Transaction completed successfully : " + dataSnapshot.toString() );
+					} else {
+						logger.log( Level.SEVERE, "Transaction failed. Error code : " + databaseError.getCode() );
+					}
+						
 				}
-					
-			}
-		} );
+
+			} );
+
+		}
+		
 	}
 
 }
