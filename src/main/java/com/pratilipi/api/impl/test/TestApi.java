@@ -185,8 +185,6 @@ public class TestApi extends GenericApi {
 					.addParam( "processContent", "true" ) );
 		TaskQueueFactory.getPratilipiOfflineTaskQueue().addAll( taskList );*/
 
-		FirebaseApi.updateUserNotificationData();
-
 		return new GenericResponse();
 		
 	}
