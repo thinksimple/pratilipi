@@ -5,6 +5,8 @@
 /most-read                   வாசகர் தேர்வு        App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"most-read" }
 /fiveminstories              ஐந்து நிமிடக்கதைகள்  App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"fiveminstories" } 
 /ministories                 குட்டிக்கதைகள்       App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"ministories" } 
+/nationalised-books          நாட்டுடைமை நூல்கள்   App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"nationalised-books" }
+/events                      போட்டிகள்          App#EventList::{ "language":"TAMIL" }
 
 பிரிவுகள்
 /horror                      மர்மம் / திகில்       App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"horror" }
@@ -27,5 +29,4 @@
 /poems                       கவிதைகள்         App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"poems" }
 /books                       புத்தகங்கள்         App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"books" }
 /magazines                   இதழ்கள்           App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"magazines" }
-/nationalised-books          நாட்டுடைமை நூல்கள்   App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"nationalised-books" }
-/events                      போட்டிகள்          App#EventList::{ "language":"TAMIL" }
+
