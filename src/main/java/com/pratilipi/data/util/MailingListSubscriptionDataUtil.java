@@ -15,13 +15,13 @@ import com.pratilipi.filter.AccessTokenFilter;
 
 public class MailingListSubscriptionDataUtil {
 	
-	public static void subscribe( MailingList mailingList, Long userId, String email, String comment )
+	public static void subscribe( MailingList mailingList, Long userId, String email, String phone, String comment )
 			throws InvalidArgumentException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
 		MailingListSubscription mailingListSubscription = dataAccessor.getMailingListSubscription( mailingList, email );
-		if( mailingListSubscription != null )
+		if( mailingListSubscription != null && mailingListSubscription.getMailingList() != MailingList.LAUNCH_ANNOUNCEMENT_OTHER )
 			throw new InvalidArgumentException( GenericRequest.ERR_MAILING_LIST_EMAIL_SUBSCRIBED_ALREDY );
 		
 		
@@ -37,6 +37,7 @@ public class MailingListSubscriptionDataUtil {
 		mailingListSubscription.setMailingList( mailingList );
 		mailingListSubscription.setUserId( userId );
 		mailingListSubscription.setEmail( email );
+		mailingListSubscription.setPhone( phone );
 		mailingListSubscription.setComment( comment );
 		mailingListSubscription.setSubscriptionDate( new Date() );
 		

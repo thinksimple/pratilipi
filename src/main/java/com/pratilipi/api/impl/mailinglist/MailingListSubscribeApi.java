@@ -20,7 +20,8 @@ public class MailingListSubscribeApi extends GenericApi {
 		MailingListSubscriptionDataUtil.subscribe(
 				request.getMailingList(),
 				AccessTokenFilter.getAccessToken().getUserId(),
-				request.getEmail().toString().trim(),
+				request.getEmail().trim(),
+				request.getPhone().trim(),
 				request.getComment() );
 		
 		return new GenericResponse();

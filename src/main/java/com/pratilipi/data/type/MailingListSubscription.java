@@ -15,9 +15,13 @@ public interface MailingListSubscription extends GenericOfyType {
 	void setUserId( Long userId );
 
 	String getEmail();
-	
+
 	void setEmail( String email );
-	
+
+	String getPhone();
+
+	void setPhone( String phone );
+
 	String getComment();
 
 	void setComment( String comment );
