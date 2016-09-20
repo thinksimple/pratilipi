@@ -180,8 +180,8 @@ public class FirebaseApi {
 
 				@Override
 				public void onComplete( DatabaseError databaseError, boolean committed, DataSnapshot dataSnapshot ) {
-
-					if( committed ) {
+					// committed: true => Transaction success; databaseError: null => if transaction is aborted.
+					if( committed || databaseError == null ) {
 						logger.log( Level.INFO, "Transaction completed successfully : " + dataSnapshot.toString() );
 					} else {
 						logger.log( Level.SEVERE, "Transaction failed. Error code : " + databaseError.getCode() );
