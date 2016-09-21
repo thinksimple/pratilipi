@@ -21,7 +21,6 @@
 
 <#-- Pratilipi dependencies -->
 <link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?45'>
-<link type="text/css" rel="stylesheet" href="/resources/style.css?71">
 
 <#-- Google Analytics -->
 <#include "GoogleAnalytics.ftl">

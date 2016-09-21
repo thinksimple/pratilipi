@@ -1,0 +1,49 @@
+<head>
+	<#-- Page Description -->
+	<meta name="description" content="A platform to discover, read and share your favorite stories, poems and books in a language, device and format of your choice.">
+	
+	<#include "../../../page/meta/Head.ftl">
+	<style>
+		<#include "css/style.css">
+	</style>
+</head>
+<body>
+    <div class="container">
+        <div class="panel panel-default col-sm-8 col-sm-offset-2" style="margin-top: 20px;border-radius: 15px;">
+            <div class="panel-body text-center" >
+                <a style="cursor: pointer;" class="pull-left">
+                    <img style="width: 20px;height: 20px;" src="http://0.ptlp.co/resource-all/icon/svg/arrow-left2.svg">
+                </a>
+                <h1 class="pratilipi-panel-heading"> start writing </h1>
+                <center>
+                <form class="col-sm-8 col-sm-offset-2">
+                  <div class="form-group">
+                    <select id="select-language" class="form-control horizontal-form-input">
+                    </select>
+                    <span id="helpBlock" class="help-block text-left">This will be the language you are writing in.</span>
+                  </div>
+                  <div class="form-group has-feedback">
+                    <input   class="form-control horizontal-form-input" id="title-vernacular" placeholder="Enter Title Here*">
+                  </div>
+                  <div class="form-group has-feedback">
+                    <input  class="form-control horizontal-form-input" id="title-english" placeholder="Re-enter the title in English*">
+						                  
+                  </div>
+                  <div class="checkbox text-left ">
+                    <label>
+                      <input type="checkbox" id="copyright_checkbox"> You own the copyright of the content
+                    </label>
+                  </div>
+                  <a class="text-left" style="display:block;">Read copyright policy here</a>
+                  <button type="submit" class="pratilipi-red-background-button go-button">Go</button>
+                </form>
+                </center>
+            </div>
+        </div>        
+    </div>
+</body>
+<#include "js/transliteration.js">
+<script>
+	<#include "js/app.js">
+	<#include "js/firstScreenWriterPanel.js">
+</script>

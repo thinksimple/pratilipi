@@ -1,0 +1,53 @@
+<head>
+	<#-- Page Description -->
+	<meta name="description" content="A platform to discover, read and share your favorite stories, poems and books in a language, device and format of your choice.">
+	
+	<#include "../../../page/meta/Head.ftl">
+	<style>
+		<#include "css/style.css">
+	</style>
+</head>
+<body>
+    <div class="container">
+        <div class="panel panel-default col-sm-8 col-sm-offset-2 pratilipi-panel" >
+            <div class="panel-body text-center" >
+                <a style="cursor: pointer;" class="pull-left">
+                    <img class="dimension-20" src="http://0.ptlp.co/resource-all/icon/svg/arrow-left2.svg">
+                </a>
+                <h1 style="margin-bottom: 20px; margin-top: 40px;"> Book Name </h1>
+                <center>
+                <form class="col-sm-8 col-sm-offset-2">
+                  <div class="form-group has-feedback">
+                    <select class="form-control horizontal-form-input" id="category">
+                      <option selected disabled data-role="default_text">Select Category *</option>
+                    </select>  
+                  </div>
+                  <div class="form-group left-align-content">
+                    <label class="grey-label pull-left" >Add cover image</label>
+                    <a href="#">
+                        <div class="pull-left image-container" >
+                            <img class="cover-image" src="http://0.ptlp.co/resource-all/icon/png/default-cover-image.png" alt="">
+                            <img src="http://0.ptlp.co/resource-all/icon/svg/camera2.svg" alt="" class="camera-icon">                        
+                        </div>
+                    </a>
+
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="form-group left-align-content">
+                    <label class="grey-label">Add summary (You can add it later)</label>
+                    <textarea rows="4" class="form-control grey-background" placeholder="Enter your text here.."></textarea>
+                  </div>
+                  <button type="submit" class="pratilipi-red-background-button publish-button">Publish</button>
+                </form>
+                </center>
+            </div>
+        </div>
+        <form id="uploadPratilipiImage" method="post" enctype="multipart/form-data" action="/api/pratilipi/cover?pratilipiId=12103549">
+			<input id="uploadPratilipiImageInput" type="file" name="{{ pratilipi.getId()?c }}" accept="image/*">
+		</form>        
+    </div>
+</body>
+<script>
+	<#include "js/app.js">
+	<#include "js/finalScreenWriterPanel.js">
+</script>
