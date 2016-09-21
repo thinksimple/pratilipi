@@ -12,7 +12,7 @@ public class PostMailingListSubscribeRequest extends GenericRequest {
 	@Validate( required = true, regEx = REGEX_EMAIL, regExErrMsg = ERR_EMAIL_INVALID )
 	private String email;
 
-	@Validate( regEx = REGEX_EMAIL, regExErrMsg = ERR_PHONE_INVALID )
+	@Validate( regEx = REGEX_PHONE, regExErrMsg = ERR_PHONE_INVALID )
 	private String phone;
 
 	private String comment;
