@@ -27,6 +27,7 @@ public class MailingListSubscriptionEntity implements MailingListSubscription {
 	@Index( IfNotNull.class )
 	private String EMAIL;
 
+	@Index( IfNotNull.class )
 	private String PHONE;
 
 	private String COMMENT;
