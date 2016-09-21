@@ -53,10 +53,9 @@
 				content='${ content! }'
 				content-type='${ contentType }'
 				index='${ indexJson }'
-				></pratilipi-pratilipi-page>
-
-		<#include "meta/Foot.ftl">
+				></pratilipi-reader-page>
 	</body>
+	<#include "meta/Foot.ftl">
 	
 </html>
 </#compress>
