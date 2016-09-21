@@ -51,8 +51,10 @@
 		</h5>
 	</div>                  
 	<div class="clearfix"></div>
-	<hr class="pratilipi-margin-top-2">	
-	<h3 style="margin-bottom: 25px;">${ user.getEmail() }</h3>
+	<hr class="pratilipi-margin-top-2">
+	<#if user.getEmail() ??> <#-- Facebook Users might not have an e-mail id -->
+		<h3 style="margin-bottom: 25px;">${ user.getEmail() }</h3>
+	</#if>
 	<div style="margin-bottom: 5px;">
 		<#if user.isEmailVerified() == true >
 			<button class="pratilipi-red-background-button">${ _strings.edit_account_email_verified } &nbsp;<span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>		
