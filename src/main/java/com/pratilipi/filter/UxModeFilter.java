@@ -199,7 +199,7 @@ public class UxModeFilter implements Filter {
 					 * Microsoft Internet Explorer 11 on Microsoft Windows 8.1
 					 *   "Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; LCJB; rv:11.0) like Gecko"
 					 */
-					basicBrowser = false;
+					basicBrowser = userAgent.contains( "IEMobile" ); // Shadow DOM not supported on Mobile devices
 					
 				} else if( userAgent.contains( "Safari" ) ) { // Apple Safari
 					/*
