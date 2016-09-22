@@ -559,11 +559,11 @@ public class PratilipiDataUtil {
 			errorMessages.addProperty( "language", GenericRequest.ERR_LANGUAGE_REQUIRED );
 
 		// New content piece must have type.
-		if( isNew && ( ! pratilipiData.hasType() || pratilipiData.getType() == null ) )
-			errorMessages.addProperty( "type", GenericRequest.ERR_PRATILIPI_TYPE_REQUIRED );
+//		if( isNew && ( ! pratilipiData.hasType() || pratilipiData.getType() == null ) )
+//			errorMessages.addProperty( "type", GenericRequest.ERR_PRATILIPI_TYPE_REQUIRED );
 		// Type can not be un-set or set to null.
-		else if( ! isNew && pratilipiData.hasType() && pratilipiData.getType() == null )
-			errorMessages.addProperty( "type", GenericRequest.ERR_PRATILIPI_TYPE_REQUIRED );
+//		else if( ! isNew && pratilipiData.hasType() && pratilipiData.getType() == null )
+//			errorMessages.addProperty( "type", GenericRequest.ERR_PRATILIPI_TYPE_REQUIRED );
 		
 		// Content type can not be un-set or set to null.
 		if( ! isNew && pratilipiData.hasContentType() && pratilipiData.getContentType() == null )
