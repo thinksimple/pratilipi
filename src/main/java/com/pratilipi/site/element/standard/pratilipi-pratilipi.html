@@ -389,7 +389,6 @@
 				this.set( 'readCount', pratilipi.readCount != null ? pratilipi.readCount : 0 );
 				this.set( 'pratilipiCoverImageUrl', pratilipi.coverImageUrl + ( pratilipi.coverImageUrl.indexOf( '?' ) == -1 ? "?" : "&" ) + "width=150" );
 				this.set( 'zeroRating', false );
-				this.set( 'type', this.pratilipiTypes[ pratilipi.type.toUpperCase() ].name );
 				this.set( 'listingDate', convertDate( pratilipi.listingDateMillis ) );
 				this.set( 'showLastUpdatedDate', pratilipi.lastUpdatedMillis != null );
 				this.set( 'lastUpdatedDate', pratilipi.lastUpdatedMillis != null ? convertDate( pratilipi.lastUpdatedMillis ) : null );
@@ -397,6 +396,8 @@
 				this.set( 'canMoveToDrafts', pratilipi.state != null && pratilipi.state != "DRAFTED" && pratilipi.hasAccessToUpdate );
 				this.set( 'canPublish', pratilipi.state != null && pratilipi.state != "PUBLISHED" && pratilipi.hasAccessToUpdate );
 				this.set( 'canDelete', pratilipi.state != null && pratilipi.state != "DELETED" && this.state != "PUBLISHED" && false && pratilipi.hasAccessToUpdate );
+				if( pratilipi.type != null )
+					this.set( 'type', this.pratilipiTypes[ pratilipi.type.toUpperCase() ].name );
 				<#-- Explicitly setting canDelete to false - awaiting business call -->
 				<#-- Display / Dont display Summary -->
 				if( pratilipi.summary == null || pratilipi.summary.trim() == "" ) { 

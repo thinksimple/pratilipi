@@ -40,7 +40,9 @@
 <script>
 	$( document ).ready( function() {
 		var pratilipiTypes = ${ pratilipiTypesJson };
-		$( '#pratilipiType-${ pratilipi.getId()?c }' ).html( pratilipiTypes[ "${ pratilipi.getType() }" ].name );
+		<#if pratilipi.getType() ??>
+			$( '#pratilipiType-${ pratilipi.getId()?c }' ).html( pratilipiTypes[ "${ pratilipi.getType() }" ].name );
+		</#if>
 		$( '#creationDate-${ pratilipi.getId()?c }' ).html( "${ _strings.pratilipi_listing_date }&nbsp;&minus;&nbsp;" + convertDate( ${ pratilipi.getListingDateMillis()?c } ) );
 		
 		<#if pratilipi.hasAccessToUpdate()==true >
