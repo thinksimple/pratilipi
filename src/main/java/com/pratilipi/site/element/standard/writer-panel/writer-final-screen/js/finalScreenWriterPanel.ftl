@@ -12,6 +12,7 @@ FinalScreenWriterPanel.prototype.init = function() {
     this.hideCoverImageForm();
     this.attachCoverImageListeners();
     this.attachFormSubmitListener();
+	console.log("${pratilipiId?c}");
 
 }
 
@@ -93,6 +94,7 @@ FinalScreenWriterPanel.prototype.resetErrorStates = function() {
 
 FinalScreenWriterPanel.prototype.ajaxSubmitForm = function() {
 	var ajax_data = {
+			pratilipiId: ${ pratilipiId?c },
 			type: this.$category_select.val() ,
     		summary: this.$summary.val(),
     		state: "PUBLISHED",            		
@@ -107,7 +109,7 @@ FinalScreenWriterPanel.prototype.ajaxSubmitForm = function() {
         	
         	var parsed_data = jQuery.parseJSON( response );
         	console.log(parsed_data);
-  			window.location = ( window.location.href.split("/")[0] + "hindi.gamma.pratilipi.com" + window.location.pathname + "?action=write" );
+  			alert( "success" );
 		},
         fail:function(response){
         	var message = jQuery.parseJSON( response.responseText );
