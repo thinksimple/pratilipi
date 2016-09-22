@@ -53,11 +53,11 @@ public class NotificationProcessApi extends GenericApi {
 				continue;
 
 			List<Long> notificationIdList = userIdNotifIdListMap.get( notificationData.getUserId() );
-			if( notificationIdList == null ) {
+			if( notificationIdList == null )
 				notificationIdList = new LinkedList<>();
-				userIdNotifIdListMap.put( notificationData.getUserId(), notificationIdList );
-			}
+
 			notificationIdList.add( notificationData.getId() );
+			userIdNotifIdListMap.put( notificationData.getUserId(), notificationIdList );
 
 		}
 		FirebaseApi.updateUserNotificationData( userIdNotifIdListMap );
