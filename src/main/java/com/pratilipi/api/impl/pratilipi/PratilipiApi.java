@@ -143,7 +143,10 @@ public class PratilipiApi extends GenericApi {
 			this.listingDateMillis = pratilipiData.getListingDate().getTime();
 			if( pratilipiData.getLastUpdated() != null )
 				this.lastUpdatedMillis = pratilipiData.getLastUpdated().getTime();
-			
+
+			if( UxModeFilter.isAndroidApp() )
+				this.index = pratilipiData.getIndex();
+
 			this.reviewCount = pratilipiData.getReviewCount();
 			this.ratingCount = pratilipiData.getRatingCount();
 			this.averageRating = pratilipiData.getAverageRating();
