@@ -11,7 +11,23 @@ FirstScreenWriterPanel.prototype.init = function() {
     this.generateAndPopulateLanguageOptions();
     this.attachLanguageChangeListener();
     this.attachFormSubmitListener();
-}
+};
+
+FirstScreenWriterPanel.prototype.attachTranslateToEnglishListener = function() {
+	var _this = this;
+	this.$vernacular_title.on('keypress', function(e) {
+	    console.log("inside heere");
+		if( e.keyCode == 32 ) {
+		var english_title_text = _this.$english_title.val();
+		console.log($(this).val().split(" ").pop());
+		var last_word = $(this).val().split(" ").pop();
+		if( english_title_text == "" ) 
+			_this.$english_title.val( last_word );
+		else	
+			_this.$english_title.val( _this.$english_title.val() + " " + last_word );
+		}
+	});
+};
 
 FirstScreenWriterPanel.prototype.generateAndPopulateLanguageOptions = function() {
 	var _this = this;
@@ -94,7 +110,7 @@ FirstScreenWriterPanel.prototype.ajaxSubmitForm = function() {
         	
         	var parsed_data = jQuery.parseJSON( response );
         	console.log(parsed_data);
-  			window.location = ( window.location.href.split("/")[0] + "hindi.gamma.pratilipi.com" + window.location.pathname + "?action=write" );
+  			window.location = window.location.origin + window.location.pathname + "?action=write&pratilipiId=" + parsed_data.pratilipiId;
 		},
         fail:function(response){
         	var message = jQuery.parseJSON( response.responseText );
