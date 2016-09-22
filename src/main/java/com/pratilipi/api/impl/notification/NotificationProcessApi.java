@@ -2,6 +2,7 @@ package com.pratilipi.api.impl.notification;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -41,22 +42,25 @@ public class NotificationProcessApi extends GenericApi {
 		List<Notification> notificationList = notificationListCursorTuple.getDataList();
 		List<NotificationData> notificationDataList = NotificationDataUtil.createNotificationDataList( notificationList, null, true );
 
+		
 		// Writing to Firebase Database
-		Map<Long, List<Long>> userIdNotificationIdMap = new HashMap<Long, List<Long>>();
-		for( int i = 0; i < notificationDataList.size(); i++ ) {
+		Map<Long, List<Long>> userIdNotifIdListMap = new HashMap<Long, List<Long>>();
+		for( NotificationData notificationData : notificationDataList ) {
 
-			NotificationData notificationData = notificationDataList.get( i );
-
-			if( notificationData.getMessage() == null || notificationData.getState() != NotificationState.UNREAD )
+			if( notificationData.getMessage() == null )
+				continue;
+			if( notificationData.getState() != NotificationState.UNREAD )
 				continue;
 
-			List<Long> notificationIdList = userIdNotificationIdMap.get( notificationData.getUserId() ) != null ?
-					userIdNotificationIdMap.get( notificationData.getUserId() ) : new ArrayList<Long>(); 
+			List<Long> notificationIdList = userIdNotifIdListMap.get( notificationData.getUserId() );
+			if( notificationIdList == null ) {
+				notificationIdList = new LinkedList<>();
+				userIdNotifIdListMap.put( notificationData.getUserId(), notificationIdList );
+			}
 			notificationIdList.add( notificationData.getId() );
-			userIdNotificationIdMap.put( notificationData.getUserId(), notificationIdList );
 
 		}
-		FirebaseApi.updateUserNotificationData( userIdNotificationIdMap );
+		FirebaseApi.updateUserNotificationData( userIdNotifIdListMap );
 
 
 		// FCM Cloud Messaging
