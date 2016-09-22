@@ -23,7 +23,6 @@ import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.type.I18n;
 import com.pratilipi.data.type.Notification;
 import com.pratilipi.filter.AccessTokenFilter;
-import com.pratilipi.filter.UxModeFilter;
 
 public class NotificationDataUtil {
 	
@@ -154,7 +153,7 @@ public class NotificationDataUtil {
 		
 	}
 
-	public static DataListCursorTuple<NotificationData> getNotificationList( Long userId, String cursor, Integer resultCount )
+	public static DataListCursorTuple<NotificationData> getNotificationList( Long userId, Language language, String cursor, Integer resultCount )
 			throws InsufficientAccessException, UnexpectedServerException {
 		
 		if( ! hasAccessToListData( userId ) )
@@ -170,7 +169,7 @@ public class NotificationDataUtil {
 		
 		// Return
 		return new DataListCursorTuple<>(
-				createNotificationDataList( notificationListCursorTuple.getDataList(), UxModeFilter.getDisplayLanguage(), false ),
+				createNotificationDataList( notificationListCursorTuple.getDataList(), language, false ),
 				notificationListCursorTuple.getCursor() );
 		
 	}

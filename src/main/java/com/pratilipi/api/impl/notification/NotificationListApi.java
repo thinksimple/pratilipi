@@ -10,10 +10,12 @@ import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.Language;
 import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.client.NotificationData;
 import com.pratilipi.data.util.NotificationDataUtil;
 import com.pratilipi.filter.AccessTokenFilter;
+import com.pratilipi.filter.UxModeFilter;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/notification/list" )
@@ -21,6 +23,7 @@ public class NotificationListApi extends GenericApi {
 
 	public static class GetRequest extends GenericRequest {
 
+		private Language language;
 		private String cursor;
 		private Integer resultCount;
 
@@ -66,6 +69,7 @@ public class NotificationListApi extends GenericApi {
 		
 		DataListCursorTuple<NotificationData> notificationListCursorTuple = NotificationDataUtil.getNotificationList(
 				AccessTokenFilter.getAccessToken().getUserId(),
+				request.language != null ? request.language : UxModeFilter.getDisplayLanguage(),
 				request.cursor,
 				request.resultCount );
 		
