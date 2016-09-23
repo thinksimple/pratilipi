@@ -11,15 +11,15 @@
                       </button>
                   </div> 
                   <ul class="dropdown-menu" aria-labelledby="table_of_contents_dropdown" style="margin-top:13px;border-radius: 0 0 4px 4px;">
-                    <li class="text-center"><strong class="pratilipi-red">Book Settings</strong></li>
+                    <li class="text-center"><strong class="pratilipi-red">Edit Title</strong></li>
                     <li role="separator" class="divider"></li>
                     <li class="text-center"><strong>Table of Contents</strong></li>
                     <li role="separator" class="divider"></li>
                   </ul>
                 </div>
               <div class="pull-right">
-                  <button class="pratilipi-red-background-button" style="padding: 6px 12px;margin-right:0;">Publish</button>
-                  <button class="btn btn-default small-screen-hidden" style="margin: 0 5px 0 5px; font-size: 13px;">Save</button>
+                  <button class="pratilipi-red-background-button" style="padding: 6px 12px;margin-right:0px;border-radius:4px;">Publish</button>
+                  <button class="btn btn-default small-screen-hidden" style="margin: 0 5px 0 10px; font-size: 13px;">Save</button>
                   <button class="btn btn-default small-screen-hidden" style="margin: 0 0px 0 5px; font-size: 13px;">Preview</button>       
                    <img style="width: 48px;height: 25px;margin-right:-12px;" src="http://0.ptlp.co/resource-all/icon/svg/dots-three-vertical.svg" class="big-screen-hidden" data-container="body" data-toggle="popover" data-content="
           <a href='#' class='pratilipi-red'>
@@ -58,7 +58,7 @@
                   </div>
                 </div>  
 
-                <div id="chapter-content" contenteditable="true"  style="border: none; margin-bottom:10px; margin-top:10px;padding-left:0;padding-right:0;text-align:left; height:auto;font-size: 18px;" class="form-control horizontal-form-input" placeholder="Tell your story here..." >
+                <div id="chapter-content" contenteditable="true"  style="border: none; margin-bottom:10px; margin-top:10px;padding-left:0;padding-right:0;text-align:left; height:auto;font-size: 18px;" class="form-control horizontal-form-input" placeholder="Write here..." >
                     
                 </div>  
                 <div id='translControl'></div>    
@@ -84,8 +84,32 @@
             </div>
             <img src='http://0.ptlp.co/resource-all/icon/svg/circle-red.svg' style='left: 80%;top:-15%;width:15px;height:15px; position: absolute;'>  
             <!-- end of progress bar                             --> 
-        </div>               
-       
+        </div>  
+	<!-- Modal -->
+	<div class="modal fade" id="urlModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">Add URL</h4>
+	      </div>
+	      <div class="modal-body">
+			<form class="form-horizontal">
+			  <div class="form-group" style="margin-top:10px;margin-bottom:10px;">
+			    
+			    <div class="col-sm-12">
+			      <input type="url" class="form-control" id="input_url" placeholder="Enter URL here">
+			    </div>
+			  </div>
+			</form>  
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+	        <button id="url_ok_button" type="button" class="btn btn-primary">OK</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>                     
 </body>
 <style><#include "css/style.ftl" /></style>
 <#include "js/transliteration.ftl" />

@@ -17,6 +17,9 @@ MainWriterPanel.prototype.init = function() {
     var editor_container = $( "#editor");
     this.editor_object = new Editor( editor_container, this.content_object );
     this.editor_object.init();
+    
+    this.hideProgressBarOnMobileFocus();
+    
 };
 
 MainWriterPanel.prototype.addAffixClasses = function() {
@@ -48,4 +51,24 @@ MainWriterPanel.prototype.setWrappersHeight = function() {
     $(".editor-wrapper").height($("#editor").height());
     $(".header-wrapper").height($("#header1").height());
      $('[data-toggle="popover"]').popover();
+};
+
+MainWriterPanel.prototype.hideProgressBarOnMobileFocus = function() {
+     if(navigator.userAgent.indexOf('Android') > -1 ){
+	     this.lastWindowHeight = $(window).height();
+	     this.lastWindowWidth = $(window).width();
+	     var _this = this;
+	     
+	     $(window).resize(function () {
+		    if ($("#subtitle,#chapter-content").is(":focus")) {
+		        var keyboardIsOn =
+		           ((_this.lastWindowWidth == $(window).width()) && (_this.lastWindowHeight > $(window).height()));
+		    }   
+		    if(keyboardIsOn){
+				$("#pagination").hide();
+		    } else{
+				$("#pagination").show();
+		    }
+		 }); 
+     }
 };
