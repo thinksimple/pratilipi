@@ -2,7 +2,7 @@
 /vachakoni-top-pasand     વાચકોની ટોપ પસંદ        App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"vachakoni-top-pasand" } 
 /meghanino-vartavaibhav   મેઘાણીનો વાર્તાવૈભવ      App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"meghanino-vartavaibhav" }
 /navi-prakashit-rachnao   નવી પ્રકાશિત રચનાઓ   App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"navi-prakashit-rachnao" }
-/event/diary-nu-ek-panu   ડાયરીનું એક પાનું            App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "eventId":4749790828036096 }
+/event/abhivyakti-varta-mahotsav  અભિવ્યક્તિ - વાર્તા મહોત્સવ ૨૦૧૬           App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "eventId":4749790828036096 }
 /events                   ઓનલાઈન સ્પર્ધાઓ      App#EventList::{ "language":"GUJARATI" }
 /gujarati-samayiko        ગુજરાતી સામયિકો         App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"gujarati-samayiko" }
 /blog                     સંપાદકની કલમે              App#BlogPostList::{ "language":"GUJARATI", "blogId":5683739602452480 }
