@@ -5,8 +5,10 @@ import java.util.List;
 import com.google.appengine.tools.remoteapi.RemoteApiInstaller;
 import com.google.appengine.tools.remoteapi.RemoteApiOptions;
 import com.googlecode.objectify.ObjectifyService;
+import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.UserState;
+import com.pratilipi.data.BlobAccessor;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.Memcache;
@@ -24,23 +26,67 @@ import com.pratilipi.data.type.gae.UserPratilipiEntity;
 
 public class DataUtil {
 
-	public static void main( String ... args ) throws IOException {
+	public static void main( String ... args ) throws IOException, UnexpectedServerException {
 		
 		RemoteApiOptions options = new RemoteApiOptions()
-				.server( "www.gamma.pratilipi.com", 80 )
+				.server( "m.gamma.pratilipi.com", 80 )
 				.useServiceAccountCredential(
 						"prod-pratilipi@appspot.gserviceaccount.com",
 						"PrivateKey.p12" )
-			    .remoteApiPath("/remote_api");
+			    .remoteApiPath( "/remote_api" );
 		RemoteApiInstaller installer = new RemoteApiInstaller();
 		installer.install( options );
 		
 		ObjectifyService.begin();
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		SearchAccessor searchAccessor = DataAccessorFactory.getSearchAccessor();
+		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
 		Memcache memcache = DataAccessorFactory.getL2CacheAccessor();
+
 		
-		// Write your code here. //
+		// START
+		
+		
+/*		QueryResultIterator<Key<AuthorEntity>> iterator = ObjectifyService.ofy().load()
+				.type( AuthorEntity.class )
+				.chunk( 1000 )
+				.keys()
+				.iterator();
+
+		List<Task> taskList = new LinkedList<>();
+		while( iterator.hasNext() ) {
+			Task task = TaskQueueFactory.newTask()
+					.setUrl( "/author/process" )
+					.addParam( "authorId", iterator.next().getId() + "" )
+					.addParam( "processData", "true" );
+			taskList.add( task );
+		}
+		TaskQueueFactory.getAuthorOfflineTaskQueue().addAll( taskList );
+
+		System.out.println( taskList.size() ); */
+
+
+/*		QueryResultIterator<Key<PratilipiEntity>> iterator = ObjectifyService.ofy().load()
+				.type( PratilipiEntity.class )
+				.chunk( 1000 )
+				.keys()
+				.iterator();
+		
+		List<Task> taskList = new LinkedList<>();
+		while( iterator.hasNext() ) {
+			Task task = TaskQueueFactory.newTask()
+					.setUrl( "/pratilipi/process" )
+					.addParam( "pratilipiId", iterator.next().getId() + "" )
+					.addParam( "processContent", "true" );
+			taskList.add( task );
+		}
+		TaskQueueFactory.getPratilipiOfflineTaskQueue().addAll( taskList );
+		
+		System.out.println( taskList.size() ); */
+		
+		
+		// END
+		
 		
 		installer.uninstall();
 		
