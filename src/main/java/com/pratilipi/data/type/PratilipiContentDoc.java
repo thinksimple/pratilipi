@@ -25,8 +25,6 @@ public interface PratilipiContentDoc {
 		void setTitle( String title );
 		int getPageCount();
 		Page getPage( int pageNo );
-		Object getContent( boolean asHtml );
-		void setContent( String content );
 		List<Page> getPageList();
 		Page addPage( PageletType type, Object data );
 		int getNesting();
@@ -40,4 +38,5 @@ public interface PratilipiContentDoc {
 	Chapter addChapter( String title, Integer chapterNo, Integer nesting );
 	void removeChapter( int chapterNo );
 	List<JsonObject> getIndex();
+
 }

@@ -2,11 +2,17 @@ package com.pratilipi.common.util;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Node;
+import org.jsoup.parser.Tag;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -18,6 +24,8 @@ import com.pratilipi.data.DocAccessor;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.PratilipiContentDoc;
 import com.pratilipi.data.type.PratilipiContentDoc.Chapter;
+import com.pratilipi.data.type.PratilipiContentDoc.Pagelet;
+import com.pratilipi.data.type.PratilipiContentDoc.PageletType;
 
 
 public class PratilipiContentUtil {
@@ -300,7 +308,7 @@ public class PratilipiContentUtil {
 
 	}
 	
-	public static Chapter updateChapter( Long pratilipiId, Integer chapterNo, String chapterTitle, String content ) 
+	public static void updateContent( Long pratilipiId, Integer chapterNo, Integer pageNo, String chapterTitle, String content ) 
 			throws UnexpectedServerException, InvalidArgumentException {
 
 		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
@@ -311,8 +319,64 @@ public class PratilipiContentUtil {
 
 		Chapter chapter = pcDoc.getChapter( chapterNo );
 		chapter.setTitle( chapterTitle );
-		chapter.setContent( content );
+
+		for( Node childNode : Jsoup.parse( content ).body().childNodes() ) {
+			if( childNode.nodeName().equals( "p" ) )
+				chapter.getPage( pageNo ).addPagelet( PageletType.TEXT, ( (Element) childNode ).html() );
+			else if( childNode.nodeName().equals( "img" ) )
+				chapter.getPage( pageNo ).addPagelet( PageletType.IMAGE, childNode.attr( "src" ) );
+			else if( childNode.nodeName().equals( "blockquote" ) )
+				chapter.getPage( pageNo ).addPagelet( PageletType.BLOCKQUOTE, ( (Element) childNode ).html() );
+
+		}
+
 		docAccessor.save( pratilipiId, pcDoc );
-		return chapter;
+
 	}
+	
+	public static JsonObject getContent( Long pratilipiId, Integer chapterNo, Integer pageNo, boolean asHtml ) 
+			throws InvalidArgumentException, UnexpectedServerException {
+
+		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
+		PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( pratilipiId );
+
+		if( pcDoc == null )
+			throw new InvalidArgumentException( "Content is Missing!" );
+
+		List<Pagelet> pageletList = pcDoc.getChapter( chapterNo ).getPage( pageNo ).getPageletList();
+		String chapterTitle = pcDoc.getChapter( chapterNo ).getTitle();
+		Object content = null;
+
+		if( asHtml ) {
+
+			String htmlString = new String();
+			for( Pagelet pagelet : pageletList ) {
+
+				Element element = null;
+
+				if( pagelet.getType() == PageletType.TEXT )
+					element = new Element( Tag.valueOf( "p" ), "" ).html( pagelet.getData().toString() );
+				else if( pagelet.getType() == PageletType.BLOCKQUOTE )
+					element = new Element( Tag.valueOf( "blockquote" ), "" ).html( pagelet.getData().toString() );
+				else if( pagelet.getType() == PageletType.IMAGE )
+					element = new Element( Tag.valueOf( "img" ), "" ).attr( "src", pagelet.getData().toString() );
+
+				if( element != null )
+					htmlString = htmlString + element.toString();
+
+			}
+
+			content = htmlString;
+
+		} else {
+			content = pageletList;
+		}
+
+		JsonObject jsonObject = new JsonObject();
+		jsonObject.addProperty( "chapterTitle", chapterTitle );
+		jsonObject.addProperty( "content", content.toString() );
+		return jsonObject;
+
+	}
+
 }

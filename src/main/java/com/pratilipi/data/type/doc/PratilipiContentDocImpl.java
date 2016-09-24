@@ -4,11 +4,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Element;
-import org.jsoup.nodes.Node;
-import org.jsoup.parser.Tag;
-
 import com.google.gson.JsonObject;
 import com.pratilipi.data.type.PratilipiContentDoc;
 
@@ -71,9 +66,9 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 
 		private String title;
 		
-		private Integer nesting;
-
 		private List<PageImpl> pages;
+
+		private Integer nesting;
 
 
 		@SuppressWarnings("unused")
@@ -108,71 +103,6 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 		@Override
 		public Page getPage( int pageNo ) {
 			return pages == null || pages.size() < pageNo ? null : pages.get( pageNo - 1 );
-		}
-
-		@Override
-		public Object getContent( boolean asHtml ) {
-
-			if( pages == null )
-				return null;
-
-			PageImpl page = pages.get( 0 );
-
-			if( page == null )
-				return null;
-
-			List<Pagelet> pageletList = page.getPageletList();
-
-			if( asHtml ) {
-
-				String htmlString = new String();
-				for( Pagelet pagelet : pageletList ) {
-
-					Element element = null;
-
-					if( pagelet.getType() == PageletType.TEXT )
-						element = new Element( Tag.valueOf( "p" ), "" ).html( pagelet.getData().toString() );
-					else if( pagelet.getType() == PageletType.BLOCKQUOTE )
-						element = new Element( Tag.valueOf( "blockquote" ), "" ).html( pagelet.getData().toString() );
-					else if( pagelet.getType() == PageletType.IMAGE )
-						element = new Element( Tag.valueOf( "img" ), "" ).attr( "src", pagelet.getData().toString() );
-
-					if( element != null )
-						htmlString = htmlString + element.toString();
-
-				}
-
-				return htmlString;
-
-			} 
-
-			return pageletList;
-
-		}
-
-		@Override
-		public void setContent( String content ) {
-
-			PageImpl page = new PageImpl();
-
-			if( content != null ) {
-
-				for( Node childNode : Jsoup.parse( content ).body().childNodes() ) {
-
-					if( childNode.nodeName().equals( "p" ) )
-						page.addPagelet( PageletType.TEXT, ( (Element) childNode ).html() );
-					else if( childNode.nodeName().equals( "img" ) )
-						page.addPagelet( PageletType.IMAGE, childNode.attr( "src" ) );
-					else if( childNode.nodeName().equals( "blockquote" ) )
-						page.addPagelet( PageletType.BLOCKQUOTE, ( (Element) childNode ).html() );
-
-				}
-
-				pages = new LinkedList<PageImpl>();
-				pages.add( page );
-
-			}
-
 		}
 
 		@Override
@@ -255,7 +185,7 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 		if( chapterNo == null || chapterNo > chapters.size() )
 			chapters.add( chapter );
 		else
-			chapters.add( chapterNo - 1, chapter );
+			chapters.add( chapterNo, chapter );
 
 		return chapter;
 

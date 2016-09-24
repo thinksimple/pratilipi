@@ -58,6 +58,7 @@ public class GenericRequest {
 	public static final String ERR_PRATILIPI_STATE_INVALID			= "Invalid State.";
 
 	public static final String ERR_PRATILIPI_CHAPTER_NO_REQUIRED			= "chapterNo is required.";
+	public static final String ERR_PRATILIPI_PAGE_NO_REQUIRED				= "pageNo is required.";
 
 	public static final String ERR_AUTHOR_ID_REQUIRED	 = "Author id is required.";
 	public static final String ERR_AUTHOR_STATE_REQUIRED = "State is required.";

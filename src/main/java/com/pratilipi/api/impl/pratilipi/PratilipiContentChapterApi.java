@@ -1,8 +1,8 @@
 package com.pratilipi.api.impl.pratilipi;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.google.gson.JsonObject;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -14,10 +14,6 @@ import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.util.PratilipiContentUtil;
-import com.pratilipi.data.DataAccessorFactory;
-import com.pratilipi.data.DocAccessor;
-import com.pratilipi.data.type.PratilipiContentDoc;
-import com.pratilipi.data.type.PratilipiContentDoc.Chapter;
 
 @SuppressWarnings({ "unused", "serial" })
 @Bind( uri = "/pratilipi/content/chapter" )
@@ -33,6 +29,9 @@ public class PratilipiContentChapterApi extends GenericApi {
 		@Validate( required = true, minInt = 1, requiredErrMsg = ERR_PRATILIPI_CHAPTER_NO_REQUIRED )
 		private Integer chapterNo;
 
+		@Validate( required = true, minInt = 1, requiredErrMsg = ERR_PRATILIPI_PAGE_NO_REQUIRED )
+		private Integer pageNo;
+
 		private boolean asHtml;
 
 	}
@@ -44,6 +43,9 @@ public class PratilipiContentChapterApi extends GenericApi {
 
 		@Validate( required = true, minInt = 1, requiredErrMsg = ERR_PRATILIPI_CHAPTER_NO_REQUIRED )
 		private Integer chapterNo;
+
+		@Validate( required = true, minInt = 1, requiredErrMsg = ERR_PRATILIPI_PAGE_NO_REQUIRED )
+		private Integer pageNo;
 
 		private String chapterTitle;
 
@@ -73,14 +75,11 @@ public class PratilipiContentChapterApi extends GenericApi {
 	public Response getPratilipiContent( GetRequest request )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
-		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
-		PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( request.pratilipiId );
-
-		if( pcDoc == null )
-			return new Response();
-
-		Chapter chapter = pcDoc.getChapter( request.chapterNo );
-		return new Response( request.pratilipiId, request.chapterNo, chapter.getTitle(), chapter.getContent( request.asHtml ) );
+		JsonObject jsonObject = PratilipiContentUtil.getContent( request.pratilipiId, request.chapterNo, request.pageNo, request.asHtml );
+		return new Response( request.pratilipiId, 
+								request.chapterNo, 
+								jsonObject.get( "chapterTitle" ).getAsString(), 
+								jsonObject.get( "content" ).getAsString() );
 
 	}
 
@@ -88,8 +87,11 @@ public class PratilipiContentChapterApi extends GenericApi {
 	public Response postPratilipiContent( PostRequest request )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
-		PratilipiContentUtil.updateChapter( request.pratilipiId, request.chapterNo, request.chapterTitle, request.content );
-		return new Response( request.pratilipiId, request.chapterNo, request.chapterTitle, request.content );
+		PratilipiContentUtil.updateContent( request.pratilipiId, request.chapterNo, request.pageNo, request.chapterTitle, request.content );
+		return new Response( request.pratilipiId, 
+								request.chapterNo, 
+								request.chapterTitle, 
+								request.content );
 
 	}
 
