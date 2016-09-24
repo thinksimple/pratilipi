@@ -1,5 +1,6 @@
-var Content = function (content_container) {
+var Content = function (content_container, parent_object) {
     this.$content_container = content_container;
+    this.parent_object = parent_object;
 };
 
 Content.prototype.init = function() {
@@ -102,5 +103,9 @@ Content.prototype.itemIsLinked = function(){
     }
     return false;
 };
+
+Content.prototype.populateContent = function( response ) {
+	this.$content_container.html( response );
+}; 
 
 

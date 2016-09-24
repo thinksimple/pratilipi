@@ -1,4 +1,5 @@
-var TableOfContents = function(toc_container) {
+var TableOfContents = function(toc_container, parent_object) {
+	this.parent_object = parent_object;
     this.toc_container = toc_container;
     this.$dropdown_menu_list = toc_container.find(".dropdown-menu");
     this.chapters = [];

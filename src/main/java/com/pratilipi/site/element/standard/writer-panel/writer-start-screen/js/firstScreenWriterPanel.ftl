@@ -117,7 +117,7 @@ FirstScreenWriterPanel.prototype.ajaxSubmitForm = function() {
 			alert(message);
 		}			    		
 		
-});	
+	});	
 	
 };
 

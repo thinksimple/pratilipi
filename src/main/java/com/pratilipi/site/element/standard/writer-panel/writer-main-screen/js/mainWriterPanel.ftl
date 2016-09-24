@@ -5,20 +5,26 @@ var MainWriterPanel = function() {
 MainWriterPanel.prototype.init = function() {
     this.addAffixClasses();
     this.setWrappersHeight();
+    this.initializeGlobalVariables();
 
     var toc_container = $( "#toc_container" );
-    this.table_of_contents_object = new TableOfContents( toc_container );
+    this.table_of_contents_object = new TableOfContents( toc_container, this );
     this.table_of_contents_object.init();
 
     var content_container = $( "#chapter-content" );
-    this.content_object = new Content( content_container );
+    this.content_object = new Content( content_container, this );
     this.content_object.init();
+    
+    var chapter_name_container = $( "#subtitle" );
+    this.chapter_name_object = new ChapterName( chapter_name_container, this );
+    this.chapter_name_object.init();
 
     var editor_container = $( "#editor");
     this.editor_object = new Editor( editor_container, this.content_object );
     this.editor_object.init();
     
     this.hideProgressBarOnMobileFocus();
+    this.initializeData();
     
 };
 
@@ -71,4 +77,46 @@ MainWriterPanel.prototype.hideProgressBarOnMobileFocus = function() {
 		    }
 		 }); 
      }
+};
+
+MainWriterPanel.prototype.initializeGlobalVariables = function() {
+	this.currChapter = 1;
+	<#if indexJson?? >
+		this.index = ${ indexJson };
+	</#if>	
+};
+
+MainWriterPanel.prototype.initializeData = function() {
+	console.log("hello");
+	<#if indexJson?? >
+		//get first chapter and populate it in the writer
+		this.getChapter( 1 );
+	<#else>
+		//make a new chapter call asychrolously
+	</#if>
+};
+
+MainWriterPanel.prototype.getChapter = function( chapterNum ) {
+	var _this = this;
+    $.ajax({type: "GET",
+        url: " /api/pratilipi/content/chapter",
+        data: {
+        	pratilipiId: ${ pratilipiId?c },
+        	chapterNo: chapterNum,
+        	asHtml: true
+        },
+        success:function(response){
+        	console.log(response);
+        	
+        	var parsed_data = jQuery.parseJSON( response );
+        	console.log(parsed_data);
+  			_this.content_object.populateContent( parsed_data.content );
+  			_this.chapter_name_object.change_name( parsed_data.chapterTitle );
+		},
+        fail:function(response){
+        	var message = jQuery.parseJSON( response.responseText );
+			alert(message);
+		}			    		
+		
+	});	
 };
