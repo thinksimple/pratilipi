@@ -375,7 +375,7 @@ public class PratilipiSite extends HttpServlet {
 					DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
 					PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( pratilipiId );
 					if( pcDoc != null )
-						dataModel.put( "indexJson", pcDoc.getIndex() );
+						dataModel.put( "indexJson", new Gson().toJson( pcDoc.getIndex() ) );
 					else
 						dataModel.put( "indexJson", null );
 				}
