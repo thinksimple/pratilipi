@@ -13,7 +13,7 @@ import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
-import com.pratilipi.common.util.PratilipiContentUtil;
+import com.pratilipi.data.util.PratilipiDocUtil;
 
 @SuppressWarnings({ "unused", "serial" })
 @Bind( uri = "/pratilipi/content/chapter" )
@@ -75,7 +75,7 @@ public class PratilipiContentChapterApi extends GenericApi {
 	public Response getPratilipiContent( GetRequest request )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
-		JsonObject jsonObject = PratilipiContentUtil.getContent( request.pratilipiId, request.chapterNo, request.pageNo, request.asHtml );
+		JsonObject jsonObject = PratilipiDocUtil.getContent( request.pratilipiId, request.chapterNo, request.pageNo, request.asHtml );
 		return new Response( request.pratilipiId, 
 								request.chapterNo, 
 								jsonObject.get( "chapterTitle" ).getAsString(), 
@@ -87,7 +87,7 @@ public class PratilipiContentChapterApi extends GenericApi {
 	public Response postPratilipiContent( PostRequest request )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
-		PratilipiContentUtil.updateContent( request.pratilipiId, request.chapterNo, request.pageNo, request.chapterTitle, request.content );
+		PratilipiDocUtil.updateContent( request.pratilipiId, request.chapterNo, request.pageNo, request.chapterTitle, request.content );
 		return new Response( request.pratilipiId, 
 								request.chapterNo, 
 								request.chapterTitle, 

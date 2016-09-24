@@ -7,8 +7,8 @@ import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
-import com.pratilipi.common.util.PratilipiContentUtil;
 import com.pratilipi.data.type.PratilipiContentDoc;
+import com.pratilipi.data.util.PratilipiDocUtil;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/pratilipi/content/chapter/add" )
@@ -28,7 +28,7 @@ public class PratilipiContentChapterAddApi extends GenericApi {
 	public GenericResponse postAddChapter( PostRequest request )
 			throws UnexpectedServerException {
 
-		PratilipiContentDoc pcDoc = PratilipiContentUtil.addChapter( request.pratilipiId, request.chapterNo );
+		PratilipiContentDoc pcDoc = PratilipiDocUtil.addChapter( request.pratilipiId, request.chapterNo );
 		return new PratilipiContentIndexApi.Response( pcDoc.getIndex() );
 
 	}

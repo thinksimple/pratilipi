@@ -8,8 +8,8 @@ import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
-import com.pratilipi.common.util.PratilipiContentUtil;
 import com.pratilipi.data.type.PratilipiContentDoc;
+import com.pratilipi.data.util.PratilipiDocUtil;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/pratilipi/content/chapter/delete" )
@@ -29,7 +29,7 @@ public class PratilipiContentChapterDeleteApi extends GenericApi {
 	public GenericResponse postAddChapter( PostRequest request ) 
 			throws UnexpectedServerException, InvalidArgumentException {
 
-		PratilipiContentDoc pcDoc = PratilipiContentUtil.deleteChapter( request.pratilipiId, request.chapterNo );
+		PratilipiContentDoc pcDoc = PratilipiDocUtil.deleteChapter( request.pratilipiId, request.chapterNo );
 		return new PratilipiContentIndexApi.Response( pcDoc.getIndex() );
 
 	}
