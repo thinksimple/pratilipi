@@ -2,10 +2,12 @@ package com.pratilipi.data.type;
 
 import java.util.List;
 
+import com.google.gson.JsonObject;
+
 public interface PratilipiContentDoc {
 	
 	enum PageletType {
-		HEAD_1, HEAD_2, HTML, TEXT, IMAGE,
+		HEAD_1, HEAD_2, HTML, TEXT, IMAGE, BLOCKQUOTE
 	}
 	
 	interface Pagelet {
@@ -20,17 +22,20 @@ public interface PratilipiContentDoc {
 	
 	interface Chapter {
 		String getTitle();
+		void setTitle( String title );
 		int getPageCount();
 		Page getPage( int pageNo );
+		Object getContent( boolean asHtml );
+		void setContent( String content );
 		List<Page> getPageList();
 		Page addPage( PageletType type, Object data );
-		int getNesting();
 	}
 
 	int getChapterCount();
 	Chapter getChapter( int chapterNo );
 	List<Chapter> getChapterList();
 	Chapter addChapter( String title );
-	Chapter addChapter( String title, int nesting );
-	
+	Chapter addChapter( String title, Integer offset );
+	void removeChapter( int chapterNo );
+	List<JsonObject> getIndex();
 }
