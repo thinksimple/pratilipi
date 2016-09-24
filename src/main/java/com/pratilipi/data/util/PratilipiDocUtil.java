@@ -118,6 +118,7 @@ public class PratilipiDocUtil {
 		
 		List<Object[]> pageletList = new LinkedList<>();
 		
+		Node prevNode = null;
 		Object[] pagelet = null;
 		for( Node childNode : node.childNodes() ) {
 			
@@ -202,7 +203,9 @@ public class PratilipiDocUtil {
 				
 			} else if( childNode.nodeName().equals( "br" ) ) {
 				
-				pagelet = null;
+				// Create new pagelet after 2 consecutive line breaks.
+				if( prevNode.nodeName().equals( "br" ) )
+					pagelet = null;
 				
 			} else {
 				
@@ -212,11 +215,16 @@ public class PratilipiDocUtil {
 				if( pagelet == null ) {
 					pagelet = new Object[] { PratilipiContentDoc.PageletType.TEXT, text };
 					pageletList.add( pagelet );
+				} else if( prevNode.nodeName().equals( "br" ) ) {
+					pagelet[1] = pagelet[1] + "\n" + text;
 				} else {
 					pagelet[1] = pagelet[1] + " " + text;
 				}
 				
 			}
+			
+			
+			prevNode = childNode;
 			
 		}
 		
