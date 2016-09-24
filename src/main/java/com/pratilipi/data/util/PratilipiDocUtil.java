@@ -135,7 +135,7 @@ public class PratilipiDocUtil {
 				if( text == null )
 					continue;
 				if( pagelet != null && ( pagelet[0] == PratilipiContentDoc.PageletType.HEAD_1 || pagelet[0] == PratilipiContentDoc.PageletType.HEAD_2 ) ) {
-					pagelet[1] = pagelet[1] + " " + text;
+					pagelet[1] = pagelet[1] + " - " + text;
 				} else {
 					pagelet = new Object[] { PratilipiContentDoc.PageletType.HEAD_1, text };
 					pageletList.add( pagelet );
@@ -147,7 +147,7 @@ public class PratilipiDocUtil {
 				if( text == null )
 					continue;
 				if( pagelet != null && pagelet[0] == PratilipiContentDoc.PageletType.HEAD_2 ) {
-					pagelet[1] = pagelet[1] + " " + text;
+					pagelet[1] = pagelet[1] + " - " + text;
 				} else {
 					pagelet = new Object[] { PratilipiContentDoc.PageletType.HEAD_2, text };
 					pageletList.add( pagelet );
