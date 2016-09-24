@@ -20,6 +20,7 @@ Editor.prototype.init = function() {
     this.attachLinkListener();
     this.attachLinkSelectionListener();
     this.addTextSelectionListener();
+    this.addImageListener();
 }
 
 Editor.prototype.attachExecCommandListeners = function() {
@@ -153,3 +154,39 @@ Editor.prototype.toggleBlockquote = function() {
         document.execCommand("formatBlock", false, "p");
     }
 };
+
+Editor.prototype.addImageListener = function() {
+	var _this = this;
+	var $upload_image_select = $("#upload_images");
+	this.$editor_container.find("#insertImage").on('click', function() {
+		$upload_image_select.trigger('click');
+	});
+	console.log($upload_image_select);
+	var e = jQuery.Event("keydown");
+	e.which = 50; 
+	$upload_image_select.on('change', function(evt) {
+			console.log("idhar hun mai");	
+		    ImageTools.resize(this.files[0], {
+		        width: 480, // maximum width
+		        height: 480 // maximum height
+		    }, function(blob, didItResize) {
+		        // didItResize will be true if it managed to resize it, otherwise false (and will return the original file as 'blob')
+		        //document.getElementById('preview').src = window.URL.createObjectURL(blob);
+		        console.log(blob);
+		        var $current_element = $( _this.getSelectionStart() );
+		        var $last_element = ( $current_element.closest("p") || $current_element.closest("p") );
+				console.log( $last_element );
+				var $img = $("<img>").attr( "src", window.URL.createObjectURL(blob) ).addClass("writer-image");
+				$img.insertAfter( $last_element );
+				$("<p><br></p>").insertAfter($img);
+				//document.execCommand('insertHTML', false, '');
+		        // you can also now upload this blob using an XHR.
+		    });
+	});	    
+	
+};
+
+Editor.prototype.getSelectionStart = function () {
+   var node = document.getSelection().anchorNode;
+   return (node.nodeType == 3 ? node.parentNode : node);
+}

@@ -347,4 +347,9 @@ blockquote {
     word-wrap: break-word;
     /*max-width: none;*/
     /*max-width: 100%;*/
-}         
+}      
+.writer-image {
+	display:block;
+	margin-left:auto;
+	margin-right:auto;
+}  

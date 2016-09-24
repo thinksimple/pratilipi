@@ -52,7 +52,7 @@
                             |
                             <a href="#" id="blockquote"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/quotes-left.svg' style='width:30px;height:20px;'></a>
                             <a href="#" id="link"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/link-505050.svg' style='width:30px;height:20px;'></a>
-                            <a href="#" id=""><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/camera2.svg' style='width:30px;height:20px;'></a>
+                            <a href="#" id="insertImage"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/camera2.svg' style='width:30px;height:20px;'></a>
                         </div>
                     </div>
                   </div>
@@ -109,7 +109,9 @@
 	      </div>
 	    </div>
 	  </div>
-	</div>                     
+	</div>  
+	<input type="file" id="upload_images" style="display:none">
+	<img id="preview">               
 </body>
 <style><#include "css/style.ftl" /></style>
 <#include "js/transliteration.ftl" />
@@ -120,4 +122,5 @@
 	<#include "js/chapter.ftl">
 	<#include "js/content.ftl">
 	<#include "js/editor.ftl">
+	<#include "js/imageTools.ftl">
 </script>
