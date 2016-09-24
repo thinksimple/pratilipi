@@ -83,6 +83,7 @@ import com.pratilipi.data.type.gae.UserAuthorEntity;
 import com.pratilipi.data.type.gae.UserEntity;
 import com.pratilipi.data.type.gae.UserPratilipiEntity;
 import com.pratilipi.data.type.gae.VoteEntity;
+import com.pratilipi.filter.UxModeFilter;
 
 public class DataAccessorGaeImpl implements DataAccessor {
 
@@ -1129,9 +1130,12 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		Query<UserPratilipiEntity> query = ObjectifyService.ofy().load()
 				.type( UserPratilipiEntity.class )
 				.filter( "USER_ID", userId )
-				.filter( "ADDED_TO_LIB", true )
-				.order( "-ADDED_TO_LIB_DATE" );
-		
+				.filter( "ADDED_TO_LIB", true );
+		if( UxModeFilter.isAndroidApp() )
+			query = query.order( "ADDED_TO_LIB_DATE" );
+		else
+			query = query.order( "-ADDED_TO_LIB_DATE" );
+
 		if( cursorStr != null )
 			query = query.startAt( Cursor.fromWebSafeString( cursorStr ) );
 		
