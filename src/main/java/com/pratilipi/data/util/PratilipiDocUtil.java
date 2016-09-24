@@ -134,7 +134,7 @@ public class PratilipiDocUtil {
 				String text = _extractText( childNode );
 				if( text == null )
 					continue;
-				if( pagelet[0] == PratilipiContentDoc.PageletType.HEAD_1 || pagelet[0] == PratilipiContentDoc.PageletType.HEAD_2 ) {
+				if( pagelet != null && ( pagelet[0] == PratilipiContentDoc.PageletType.HEAD_1 || pagelet[0] == PratilipiContentDoc.PageletType.HEAD_2 ) ) {
 					pagelet[1] = pagelet[1] + " " + text;
 				} else {
 					pagelet = new Object[] { PratilipiContentDoc.PageletType.HEAD_1, text };
@@ -146,7 +146,7 @@ public class PratilipiDocUtil {
 				String text = _extractText( childNode );
 				if( text == null )
 					continue;
-				if( pagelet[0] == PratilipiContentDoc.PageletType.HEAD_2 ) {
+				if( pagelet != null && pagelet[0] == PratilipiContentDoc.PageletType.HEAD_2 ) {
 					pagelet[1] = pagelet[1] + " " + text;
 				} else {
 					pagelet = new Object[] { PratilipiContentDoc.PageletType.HEAD_2, text };
