@@ -8,20 +8,19 @@ import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
-import com.pratilipi.data.DataAccessorFactory;
-import com.pratilipi.data.DocAccessor;
+import com.pratilipi.common.util.PratilipiContentUtil;
 import com.pratilipi.data.type.PratilipiContentDoc;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/pratilipi/content/chapter/remove" )
-public class PratilipiContentRemoveChapterApi extends GenericApi {
+public class PratilipiContentChapterRemoveApi extends GenericApi {
 
 	public static class PostRequest extends GenericRequest {
 
-		@Validate( required = true )
+		@Validate( required = true, minLong = 1L, requiredErrMsg = ERR_PRATILIPI_ID_REQUIRED )
 		private Long pratilipiId;
 
-		@Validate( required = true )
+		@Validate( required = true, minInt = 1 )
 		private int chapterNo;
 
 	}
@@ -30,15 +29,8 @@ public class PratilipiContentRemoveChapterApi extends GenericApi {
 	public GenericResponse postAddChapter( PostRequest request ) 
 			throws UnexpectedServerException, InvalidArgumentException {
 
-		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
-		PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( request.pratilipiId );
-
-		if( pcDoc == null )
-			throw new InvalidArgumentException( "Content is Missing!" );
-
-		pcDoc.removeChapter( request.chapterNo );
-		docAccessor.save( request.pratilipiId, pcDoc );
-		return new GenericResponse();
+		PratilipiContentDoc pcDoc = PratilipiContentUtil.removeChapter( request.pratilipiId, request.chapterNo );
+		return new PratilipiContentIndexApi.Response( pcDoc.getIndex() );
 
 	}
 

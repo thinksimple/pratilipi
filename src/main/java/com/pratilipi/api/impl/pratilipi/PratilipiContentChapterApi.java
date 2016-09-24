@@ -13,6 +13,7 @@ import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.util.PratilipiContentUtil;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DocAccessor;
 import com.pratilipi.data.type.PratilipiContentDoc;
@@ -26,10 +27,10 @@ public class PratilipiContentChapterApi extends GenericApi {
 
 	public static class GetRequest extends GenericRequest {
 
-		@Validate( required = true, requiredErrMsg = GenericRequest.ERR_PRATILIPI_ID_REQUIRED )
+		@Validate( required = true, minLong = 1L, requiredErrMsg = ERR_PRATILIPI_ID_REQUIRED )
 		private Long pratilipiId;
 
-		@Validate( required = true, requiredErrMsg = GenericRequest.ERR_CHAPTER_NO_REQUIRED )
+		@Validate( required = true, minInt = 1, requiredErrMsg = ERR_PRATILIPI_CHAPTER_NO_REQUIRED )
 		private Integer chapterNo;
 
 		private boolean asHtml;
@@ -38,10 +39,10 @@ public class PratilipiContentChapterApi extends GenericApi {
 
 	public static class PostRequest extends GenericRequest {
 
-		@Validate( required = true, requiredErrMsg = GenericRequest.ERR_PRATILIPI_ID_REQUIRED )
+		@Validate( required = true, minLong = 1L, requiredErrMsg = ERR_PRATILIPI_ID_REQUIRED )
 		private Long pratilipiId;
 
-		@Validate( required = true, requiredErrMsg = GenericRequest.ERR_CHAPTER_NO_REQUIRED )
+		@Validate( required = true, minInt = 1, requiredErrMsg = ERR_PRATILIPI_CHAPTER_NO_REQUIRED )
 		private Integer chapterNo;
 
 		private String chapterTitle;
@@ -87,17 +88,8 @@ public class PratilipiContentChapterApi extends GenericApi {
 	public Response postPratilipiContent( PostRequest request )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
-		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
-		PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( request.pratilipiId );
-
-		if( pcDoc == null )
-			throw new InvalidArgumentException( "Content is Missing!" );
-
-		Chapter chapter = pcDoc.getChapter( request.chapterNo );
-		chapter.setTitle( request.chapterTitle );
-		chapter.setContent( request.content );
-		docAccessor.save( request.pratilipiId, pcDoc );
-		return new Response( request.pratilipiId, request.chapterNo, chapter.getTitle(), request.content );
+		PratilipiContentUtil.updateChapter( request.pratilipiId, request.chapterNo, request.chapterTitle, request.content );
+		return new Response( request.pratilipiId, request.chapterNo, request.chapterTitle, request.content );
 
 	}
 

@@ -60,9 +60,9 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 
 		@Override
 		public void addPagelet( PageletType type, Object data ) {
-			if( this.pagelets == null )
-				this.pagelets = new LinkedList<>();
-			this.pagelets.add( new PageletImpl( type, data ) );
+			if( pagelets == null )
+				pagelets = new LinkedList<>();
+			pagelets.add( new PageletImpl( type, data ) );
 		}
 
 	}
@@ -70,6 +70,8 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 	public static class ChapterImpl implements PratilipiContentDoc.Chapter {
 
 		private String title;
+		
+		private Integer nesting;
 
 		private List<PageImpl> pages;
 
@@ -80,6 +82,11 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 
 		public ChapterImpl( String title ) {
 			this.title = title;
+		}
+
+		public ChapterImpl( String title, Integer nesting ) {
+			this.title = title;
+			this.nesting = nesting;
 		}
 
 
@@ -106,10 +113,10 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 		@Override
 		public Object getContent( boolean asHtml ) {
 
-			if( this.pages == null )
+			if( pages == null )
 				return null;
 
-			PageImpl page = this.pages.get( 0 );
+			PageImpl page = pages.get( 0 );
 
 			if( page == null )
 				return null;
@@ -161,8 +168,8 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 
 				}
 
-				this.pages = new LinkedList<PageImpl>();
-				this.pages.add( page );
+				pages = new LinkedList<PageImpl>();
+				pages.add( page );
 
 			}
 
@@ -172,9 +179,9 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 		public Page addPage( PageletType type, Object data ) {
 			PageImpl page = new PageImpl();
 			page.addPagelet( type, data );
-			if( this.pages == null )
-				this.pages = new LinkedList<>();
-			this.pages.add( page );
+			if( pages == null )
+				pages = new LinkedList<>();
+			pages.add( page );
 			return page;
 		}
 
@@ -183,6 +190,12 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 			return pages == null
 					? new ArrayList<Page>( 0 )
 					: new ArrayList<Page>( pages );
+		}
+
+
+		@Override
+		public int getNesting() {
+			return nesting == null ? 0 : nesting;
 		}
 
 	}
@@ -226,17 +239,23 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 	}
 
 	@Override
-	public Chapter addChapter( String title, Integer offset ) {
+	public Chapter addChapter( String title, Integer chapterNo ) {
+		return addChapter( title, null, null );
+	}
 
-		if( this.chapters == null )
-			this.chapters = new LinkedList<>();
+	@Override
+	public Chapter addChapter( String title, Integer chapterNo, Integer nesting ) {
 
-		ChapterImpl chapter = new ChapterImpl( title );
+		if( chapters == null )
+			chapters = new LinkedList<>();
 
-		if( offset == null || offset > this.chapters.size() )
-			this.chapters.add( chapter );
+		ChapterImpl chapter = nesting != null ?
+				new ChapterImpl( title, nesting ) : new ChapterImpl( title );
+
+		if( chapterNo == null || chapterNo > chapters.size() )
+			chapters.add( chapter );
 		else
-			this.chapters.add( offset - 1, chapter );
+			chapters.add( chapterNo - 1, chapter );
 
 		return chapter;
 
@@ -248,20 +267,20 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 		if( chapters == null || chapters.size() < chapterNo )
 			return;
 
-		this.chapters.remove( chapterNo - 1 );
+		chapters.remove( chapterNo - 1 );
 
 	}
 
 	@Override
 	public List<JsonObject> getIndex() {
 
-		if( this.chapters == null )
+		if( chapters == null )
 			return null;
 
 		List<JsonObject> index = new LinkedList<JsonObject>();
 
 		int i = 0;
-		for( Chapter chapter : this.chapters ) {
+		for( Chapter chapter : chapters ) {
 			JsonObject jsonObject = new JsonObject();
 			jsonObject.addProperty( "chapterNo", ++i );
 			if( chapter.getTitle() != null )

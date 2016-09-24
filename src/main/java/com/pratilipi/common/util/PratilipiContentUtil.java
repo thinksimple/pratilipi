@@ -11,7 +11,13 @@ import java.util.regex.Pattern;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.pratilipi.common.exception.InvalidArgumentException;
+import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.DocAccessor;
 import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.type.PratilipiContentDoc;
+import com.pratilipi.data.type.PratilipiContentDoc.Chapter;
 
 
 public class PratilipiContentUtil {
@@ -262,4 +268,51 @@ public class PratilipiContentUtil {
 		return keywords.trim();
 	}
 
+	public static PratilipiContentDoc addChapter( Long pratilipiId, Integer chapterNo ) 
+			throws UnexpectedServerException {
+
+		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
+		PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( pratilipiId );
+
+		if( pcDoc == null )
+			pcDoc = docAccessor.newPratilipiContentDoc();
+
+		pcDoc.addChapter( null, chapterNo );
+		docAccessor.save( pratilipiId, pcDoc );
+
+		return pcDoc;
+
+	}
+
+	public static PratilipiContentDoc removeChapter( Long pratilipiId, Integer chapterNo ) 
+			throws UnexpectedServerException, InvalidArgumentException {
+
+		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
+		PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( pratilipiId );
+
+		if( pcDoc == null )
+			throw new InvalidArgumentException( "Content is Missing!" );
+
+		pcDoc.removeChapter( chapterNo );
+		docAccessor.save( pratilipiId, pcDoc );
+
+		return pcDoc;
+
+	}
+	
+	public static Chapter updateChapter( Long pratilipiId, Integer chapterNo, String chapterTitle, String content ) 
+			throws UnexpectedServerException, InvalidArgumentException {
+
+		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
+		PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( pratilipiId );
+
+		if( pcDoc == null )
+			throw new InvalidArgumentException( "Content is Missing!" );
+
+		Chapter chapter = pcDoc.getChapter( chapterNo );
+		chapter.setTitle( chapterTitle );
+		chapter.setContent( content );
+		docAccessor.save( pratilipiId, pcDoc );
+		return chapter;
+	}
 }

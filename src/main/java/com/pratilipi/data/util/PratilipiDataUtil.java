@@ -303,6 +303,7 @@ public class PratilipiDataUtil {
 					else
 						indexItem.addProperty( "chapterNo", chapterNo++ );
 					indexItem.addProperty( "title", chapter.getTitle() );
+					indexItem.addProperty( "nesting", chapter.getNesting() );
 					index.add( indexItem );
 				}
 				pratilipiData.setIndex( index );

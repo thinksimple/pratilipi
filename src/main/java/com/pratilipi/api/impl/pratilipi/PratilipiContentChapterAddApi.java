@@ -7,20 +7,20 @@ import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
-import com.pratilipi.data.DataAccessorFactory;
-import com.pratilipi.data.DocAccessor;
+import com.pratilipi.common.util.PratilipiContentUtil;
 import com.pratilipi.data.type.PratilipiContentDoc;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/pratilipi/content/chapter/add" )
-public class PratilipiContentAddChapterApi extends GenericApi {
+public class PratilipiContentChapterAddApi extends GenericApi {
 
 	public static class PostRequest extends GenericRequest {
 
-		@Validate( required = true )
+		@Validate( required = true, minLong = 1L, requiredErrMsg = ERR_PRATILIPI_ID_REQUIRED )
 		private Long pratilipiId;
 
-		private Integer offset;
+		@Validate( minInt = 1 )
+		private Integer chapterNo;
 
 	}
 
@@ -28,16 +28,8 @@ public class PratilipiContentAddChapterApi extends GenericApi {
 	public GenericResponse postAddChapter( PostRequest request )
 			throws UnexpectedServerException {
 
-		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
-		PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( request.pratilipiId );
-
-		if( pcDoc == null )
-			pcDoc = docAccessor.newPratilipiContentDoc();
-
-		pcDoc.addChapter( null, request.offset );
-		docAccessor.save( request.pratilipiId, pcDoc );
-
-		return new GenericResponse();
+		PratilipiContentDoc pcDoc = PratilipiContentUtil.addChapter( request.pratilipiId, request.chapterNo );
+		return new PratilipiContentIndexApi.Response( pcDoc.getIndex() );
 
 	}
 

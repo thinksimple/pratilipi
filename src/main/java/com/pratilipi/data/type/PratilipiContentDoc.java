@@ -29,13 +29,15 @@ public interface PratilipiContentDoc {
 		void setContent( String content );
 		List<Page> getPageList();
 		Page addPage( PageletType type, Object data );
+		int getNesting();
 	}
 
 	int getChapterCount();
 	Chapter getChapter( int chapterNo );
 	List<Chapter> getChapterList();
 	Chapter addChapter( String title );
-	Chapter addChapter( String title, Integer offset );
+	Chapter addChapter( String title, Integer chapterNo );
+	Chapter addChapter( String title, Integer chapterNo, Integer nesting );
 	void removeChapter( int chapterNo );
 	List<JsonObject> getIndex();
 }

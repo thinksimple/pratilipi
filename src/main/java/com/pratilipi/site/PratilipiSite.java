@@ -57,6 +57,7 @@ import com.pratilipi.common.util.ThirdPartyResource;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
+import com.pratilipi.data.DocAccessor;
 import com.pratilipi.data.client.BlogPostData;
 import com.pratilipi.data.client.EventData;
 import com.pratilipi.data.client.PratilipiData;
@@ -67,6 +68,7 @@ import com.pratilipi.data.type.Blog;
 import com.pratilipi.data.type.Navigation;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.type.PratilipiContentDoc;
 import com.pratilipi.data.util.BlogPostDataUtil;
 import com.pratilipi.data.util.EventDataUtil;
 import com.pratilipi.data.util.PratilipiDataUtil;
@@ -356,14 +358,27 @@ public class PratilipiSite extends HttpServlet {
 				dataModel = new HashMap<String, Object>();
 				dataModel.put( "title", "Writer Panel" );
 
-				if( request.getParameter( "action" ) != null )
-					dataModel.put( "action", request.getParameter( "action" ) );
+				String action = request.getParameter( "action" );
+				if( action != null )
+					dataModel.put( "action", action );
 
-				if( request.getParameter( RequestParameter.READER_CONTENT_ID.getName() ) != null )
+				Long pratilipiId = RequestParameter.READER_CONTENT_ID.getName() != null 
+							? Long.parseLong( RequestParameter.READER_CONTENT_ID.getName() ) 
+							: null;
+				if( pratilipiId != null )
 					dataModel.put( "pratilipiId", Long.parseLong( request.getParameter( RequestParameter.READER_CONTENT_ID.getName() ) ) );
 
 				if( request.getParameter( RequestParameter.AUTHOR_ID.getName() ) != null )
 					dataModel.put( "authorId", Long.parseLong( request.getParameter( RequestParameter.AUTHOR_ID.getName() ) ) );
+
+				if( action.equals( "write" ) ) {
+					DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
+					PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( pratilipiId );
+					if( pcDoc != null )
+						dataModel.put( "indexJson", pcDoc.getIndex() );
+					else
+						dataModel.put( "indexJson", null );
+				}
 
 				templateName = templateFilePrefix + "Writer.ftl";
 				

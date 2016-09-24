@@ -25,14 +25,14 @@ public class PratilipiContentIndexApi extends GenericApi {
 
 	}
 
+	@SuppressWarnings("unused")
 	public static class Response extends GenericResponse {
-
-		@SuppressWarnings("unused")
+		
 		private List<JsonObject> index;
 
 		private Response() {}
 
-		private Response( List<JsonObject> indexArray ) {
+		public Response( List<JsonObject> indexArray ) {
 			this.index = indexArray;
 		}
 
