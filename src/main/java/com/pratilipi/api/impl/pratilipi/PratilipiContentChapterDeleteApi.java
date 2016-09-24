@@ -12,8 +12,8 @@ import com.pratilipi.common.util.PratilipiContentUtil;
 import com.pratilipi.data.type.PratilipiContentDoc;
 
 @SuppressWarnings("serial")
-@Bind( uri = "/pratilipi/content/chapter/remove" )
-public class PratilipiContentChapterRemoveApi extends GenericApi {
+@Bind( uri = "/pratilipi/content/chapter/delete" )
+public class PratilipiContentChapterDeleteApi extends GenericApi {
 
 	public static class PostRequest extends GenericRequest {
 
@@ -29,7 +29,7 @@ public class PratilipiContentChapterRemoveApi extends GenericApi {
 	public GenericResponse postAddChapter( PostRequest request ) 
 			throws UnexpectedServerException, InvalidArgumentException {
 
-		PratilipiContentDoc pcDoc = PratilipiContentUtil.removeChapter( request.pratilipiId, request.chapterNo );
+		PratilipiContentDoc pcDoc = PratilipiContentUtil.deleteChapter( request.pratilipiId, request.chapterNo );
 		return new PratilipiContentIndexApi.Response( pcDoc.getIndex() );
 
 	}

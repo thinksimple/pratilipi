@@ -362,11 +362,11 @@ public class PratilipiSite extends HttpServlet {
 				if( action != null )
 					dataModel.put( "action", action );
 
-				Long pratilipiId = RequestParameter.READER_CONTENT_ID.getName() != null 
-							? Long.parseLong( RequestParameter.READER_CONTENT_ID.getName() ) 
+				Long pratilipiId = request.getParameter( RequestParameter.READER_CONTENT_ID.getName() ) != null 
+							? Long.parseLong( request.getParameter( RequestParameter.READER_CONTENT_ID.getName() ) ) 
 							: null;
 				if( pratilipiId != null )
-					dataModel.put( "pratilipiId", Long.parseLong( request.getParameter( RequestParameter.READER_CONTENT_ID.getName() ) ) );
+					dataModel.put( "pratilipiId", pratilipiId );
 
 				if( request.getParameter( RequestParameter.AUTHOR_ID.getName() ) != null )
 					dataModel.put( "authorId", Long.parseLong( request.getParameter( RequestParameter.AUTHOR_ID.getName() ) ) );

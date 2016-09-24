@@ -284,7 +284,7 @@ public class PratilipiContentUtil {
 
 	}
 
-	public static PratilipiContentDoc removeChapter( Long pratilipiId, Integer chapterNo ) 
+	public static PratilipiContentDoc deleteChapter( Long pratilipiId, Integer chapterNo ) 
 			throws UnexpectedServerException, InvalidArgumentException {
 
 		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
