@@ -217,7 +217,7 @@ public class PratilipiDocUtil {
 			} else if( childNode.nodeName().equals( "br" ) ) {
 				
 				// Create new pagelet after 2 consecutive line breaks.
-				if( prevNode.nodeName().equals( "br" ) )
+				if( prevNode != null && prevNode.nodeName().equals( "br" ) )
 					pagelet = null;
 				
 			} else {
@@ -228,7 +228,7 @@ public class PratilipiDocUtil {
 				if( pagelet == null || pagelet[0] != PratilipiContentDoc.PageletType.TEXT ) {
 					pagelet = new Object[] { PratilipiContentDoc.PageletType.TEXT, text };
 					pageletList.add( pagelet );
-				} else if( prevNode.nodeName().equals( "br" ) ) {
+				} else if( prevNode != null && prevNode.nodeName().equals( "br" ) ) {
 					pagelet[1] = pagelet[1] + "\n" + text;
 				} else {
 					pagelet[1] = pagelet[1] + " " + text;
