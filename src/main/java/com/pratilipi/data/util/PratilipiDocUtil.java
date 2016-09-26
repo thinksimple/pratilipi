@@ -45,14 +45,14 @@ import com.pratilipi.data.type.CommentDoc;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.PratilipiContentDoc;
+import com.pratilipi.data.type.PratilipiContentDoc.Chapter;
+import com.pratilipi.data.type.PratilipiContentDoc.Pagelet;
+import com.pratilipi.data.type.PratilipiContentDoc.PageletType;
 import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
 import com.pratilipi.data.type.PratilipiReviewsDoc;
 import com.pratilipi.data.type.UserPratilipi;
 import com.pratilipi.data.type.UserPratilipiDoc;
 import com.pratilipi.data.type.Vote;
-import com.pratilipi.data.type.PratilipiContentDoc.Chapter;
-import com.pratilipi.data.type.PratilipiContentDoc.Pagelet;
-import com.pratilipi.data.type.PratilipiContentDoc.PageletType;
 
 
 public class PratilipiDocUtil {
@@ -546,6 +546,10 @@ public class PratilipiDocUtil {
 			throw new InvalidArgumentException( "Content is Missing!" );
 
 		Chapter chapter = pcDoc.getChapter( chapterNo );
+		PratilipiContentDoc.Page page = chapter.getPage( pageNo ); 
+		if( page == null )
+			page = chapter.addPage();
+
 		chapter.setTitle( chapterTitle );
 
 		for( Node childNode : Jsoup.parse( content ).body().childNodes() ) {

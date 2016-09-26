@@ -106,6 +106,15 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 		}
 
 		@Override
+		public Page addPage() {
+			PageImpl page = new PageImpl();
+			if( pages == null )
+				pages = new LinkedList<>();
+			pages.add( page );
+			return page;
+		}
+
+		@Override
 		public Page addPage( PageletType type, Object data ) {
 			PageImpl page = new PageImpl();
 			page.addPagelet( type, data );
