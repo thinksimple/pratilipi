@@ -37,6 +37,23 @@ public class PratilipiContentApi extends GenericApi {
 
 		private PratilipiContentType contentType;
 
+
+		public void setPratilipiId( Long pratilipiId ) {
+			this.pratilipiId = pratilipiId;
+		}
+
+		public void setChapterNo( Integer chapterNo ) {
+			this.chapterNo = chapterNo;
+		}
+
+		public void setPageNo( Integer pageNo ) {
+			this.pageNo = pageNo;
+		}
+
+		public void setContentType( PratilipiContentType contentType ) {
+			this.contentType = contentType;
+		}
+
 	}
 
 	public static class PostRequest extends GenericRequest {
@@ -67,12 +84,16 @@ public class PratilipiContentApi extends GenericApi {
 
 		private Response() {}
 
-		private Response( Long pratilipiId, Integer chapterNo, Integer pageNo, String chapterTitle, Object content ) {
+		public Response( Long pratilipiId, Integer chapterNo, Integer pageNo, String chapterTitle, Object content ) {
 			this.pratilipiId = pratilipiId;
 			this.chapterNo = chapterNo;
 			this.pageNo = pageNo;
 			this.chapterTitle = chapterTitle;
 			this.content = content;
+		}
+
+		public Object getContent() {
+			return content;
 		}
 
 	}

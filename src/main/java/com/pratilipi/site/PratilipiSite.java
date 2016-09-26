@@ -33,6 +33,7 @@ import com.pratilipi.api.impl.event.EventApi;
 import com.pratilipi.api.impl.event.EventListApi;
 import com.pratilipi.api.impl.notification.NotificationListApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiApi;
+import com.pratilipi.api.impl.pratilipi.PratilipiContentApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiListApi;
 import com.pratilipi.api.impl.user.UserApi;
 import com.pratilipi.api.impl.userauthor.UserAuthorFollowApi;
@@ -1086,10 +1087,18 @@ public class PratilipiSite extends HttpServlet {
 		pageNo = pageNo < 1 ? 1 : pageNo;
 		pageNo = pageNo > pratilipi.getPageCount() ? pratilipi.getPageCount() : pageNo;
 		Object content = null;
-		if( pratilipi.getContentType() == PratilipiContentType.PRATILIPI )
-			content = PratilipiDataUtil.getPratilipiContent( pratilipiId, null, pageNo, pratilipi.getContentType() );
-		else if( pratilipi.getContentType() == PratilipiContentType.IMAGE )
+
+		if( pratilipi.getContentType() == PratilipiContentType.PRATILIPI ) {
+			PratilipiContentApi.GetRequest req = new PratilipiContentApi.GetRequest();
+			req.setPratilipiId(pratilipiId);
+			req.setChapterNo( pageNo );
+			req.setContentType( pratilipi.getContentType() );
+			req.setPageNo( pageNo );
+			PratilipiContentApi.Response res = (PratilipiContentApi.Response) ApiRegistry.getApi( PratilipiContentApi.class ).getPratilipiContent( req );
+			content = res.getContent();
+		} else if( pratilipi.getContentType() == PratilipiContentType.IMAGE ) {
 			content = "<img src=\"/api/pratilipi/content?pratilipiId=" + pratilipi.getId() + "&pageNo=" + pageNo + "&chapterNo=" + pageNo + "\" />";
+		}
 		
 		Gson gson = new Gson();
 		PratilipiApi.Response pratilipiResponse = new PratilipiApi.Response( pratilipiData );
