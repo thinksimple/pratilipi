@@ -1,8 +1,8 @@
 नवीन 
 /readers-top-choice         वाचकांची सर्वात जास्त आवड   App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"readers-top-choice" }
-/newly-published-content    नवीन साहित्य प्रकाशित             App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"newly-published-content" }
+/newly-published-content    नवीन प्रकाशित साहित्य      App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"newly-published-content" }
 /sane-guruji-kathamala      साने गुरुजी कथामाला               App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"sane-guruji-kathamala" }
-/event/shravansar-lekhmala  श्रावणसर लेखमाला                  App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "eventId":6198294075146240 }
+/event/marathi-katha-utsav-2016   मराठी कथा उत्सव-२०१६     App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "eventId":5180012207538176 }
 /events                     ऑनलाइन स्पर्धा                       App#EventList::{ "language":"HINDI" }
 /blog                       संपादकीय                                App#BlogPostList::{ "language":"HINDI", "blogId":5683739602452480 }
 /author-interviews          साहित्यकारांची मुलाखत            App#BlogPostList::{ "language":"HINDI", "blogId":5197509039226880 }
@@ -10,16 +10,16 @@
 श्रेणी 
 /lovestories       प्रेम कथा                 App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"lovestories" }
 /horror            थरार कथा              App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"horror" }
-/search?q=poems    काव्य रिदम             App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "searchQuery":"poems" }
-/search?q=articles नॉन फिक्शन           App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "searchQuery":"articles" }
 /search?q=stories  लघुकथा                 App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "searchQuery":"stories" }
 /baalkatha         बालकथा                 App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"baalkatha" }
 /bodhkatha         बोधकथा                 App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"bodhkatha" }
 /hasyakatha        हास्यकथा                App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"hasyakatha" }
 /navalkatha        नवल कथा              App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"navalkatha" }
 /rahasyakatha      रहस्य कथा              App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"rahasyakatha" }
-/jivancharitra     जीवन चरित्र            App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"jivancharitra" }
-/samaj-prabodhan   समाज प्रबोधन         App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"samaj-prabodhan" }
+/search?q=poems    कविता            App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "searchQuery":"poems" }
+/search?q=articles लेख           App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "searchQuery":"articles" }
+/jivancharitra     जीवन-चरित्र            App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"jivancharitra" }
 /sair-sapata       भटकंती                  App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"sair-sapata" }
+/swadishta-pakkala पाककला          App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"swadishta-pakkala" }
+/samaj-prabodhan   समाज प्रबोधन         App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"samaj-prabodhan" }
 /bhavishya         भविष्य                App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"bhavishya" }
-/swadishta-pakkala स्वादिष्ट पाककला    App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"swadishta-pakkala" }
