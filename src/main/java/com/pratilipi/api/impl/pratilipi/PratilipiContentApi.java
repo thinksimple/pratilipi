@@ -121,7 +121,7 @@ public class PratilipiContentApi extends GenericApi {
 						blobEntry.getETag() );
 			}
 		} else {
-			JsonObject jsonObject = PratilipiDocUtil.getContent( request.pratilipiId, request.chapterNo, request.pageNo, request.asHtml );
+			JsonObject jsonObject = PratilipiDocUtil.getContent( request.pratilipiId, request.chapterNo, 1, ! UxModeFilter.isAndroidApp() );
 			return new Response( request.pratilipiId, 
 					request.chapterNo, 
 					request.pageNo,
