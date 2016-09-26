@@ -112,7 +112,7 @@ Content.prototype.reset = function() {
 	this.$content_container.empty();
 };
 
-Content.prototype.reset = function() {
+Content.prototype.getContent = function() {
 	return this.$content_container.html();
 };
 
