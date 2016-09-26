@@ -122,13 +122,14 @@ MainWriterPanel.prototype.attachActionButtonListeners = function() {
 	this.$save_button.on('click', this.saveChapter );
 	
 	this.$publish_button.on('click', function() {
-		_this.saveChapter();
-		window.location = window.location.origin + window.location.pathname + "?action=summarize&id=" + "${ pratilipiId?c }";
+		var url = "?action=summarize&id=" + "${ pratilipiId?c }";
+		_this.saveChapter( url );
 	} );
 	
 	this.$preview_button.on('click', function() {
-		_this.saveChapter();
-		window.location.href = this.pratilipiJson.readPageUrl;
+		var url = _this.pratilipiJson.readPageUrl;
+		_this.saveChapter( url );
+
 	} );
 	
 };
@@ -197,11 +198,11 @@ MainWriterPanel.prototype.resetContent = function() {
 	this.chapter_name_object.reset();
 };
 
-MainWriterPanel.prototype.saveChapter = function() {
+MainWriterPanel.prototype.saveChapter = function( url ) {
 	var _this = this;
 	var ajaxData = { pratilipiId: ${ pratilipiId?c },
 					chapterNo: this.currChapter,
-					chapterTitle: this.$chapter_name_object.getTitle(),
+					chapterTitle: this.chapter_name_object.getTitle(),
 					content: this.$content_object.getContent(),
 					pageNo: 1
 				   };
@@ -211,6 +212,9 @@ MainWriterPanel.prototype.saveChapter = function() {
         success:function(response){
         	console.log(response);
 			alert("Chapter Saved");
+			if( url ) {
+					window.location.href = url;
+			}
 		},
         fail:function(response){
         	var message = jQuery.parseJSON( response.responseText );
