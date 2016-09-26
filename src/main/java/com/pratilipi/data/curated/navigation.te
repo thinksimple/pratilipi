@@ -7,13 +7,13 @@
 /blog             బ్లాగు                  App#BlogPostList::{ "language":"TELUGU", "blogId":5683739602452480 }
 
 విభాగాలు
-/children         బాల సాహిత్యం            App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"children" }
-/ministories      మినీకథలు'             App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"ministories" }
-/love             ప్రేమ                   App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"love" }
+/love             ప్రేమ                   App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"love" }          
+/ministories      మినీకథలు               App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"ministories" }
 /women            మహిళ                  App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"women" }
 /life             జీవితం                App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"life" }
 /social           సామాజికం              App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"social" }
 /spiritual        ఆధ్యాత్మికం             App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"spiritual" }
+/children         బాల సాహిత్యం            App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"children" }
 
 గ్రంథాలయం
 /stories          కథలు                App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"stories" }
