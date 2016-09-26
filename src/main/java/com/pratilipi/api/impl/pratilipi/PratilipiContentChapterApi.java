@@ -78,6 +78,10 @@ public class PratilipiContentChapterApi extends GenericApi {
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
 		JsonObject jsonObject = PratilipiDocUtil.getContent( request.pratilipiId, request.chapterNo, request.pageNo, request.asHtml );
+
+		if( jsonObject == null )
+			return new Response();
+
 		return new Response( request.pratilipiId, 
 								request.chapterNo, 
 								request.pageNo,

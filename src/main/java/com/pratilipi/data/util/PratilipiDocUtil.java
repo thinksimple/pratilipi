@@ -575,9 +575,13 @@ public class PratilipiDocUtil {
 		PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( pratilipiId );
 
 		if( pcDoc == null )
-			throw new InvalidArgumentException( "Content is Missing!" );
+			throw new InvalidArgumentException( "Chapter is Missing!" );
+
+		if( pcDoc.getChapter( chapterNo ).getPage( pageNo ) == null )
+			return null;
 
 		List<Pagelet> pageletList = pcDoc.getChapter( chapterNo ).getPage( pageNo ).getPageletList();
+		
 		String chapterTitle = pcDoc.getChapter( chapterNo ).getTitle();
 		Object content = null;
 
