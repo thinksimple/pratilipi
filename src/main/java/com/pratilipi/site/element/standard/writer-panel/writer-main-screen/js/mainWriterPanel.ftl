@@ -119,7 +119,7 @@ MainWriterPanel.prototype.initializeData = function() {
 
 MainWriterPanel.prototype.attachActionButtonListeners = function() {
 	var _this = this;
-	this.$save_button.on('click', this.saveChapter );
+	this.$save_button.on('click', this.saveChapter.bind( this ) );
 	
 	this.$publish_button.on('click', function() {
 		var url = "?action=summarize&id=" + "${ pratilipiId?c }";
@@ -203,7 +203,7 @@ MainWriterPanel.prototype.saveChapter = function( url ) {
 	var ajaxData = { pratilipiId: ${ pratilipiId?c },
 					chapterNo: this.currChapter,
 					chapterTitle: this.chapter_name_object.getTitle(),
-					content: this.$content_object.getContent(),
+					content: this.content_object.getContent(),
 					pageNo: 1
 				   };
     $.ajax({type: "POST",
