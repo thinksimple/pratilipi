@@ -1085,7 +1085,8 @@ public class PratilipiSite extends HttpServlet {
 		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author, false );
 		
 		pageNo = pageNo < 1 ? 1 : pageNo;
-		pageNo = pageNo > pratilipi.getPageCount() ? pratilipi.getPageCount() : pageNo;
+		if( pratilipi.getPageCount() != null )
+			pageNo = pageNo > pratilipi.getPageCount() ? pratilipi.getPageCount() : pageNo;
 		Object content = null;
 
 		if( pratilipi.getContentType() == PratilipiContentType.PRATILIPI ) {
