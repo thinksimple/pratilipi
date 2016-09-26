@@ -12,7 +12,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import com.google.appengine.repackaged.com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.data.DataAccessor;
@@ -41,9 +40,9 @@ public class LogAndSecurityFilter implements Filter {
 		if( page != null ) {
 			if( page.getType() == PageType.BLOG_POST ) {
 				JsonObject jsonObject = new JsonObject();
-				jsonObject.addProperty( "PAGE_ID", page.getId() );
-				jsonObject.addProperty( "ACCESS_TOKEN", AccessTokenFilter.getAccessToken().getId() );
-				logger.log( Level.INFO, "PAGE_HIT :: " + new Gson().toJson( jsonObject ) );
+				jsonObject.addProperty( "pageId", page.getId() );
+				jsonObject.addProperty( "accessToken", AccessTokenFilter.getAccessToken().getId() );
+				logger.log( Level.INFO, "DataFlow#PAGE_HIT::" + jsonObject.toString() );
 			}
 		}
 
