@@ -1085,18 +1085,16 @@ public class PratilipiSite extends HttpServlet {
 		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author, false );
 		
 		pageNo = pageNo < 1 ? 1 : pageNo;
-		if( pratilipi.getPageCount() != null )
+		if( pratilipi.getPageCount() != null && pratilipi.getPageCount() > 0 )
 			pageNo = pageNo > pratilipi.getPageCount() ? pratilipi.getPageCount() : pageNo;
 		Object content = null;
 
 		if( pratilipi.getContentType() == PratilipiContentType.PRATILIPI ) {
-			logger.log( Level.INFO, "pageNo = " + pageNo );
 			PratilipiContentApi.GetRequest req = new PratilipiContentApi.GetRequest();
 			req.setPratilipiId( pratilipiId );
 			req.setChapterNo( pageNo );
 			req.setPageNo( pageNo );
 			req.setContentType( pratilipi.getContentType() );
-			logger.log( Level.INFO, "Request Params = " + new Gson().toJson( req ) );
 			PratilipiContentApi.Response res = (PratilipiContentApi.Response) ApiRegistry.getApi( PratilipiContentApi.class ).getPratilipiContent( req );
 			content = res.getContent();
 		} else if( pratilipi.getContentType() == PratilipiContentType.IMAGE ) {
