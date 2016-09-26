@@ -2,21 +2,21 @@
 /pathoker-pratham-pchondo   পাঠকের প্রথম পছন্দ             App#PratilipiList::{ "language":"BENGALI", "state":"PUBLISHED", "listName":"pathoker-pratham-pchondo" }
 /natun-prakashito-rachona   নতুন প্রকাশিত রচনা              App#PratilipiList::{ "language":"BENGALI", "state":"PUBLISHED", "listName":"natun-prakashito-rachona" }
 /classic-lekhak             ক্লাসিক লেখক                        App#PratilipiList::{ "language":"BENGALI", "state":"PUBLISHED", "listName":"classic-lekhak" }
-/event/ujan-natun-bodhon    উজান-নতুন বোধন                App#PratilipiList::{ "language":"BENGALI", "state":"PUBLISHED", "eventId":6326060862930944 }
+/event/uttar-khunje-pai-ni  উত্তর খুঁজে পাই নি        App#PratilipiList::{ "language":"BENGALI", "state":"PUBLISHED", "eventId":5827144929247232 }
 /blog                       সম্পাদকীয়                             App#BlogPostList::{ "language":"BENGALI", "blogId":5683739602452480 }
 /events                     অনলাইন প্রতিযোগিতায়        App#EventList::{ "language":"BENGALI" }
 /author-interviews          লেখকের সাক্ষাৎকার              App#BlogPostList::{ "language":"BENGALI", "blogId":5197509039226880 }
 
 শ্রেণী
 /premkahini                      প্রেমকাহিনী                          App#PratilipiList::{ "language":"BENGALI", "state":"PUBLISHED", "listName":"premkahini" }
-/search?q=stories                ছোটগল্প                                App#PratilipiList::{ "language":"BENGALI", "state":"PUBLISHED", "searchQuery":"stories" }
-/search?q=poems                  কবিতা বা কাব্য                     App#PratilipiList::{ "language":"BENGALI", "state":"PUBLISHED", "searchQuery":"poems" }
-/search?q=articles               প্রবন্ধ                                     App#PratilipiList::{ "language":"BENGALI", "state":"PUBLISHED", "searchQuery":"articles" }
-/aleek-kahini                    অলীক কাহিনী                     App#PratilipiList::{ "language":"BENGALI", "state":"PUBLISHED", "listName":"aleek-kahini" }
-/laghu-kathaye                   অনুগল্প                                 App#PratilipiList::{ "language":"BENGALI", "state":"PUBLISHED", "listName":"laghu-kathaye" }
 /rahashyogalpo                   রহস্যগল্প                               App#PratilipiList::{ "language":"BENGALI", "state":"PUBLISHED", "listName":"rahashyogalpo" }
 /bhoutik-galpo                   ভৌতিক গল্প                         App#PratilipiList::{ "language":"BENGALI", "state":"PUBLISHED", "listName":"bhoutik-galpo" } 
+/search?q=stories                ছোটগল্প                                App#PratilipiList::{ "language":"BENGALI", "state":"PUBLISHED", "searchQuery":"stories" }
+/aleek-kahini                    অলীক কাহিনী                     App#PratilipiList::{ "language":"BENGALI", "state":"PUBLISHED", "listName":"aleek-kahini" }
+/laghu-kathaye                   অনুগল্প                                 App#PratilipiList::{ "language":"BENGALI", "state":"PUBLISHED", "listName":"laghu-kathaye" }
 /search?q=books                  উপন্যাস                                App#PratilipiList::{ "language":"BENGALI", "state":"PUBLISHED", "searchQuery":"books" }
+/search?q=poems                  কাব্য                     App#PratilipiList::{ "language":"BENGALI", "state":"PUBLISHED", "searchQuery":"poems" }
+/search?q=articles               প্রবন্ধ                                     App#PratilipiList::{ "language":"BENGALI", "state":"PUBLISHED", "searchQuery":"articles" }
 /hashyokoutuk                    হাস্যকৌতুক                         App#PratilipiList::{ "language":"BENGALI", "state":"PUBLISHED", "listName":"hashyokoutuk" }
 /shishusahityo                   শিশু সাহিত্য                          App#PratilipiList::{ "language":"BENGALI", "state":"PUBLISHED", "listName":"shishusahityo" }
 /jeevancharit-ebong-smritikatha  জীবনচরিত এবং স্মৃতিকথা    App#PratilipiList::{ "language":"BENGALI", "state":"PUBLISHED", "listName":"jeevancharit-ebong-smritikatha" }
