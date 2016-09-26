@@ -606,7 +606,7 @@ public class PratilipiDataUtil {
 		
 	}
 
-	public static void savePratilipiCover( Long pratilipiId, BlobEntry blobEntry )
+	public static String savePratilipiCover( Long pratilipiId, BlobEntry blobEntry )
 			throws InsufficientAccessException, UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -636,6 +636,8 @@ public class PratilipiDataUtil {
 		auditLog.setEventComment( "Uploaded cover image." );
 		
 		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi, auditLog );
+		
+		return createPratilipiCoverUrl( pratilipi );
 		
 	}
 	

@@ -19,6 +19,17 @@ import com.pratilipi.data.util.PratilipiDataUtil;
 @Bind( uri = "/pratilipi/cover" )
 public class PratilipiCoverApi extends GenericApi {
 
+	public static class Response extends GenericResponse {
+		
+		@SuppressWarnings("unused")
+		private String coverImageUrl;
+		
+		private Response( String coverImageUrl ) {
+			this.coverImageUrl = coverImageUrl;
+		}
+		
+	}
+
 	@Get
 	public GenericFileDownloadResponse getPratilipiCover( GetPratilipiCoverRequest request )
 			throws UnexpectedServerException {
@@ -35,7 +46,7 @@ public class PratilipiCoverApi extends GenericApi {
 	}
 
 	@Post
-	public GenericResponse postPratilipiCover( PostPratilipiCoverRequest request )
+	public Response postPratilipiCover( PostPratilipiCoverRequest request )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
 		// This is to cover issue with jQuery FileUpload plug-in.
@@ -49,11 +60,11 @@ public class PratilipiCoverApi extends GenericApi {
 		blobEntry.setData( request.getData() );
 		blobEntry.setMimeType( request.getMimeType() );
 		
-		PratilipiDataUtil.savePratilipiCover(
+		String coverImageUrl = PratilipiDataUtil.savePratilipiCover(
 				request.getPratilipiId(),
 				blobEntry );
 
-		return new GenericResponse();
+		return new Response( coverImageUrl );
 		
 	}		
 

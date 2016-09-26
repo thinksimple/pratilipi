@@ -151,7 +151,7 @@ public class PratilipiContentApi extends GenericApi {
 				.addParam( "processContent", "true" );
 		TaskQueueFactory.getPratilipiTaskQueue().add( task );
 
-		return new Response( null, null, null, null, null );
+		return new Response();
 
 	}		
 
