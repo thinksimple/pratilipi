@@ -177,10 +177,11 @@ MainWriterPanel.prototype.addNewChapter = function( chapterNum ) {
         	console.log(response);
         	
         	var index = jQuery.parseJSON( response ).index;
-        	console.log(parsed_data);
-        	this.index = index;
-        	//increase current chapter, reset 
+        	_this.index = index;
+        	console.log( _this.index );
+        	//increase current chapter and reset 
 			_this.currChapter++;
+			console.log( _this.currChapter );
 			_this.resetContent();
 			
 		},
