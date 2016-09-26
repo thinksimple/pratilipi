@@ -383,8 +383,6 @@ public class PratilipiSite extends HttpServlet {
 					PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( pratilipiId );
 					if( pcDoc != null )
 						dataModel.put( "indexJson", new Gson().toJson( pcDoc.getIndex() ) );
-					else
-						dataModel.put( "indexJson", null );
 				}
 
 				templateName = templateFilePrefix + "Writer.ftl";
