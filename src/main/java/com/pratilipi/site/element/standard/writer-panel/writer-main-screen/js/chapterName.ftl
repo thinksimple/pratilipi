@@ -13,3 +13,7 @@ ChapterName.prototype.change_name = function( name ) {
 ChapterName.prototype.reset = function() {
 	this.$chapter_name_container.val("");
 };
+
+ChapterName.prototype.getTitle = function() {
+	return this.$chapter_name_container.val();
+};

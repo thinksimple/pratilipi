@@ -1,4 +1,7 @@
 var MainWriterPanel = function() {
+	this.$save_button = $( "[data-behaviour='save_button']" );
+	this.$preview_button = $( "[data-behaviour='preview_button']" );
+	this.$publish_button = $( "[data-behaviour='publish_button']" );
 };
 
 
@@ -25,6 +28,9 @@ MainWriterPanel.prototype.init = function() {
     
     this.hideProgressBarOnMobileFocus();
     this.initializeData();
+    
+    //add button listeners
+    this.attachActionButtonListeners();
     
 };
 
@@ -80,6 +86,7 @@ MainWriterPanel.prototype.hideProgressBarOnMobileFocus = function() {
 };
 
 MainWriterPanel.prototype.initializeGlobalVariables = function() {
+	this.pratilipiJson = ${ pratilipiJson };
 	var indexJson = ${ indexJson };
 	if ( indexJson ) {
 		this.index = ${ indexJson };
@@ -108,6 +115,22 @@ MainWriterPanel.prototype.initializeData = function() {
 		this.addNewChapter();
 		console.log("indexjson doesnt exists");
 	}
+};
+
+MainWriterPanel.prototype.attachActionButtonListeners = function() {
+	var _this = this;
+	this.$save_button.on('click', this.saveChapter );
+	
+	this.$publish_button.on('click', function() {
+		_this.saveChapter();
+		window.location = window.location.origin + window.location.pathname + "?action=summarize&id=" + "${ pratilipiId?c }";
+	} );
+	
+	this.$preview_button.on('click', function() {
+		_this.saveChapter();
+		window.location.href = this.pratilipiJson.readPageUrl;
+	} );
+	
 };
 
 MainWriterPanel.prototype.getChapter = function( chapterNum ) {
@@ -172,4 +195,27 @@ MainWriterPanel.prototype.resetContent = function() {
 	this.table_of_contents_object.populateIndex( this.index );
 	this.content_object.reset();
 	this.chapter_name_object.reset();
+};
+
+MainWriterPanel.prototype.saveChapter = function() {
+	var _this = this;
+	var ajaxData = { pratilipiId: ${ pratilipiId?c },
+					chapterNo: this.currChapter,
+					chapterTitle: this.$chapter_name_object.getTitle(),
+					content: this.$content_object.getContent(),
+					pageNo: 1
+				   };
+    $.ajax({type: "POST",
+        url: " /api/pratilipi/content/chapter",
+        data: ajaxData,
+        success:function(response){
+        	console.log(response);
+			alert("Chapter Saved");
+		},
+        fail:function(response){
+        	var message = jQuery.parseJSON( response.responseText );
+			alert(message);
+		}			    		
+		
+	});	
 };
