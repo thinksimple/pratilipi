@@ -80,30 +80,33 @@ MainWriterPanel.prototype.hideProgressBarOnMobileFocus = function() {
 };
 
 MainWriterPanel.prototype.initializeGlobalVariables = function() {
-	
-	<#if indexJson?? >
+	var indexJson = ${ indexJson };
+	if ( indexJson ) {
 		this.index = ${ indexJson };
 		this.currChapter = 1;
-	<#else>
+	}
+	else {
 		this.currChapter = 0;	
-	</#if>	
+	}	
 };
 
 MainWriterPanel.prototype.initializeData = function() {
 	console.log("hello");
 	//if indexJson is not null, book exists, get first chapter and populate the index too.
-	<#if indexJson?? >
+	var indexJson = ${ indexJson };
+	if ( indexJson ) {
 		//get first chapter and populate it in the writer
-		console.log("${indexJson}");
+		console.log( indexJson );
 		this.getChapter( 1 );
 		this.table_of_contents_object.populateIndex( this.index );
 		console.log("indexjson exists");
-	<#else>
+	}
+	else {
 		//make a new chapter call asychrolously and populate the index
 		console.log("indexjson doesnt exists");
 		this.addNewChapter();
 		console.log("indexjson doesnt exists");
-	</#if>
+	}
 };
 
 MainWriterPanel.prototype.getChapter = function( chapterNum ) {

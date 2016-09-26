@@ -110,7 +110,7 @@ FirstScreenWriterPanel.prototype.ajaxSubmitForm = function() {
         	
         	var parsed_data = jQuery.parseJSON( response );
         	console.log(parsed_data);
-  			window.location = window.location.origin + window.location.pathname + "?action=write&pratilipiId=" + parsed_data.pratilipiId;
+  			window.location = window.location.origin + window.location.pathname + "?action=write&id=" + parsed_data.pratilipiId;
 		},
         fail:function(response){
         	var message = jQuery.parseJSON( response.responseText );
