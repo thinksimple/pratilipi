@@ -1093,7 +1093,7 @@ public class PratilipiSite extends HttpServlet {
 			PratilipiContentApi.GetRequest req = new PratilipiContentApi.GetRequest();
 			req.setPratilipiId( pratilipiId );
 			req.setChapterNo( pageNo );
-			req.setPageNo( 1 );
+			req.setPageNo( pageNo );
 			req.setContentType( pratilipi.getContentType() );
 			PratilipiContentApi.Response res = (PratilipiContentApi.Response) ApiRegistry.getApi( PratilipiContentApi.class ).getPratilipiContent( req );
 			content = res.getContent();
