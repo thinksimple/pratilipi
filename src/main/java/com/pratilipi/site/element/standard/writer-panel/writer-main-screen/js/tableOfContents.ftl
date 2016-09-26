@@ -3,6 +3,7 @@ var TableOfContents = function(toc_container, parent_object) {
     this.toc_container = toc_container;
     this.$dropdown_menu_list = toc_container.find(".dropdown-menu");
     this.$book_name_container = toc_container.find("#book_name_toc");
+    this.$chapters_separator_second = this.$dropdown_menu_list.find("[data-behaviour=chapters_separator_second]");
     this.chapters = [];
     console.log(this.chapters);
     var pratilipi_data = ${ pratilipiJson };
@@ -31,11 +32,12 @@ TableOfContents.prototype.setListWidth = function() {
 TableOfContents.prototype.populateIndex = function( index ) {
     var _this = this;
     this.emptyChaptersList();
-    this.chaptersList = index["index"];
+    this.chaptersList = index;
+    console.log( index );
     $.each(this.chaptersList, function(index, chapter) {
         var ch = new Chapter( chapter );
         _this.chapters.push(ch);
-        _this.$dropdown_menu_list.append( ch.getListDomElement() );
+        ch.getListDomElement().insertBefore( _this.$chapters_separator_second );
     });
 };
 
