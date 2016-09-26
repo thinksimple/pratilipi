@@ -289,11 +289,11 @@
 				var response = event.detail.response;
 
 				// Populate map
-				this.contentMap[ response.pageNo ] = response.pageContent;
+				this.contentMap[ response.pageNo ] = response.content;
 
 				// Update content if response page no == this page no
 				if( this.pageNo == response.pageNo )
-					this.set( 'content', response.pageContent );
+					this.set( 'content', response.content );
 			},
 
 			_onError: function( event ) {
