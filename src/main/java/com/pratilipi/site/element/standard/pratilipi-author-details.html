@@ -11,6 +11,7 @@
 			width: 100%;
 			height: 350px;
 			border-radius: 0;
+			background-image: url(http://0.ptlp.co/author/cover);
 			background-color: #FFF;
 			background-repeat: no-repeat;
 			background-position: top;
@@ -151,7 +152,7 @@
 		}
 	</style>
 	<template>
-		<paper-card class="cover-image pratilipi-shadow" style="background-image: url({{ coverImageUrl }})">
+		<paper-card class="cover-image pratilipi-shadow" style="background-image: url('{{ coverImageUrl }}');">
 		
 			<template is="dom-if" if="{{ hasAccessToUpdate }}">
 				<div class="edit-profile">
