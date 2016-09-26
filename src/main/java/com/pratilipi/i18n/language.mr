@@ -243,12 +243,12 @@ logout_failed						= लॉग आउट असफल! कृपया पुन
 
 # Author Edit Popup
 edit_author_heading				= लेखक परिचय संपादित करां 
-edit_author_first_name			= नाव बदला
+edit_author_first_name			= नाव (मराठी)
 edit_author_last_name			= शेवटचे नाव बदलणे
-edit_author_first_name_en		= नाव ( इंग्लिश मध्ये )
-edit_author_last_name_en		= आडनाव ( इंग्लिश मध्ये ) 
+edit_author_first_name_en		= नाव (इंग्रजी)
+edit_author_last_name_en		= आडनाव (इंग्रजी) 
 edit_author_pen_name			= आडनाव
-edit_author_pen_name_en			= आडनाव ( इंग्रजी )
+edit_author_pen_name_en			= आडनाव (इंग्रजी)
 edit_author_birthday_ddmmyyyy	= जन्मतिथि (dd-mm-yyyy)
 edit_author_language			=  भाषा 
 edit_author_summary				= जन्मतिथि (dd-mm-yyyy)
@@ -256,8 +256,8 @@ edit_author_save_changes		= बदल जतन करा
 
 # Pratilipi Edit Popup
 edit_pratilipi_heading			=  रचनेची माहिती बदला
-edit_pratilipi_title			= शिर्षक
-edit_pratilipi_title_en			= शिर्षक  ( इंग्लिश मध्ये )
+edit_pratilipi_title			= शिर्षक (मराठी)
+edit_pratilipi_title_en			= शिर्षक (इंग्रजी)
 edit_pratilipi_type				= विधा 
 edit_pratilipi_language			= भाषा 
 edit_pratilipi_summary			= रचनेचे सारांश
@@ -272,7 +272,7 @@ register_part_3					=
 event_events					= कार्यक्रम 
 event_entries = कार्यक्रम प्रवेश
 event_name = कार्यक्रमाचे नाव
-event_name_en =कार्यक्रम शिर्षक इंग्लिश मध्ये
+event_name_en =कार्यक्रम शिर्षक इंग्रजी मध्ये
 event_description =  कार्यक्रमाच्या संदर्भात
 event_entries_url_list = प्रवेशिकाची  युआरएल लिस्ट
 event_save_changes = सुरक्षित बदल करा
