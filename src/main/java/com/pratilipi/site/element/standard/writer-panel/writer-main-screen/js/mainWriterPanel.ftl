@@ -152,7 +152,7 @@ MainWriterPanel.prototype.addNewChapter = function( chapterNum ) {
         success:function(response){
         	console.log(response);
         	
-        	var index = jQuery.parseJSON( response );
+        	var index = jQuery.parseJSON( response ).index;
         	console.log(parsed_data);
         	this.index = index;
         	//increase current chapter, reset 
@@ -169,7 +169,7 @@ MainWriterPanel.prototype.addNewChapter = function( chapterNum ) {
 };
 
 MainWriterPanel.prototype.resetContent = function() {
-	this.table_of_contents_object.populateIndex( index );
+	this.table_of_contents_object.populateIndex( this.index );
 	this.content_object.reset();
 	this.chapter_name_object.reset();
 };
