@@ -12,19 +12,20 @@
 
 श्रेणी
 /lovestories             प्रेम कथाएं                     App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"lovestories" }
-/suspense-aur-thriller   सस्पेंस और थ्रिलर         App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"suspense-aur-thriller" }
-/horror                  हॉरर                             App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"horror" }
+/suspense-aur-thriller   सस्पेंस और थ्रिलर कथाएं       App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"suspense-aur-thriller" }
+/horror                  हॉरर कथाएं                           App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"horror" }
 /search?q=stories        अन्य कहानियां               App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "searchQuery":"stories" }
 /upanyas                 उपन्यास                        App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"upanyas" }
-/hasya-vyangya           हास्य – व्यंग्य               App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"hasya-vyangya" }
-/search?q=poems          काव्य – वाटिका           App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "searchQuery":"poems" }
-/gazals                  बज़्म-ए-महफ़िल      App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "searchQuery":"gazals" }
+/search?q=poems          पद्य                 App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "searchQuery":"poems" }
+/gazals                  ग़ज़ल                App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "searchQuery":"gazals" }
 /search?q=articles       लेख                              App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "searchQuery":"articles" }
-/jivani-evam-atmakatha   जीवनी एवं आत्मकथा     App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"jivani-evam-atmakatha" }
-/vichar-vimarsh          विचार विमर्श                 App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"vichar-vimarsh" }
+/hasya-vyangya           हास्य – व्यंग्य               App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"hasya-vyangya" }
 /childhood-stories       बाल-साहित्य            App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"childhood-stories" }
+/vichar-vimarsh          विचार विमर्श                 App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"vichar-vimarsh" }
+/jivani-evam-atmakatha   जीवनी एवं आत्मकथा     App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"jivani-evam-atmakatha" }
 /mythology               प्राचीन साहित्य               App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"mythology" }
 /yatra-vrutant           यात्रा – वृत्तांत               App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"yatra-vrutant" }
 /self-help               स्व - विकास               App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"self-help" }
-/numerology            अंकों में छुपे रहस्य        App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"numerology" }
 /swasthya-sukh           स्वास्थ्य सुख                  App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"swasthya-sukh" }
+/swad-ka-tadka           स्वाद का तड़का       App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"swad-ka-tadka" }
+/numerology            अंकों में छुपे रहस्य        App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"numerology" }
