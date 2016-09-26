@@ -1090,10 +1090,9 @@ public class PratilipiSite extends HttpServlet {
 
 		if( pratilipi.getContentType() == PratilipiContentType.PRATILIPI ) {
 			PratilipiContentApi.GetRequest req = new PratilipiContentApi.GetRequest();
-			req.setPratilipiId(pratilipiId);
+			req.setPratilipiId( pratilipiId );
 			req.setChapterNo( pageNo );
 			req.setContentType( pratilipi.getContentType() );
-			req.setPageNo( pageNo );
 			PratilipiContentApi.Response res = (PratilipiContentApi.Response) ApiRegistry.getApi( PratilipiContentApi.class ).getPratilipiContent( req );
 			content = res.getContent();
 		} else if( pratilipi.getContentType() == PratilipiContentType.IMAGE ) {
