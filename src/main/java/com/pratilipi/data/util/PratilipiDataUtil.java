@@ -999,6 +999,17 @@ public class PratilipiDataUtil {
 		return DataAccessorFactory.getBlobAccessor().getBlob( CONTENT_FOLDER + "/" + pratilipiId ) != null;
 
 	}
+
+	public static String createNewImage( Long pratilipiId, Integer pageNo, BlobEntry blobEntry ) 
+			throws UnexpectedServerException {
+		
+		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
+		String imageName = new Date().getTime() + "";
+		blobEntry.setName( IMAGE_CONTENT_FOLDER + "/" + pratilipiId + "/" + pageNo );
+		blobAccessor.createOrUpdateBlob( blobEntry );
+		return imageName;
+
+	}
 	
 	public static Object getPratilipiContent( long pratilipiId, Integer chapterNo, Integer pageNo,
 			PratilipiContentType contentType ) throws InvalidArgumentException,

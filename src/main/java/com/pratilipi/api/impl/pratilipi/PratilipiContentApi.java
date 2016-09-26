@@ -33,12 +33,9 @@ public class PratilipiContentApi extends GenericApi {
 		@Validate( required = true, minInt = 1, requiredErrMsg = ERR_PRATILIPI_CHAPTER_NO_REQUIRED )
 		private Integer chapterNo;
 
-		@Validate( required = true, minInt = 1, requiredErrMsg = ERR_PRATILIPI_PAGE_NO_REQUIRED )
 		private Integer pageNo;
 
 		private PratilipiContentType contentType;
-
-		private boolean asHtml;
 
 	}
 
@@ -121,12 +118,14 @@ public class PratilipiContentApi extends GenericApi {
 						blobEntry.getETag() );
 			}
 		} else {
+
 			JsonObject jsonObject = PratilipiDocUtil.getContent( request.pratilipiId, request.chapterNo, 1, ! UxModeFilter.isAndroidApp() );
 			return new Response( request.pratilipiId, 
 					request.chapterNo, 
 					request.pageNo,
 					jsonObject.get( "chapterTitle" ).getAsString(), 
 					jsonObject.get( "content" ).getAsString() );
+
 		}
 
 		return new GenericResponse();
