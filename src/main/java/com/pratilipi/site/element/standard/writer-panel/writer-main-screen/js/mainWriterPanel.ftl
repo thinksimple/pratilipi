@@ -195,6 +195,34 @@ MainWriterPanel.prototype.addNewChapter = function( chapterNum ) {
 	});	
 };
 
+MainWriterPanel.prototype.removeChapter = function( chapterNum ) {
+	var _this = this;
+	var ajaxData = { pratilipiId: ${ pratilipiId?c } };
+    	ajaxData.chapterNo = chapterNum;
+    $.ajax({type: "POST",
+        url: " /api/pratilipi/content/chapter/delete",
+        data: ajaxData,
+        success:function(response){
+        	console.log(response);
+        	
+        	var index = jQuery.parseJSON( response ).index;
+        	_this.index = index;
+        	console.log( _this.index );
+        	_this.table_of_contents_object.populateIndex( _this.index );
+        	//increase current chapter and reset 
+			//_this.currChapter++;
+			//console.log( _this.currChapter );
+			//_this.resetContent();
+			
+		},
+        fail:function(response){
+        	var message = jQuery.parseJSON( response.responseText );
+			alert(message);
+		}			    		
+		
+	});	
+};
+
 MainWriterPanel.prototype.resetContent = function() {
 	this.table_of_contents_object.populateIndex( this.index );
 	this.content_object.reset();

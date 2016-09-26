@@ -36,7 +36,7 @@ TableOfContents.prototype.populateIndex = function( index ) {
     this.chaptersList = index;
     console.log( index );
     $.each(this.chaptersList, function(index, chapter) {
-        var ch = new Chapter( chapter );
+        var ch = new Chapter( chapter, _this.parent_object );
         _this.chapters.push(ch);
         ch.getListDomElement().insertBefore( _this.$chapters_separator_second );
     });

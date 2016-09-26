@@ -32,6 +32,7 @@ FinalScreenWriterPanel.prototype.hideCoverImageForm = function() {
 };
 
 FinalScreenWriterPanel.prototype.attachCoverImageListeners = function() {
+	var _this = this;
     this.$image_container.on('click', function() {
     	$("#uploadPratilipiImageInput").trigger('click');
     });
@@ -54,6 +55,8 @@ FinalScreenWriterPanel.prototype.attachCoverImageListeners = function() {
             success:function(data){
                 console.log("success");
                 console.log(data);
+                var image_src = jQuery.parseJSON( data ).coverImageUrl;
+                _this.$image_container.find(".cover-image").attr("src", image_src );
             },
             error: function(data){
                 console.log("error");

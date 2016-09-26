@@ -162,8 +162,6 @@ Editor.prototype.addImageListener = function() {
 		$upload_image_select.trigger('click');
 	});
 	console.log($upload_image_select);
-	var e = jQuery.Event("keydown");
-	e.which = 50; 
 	$upload_image_select.on('change', function(evt) {
 			console.log("idhar hun mai");	
 		    ImageTools.resize(this.files[0], {
