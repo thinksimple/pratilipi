@@ -119,16 +119,18 @@ MainWriterPanel.prototype.initializeData = function() {
 
 MainWriterPanel.prototype.attachActionButtonListeners = function() {
 	var _this = this;
-	this.$save_button.on('click', this.saveChapter.bind( this ) );
+	this.$save_button.on('click', function() {
+		_this.saveChapter();
+	} );
 	
 	this.$publish_button.on('click', function() {
 		var url = "?action=summarize&id=" + "${ pratilipiId?c }";
-		_this.saveChapter( url );
+		_this.saveChapter( url, false );
 	} );
 	
 	this.$preview_button.on('click', function() {
 		var url = _this.pratilipiJson.readPageUrl;
-		_this.saveChapter( url );
+		_this.saveChapter( url, true );
 
 	} );
 	
@@ -199,7 +201,7 @@ MainWriterPanel.prototype.resetContent = function() {
 	this.chapter_name_object.reset();
 };
 
-MainWriterPanel.prototype.saveChapter = function( url ) {
+MainWriterPanel.prototype.saveChapter = function( url, newTab ) {
 	var _this = this;
 	var ajaxData = { pratilipiId: ${ pratilipiId?c },
 					chapterNo: this.currChapter,
@@ -214,7 +216,12 @@ MainWriterPanel.prototype.saveChapter = function( url ) {
         	console.log(response);
 			alert("Chapter Saved");
 			if( url ) {
+				if( newTab ) {
+					window.open( url, '_blank' );
+				}
+				else {
 					window.location.href = url;
+				}
 			}
 		},
         fail:function(response){
