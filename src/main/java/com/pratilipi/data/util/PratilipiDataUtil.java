@@ -990,7 +990,13 @@ public class PratilipiDataUtil {
 		}
 		
 	}
-	
+
+	public static Boolean hasOldFormatContent( Long pratilipiId ) 
+			throws UnexpectedServerException {
+
+		return DataAccessorFactory.getBlobAccessor().getBlob( CONTENT_FOLDER + "/" + pratilipiId ) != null;
+
+	}
 	
 	public static Object getPratilipiContent( long pratilipiId, Integer chapterNo, Integer pageNo,
 			PratilipiContentType contentType ) throws InvalidArgumentException,

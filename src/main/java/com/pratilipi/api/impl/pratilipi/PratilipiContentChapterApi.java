@@ -57,14 +57,16 @@ public class PratilipiContentChapterApi extends GenericApi {
 
 		private Long pratilipiId;
 		private Integer chapterNo;
+		private Integer pageNo;
 		private String chapterTitle;
 		private Object content;
 
 		private Response() {}
 
-		private Response( Long pratilipiId, Integer chapterNo, String chapterTitle, Object content ) {
+		private Response( Long pratilipiId, Integer chapterNo, Integer pageNo, String chapterTitle, Object content ) {
 			this.pratilipiId = pratilipiId;
 			this.chapterNo = chapterNo;
+			this.pageNo = pageNo;
 			this.chapterTitle = chapterTitle;
 			this.content = content;
 		}
@@ -78,6 +80,7 @@ public class PratilipiContentChapterApi extends GenericApi {
 		JsonObject jsonObject = PratilipiDocUtil.getContent( request.pratilipiId, request.chapterNo, request.pageNo, request.asHtml );
 		return new Response( request.pratilipiId, 
 								request.chapterNo, 
+								request.pageNo,
 								jsonObject.get( "chapterTitle" ).getAsString(), 
 								jsonObject.get( "content" ).getAsString() );
 
@@ -90,6 +93,7 @@ public class PratilipiContentChapterApi extends GenericApi {
 		PratilipiDocUtil.updateContent( request.pratilipiId, request.chapterNo, request.pageNo, request.chapterTitle, request.content );
 		return new Response( request.pratilipiId, 
 								request.chapterNo, 
+								request.pageNo,
 								request.chapterTitle, 
 								request.content );
 
