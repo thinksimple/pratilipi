@@ -9,3 +9,7 @@ ChapterName.prototype.init = function() {
 ChapterName.prototype.change_name = function( name ) {
 	this.$chapter_name_container.val( name );
 };
+
+ChapterName.prototype.reset = function() {
+	this.$chapter_name_container.val("");
+};

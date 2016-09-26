@@ -1,5 +1,6 @@
 var Chapter = function (ch_object) {
-    this.name = ch_object.name;
+    this.chapterNo = ch_object.chapterNo;
+    this.name = ch_object.chapterTitle ? ch_object.chapterTitle : "Untitled Chapter " + this.chapterNo;
     this.$ListDomElement = null;
 };
 
@@ -8,7 +9,7 @@ Chapter.prototype.getListDomElement = function () {
         return this.$ListDomElement;
     }
 
-    this.$ListDomElement = $("<li>");
+    this.$ListDomElement = $("<li>").addClass("toc_chapter_item");
     var $name = $("<a>", {
         href: "#"
     }).text(this.name);

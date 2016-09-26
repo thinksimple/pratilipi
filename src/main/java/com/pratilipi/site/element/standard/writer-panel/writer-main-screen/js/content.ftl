@@ -108,4 +108,8 @@ Content.prototype.populateContent = function( response ) {
 	this.$content_container.html( response );
 }; 
 
+Content.prototype.reset = function() {
+	this.$content_container.empty();
+};
+
 

@@ -80,26 +80,36 @@ MainWriterPanel.prototype.hideProgressBarOnMobileFocus = function() {
 };
 
 MainWriterPanel.prototype.initializeGlobalVariables = function() {
-	this.currChapter = 1;
+	
 	<#if indexJson?? >
 		this.index = ${ indexJson };
+		this.currChapter = 1;
+	<#else>
+		this.currChapter = 0;	
 	</#if>	
 };
 
 MainWriterPanel.prototype.initializeData = function() {
 	console.log("hello");
+	//if indexJson is not null, book exists, get first chapter and populate the index too.
 	<#if indexJson?? >
 		//get first chapter and populate it in the writer
+		console.log("${indexJson}");
 		this.getChapter( 1 );
+		this.table_of_contents_object.populateIndex( this.index );
+		console.log("indexjson exists");
 	<#else>
-		//make a new chapter call asychrolously
+		//make a new chapter call asychrolously and populate the index
+		console.log("indexjson doesnt exists");
+		this.addNewChapter();
+		console.log("indexjson doesnt exists");
 	</#if>
 };
 
 MainWriterPanel.prototype.getChapter = function( chapterNum ) {
 	var _this = this;
     $.ajax({type: "GET",
-        url: " /api/pratilipi/content/chapter",
+        url: "/api/pratilipi/content/chapter",
         data: {
         	pratilipiId: ${ pratilipiId?c },
         	chapterNo: chapterNum,
@@ -111,8 +121,7 @@ MainWriterPanel.prototype.getChapter = function( chapterNum ) {
         	
         	var parsed_data = jQuery.parseJSON( response );
         	console.log(parsed_data);
-  			_this.content_object.populateContent( parsed_data.content );
-  			_this.chapter_name_object.change_name( parsed_data.chapterTitle );
+			_this.populateContent( parsed_data );
 		},
         fail:function(response){
         	var message = jQuery.parseJSON( response.responseText );
@@ -120,4 +129,43 @@ MainWriterPanel.prototype.getChapter = function( chapterNum ) {
 		}			    		
 		
 	});	
+};
+
+MainWriterPanel.prototype.populateContent = function( parsed_data ) {
+	this.content_object.populateContent( parsed_data.content );
+	this.chapter_name_object.change_name( parsed_data.chapterTitle );
+};
+
+MainWriterPanel.prototype.addNewChapter = function( chapterNum ) {
+	var _this = this;
+	var ajaxData = { pratilipiId: ${ pratilipiId?c } };
+	if ( chapterNum !== undefined ){
+    	ajaxData.chapterNo = chapterNum;   
+  	}
+    $.ajax({type: "POST",
+        url: "/api/pratilipi/content/chapter/add",
+        data: ajaxData,
+        success:function(response){
+        	console.log(response);
+        	
+        	var index = jQuery.parseJSON( response );
+        	console.log(parsed_data);
+        	this.index = index;
+        	//increase current chapter, reset 
+			_this.currChapter++;
+			_this.resetContent();
+			
+		},
+        fail:function(response){
+        	var message = jQuery.parseJSON( response.responseText );
+			alert(message);
+		}			    		
+		
+	});	
+};
+
+MainWriterPanel.prototype.resetContent = function() {
+	this.table_of_contents_object.populateIndex( index );
+	this.content_object.reset();
+	this.chapter_name_object.reset();
 };
