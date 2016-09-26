@@ -48,9 +48,10 @@ TableOfContents.prototype.emptyChaptersList = function() {
 };
 
 TableOfContents.prototype.attachNewChapterListener = function() {
+	var _this = this;
 	this.$new_chapter_button.on('click', function(e) {
 		e.preventDefault();
-		this.parent_object.addNewChapter( this.parent_object.currChapter );
+		_this.parent_object.addNewChapter( _this.parent_object.currChapter );
 	});
 };
 
