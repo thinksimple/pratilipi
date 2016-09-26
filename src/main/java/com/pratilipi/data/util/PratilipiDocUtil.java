@@ -547,18 +547,20 @@ public class PratilipiDocUtil {
 
 		Chapter chapter = pcDoc.getChapter( chapterNo );
 		PratilipiContentDoc.Page page = chapter.getPage( pageNo ); 
-		if( page == null )
-			page = chapter.addPage();
+
+		if( page != null )
+			chapter.removePage( pageNo );
+		page = chapter.addPage( pageNo );
 
 		chapter.setTitle( chapterTitle );
 
 		for( Node childNode : Jsoup.parse( content ).body().childNodes() ) {
 			if( childNode.nodeName().equals( "p" ) )
-				chapter.getPage( pageNo ).addPagelet( PageletType.TEXT, ( (Element) childNode ).html() );
+				page.addPagelet( PageletType.TEXT, ( (Element) childNode ).html() );
 			else if( childNode.nodeName().equals( "img" ) )
-				chapter.getPage( pageNo ).addPagelet( PageletType.IMAGE, childNode.attr( "src" ) );
+				page.addPagelet( PageletType.IMAGE, childNode.attr( "src" ) );
 			else if( childNode.nodeName().equals( "blockquote" ) )
-				chapter.getPage( pageNo ).addPagelet( PageletType.BLOCKQUOTE, ( (Element) childNode ).html() );
+				page.addPagelet( PageletType.BLOCKQUOTE, ( (Element) childNode ).html() );
 
 		}
 

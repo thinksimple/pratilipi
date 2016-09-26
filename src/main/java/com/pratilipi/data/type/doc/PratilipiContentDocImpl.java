@@ -106,11 +106,11 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 		}
 
 		@Override
-		public Page addPage() {
+		public Page addPage( int pageNo ) {
 			PageImpl page = new PageImpl();
 			if( pages == null )
 				pages = new LinkedList<>();
-			pages.add( page );
+			pages.add( pageNo - 1, page );
 			return page;
 		}
 
@@ -131,6 +131,16 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 					: new ArrayList<Page>( pages );
 		}
 
+
+		@Override
+		public void removePage( int pageNo ) {
+
+			if( pages == null || pages.size() < pageNo )
+				return;
+
+			pages.remove( pageNo - 1 );
+
+		}
 
 		@Override
 		public int getNesting() {

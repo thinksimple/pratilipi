@@ -26,8 +26,9 @@ public interface PratilipiContentDoc {
 		int getPageCount();
 		Page getPage( int pageNo );
 		List<Page> getPageList();
-		Page addPage();
 		Page addPage( PageletType type, Object data );
+		Page addPage( int pageNo );
+		void removePage( int pageNo );
 		int getNesting();
 	}
 
