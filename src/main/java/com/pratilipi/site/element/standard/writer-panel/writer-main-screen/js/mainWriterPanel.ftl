@@ -197,30 +197,42 @@ MainWriterPanel.prototype.addNewChapter = function( chapterNum ) {
 
 MainWriterPanel.prototype.removeChapter = function( chapterNum ) {
 	var _this = this;
-	var ajaxData = { pratilipiId: ${ pratilipiId?c } };
-    	ajaxData.chapterNo = chapterNum;
-    $.ajax({type: "POST",
-        url: " /api/pratilipi/content/chapter/delete",
-        data: ajaxData,
-        success:function(response){
-        	console.log(response);
-        	
-        	var index = jQuery.parseJSON( response ).index;
-        	_this.index = index;
-        	console.log( _this.index );
-        	_this.table_of_contents_object.populateIndex( _this.index );
-        	//increase current chapter and reset 
-			//_this.currChapter++;
-			//console.log( _this.currChapter );
-			//_this.resetContent();
+	//first and only chapter, dont remove, just reset content and save.
+	if( this.index.length == 1 ) {
+		this.resetContent();
+		this.saveChapter();
+		//update index too in save chapter for all cases - remember
+	}
+	else {
+		var ajaxData = { pratilipiId: ${ pratilipiId?c } };
+	    	ajaxData.chapterNo = chapterNum;
+	    $.ajax({type: "POST",
+	        url: " /api/pratilipi/content/chapter/delete",
+	        data: ajaxData,
+	        success:function(response){
+	        	console.log(response);
+	        	
+	        	var index = jQuery.parseJSON( response ).index;
+	        	_this.index = index;
+	        	console.log( _this.index );
+	        	_this.table_of_contents_object.populateIndex( _this.index );
+	        	// check if we need to change the page number
+	        	if( _this.currChapter == chapterNum ) {
+	        		_this.setCurrentPage( chapterNum - 1 );
+	        	}
+	        	//increase current chapter and reset 
+				//_this.currChapter++;
+				//console.log( _this.currChapter );
+				//_this.resetContent();
+				
+			},
+	        fail:function(response){
+	        	var message = jQuery.parseJSON( response.responseText );
+				alert(message);
+			}			    		
 			
-		},
-        fail:function(response){
-        	var message = jQuery.parseJSON( response.responseText );
-			alert(message);
-		}			    		
-		
-	});	
+		});	
+	}
 };
 
 MainWriterPanel.prototype.resetContent = function() {
@@ -244,7 +256,7 @@ MainWriterPanel.prototype.saveChapter = function( url, newTab ) {
         	console.log(response);
 			alert("Chapter Saved");
 			if( url ) {
-				if( newTab ) {
+				if( newTab ) {	
 					window.open( url, '_blank' );
 				}
 				else {
@@ -258,4 +270,9 @@ MainWriterPanel.prototype.saveChapter = function( url, newTab ) {
 		}			    		
 		
 	});	
+};
+
+MainWriterPanel.prototype.setCurrentPage = function( chapterNum ) {
+	this.currChapter = chapterNum;
+	this.getChapter( chapterNum );
 };

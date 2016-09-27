@@ -21,12 +21,17 @@ Chapter.prototype.getListDomElement = function () {
          src: "http://0.ptlp.co/resource-all/icon/svg/trash.svg"
     }).data("relatedObject", this).css({width: "20px", height: "20px"});
     
-    $delete.on("click", function() {
+    $delete.on("click", function(e) {
+    	e.stopPropogation();
     	_this.writer_panel_object.removeChapter( _this.chapterNo );
     });
 
     $name.append( $delete );
-    this.$ListDomElement.append($name)
+    this.$ListDomElement.append($name);
+    this.$ListDomElement.on('click', function(e) {
+    	//make sure it doesnt fire on delete
+    	_this.writer_panel_object.setCurrentPage( _this.chapterNo );
+    });
     // console.log(this.$ListDomElement);
     return this.$ListDomElement;        
 
