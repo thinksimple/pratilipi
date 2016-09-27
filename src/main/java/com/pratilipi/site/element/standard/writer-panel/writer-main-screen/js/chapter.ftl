@@ -22,7 +22,7 @@ Chapter.prototype.getListDomElement = function () {
     }).data("relatedObject", this).css({width: "20px", height: "20px"});
     
     $delete.on("click", function(e) {
-    	e.stopPropogation();
+    	e.stopPropagation();
     	_this.writer_panel_object.removeChapter( _this.chapterNo );
     });
 
