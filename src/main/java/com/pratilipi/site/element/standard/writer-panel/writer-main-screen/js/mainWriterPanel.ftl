@@ -223,7 +223,7 @@ MainWriterPanel.prototype.removeChapter = function( chapterNum ) {
 	        	_this.table_of_contents_object.populateIndex( _this.index );
 	        	// check if we need to change the page number
 	        	if( _this.currChapter >= chapterNum ) {
-	        		_this.setCurrentPage( chapterNum - 1 );
+	        		_this.setCurrentPage( _this.currChapter - 1 );
 	        	}
 	        	
 	        	//increase current chapter and reset 
