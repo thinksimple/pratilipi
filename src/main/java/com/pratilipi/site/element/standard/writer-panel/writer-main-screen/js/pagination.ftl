@@ -35,7 +35,7 @@ Pagination.prototype.setProgressPage = function() {
 };
 
 Pagination.prototype.setCurrentPageNo = function() {
-	this.$curr_page_input.val( this.parent_object.currPage );
+	this.$curr_page_input.val( this.parent_object.currChapter );
 };
 
 Pagination.prototype.setTotalPageNo = function() {
@@ -43,7 +43,7 @@ Pagination.prototype.setTotalPageNo = function() {
 };
 
 Pagination.prototype.setProgressBar = function() {
-	var progress = ( this.parent_object.currPage /  this.parent_object.index.length ) ; 
+	var progress = ( this.parent_object.currChapter /  this.parent_object.index.length ) ; 
 	this.$progress_line.css("width", progress + "%");
 	this.$progress_ball.css("left", progress + "%");
 };
