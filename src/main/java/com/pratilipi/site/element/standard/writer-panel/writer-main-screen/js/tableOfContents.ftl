@@ -55,6 +55,10 @@ TableOfContents.prototype.attachNewChapterListener = function() {
 	});
 };
 
+TableOfContents.prototype.changeCurrentChapterName = function( currChapter, title ) {
+	this.chapters[ currChapter - 1 ].changeName( title );
+};
+
 TableOfContents.prototype.addNewChapterButton = function() {
     var $divider = $("<li>", {
         role: "separator",

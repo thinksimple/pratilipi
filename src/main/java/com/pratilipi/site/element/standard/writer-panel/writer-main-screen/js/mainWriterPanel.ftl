@@ -255,6 +255,8 @@ MainWriterPanel.prototype.saveChapter = function( url, newTab ) {
         success:function(response){
         	console.log(response);
 			alert("Chapter Saved");
+			var title = jQuery.parseJSON( response ).chapterTitle;
+			_this.table_of_contents_object.changeCurrentChapterName( _this.currChapter, title );
 			if( url ) {
 				if( newTab ) {	
 					window.open( url, '_blank' );

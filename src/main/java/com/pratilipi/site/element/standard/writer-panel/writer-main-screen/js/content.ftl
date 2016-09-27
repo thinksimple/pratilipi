@@ -105,7 +105,12 @@ Content.prototype.itemIsLinked = function(){
 };
 
 Content.prototype.populateContent = function( response ) {
-	this.$content_container.html( response );
+	if( response == undefined ) {
+		this.reset();
+	}
+	else {
+		this.$content_container.html( response );
+	}
 }; 
 
 Content.prototype.reset = function() {

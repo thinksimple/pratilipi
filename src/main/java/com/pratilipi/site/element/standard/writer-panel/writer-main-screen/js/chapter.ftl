@@ -12,7 +12,7 @@ Chapter.prototype.getListDomElement = function () {
     }
 
     this.$ListDomElement = $("<li>").addClass("toc_chapter_item");
-    var $name = $("<a>", {
+    this.$name = $("<a>", {
         href: "#"
     }).text(this.name);
 
@@ -26,13 +26,19 @@ Chapter.prototype.getListDomElement = function () {
     	_this.writer_panel_object.removeChapter( _this.chapterNo );
     });
 
-    $name.append( $delete );
-    this.$ListDomElement.append($name);
+    this.$name.append( $delete );
+    this.$ListDomElement.append(this.$name);
     this.$ListDomElement.on('click', function(e) {
     	//make sure it doesnt fire on delete
     	_this.writer_panel_object.setCurrentPage( _this.chapterNo );
     });
+    
     // console.log(this.$ListDomElement);
     return this.$ListDomElement;        
 
+};
+
+Chapter.prototype.changeName = function( title ) {
+	this.name = title ? title : "Chapter " + this.chapterNo;
+	this.$name.text( this.name );
 };
