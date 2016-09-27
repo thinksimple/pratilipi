@@ -10,8 +10,8 @@ var Pagination = function(pagination_container, parent_object) {
 }
 
 Pagination.prototype.init = function () {
-    //this.attachPreviousPageListener();
-    //this.attachNextPageListener();
+    this.attachPreviousPageListener();
+    this.attachNextPageListener();
 }
 
 Pagination.prototype.getPreviousPage = function() {
