@@ -14,11 +14,32 @@ Pagination.prototype.init = function () {
     //this.attachNextPageListener();
 }
 
+Pagination.prototype.getPreviousPage = function() {
+ return ( this.parent_object.currChapter - 1 );
+};
+
+Pagination.prototype.getNextPage = function() {
+ 	return ( this.parent_object.currChapter + 1 );
+};
+
 Pagination.prototype.attachPreviousPageListener = function() {
 	var _this = this;
+	this.$previous_page.on('click', function(e) {
+		e.preventDefault();
+		var prev_page = _this.getPreviousPage();
+		_this.parent_object.setCurrentPage( prev_page );
+	});
 };
 
 Pagination.prototype.attachNextPageListener = function() {
+	var _this = this;
+	this.$next_page.on('click', function(e) {
+		e.preventDefault();
+		var next_page = _this.getNextPage();
+		if( next_page <= _this.parent_object.index.length ) {
+			_this.parent_object.setCurrentPage( next_page );
+		}
+	});
 };
 
 Pagination.prototype.setProgressPage = function() {
@@ -43,7 +64,7 @@ Pagination.prototype.setTotalPageNo = function() {
 };
 
 Pagination.prototype.setProgressBar = function() {
-	var progress = ( this.parent_object.currChapter /  this.parent_object.index.length ) ; 
+	var progress = ( this.parent_object.currChapter /  this.parent_object.index.length )*100 ; 
 	this.$progress_line.css("width", progress + "%");
 	this.$progress_ball.css("left", progress + "%");
 };
