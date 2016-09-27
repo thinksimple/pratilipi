@@ -15,7 +15,7 @@ MainWriterPanel.prototype.init = function() {
     this.pagination_object.init();
 
     var toc_container = $( "#toc_container" );
-    this.table_of_contents_object = new TableOfContents( toc_container, pagination_object, this );
+    this.table_of_contents_object = new TableOfContents( toc_container, this.pagination_object, this );
     this.table_of_contents_object.init();
 
     var content_container = $( "#chapter-content" );
