@@ -27,7 +27,9 @@ Pagination.prototype.attachPreviousPageListener = function() {
 	this.$previous_page.on('click', function(e) {
 		e.preventDefault();
 		var prev_page = _this.getPreviousPage();
-		_this.parent_object.setCurrentPage( prev_page );
+		if( prev_page >= 1 ) {
+			_this.parent_object.setCurrentPage( prev_page );
+		}	
 	});
 };
 
