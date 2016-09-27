@@ -1,5 +1,6 @@
-var TableOfContents = function(toc_container, parent_object) {
+var TableOfContents = function(toc_container, pagination_object, parent_object) {
 	this.parent_object = parent_object;
+	this.pagination_object = pagination_object;
     this.toc_container = toc_container;
     this.$dropdown_menu_list = toc_container.find(".dropdown-menu");
     this.$book_name_container = toc_container.find("#book_name_toc");
@@ -40,6 +41,7 @@ TableOfContents.prototype.populateIndex = function( index ) {
         _this.chapters.push(ch);
         ch.getListDomElement().insertBefore( _this.$chapters_separator_second );
     });
+    this.pagination_object.setProgressPage();
 };
 
 TableOfContents.prototype.emptyChaptersList = function() {

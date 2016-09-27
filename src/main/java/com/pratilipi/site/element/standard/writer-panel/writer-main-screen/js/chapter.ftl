@@ -40,5 +40,5 @@ Chapter.prototype.getListDomElement = function () {
 
 Chapter.prototype.changeName = function( title ) {
 	this.name = title ? title : "Chapter " + this.chapterNo;
-	this.$name.text( this.name );
+	this.$name.get(0).firstChild.nodeValue = this.name;
 };
