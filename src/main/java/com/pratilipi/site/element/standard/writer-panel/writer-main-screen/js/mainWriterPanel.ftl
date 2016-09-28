@@ -270,6 +270,10 @@ MainWriterPanel.prototype.saveChapter = function( url, newTab ) {
         success:function(response){
         	console.log(response);
 			alert("Chapter Saved");
+			toastr.options = {
+			positionClass: 'toast-top-center'
+			};
+			toastr.success('Saved!');
 			var title = jQuery.parseJSON( response ).chapterTitle;
 			_this.table_of_contents_object.changeCurrentChapterName( _this.currChapter, title );
 			if( url ) {
@@ -295,7 +299,8 @@ MainWriterPanel.prototype.setCurrentPage = function( chapterNum ) {
 };
 
 MainWriterPanel.prototype.initializeAutosave = function() {
+	var _this = this;
 	setInterval(function () {
-    	this.saveChapter();
+    	_this.saveChapter();
 	}, 15000);
 };
