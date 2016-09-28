@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gson.JsonObject;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -171,9 +172,12 @@ public class InitDataUtil {
 		BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor()
 				.getBlob( "init/banners/" + language.getCode() + "/" + bannerId );
 		
-		if( blobEntry == null )
-			throw new InvalidArgumentException( "{ \"bannerId\":\"Invalid bannerId.\" }" );
-		
+		if( blobEntry == null ) {
+			JsonObject errorMessages = new JsonObject();
+			errorMessages.addProperty( "bannerId", "Invalid bannerId." );
+			throw new InvalidArgumentException( errorMessages );
+		}
+			
 		if( width != null )
 			blobEntry.setData( ImageUtil.resize( blobEntry.getData(), width ) );
 		
