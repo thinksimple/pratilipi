@@ -1,5 +1,5 @@
 പ്രസിദ്ധമായവ 
-/event/katha   കഥാപൂരണം
+/event/katha   കഥാപൂരണം				App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "eventId":4839232641171456 }
 /most-read     കൂടുതൽ  വായിക്കപ്പെട്ടവ     App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"most-read" }
 /recommended   നിര്‍ദ്ദേശിക്കപ്പെട്ടവ           App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"recommended" }
 /new           പുതിയവ                 App#PratilipiList::{ "language":"MALAYതുടര്‍ക്കഥകള്‍ALAM", "state":"PUBLISHED", "listName":"new" } 
