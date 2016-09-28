@@ -31,7 +31,9 @@ Chapter.prototype.getListDomElement = function () {
     this.$ListDomElement.append(this.$name);
     this.$ListDomElement.on('click', function(e) {
     	//make sure it doesnt fire on delete
-    	_this.writer_panel_object.setCurrentPage( _this.chapterNo );
+    	if( $(e.target).data("behaviour") != "delete-chapter" ) {
+    		_this.writer_panel_object.setCurrentPage( _this.chapterNo );
+    	}
     });
     
     // console.log(this.$ListDomElement);

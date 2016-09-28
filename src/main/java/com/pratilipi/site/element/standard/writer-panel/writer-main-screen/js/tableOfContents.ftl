@@ -10,6 +10,7 @@ var TableOfContents = function(toc_container, pagination_object, parent_object) 
     var pratilipi_data = ${ pratilipiJson };
     this.book_name = pratilipi_data.title ? pratilipi_data.title : pratilipi_data.titleEn;
     this.$new_chapter_button = this.$dropdown_menu_list.find("[data-behaviour=new_chapter]");
+    this.$deleteConfirmationModal = $("#chapterDeleteModal");
     //console.log( this.book_name );
 
 }
@@ -20,6 +21,7 @@ TableOfContents.prototype.init = function () {
     //this.populateChapters();
     this.attachNewChapterListener();
     this.delegateDeleteChapterListeners();
+    this.removeEventListenersOnDeleteModalHide();
 }
 
 TableOfContents.prototype.changeName = function( name ) {
@@ -65,8 +67,23 @@ TableOfContents.prototype.changeCurrentChapterName = function( currChapter, titl
 TableOfContents.prototype.delegateDeleteChapterListeners = function() {
 	var _this = this;
 	this.$dropdown_menu_list.on("click", "img[data-behaviour=delete-chapter]", function(e) {
-		e.stopPropogation();
-		_this.parent_object.removeChapter( $(this).data("relatedObject").chapterNo );
+		e.stopPropagation();
+		var chapter_object = $(this).data("relatedObject");
+		this.$deleteConfirmationModal.find(".modal-title").text( chapter_object.name );
+		this.$deleteConfirmationModal.modal('show');
+		
+		this.$deleteConfirmationModal.find('#ok_button').one('click', function() {
+		    _this.$deleteConfirmationModal.modal('hide');
+		    _this.parent_object.removeChapter( chapter_object.chapterNo );
+	    });		
+		
+	});
+};
+
+TableOfContents.prototype.removeEventListenersOnDeleteModalHide = function () {
+ 	var _this = this; 
+	this.$deleteConfirmationModal.on('hidden.bs.modal', function (e) {
+		_this.$deleteConfirmationModal.find('#ok_button').unbind("click");
 	});
 };
 
