@@ -61,4 +61,9 @@ form .form-group {
 }
 .pratilipi-red {
   color:#d0021b;
-}     
+}    
+
+.has-error #copyright_checkbox {
+	outline: #d0021b 1px solid;
+    outline-offset: -2px;
+} 

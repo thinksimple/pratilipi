@@ -88,7 +88,7 @@
             <img src='http://0.ptlp.co/resource-all/icon/svg/circle-red.svg' data-behaviour="progress-ball" style='left: 0%;top:-15%;width:15px;height:15px; position: absolute;'>  
             <!-- end of progress bar                             --> 
         </div>  
-	<!-- Modal -->
+	<!-- Modal for URL -->
 	<div class="modal fade" id="urlModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
@@ -112,7 +112,25 @@
 	      </div>
 	    </div>
 	  </div>
-	</div>  
+	</div>
+	<!-- Modal for delete confirmation -->
+	<div class="modal fade" id="chapterDeleteModal" tabindex="-1" role="dialog">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title">Delete Chapter</h4>
+	      </div>
+	      <div class="modal-body">
+	        <p>Are you sure you want to delete this chapter?</p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+	        <button type="button" class="btn btn-primary">Yes</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div>	  
 	<input type="file" id="upload_images" style="display:none">            
 </body>
 <style><#include "css/style.ftl" /></style>

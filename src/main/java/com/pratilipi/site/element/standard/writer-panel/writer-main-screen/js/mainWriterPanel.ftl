@@ -220,11 +220,11 @@ MainWriterPanel.prototype.removeChapter = function( chapterNum ) {
 	        	var index = jQuery.parseJSON( response ).index;
 	        	_this.index = index;
 	        	console.log( _this.index );
-	        	_this.table_of_contents_object.populateIndex( _this.index );
-	        	// check if we need to change the page number
 	        	if( _this.currChapter >= chapterNum ) {
 	        		_this.setCurrentPage( _this.currChapter - 1 );
-	        	}
+	        	}	        	
+	        	_this.table_of_contents_object.populateIndex( _this.index );
+	        	// check if we need to change the page number
 	        	
 	        	//increase current chapter and reset 
 				//_this.currChapter++;

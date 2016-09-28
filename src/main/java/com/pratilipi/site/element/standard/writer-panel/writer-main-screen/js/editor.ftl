@@ -21,6 +21,7 @@ Editor.prototype.init = function() {
     this.attachLinkSelectionListener();
     this.addTextSelectionListener();
     this.addImageListener();
+    this.removeEventListenersOnUrlModalHide();
 }
 
 Editor.prototype.attachExecCommandListeners = function() {
@@ -188,3 +189,10 @@ Editor.prototype.getSelectionStart = function () {
    var node = document.getSelection().anchorNode;
    return (node.nodeType == 3 ? node.parentNode : node);
 }
+
+Editor.prototype.removeEventListenersOnUrlModalHide = function () {
+ 	var _this = this; 
+	this.$urlModal.on('hidden.bs.modal', function (e) {
+		_this.$urlModal.find('#url_ok_button').unbind("click");
+	});
+};

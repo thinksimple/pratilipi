@@ -19,6 +19,7 @@ TableOfContents.prototype.init = function () {
     this.setListWidth();
     //this.populateChapters();
     this.attachNewChapterListener();
+    this.delegateDeleteChapterListeners();
 }
 
 TableOfContents.prototype.changeName = function( name ) {
@@ -59,6 +60,14 @@ TableOfContents.prototype.attachNewChapterListener = function() {
 
 TableOfContents.prototype.changeCurrentChapterName = function( currChapter, title ) {
 	this.chapters[ currChapter - 1 ].changeName( title );
+};
+
+TableOfContents.prototype.delegateDeleteChapterListeners = function() {
+	var _this = this;
+	this.$dropdown_menu_list.on("click", "img[data-behaviour=delete-chapter]", function(e) {
+		e.stopPropogation();
+		_this.parent_object.removeChapter( $(this).data("relatedObject").chapterNo );
+	});
 };
 
 TableOfContents.prototype.addNewChapterButton = function() {
