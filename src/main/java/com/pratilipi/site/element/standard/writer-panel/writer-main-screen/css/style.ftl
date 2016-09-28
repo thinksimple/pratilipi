@@ -355,6 +355,6 @@ blockquote {
 }  
 
 .current-chapter {
-	color: #d0021b;
-    background-color: whitesmoke;
+	color: #d0021b !important;
+    background-color: whitesmoke !important;
 }
