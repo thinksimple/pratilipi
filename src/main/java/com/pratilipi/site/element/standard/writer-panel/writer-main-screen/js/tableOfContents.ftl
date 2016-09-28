@@ -64,6 +64,11 @@ TableOfContents.prototype.changeCurrentChapterName = function( currChapter, titl
 	this.chapters[ currChapter - 1 ].changeName( title );
 };
 
+TableOfContents.prototype.setCurrentChapterActive = function() {
+	this.$dropdown_menu_list.find(".current-chapter").removeClass("current-chapter");
+	this.chapters[ this.parent_object.currChapter - 1 ].setActive();
+};
+
 TableOfContents.prototype.delegateDeleteChapterListeners = function() {
 	var _this = this;
 	this.$dropdown_menu_list.on("click", "img[data-behaviour=delete-chapter]", function(e) {

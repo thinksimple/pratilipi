@@ -45,6 +45,7 @@ Pagination.prototype.attachNextPageListener = function() {
 };
 
 Pagination.prototype.setProgressPage = function() {
+	this.parent_object.toc_container.setCurrentChapterActive();
 	if( this.parent_object.index.length == 1 ) {
 		this.$pagination_container.hide();
 	}

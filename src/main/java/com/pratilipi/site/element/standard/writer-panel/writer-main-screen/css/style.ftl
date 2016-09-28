@@ -353,3 +353,8 @@ blockquote {
 	margin-left:auto;
 	margin-right:auto;
 }  
+
+.current-chapter {
+	color: #d0021b;
+    background-color: whitesmoke;
+}
