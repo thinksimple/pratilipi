@@ -69,10 +69,10 @@ TableOfContents.prototype.delegateDeleteChapterListeners = function() {
 	this.$dropdown_menu_list.on("click", "img[data-behaviour=delete-chapter]", function(e) {
 		e.stopPropagation();
 		var chapter_object = $(this).data("relatedObject");
-		this.$deleteConfirmationModal.find(".modal-title").text( chapter_object.name );
-		this.$deleteConfirmationModal.modal('show');
+		_this.$deleteConfirmationModal.find(".modal-title").text( chapter_object.name );
+		_this.$deleteConfirmationModal.modal('show');
 		
-		this.$deleteConfirmationModal.find('#ok_button').one('click', function() {
+		_this.$deleteConfirmationModal.find('#ok_button').one('click', function() {
 		    _this.$deleteConfirmationModal.modal('hide');
 		    _this.parent_object.removeChapter( chapter_object.chapterNo );
 	    });		

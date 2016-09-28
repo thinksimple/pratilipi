@@ -67,3 +67,49 @@ form .form-group {
 	outline: #d0021b 1px solid;
     outline-offset: -2px;
 } 
+
+.spinner {
+  position: relative;
+  /*width: 40px;
+  height: 40px;
+
+  
+  margin: 100px auto;*/
+}
+
+.spinner:before, .spinner:after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -50px;
+  margin-top: -50px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #333;
+  opacity: 0.6;
+  content: '';
+  
+  -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+  animation: sk-bounce 2.0s infinite ease-in-out;
+}
+
+.spinner:after {
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+}
+
+@-webkit-keyframes sk-bounce {
+  0%, 100% { -webkit-transform: scale(0.0) }
+  50% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes sk-bounce {
+  0%, 100% { 
+    transform: scale(0.0);
+    -webkit-transform: scale(0.0);
+  } 50% { 
+    transform: scale(1.0);
+    -webkit-transform: scale(1.0);
+  }
+}
