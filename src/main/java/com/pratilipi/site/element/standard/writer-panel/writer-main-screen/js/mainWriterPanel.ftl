@@ -35,6 +35,7 @@ MainWriterPanel.prototype.init = function() {
     
     //add button listeners
     this.attachActionButtonListeners();
+    this.initializeAutosave();
     
 };
 
@@ -254,6 +255,9 @@ MainWriterPanel.prototype.resetContent = function() {
 
 MainWriterPanel.prototype.saveChapter = function( url, newTab ) {
 	var _this = this;
+	if( this.content_object.hasEmptyText() ) {
+		this.content_object.wrapInParagraph();
+	}
 	var ajaxData = { pratilipiId: ${ pratilipiId?c },
 					chapterNo: this.currChapter,
 					chapterTitle: this.chapter_name_object.getTitle(),
@@ -288,4 +292,10 @@ MainWriterPanel.prototype.saveChapter = function( url, newTab ) {
 MainWriterPanel.prototype.setCurrentPage = function( chapterNum ) {
 	this.currChapter = chapterNum;
 	this.getChapter( chapterNum );
+};
+
+MainWriterPanel.prototype.initializeAutosave = function() {
+	setInterval(function () {
+    	this.saveChapter();
+	}, 15000);
 };

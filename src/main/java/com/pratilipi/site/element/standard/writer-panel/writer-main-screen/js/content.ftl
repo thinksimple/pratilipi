@@ -121,4 +121,10 @@ Content.prototype.getContent = function() {
 	return this.$content_container.html();
 };
 
+Content.prototype.hasEmptyText = function() {
+	return ( this.$content_container.children().length == 0 );
+};
 
+Content.prototype.wrapInParagraph = function() {
+	this.$content_container.wrapInner("<p>");
+};
