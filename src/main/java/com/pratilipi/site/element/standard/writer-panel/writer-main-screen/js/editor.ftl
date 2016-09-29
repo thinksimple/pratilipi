@@ -8,7 +8,8 @@ var Editor = function ( editor_container, content_object ) {
     "justifyCenter": {highlighted: "http://0.ptlp.co/resource-all/icon/svg/paragraph-center-red.svg", unhighlighted: "http://0.ptlp.co/resource-all/icon/svg/paragraph-center.svg"},
     "justifyRight": {highlighted: "http://0.ptlp.co/resource-all/icon/svg/paragraph-right-red.svg", unhighlighted: "http://0.ptlp.co/resource-all/icon/svg/paragraph-right.svg"},
     "blockquote": {highlighted: "http://0.ptlp.co/resource-all/icon/svg/quotes-left-red.svg", unhighlighted: "http://0.ptlp.co/resource-all/icon/svg/quotes-left.svg"},
-    "createLink": {highlighted: "http://0.ptlp.co/resource-all/icon/svg/link-red.svg", unhighlighted: "http://0.ptlp.co/resource-all/icon/svg/link-505050.svg"} };
+    "createLink": {highlighted: "http://0.ptlp.co/resource-all/icon/svg/link-red.svg", unhighlighted: "http://0.ptlp.co/resource-all/icon/svg/link-505050.svg"},
+    "insertImage": {highlighted: "http://0.ptlp.co/resource-all/icon/svg/trash-d0021b.svg", unhighlighted: "http://0.ptlp.co/resource-all/icon/svg/camera2.svg"} };
     this.$execCommandLinks = this.$editor_container.find(".execCommand");
     // this.$alignmentLinks = this.$editor_container.find( '[data-role="alignment"]' );
     this.$urlModal = $('#urlModal');
@@ -19,6 +20,7 @@ Editor.prototype.init = function() {
     this.attachBlockquoteListener();
     this.attachLinkListener();
     this.attachLinkSelectionListener();
+    this.attachImageSelectionListener();
     this.addTextSelectionListener();
     this.addImageListener();
     this.removeEventListenersOnUrlModalHide();
@@ -123,6 +125,29 @@ Editor.prototype.attachLinkSelectionListener = function() {
             }
         });
     });
+};
+
+Editor.prototype.attachImageSelectionListener = function() {
+    var _this = this;
+    var $remove = this.$editor_container.find("#insertImage");
+    this.content_object.$content_container.on("click", "img.writer-image", function(e) {
+    	_this.highlightImageOption( true );
+    	var $image_element = $(this);
+        $(document).one('click', function( e2 ) {
+            if ( e2.target == $remove.get(0) ) {
+				$image_element.remove();
+				_this.highlightImageOption( false );
+            }
+            else { 
+            	_this.highlightImageOption( false );            	
+            }
+        });
+    });
+};
+
+Editor.prototype.highlightImageOption = function( deleteFlag ) {
+	var img_src = deleteFlag ? this.icons_object[ "insertImage" ]["unhighlighted"] : this.icons_object[ "insertImage" ]["highlighted"];
+	this.$editor_container.find("#insertImage").attr( "src", img_src );
 };
 
 Editor.prototype.addTextSelectionListener = function() {

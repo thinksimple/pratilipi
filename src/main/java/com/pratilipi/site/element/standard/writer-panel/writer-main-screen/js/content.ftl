@@ -110,6 +110,7 @@ Content.prototype.populateContent = function( response ) {
 	}
 	else {
 		this.$content_container.html( response );
+		this.$content_container.find("img").addClass("writer-image");
 	}
 }; 
 
