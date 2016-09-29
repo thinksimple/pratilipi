@@ -1,6 +1,7 @@
 package com.pratilipi.api.impl.pratilipi;
 
 import java.util.List;
+import java.util.Map;
 
 import com.google.gson.JsonObject;
 import com.pratilipi.api.GenericApi;
@@ -9,10 +10,10 @@ import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
+import com.pratilipi.common.exception.InsufficientAccessException;
+import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
-import com.pratilipi.data.DataAccessorFactory;
-import com.pratilipi.data.DocAccessor;
-import com.pratilipi.data.type.PratilipiContentDoc;
+import com.pratilipi.data.util.PratilipiDocUtil;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/pratilipi/content/index" )
@@ -35,6 +36,7 @@ public class PratilipiContentIndexApi extends GenericApi {
 		private List<JsonObject> index;
 		private Integer chapterCount;
 
+		@SuppressWarnings("unused")
 		private Response() {}
 
 		public Response( List<JsonObject> index, Integer chapterCount ) {
@@ -53,17 +55,15 @@ public class PratilipiContentIndexApi extends GenericApi {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	@Get
 	public Response getIndex( GetRequest request )
-			throws UnexpectedServerException {
+			throws UnexpectedServerException, InsufficientAccessException, InvalidArgumentException {
 
-		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
-		PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( request.pratilipiId );
-
-		if( pcDoc != null )
-			return new Response( pcDoc.getIndex(), pcDoc.getChapterCount() );
-
-		return new Response();
+		Map<String, Object> indexAndChapterCountMap = PratilipiDocUtil.getIndexAndChapterCount( request.pratilipiId );
+		List<JsonObject> index = (List<JsonObject>) indexAndChapterCountMap.get( "index" );
+		Integer chapterCount = (Integer) indexAndChapterCountMap.get( "chapterCount" );
+		return new Response( index, chapterCount );
 
 	}
 

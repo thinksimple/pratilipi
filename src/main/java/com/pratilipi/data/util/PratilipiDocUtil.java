@@ -594,30 +594,40 @@ public class PratilipiDocUtil {
 
 	}
 
-	public static JsonObject getContent( Long pratilipiId, Integer chapterNo, Integer pageNo, boolean asHtml ) 
-			throws InvalidArgumentException, UnexpectedServerException {
+	public static Map<String, Object> getContent( Long pratilipiId, Integer chapterNo, Integer pageNo, boolean asHtml ) 
+			throws InvalidArgumentException, UnexpectedServerException, InsufficientAccessException {
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+
+		if( ! PratilipiDataUtil.hasAccessToReadPratilipiContent( pratilipi ) )
+			throw new InsufficientAccessException();
 
 		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
 		PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( pratilipiId );
 
 		if( pcDoc == null )
+			throw new InvalidArgumentException( "Content is Missing!" );
+
+		Chapter chapter = pcDoc.getChapter( chapterNo );
+		if( chapter == null )
 			throw new InvalidArgumentException( "Chapter is Missing!" );
 
-		if( pcDoc.getChapter( chapterNo ).getPage( pageNo ) == null )
+		if( chapter.getPage( pageNo ) == null )
 			return null;
 
-		List<Pagelet> pageletList = pcDoc.getChapter( chapterNo ).getPage( pageNo ).getPageletList();
-		
-		String chapterTitle = pcDoc.getChapter( chapterNo ).getTitle();
+		String chapterTitle = chapter.getTitle();
+		List<Pagelet> pageletList = chapter.getPage( pageNo ).getPageletList();
+
+
 		Object content = null;
 
 		if( asHtml ) {
 
 			String htmlString = new String();
+
 			for( Pagelet pagelet : pageletList ) {
-
 				Element element = null;
-
 				if( pagelet.getType() == PageletType.TEXT )
 					element = new Element( Tag.valueOf( "p" ), "" ).html( pagelet.getData().toString() );
 				else if( pagelet.getType() == PageletType.BLOCKQUOTE )
@@ -627,19 +637,40 @@ public class PratilipiDocUtil {
 
 				if( element != null )
 					htmlString = htmlString + element.toString();
-
 			}
 
 			content = htmlString;
 
 		} else {
 			content = pageletList;
+
 		}
 
-		JsonObject jsonObject = new JsonObject();
-		jsonObject.addProperty( "chapterTitle", chapterTitle );
-		jsonObject.addProperty( "content", content.toString() );
-		return jsonObject;
+		Map<String, Object> contentMap = new HashMap<String, Object>();
+		contentMap.put( "chapterTitle", chapterTitle );
+		contentMap.put( "content", content );
+		return contentMap;
+
+	}
+
+	public static Map<String, Object> getIndexAndChapterCount( Long pratilipiId ) 
+			throws InsufficientAccessException, UnexpectedServerException, InvalidArgumentException {
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+
+		if( ! PratilipiDataUtil.hasAccessToReadPratilipiContent( pratilipi ) )
+			throw new InsufficientAccessException();
+
+		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
+		PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( pratilipiId );
+		if( pcDoc == null )
+			throw new InvalidArgumentException( "Content is Missing!" );
+
+		Map<String, Object> indexAndChapterCountMap = new HashMap<String, Object>();
+		indexAndChapterCountMap.put( "index", pcDoc.getIndex() );
+		indexAndChapterCountMap.put( "chapterCount", pcDoc.getChapterCount() );
+		return indexAndChapterCountMap;
 
 	}
 	

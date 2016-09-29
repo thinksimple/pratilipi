@@ -993,7 +993,7 @@ public class PratilipiDataUtil {
 		
 	}
 
-	public static Boolean hasOldFormatContent( Long pratilipiId ) 
+	public static Boolean isOldFormatContent( Long pratilipiId ) 
 			throws UnexpectedServerException {
 
 		return DataAccessorFactory.getBlobAccessor().getBlob( CONTENT_FOLDER + "/" + pratilipiId ) != null;

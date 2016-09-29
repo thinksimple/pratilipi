@@ -1,6 +1,7 @@
 package com.pratilipi.api.impl.pratilipi;
 
-import com.google.gson.JsonObject;
+import java.util.Map;
+
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -109,14 +110,16 @@ public class PratilipiContentApi extends GenericApi {
 			contentType = DataAccessorFactory.getDataAccessor()
 					.getPratilipi( request.pratilipiId )
 					.getContentType();
-		
 
-		if( PratilipiDataUtil.hasOldFormatContent( request.pratilipiId ) ) {
+
+		if( PratilipiDataUtil.isOldFormatContent( request.pratilipiId ) ) {
+
 			Object content = PratilipiDataUtil.getPratilipiContent(
 					request.pratilipiId,
 					request.chapterNo,
 					request.pageNo,
 					contentType );
+
 			if( UxModeFilter.isAndroidApp() ) {
 				return new Response(
 						request.pratilipiId,
@@ -124,6 +127,7 @@ public class PratilipiContentApi extends GenericApi {
 						request.pageNo,
 						null,
 						content );
+
 			} else if( contentType == PratilipiContentType.PRATILIPI ) {
 				return new Response(
 						request.pratilipiId,
@@ -131,21 +135,28 @@ public class PratilipiContentApi extends GenericApi {
 						request.pageNo,
 						null,
 						content );
+
 			} else if( contentType == PratilipiContentType.IMAGE ) {
 				BlobEntry blobEntry = ( BlobEntry ) content;
 				return new GenericFileDownloadResponse(
 						blobEntry.getData(),
 						blobEntry.getMimeType(),
 						blobEntry.getETag() );
+
 			}
+
 		} else {
 
-			JsonObject jsonObject = PratilipiDocUtil.getContent( request.pratilipiId, request.chapterNo, 1, ! UxModeFilter.isAndroidApp() );
+			Map<String, Object> contentMap = PratilipiDocUtil.getContent( request.pratilipiId, request.chapterNo, 1, ! UxModeFilter.isAndroidApp() );
+
+			if( contentMap == null )
+				return new GenericResponse();
+
 			return new Response( request.pratilipiId, 
 					request.chapterNo, 
 					request.pageNo,
-					jsonObject.get( "chapterTitle" ).getAsString(), 
-					jsonObject.get( "content" ).getAsString() );
+					contentMap.get( "chapterTitle" ).toString(), 
+					contentMap.get( "content" ) );
 
 		}
 
