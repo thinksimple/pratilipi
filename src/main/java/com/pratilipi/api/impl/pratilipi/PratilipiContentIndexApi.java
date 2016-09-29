@@ -20,12 +20,15 @@ public class PratilipiContentIndexApi extends GenericApi {
 
 	public static class GetRequest extends GenericRequest {
 
-		@Validate( required = true )
+		@Validate( required = true, minLong = 1L, requiredErrMsg = ERR_PRATILIPI_ID_REQUIRED )
 		private Long pratilipiId;
+
+		public void setPratilipiId( Long pratilipiId )  {
+			this.pratilipiId = pratilipiId;
+		}
 
 	}
 
-	@SuppressWarnings("unused")
 	public static class Response extends GenericResponse {
 		
 		private List<JsonObject> index;
@@ -36,16 +39,23 @@ public class PratilipiContentIndexApi extends GenericApi {
 			this.index = indexArray;
 		}
 
+		public List<JsonObject> getIndex() {
+			return index;
+		}
+
 	}
 
 	@Get
-	public Response postAddChapter( GetRequest request )
+	public Response getIndex( GetRequest request )
 			throws UnexpectedServerException {
 
 		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
 		PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( request.pratilipiId );
 
-		return new Response( pcDoc.getIndex() );
+		if( pcDoc != null )
+			return new Response( pcDoc.getIndex() );
+
+		return new Response();
 
 	}
 

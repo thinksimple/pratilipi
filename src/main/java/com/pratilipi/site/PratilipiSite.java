@@ -24,6 +24,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.pratilipi.api.ApiRegistry;
 import com.pratilipi.api.impl.author.AuthorApi;
 import com.pratilipi.api.impl.author.AuthorListApi;
@@ -34,6 +35,7 @@ import com.pratilipi.api.impl.event.EventListApi;
 import com.pratilipi.api.impl.notification.NotificationListApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentApi;
+import com.pratilipi.api.impl.pratilipi.PratilipiContentIndexApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiListApi;
 import com.pratilipi.api.impl.user.UserApi;
 import com.pratilipi.api.impl.userauthor.UserAuthorFollowApi;
@@ -380,10 +382,11 @@ public class PratilipiSite extends HttpServlet {
 					dataModel.put( "authorId", Long.parseLong( request.getParameter( RequestParameter.AUTHOR_ID.getName() ) ) );
 
 				if( action.equals( "write" ) ) {
-					DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
-					PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( pratilipiId );
-					if( pcDoc != null )
-						dataModel.put( "indexJson", new Gson().toJson( pcDoc.getIndex() ) );
+					PratilipiContentIndexApi.GetRequest indexReq = new PratilipiContentIndexApi.GetRequest();
+					indexReq.setPratilipiId( pratilipiId );
+					List<JsonObject> indexArray = ApiRegistry.getApi( PratilipiContentIndexApi.class )
+															.getIndex( indexReq ).getIndex();
+					dataModel.put( "indexJson", new Gson().toJson( indexArray ) );
 				}
 
 				templateName = templateFilePrefix + "Writer.ftl";
