@@ -642,7 +642,7 @@ public class PratilipiDocUtil {
 			content = htmlString;
 
 		} else {
-			content = pageletList;
+			content = chapter;
 
 		}
 
