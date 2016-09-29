@@ -129,11 +129,11 @@ Editor.prototype.attachLinkSelectionListener = function() {
 
 Editor.prototype.attachImageSelectionListener = function() {
     var _this = this;
-    var $remove = this.$editor_container.find("#insertImage");
+    var $remove = this.$editor_container.find("#insertImage img");
     this.content_object.$content_container.on("click", "img.writer-image", function(e) {
     	_this.highlightImageOption( true );
     	var $image_element = $(this);
-        $(document).one('click', function( e2 ) {
+        $(document.body).one('click', function( e2 ) {
             if ( e2.target == $remove.get(0) ) {
 				$image_element.remove();
 				_this.highlightImageOption( false );
@@ -147,7 +147,7 @@ Editor.prototype.attachImageSelectionListener = function() {
 
 Editor.prototype.highlightImageOption = function( deleteFlag ) {
 	var img_src = deleteFlag ? this.icons_object[ "insertImage" ]["unhighlighted"] : this.icons_object[ "insertImage" ]["highlighted"];
-	this.$editor_container.find("#insertImage").attr( "src", img_src );
+	this.$editor_container.find("#insertImage img").attr( "src", img_src );
 };
 
 Editor.prototype.addTextSelectionListener = function() {
