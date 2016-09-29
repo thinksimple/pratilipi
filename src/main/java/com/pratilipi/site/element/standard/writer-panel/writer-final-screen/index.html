@@ -52,10 +52,11 @@
 		    var fd = new FormData();
 				fd.append('data', blob);
 				fd.append('pratilipiId', ${ pratilipiId?c } );  
-				fd.append('pageNo', 1 );	  
+				fd.append('pageNo', 1 );
+				
 		    $.ajax({
             type:'POST',
-            url: '/api/pratilipi/content/image',
+            url: '/api/pratilipi/content/image?pratilipiId=${ pratilipiId?c }&pageNo=1',
             data:fd,
             cache:true,
             contentType: false,
