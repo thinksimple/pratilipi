@@ -171,14 +171,22 @@ Editor.prototype.addImageListener = function() {
 		    }, function(blob, didItResize) {
 		        // didItResize will be true if it managed to resize it, otherwise false (and will return the original file as 'blob')
 		        var $current_element = $( _this.getSelectionStart() );
-		        var $last_element = ( $current_element.closest("p") || $current_element.closest("blockquote") );
-				console.log( $last_element );
+		        var $last_element;
+		        if( $current_element.closest("p").length ) {
+		        	$last_element =  $current_element.closest("p") ;
+		        }
+		        else if ( $current_element.closest("blockquote").length ) {
+		        	$last_element =  $current_element.closest("blockquote") ;
+		        }
+		        else {
+		        	$last_element = null;
+		        }
 				var $img = $("<img>").attr( "src", window.URL.createObjectURL(blob) ).addClass("writer-image").addClass("blur-image");
 				if( $last_element ) {
 					$img.insertAfter( $last_element );
 				}
 				else {
-					_this.content_onject.$content_container.append($img);
+					_this.content_object.$content_container.append($img);
 				}
 				$("<p><br></p>").insertAfter($img);
 				var cur_page = _this.content_object.parent_object.currChapter;
