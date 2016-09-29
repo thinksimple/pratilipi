@@ -149,14 +149,11 @@ public class PratilipiContentApi extends GenericApi {
 
 			Map<String, Object> contentMap = PratilipiDocUtil.getContent( request.pratilipiId, request.chapterNo, 1, ! UxModeFilter.isAndroidApp() );
 
-			if( contentMap == null )
-				return new GenericResponse();
-
 			return new Response( request.pratilipiId, 
 					request.chapterNo, 
 					request.pageNo,
-					contentMap.get( "chapterTitle" ) != null ? contentMap.get( "chapterTitle" ).toString() : null, 
-					contentMap.get( "content" ) );
+					contentMap != null && contentMap.get( "chapterTitle" ) != null ? contentMap.get( "chapterTitle" ).toString() : null, 
+					contentMap != null && contentMap.get( "content" ) != null ? contentMap.get( "content" ) : null );
 
 		}
 
