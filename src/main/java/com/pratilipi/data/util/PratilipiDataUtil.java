@@ -65,6 +65,8 @@ public class PratilipiDataUtil {
 	private static final String COVER_FOLDER 		 = "pratilipi-cover/original";
 	private static final String RESOURCE_FOLDER		 = "pratilipi-resource";
 
+	private static final String CONTENT_IMAGE_PREFIX = "CONTENT_IMAGE_";
+
 
 	public static boolean hasAccessToListPratilipiData( PratilipiFilter pratilipiFilter ) {
 		
@@ -1000,17 +1002,17 @@ public class PratilipiDataUtil {
 
 	}
 
-	public static String createNewImage( Long pratilipiId, Integer pageNo, BlobEntry blobEntry ) 
+	public static String createNewImage( Long pratilipiId, BlobEntry blobEntry ) 
 			throws UnexpectedServerException {
 
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-		String imageName = "CONTENT_IMAGE::" + new Date().getTime();
+		String imageName = CONTENT_IMAGE_PREFIX + new Date().getTime();
 		blobEntry.setName( IMAGE_CONTENT_FOLDER + "/" + pratilipiId + "/" + imageName );
 		blobAccessor.createOrUpdateBlob( blobEntry );
 		return imageName;
 
 	}
-	
+
 	public static Object getPratilipiContent( long pratilipiId, Integer chapterNo, Integer pageNo,
 			PratilipiContentType contentType ) throws InvalidArgumentException,
 			InsufficientAccessException, UnexpectedServerException {

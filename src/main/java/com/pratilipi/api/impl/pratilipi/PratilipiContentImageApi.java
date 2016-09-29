@@ -23,7 +23,7 @@ public class PratilipiContentImageApi extends GenericApi {
 
 	public static class GetRequest extends GenericRequest {
 
-		@Validate( required = true, minLong = 1L, requiredErrMsg = ERR_PRATILIPI_ID_REQUIRED )
+		@Validate( required = true, requiredErrMsg = ERR_PRATILIPI_ID_REQUIRED, minLong = 1L )
 		private Long pratilipiId;
 
 		private Integer pageNo;
@@ -41,7 +41,6 @@ public class PratilipiContentImageApi extends GenericApi {
 		@Validate( required = true, minLong = 1L, requiredErrMsg = ERR_PRATILIPI_ID_REQUIRED )
 		private Long pratilipiId;
 
-		@Validate( required = true, minInt = 1, requiredErrMsg = ERR_PRATILIPI_PAGE_NO_REQUIRED )
 		private Integer pageNo;
 
 		private PratilipiContentType contentType;
@@ -84,12 +83,14 @@ public class PratilipiContentImageApi extends GenericApi {
 					request.pratilipiId,
 					0,
 					request.pageNo,
-					PratilipiContentType.IMAGE );
+					contentType );
+
 		} else if( contentType == PratilipiContentType.PRATILIPI ) {
 			blobEntry = (BlobEntry) PratilipiDataUtil.getPratilipiContentImage(
 					request.pratilipiId,
 					request.name,
 					request.width );
+
 		}
 
 		return new GenericFileDownloadResponse(
@@ -109,13 +110,17 @@ public class PratilipiContentImageApi extends GenericApi {
 					.getPratilipi( request.pratilipiId )
 					.getContentType();
 
-		if( contentType == PratilipiContentType.PRATILIPI ) {
 
+		if( contentType == PratilipiContentType.PRATILIPI ) {
 			BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor().newBlob( request.getName() );
 			blobEntry.setData( request.getData() );
 			blobEntry.setMimeType( request.getMimeType() );
 			blobEntry.setMetaName( request.getName() );
-			String imageName = PratilipiDataUtil.createNewImage( request.pratilipiId, request.pageNo, blobEntry );
+
+			String imageName = PratilipiDataUtil.createNewImage( 
+									request.pratilipiId, 
+									blobEntry );
+
 			return new Response( request.pageNo, null, imageName );
 
 		} else if( contentType == PratilipiContentType.IMAGE ) {
@@ -133,8 +138,9 @@ public class PratilipiContentImageApi extends GenericApi {
 			return new Response( request.pageNo, pageCount, null );
 
 		}
-		
+
 		return null;
+
 	}		
 
 }
