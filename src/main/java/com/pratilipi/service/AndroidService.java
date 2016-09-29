@@ -17,6 +17,7 @@ import com.pratilipi.api.impl.init.InitBannerListApi;
 import com.pratilipi.api.impl.navigation.NavigationListApi;
 import com.pratilipi.api.impl.notification.NotificationApi;
 import com.pratilipi.api.impl.notification.NotificationListApi;
+import com.pratilipi.api.impl.page.PageApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentImageApi;
@@ -58,6 +59,8 @@ public class AndroidService extends GenericService {
 		ApiRegistry.register( UserPasswordUpdateApi.class );
 
 		ApiRegistry.register( PratilipiApi.class );
+		
+		ApiRegistry.register( PageApi.class );
 		ApiRegistry.register( PratilipiListApi.class );
 		ApiRegistry.register( PratilipiContentApi.class );
 		ApiRegistry.register( PratilipiCoverApi.class );
