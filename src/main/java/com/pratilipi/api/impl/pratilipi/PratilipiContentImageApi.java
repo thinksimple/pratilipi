@@ -90,6 +90,7 @@ public class PratilipiContentImageApi extends GenericApi {
 			blobEntry.setMimeType( request.getMimeType() );
 			blobEntry.setMetaName( request.getName() );
 			String imageUrl = PratilipiDataUtil.createNewImage( request.pratilipiId, request.pageNo, blobEntry );
+			return new PostPratilipiContentImageResponse( request.pageNo, request.pageNo );
 
 		} else if( contentType == PratilipiContentType.IMAGE ) {
 			BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor().newBlob( request.getName() );
