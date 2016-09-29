@@ -32,6 +32,8 @@ public class PratilipiContentImageApi extends GenericApi {
 
 		private Integer width;
 
+		private PratilipiContentType contentType;
+
 	}
 
 	public static class PostRequest extends GenericFileUploadRequest {
@@ -69,20 +71,26 @@ public class PratilipiContentImageApi extends GenericApi {
 	public GenericFileDownloadResponse getPratilipiContent( GetRequest request )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
+		PratilipiContentType contentType = request.contentType;
+		if( contentType == null )
+			contentType = DataAccessorFactory.getDataAccessor()
+					.getPratilipi( request.pratilipiId )
+					.getContentType();
+
 		BlobEntry blobEntry = null;
 
-		if( request.pageNo != null )
+		if( contentType == PratilipiContentType.IMAGE ) {
 			blobEntry = (BlobEntry) PratilipiDataUtil.getPratilipiContent(
 					request.pratilipiId,
 					0,
 					request.pageNo,
 					PratilipiContentType.IMAGE );
-
-		else if( request.name != null )
+		} else if( contentType == PratilipiContentType.PRATILIPI ) {
 			blobEntry = (BlobEntry) PratilipiDataUtil.getPratilipiContentImage(
 					request.pratilipiId,
 					request.name,
 					request.width );
+		}
 
 		return new GenericFileDownloadResponse(
 				blobEntry.getData(),

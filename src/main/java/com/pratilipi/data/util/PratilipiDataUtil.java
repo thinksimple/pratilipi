@@ -1002,10 +1002,10 @@ public class PratilipiDataUtil {
 
 	public static String createNewImage( Long pratilipiId, Integer pageNo, BlobEntry blobEntry ) 
 			throws UnexpectedServerException {
-		
+
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-		String imageName = new Date().getTime() + "";
-		blobEntry.setName( IMAGE_CONTENT_FOLDER + "/" + pratilipiId + "/" + pageNo );
+		String imageName = "CONTENT_IMAGE::" + new Date().getTime();
+		blobEntry.setName( IMAGE_CONTENT_FOLDER + "/" + pratilipiId + "/" + imageName );
 		blobAccessor.createOrUpdateBlob( blobEntry );
 		return imageName;
 
