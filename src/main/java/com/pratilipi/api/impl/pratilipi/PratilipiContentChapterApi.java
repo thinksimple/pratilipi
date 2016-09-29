@@ -85,8 +85,8 @@ public class PratilipiContentChapterApi extends GenericApi {
 		return new Response( request.pratilipiId, 
 								request.chapterNo, 
 								request.pageNo,
-								jsonObject.get( "chapterTitle" ).getAsString(), 
-								jsonObject.get( "content" ).getAsString() );
+								jsonObject.get( "chapterTitle" ) != null ? jsonObject.get( "chapterTitle" ).getAsString() : null, 
+								jsonObject.get( "content" ) != null ? jsonObject.get( "content" ).getAsString() : null );
 
 	}
 
