@@ -22,6 +22,7 @@ import org.jsoup.parser.Tag;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.CommentParentType;
@@ -505,7 +506,13 @@ public class PratilipiDocUtil {
 	}
 	
 	public static PratilipiContentDoc addChapter( Long pratilipiId, Integer chapterNo ) 
-			throws UnexpectedServerException {
+			throws InsufficientAccessException, UnexpectedServerException {
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+
+		if( ! PratilipiDataUtil.hasAccessToUpdatePratilipiContent( pratilipi ) )
+			throw new InsufficientAccessException();
 
 		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
 		PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( pratilipiId );
@@ -521,7 +528,13 @@ public class PratilipiDocUtil {
 	}
 
 	public static PratilipiContentDoc deleteChapter( Long pratilipiId, Integer chapterNo ) 
-			throws UnexpectedServerException, InvalidArgumentException {
+			throws UnexpectedServerException, InvalidArgumentException, InsufficientAccessException {
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+
+		if( ! PratilipiDataUtil.hasAccessToUpdatePratilipiContent( pratilipi ) )
+			throw new InsufficientAccessException();
 
 		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
 		PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( pratilipiId );
@@ -529,30 +542,42 @@ public class PratilipiDocUtil {
 		if( pcDoc == null )
 			throw new InvalidArgumentException( "Content is Missing!" );
 
-		pcDoc.removeChapter( chapterNo );
+		pcDoc.deleteChapter( chapterNo );
 		docAccessor.save( pratilipiId, pcDoc );
 
 		return pcDoc;
 
 	}
-	
-	public static void updateContent( Long pratilipiId, Integer chapterNo, Integer pageNo, String chapterTitle, String content ) 
-			throws UnexpectedServerException, InvalidArgumentException {
+
+	public static PratilipiContentDoc updateContent( Long pratilipiId, Integer chapterNo, Integer pageNo, String chapterTitle, String content ) 
+			throws UnexpectedServerException, InvalidArgumentException, InsufficientAccessException {
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+
+		if( ! PratilipiDataUtil.hasAccessToUpdatePratilipiContent( pratilipi ) )
+			throw new InsufficientAccessException();
 
 		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
-		PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( pratilipiId );
 
+		PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( pratilipiId );
 		if( pcDoc == null )
 			throw new InvalidArgumentException( "Content is Missing!" );
 
 		Chapter chapter = pcDoc.getChapter( chapterNo );
+		if( chapter == null )
+			throw new InvalidArgumentException( "Chapter is Missing!" );
+
+		chapter.setTitle( chapterTitle );
+
+
 		PratilipiContentDoc.Page page = chapter.getPage( pageNo ); 
 
 		if( page != null )
-			chapter.removePage( pageNo );
+			chapter.deletePage( pageNo );
+
 		page = chapter.addPage( pageNo );
 
-		chapter.setTitle( chapterTitle );
 
 		for( Node childNode : Jsoup.parse( content ).body().childNodes() ) {
 			if( childNode.nodeName().equals( "p" ) )
@@ -561,13 +586,14 @@ public class PratilipiDocUtil {
 				page.addPagelet( PageletType.IMAGE, childNode.attr( "src" ) );
 			else if( childNode.nodeName().equals( "blockquote" ) )
 				page.addPagelet( PageletType.BLOCKQUOTE, ( (Element) childNode ).html() );
-
 		}
 
 		docAccessor.save( pratilipiId, pcDoc );
 
+		return pcDoc;
+
 	}
-	
+
 	public static JsonObject getContent( Long pratilipiId, Integer chapterNo, Integer pageNo, boolean asHtml ) 
 			throws InvalidArgumentException, UnexpectedServerException {
 

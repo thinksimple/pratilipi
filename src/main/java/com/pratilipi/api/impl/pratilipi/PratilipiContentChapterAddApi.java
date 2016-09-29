@@ -6,6 +6,7 @@ import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
+import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.data.type.PratilipiContentDoc;
 import com.pratilipi.data.util.PratilipiDocUtil;
@@ -16,7 +17,7 @@ public class PratilipiContentChapterAddApi extends GenericApi {
 
 	public static class PostRequest extends GenericRequest {
 
-		@Validate( required = true, minLong = 1L, requiredErrMsg = ERR_PRATILIPI_ID_REQUIRED )
+		@Validate( required = true, requiredErrMsg = ERR_PRATILIPI_ID_REQUIRED, minLong = 1L )
 		private Long pratilipiId;
 
 		@Validate( minInt = 1 )
@@ -25,11 +26,11 @@ public class PratilipiContentChapterAddApi extends GenericApi {
 	}
 
 	@Post
-	public GenericResponse postAddChapter( PostRequest request )
-			throws UnexpectedServerException {
+	public GenericResponse addChapter( PostRequest request )
+			throws UnexpectedServerException, InsufficientAccessException {
 
 		PratilipiContentDoc pcDoc = PratilipiDocUtil.addChapter( request.pratilipiId, request.chapterNo );
-		return new PratilipiContentIndexApi.Response( pcDoc.getIndex() );
+		return new PratilipiContentIndexApi.Response( pcDoc.getIndex(), pcDoc.getChapterCount() );
 
 	}
 

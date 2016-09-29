@@ -133,13 +133,10 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 
 
 		@Override
-		public void removePage( int pageNo ) {
-
+		public void deletePage( int pageNo ) {
 			if( pages == null || pages.size() < pageNo )
 				return;
-
 			pages.remove( pageNo - 1 );
-
 		}
 
 		@Override
@@ -201,17 +198,17 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 		ChapterImpl chapter = nesting != null ?
 				new ChapterImpl( title, nesting ) : new ChapterImpl( title );
 
-		if( chapterNo == null || chapterNo > chapters.size() )
+		if( chapterNo == null || chapters.size() < chapterNo )
 			chapters.add( chapter );
 		else
-			chapters.add( chapterNo, chapter );
+			chapters.add( chapterNo - 1, chapter );
 
 		return chapter;
 
 	}
 
 	@Override
-	public void removeChapter( int chapterNo ) {
+	public void deleteChapter( int chapterNo ) {
 
 		if( chapters == null || chapters.size() < chapterNo )
 			return;

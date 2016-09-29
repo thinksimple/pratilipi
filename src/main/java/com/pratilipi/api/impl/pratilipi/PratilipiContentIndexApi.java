@@ -20,8 +20,9 @@ public class PratilipiContentIndexApi extends GenericApi {
 
 	public static class GetRequest extends GenericRequest {
 
-		@Validate( required = true, minLong = 1L, requiredErrMsg = ERR_PRATILIPI_ID_REQUIRED )
+		@Validate( required = true, requiredErrMsg = ERR_PRATILIPI_ID_REQUIRED, minLong = 1L )
 		private Long pratilipiId;
+
 
 		public void setPratilipiId( Long pratilipiId )  {
 			this.pratilipiId = pratilipiId;
@@ -30,17 +31,24 @@ public class PratilipiContentIndexApi extends GenericApi {
 	}
 
 	public static class Response extends GenericResponse {
-		
+
 		private List<JsonObject> index;
+		private Integer chapterCount;
 
 		private Response() {}
 
-		public Response( List<JsonObject> indexArray ) {
-			this.index = indexArray;
+		public Response( List<JsonObject> index, Integer chapterCount ) {
+			this.index = index;
+			this.chapterCount = chapterCount;
 		}
+
 
 		public List<JsonObject> getIndex() {
 			return index;
+		}
+
+		public Integer getChapterCount() {
+			return chapterCount;
 		}
 
 	}
@@ -53,7 +61,7 @@ public class PratilipiContentIndexApi extends GenericApi {
 		PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( request.pratilipiId );
 
 		if( pcDoc != null )
-			return new Response( pcDoc.getIndex() );
+			return new Response( pcDoc.getIndex(), pcDoc.getChapterCount() );
 
 		return new Response();
 

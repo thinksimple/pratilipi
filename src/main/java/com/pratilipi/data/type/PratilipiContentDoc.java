@@ -5,21 +5,21 @@ import java.util.List;
 import com.google.gson.JsonObject;
 
 public interface PratilipiContentDoc {
-	
+
 	enum PageletType {
 		HEAD_1, HEAD_2, HTML, TEXT, IMAGE, BLOCKQUOTE
 	}
-	
+
 	interface Pagelet {
 		PageletType getType();
 		Object getData();
 	}
-	
+
 	interface Page {
 		List<Pagelet> getPageletList();
 		void addPagelet( PageletType type, Object data );
 	}
-	
+
 	interface Chapter {
 		String getTitle();
 		void setTitle( String title );
@@ -28,7 +28,7 @@ public interface PratilipiContentDoc {
 		List<Page> getPageList();
 		Page addPage( PageletType type, Object data );
 		Page addPage( int pageNo );
-		void removePage( int pageNo );
+		void deletePage( int pageNo );
 		int getNesting();
 	}
 
@@ -38,7 +38,7 @@ public interface PratilipiContentDoc {
 	Chapter addChapter( String title );
 	Chapter addChapter( String title, Integer chapterNo );
 	Chapter addChapter( String title, Integer chapterNo, Integer nesting );
-	void removeChapter( int chapterNo );
+	void deleteChapter( int chapterNo );
 	List<JsonObject> getIndex();
 
 }
