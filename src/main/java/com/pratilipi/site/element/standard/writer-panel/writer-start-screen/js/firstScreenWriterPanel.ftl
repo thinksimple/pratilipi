@@ -91,6 +91,9 @@ FirstScreenWriterPanel.prototype.resetErrorStates = function() {
 };
 
 FirstScreenWriterPanel.prototype.ajaxSubmitForm = function() {
+	var _this = this;
+	var $spinner_div = $("<div>").addClass("spinner");
+	this.$panel_container.append($spinner_div);
 	var ajax_data = {
 			title: this.$vernacular_title.val() ,
     		titleEn: this.$english_title.val(),
@@ -110,9 +113,11 @@ FirstScreenWriterPanel.prototype.ajaxSubmitForm = function() {
         	
         	var parsed_data = jQuery.parseJSON( response );
         	console.log(parsed_data);
+        	$spinner_div.remove();
   			window.location = window.location.origin + window.location.pathname + "?action=write&id=" + parsed_data.pratilipiId;
 		},
         fail:function(response){
+        	$spinner_div.remove();
         	var message = jQuery.parseJSON( response.responseText );
 			alert(message);
 		}			    		

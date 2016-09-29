@@ -87,7 +87,32 @@
             </div>
             <img src='http://0.ptlp.co/resource-all/icon/svg/circle-red.svg' data-behaviour="progress-ball" style='left: 0%;top:-15%;width:15px;height:15px; position: absolute;'>  
             <!-- end of progress bar                             --> 
-        </div>  
+        </div>
+	<!-- Modal for title change -->
+	<div class="modal fade" id="titleChangelModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">Add URL</h4>
+	      </div>
+	      <div class="modal-body">
+			<form class="form-horizontal">
+                  <div class="form-group has-feedback">
+                    <input   class="form-control horizontal-form-input" id="title-vernacular" placeholder="Enter Title Here*">
+                  </div>
+                  <div class="form-group has-feedback">
+                    <input  class="form-control horizontal-form-input" id="title-english" placeholder="Re-enter the title in English*">
+				  </div>
+			</form>  
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+	        <button id="url_ok_button" type="button" class="btn btn-primary">OK</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>          
 	<!-- Modal for URL -->
 	<div class="modal fade" id="urlModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	  <div class="modal-dialog" role="document">
@@ -137,6 +162,7 @@
 <style><#include "css/toastr.ftl" /></style>
 <#include "js/transliteration.ftl" />
 <script>
+	<#include "js/throttle-debounce.ftl">
 	<#include "js/toastr.ftl">
 	<#include "js/app.ftl">
 	<#include "js/mainWriterPanel.ftl">

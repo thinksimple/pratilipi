@@ -269,7 +269,7 @@ MainWriterPanel.prototype.saveChapter = function( url, newTab ) {
         data: ajaxData,
         success:function(response){
         	console.log(response);
-			alert("Chapter Saved");
+			//alert("Chapter Saved");
 			toastr.options = {
 			positionClass: 'toast-top-center'
 			};
@@ -300,7 +300,5 @@ MainWriterPanel.prototype.setCurrentPage = function( chapterNum ) {
 
 MainWriterPanel.prototype.initializeAutosave = function() {
 	var _this = this;
-	setInterval(function () {
-    	_this.saveChapter();
-	}, 15000);
+	this.content_object.$content_container.keyup( $.debounce( 1500, _this.saveChapter.bind(this) ) );
 };

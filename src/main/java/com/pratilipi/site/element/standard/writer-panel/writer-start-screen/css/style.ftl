@@ -69,12 +69,12 @@ form .form-group {
 } 
 
 .spinner {
-  position: relative;
-  /*width: 40px;
-  height: 40px;
-
-  
-  margin: 100px auto;*/
+  position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background: rgba(255,255,255,0.8);
 }
 
 .spinner:before, .spinner:after {
