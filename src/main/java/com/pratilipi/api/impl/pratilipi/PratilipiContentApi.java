@@ -155,7 +155,7 @@ public class PratilipiContentApi extends GenericApi {
 			return new Response( request.pratilipiId, 
 					request.chapterNo, 
 					request.pageNo,
-					contentMap.get( "chapterTitle" ).toString(), 
+					contentMap.get( "chapterTitle" ) != null ? contentMap.get( "chapterTitle" ).toString() : null, 
 					contentMap.get( "content" ) );
 
 		}
