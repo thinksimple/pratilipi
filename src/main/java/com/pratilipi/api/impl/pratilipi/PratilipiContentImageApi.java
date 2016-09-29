@@ -5,10 +5,10 @@ import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.annotation.Validate;
-import com.pratilipi.api.impl.pratilipi.shared.PostPratilipiContentImageResponse;
 import com.pratilipi.api.shared.GenericFileDownloadResponse;
 import com.pratilipi.api.shared.GenericFileUploadRequest;
 import com.pratilipi.api.shared.GenericRequest;
+import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -46,6 +46,24 @@ public class PratilipiContentImageApi extends GenericApi {
 
 	}
 
+	@SuppressWarnings("unused")
+	public class Response extends GenericResponse {
+
+		private Integer pageNo;
+		private Integer pageCount;
+		private String imageName;
+
+
+		private Response() {}
+
+		public Response( Integer pageNo, Integer pageCount, String imageName ) {
+			this.pageNo = pageNo;
+			this.pageCount = pageCount;
+			this.imageName = imageName;
+		}
+
+	}
+
 
 	@Get
 	public GenericFileDownloadResponse getPratilipiContent( GetRequest request )
@@ -74,8 +92,7 @@ public class PratilipiContentImageApi extends GenericApi {
 	}
 
 	@Post
-	public PostPratilipiContentImageResponse postPratilipiContent(
-			PostRequest request )
+	public Response postPratilipiContent( PostRequest request )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
 		PratilipiContentType contentType = request.contentType;
@@ -85,12 +102,13 @@ public class PratilipiContentImageApi extends GenericApi {
 					.getContentType();
 
 		if( contentType == PratilipiContentType.PRATILIPI ) {
+
 			BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor().newBlob( request.getName() );
 			blobEntry.setData( request.getData() );
 			blobEntry.setMimeType( request.getMimeType() );
 			blobEntry.setMetaName( request.getName() );
-			String imageUrl = PratilipiDataUtil.createNewImage( request.pratilipiId, request.pageNo, blobEntry );
-			return new PostPratilipiContentImageResponse( request.pageNo, request.pageNo );
+			String imageName = PratilipiDataUtil.createNewImage( request.pratilipiId, request.pageNo, blobEntry );
+			return new Response( request.pageNo, null, imageName );
 
 		} else if( contentType == PratilipiContentType.IMAGE ) {
 			BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor().newBlob( request.getName() );
@@ -104,7 +122,7 @@ public class PratilipiContentImageApi extends GenericApi {
 					blobEntry,
 					false );
 
-			return new PostPratilipiContentImageResponse( request.pageNo, pageCount );
+			return new Response( request.pageNo, pageCount, null );
 
 		}
 		
