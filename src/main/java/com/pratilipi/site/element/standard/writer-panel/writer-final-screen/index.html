@@ -49,27 +49,27 @@
 		        // didItResize will be true if it managed to resize it, otherwise false (and will return the original file as 'blob')
 		        document.getElementById('preview').src = window.URL.createObjectURL(blob);
 		        console.log(blob);
-		    var fd = new FormData();
-				fd.append('data', blob);
-				fd.append('pratilipiId', ${ pratilipiId?c } );  
-				fd.append('pageNo', 1 );
-				
-		    $.ajax({
-            type:'POST',
-            url: '/api/pratilipi/content/image?pratilipiId=${ pratilipiId?c }&pageNo=1',
-            data:fd,
-            cache:true,
-            contentType: false,
-            processData: false,
-            success:function(data){
-                console.log("success");
-                console.log(data);
-            },
-            error: function(data){
-                console.log("error");
-                console.log(data);
-            }
-        });    
+			    var fd = new FormData();
+					fd.append('data', blob);
+					fd.append('pratilipiId', ${ pratilipiId?c } );  
+					fd.append('pageNo', 1 );
+					
+				$.ajax({
+		            type:'POST',
+		            url: '/api/pratilipi/content/image?pratilipiId=${ pratilipiId?c }&pageNo=1',
+		            data:fd,
+		            cache:true,
+		            contentType: false,
+		            processData: false,
+		            success:function(data){
+		                console.log("success");
+		                console.log(data);
+		            },
+		            error: function(data){
+		                console.log("error");
+		                console.log(data);
+		            }
+		        });    
 		        // you can also now upload this blob using an XHR.
 		    });
 		};

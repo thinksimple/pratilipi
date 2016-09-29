@@ -170,16 +170,39 @@ Editor.prototype.addImageListener = function() {
 		        height: 480 // maximum height
 		    }, function(blob, didItResize) {
 		        // didItResize will be true if it managed to resize it, otherwise false (and will return the original file as 'blob')
-		        //document.getElementById('preview').src = window.URL.createObjectURL(blob);
-		        console.log(blob);
 		        var $current_element = $( _this.getSelectionStart() );
 		        var $last_element = ( $current_element.closest("p") || $current_element.closest("p") );
 				console.log( $last_element );
-				var $img = $("<img>").attr( "src", window.URL.createObjectURL(blob) ).addClass("writer-image");
+				var $img = $("<img>").attr( "src", window.URL.createObjectURL(blob) ).addClass("writer-image").addClass("blur-image");
 				$img.insertAfter( $last_element );
 				$("<p><br></p>").insertAfter($img);
-				//document.execCommand('insertHTML', false, '');
-		        // you can also now upload this blob using an XHR.
+				var cur_page = _this.content_object.parent_object.currChapter;
+				var fd = new FormData();
+					fd.append('data', blob);
+					fd.append('pratilipiId', ${ pratilipiId?c } );  
+					fd.append('pageNo', cur_page );
+					
+				$.ajax({
+		            type:'POST',
+		            url: '/api/pratilipi/content/image?pratilipiId=${ pratilipiId?c }&pageNo=' + cur_page,
+		            data:fd,
+		            cache:true,
+		            contentType: false,
+		            processData: false,
+		            success:function(data){
+		                console.log("success");
+		                console.log(data);
+		                var parsed_data = jQuery.parseJSON( data );
+		                var image_name = parsed_data.imageName;
+		                var image_url = "/api/pratilipi/content/image?pratilipiId=${ pratilipiId?c }&name=" + image_name;
+		                $img.attr( "src", image_url ).attr( "name", image_name ).removeClass("blur-image");
+		            },
+		            error: function(data){
+		                console.log("error");
+		                console.log(data);
+		                $img.remove();
+		            }
+		        });
 		    });
 	});	    
 	
