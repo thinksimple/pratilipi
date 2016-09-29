@@ -34,7 +34,7 @@ public class PratilipiContentImageApi extends GenericApi {
 
 	}
 
-	public class PostRequest extends GenericFileUploadRequest {
+	public static class PostRequest extends GenericFileUploadRequest {
 
 		@Validate( required = true, minLong = 1L, requiredErrMsg = ERR_PRATILIPI_ID_REQUIRED )
 		private Long pratilipiId;
