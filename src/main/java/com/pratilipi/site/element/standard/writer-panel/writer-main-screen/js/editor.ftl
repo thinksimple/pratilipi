@@ -131,7 +131,7 @@ Editor.prototype.attachImageSelectionListener = function() {
     var _this = this;
     var $remove = this.$editor_container.find("#insertImage img");
     this.content_object.$content_container.on("click", "img.writer-image", function(e) {
-    	e.stopPropogation();
+    	e.stopPropagation();
     	_this.highlightImageOption( true );
     	var $image_element = $(this);
         $(document.body).one('click', function( e2 ) {
