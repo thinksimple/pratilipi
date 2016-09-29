@@ -37,7 +37,7 @@ public class InitDataUtil {
 
 		
 		InitBannerDoc[] initBannerDocs = new InitBannerDoc[] {
-				docAccessor.newInitBannerDoc( "pratilipi-hindi-carousel-24.jpg", null, "/self-help" ),
+				docAccessor.newInitBannerDoc( "pratilipi-hindi-carousel-30.jpg", null, "/event/aajka-rashifal" ),
 				docAccessor.newInitBannerDoc( "pratilipi-hindi-carousel-25.jpg", null, "/mythology" ),
 				docAccessor.newInitBannerDoc( "pratilipi-hindi-carousel-29.jpg", null, "/lovestories" ),
 				docAccessor.newInitBannerDoc( "pratilipi-hindi-carousel-27.jpg", null, "/suspense-aur-thriller" ),
@@ -62,6 +62,7 @@ public class InitDataUtil {
 		
 		
 		initBannerDocs = new InitBannerDoc[] {
+				docAccessor.newInitBannerDoc( "pratilipi-tamil-carousel-15.jpg", null, "/event/memories" ),
 				docAccessor.newInitBannerDoc( "pratilipi-tamil-carousel-11.jpg", null, "/ministories" ),
 				docAccessor.newInitBannerDoc( "pratilipi-tamil-carousel-12.jpg", null, "/cinema" ),
 				docAccessor.newInitBannerDoc( "pratilipi-tamil-carousel-13.jpg", null, "/fiveminstories" ),
@@ -86,7 +87,8 @@ public class InitDataUtil {
 		
 		
 		initBannerDocs = new InitBannerDoc[] {
-				docAccessor.newInitBannerDoc( "pratilipi-malayalam-carousel-05.jpg", null, "/event/fr" ),
+				docAccessor.newInitBannerDoc( "pratilipi-malayalam-carousel-09.jpg", null, "/event/katha" ),
+				docAccessor.newInitBannerDoc( "pratilipi-malayalam-carousel-10.jpg", null, "/women" ),
 				docAccessor.newInitBannerDoc( "pratilipi-malayalam-carousel-06.jpg", null, "/love" ),
 				docAccessor.newInitBannerDoc( "pratilipi-malayalam-carousel-07.jpg", null, "/memory" ),
 		};
@@ -121,7 +123,6 @@ public class InitDataUtil {
 		
 		
 		initBannerDocs = new InitBannerDoc[] {
-				docAccessor.newInitBannerDoc( "pratilipi-kannada-carousel-05.jpg", null, "/event/fday" ),
 				docAccessor.newInitBannerDoc( "pratilipi-kannada-carousel-01.jpg", null, "/love" ),
 				docAccessor.newInitBannerDoc( "pratilipi-kannada-carousel-02.jpg", null, "/society" ),
 				docAccessor.newInitBannerDoc( "pratilipi-kannada-carousel-03.jpg", null, "/spiritual" ),
