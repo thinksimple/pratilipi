@@ -131,6 +131,7 @@ Editor.prototype.attachImageSelectionListener = function() {
     var _this = this;
     var $remove = this.$editor_container.find("#insertImage img");
     this.content_object.$content_container.on("click", "img.writer-image", function(e) {
+    	e.stopPropogation();
     	_this.highlightImageOption( true );
     	var $image_element = $(this);
         $(document.body).one('click', function( e2 ) {
@@ -141,13 +142,22 @@ Editor.prototype.attachImageSelectionListener = function() {
             else { 
             	_this.highlightImageOption( false );            	
             }
+            
         });
     });
 };
 
 Editor.prototype.highlightImageOption = function( deleteFlag ) {
-	var img_src = deleteFlag ? this.icons_object[ "insertImage" ]["unhighlighted"] : this.icons_object[ "insertImage" ]["highlighted"];
+	var img_src = deleteFlag ? this.icons_object[ "insertImage" ]["highlighted"] : this.icons_object[ "insertImage" ]["unhighlighted"];
 	this.$editor_container.find("#insertImage img").attr( "src", img_src );
+	if( deleteFlag ) {
+		this.$editor_container.find("#insertImage").unbind("click");
+		console.log("unbinded click ");
+	}
+	else {
+		this.addImageListener();
+		console.log("binded click");
+	}
 };
 
 Editor.prototype.addTextSelectionListener = function() {
