@@ -411,3 +411,9 @@ blockquote {
 .opaque-image{
 	opacity: 1;
 }
+
+.remove-image {
+    border-radius: 50%;
+    padding: 7px 7px;    
+    background: white;
+  }

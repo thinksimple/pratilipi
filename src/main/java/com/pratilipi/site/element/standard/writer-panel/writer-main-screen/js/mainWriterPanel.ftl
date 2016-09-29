@@ -144,7 +144,7 @@ MainWriterPanel.prototype.attachActionButtonListeners = function() {
 MainWriterPanel.prototype.getChapter = function( chapterNum ) {
 	var _this = this;
     $.ajax({type: "GET",
-        url: "/api/pratilipi/content/chapter",
+        url: "/api/pratilipi/content",
         data: {
         	pratilipiId: ${ pratilipiId?c },
         	chapterNo: chapterNum,
