@@ -60,7 +60,6 @@ import com.pratilipi.common.util.ThirdPartyResource;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
-import com.pratilipi.data.DocAccessor;
 import com.pratilipi.data.client.BlogPostData;
 import com.pratilipi.data.client.EventData;
 import com.pratilipi.data.client.PratilipiData;
@@ -71,7 +70,6 @@ import com.pratilipi.data.type.Blog;
 import com.pratilipi.data.type.Navigation;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
-import com.pratilipi.data.type.PratilipiContentDoc;
 import com.pratilipi.data.util.BlogPostDataUtil;
 import com.pratilipi.data.util.EventDataUtil;
 import com.pratilipi.data.util.PratilipiDataUtil;
@@ -286,7 +284,7 @@ public class PratilipiSite extends HttpServlet {
 				dataModel.put( "imageSize", imageSize != null ? Integer.parseInt( imageSize ) : 636 );
 				dataModel.put( "action", action );
 				templateName = templateFilePrefix + ( basicMode ? "ReadBasic.ftl" : "Read.ftl" );
-			
+
 			} else if( uri.equals( "/search" ) ) {
 				dataModel = createDataModelForSearchPage( basicMode, filterLanguage, request );
 				templateName = templateFilePrefix + ( basicMode ? "SearchBasic.ftl" : "Search.ftl" );
@@ -1080,16 +1078,33 @@ public class PratilipiSite extends HttpServlet {
 	@SuppressWarnings("deprecation")
 	public Map<String, Object> createDataModelForReadPage( Long pratilipiId, Integer pageNo, boolean basicMode )
 			throws InvalidArgumentException, UnexpectedServerException, InsufficientAccessException {
-		
+
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 		UserPratilipiData userPratilipiData = UserPratilipiDataUtil.getUserPratilipi( AccessTokenFilter.getAccessToken().getUserId(), pratilipiId );
 		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
 		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author, false );
+
+		if( pageNo < 1 )
+			pageNo = 1;
+		if( pratilipi.getPageCount() > 0 && pageNo > pratilipi.getPageCount() )
+			pageNo = pratilipi.getPageCount();
 		
-		pageNo = pageNo < 1 ? 1 : pageNo;
-		if( pratilipi.getPageCount() != null && pratilipi.getPageCount() > 0 )
-			pageNo = pageNo > pratilipi.getPageCount() ? pratilipi.getPageCount() : pageNo;
+		Integer pageCount = null;
+		String indexJson = null;
+		if( pratilipi.getPageCount() > 0 ) {
+			pageCount = pratilipi.getPageCount();
+			indexJson = pratilipi.getIndex();
+		} else {
+			PratilipiContentIndexApi.GetRequest indexReq = new PratilipiContentIndexApi.GetRequest();
+			indexReq.setPratilipiId( pratilipiId );
+			PratilipiContentIndexApi.Response indexRes = ApiRegistry
+														.getApi( PratilipiContentIndexApi.class )
+														.getIndex( indexReq ); 
+			indexJson = indexRes.getIndex().toString();
+			pageCount = indexRes.getChapterCount();
+		}
+
 		Object content = null;
 
 		if( pratilipi.getContentType() == PratilipiContentType.PRATILIPI ) {
@@ -1112,18 +1127,18 @@ public class PratilipiSite extends HttpServlet {
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", createReadPageTitle( pratilipiData, 1, 1 ) );
 		dataModel.put( "pageNo", pageNo );
-		dataModel.put( "pageCount", pratilipi.getPageCount() );
+		dataModel.put( "pageCount", pageCount );
 		dataModel.put( "content", content );
 		dataModel.put( "contentType", pratilipi.getContentType() );
 		if( basicMode ) {
 			dataModel.put( "pratilipi", pratilipiResponse );
 			dataModel.put( "userpratilipi", userPratilipiResponse );
-			dataModel.put( "indexList", gson.fromJson( pratilipi.getIndex(), Object.class ) );
+			dataModel.put( "indexList", gson.fromJson( indexJson, Object.class ) );
 			
 		} else {
 			dataModel.put( "pratilipiJson", gson.toJson( pratilipiResponse ) );
 			dataModel.put( "userpratilipiJson", gson.toJson( userPratilipiResponse ) );
-			dataModel.put( "indexJson", gson.toJson( pratilipi.getIndex() ) );
+			dataModel.put( "indexJson", gson.toJson( indexJson ) );
 		}
 		return dataModel;
 		
