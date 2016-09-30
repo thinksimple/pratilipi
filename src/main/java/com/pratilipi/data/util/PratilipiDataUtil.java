@@ -257,6 +257,7 @@ public class PratilipiDataUtil {
 		return createPratilipiData( pratilipi, null, author, includeMetaData );
 	}
 	
+	@SuppressWarnings("unused")
 	public static PratilipiData createPratilipiData( Pratilipi pratilipi, Page pratilipiPage, Author author, boolean includeMetaData ) throws UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -281,10 +282,16 @@ public class PratilipiDataUtil {
 		pratilipiData.setReadPageUrl( readPage == null || readPage.getUriAlias() == null
 				? PageType.READ.getUrlPrefix() + pratilipi.getId()
 				: readPage.getUriAlias() );
-		pratilipiData.setWritePageUrl( writePage == null || writePage.getUriAlias() == null
-				? PageType.WRITE.getUrlPrefix() + pratilipi.getId()
-				: writePage.getUriAlias() );
-		
+
+		if( writePage != null && writePage.getUriAlias() != null ) {
+			pratilipiData.setWritePageUrl( writePage.getUriAlias() );
+		} else {
+			if( isOldFormatContent( pratilipi.getId() ) )
+				pratilipiData.setWritePageUrl( PageType.WRITE.getUrlPrefix() + pratilipi.getId() );
+			else
+				pratilipiData.setWritePageUrl( "/pratilipi-write?id=" + pratilipi.getId() );
+		}
+
 		pratilipiData.setType( pratilipi.getType() );
 		pratilipiData.setContentType( pratilipi.getContentType() );
 		pratilipiData.setState( pratilipi.getState() );
