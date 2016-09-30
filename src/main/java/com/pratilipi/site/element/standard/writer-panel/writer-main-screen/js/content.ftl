@@ -45,7 +45,7 @@ Content.prototype.unformatPastedData = function() {
 Content.prototype.delegateTargetBlankToLinks = function() {
     this.$content_container.on( "click mouseover", "a:not(.tooltip_link)", function( event ) {
         // window.open( $( this ).attr( "href"), '_blank');
-        if (typeof $(this).data('toggle') == 'undefined') { 
+        if (typeof $(this).data('toggle') == 'undefined' || $(this).data("popover") == "absent") { 
             var href = $(this).attr("href");
             var a_tag = '<a class="tooltip_link" target="_blank" href="' + href + '">' + href + "</a>";
             // var templ = '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"><a href="' + href + '">' + href + '</a></div></div>';
@@ -54,7 +54,10 @@ Content.prototype.delegateTargetBlankToLinks = function() {
             $(this).on('click mouseover', function() {
                 // alert("hover ke andar");
                 $(this).popover('show');
-            });         
+            }); 
+            if( $(this).data("popover") == "absent" ) {
+            	$(this).data("popover") = "present";
+            }    
         }
     });
 
@@ -111,6 +114,7 @@ Content.prototype.populateContent = function( response ) {
 	else {
 		this.$content_container.html( response );
 		this.$content_container.find("img").addClass("writer-image").attr("tabindex", -1);
+		this.$content_container.find("a").data("popover", "absent");
 	}
 }; 
 
