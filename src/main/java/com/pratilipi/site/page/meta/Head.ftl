@@ -20,7 +20,7 @@
 <script src='http://1.ptlp.co/third-party/ckeditor-4.5.10-full/ckeditor.js'></script>
 
 <#-- Pratilipi dependencies -->
-<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?50'>
+<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?51'>
 
 <#-- Google Analytics -->
 <#include "GoogleAnalytics.ftl">
