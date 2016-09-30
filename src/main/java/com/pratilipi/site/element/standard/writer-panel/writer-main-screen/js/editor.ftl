@@ -136,6 +136,7 @@ Editor.prototype.attachImageSelectionListener = function() {
     	$( this ).addClass("remove");
     	$add_image.hide();
     	$remove_image.show();
+    	_this.resetExecCommandIcons();
     });
     this.content_object.$content_container.on("blur", "img.writer-image", function(e) {
     	_this.content_object.$content_container.find("img.remove").removeClass("remove");
@@ -267,3 +268,10 @@ Editor.prototype.removeEventListenersOnUrlModalHide = function () {
 		_this.$urlModal.find('#url_ok_button').unbind("click");
 	});
 };
+
+Editor.prototype.resetExecCommandIcons = function() {
+	var _this = this;
+	this.$execCommandLinks.each( function() {
+		$(this).find("img").attr("src", _this.icons_object[$(this).id]["unhighlighted"]);
+	});
+}
