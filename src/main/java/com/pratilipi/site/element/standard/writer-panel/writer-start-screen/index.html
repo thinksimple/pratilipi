@@ -5,28 +5,28 @@
                 <a style="cursor: pointer;" class="pull-left">
                     <img style="width: 20px;height: 20px;" src="http://0.ptlp.co/resource-all/icon/svg/arrow-left2.svg">
                 </a>
-                <h1 class="pratilipi-panel-heading"> Add Title </h1>
+                <h1 class="pratilipi-panel-heading"> ${ _strings.writer_add_content_title } </h1>
                 <center>
                 <form class="col-sm-8 col-sm-offset-2">
                   <div class="form-group">
                     <select id="select-language" class="form-control horizontal-form-input">
                     </select>
-                    <span id="helpBlock" class="help-block text-left">This will be the language you are writing in.</span>
+                    <span id="helpBlock" class="help-block text-left">${ _strings.writer_select_language }</span>
                   </div>
                   <div class="form-group has-feedback">
-                    <input class="form-control horizontal-form-input" id="title-vernacular" placeholder="Enter Title Here*">
+                    <input class="form-control horizontal-form-input" id="title-vernacular" placeholder="${ _strings.writer_input_title }*">
                   </div>
                   <div class="form-group has-feedback">
-                    <input class="form-control horizontal-form-input" id="title-english" placeholder="Re-enter the title in English*">
+                    <input class="form-control horizontal-form-input" id="title-english" placeholder="${ _strings.writer_input_title_en }*">
 						                  
                   </div>
                   <div class="checkbox text-left ">
                     <label>
-                      <input type="checkbox" id="copyright_checkbox"> You own the copyright of the content
+                      <input type="checkbox" id="copyright_checkbox"> ${ _strings.writer_you_own_copyright }
                     </label>
                   </div>
-                  <a class="text-left" style="display:block;">Read copyright policy here</a>
-                  <button type="submit" class="pratilipi-red-background-button go-button">Next</button>
+                  <a class="text-left" style="display:block;">${ _strings.writer_read_copyright }</a>
+                  <button type="submit" class="pratilipi-red-background-button go-button">${ _strings.writer_to_next_screen }</button>
                 </form>
                 </center>
             </div>

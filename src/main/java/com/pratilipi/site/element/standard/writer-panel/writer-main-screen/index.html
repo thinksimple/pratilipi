@@ -11,19 +11,19 @@
                       </button>
                   </div> 
                   <ul class="dropdown-menu" aria-labelledby="table_of_contents_dropdown" style="min-width:230px;margin-top:13px;border-radius: 0 0 4px 4px;">
-                    <li style="cursor: pointer;" data-behaviour="edit-title" class="text-center"><strong class="pratilipi-red">Edit Title</strong></li>
+                    <li style="cursor: pointer;" data-behaviour="edit-title" class="text-center"><strong class="pratilipi-red">${ _strings.writer_edit_title_placeholder }</strong></li>
                     <li role="separator" class="divider"></li>
-                    <li class="text-center"><strong>Table of Contents</strong></li>
+                    <li class="text-center"><strong>${ _strings.writer_table_of_contents }</strong></li>
                     <li role="separator" class="divider"></li>
                     
                     <li role="separator" class="divider"  data-behaviour="chapters_separator_second"></li>
-                    <li class="text-center" data-behaviour="new_chapter"><a href="#"><strong class="pratilipi-red"> + New Chapter</strong></a></li>
+                    <li class="text-center" data-behaviour="new_chapter"><a href="#"><strong class="pratilipi-red"> + ${ _strings.writer_add_new_chapter }</strong></a></li>
                   </ul>
                 </div>
               <div class="pull-right">
-                  <button class="pratilipi-red-background-button" style="padding: 6px 12px;margin-right:0px;border-radius:4px;" data-behaviour="publish_button">Publish</button>
-                  <button class="btn btn-default small-screen-hidden" style="margin: 0 5px 0 10px; font-size: 13px;" data-behaviour="save_button">Save</button>
-                  <button class="btn btn-default small-screen-hidden" style="margin: 0 0px 0 5px; font-size: 13px;" data-behaviour="preview_button">Preview</button>       
+                  <button class="pratilipi-red-background-button" style="padding: 6px 12px;margin-right:0px;border-radius:4px;" data-behaviour="publish_button">${ _strings.writer_publish }</button>
+                  <button class="btn btn-default small-screen-hidden" style="margin: 0 5px 0 10px; font-size: 13px;" data-behaviour="save_button">${ _strings.writer_save }</button>
+                  <button class="btn btn-default small-screen-hidden" style="margin: 0 0px 0 5px; font-size: 13px;" data-behaviour="preview_button">${ _strings.writer_preview }</button>       
                    <img style="width: 48px;height: 25px;margin-right:-12px;" src="http://0.ptlp.co/resource-all/icon/svg/dots-three-vertical.svg" class="big-screen-hidden" data-container="body" data-toggle="popover" data-content="
           <a href='#' class='pratilipi-red'>
             Preview
@@ -40,29 +40,29 @@
                 <form style="    width: 95%;margin-left: auto;margin-right: auto;">
                 <div class="editor-wrapper">
                   <div class="form-group" style="">
-                    <input  class="col-sm-6 form-control horizontal-form-input" id="subtitle" style="padding-bottom: 25px;padding-top: 20px;font-size: 25px;border-bottom: 1px solid #ddd;" placeholder="Add Chapter Name">
+                    <input  class="col-sm-6 form-control horizontal-form-input" id="subtitle" style="padding-bottom: 25px;padding-top: 20px;font-size: 25px;border-bottom: 1px solid #ddd;" placeholder="${ _strings.writer_add_content_title }">
                     <!-- editing panel -->
                     <div id="editor" class="">
                         <div style="background-color: #ddd;padding: 7px;">
           
-                            <a class="execCommand" href="#" id="bold"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/bold.svg' style='width:30px;height:20px;'></a>
-                            <a class="execCommand" href="#" id="italic"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/italic.svg' style='width:30px;height:20px;'></a>
-                            <a class="execCommand" href="#" id="underline"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/underline.svg' style='width:30px;height:20px;'></a>
+                            <a class="execCommand" data-toggle="tooltip" data-placement="bottom" title="${ _strings.writer_editor_bold }" href="#" id="bold"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/bold.svg' style='width:30px;height:20px;'></a>
+                            <a class="execCommand" data-toggle="tooltip" data-placement="bottom" title="${ _strings.writer_editor_italics }" href="#" id="italic"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/italic.svg' style='width:30px;height:20px;'></a>
+                            <a class="execCommand" data-toggle="tooltip" data-placement="bottom" title="${ _strings.writer_editor_underline }" href="#" id="underline"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/underline.svg' style='width:30px;height:20px;'></a>
                             |
-                            <a class="execCommand alignment" href="#" id="justifyLeft"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/paragraph-left.svg' style='width:30px;height:20px;'></a>
-                            <a class="execCommand alignment" href="#" id="justifyCenter"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/paragraph-center.svg' style='width:30px;height:20px;'></a>
-                            <a class="execCommand alignment" href="#" id="justifyRight"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/paragraph-right.svg' style='width:30px;height:20px;'></a>
+                            <a class="execCommand alignment" data-toggle="tooltip" data-placement="bottom" title="${ _strings.writer_editor_align_left }" href="#" id="justifyLeft"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/paragraph-left.svg' style='width:30px;height:20px;'></a>
+                            <a class="execCommand alignment" data-toggle="tooltip" data-placement="bottom" title="${ _strings.writer_editor_align_center }" href="#" id="justifyCenter"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/paragraph-center.svg' style='width:30px;height:20px;'></a>
+                            <a class="execCommand alignment" data-toggle="tooltip" data-placement="bottom" title="${ _strings.writer_editor_align_right }" href="#" id="justifyRight"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/paragraph-right.svg' style='width:30px;height:20px;'></a>
                             |
-                            <a href="#" id="blockquote"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/quotes-left.svg' style='width:30px;height:20px;'></a>
-                            <a href="#" id="link"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/link-505050.svg' style='width:30px;height:20px;'></a>
-                            <a href="#" id="insertImage"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/camera2.svg' style='width:30px;height:20px;'></a>
+                            <a href="#" id="blockquote" data-toggle="tooltip" data-placement="bottom" title="${ _strings.writer_editor_quote }"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/quotes-left.svg' style='width:30px;height:20px;'></a>
+                            <a href="#" id="link" data-toggle="tooltip" data-placement="bottom" title="${ _strings.writer_editor_image }"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/link-505050.svg' style='width:30px;height:20px;'></a>
+                            <a href="#" id="insertImage" data-toggle="tooltip" data-placement="bottom" title="${ _strings.writer_editor_link }"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/camera2.svg' style='width:30px;height:20px;'></a>
                             <a href="#" id="removeImage" style="display:none;"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/trash-d0021b.svg' style='width:30px;height:20px;'></a>
                         </div>
                     </div>
                   </div>
                 </div>  
 
-                <div id="chapter-content" contenteditable="true"  style="border: none; margin-bottom:10px; margin-top:10px;padding-left:0;padding-right:0;text-align:left; height:auto;font-size: 18px;" class="form-control horizontal-form-input" placeholder="Write here..." >
+                <div id="chapter-content" contenteditable="true"  style="border: none; margin-bottom:10px; margin-top:10px;padding-left:0;padding-right:0;text-align:left; height:auto;font-size: 18px;" class="form-control horizontal-form-input" placeholder="${ _strings.writer_write_here_placeholder }..." >
                     
                 </div>  
                 <div id='translControl'></div>    
@@ -95,7 +95,7 @@
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title" id="myModalLabel">Edit title</h4>
+	        <h4 class="modal-title" id="myModalLabel">${ _strings.writer_edit_title_placeholder }</h4>
 	      </div>
 	      <form class="form-horizontal">
 		      <div class="modal-body">
@@ -109,8 +109,8 @@
 					  </div>  
 		      </div>
 		      <div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-		        <button id="title_ok_button" type="submit" class="pratilipi-red-background-modal-button">Ok</button>
+		        <button type="button" class="btn btn-default" data-dismiss="modal">${ _strings.writer_cancel }</button>
+		        <button id="title_ok_button" type="submit" class="pratilipi-red-background-modal-button">${ _strings.writer_okay }</button>
 		      </div>
 	      </form>
 	    </div>
@@ -135,8 +135,8 @@
 			</form>  
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-	        <button id="url_ok_button" type="button" class="pratilipi-red-background-modal-button">OK</button>
+	        <button type="button" class="btn btn-default" data-dismiss="modal">${ _strings.writer_cancel }</button>
+	        <button id="url_ok_button" type="button" class="pratilipi-red-background-modal-button">${ _strings.writer_okay }</button>
 	      </div>
 	    </div>
 	  </div>
@@ -150,11 +150,11 @@
 	        <h4 class="modal-title">Delete Chapter</h4>
 	      </div>
 	      <div class="modal-body">
-	        <p>Are you sure you want to delete this chapter?</p>
+	        <p>${ _strings.writer_chapter_delete_confirmation }</p>
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-	        <button type="button" id="ok_button" class="pratilipi-red-background-modal-button">Yes</button>
+	        <button type="button" class="btn btn-default" data-dismiss="modal">${ _strings.writer_cancel }</button>
+	        <button type="button" id="ok_button" class="pratilipi-red-background-modal-button">${ _strings.writer_okay }</button>
 	      </div>
 	    </div><!-- /.modal-content -->
 	  </div><!-- /.modal-dialog -->

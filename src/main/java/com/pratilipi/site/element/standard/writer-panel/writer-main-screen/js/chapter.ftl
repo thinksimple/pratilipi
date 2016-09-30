@@ -1,6 +1,6 @@
 var Chapter = function (ch_object, writer_panel_object) {
     this.chapterNo = ch_object.chapterNo;
-    this.name = ch_object.chapterTitle ? ch_object.chapterTitle : "Chapter " + this.chapterNo;
+    this.name = ch_object.title ? ch_object.title : "${ _strings.writer_chapter } " + this.chapterNo;
     this.$ListDomElement = null;
     this.writer_panel_object = writer_panel_object;
 };
@@ -42,7 +42,7 @@ Chapter.prototype.getListDomElement = function () {
 };
 
 Chapter.prototype.changeName = function( title ) {
-	this.name = title ? title : "Chapter " + this.chapterNo;
+	this.name = title ? title : "${ _strings.writer_chapter } " + this.chapterNo;
 	this.$name.get(0).firstChild.nodeValue = this.name;
 };
 

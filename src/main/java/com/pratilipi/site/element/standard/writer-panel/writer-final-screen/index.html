@@ -10,11 +10,11 @@
                 <form class="col-sm-8 col-sm-offset-2">
                   <div class="form-group has-feedback">
                     <select class="form-control horizontal-form-input" id="category">
-                      <option selected disabled data-role="default_text">Select Category *</option>
+                      <option selected disabled data-role="default_text">${ _strings.writer_select_category } *</option>
                     </select>  
                   </div>
                   <div class="form-group left-align-content">
-                    <label class="grey-label pull-left" >Add cover image</label>
+                    <label class="grey-label pull-left" >${ _strings.writer_add_cover }</label>
                     <a href="#">
                         <div class="pull-left image-container" >
                             <img class="cover-image" src="http://0.ptlp.co/resource-all/icon/png/default-cover-image.png" alt="">
@@ -25,10 +25,10 @@
                     <div class="clearfix"></div>
                   </div>
                   <div class="form-group left-align-content">
-                    <label class="grey-label">Add summary (You can add it later)</label>
-                    <textarea id="summary" rows="4" class="form-control grey-background" placeholder="Write here.."></textarea>
+                    <label class="grey-label">${ _strings.writer_add_summary }</label>
+                    <textarea id="summary" rows="4" class="form-control grey-background" placeholder="${ _strings.writer_write_here_placeholder }..."></textarea>
                   </div>
-                  <button type="submit" class="pratilipi-red-background-button publish-button">Publish</button>
+                  <button type="submit" class="pratilipi-red-background-button publish-button">${ _strings.writer_publish }</button>
                 </form>
                 </center>
             </div>

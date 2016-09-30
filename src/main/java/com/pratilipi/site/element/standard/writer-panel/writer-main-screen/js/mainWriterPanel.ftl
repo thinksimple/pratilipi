@@ -265,7 +265,7 @@ MainWriterPanel.prototype.saveChapter = function( url, newTab ) {
 					pageNo: 1
 				   };
     $.ajax({type: "POST",
-        url: " /api/pratilipi/content/chapter",
+        url: " /api/pratilipi/content",
         data: ajaxData,
         success:function(response){
         	console.log(response);
@@ -273,7 +273,7 @@ MainWriterPanel.prototype.saveChapter = function( url, newTab ) {
 			toastr.options = {
 			positionClass: 'toast-top-center'
 			};
-			toastr.success('Saved!');
+			toastr.success('${ _strings.writer_changes_saved }');
 			var title = jQuery.parseJSON( response ).chapterTitle;
 			_this.table_of_contents_object.changeCurrentChapterName( _this.currChapter, title );
 			if( url && !(url.originalEvent instanceof Event)) {
