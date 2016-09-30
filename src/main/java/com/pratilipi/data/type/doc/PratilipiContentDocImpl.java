@@ -229,8 +229,9 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 		for( Chapter chapter : chapters ) {
 			JsonObject jsonObject = new JsonObject();
 			jsonObject.addProperty( "chapterNo", ++i );
+			jsonObject.addProperty( "nesting", chapter.getNesting() );
 			if( chapter.getTitle() != null )
-				jsonObject.addProperty( "chapterTitle", chapter.getTitle() );
+				jsonObject.addProperty( "title", chapter.getTitle() );
 			index.add( jsonObject );
 		}
 

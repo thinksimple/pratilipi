@@ -26,6 +26,7 @@ public class PratilipiContentImageApi extends GenericApi {
 		@Validate( required = true, requiredErrMsg = ERR_PRATILIPI_ID_REQUIRED, minLong = 1L )
 		private Long pratilipiId;
 
+		@Validate( minInt = 1 )
 		private Integer pageNo;
 
 		private String name;
@@ -41,6 +42,7 @@ public class PratilipiContentImageApi extends GenericApi {
 		@Validate( required = true, minLong = 1L, requiredErrMsg = ERR_PRATILIPI_ID_REQUIRED )
 		private Long pratilipiId;
 
+		@Validate( minInt = 1 )
 		private Integer pageNo;
 
 		private PratilipiContentType contentType;

@@ -16,6 +16,7 @@ import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.PratilipiContentType;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.type.BlobEntry;
+import com.pratilipi.data.type.PratilipiContentDoc;
 import com.pratilipi.data.util.PratilipiDataUtil;
 import com.pratilipi.data.util.PratilipiDocUtil;
 import com.pratilipi.filter.UxModeFilter;
@@ -34,6 +35,7 @@ public class PratilipiContentApi extends GenericApi {
 		@Validate( required = true, minInt = 1, requiredErrMsg = ERR_PRATILIPI_CHAPTER_NO_REQUIRED )
 		private Integer chapterNo;
 
+		@Validate( minInt = 1 )
 		private Integer pageNo;
 
 		private PratilipiContentType contentType;
@@ -59,16 +61,17 @@ public class PratilipiContentApi extends GenericApi {
 
 	public static class PostRequest extends GenericRequest {
 
-		@Validate( required = true, minLong = 1L, requiredErrMsg = ERR_PRATILIPI_ID_REQUIRED )
+		@Validate( required = true, requiredErrMsg = ERR_PRATILIPI_ID_REQUIRED, minLong = 1L )
 		private Long pratilipiId;
 
-		@Validate( required = true, minInt = 1, requiredErrMsg = ERR_PRATILIPI_CHAPTER_NO_REQUIRED )
+		@Validate( required = true, requiredErrMsg = ERR_PRATILIPI_CHAPTER_NO_REQUIRED, minInt = 1 )
 		private Integer chapterNo;
 
-		@Validate( required = true, minInt = 1, requiredErrMsg = ERR_PRATILIPI_PAGE_NO_REQUIRED )
+		@Validate( required = true, requiredErrMsg = ERR_PRATILIPI_PAGE_NO_REQUIRED, minInt = 1 )
 		private Integer pageNo;
-		
-		@Validate( required = true )
+
+		private String chapterTitle;
+
 		private String content;
 
 	}
@@ -166,12 +169,12 @@ public class PratilipiContentApi extends GenericApi {
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
 		@SuppressWarnings("unused")
-		int pageCount = PratilipiDataUtil.updatePratilipiContent(
-				request.pratilipiId,
-				request.pageNo,
-				PratilipiContentType.PRATILIPI,
-				request.content,
-				false );
+		PratilipiContentDoc pcDoc = 
+				PratilipiDocUtil.updateContent( request.pratilipiId, 
+												request.chapterNo, 
+												request.pageNo, 
+												request.chapterTitle, 
+												request.content );
 
 		Task task = TaskQueueFactory.newTask()
 				.setUrl( "/pratilipi/process" )
