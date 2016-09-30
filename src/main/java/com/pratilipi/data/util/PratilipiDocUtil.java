@@ -34,6 +34,7 @@ import com.pratilipi.common.type.UserReviewState;
 import com.pratilipi.common.type.VoteParentType;
 import com.pratilipi.common.type.VoteType;
 import com.pratilipi.common.util.GoogleAnalyticsApi;
+import com.pratilipi.common.util.HtmlUtil;
 import com.pratilipi.common.util.HttpUtil;
 import com.pratilipi.common.util.ImageUtil;
 import com.pratilipi.data.BlobAccessor;
@@ -642,6 +643,20 @@ public class PratilipiDocUtil {
 			content = htmlString;
 
 		} else {
+
+			// Deleting the page and replacing it with extracted text format
+			chapter.deletePage( pageNo );
+			PratilipiContentDoc.Page page = chapter.addPage( pageNo );
+
+			for( Pagelet pagelet : pageletList ) {
+				if( pagelet.getType() == PageletType.TEXT )
+					page.addPagelet( pagelet.getType(), HtmlUtil.toPlainText( pagelet.getData().toString() ) );
+				else if( pagelet.getType() == PageletType.BLOCKQUOTE )
+					page.addPagelet( pagelet.getType(), HtmlUtil.toPlainText( pagelet.getData().toString() ) );
+				else
+					page.addPagelet( pagelet.getType(), pagelet.getData() );
+			}
+
 			content = chapter;
 
 		}
