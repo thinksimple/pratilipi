@@ -244,7 +244,7 @@ logout_failed						= लॉग आउट असफल! कृपया पुन
 # Author Edit Popup
 edit_author_heading				= लेखक परिचय संपादित करां 
 edit_author_first_name			= नाव (मराठी)
-edit_author_last_name			= आडनाव नाव बदलणे
+edit_author_last_name			= आडनाव (मराठी)
 edit_author_first_name_en		= नाव (इंग्रजी)
 edit_author_last_name_en		= आडनाव (इंग्रजी) 
 edit_author_pen_name			= टोपणनाव 
