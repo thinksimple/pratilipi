@@ -7,7 +7,6 @@ import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.annotation.Validate;
-import com.pratilipi.api.impl.pratilipi.PratilipiContentChapterApi.Response;
 import com.pratilipi.api.shared.GenericFileDownloadResponse;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
@@ -189,6 +188,6 @@ public class PratilipiContentApi extends GenericApi {
 				request.chapterTitle, 
 				request.content );
 
-	}		
+	}
 
 }
