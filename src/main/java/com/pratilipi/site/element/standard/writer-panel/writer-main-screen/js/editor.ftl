@@ -138,7 +138,7 @@ Editor.prototype.attachImageSelectionListener = function() {
     	$remove_image.show();
     });
     this.content_object.$content_container.on("blur", "img.writer-image", function(e) {
-    	_this.content_object.find("img.remove").removeClass("remove");
+    	_this.content_object.$content_container.find("img.remove").removeClass("remove");
     	$remove_image.hide();
     	$add_image.show();
     });    
