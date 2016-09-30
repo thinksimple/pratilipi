@@ -137,3 +137,7 @@
     -webkit-transform: scale(1.0);
   }
 }
+
+.blur-image {
+	opacity: 0.6;
+}

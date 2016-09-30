@@ -48,29 +48,43 @@ FinalScreenWriterPanel.prototype.attachCoverImageListeners = function() {
 		$("#uploadPratilipiImage").submit();
 	});
     
-    $('#uploadPratilipiImage').on('submit',(function(e) {
+    $('#uploadPratilipiImage').on('submit',function(e) {
         e.preventDefault();
-        var formData = new FormData(this);
-
-        $.ajax({
-            type:'POST',
-            url: $(this).attr('action'),
-            data:formData,
-            cache:false,
-            contentType: false,
-            processData: false,
-            success:function(data){
-                console.log("success");
-                console.log(data);
-                var image_src = jQuery.parseJSON( data ).coverImageUrl;
-                _this.$image_container.find(".cover-image").attr("src", image_src );
-            },
-            error: function(data){
-                console.log("error");
-                console.log(data);
-            }
-        });
-    }));    
+        var file = $(this).find("#uploadPratilipiImageInput").get(0).files[0];
+		    ImageTools.resize( file, {
+		        width: 480, // maximum width
+		        height: 480 // maximum height
+		    }, function(blob, didItResize) {
+		        // didItResize will be true if it managed to resize it, otherwise false (and will return the original file as 'blob')
+		        var $img = _this.$image_container.find(".cover-image");
+		        $img.attr("src", window.URL.createObjectURL(blob) ).addClass("blur-image");
+		        console.log(blob);
+			    var fd = new FormData();
+					fd.append('data', blob);
+					fd.append('pratilipiId', ${ pratilipiId?c } );  
+					
+				$.ajax({
+		            type:'POST',
+		            url: '/api/pratilipi/cover?pratilipiId=${ pratilipiId?c }',
+		            data:fd,
+		            cache:true,
+		            contentType: false,
+		            processData: false,
+		            success:function(data){
+		                console.log("success");
+		                console.log(data);
+		                var image_url = jQuery.parseJSON( data ).coverImageUrl;
+		                $img.attr( "src", image_url ).removeClass("blur-image");
+		            },
+		            error: function(data){
+		                console.log("error");
+		                console.log(data);
+		                $img.removeClass("blur-image").attr("src", "");
+		            }
+		        });    
+		        // you can also now upload this blob using an XHR.
+		    });
+		});		               
 };
 
 FinalScreenWriterPanel.prototype.attachFormSubmitListener = function() {
