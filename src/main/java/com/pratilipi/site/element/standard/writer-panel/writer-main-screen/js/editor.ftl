@@ -175,6 +175,11 @@ Editor.prototype.highlightBlockquoteOption = function() {
     this.$editor_container.find( "#blockquote img" ).attr( "src", blockquote_img_src );
 };
 
+Editor.prototype.unhighlightBlockquoteOption = function() {
+    var blockquote_img_src = this.icons_object["blockquote"]["unhighlighted"];
+    this.$editor_container.find( "#blockquote img" ).attr( "src", blockquote_img_src );
+};
+
 Editor.prototype.toggleBlockquote = function() {
     if( this.content_object.isSelectionInsideElement( "p" ) ) {
 
@@ -283,4 +288,5 @@ Editor.prototype.resetExecCommandIcons = function() {
 	this.$execCommandLinks.each( function() {
 		$(this).find("img").attr("src", _this.icons_object[this.id]["unhighlighted"]);
 	});
+	this.unhighlightBlockquoteOption();
 };

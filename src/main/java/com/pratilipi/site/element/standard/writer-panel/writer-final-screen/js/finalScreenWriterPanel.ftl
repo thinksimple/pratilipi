@@ -5,15 +5,22 @@ var FinalScreenWriterPanel = function (panel_container) {
     this.$image_container = this.$form.find(".image-container");
     this.$summary = this.$form.find("#summary");
     this.form_validated = true;
+    this.pratilipi_data = ${ pratilipiJson };
 }
 
 FinalScreenWriterPanel.prototype.init = function() {
+	this.setBookName();
     this.generateCategoryOptions();
     this.hideCoverImageForm();
     this.attachCoverImageListeners();
     this.attachFormSubmitListener();
 	console.log("${pratilipiId?c}");
 
+}
+
+FinalScreenWriterPanel.prototype.setBookName = function(){
+	var book_name = this.pratilipi_data.title ? this.pratilipi_data.title : this.pratilipi_data.titleEn;
+	this.$panel_container.find('[data-behaviour="book_name"]').text( book_name );
 }
 
 FinalScreenWriterPanel.prototype.generateCategoryOptions = function() {
@@ -112,7 +119,7 @@ FinalScreenWriterPanel.prototype.ajaxSubmitForm = function() {
         	
         	var parsed_data = jQuery.parseJSON( response );
         	console.log(parsed_data);
-  			alert( "success" );
+  			window.location.href = parsed_data.pageUrl;
 		},
         fail:function(response){
         	var message = jQuery.parseJSON( response.responseText );
