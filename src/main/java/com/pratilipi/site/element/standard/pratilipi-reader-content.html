@@ -287,13 +287,14 @@
 			_onResponse: function( event ) {
 
 				var response = event.detail.response;
+				var content = response != null && response.content != null ? response.content : "";
 
 				// Populate map
-				this.contentMap[ response.pageNo ] = response.content;
+				this.contentMap[ response.pageNo ] = content;
 
 				// Update content if response page no == this page no
 				if( this.pageNo == response.pageNo )
-					this.set( 'content', response.content );
+					this.set( 'content', content );
 			},
 
 			_onError: function( event ) {
