@@ -23,6 +23,7 @@ Editor.prototype.init = function() {
     this.attachImageSelectionListener();
     this.addTextSelectionListener();
     this.addImageListener();
+    this.addRemoveImageListener();
     this.removeEventListenersOnUrlModalHide();
 }
 
@@ -129,35 +130,18 @@ Editor.prototype.attachLinkSelectionListener = function() {
 
 Editor.prototype.attachImageSelectionListener = function() {
     var _this = this;
-    var $remove = this.$editor_container.find("#insertImage img");
-    this.content_object.$content_container.on("click", "img.writer-image", function(e) {
-    	e.stopPropagation();
-    	_this.highlightImageOption( true );
-    	var $image_element = $(this);
-        $(document.body).one('click', function( e2 ) {
-            if ( e2.target == $remove.get(0) ) {
-				$image_element.remove();
-				_this.highlightImageOption( false );
-            }
-            else { 
-            	_this.highlightImageOption( false );            	
-            }
-            
-        });
+    var $add_image = this.$editor_container.find("#insertImage");
+    var $remove_image = this.$editor_container.find("#removeImage");
+    this.content_object.$content_container.on("focus", "img.writer-image", function(e) {
+    	$( this ).addClass("remove");
+    	$add_image.hide();
+    	$remove_image.show();
     });
-};
-
-Editor.prototype.highlightImageOption = function( deleteFlag ) {
-	var img_src = deleteFlag ? this.icons_object[ "insertImage" ]["highlighted"] : this.icons_object[ "insertImage" ]["unhighlighted"];
-	this.$editor_container.find("#insertImage img").attr( "src", img_src );
-	if( deleteFlag ) {
-		this.$editor_container.find("#insertImage").unbind("click");
-		console.log("unbinded click ");
-	}
-	else {
-		this.addImageListener();
-		console.log("binded click");
-	}
+    this.content_object.$content_container.on("blur", "img.writer-image", function(e) {
+    	_this.content_object.find("img.remove").removeClass("remove");
+    	$remove_image.hide();
+    	$add_image.show();
+    });    
 };
 
 Editor.prototype.addTextSelectionListener = function() {
@@ -216,7 +200,10 @@ Editor.prototype.addImageListener = function() {
 		        else {
 		        	$last_element = null;
 		        }
-				var $img = $("<img>").attr( "src", window.URL.createObjectURL(blob) ).addClass("writer-image").addClass("blur-image");
+				var $img = $("<img>").attr({
+					"src": window.URL.createObjectURL(blob),
+					"tabindex": -1,
+				} ).addClass("writer-image").addClass("blur-image");
 				if( $last_element ) {
 					$img.insertAfter( $last_element );
 				}
@@ -254,6 +241,17 @@ Editor.prototype.addImageListener = function() {
 		    });
 	});	    
 	
+};
+
+Editor.prototype.addRemoveImageListener = function() {
+	var _this = this;
+	var $removeImageLink = this.$editor_container.find("#removeImage");
+	var $addImageLink = this.$editor_container.find("#insertImage");
+	$removeImageLink.on("click", function(e) {
+		_this.content_object.$content_container.find("img.remove").remove();
+		$removeImageLink.hide();
+		$addImageLink.show();
+	});
 };
 
 Editor.prototype.getSelectionStart = function () {
