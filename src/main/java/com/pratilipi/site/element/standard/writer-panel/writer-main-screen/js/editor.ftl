@@ -247,7 +247,7 @@ Editor.prototype.addRemoveImageListener = function() {
 	var _this = this;
 	var $removeImageLink = this.$editor_container.find("#removeImage");
 	var $addImageLink = this.$editor_container.find("#insertImage");
-	$removeImageLink.on("click", function(e) {
+	$removeImageLink.on("mousedown", function(e) {
 		_this.content_object.$content_container.find("img.remove").remove();
 		$removeImageLink.hide();
 		$addImageLink.show();
