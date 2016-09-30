@@ -272,6 +272,6 @@ Editor.prototype.removeEventListenersOnUrlModalHide = function () {
 Editor.prototype.resetExecCommandIcons = function() {
 	var _this = this;
 	this.$execCommandLinks.each( function() {
-		$(this).find("img").attr("src", _this.icons_object[$(this).id]["unhighlighted"]);
+		$(this).find("img").attr("src", _this.icons_object[this.id]["unhighlighted"]);
 	});
 };
