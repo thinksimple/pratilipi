@@ -229,7 +229,7 @@ user_login_success					= लॉग-इन यशस्वी आहे
 user_register_success				= नोंदणी यशस्वी आहे
 password_change_success				= पासवर्ड बदला यशस्वी आहेुआ
 verification_email_sent_success		= पुष्टीकरण ईमेल यशस्वीरित्या पाठवले गेले आहे!ा गया!
-user_verified_success				= वापरकर्ता यशस्वीरित्या पुष्टी!!
+user_verified_success				= वापरकर्ता यशस्वीरित्या पुष्टी!
 content_created_success				= यशस्वी प्रकाशन काम
 updated_author_info_success			= लेखक संपादन परिचय सांभाळते
 updated_pratilipi_info_success		= संपादित माहिती निर्मिती यशस्वी आहे
@@ -238,7 +238,7 @@ updated_review						= यशस्वी
 #Failure Messages
 server_error_message				= काही त्रुटी आली ! कृपया पुन्हा प्रयत्न करा!
 could_not_connect_server			= सर्वर शी जोडण्याचा प्रयत्न असफल झाला 
-review_authorisation_error			= माफ करा ! तुम्ही या रचनेवर टिप्पणी लिहण्यास अधिकृत नाही . 
+review_authorisation_error			= माफ करा! तुम्ही या रचनेवर टिप्पणी लिहण्यास अधिकृत नाही. 
 logout_failed						= लॉग आउट असफल! कृपया पुन्हा प्रयत्न करा. 
 
 # Author Edit Popup
@@ -249,16 +249,16 @@ edit_author_first_name_en		= नाव (इंग्रजी)
 edit_author_last_name_en		= आडनाव (इंग्रजी) 
 edit_author_pen_name			= टोपणनाव 
 edit_author_pen_name_en			= टोपणनाव (इंग्रजी)
-edit_author_birthday_ddmmyyyy	= जन्मतिथि (dd-mm-yyyy)
+edit_author_birthday_ddmmyyyy	= जन्मतारीख (dd-mm-yyyy)
 edit_author_language			=  भाषा 
-edit_author_summary				= जन्मतिथि (dd-mm-yyyy)
+edit_author_summary				=  सारांश
 edit_author_save_changes		= बदल जतन करा
 
 # Pratilipi Edit Popup
 edit_pratilipi_heading			=  रचनेची माहिती बदला
 edit_pratilipi_title			= शिर्षक (मराठी)
 edit_pratilipi_title_en			= शिर्षक (इंग्रजी)
-edit_pratilipi_type				= विधा 
+edit_pratilipi_type				=  प्रकार   
 edit_pratilipi_language			= भाषा 
 edit_pratilipi_summary			= रचनेचे सारांश
 edit_pratilipi_save_changes		= बदलांना सुरक्षित करां 
@@ -274,7 +274,7 @@ event_entries = कार्यक्रम प्रवेश
 event_name = कार्यक्रमाचे नाव
 event_name_en =कार्यक्रम शिर्षक इंग्रजी मध्ये
 event_description =  कार्यक्रमाच्या संदर्भात
-event_entries_url_list = प्रवेशिकाची  युआरएल लिस्ट
+event_entries_url_list = प्रवेशिकाची युआरएल लिस्ट
 event_save_changes = सुरक्षित बदल करा
 
 # Gender
