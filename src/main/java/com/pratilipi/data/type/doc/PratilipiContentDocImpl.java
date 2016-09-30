@@ -181,12 +181,12 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 
 	@Override
 	public Chapter addChapter( String title ) {
-		return addChapter( title, null );
+		return addChapter( title, null, null );
 	}
 
 	@Override
 	public Chapter addChapter( String title, Integer chapterNo ) {
-		return addChapter( title, null, null );
+		return addChapter( title, chapterNo, null );
 	}
 
 	@Override
