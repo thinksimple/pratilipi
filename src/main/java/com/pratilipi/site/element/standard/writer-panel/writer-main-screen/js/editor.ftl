@@ -13,6 +13,7 @@ var Editor = function ( editor_container, content_object ) {
     this.$execCommandLinks = this.$editor_container.find(".execCommand");
     // this.$alignmentLinks = this.$editor_container.find( '[data-role="alignment"]' );
     this.$urlModal = $('#urlModal');
+    this.highlightEditorOptionsFlag = true;
 }
 
 Editor.prototype.init = function() {
@@ -137,18 +138,22 @@ Editor.prototype.attachImageSelectionListener = function() {
     	$add_image.hide();
     	$remove_image.show();
     	_this.resetExecCommandIcons();
+    	_this.setHighlightEditorOptionsFlag( false );
     });
     this.content_object.$content_container.on("blur", "img.writer-image", function(e) {
     	_this.content_object.$content_container.find("img.remove").removeClass("remove");
     	$remove_image.hide();
     	$add_image.show();
+    	_this.setHighlightEditorOptionsFlag( false );
     });    
 };
 
 Editor.prototype.addTextSelectionListener = function() {
     var _this = this;
     this.content_object.$content_container.on("mouseup keyup", function() {
-        _this.highlightEditorsOptions();
+    	if( _this.highlightEditorOptionsFlag ) {
+        	_this.highlightEditorsOptions();
+        }
     });
 }; 
 
@@ -160,6 +165,10 @@ Editor.prototype.highlightEditorsOptions = function() {
     });
     this.highlightBlockquoteOption();
 };
+
+Editor.prototype.setHighlightEditorOptionsFlag = function( flag ) {
+	this.highlightEditorOptionsFlag = flag;
+}; 
 
 Editor.prototype.highlightBlockquoteOption = function() {
     var blockquote_img_src = this.content_object.isSelectionInsideElement( "blockquote" ) ? this.icons_object["blockquote"]["highlighted"] : this.icons_object[ "blockquote" ]["unhighlighted"];
