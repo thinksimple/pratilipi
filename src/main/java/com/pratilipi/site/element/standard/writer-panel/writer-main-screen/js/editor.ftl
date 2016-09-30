@@ -274,4 +274,4 @@ Editor.prototype.resetExecCommandIcons = function() {
 	this.$execCommandLinks.each( function() {
 		$(this).find("img").attr("src", _this.icons_object[$(this).id]["unhighlighted"]);
 	});
-}
+};
