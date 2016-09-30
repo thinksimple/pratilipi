@@ -24,7 +24,6 @@ import com.pratilipi.api.impl.notification.NotificationListApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentChapterAddApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentApi;
-import com.pratilipi.api.impl.pratilipi.PratilipiContentChapterApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentImageApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentIndexApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentChapterDeleteApi;
@@ -109,7 +108,6 @@ public class ApiService extends GenericService {
 		
 		ApiRegistry.register( PratilipiContentChapterAddApi.class );	// *.pratilipi.com
 		ApiRegistry.register( PratilipiContentChapterDeleteApi.class );	// *.pratilipi.com
-		ApiRegistry.register( PratilipiContentChapterApi.class );		// *.pratilipi.com
 		ApiRegistry.register( PratilipiContentIndexApi.class );
 		
 	}
