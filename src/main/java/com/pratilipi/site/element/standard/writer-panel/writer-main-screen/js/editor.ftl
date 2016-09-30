@@ -231,11 +231,13 @@ Editor.prototype.addImageListener = function() {
 		                var image_name = parsed_data.imageName;
 		                var image_url = "/api/pratilipi/content/image?pratilipiId=${ pratilipiId?c }&name=" + image_name;
 		                $img.attr( "src", image_url ).attr( "name", image_name ).removeClass("blur-image");
+		            	$upload_image_select.val("");
 		            },
 		            error: function(data){
 		                console.log("error");
 		                console.log(data);
 		                $img.remove();
+		                $upload_image_select.val("");
 		            }
 		        });
 		    });
