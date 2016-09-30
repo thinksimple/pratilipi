@@ -144,7 +144,7 @@ Editor.prototype.attachImageSelectionListener = function() {
     	_this.content_object.$content_container.find("img.remove").removeClass("remove");
     	$remove_image.hide();
     	$add_image.show();
-    	_this.setHighlightEditorOptionsFlag( false );
+    	_this.setHighlightEditorOptionsFlag( true );
     });    
 };
 
