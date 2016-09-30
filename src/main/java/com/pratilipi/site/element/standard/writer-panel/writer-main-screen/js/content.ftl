@@ -56,7 +56,7 @@ Content.prototype.delegateTargetBlankToLinks = function() {
                 $(this).popover('show');
             }); 
             if( $(this).data("popover") == "absent" ) {
-            	$(this).data("popover") = "present";
+            	$(this).data("popover","present");
             }    
         }
     });

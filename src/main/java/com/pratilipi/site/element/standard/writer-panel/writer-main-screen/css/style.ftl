@@ -424,3 +424,17 @@ blockquote {
     margin-right: auto !important;
    }
    
+.pratilipi-red-background-modal-button {
+	border-radius: 4px;
+    letter-spacing: 0.3px;
+    text-shadow: 0px 1px 2px #FFFFFF;
+    display: inline-block;
+    background: #d0021b !important;
+    border: none;
+    box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.50);
+    background-color: white;
+    outline: none;
+    color: white;
+    padding: 6px 12px;
+    font-size: 14px;
+}   
