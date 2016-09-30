@@ -7,10 +7,13 @@ var TableOfContents = function(toc_container, pagination_object, parent_object) 
     this.$chapters_separator_second = this.$dropdown_menu_list.find("[data-behaviour=chapters_separator_second]");
     this.chapters = [];
     console.log(this.chapters);
-    var pratilipi_data = ${ pratilipiJson };
-    this.book_name = pratilipi_data.title ? pratilipi_data.title : pratilipi_data.titleEn;
+    this.pratilipi_data = ${ pratilipiJson };
+    this.book_name = this.pratilipi_data.title ? this.pratilipi_data.title : this.pratilipi_data.titleEn;
     this.$new_chapter_button = this.$dropdown_menu_list.find("[data-behaviour=new_chapter]");
+    this.$edit_title = this.$dropdown_menu_list.find('li[data-behaviour="edit-title"]');
     this.$deleteConfirmationModal = $("#chapterDeleteModal");
+    this.$titleChangeModal = $("#titleChangelModal");
+    this.form_validated = true;
     //console.log( this.book_name );
 
 }
@@ -22,6 +25,7 @@ TableOfContents.prototype.init = function () {
     this.attachNewChapterListener();
     this.delegateDeleteChapterListeners();
     this.removeEventListenersOnDeleteModalHide();
+    this.attachEditTitleListener();
 }
 
 TableOfContents.prototype.changeName = function( name ) {
@@ -90,6 +94,84 @@ TableOfContents.prototype.removeEventListenersOnDeleteModalHide = function () {
 	this.$deleteConfirmationModal.on('hidden.bs.modal', function (e) {
 		_this.$deleteConfirmationModal.find('#ok_button').unbind("click");
 	});
+};
+
+TableOfContents.prototype.attachEditTitleListener = function() {
+	var _this = this;
+	this.$edit_title.on("click", function() {
+		_this.$titleChangeModal.find("#title-vernacular").val( _this.pratilipi_data.title );
+		_this.$titleChangeModal.find("#title-english").val( _this.pratilipi_data.titleEn );
+		_this.$titleChangeModal.modal('show');
+	});
+	this.$titleChangeModal.find("form").on("submit", function(e) {
+		e.preventDefault();
+		_this.validateTitleForm();
+	} );
+};
+
+TableOfContents.prototype.validateTitleForm = function() {
+	this.resetErrorStates();
+	var $vernacular_title = this.$titleChangeModal.find("#title-vernacular");
+	var $english_title = this.$titleChangeModal.find("#title-english");
+	if( this.isEmptyStr( $vernacular_title.val() ) ) {
+		$vernacular_title.closest(".form-group").addClass("has-error");
+		$vernacular_title.after('<span class="error-exclamation glyphicon glyphicon-exclamation-sign form-control-feedback" aria-hidden="true"></span>');
+		this.form_validated = false;
+	}
+	
+	if( this.isEmptyStr( $english_title.val() ) ) {
+		$english_title.closest(".form-group").addClass("has-error");
+		$english_title.after('<span class="error-exclamation glyphicon glyphicon-exclamation-sign form-control-feedback" aria-hidden="true"></span>');
+		this.form_validated = false;
+	}
+	
+	if( this.form_validated ) {
+		this.ajaxSubmitForm( $vernacular_title.val(), $english_title.val() );
+	}
+};
+
+TableOfContents.prototype.isEmptyStr = function(str) {
+	return ( str.length === 0 || !str.trim() );
+};
+
+TableOfContents.prototype.resetErrorStates = function() {
+	this.form_validated = true;
+	var $title_form = this.$titleChangeModal.find("form");
+	$title_form.find(".has-error").removeClass("has-error");
+	$title_form.find(".error-exclamation").remove();
+	
+};
+
+TableOfContents.prototype.ajaxSubmitForm = function( vernacular_title, english_title ) {
+	var _this = this;
+	_this.$titleChangeModal.modal('hide');
+	var ajax_data = {
+			title: vernacular_title ,
+    		titleEn: english_title,
+    		pratilipiId: "${ pratilipiId }",          		
+    	   };
+	console.log( ajax_data );
+    $.ajax({type: "POST",
+        url: "/api/pratilipi",
+        data: ajax_data,
+        success:function(response){
+        	console.log(response);
+        	console.log(typeof response);
+        	
+        	var parsed_data = jQuery.parseJSON( response );
+        	console.log(parsed_data);
+        	_this.pratilipi_data = parsed_data;
+        	var book_name = parsed_data.title ? parsed_data.title : parsed_data.titleEn;
+        	_this.changeName( book_name );
+        	//reset Pratilipi data and table of contents title in frontend
+		},
+        fail:function(response){
+        	var message = jQuery.parseJSON( response.responseText );
+			alert(message);
+		}			    		
+		
+	});	
+	
 };
 
 TableOfContents.prototype.addNewChapterButton = function() {

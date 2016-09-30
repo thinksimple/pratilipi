@@ -74,7 +74,7 @@ html, body {
 }        
 .horizontal-form-input {
     border: none;
-    box-shadow: none;
+    box-shadow: none !important;
     border-bottom: 1px solid black;
     border-radius: 0px;
     /*color: #a5a0a0;*/
@@ -417,3 +417,10 @@ blockquote {
     padding: 7px 7px;    
     background: white;
   }
+  
+  .title-change-input {
+  	width: 90%;
+    margin-left: auto !important;
+    margin-right: auto !important;
+   }
+   

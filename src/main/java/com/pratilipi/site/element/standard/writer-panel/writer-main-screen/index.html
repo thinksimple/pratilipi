@@ -11,7 +11,7 @@
                       </button>
                   </div> 
                   <ul class="dropdown-menu" aria-labelledby="table_of_contents_dropdown" style="min-width:230px;margin-top:13px;border-radius: 0 0 4px 4px;">
-                    <li class="text-center"><strong class="pratilipi-red">Edit Title</strong></li>
+                    <li data-behaviour="edit-title" class="text-center"><strong class="pratilipi-red">Edit Title</strong></li>
                     <li role="separator" class="divider"></li>
                     <li class="text-center"><strong>Table of Contents</strong></li>
                     <li role="separator" class="divider"></li>
@@ -95,22 +95,24 @@
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title" id="myModalLabel">Add URL</h4>
+	        <h4 class="modal-title" id="myModalLabel">Edit title</h4>
 	      </div>
-	      <div class="modal-body">
-			<form class="form-horizontal">
-                  <div class="form-group has-feedback">
-                    <input   class="form-control horizontal-form-input" id="title-vernacular" placeholder="Enter Title Here*">
-                  </div>
-                  <div class="form-group has-feedback">
-                    <input  class="form-control horizontal-form-input" id="title-english" placeholder="Re-enter the title in English*">
-				  </div>
-			</form>  
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-	        <button id="url_ok_button" type="button" class="btn btn-primary">OK</button>
-	      </div>
+	      <form class="form-horizontal">
+		      <div class="modal-body">
+	                  <div class="form-group has-feedback title-change-input">
+	                  	<label>Enter Title Here*</label>
+	                    <input   class="form-control horizontal-form-input " id="title-vernacular" placeholder="Enter Title Here*">
+	                  </div>
+	                  <div class="form-group has-feedback title-change-input">
+	                  	<label>Re-enter the title in English*</label>
+	                    <input  class="form-control horizontal-form-input" id="title-english" placeholder="Re-enter the title in English*">
+					  </div>  
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+		        <button id="title_ok_button" type="submit" class="btn btn-primary">Ok</button>
+		      </div>
+	      </form>
 	    </div>
 	  </div>
 	</div>          
