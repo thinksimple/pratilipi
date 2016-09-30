@@ -649,12 +649,13 @@ public class PratilipiDocUtil {
 			PratilipiContentDoc.Page page = chapter.addPage( pageNo );
 
 			for( Pagelet pagelet : pageletList ) {
-				if( pagelet.getType() == PageletType.TEXT )
-					page.addPagelet( pagelet.getType(), HtmlUtil.toPlainText( pagelet.getData().toString() ) );
-				else if( pagelet.getType() == PageletType.BLOCKQUOTE )
-					page.addPagelet( pagelet.getType(), HtmlUtil.toPlainText( pagelet.getData().toString() ) );
-				else
+				if( pagelet.getType() == PageletType.TEXT || pagelet.getType() == PageletType.BLOCKQUOTE ) {
+					String extractedText = HtmlUtil.toPlainText( pagelet.getData().toString() );
+					if( !extractedText.trim().isEmpty() )
+						page.addPagelet( pagelet.getType(), extractedText );
+				} else {
 					page.addPagelet( pagelet.getType(), pagelet.getData() );
+				}
 			}
 
 			content = chapter;
