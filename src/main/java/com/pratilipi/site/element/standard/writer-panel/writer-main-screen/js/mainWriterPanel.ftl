@@ -129,7 +129,7 @@ MainWriterPanel.prototype.attachActionButtonListeners = function() {
 	} );
 	
 	this.$publish_button.on('click', function() {
-		var url = "?action=summarize&id=" + "${ pratilipiId?c }";
+		var url = "?action=publish&id=" + "${ pratilipiId?c }";
 		_this.saveChapter( url, false );
 	} );
 	
