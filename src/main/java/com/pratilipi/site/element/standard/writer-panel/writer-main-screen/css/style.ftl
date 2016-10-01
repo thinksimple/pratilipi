@@ -427,7 +427,6 @@ blockquote {
 .pratilipi-red-background-modal-button {
 	border-radius: 4px;
     letter-spacing: 0.3px;
-    text-shadow: 0px 1px 2px #FFFFFF;
     display: inline-block;
     background: #d0021b !important;
     border: none;
@@ -438,3 +437,6 @@ blockquote {
     padding: 6px 12px;
     font-size: 14px;
 }   
+.toast {
+	background-color: #d0021b;
+}
