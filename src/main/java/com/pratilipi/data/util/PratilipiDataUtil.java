@@ -286,7 +286,7 @@ public class PratilipiDataUtil {
 		if( writePage != null && writePage.getUriAlias() != null ) {
 			pratilipiData.setWritePageUrl( writePage.getUriAlias() );
 		} else {
-			if( isOldFormatContent( pratilipi.getId() ) )
+			if( pratilipi.isOldContent() )
 				pratilipiData.setWritePageUrl( PageType.WRITE.getUrlPrefix() + pratilipi.getId() );
 			else
 				pratilipiData.setWritePageUrl( "/pratilipi-write?id=" + pratilipi.getId() );
@@ -526,6 +526,10 @@ public class PratilipiDataUtil {
 			pratilipi.setState( pratilipiData.getState() );
 		else if( isNew )
 			pratilipi.setState( PratilipiState.DRAFTED );
+
+		if( pratilipiData.hasOldContentFlag() )
+			pratilipi.setOldContent( pratilipiData.isOldContent() );
+
 
 		if( isNew )
 			pratilipi.setListingDate( new Date() );

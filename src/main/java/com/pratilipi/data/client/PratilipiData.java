@@ -69,6 +69,8 @@ public class PratilipiData implements Serializable {
 	private Boolean addedToLib;
 	private Boolean hasAccessToUpdate;
 
+	private Boolean oldContent;
+	private boolean hasOldContent;
 
 	
 	public PratilipiData() {}
@@ -328,6 +330,19 @@ public class PratilipiData implements Serializable {
 	
 	public void setAccessToUpdate( Boolean hasAccessToUpdate ) {
 		this.hasAccessToUpdate = hasAccessToUpdate;
+	}
+	
+	public boolean hasOldContentFlag() {
+		return hasOldContent;
+	} 
+
+	public boolean isOldContent() {
+		return oldContent;
+	}
+
+	void setOldContent( Boolean oldContent ) {
+		this.oldContent = oldContent;
+		this.hasOldContent = true;
 	}
 
 }

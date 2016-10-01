@@ -79,6 +79,9 @@ public class PratilipiApi extends GenericApi {
 		private PratilipiState state;
 		private boolean hasState;
 
+		private Boolean oldContent;
+		private boolean hasOldContent;
+
 	}
 	
 	public static class Response extends GenericResponse {
