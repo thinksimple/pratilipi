@@ -94,20 +94,6 @@
 		
 		<!-- List of Books -->
 		<div class="row">
-			<template is="dom-if" if="{{ includeAddCard }}">
-				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-					<paper-card class="add-card">
-						<div style="text-align: center; margin-top: 50px;">
-							<a on-click="_write">
-								<iron-icon icon="add-circle"></iron-icon>
-							</a>
-							<a on-click="_write">
-								<h6 style="margin-top: 30px;">${ _strings.author_add_new_content }</h6>
-							</a>
-						</div>
-					</paper-card>
-				</div>
-			</template>
 			<template is="dom-repeat" id="repeatPratilipiList" items="[[ pratilipiList ]]">
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<pratilipi-card 
@@ -163,7 +149,6 @@
 				isLoading: { type: Boolean, value: false },
 				isFinished: { type: Boolean, value: false },
 				
-				includeAddCard: { type: Boolean, value: false },
 				includeShowMoreButton: { type: Boolean, value: false },
 				
 				draftsActive: { type: Boolean, value: false },
@@ -297,10 +282,6 @@
 				if( this.pratilipiList.length < 20 || this.cursor == "" )
 					this.isFinished = true;
 				this.checkForZeroResults();
-			},
-			
-			_write: function() {
-				document.querySelector( 'pratilipi-write' ).createNewPratilipi( this.authorId );
 			}
 
 		});

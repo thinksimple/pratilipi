@@ -153,10 +153,10 @@
 			},
 
 			_write: function() {
-				if( jQuery( window ).width() >= 600 )
-					document.querySelector( 'pratilipi-write' ).createNewPratilipi( this.author.authorId );
-				else
+				if( isMobile() )
 					document.querySelector( 'pratilipi-alert' ).alert( "${ _strings.write_on_desktop_only }", false, 10 * 6000 );
+				else
+					window.location.href = "/pratilipi-write?action=start_writing&aId=" + this.author.authorId;
 			},
 
 			_numberFoundObserver: function() {
