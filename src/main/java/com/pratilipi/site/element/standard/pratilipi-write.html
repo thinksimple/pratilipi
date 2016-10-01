@@ -98,7 +98,7 @@
 				<div class="display-message-div"><p>{{ message }}</p></div>
 				<button id="pratilipiWriteButton" style="position: fixed; bottom: 15px; right: 15px;" class="pratilipi-dark-blue-button" type="button" on-click="onSubmit">{{ modalButtonText }}</button>
 				<template is="dom-if" if="{{ editPratilipi }}">
-					<a class="pratilipi-grey-button" href="/write?id={{ pratilipiId }}">${ _strings.pratilipi_edit_content }</a>
+					<a style="position: fixed; bottom: 15px; left: 15px;" class="pratilipi-grey-button" href="/write?id={{ pratilipiId }}">${ _strings.pratilipi_edit_content }</a>
 				</template>
 			</div>
 		</div>
