@@ -356,20 +356,18 @@ public class PratilipiSite extends HttpServlet {
 				templateName = templateFilePrefix + ( basicMode ? "PasswordResetBasic.ftl" : "PasswordReset.ftl" );
 				
 			} else if( uri.equals( "/pratilipi-write" ) ) {
+
 				dataModel = new HashMap<String, Object>();
 				dataModel.put( "title", "Writer Panel" );
 
-				String action = request.getParameter( "action" );
-				if( action != null )
-					dataModel.put( "action", action );
+				Long authorId = request.getParameter( RequestParameter.AUTHOR_ID.getName() ) != null 
+						? Long.parseLong( request.getParameter( RequestParameter.AUTHOR_ID.getName() ) ) 
+						: null;
 
 				Long pratilipiId = request.getParameter( RequestParameter.READER_CONTENT_ID.getName() ) != null 
 							? Long.parseLong( request.getParameter( RequestParameter.READER_CONTENT_ID.getName() ) ) 
 							: null;
 
-				Long authorId = request.getParameter( RequestParameter.AUTHOR_ID.getName() ) != null 
-						? Long.parseLong( request.getParameter( RequestParameter.AUTHOR_ID.getName() ) ) 
-						: null;
 
 				if( authorId != null )
 					dataModel.put( "authorId", authorId );
@@ -379,26 +377,23 @@ public class PratilipiSite extends HttpServlet {
 					pratilipiRequest.setPratilipiId( pratilipiId );
 					PratilipiApi.Response pratilipiResponse = ApiRegistry.getApi( PratilipiApi.class ).get( pratilipiRequest );
 
-					dataModel.put( "pratilipiId", pratilipiId );
-					dataModel.put( "pratilipiJson", new Gson().toJson( pratilipiResponse ) );
-				}
-					
-
-				if( request.getParameter( RequestParameter.AUTHOR_ID.getName() ) != null )
-					dataModel.put( "authorId", Long.parseLong( request.getParameter( RequestParameter.AUTHOR_ID.getName() ) ) );
-
-				if( action.equals( "write" ) ) {
 					PratilipiContentIndexApi.GetRequest indexReq = new PratilipiContentIndexApi.GetRequest();
 					indexReq.setPratilipiId( pratilipiId );
 					List<JsonObject> indexArray = ApiRegistry.getApi( PratilipiContentIndexApi.class )
 															.getIndex( indexReq ).getIndex();
+
+					dataModel.put( "pratilipiId", pratilipiId );
+					dataModel.put( "pratilipiJson", new Gson().toJson( pratilipiResponse ) );
 					dataModel.put( "indexJson", new Gson().toJson( indexArray ) );
 				}
 
+				String action = request.getParameter( "action" );
+				if( action != null )
+					dataModel.put( "action", action );
+
 				templateName = templateFilePrefix + "Writer.ftl";
-				
+
 			// Internal links
-				
 			} else if( ! basicMode && uri.equals( "/authors" ) ) {
 				dataModel = createDataModelForAuthorsPage( filterLanguage );
 				templateName = templateFilePrefix + "AuthorList.ftl";
