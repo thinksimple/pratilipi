@@ -105,8 +105,11 @@ public class PratilipiEntity implements Pratilipi {
 	@Index
 	private Long FB_LIKE_SHARE_COUNT;
 
-	
-	
+
+	private Boolean OLD_CONTENT;
+
+
+
 	public PratilipiEntity() {}
 	
 	public PratilipiEntity( Long id ) {
@@ -368,5 +371,15 @@ public class PratilipiEntity implements Pratilipi {
 	public void setFbLikeShareCount( Long fbLikeShareCount ) {
 		this.FB_LIKE_SHARE_COUNT = fbLikeShareCount;
 	}
-	
+
+	@Override
+	public Boolean isOldContent() {
+		return OLD_CONTENT == null ? false : OLD_CONTENT;
+	}
+
+	@Override
+	public void setOldContent( Boolean oldContent ) {
+		this.OLD_CONTENT = oldContent;
+	}
+
 }

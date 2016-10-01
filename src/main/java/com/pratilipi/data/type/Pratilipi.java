@@ -111,4 +111,9 @@ public interface Pratilipi extends GenericOfyType {
 
 	void setFbLikeShareCount( Long fbLikeShareCount );
 
+
+	Boolean isOldContent();
+
+	void setOldContent( Boolean oldContent );
+
 }
