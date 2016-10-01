@@ -134,7 +134,7 @@ Editor.prototype.attachImageSelectionListener = function() {
     var _this = this;
     var $add_image = this.$editor_container.find("#insertImage");
     var $remove_image = this.$editor_container.find("#removeImage");
-    this.content_object.$content_container.on("focus", "img.writer-image", function(e) {
+    this.content_object.$content_container.on("mouseup", "img.writer-image", function(e) {
     	$( this ).addClass("remove");
     	$add_image.hide();
     	$remove_image.show();

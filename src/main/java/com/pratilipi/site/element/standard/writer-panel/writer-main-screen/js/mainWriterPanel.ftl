@@ -253,7 +253,7 @@ MainWriterPanel.prototype.resetContent = function() {
 	this.chapter_name_object.reset();
 };
 
-MainWriterPanel.prototype.saveChapter = function( url, newTab ) {
+MainWriterPanel.prototype.saveChapter = function( url, newTab, autosaveFlag ) {
 	var _this = this;
 	if( this.content_object.hasEmptyText() ) {
 		this.content_object.wrapInParagraph();
@@ -273,7 +273,9 @@ MainWriterPanel.prototype.saveChapter = function( url, newTab ) {
 			toastr.options = {
 			positionClass: 'toast-top-center'
 			};
-			toastr.success('${ _strings.writer_changes_saved }');
+			if( !autosaveFlag ) {
+				toastr.success('${ _strings.writer_changes_saved }');
+			}	
 			var title = jQuery.parseJSON( response ).chapterTitle;
 			_this.table_of_contents_object.changeCurrentChapterName( _this.currChapter, title );
 			if( url && !(url.originalEvent instanceof Event)) {
@@ -300,5 +302,5 @@ MainWriterPanel.prototype.setCurrentPage = function( chapterNum ) {
 
 MainWriterPanel.prototype.initializeAutosave = function() {
 	var _this = this;
-	this.content_object.$content_container.keyup( $.debounce( 1500, _this.saveChapter.bind(this) ) );
+	this.content_object.$content_container.keyup( $.debounce( 1500, _this.saveChapter.bind(this, null, null, true) ) );
 };
