@@ -102,6 +102,7 @@ Editor.prototype.promptUrlBox = function() {
 	    var url = _this.$urlModal.find("#input_url").val();
 	    _this.$urlModal.modal('hide');
 	    _this.restoreSelection( saved_selection );
+	    url = _this.addhttp( url );
 	    _this.linkUrlToText( url );
     });
 
@@ -289,4 +290,11 @@ Editor.prototype.resetExecCommandIcons = function() {
 		$(this).find("img").attr("src", _this.icons_object[this.id]["unhighlighted"]);
 	});
 	this.unhighlightBlockquoteOption();
+};
+
+Editor.prototype.addhttp = function (url) {
+    if (!url.match(/^http([s]?):\/\/.*/)) {
+        url = "http://" + url;
+    }
+    return url;
 };
