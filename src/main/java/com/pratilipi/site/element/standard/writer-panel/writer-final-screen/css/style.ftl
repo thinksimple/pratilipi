@@ -44,7 +44,6 @@
      color: #ffffff;
      letter-spacing: 0.3px;
      line-height: 16px;
-     text-shadow: 0px 1px 2px #FFFFFF;
      display: inline-block;
      padding: 10px;
      margin-right: 10px;
