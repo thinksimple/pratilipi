@@ -374,7 +374,7 @@ public class PratilipiEntity implements Pratilipi {
 
 	@Override
 	public Boolean isOldContent() {
-		return OLD_CONTENT == null ? false : OLD_CONTENT;
+		return OLD_CONTENT == null ? true : OLD_CONTENT;
 	}
 
 	@Override
