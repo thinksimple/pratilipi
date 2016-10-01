@@ -27,7 +27,7 @@
 				<#assign action="write">
 			<#else>
 				<#assign action="start_writing">
-			</#i>	
+			</#if>	
 		</#if>
 		
 		<#if action == "start_writing">
