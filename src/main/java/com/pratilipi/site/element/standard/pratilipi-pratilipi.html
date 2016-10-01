@@ -333,7 +333,7 @@
 			
 			openWriterPanel: function() {
 				<#-- New Writer -->
-				if( this.pratilipi.writePageUrl.contains( "pratilipi-write" ) ) {
+				if( this.pratilipi.writePageUrl.indexOf( "/pratilipi-write" ) != -1 ) {
 					window.location.href = this.pratilipi.writePageUrl;
 				} else {
 					document.querySelector( 'pratilipi-write' ).editExistingPratilipi( this.pratilipi );
