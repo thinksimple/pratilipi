@@ -366,6 +366,14 @@ public class PratilipiSite extends HttpServlet {
 				Long pratilipiId = request.getParameter( RequestParameter.READER_CONTENT_ID.getName() ) != null 
 							? Long.parseLong( request.getParameter( RequestParameter.READER_CONTENT_ID.getName() ) ) 
 							: null;
+
+				Long authorId = request.getParameter( RequestParameter.AUTHOR_ID.getName() ) != null 
+						? Long.parseLong( request.getParameter( RequestParameter.AUTHOR_ID.getName() ) ) 
+						: null;
+
+				if( authorId != null )
+					dataModel.put( "authorId", authorId );
+
 				if( pratilipiId != null ) {
 					PratilipiApi.GetRequest pratilipiRequest = new PratilipiApi.GetRequest();
 					pratilipiRequest.setPratilipiId( pratilipiId );
