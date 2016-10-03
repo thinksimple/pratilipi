@@ -1,5 +1,6 @@
 package com.pratilipi.api;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
@@ -35,25 +36,19 @@ public abstract class GenericService extends HttpServlet {
 		if( requestUri.equals( "/" ) || requestUri.isEmpty() ) {
 			
 			String[] reqUris = request.getParameter( "req" ).split( ";" );
-			final PrintWriter pw = new PrintWriter( response.getWriter() ) {
-				public void flush() {
-					// Do Nothing
-				}
-				public void close() {
-					// Do Nothing
-				}
-			};
-			HttpServletResponseWrapper resp = new HttpServletResponseWrapper( response ) {
-				@Override
-				public PrintWriter getWriter() throws IOException {
-					return pw;
-				}
-			};
 			for( final String reqUri : reqUris ) {
 				if( reqUri.trim().isEmpty() )
 					continue;
+				final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				HttpServletResponseWrapper resp = new HttpServletResponseWrapper( response ) {
+					@Override
+					public PrintWriter getWriter() throws IOException {
+						return new PrintWriter( baos );
+					}
+				};
 				logger.log( Level.WARNING, reqUri.trim() );
-				request.getRequestDispatcher( reqUri.trim() ).include( request, resp );
+				request.getRequestDispatcher( reqUri.trim() ).forward( request, resp );
+				response.getOutputStream().write( baos.toByteArray() );
 			}
 			response.getWriter().close();
 			
