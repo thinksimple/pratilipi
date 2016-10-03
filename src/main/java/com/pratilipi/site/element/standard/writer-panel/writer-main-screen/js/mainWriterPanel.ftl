@@ -9,6 +9,8 @@ MainWriterPanel.prototype.init = function() {
     this.addAffixClasses();
     this.setWrappersHeight();
     this.initializeGlobalVariables();
+    this.preventFormSubmission();
+    this.$panel_container = $(".panel");
     
     var pagination_container = $("#pagination");
     this.pagination_object = new Pagination( pagination_container, this );
@@ -130,6 +132,8 @@ MainWriterPanel.prototype.attachActionButtonListeners = function() {
 	
 	this.$publish_button.on('click', function() {
 		var url = "?action=publish&id=" + "${ pratilipiId?c }";
+		var $spinner_div = $("<div>").addClass("spinner");
+		this.$panel_container.append($spinner_div);
 		_this.saveChapter( url, false );
 	} );
 	
@@ -158,6 +162,7 @@ MainWriterPanel.prototype.getChapter = function( chapterNum ) {
         	console.log(parsed_data);
 			_this.populateContent( parsed_data );
 			_this.pagination_object.setProgressPage();
+			_this.editor_object.resetExecCommandIcons();
 		},
         fail:function(response){
         	var message = jQuery.parseJSON( response.responseText );
@@ -283,12 +288,14 @@ MainWriterPanel.prototype.saveChapter = function( url, newTab, autosaveFlag ) {
 					window.open( url, '_blank' );
 				}
 				else {
+					_this.$panel_container.find(".spinner").remove();
 					window.location.href = url;
 				}
 			}
 		},
         fail:function(response){
         	var message = jQuery.parseJSON( response.responseText );
+        	_this.$panel_container.find(".spinner").remove();
 			alert(message);
 		}			    		
 		
@@ -302,5 +309,12 @@ MainWriterPanel.prototype.setCurrentPage = function( chapterNum ) {
 
 MainWriterPanel.prototype.initializeAutosave = function() {
 	var _this = this;
+	this.chapter_name_object.$chapter_name_container.keyup( $.debounce( 1500, _this.saveChapter.bind(this, null, null, true) ) );
 	this.content_object.$content_container.keyup( $.debounce( 1500, _this.saveChapter.bind(this, null, null, true) ) );
+};
+
+MainWriterPanel.prototype.preventFormSubmission = function() {
+	this.$panel_container.find("form").on("submit", function(e) {
+		e.preventDefault();
+	});
 };

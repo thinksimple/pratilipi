@@ -12,6 +12,7 @@ FinalScreenWriterPanel.prototype.init = function() {
 	this.setBookName();
     this.generateCategoryOptions();
     this.hideCoverImageForm();
+    this.prepopulateBookDetails();
     this.attachCoverImageListeners();
     this.attachFormSubmitListener();
 	console.log("${pratilipiId?c}");
@@ -36,6 +37,22 @@ FinalScreenWriterPanel.prototype.generateCategoryOptions = function() {
 
 FinalScreenWriterPanel.prototype.hideCoverImageForm = function() {
 	$("#uploadPratilipiImageInput").hide();
+};
+
+FinalScreenWriterPanel.prototype.prepopulateBookDetails = function() {
+	if ( this.pratilipi_data.type ) {
+		this.$category_select.val( this.pratilipi_data.type );
+	}
+	
+	if( this.pratilipi_data.coverImageUrl ) {
+		this.lastCoverUrl = this.pratilipi_data.coverImageUrl;
+		this.$image_container.find( ".cover-image" ).attr( "src", this.lastCoverUrl );
+	}
+	
+	if( this.pratilipi_data.summary ) {
+		this.$summary.val( this.pratilipi_data.summary );
+	}
+	
 };
 
 FinalScreenWriterPanel.prototype.attachCoverImageListeners = function() {
@@ -75,11 +92,13 @@ FinalScreenWriterPanel.prototype.attachCoverImageListeners = function() {
 		                console.log(data);
 		                var image_url = jQuery.parseJSON( data ).coverImageUrl;
 		                $img.attr( "src", image_url ).removeClass("blur-image");
+		                $("#uploadPratilipiImageInput").val("");
+		                _this.lastCoverUrl = image_url;
 		            },
 		            error: function(data){
 		                console.log("error");
 		                console.log(data);
-		                $img.removeClass("blur-image").attr("src", "");
+		                $img.removeClass("blur-image").attr("src", _this.lastCoverUrl);
 		            }
 		        });    
 		        // you can also now upload this blob using an XHR.

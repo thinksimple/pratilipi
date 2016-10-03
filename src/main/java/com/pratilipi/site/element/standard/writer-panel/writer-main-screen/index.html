@@ -34,13 +34,13 @@
             </div>
         </div>     
         <!-- panel -->
-        <div class="panel panel-default" style="margin-bottom: 5px;min-height: 100%;margin-top:12px;"> 
+        <div class="panel panel-default" style="margin-bottom: 5px;margin-top:12px;"> 
             <div class="panel-body" style="text-align: center;padding: 0 0 0 5px;">
             
                 <form style="    width: 95%;margin-left: auto;margin-right: auto;">
                 <div class="editor-wrapper">
                   <div class="form-group" style="">
-                    <input  class="col-sm-6 form-control horizontal-form-input" id="subtitle" style="padding-bottom: 25px;padding-top: 20px;font-size: 25px;border-bottom: 1px solid #ddd;" placeholder="${ _strings.writer_add_content_title }">
+                    <input  class="col-sm-6 form-control horizontal-form-input" autocomplete="off" id="subtitle" style="padding-bottom: 25px;padding-top: 20px;font-size: 25px;border-bottom: 1px solid #ddd;" placeholder="${ _strings.writer_add_content_title }">
                     <!-- editing panel -->
                     <div id="editor" class="">
                         <div style="background-color: #ddd;padding: 7px;">
@@ -54,15 +54,15 @@
                             <a class="execCommand alignment" data-toggle="tooltip" data-placement="bottom" title="${ _strings.writer_editor_align_right }" href="#" id="justifyRight"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/paragraph-right.svg' style='width:30px;height:20px;'></a>
                             |
                             <a href="#" id="blockquote" data-toggle="tooltip" data-placement="bottom" title="${ _strings.writer_editor_quote }"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/quotes-left.svg' style='width:30px;height:20px;'></a>
-                            <a href="#" id="link" data-toggle="tooltip" data-placement="bottom" title="${ _strings.writer_editor_image }"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/link-505050.svg' style='width:30px;height:20px;'></a>
-                            <a href="#" id="insertImage" data-toggle="tooltip" data-placement="bottom" title="${ _strings.writer_editor_link }"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/camera2.svg' style='width:30px;height:20px;'></a>
+                            <a href="#" id="link" data-toggle="tooltip" data-placement="bottom" title="${ _strings.writer_editor_link }"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/link-505050.svg' style='width:30px;height:20px;'></a>
+                            <a href="#" id="insertImage" data-toggle="tooltip" data-placement="bottom" title="${ _strings.writer_editor_image }"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/camera2.svg' style='width:30px;height:20px;'></a>
                             <a href="#" id="removeImage" style="display:none;"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/trash-d0021b.svg' style='width:30px;height:20px;'></a>
                         </div>
                     </div>
                   </div>
                 </div>  
 
-                <div id="chapter-content" contenteditable="true"  style="border: none; margin-bottom:10px; margin-top:10px;padding-left:0;padding-right:0;text-align:left; height:auto;font-size: 18px;" class="form-control horizontal-form-input" placeholder="${ _strings.writer_write_here_placeholder }..." >
+                <div id="chapter-content" contenteditable="true"  style="min-height: 450px;border: none; margin-bottom:10px; margin-top:10px;padding-left:0;padding-right:0;text-align:left; height:auto;font-size: 18px;" class="form-control horizontal-form-input" placeholder="${ _strings.writer_write_here_placeholder }..." >
                     
                 </div>  
                 <div id='translControl'></div>    

@@ -20,7 +20,6 @@ var TableOfContents = function(toc_container, pagination_object, parent_object) 
 
 TableOfContents.prototype.init = function () {
 	this.changeName( this.book_name );
-    this.setListWidth();
     //this.populateChapters();
     this.attachNewChapterListener();
     this.delegateDeleteChapterListeners();
@@ -31,6 +30,7 @@ TableOfContents.prototype.init = function () {
 TableOfContents.prototype.changeName = function( name ) {
 	this.book_name = name;
 	this.$book_name_container.text( name );
+	this.setListWidth();
 };
 
 TableOfContents.prototype.setListWidth = function() {
