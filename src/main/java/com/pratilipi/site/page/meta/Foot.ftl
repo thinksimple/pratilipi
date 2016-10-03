@@ -1,4 +1,4 @@
-<link type="text/css" rel="stylesheet" href="/resources/style.css?72">
+<link type="text/css" rel="stylesheet" href="/resources/style.css?73">
 <script>
 	var didScroll;
 	var lastScrollTop = 0;
