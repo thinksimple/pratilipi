@@ -133,7 +133,7 @@ MainWriterPanel.prototype.attachActionButtonListeners = function() {
 	this.$publish_button.on('click', function() {
 		var url = "?action=publish&id=" + "${ pratilipiId?c }";
 		var $spinner_div = $("<div>").addClass("spinner");
-		this.$panel_container.append($spinner_div);
+		_this.$panel_container.append($spinner_div);
 		_this.saveChapter( url, false );
 	} );
 	
