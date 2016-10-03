@@ -21,7 +21,7 @@ public abstract class GenericService extends HttpServlet {
 	
 	@Override
 	protected final void service(
-			HttpServletRequest request,
+			final HttpServletRequest request,
 			HttpServletResponse response ) throws ServletException, IOException {
 
 		String requestUri = request.getRequestURI();
@@ -33,19 +33,26 @@ public abstract class GenericService extends HttpServlet {
 
 		if( requestUri.equals( "/" ) || requestUri.isEmpty() ) {
 			
-			logger.log( Level.WARNING, request.getRequestURL().toString() );
-			
 			String[] reqUris = request.getParameter( "req" ).split( ";" );
 			for( final String reqUri : reqUris ) {
 				if( reqUri.trim().isEmpty() )
 					continue;
 				logger.log( Level.WARNING, reqUri.trim() );
 				HttpServletRequestWrapper req = new HttpServletRequestWrapper( request ) {
+					@Override
 					public String getQueryString() {
 						return reqUri.substring( reqUri.indexOf( '?' ) + 1 );
 					}
+					@Override
 					public String getRequestURI() {
 						return reqUri.substring( 0, reqUri.indexOf( '?' ) );
+					}
+					@Override
+					public StringBuffer getRequestURL() {
+						String url = request.getRequestURL().toString();
+						url = url.substring( 0, url.indexOf( '/' ) );
+						url = url + reqUri;
+						return new StringBuffer( reqUri );
 					}
 				};	
 				ApiRegistry.getApi( req.getRequestURI() ).service( request, response );
