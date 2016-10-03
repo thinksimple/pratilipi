@@ -50,9 +50,9 @@ public abstract class GenericService extends HttpServlet {
 					@Override
 					public StringBuffer getRequestURL() {
 						String url = request.getRequestURL().toString();
-						url = url.substring( 0, url.indexOf( '/' ) );
+						url = url.substring( 0, url.length() - request.getRequestURI().length() );
 						url = url + reqUri;
-						return new StringBuffer( reqUri );
+						return new StringBuffer( url );
 					}
 				};	
 				ApiRegistry.getApi( req.getRequestURI() ).service( request, response );
