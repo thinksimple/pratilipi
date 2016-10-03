@@ -24,7 +24,7 @@ Editor.prototype.init = function() {
     this.attachImageSelectionListener();
     this.addTextSelectionListener();
     this.addImageListener();
-    this.addRemoveImageListener();
+    //this.addRemoveImageListener();
     this.removeEventListenersOnUrlModalHide();
 }
 
@@ -259,16 +259,7 @@ Editor.prototype.addImageListener = function() {
 	
 };
 
-Editor.prototype.addRemoveImageListener = function() {
-	var _this = this;
-	var $removeImageLink = this.$editor_container.find("#removeImage");
-	var $addImageLink = this.$editor_container.find("#insertImage");
-	$removeImageLink.on("mousedown", function(e) {
-		_this.content_object.$content_container.find("img.remove").remove();
-		$removeImageLink.hide();
-		$addImageLink.show();
-	});
-};
+
 
 Editor.prototype.getSelectionStart = function () {
    var node = document.getSelection().anchorNode;

@@ -8,6 +8,7 @@ Content.prototype.init = function() {
     this.unformatPastedData();
     this.delegateTargetBlankToLinks();
     this.dismissPopoverOnClickingOutside();
+    this.delegateRemoveImageListener();
 };
 
 Content.prototype.changeDefaultToParagraph = function() {
@@ -112,18 +113,26 @@ Content.prototype.populateContent = function( response ) {
 	}
 	else {
 		this.$content_container.html( response );
-		var $delete_icon = $("<img>").attr("src", "http://0.ptlp.co/resource-all/icon/svg/trash.svg").attr("data-behaviour", "remove-image");
+		var $delete_icon = '<img src="http://0.ptlp.co/resource-all/icon/svg/trash.svg" data-behaviour="remove-image">';
 		this.$content_container.find("img").addClass("writer-image").attr({
 			"tabindex": "-1",
 			'data-toggle': "popover",
-			"data-placement": "right",
+			"data-placement": "top",
 			"data-trigger": "focus",
 			"data-html":"true",
 			"data-content": $delete_icon,
 		});
+		$('[data-toggle="popover"]').popover();
 		this.$content_container.find("a").data("popover", "absent");
 	}
 }; 
+
+Content.prototype.delegateRemoveImageListener = function() {
+	var _this;
+	this.$content_container.on("click", "img[data-behaviour=remove-image]", function(e) {
+		_this.$content_container.find("img.remove").remove();
+	});
+};
 
 Content.prototype.reset = function() {
 	this.$content_container.empty();
