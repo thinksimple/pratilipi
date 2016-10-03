@@ -1,6 +1,8 @@
 package com.pratilipi.filter;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -14,6 +16,10 @@ import javax.servlet.http.HttpServletResponse;
 import com.pratilipi.data.DataAccessorFactory;
 
 public class PratilipiServiceFilter implements Filter {
+	
+	private static final Logger logger =
+			Logger.getLogger( PratilipiServiceFilter.class.getName() );
+
 	
 	@Override
 	public void init( FilterConfig config ) throws ServletException { }
@@ -32,6 +38,11 @@ public class PratilipiServiceFilter implements Filter {
 
 		if( requestUri.equals( "/_ah/start" ) || requestUri.equals( "/_ah/stop" ) ) {
 			response.setStatus( HttpServletResponse.SC_NO_CONTENT );
+		} else if( requestUri.equals( "/api" ) ) {
+			DataAccessorFactory.getL1CacheAccessor().flush();
+			logger.log( Level.WARNING, requestUri );
+			req.getRequestDispatcher("/pratilipi?pratilipiId=5734670612299776").forward( req, resp );
+			req.getRequestDispatcher("/pratilipi?pratilipiId=5734670612299777").forward( req, resp );
 		} else {
 			DataAccessorFactory.getL1CacheAccessor().flush();
 			chain.doFilter( request, response );
