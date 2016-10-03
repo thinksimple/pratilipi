@@ -25,7 +25,7 @@ public abstract class GenericService extends HttpServlet {
 		if( prefix != null && ! prefix.isEmpty() )
 			requestUri = requestUri.substring( prefix.length() );
 
-		if( requestUri.equals( "/" ) ) {
+		if( requestUri.equals( "/" ) || requestUri.isEmpty() ) {
 		
 			requestUri = "/pratilipi?pratilipiId=5734670612299776";
 			GenericApi api = ApiRegistry.getApi( requestUri );
