@@ -52,7 +52,7 @@ Pagination.prototype.attachChapterInputListener = function() {
 	this.$page_form.on("submit", function(e) {
 		e.preventDefault();
 		var page_val = $page_input.val();
-		if( page_val > 0 && page_val <= _this.index.length ) {
+		if( page_val > 0 && page_val <= _this.parent_object.index.length ) {
 			_this.parent_object.setCurrentPage( page_val );
 		}
 		else {
