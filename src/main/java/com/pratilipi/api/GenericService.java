@@ -41,18 +41,13 @@ public abstract class GenericService extends HttpServlet {
 					continue;
 				logger.log( Level.WARNING, reqUri.trim() );
 				HttpServletRequestWrapper req = new HttpServletRequestWrapper( request ) {
-/*					public String getQueryString() {
+					public String getQueryString() {
 						return reqUri.substring( reqUri.indexOf( '?' ) + 1 );
 					}
 					public String getRequestURI() {
 						return reqUri.substring( 0, reqUri.indexOf( '?' ) );
-					}*/
-					public StringBuffer getRequestURL() {
-						return new StringBuffer( reqUri.trim() );
 					}
 				};	
-				logger.log( Level.WARNING, req.getQueryString() );
-				logger.log( Level.WARNING, req.getRequestURI() );
 				ApiRegistry.getApi( req.getRequestURI() ).service( request, response );
 			}
 			
