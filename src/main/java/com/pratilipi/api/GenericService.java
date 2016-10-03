@@ -53,7 +53,7 @@ public abstract class GenericService extends HttpServlet {
 				if( reqUri.trim().isEmpty() )
 					continue;
 				logger.log( Level.WARNING, reqUri.trim() );
-				request.getRequestDispatcher( reqUri.trim() ).forward( request, resp );
+				request.getRequestDispatcher( reqUri.trim() ).include( request, resp );
 			}
 			response.getWriter().close();
 			
