@@ -8,7 +8,6 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
 @SuppressWarnings("serial")
@@ -38,28 +37,12 @@ public abstract class GenericService extends HttpServlet {
 				if( reqUri.trim().isEmpty() )
 					continue;
 				logger.log( Level.WARNING, reqUri.trim() );
-				HttpServletRequestWrapper req = new HttpServletRequestWrapper( request ) {
-					@Override
-					public String getQueryString() {
-						return reqUri.substring( reqUri.indexOf( '?' ) + 1 );
-					}
-					@Override
-					public String getRequestURI() {
-						return reqUri.substring( 0, reqUri.indexOf( '?' ) );
-					}
-					@Override
-					public StringBuffer getRequestURL() {
-						String url = request.getRequestURL().toString();
-						url = url.substring( 0, url.length() - request.getRequestURI().length() );
-						url = url + reqUri;
-						return new StringBuffer( url );
-					}
-				};	
-				ApiRegistry.getApi( req.getRequestURI() ).service( request, response );
+				request.getRequestDispatcher( reqUri.trim() ).forward( request, response );
 			}
 			
 		} else {
 		
+			logger.log( Level.SEVERE, requestUri );
 			GenericApi api = ApiRegistry.getApi( requestUri );
 			
 			if( api == null )
