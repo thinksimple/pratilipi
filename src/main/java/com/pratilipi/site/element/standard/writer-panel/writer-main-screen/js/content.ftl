@@ -121,8 +121,7 @@ Content.prototype.populateContent = function( response ) {
 			"data-trigger": "focus",
 			"data-html":"true",
 			"data-content": $delete_icon,
-		});
-		$('[data-toggle="popover"]').popover();
+		}).popover();
 		this.$content_container.find("a").data("popover", "absent");
 	}
 }; 
