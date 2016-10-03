@@ -88,18 +88,24 @@
 				addToLibClicked: { type: Boolean, value: false },
 				goToLibraryBoolean: { type: Boolean, value: false },
 				reviewButtonClicked: { type: Boolean, value: false },
-				hideIndexButton: { type: Boolean, value: false },
+				hideIndexButton: { type: Boolean, value: true },
 				
 			},
 			
 			// Ready function
 			ready: function() {
-				if( this.index != null )
-					this.index = jQuery.parseJSON( this.index );
-				if( typeof this.index == "string" )
-					this.index = JSON.parse( this.index );
-				if( this.index == null || this.index.length == 0 )
-					this.set( 'hideIndexButton', true );
+				var index = this.index;
+				if( index != null ) {
+					index = jQuery.parseJSON( index );
+					index = JSON.parse( index );
+					if( index.length > 0 )
+						this.set( 'hideIndexButton', false );
+
+					for( var i = 0; i < index.length; i++ )
+						if( index[i].title == null )
+							index[i].title = "${ _strings.writer_chapter } " + index[i].chapterNo;
+					this.set( 'index', index );
+				}
 
 				this.set( 'addedToLib', this.userpratilipi != null ? this.userpratilipi.addedToLib : false );
 
