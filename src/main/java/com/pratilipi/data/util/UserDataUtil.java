@@ -214,10 +214,11 @@ public class UserDataUtil {
 		Gson gson = new Gson();
 
 		
-		AuditLog auditLog = dataAccessor.newAuditLog();
-		auditLog.setAccessId( AccessTokenFilter.getAccessToken().getId() );
-		auditLog.setAccessType( isNew ? AccessType.USER_ADD : AccessType.USER_UPDATE );
-		auditLog.setEventDataOld( gson.toJson( user ) );
+		AuditLog auditLog = dataAccessor.newAuditLog(
+				AccessTokenFilter.getAccessToken().getId(),
+				isNew ? AccessType.USER_ADD : AccessType.USER_UPDATE,
+				user
+				);
 
 		
 		if( userData.hasEmail() && ! userData.getEmail().equals( user.getEmail() ) ) {

@@ -586,7 +586,7 @@ public class PratilipiDocUtil {
 			else if( childNode.nodeName().equals( "img" ) )
 				page.addPagelet( PageletType.IMAGE, childNode.attr( "src" ) );
 			else if( childNode.nodeName().equals( "blockquote" ) )
-				page.addPagelet( PageletType.BLOCKQUOTE, ( (Element) childNode ).html() );
+				page.addPagelet( PageletType.BLOCK_QUOTE, ( (Element) childNode ).html() );
 		}
 
 		docAccessor.save( pratilipiId, pcDoc );
@@ -631,7 +631,7 @@ public class PratilipiDocUtil {
 				Element element = null;
 				if( pagelet.getType() == PageletType.TEXT )
 					element = new Element( Tag.valueOf( "p" ), "" ).html( pagelet.getData().toString() );
-				else if( pagelet.getType() == PageletType.BLOCKQUOTE )
+				else if( pagelet.getType() == PageletType.BLOCK_QUOTE )
 					element = new Element( Tag.valueOf( "blockquote" ), "" ).html( pagelet.getData().toString() );
 				else if( pagelet.getType() == PageletType.IMAGE )
 					element = new Element( Tag.valueOf( "img" ), "" ).attr( "src", pagelet.getData().toString() );
@@ -649,7 +649,7 @@ public class PratilipiDocUtil {
 			PratilipiContentDoc.Page page = chapter.addPage( pageNo );
 
 			for( Pagelet pagelet : pageletList ) {
-				if( pagelet.getType() == PageletType.TEXT || pagelet.getType() == PageletType.BLOCKQUOTE ) {
+				if( pagelet.getType() == PageletType.TEXT || pagelet.getType() == PageletType.BLOCK_QUOTE ) {
 					String extractedText = HtmlUtil.toPlainText( pagelet.getData().toString() );
 					if( !extractedText.trim().isEmpty() )
 						page.addPagelet( pagelet.getType(), extractedText );

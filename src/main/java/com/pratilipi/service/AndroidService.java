@@ -59,9 +59,9 @@ public class AndroidService extends GenericService {
 		ApiRegistry.register( UserRegisterApi.class );
 		ApiRegistry.register( UserPasswordUpdateApi.class );
 
-		ApiRegistry.register( PratilipiApi.class );
-		
 		ApiRegistry.register( PageApi.class );
+		
+		ApiRegistry.register( PratilipiApi.class );
 		ApiRegistry.register( PratilipiListApi.class );
 		ApiRegistry.register( PratilipiContentApi.class );
 		ApiRegistry.register( PratilipiCoverApi.class );
@@ -73,6 +73,7 @@ public class AndroidService extends GenericService {
 		ApiRegistry.register( AuthorCoverApi.class );
 		ApiRegistry.register( AuthorCoverRemoveApi.class );
 		
+		ApiRegistry.register( EventApi.class );
 		ApiRegistry.register( EventListApi.class );
 		
 		ApiRegistry.register( UserPratilipiApi.class );
@@ -99,8 +100,6 @@ public class AndroidService extends GenericService {
 		ApiRegistry.register( NotificationApi.class );
 		ApiRegistry.register( NotificationListApi.class );
 
-		ApiRegistry.register( EventApi.class );
-		
 	}
 	
 }

@@ -7,7 +7,7 @@ import com.google.gson.JsonObject;
 public interface PratilipiContentDoc {
 
 	enum PageletType {
-		HEAD_1, HEAD_2, HTML, TEXT, IMAGE, BLOCKQUOTE
+		HEAD_1, HEAD_2, HTML, TEXT, IMAGE, BLOCK_QUOTE
 	}
 
 	interface Pagelet {

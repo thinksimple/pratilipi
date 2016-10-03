@@ -24,6 +24,7 @@ public class LogAndSecurityFilter implements Filter {
 	private static final Logger logger = 
 			Logger.getLogger( LogAndSecurityFilter.class.getName() ); 
 
+	
 	@Override
 	public void init( FilterConfig filterConfig ) throws ServletException {	}
 

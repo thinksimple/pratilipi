@@ -5,7 +5,6 @@ import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericRequest;
-import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -27,8 +26,8 @@ public class PratilipiContentChapterDeleteApi extends GenericApi {
 	}
 
 	@Post
-	public GenericResponse deleteChapter( PostRequest request ) 
-			throws UnexpectedServerException, InvalidArgumentException, InsufficientAccessException {
+	public PratilipiContentIndexApi.Response deleteChapter( PostRequest request ) 
+			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
 		PratilipiContentDoc pcDoc = PratilipiDocUtil.deleteChapter( request.pratilipiId, request.chapterNo );
 		return new PratilipiContentIndexApi.Response( pcDoc.getIndex(), pcDoc.getChapterCount() );

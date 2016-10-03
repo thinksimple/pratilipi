@@ -64,9 +64,12 @@ public class ApiService extends GenericService {
 
 		ApiRegistry.register( PratilipiApi.class );					// *.pratilipi.com
 		ApiRegistry.register( PratilipiListApi.class );				// *.pratilipi.com
-		ApiRegistry.register( PratilipiContentApi.class );			// *.pratilipi.com
-		ApiRegistry.register( PratilipiContentImageApi.class );		// *.pratilipi.com
 		ApiRegistry.register( PratilipiCoverApi.class );			// *.pratilipi.com & AWS CloudFront
+		ApiRegistry.register( PratilipiContentApi.class );			// *.pratilipi.com
+		ApiRegistry.register( PratilipiContentIndexApi.class );			// *.pratilipi.com
+		ApiRegistry.register( PratilipiContentImageApi.class );			// *.pratilipi.com
+		ApiRegistry.register( PratilipiContentChapterAddApi.class );	// *.pratilipi.com
+		ApiRegistry.register( PratilipiContentChapterDeleteApi.class );	// *.pratilipi.com
 		
 		ApiRegistry.register( AuthorApi.class );					// *.pratilipi.com
 		ApiRegistry.register( AuthorListApi.class );				// *.pratilipi.com
@@ -105,10 +108,6 @@ public class ApiService extends GenericService {
 
 		ApiRegistry.register( NotificationApi.class );
 		ApiRegistry.register( NotificationListApi.class );			// *.pratilipi.com
-		
-		ApiRegistry.register( PratilipiContentChapterAddApi.class );	// *.pratilipi.com
-		ApiRegistry.register( PratilipiContentChapterDeleteApi.class );	// *.pratilipi.com
-		ApiRegistry.register( PratilipiContentIndexApi.class );
 		
 	}
 	

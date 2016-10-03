@@ -104,8 +104,7 @@ public class EventDataUtil {
 				List<String> pratilipiUrlList = new ArrayList<>( event.getPratilipiIdList().size() );
 				for( Long pratilipiId : event.getPratilipiIdList() ) {
 					Page pratilipiPage = pratilipiPages.get( pratilipiId );
-					if( pratilipiPage != null )
-						pratilipiUrlList.add( pratilipiPage.getUriAlias() == null ? pratilipiPage.getUri() : pratilipiPage.getUriAlias() );
+					pratilipiUrlList.add( pratilipiPage.getUriAlias() == null ? pratilipiPage.getUri() : pratilipiPage.getUriAlias() );
 				}
 				eventData.setPratilipiUrlList( pratilipiUrlList );
 			}
