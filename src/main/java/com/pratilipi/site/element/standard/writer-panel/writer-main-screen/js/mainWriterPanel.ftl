@@ -9,8 +9,8 @@ MainWriterPanel.prototype.init = function() {
     this.addAffixClasses();
     this.setWrappersHeight();
     this.initializeGlobalVariables();
-    this.preventFormSubmission();
     this.$panel_container = $(".panel");
+    this.preventFormSubmission();
     
     var pagination_container = $("#pagination");
     this.pagination_object = new Pagination( pagination_container, this );
