@@ -1,12 +1,13 @@
 @import url(http://fonts.googleapis.com/earlyaccess/notosanstamil.css);
 @import url(http://0.ptlp.co/resource-gu/font/shruti.css);
+@import url(https://fonts.googleapis.com/css?family=Noto+Sans);
 
 html {
 	height: 100%;
 }
 
 body {
-	font-family: Helvetica,'Noto Sans Tamil','Shruti', sans-serif;
+	font-family: Helvetica, 'Noto Sans','Noto Sans Tamil','Shruti', sans-serif;
 	background: #f5f5f5;
 	margin: 0px;
 	height: 100%;
