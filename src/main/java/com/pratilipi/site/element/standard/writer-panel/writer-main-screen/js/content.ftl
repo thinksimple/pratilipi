@@ -130,7 +130,7 @@ Content.prototype.populateContent = function( response ) {
 Content.prototype.delegateRemoveImageListener = function() {
 	var _this = this;
 	this.$content_container.on("mousedown", "img[data-behaviour=remove-image]", function(e) {
-		_this.$content_container.find("img.remove").remove();
+		_this.$content_container.find("img.remove").popover('hide').remove();
 	});
 };
 
