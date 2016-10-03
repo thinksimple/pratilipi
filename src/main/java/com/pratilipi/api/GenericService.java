@@ -36,6 +36,9 @@ public abstract class GenericService extends HttpServlet {
 			
 			String[] reqUris = request.getParameter( "req" ).split( ";" );
 			final PrintWriter pw = new PrintWriter( response.getWriter() ) {
+				public void flush() {
+					// Do Nothing
+				}
 				public void close() {
 					// Do Nothing
 				}
