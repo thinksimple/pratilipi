@@ -66,17 +66,20 @@ public class NotificationListApi extends GenericApi {
 	
 	@Get
 	public Response get( GetRequest request ) throws InsufficientAccessException, UnexpectedServerException {
-		
+
+		if( AccessTokenFilter.getAccessToken().getUserId() == 0L )
+			throw new InsufficientAccessException();
+
 		DataListCursorTuple<NotificationData> notificationListCursorTuple = NotificationDataUtil.getNotificationList(
 				AccessTokenFilter.getAccessToken().getUserId(),
 				request.language != null ? request.language : UxModeFilter.getDisplayLanguage(),
 				request.cursor,
 				request.resultCount );
-		
+
 		return new Response(
 				notificationListCursorTuple.getDataList(),
 				notificationListCursorTuple.getCursor() );
-		
+
 	}
-	
+
 }
