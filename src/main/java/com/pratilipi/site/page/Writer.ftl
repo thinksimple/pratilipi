@@ -11,7 +11,7 @@
 		<link rel='stylesheet' href='http://1.ptlp.co/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>
 	</head>
 	
-	<#if !user.isGuest() >
+	<#if user.isGuest() >
 		<script>
 			$( document ).ready(function() {
 			    window.location.href = "/?action=login&login_success=redirect_writer";
