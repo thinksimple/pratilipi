@@ -300,7 +300,7 @@ public class PratilipiDataUtil {
 			pratilipiData.setLastUpdated( pratilipi.getLastUpdated() );
 
 		if( UxModeFilter.isAndroidApp() ) {
-			DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
+/*			DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
 			PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( pratilipi.getId() );
 			if( pcDoc != null ) {
 				JsonArray index = new JsonArray();
@@ -316,7 +316,7 @@ public class PratilipiDataUtil {
 					index.add( indexItem );
 				}
 				pratilipiData.setIndex( index );
-			}
+			}*/
 		} else {
 			pratilipiData.setIndex( pratilipi.getIndex() );
 		}
