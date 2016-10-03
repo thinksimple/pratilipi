@@ -128,7 +128,7 @@ Content.prototype.populateContent = function( response ) {
 }; 
 
 Content.prototype.delegateRemoveImageListener = function() {
-	var _this;
+	var _this = this;
 	this.$content_container.on("click", "img[data-behaviour=remove-image]", function(e) {
 		_this.$content_container.find("img.remove").remove();
 	});
