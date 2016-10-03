@@ -439,3 +439,6 @@ blockquote {
 .toast {
 	background-color: #d0021b;
 }
+.popover-content {
+	text-align: center;
+}
