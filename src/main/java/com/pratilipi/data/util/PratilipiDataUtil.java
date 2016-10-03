@@ -684,7 +684,8 @@ public class PratilipiDataUtil {
 			int imageCount = 0;
 			int chapterCount = 0;
 			for( PratilipiContentDoc.Chapter chapter : pcDoc.getChapterList() ) {
-				wordCount += chapter.getTitle().split( "[\\s]+" ).length;
+				if( chapter.getTitle() != null )
+					wordCount += chapter.getTitle().split( "[\\s]+" ).length;
 				if( chapter.getPageCount() == 0 )
 					continue;
 				chapterCount++;
