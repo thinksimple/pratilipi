@@ -48,11 +48,10 @@ Content.prototype.delegateTargetBlankToLinks = function() {
         if (typeof $(this).data('toggle') == 'undefined' || $(this).data("popover") == "absent") { 
             var href = $(this).attr("href");
             var a_tag = '<a class="tooltip_link" target="_blank" href="' + href + '">' + href + "</a>";
-            // var templ = '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"><a href="' + href + '">' + href + '</a></div></div>';
-            // console.log( templ );
+
             $(this).attr('data-toggle', "popover").data("placement", "bottom").data("trigger", "manual").data("html","true").data("content", a_tag).popover('show');
             $(this).on('click mouseover', function() {
-                // alert("hover ke andar");
+               
                 $(this).popover('show');
             }); 
             if( $(this).data("popover") == "absent" ) {
@@ -113,7 +112,15 @@ Content.prototype.populateContent = function( response ) {
 	}
 	else {
 		this.$content_container.html( response );
-		this.$content_container.find("img").addClass("writer-image").attr("tabindex", -1);
+		var $delete_icon = $("<img>").attr("src", "http://0.ptlp.co/resource-all/icon/svg/trash.svg").attr("data-behaviour", "remove-image");
+		this.$content_container.find("img").addClass("writer-image").attr({
+			"tabindex": "-1",
+			'data-toggle': "popover",
+			"data-placement": "right",
+			"data-trigger": "focus",
+			"data-html":"true",
+			"data-content": $delete_icon,
+		});
 		this.$content_container.find("a").data("popover", "absent");
 	}
 }; 

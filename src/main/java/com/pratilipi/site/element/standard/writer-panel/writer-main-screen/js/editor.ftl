@@ -134,19 +134,17 @@ Editor.prototype.attachImageSelectionListener = function() {
     var _this = this;
     var $add_image = this.$editor_container.find("#insertImage");
     var $remove_image = this.$editor_container.find("#removeImage");
-    this.content_object.$content_container.on("mouseup mousedown", "img.writer-image", function(e) {
+    
+    this.content_object.$content_container.on("click", "img.writer-image", function(e) {
     	$( this ).addClass("remove").focus();
-    	$add_image.hide();
-    	$remove_image.show();
     	_this.resetExecCommandIcons();
     	_this.setHighlightEditorOptionsFlag( false );
-    });
+    });    
     this.content_object.$content_container.on("blur", "img.writer-image", function(e) {
     	_this.content_object.$content_container.find("img.remove").removeClass("remove");
-    	$remove_image.hide();
-    	$add_image.show();
     	_this.setHighlightEditorOptionsFlag( true );
     });    
+   
 };
 
 Editor.prototype.addTextSelectionListener = function() {
