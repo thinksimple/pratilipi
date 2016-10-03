@@ -1,6 +1,7 @@
 var Pagination = function(pagination_container, parent_object) {
 	this.parent_object = parent_object;
     this.$pagination_container = pagination_container;
+    this.$page_form = this.$pagination_container.find("form");
     this.$previous_page = this.$pagination_container.find("[data-behaviour=previous-page]");
     this.$next_page = this.$pagination_container.find("[data-behaviour=next-page]");
     this.$page_info_para = this.$pagination_container.find("[data-behaviour=page-info]");
@@ -12,6 +13,7 @@ var Pagination = function(pagination_container, parent_object) {
 Pagination.prototype.init = function () {
     this.attachPreviousPageListener();
     this.attachNextPageListener();
+    this.attachChapterInputListener();
 }
 
 Pagination.prototype.getPreviousPage = function() {
@@ -40,6 +42,21 @@ Pagination.prototype.attachNextPageListener = function() {
 		var next_page = _this.getNextPage();
 		if( next_page <= _this.parent_object.index.length ) {
 			_this.parent_object.setCurrentPage( next_page );
+		}
+	});
+};
+
+Pagination.prototype.attachChapterInputListener = function() {
+	var _this = this;
+ 	var $page_input = this.$page_form.find('[data-behaviour="curr_page"]');
+	this.$page_form.on("submit", function(e) {
+		e.preventDefault();
+		var page_val = $page_input.val();
+		if( page_val > 0 && page_val <= _this.index.length ) {
+			_this.parent_object.setCurrentPage( page_val );
+		}
+		else {
+			$page_input.val( _this.parent_object.currChapter );
 		}
 	});
 };
