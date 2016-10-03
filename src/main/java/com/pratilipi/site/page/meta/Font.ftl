@@ -34,4 +34,4 @@
 	<#assign url="http://fonts.googleapis.com/earlyaccess/notosanskannada.css">
 	<#assign font="Noto Sans Kannada">
 </#if>
-<style>@import url(${ url });*{font-family: Helvetica, '${ font }', sans-serif !important;}</style>
+<style>@import url(${ url });*{font-family: Helvetica, '${ font }', sans-serif;}</style>
