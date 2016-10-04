@@ -640,12 +640,15 @@ public class PratilipiDocUtil {
 
 			for( Pagelet pagelet : pageletList ) {
 				Element element = null;
-				if( pagelet.getType() == PageletType.TEXT )
+				if( pagelet.getType() == PageletType.TEXT ) {
 					element = new Element( Tag.valueOf( "p" ), "" ).html( pagelet.getData().toString() );
-				else if( pagelet.getType() == PageletType.BLOCK_QUOTE )
+					if( pagelet.getAlignment() != null )
+						element.attr( "style", "text-align:" + pagelet.getAlignment().toString() );
+				} else if( pagelet.getType() == PageletType.BLOCK_QUOTE ) {
 					element = new Element( Tag.valueOf( "blockquote" ), "" ).html( pagelet.getData().toString() );
-				else if( pagelet.getType() == PageletType.IMAGE )
+				} else if( pagelet.getType() == PageletType.IMAGE ) {
 					element = new Element( Tag.valueOf( "img" ), "" ).attr( "src", pagelet.getData().toString() );
+				}
 
 				if( element != null )
 					htmlString = htmlString + element.toString();
