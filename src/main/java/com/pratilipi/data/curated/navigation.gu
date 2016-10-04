@@ -5,7 +5,7 @@
 /event/abhivyakti-varta-mahotsav વાર્તા મહોત્સવ-૨૦૧૬     App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "eventId":4749790828036096 }
 /events                   ઓનલાઈન સ્પર્ધાઓ      App#EventList::{ "language":"GUJARATI" }
 /gujarati-samayiko        ગુજરાતી સામયિકો         App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"gujarati-samayiko" }
-/blog                     સંપાદકની કલમે              App#BlogPostList::{ "language":"GUJARATI", "blogId":5683739602452480 }
+/blog                     બ્લોગ             App#BlogPostList::{ "language":"GUJARATI", "blogId":5683739602452480 }
 /author-interviews        લેખકો સાથે વાર્તાલાપ    App#BlogPostList::{ "language":"GUJARATI", "blogId":5197509039226880 }
 
 
