@@ -1,6 +1,7 @@
 package com.pratilipi.service;
 
 import com.pratilipi.api.ApiRegistry;
+import com.pratilipi.api.GenericBatchApi;
 import com.pratilipi.api.GenericService;
 import com.pratilipi.api.impl.author.AuthorApi;
 import com.pratilipi.api.impl.author.AuthorCoverApi;
@@ -50,6 +51,8 @@ import com.pratilipi.api.impl.vote.VoteApi;
 public class ApiService extends GenericService {
 	
 	static {
+		
+		ApiRegistry.register( GenericBatchApi.class );				// *.pratilipi.com
 		
 		ApiRegistry.register( InitBannerApi.class );				// *.pratilipi.com & AWS CloudFront
 		ApiRegistry.register( InitBannerListApi.class );			// *.pratilipi.com

@@ -89,6 +89,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ApiService</servlet-name>
+		<url-pattern>/api</url-pattern>
 		<url-pattern>/api/*</url-pattern>
 	</servlet-mapping>
 
