@@ -78,23 +78,19 @@ public abstract class GenericApi extends HttpServlet {
 			} else if( method.getAnnotation( Put.class ) != null ) {
 				putMethod = method;
 				putMethodParameterType = (Class<? extends GenericRequest>) method.getParameterTypes()[0];
-				for( Field field : putMethodParameterType.getFields() )
+				for( Field field : putMethodParameterType.getDeclaredFields() )
 					if( field.getAnnotation( Sensitive.class ) != null )
 						putRequestSensitiveFieldList.add( field.getName() );
 			} else if( method.getAnnotation( Post.class ) != null ) {
 				postMethod = method;
 				postMethodParameterType = (Class<? extends GenericRequest>) method.getParameterTypes()[0];
-				logger.log( Level.WARNING, postMethodParameterType.getName() );
-				for( Field field : postMethodParameterType.getDeclaredFields() ) {
-					logger.log( Level.INFO, this.getClass().getName() + ":" + field.getName() );
-					if( field.getAnnotation( Sensitive.class ) != null ) {
+				for( Field field : postMethodParameterType.getDeclaredFields() )
+					if( field.getAnnotation( Sensitive.class ) != null )
 						postRequestSensitiveFieldList.add( field.getName() );
-					}
-				}
 			} else if( method.getAnnotation( Delete.class ) != null ) {
 				deleteMethod = method;
 				deleteMethodParameterType = (Class<? extends GenericRequest>) method.getParameterTypes()[0];
-				for( Field field : deleteMethodParameterType.getFields() )
+				for( Field field : deleteMethodParameterType.getDeclaredFields() )
 					if( field.getAnnotation( Sensitive.class ) != null )
 						deleteRequestSensitiveFieldList.add( field.getName() );
 			}
@@ -162,11 +158,9 @@ public abstract class GenericApi extends HttpServlet {
 			requestPayloadJson = new Gson()
 					.fromJson( requestPayloadJson.toString(), JsonElement.class )
 					.getAsJsonObject();
-			for( String sensitiveField : sensitiveFieldList ) {
-				logger.log( Level.INFO, sensitiveField + ":" + requestPayloadJson.get( sensitiveField ) );
+			for( String sensitiveField : sensitiveFieldList )
 				if( requestPayloadJson.get( sensitiveField ) != null )
 					requestPayloadJson.addProperty( sensitiveField, "********" );
-			}
 		}
 		
 		logger.log( Level.INFO, "Enhanced Request Payload: " + requestPayloadJson );
