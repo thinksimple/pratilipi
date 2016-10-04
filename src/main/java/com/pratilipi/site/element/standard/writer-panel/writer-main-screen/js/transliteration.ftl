@@ -19,7 +19,7 @@ function onLoad() {
   var control =
       new google.elements.transliteration.TransliterationControl(options);
 
-  control.makeTransliteratable(['subtitle','chapter-content', 'title-vernacular']);
+  control.makeTransliteratable(['subtitle','chapter-content', 'title-vernacular', 'summary']);
 
 }
 google.setOnLoadCallback(onLoad);

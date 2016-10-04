@@ -18,10 +18,16 @@ PublishModal.prototype.init = function() {
 
 }
 
-PublishModal.prototype.setBookName = function(){
-	var book_name = this.pratilipi_data.title ? this.pratilipi_data.title : this.pratilipi_data.titleEn;
+PublishModal.prototype.setBookName = function( name ){
+	var book_name;
+	if( name ) {
+		book_name = name;
+	}
+	else {
+		book_name = this.pratilipi_data.title ? this.pratilipi_data.title : this.pratilipi_data.titleEn;
+	}
 	this.$publish_modal_container.find('[data-behaviour="publish_book_name"]').text( book_name );
-}
+};
 
 PublishModal.prototype.generateCategoryOptions = function() {
 	var _this = this;
@@ -54,6 +60,9 @@ PublishModal.prototype.prepopulateBookDetails = function() {
 	}
 	
 };
+
+PublishModal.prototype.changeName = function(  ) {
+}
 
 PublishModal.prototype.attachCoverImageListeners = function() {
 	var _this = this;

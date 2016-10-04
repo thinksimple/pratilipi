@@ -162,7 +162,7 @@ TableOfContents.prototype.ajaxSubmitForm = function( vernacular_title, english_t
         	console.log(parsed_data);
         	_this.pratilipi_data = parsed_data;
         	var book_name = parsed_data.title ? parsed_data.title : parsed_data.titleEn;
-        	_this.changeName( book_name );
+        	_this.parent_object.changeName( book_name );
         	//reset Pratilipi data and table of contents title in frontend
 		},
         fail:function(response){

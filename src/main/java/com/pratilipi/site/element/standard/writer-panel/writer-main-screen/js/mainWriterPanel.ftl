@@ -322,3 +322,8 @@ MainWriterPanel.prototype.preventFormSubmission = function() {
 		e.preventDefault();
 	});
 };
+
+MainWriterPanel.prototype.changeName = function( name ) {
+	this.publish_modal_object.setBookName( name );
+	this.table_of_contents_object.changeName( name );
+}
