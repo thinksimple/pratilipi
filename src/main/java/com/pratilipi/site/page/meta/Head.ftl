@@ -19,7 +19,7 @@
 <link rel='stylesheet' href='http://1.ptlp.co/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>
 
 <#-- Pratilipi dependencies -->
-<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?59'>
+<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?60'>
 
 <#-- Google Analytics -->
 <#include "GoogleAnalytics.ftl">

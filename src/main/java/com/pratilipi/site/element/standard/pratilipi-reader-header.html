@@ -332,7 +332,7 @@
 			
 			_entryClicked: function( event ) {
 				var entry = event.model.entry;
-				document.querySelector( 'pratilipi-reader-page' ).setPageNo( entry.pageNo );
+				document.querySelector( 'pratilipi-reader-page' ).setPageNo( entry.pageNo != null ? entry.pageNo : entry.chapterNo );
 			},
 			
 			ready: function() {
