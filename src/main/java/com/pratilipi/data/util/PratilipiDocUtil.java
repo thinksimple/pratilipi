@@ -585,10 +585,12 @@ public class PratilipiDocUtil {
 			Element element = (Element) childNode;
 			AlignmentType alignment = null;
 			if( childNode.nodeName().equals( "p" ) ) {
-				String[] styles = element.attr( "style" ).split( ";" );
-				for( String style : styles )
-					if( style.substring( 0, style.indexOf( ":" ) ).trim().equals( "text-align" ) )
-						alignment = AlignmentType.valueOf( style.substring( style.indexOf( ":" ) + 1 ).trim().toUpperCase() );
+				if( !element.attr( "style" ).trim().isEmpty() ) {
+					String[] styles = element.attr( "style" ).split( ";" );
+					for( String style : styles )
+						if( style.substring( 0, style.indexOf( ":" ) ).trim().equals( "text-align" ) )
+							alignment = AlignmentType.valueOf( style.substring( style.indexOf( ":" ) + 1 ).trim().toUpperCase() );
+				}
 				page.addPagelet( PageletType.TEXT, element.html(), alignment );
 			} else if( childNode.nodeName().equals( "img" ) ) {
 				page.addPagelet( PageletType.IMAGE, childNode.attr( "src" ) );
