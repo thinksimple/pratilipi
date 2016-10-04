@@ -57,6 +57,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>FrontendApiService</servlet-name>
+		<url-pattern>/api</url-pattern>
 		<url-pattern>/api/*</url-pattern>
 	</servlet-mapping>
 
