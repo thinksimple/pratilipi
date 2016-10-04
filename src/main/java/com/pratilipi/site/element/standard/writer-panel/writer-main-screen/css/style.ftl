@@ -442,3 +442,41 @@ blockquote {
 .popover-content {
 	text-align: center;
 }
+
+.show-cursor {
+	cursor: pointer;
+}
+.modal-form {
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+}
+.grey-label {
+    color: #a5a0a0;
+    font-weight: 500;
+}
+
+ .grey-color {
+   color:#a5a0a0;
+ }
+ 
+ .dimension-20 {
+     width: 20px;
+     height: 20px;
+ }   
+ .image-container {
+     margin-left: 15px;
+     position:relative;
+ }
+ .cover-image {
+     height: 150px;
+     width: 115px;
+ }    
+ .camera-icon {
+     position:absolute;
+     top:50%;
+     left:35%;
+ }
+ .grey-background {
+     background-color: #eee;
+}

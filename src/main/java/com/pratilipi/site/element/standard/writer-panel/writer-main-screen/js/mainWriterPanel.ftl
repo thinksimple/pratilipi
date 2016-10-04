@@ -32,6 +32,10 @@ MainWriterPanel.prototype.init = function() {
     this.editor_object = new Editor( editor_container, this.content_object );
     this.editor_object.init();
     
+    var publish_modal_container = $("#publishModal");
+    this.publish_modal_object = new PublishModal( publish_modal_container );
+    this.publish_modal_object.init();
+    
     this.hideProgressBarOnMobileFocus();
     this.initializeData();
     
@@ -131,10 +135,10 @@ MainWriterPanel.prototype.attachActionButtonListeners = function() {
 	} );
 	
 	this.$publish_button.on('click', function() {
-		var url = "?action=publish&id=" + "${ pratilipiId?c }";
-		var $spinner_div = $("<div>").addClass("spinner");
-		_this.$panel_container.append($spinner_div);
-		_this.saveChapter( url, false );
+		//var url = "?action=publish&id=" + "${ pratilipiId?c }";
+		//var $spinner_div = $("<div>").addClass("spinner");
+		//_this.$panel_container.append($spinner_div);
+		//_this.saveChapter( url, false );
 	} );
 	
 	this.$preview_button.on('click', function() {

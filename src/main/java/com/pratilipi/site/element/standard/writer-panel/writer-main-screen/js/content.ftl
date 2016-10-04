@@ -113,7 +113,7 @@ Content.prototype.populateContent = function( response ) {
 	}
 	else {
 		this.$content_container.html( response );
-		var $delete_icon = '<img src="http://0.ptlp.co/resource-all/icon/svg/trash.svg" data-behaviour="remove-image">';
+		var $delete_icon = '<img src="http://0.ptlp.co/resource-all/icon/svg/trash.svg" class="show-cursor" data-behaviour="remove-image">';
 		this.$content_container.find("img").addClass("writer-image").attr({
 			"tabindex": "-1",
 			'data-toggle': "popover",
