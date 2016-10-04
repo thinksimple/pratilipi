@@ -3,6 +3,7 @@ package com.pratilipi.api.impl.user;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Post;
+import com.pratilipi.api.annotation.Sensitive;
 import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.common.exception.InsufficientAccessException;
@@ -19,6 +20,7 @@ public class UserLoginApi extends GenericApi {
 		@Validate( required = true, requiredErrMsg = ERR_EMAIL_REQUIRED, regEx = REGEX_EMAIL, regExErrMsg = ERR_EMAIL_INVALID )
 		private String email;
 
+		@Sensitive
 		@Validate( required = true, requiredErrMsg = ERR_PASSWORD_REQUIRED )
 		private String password;
 

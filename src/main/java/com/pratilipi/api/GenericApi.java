@@ -3,10 +3,12 @@ package com.pratilipi.api;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Enumeration;
-import java.util.Map;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,6 +32,7 @@ import com.pratilipi.api.annotation.Delete;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.annotation.Put;
+import com.pratilipi.api.annotation.Sensitive;
 import com.pratilipi.api.shared.GenericFileDownloadResponse;
 import com.pratilipi.api.shared.GenericFileUploadRequest;
 import com.pratilipi.api.shared.GenericRequest;
@@ -55,10 +58,13 @@ public abstract class GenericApi extends HttpServlet {
 	Class<? extends GenericRequest> postMethodParameterType;
 	Class<? extends GenericRequest> deleteMethodParameterType;
 
+	List<String> sensitiveFieldList = new LinkedList<>();
+	
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	public void init() throws ServletException {
+		
 		for( Method method : this.getClass().getMethods() ) {
 			if( method.getAnnotation( Get.class ) != null ) {
 				getMethod = method;
@@ -74,14 +80,23 @@ public abstract class GenericApi extends HttpServlet {
 				deleteMethodParameterType = (Class<? extends GenericRequest>) method.getParameterTypes()[0];
 			}
 		}
+		
+		for( Field field : this.getClass().getFields() ) {
+			if( field.getAnnotation( Sensitive.class ) != null )
+				sensitiveFieldList.add( field.getName() );
+		}
+		
 	}
 	
 
 	@Override
-	protected void service(
-			HttpServletRequest request,
-			HttpServletResponse response ) throws ServletException, IOException {
+	protected void service( HttpServletRequest request, HttpServletResponse response )
+			throws ServletException, IOException {
 		
+		if( SystemProperty.STAGE != SystemProperty.STAGE_PROD )
+			logHeaders( request );
+		
+		// Creating request payload json
 		JsonObject requestPayloadJson = createRequestPayloadJson( request );
 		
 		String method = request.getMethod();
@@ -105,26 +120,34 @@ public abstract class GenericApi extends HttpServlet {
 	}
 	
 	
-	final JsonObject createRequestPayloadJson( String queryStr ) throws JsonSyntaxException, IOException {
-		JsonObject requestPayloadJson = new JsonObject();
-		for( String paramValue : queryStr.split( "&" ) ) {
-			int index = paramValue.indexOf( '=' );
-			String param = index == -1 ? paramValue : paramValue.substring( 0, index );
-			String value = index == -1 ? null : paramValue.substring( index + 1 );
-			requestPayloadJson.addProperty( param, value );
-			requestPayloadJson.addProperty( "has" + Character.toUpperCase( param.charAt( 0 ) ) + param.substring( 1 ), true );
+	final void logHeaders( HttpServletRequest request ) {
+		@SuppressWarnings("unchecked")
+		Enumeration<String> headerNames = request.getHeaderNames();
+		while( headerNames.hasMoreElements() ) {
+			String headerName = headerNames.nextElement();
+			logger.log( Level.INFO, "Header " + headerName + " = " + request.getHeader( headerName ) ) ;
 		}
-		logger.log( Level.INFO, "Enhanced Request Payload: " + requestPayloadJson );
-		return requestPayloadJson;
 	}
 	
-	final JsonObject createRequestPayloadJson( HttpServletRequest request ) throws JsonSyntaxException, IOException {
+	final void logRequestPayloadJson( JsonObject requestPayloadJson ) {
+		if( sensitiveFieldList.size() != 0 ) {
+			requestPayloadJson = new Gson()
+					.fromJson( requestPayloadJson.toString(), JsonElement.class )
+					.getAsJsonObject();
+			for( String sensitiveField : sensitiveFieldList )
+				if( requestPayloadJson.get( sensitiveField ) != null )
+					requestPayloadJson.addProperty( sensitiveField, "********" );
+		}
+		logger.log( Level.INFO, "Enhanced Request Payload: " + requestPayloadJson );
+	}
+	
+	final JsonObject createRequestPayloadJson( HttpServletRequest request ) throws IOException {
 		
-		String requestUri = request.getRequestURI();
 		String method = request.getMethod();
 		Gson gson = new Gson();
 
 		// Creating JsonObject from request parameters
+		@SuppressWarnings("unchecked")
 		Enumeration<String> queryParams = request.getParameterNames();
 		StringBuilder queryParamsStr = new StringBuilder( "{" );
 		while( queryParams.hasMoreElements() ) {
@@ -147,18 +170,6 @@ public abstract class GenericApi extends HttpServlet {
 			queryParamsStr.append( "}" );
 
 		
-		if( SystemProperty.STAGE != SystemProperty.STAGE_PROD ) {
-			Enumeration<String> headerNames = request.getHeaderNames();
-			while( headerNames.hasMoreElements() ) {
-				String headerName = headerNames.nextElement();
-				logger.log( Level.INFO, "Header " + headerName + " = " + request.getHeader( headerName ) ) ;
-			}
-			logger.log( Level.INFO, "Request Payload: " + queryParamsStr );
-		} else if( ! requestUri.startsWith( "/user/" ) && ! requestUri.startsWith( "/api/user/" ) ) {
-			logger.log( Level.INFO, "Request Payload: " + queryParamsStr );
-		}
-
-		
 		JsonObject queryParamsJson = gson.fromJson( queryParamsStr.toString(), JsonElement.class ).getAsJsonObject();
 
 		// Creating JsonObject from request body (JSON)
@@ -178,7 +189,8 @@ public abstract class GenericApi extends HttpServlet {
 		}
 		
 		
-		logger.log( Level.INFO, "Enhanced Request Payload: " + requestPayloadJson );
+		// Logging
+		logRequestPayloadJson( requestPayloadJson );
 		
 		return requestPayloadJson;
 	}
@@ -240,50 +252,10 @@ public abstract class GenericApi extends HttpServlet {
 		
 	}
 	
-	@SuppressWarnings("unchecked")
 	final void dispatchApiResponse( Object apiResponse, HttpServletRequest request,
 			HttpServletResponse response ) throws IOException {
 		
-		if( apiResponse instanceof Map ) {
-
-			response.setContentType( "text/html" );
-			response.setCharacterEncoding( "UTF-8" );
-			
-			Gson gson = new Gson();
-			boolean bool = true;
-			
-			PrintWriter writer = response.getWriter();
-			writer.print( "{" );
-			for( Entry<String, Object> apiResp : ( (Map<String, Object>) apiResponse ).entrySet() ) {
-				if( bool )
-					bool = false;
-				else
-					writer.print( "," );
-				writer.print( "\"" + apiResp.getKey() + "\":{" );
-				if( apiResp.getValue() instanceof GenericResponse ) {
-					writer.print( "\"status\":" + HttpServletResponse.SC_OK + "," );
-					writer.print( "\"response\":" + gson.toJson( apiResp.getValue() ) );
-				} else if( apiResp.getValue() instanceof InvalidArgumentException ) {
-					logger.log( Level.INFO, ((Throwable) apiResp.getValue() ).getMessage() );
-					writer.print( "\"status\":" + HttpServletResponse.SC_BAD_REQUEST + "," );
-					writer.print( "\"response\":" + ((Throwable) apiResp.getValue() ).getMessage() );
-				} else if( apiResp.getValue() instanceof InsufficientAccessException ) {
-					logger.log( Level.INFO, ((Throwable) apiResp.getValue() ).getMessage() );
-					writer.print( "\"status\":" + HttpServletResponse.SC_UNAUTHORIZED + "," );
-					writer.print( "\"response\":" + ((Throwable) apiResp.getValue() ).getMessage() );
-				} else if( apiResp.getValue() instanceof UnexpectedServerException ) {
-					writer.print( "\"status\":" + HttpServletResponse.SC_INTERNAL_SERVER_ERROR + "," );
-					writer.print( "\"response\":" + ((Throwable) apiResp.getValue() ).getMessage() );
-				} else {
-					writer.print( "\"status\":" + HttpServletResponse.SC_INTERNAL_SERVER_ERROR + "," );
-					writer.print( "\"response\":" + ((Throwable) apiResp.getValue() ).getMessage() );
-				}
-				writer.print( "}" );
-			}
-			writer.print( "}" );
-			writer.close();
-			
-		} else if( apiResponse instanceof GenericFileDownloadResponse ) {
+		if( apiResponse instanceof GenericFileDownloadResponse ) {
 			
 			GenericFileDownloadResponse gfdResponse = (GenericFileDownloadResponse) apiResponse;
 
