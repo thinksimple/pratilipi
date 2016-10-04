@@ -683,7 +683,7 @@ public class PratilipiDocUtil {
 
 	}
 
-	public static Map<String, Object> getIndexAndChapterCount( Long pratilipiId ) 
+	public static List<JsonObject> getIndex( Long pratilipiId ) 
 			throws InsufficientAccessException, UnexpectedServerException, InvalidArgumentException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -697,11 +697,8 @@ public class PratilipiDocUtil {
 		if( pcDoc == null )
 			throw new InvalidArgumentException( "Content is Missing!" );
 
-		Map<String, Object> indexAndChapterCountMap = new HashMap<String, Object>();
-		indexAndChapterCountMap.put( "index", pcDoc.getIndex() );
-		indexAndChapterCountMap.put( "chapterCount", pcDoc.getChapterCount() );
-		return indexAndChapterCountMap;
+		return pcDoc.getIndex();
 
 	}
-	
+
 }

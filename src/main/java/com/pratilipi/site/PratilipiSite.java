@@ -1106,7 +1106,7 @@ public class PratilipiSite extends HttpServlet {
 														.getApi( PratilipiContentIndexApi.class )
 														.getIndex( indexReq ); 
 			indexJson = indexRes.getIndex().toString();
-			pageCount = indexRes.getChapterCount();
+			pageCount = indexRes.getIndex().size();
 		}
 
 		Object content = null;

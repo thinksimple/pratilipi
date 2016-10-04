@@ -29,7 +29,7 @@ public class PratilipiContentChapterAddApi extends GenericApi {
 			throws InsufficientAccessException, UnexpectedServerException {
 
 		PratilipiContentDoc pcDoc = PratilipiDocUtil.addChapter( request.pratilipiId, request.chapterNo );
-		return new PratilipiContentIndexApi.Response( pcDoc.getIndex(), pcDoc.getChapterCount() );
+		return new PratilipiContentIndexApi.Response( pcDoc.getIndex() );
 
 	}
 

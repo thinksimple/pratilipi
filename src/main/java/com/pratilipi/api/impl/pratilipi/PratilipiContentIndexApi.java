@@ -34,14 +34,12 @@ public class PratilipiContentIndexApi extends GenericApi {
 	public static class Response extends GenericResponse {
 
 		private List<JsonObject> index;
-		private Integer chapterCount;
 
 		@SuppressWarnings("unused")
 		private Response() {}
 
-		public Response( List<JsonObject> index, Integer chapterCount ) {
+		public Response( List<JsonObject> index ) {
 			this.index = index;
-			this.chapterCount = chapterCount;
 		}
 
 
@@ -49,21 +47,13 @@ public class PratilipiContentIndexApi extends GenericApi {
 			return index;
 		}
 
-		public Integer getChapterCount() {
-			return chapterCount;
-		}
-
 	}
 
-	@SuppressWarnings("unchecked")
 	@Get
 	public Response getIndex( GetRequest request )
 			throws UnexpectedServerException, InsufficientAccessException, InvalidArgumentException {
 
-		Map<String, Object> indexAndChapterCountMap = PratilipiDocUtil.getIndexAndChapterCount( request.pratilipiId );
-		List<JsonObject> index = (List<JsonObject>) indexAndChapterCountMap.get( "index" );
-		Integer chapterCount = (Integer) indexAndChapterCountMap.get( "chapterCount" );
-		return new Response( index, chapterCount );
+		return new Response( PratilipiDocUtil.getIndex( request.pratilipiId ) );
 
 	}
 

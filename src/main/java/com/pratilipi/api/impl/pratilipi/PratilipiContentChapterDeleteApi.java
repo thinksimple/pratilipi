@@ -30,7 +30,7 @@ public class PratilipiContentChapterDeleteApi extends GenericApi {
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
 		PratilipiContentDoc pcDoc = PratilipiDocUtil.deleteChapter( request.pratilipiId, request.chapterNo );
-		return new PratilipiContentIndexApi.Response( pcDoc.getIndex(), pcDoc.getChapterCount() );
+		return new PratilipiContentIndexApi.Response( pcDoc.getIndex() );
 
 	}
 
