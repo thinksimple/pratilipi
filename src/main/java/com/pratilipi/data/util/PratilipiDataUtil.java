@@ -25,6 +25,7 @@ import com.pratilipi.common.type.PratilipiContentType;
 import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.Website;
 import com.pratilipi.common.util.FacebookApi;
+import com.pratilipi.common.util.HtmlUtil;
 import com.pratilipi.common.util.ImageUtil;
 import com.pratilipi.common.util.PratilipiContentUtil;
 import com.pratilipi.common.util.PratilipiFilter;
@@ -274,8 +275,8 @@ public class PratilipiDataUtil {
 		pratilipiData.setLanguage( pratilipi.getLanguage() );
 		pratilipiData.setAuthorId( pratilipi.getAuthorId() );
 		pratilipiData.setAuthor( AuthorDataUtil.createAuthorData( author ) );
-		pratilipiData.setSummary( pratilipi.getSummary() );
-		
+		pratilipiData.setSummary( HtmlUtil.toPlainText( pratilipi.getSummary() ) );
+
 		pratilipiData.setPageUrl( pratilipiPage == null ? null :
 				( pratilipiPage.getUriAlias() == null ? pratilipiPage.getUri() : pratilipiPage.getUriAlias() ) );
 		pratilipiData.setCoverImageUrl( createPratilipiCoverUrl( pratilipi ) );
