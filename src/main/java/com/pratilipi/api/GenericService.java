@@ -15,7 +15,7 @@ public abstract class GenericService extends HttpServlet {
 	
 	@Override
 	protected final void service(
-			final HttpServletRequest request,
+			HttpServletRequest request,
 			HttpServletResponse response ) throws ServletException, IOException {
 
 		String requestUri = request.getRequestURI();

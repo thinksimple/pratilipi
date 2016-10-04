@@ -6,6 +6,8 @@ import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -76,11 +78,72 @@ public abstract class GenericApi extends HttpServlet {
 	}
 	
 
-	@SuppressWarnings("unchecked")
 	@Override
 	protected final void service(
 			HttpServletRequest request,
 			HttpServletResponse response ) throws ServletException, IOException {
+		
+
+		String method = request.getMethod();
+		Object apiResponse = null;
+		
+		// Invoking batch get methods for API response map
+		if( method.equals( "GET" ) && request.getRequestURI().equals( "/" ) ) {
+			
+			Gson gson = new Gson();
+			
+			JsonObject apiReqs = gson.fromJson( request.getParameter( "reqs" ), JsonElement.class ).getAsJsonObject();
+			Map<String, Object> apiResps = new HashMap<>();
+			for( Entry<String, JsonElement> apiReq : apiReqs.entrySet() ) {
+				String reqUrl = apiReq.getValue().getAsString();
+				int index = reqUrl.indexOf( '?' );
+				GenericApi api = index == -1
+						? ApiRegistry.getApi( reqUrl )
+						: ApiRegistry.getApi( reqUrl.substring( 0, index ) );
+				JsonObject reqPayloadJson = index == -1
+						? new JsonObject()
+						: createRequestPayloadJson( reqUrl.substring( index + 1 ) );
+				apiResps.put(
+						apiReq.getKey(),
+						executeApi( api.getMethod, reqPayloadJson, api.getMethodParameterType, request ) );
+			}
+			apiResponse = apiResps;
+
+		// Invoking get/put method for API response
+		} else { 
+			JsonObject requestPayloadJson = createRequestPayloadJson( request );
+			if( method.equals( "GET" ) && getMethod != null )
+				apiResponse = executeApi( getMethod, requestPayloadJson, getMethodParameterType, request );
+			if( method.equals( "PUT" ) && putMethod != null )
+				apiResponse = executeApi( putMethod, requestPayloadJson, putMethodParameterType, request );
+			else if( method.equals( "POST" ) && postMethod != null )
+				apiResponse = executeApi( postMethod, requestPayloadJson, postMethodParameterType, request );
+			else if( method.equals( "DELETE" ) && deleteMethod != null )
+				apiResponse = executeApi( deleteMethod, requestPayloadJson, deleteMethodParameterType, request );
+			else
+				apiResponse = new InvalidArgumentException( "Invalid resource or method." );
+		}
+		
+		// Dispatching API response
+		dispatchApiResponse( apiResponse, request, response );
+		
+	}
+	
+	
+	private JsonObject createRequestPayloadJson( String queryStr ) throws JsonSyntaxException, IOException {
+		JsonObject requestPayloadJson = new JsonObject();
+		for( String paramValue : queryStr.split( "&" ) ) {
+			int index = paramValue.indexOf( '=' );
+			String param = index == -1 ? paramValue : paramValue.substring( 0, index );
+			String value = index == -1 ? null : paramValue.substring( index + 1 );
+			requestPayloadJson.addProperty( param, value );
+			requestPayloadJson.addProperty( "has" + Character.toUpperCase( param.charAt( 0 ) ) + param.substring( 1 ), true );
+		}
+		logger.log( Level.INFO, "Enhanced Request Payload: " + requestPayloadJson );
+		return requestPayloadJson;
+	}
+	
+	private JsonObject createRequestPayloadJson( HttpServletRequest request ) throws JsonSyntaxException, IOException {
 		
 		String requestUri = request.getRequestURI();
 		String method = request.getMethod();
@@ -101,8 +164,8 @@ public abstract class GenericApi extends HttpServlet {
 					queryParamsStr.append( "\"" + param + "\":\"" + value.replaceAll( "\"", "\\\\\"" ) + "\"," );
 				}
 			}
-			
 		}
+		
 		if( queryParamsStr.length() > 1 )
 			queryParamsStr.setCharAt( queryParamsStr.length() - 1, '}' );
 		else
@@ -142,26 +205,8 @@ public abstract class GenericApi extends HttpServlet {
 		
 		logger.log( Level.INFO, "Enhanced Request Payload: " + requestPayloadJson );
 		
-		
-		// Invoking get/put method for API response
-		Object apiResponse = null;
-		if( method.equals( "GET" ) && getMethod != null )
-			apiResponse = executeApi( getMethod, requestPayloadJson, getMethodParameterType, request );
-		else if( method.equals( "PUT" ) && putMethod != null )
-			apiResponse = executeApi( putMethod, requestPayloadJson, putMethodParameterType, request );
-		else if( method.equals( "POST" ) && postMethod != null )
-			apiResponse = executeApi( postMethod, requestPayloadJson, postMethodParameterType, request );
-		else if( method.equals( "DELETE" ) && deleteMethod != null )
-			apiResponse = executeApi( deleteMethod, requestPayloadJson, deleteMethodParameterType, request );
-		else
-			apiResponse = new InvalidArgumentException( "Invalid resource or method." );
-
-		
-		// Dispatching API response
-		dispatchApiResponse( apiResponse, request, response );
-		
+		return requestPayloadJson;
 	}
-	
 	
 	private Object executeApi( Method apiMethod, JsonObject requestPayloadJson,
 			Class<? extends GenericRequest> apiMethodParameterType, HttpServletRequest request ) {
@@ -220,10 +265,50 @@ public abstract class GenericApi extends HttpServlet {
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	private void dispatchApiResponse( Object apiResponse, HttpServletRequest request,
 			HttpServletResponse response ) throws IOException {
 		
-		if( apiResponse instanceof GenericFileDownloadResponse ) {
+		if( apiResponse instanceof Map ) {
+
+			response.setContentType( "text/html" );
+			response.setCharacterEncoding( "UTF-8" );
+			
+			Gson gson = new Gson();
+			boolean bool = true;
+			
+			PrintWriter writer = response.getWriter();
+			writer.print( "{" );
+			for( Entry<String, Object> apiResp : ( (Map<String, Object>) apiResponse ).entrySet() ) {
+				if( bool )
+					bool = false;
+				else
+					writer.print( "," );
+				writer.print( "\"" + apiResp.getKey() + "\":{" );
+				if( apiResp.getValue() instanceof GenericResponse ) {
+					writer.print( "\"status\":" + HttpServletResponse.SC_OK + "," );
+					writer.print( "\"response\":" + gson.toJson( apiResp.getValue() ) );
+				} else if( apiResp.getValue() instanceof InvalidArgumentException ) {
+					logger.log( Level.INFO, ((Throwable) apiResp.getValue() ).getMessage() );
+					writer.print( "\"status\":" + HttpServletResponse.SC_BAD_REQUEST + "," );
+					writer.print( "\"response\":" + ((Throwable) apiResp.getValue() ).getMessage() );
+				} else if( apiResp.getValue() instanceof InsufficientAccessException ) {
+					logger.log( Level.INFO, ((Throwable) apiResp.getValue() ).getMessage() );
+					writer.print( "\"status\":" + HttpServletResponse.SC_UNAUTHORIZED + "," );
+					writer.print( "\"response\":" + ((Throwable) apiResp.getValue() ).getMessage() );
+				} else if( apiResp.getValue() instanceof UnexpectedServerException ) {
+					writer.print( "\"status\":" + HttpServletResponse.SC_INTERNAL_SERVER_ERROR + "," );
+					writer.print( "\"response\":" + ((Throwable) apiResp.getValue() ).getMessage() );
+				} else {
+					writer.print( "\"status\":" + HttpServletResponse.SC_INTERNAL_SERVER_ERROR + "," );
+					writer.print( "\"response\":" + ((Throwable) apiResp.getValue() ).getMessage() );
+				}
+				writer.print( "}" );
+			}
+			writer.print( "}" );
+			writer.close();
+			
+		} else if( apiResponse instanceof GenericFileDownloadResponse ) {
 			
 			GenericFileDownloadResponse gfdResponse = (GenericFileDownloadResponse) apiResponse;
 
