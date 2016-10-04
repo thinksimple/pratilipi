@@ -57,7 +57,7 @@ public class GenericBatchApi extends GenericApi {
 						: ApiRegistry.getApi( reqUri.substring( 0, index ) );
 				JsonObject reqPayloadJson = index == -1
 						? new JsonObject()
-						: createRequestPayloadJson( reqUri.substring( index + 1 ) );
+						: createRequestPayloadJson( reqUri.substring( index + 1 ), request );
 				apiResps.put(
 						apiReq.getKey(),
 						executeApi( api, api.getMethod, reqPayloadJson, api.getMethodParameterType, request ) );
@@ -75,7 +75,7 @@ public class GenericBatchApi extends GenericApi {
 		
 	}
 	
-	final JsonObject createRequestPayloadJson( String queryStr ) {
+	final JsonObject createRequestPayloadJson( String queryStr, HttpServletRequest request ) {
 		
 		JsonObject requestPayloadJson = new JsonObject();
 		for( String paramValue : queryStr.split( "&" ) ) {
@@ -87,7 +87,7 @@ public class GenericBatchApi extends GenericApi {
 		}
 		
 		// Logging
-		logRequestPayloadJson( requestPayloadJson );
+		logRequestPayloadJson( requestPayloadJson, request );
 		
 		return requestPayloadJson;
 	

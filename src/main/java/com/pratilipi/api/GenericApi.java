@@ -58,7 +58,10 @@ public abstract class GenericApi extends HttpServlet {
 	Class<? extends GenericRequest> postMethodParameterType;
 	Class<? extends GenericRequest> deleteMethodParameterType;
 
-	List<String> sensitiveFieldList = new LinkedList<>();
+	List<String> getRequestSensitiveFieldList = new LinkedList<>();
+	List<String> putRequestSensitiveFieldList = new LinkedList<>();
+	List<String> postRequestSensitiveFieldList = new LinkedList<>();
+	List<String> deleteRequestSensitiveFieldList = new LinkedList<>();
 	
 	
 	@SuppressWarnings("unchecked")
@@ -69,22 +72,30 @@ public abstract class GenericApi extends HttpServlet {
 			if( method.getAnnotation( Get.class ) != null ) {
 				getMethod = method;
 				getMethodParameterType = (Class<? extends GenericRequest>) method.getParameterTypes()[0];
+				for( Field field : getMethodParameterType.getFields() )
+					if( field.getAnnotation( Sensitive.class ) != null )
+						getRequestSensitiveFieldList.add( field.getName() );
 			} else if( method.getAnnotation( Put.class ) != null ) {
 				putMethod = method;
 				putMethodParameterType = (Class<? extends GenericRequest>) method.getParameterTypes()[0];
+				for( Field field : putMethodParameterType.getFields() )
+					if( field.getAnnotation( Sensitive.class ) != null )
+						putRequestSensitiveFieldList.add( field.getName() );
 			} else if( method.getAnnotation( Post.class ) != null ) {
 				postMethod = method;
 				postMethodParameterType = (Class<? extends GenericRequest>) method.getParameterTypes()[0];
+				for( Field field : postMethodParameterType.getFields() )
+					if( field.getAnnotation( Sensitive.class ) != null )
+						postRequestSensitiveFieldList.add( field.getName() );
 			} else if( method.getAnnotation( Delete.class ) != null ) {
 				deleteMethod = method;
 				deleteMethodParameterType = (Class<? extends GenericRequest>) method.getParameterTypes()[0];
+				for( Field field : deleteMethodParameterType.getFields() )
+					if( field.getAnnotation( Sensitive.class ) != null )
+						deleteRequestSensitiveFieldList.add( field.getName() );
 			}
 		}
 		
-		for( Field field : this.getClass().getFields() ) {
-			if( field.getAnnotation( Sensitive.class ) != null )
-				sensitiveFieldList.add( field.getName() );
-		}
 		
 	}
 	
@@ -129,18 +140,31 @@ public abstract class GenericApi extends HttpServlet {
 		}
 	}
 	
-	final void logRequestPayloadJson( JsonObject requestPayloadJson ) {
+	final void logRequestPayloadJson( JsonObject requestPayloadJson, HttpServletRequest request ) {
+		
+		String method = request.getMethod();
+		List<String> sensitiveFieldList = null;
+		
+		if( method.equals( "GET" ) )
+			sensitiveFieldList = getRequestSensitiveFieldList;
+		else if( method.equals( "PUT" ) )
+			sensitiveFieldList = putRequestSensitiveFieldList;
+		else if( method.equals( "POST" ) )
+			sensitiveFieldList = postRequestSensitiveFieldList;
+		else if( method.equals( "DELETE" ) )
+			sensitiveFieldList = deleteRequestSensitiveFieldList;
+		
 		if( sensitiveFieldList.size() != 0 ) {
 			requestPayloadJson = new Gson()
 					.fromJson( requestPayloadJson.toString(), JsonElement.class )
 					.getAsJsonObject();
-			for( String sensitiveField : sensitiveFieldList ) {
-				logger.log( Level.INFO, sensitiveField + ": " + requestPayloadJson.get( sensitiveField ) );
+			for( String sensitiveField : sensitiveFieldList )
 				if( requestPayloadJson.get( sensitiveField ) != null )
 					requestPayloadJson.addProperty( sensitiveField, "********" );
-			}
 		}
+		
 		logger.log( Level.INFO, "Enhanced Request Payload: " + requestPayloadJson );
+		
 	}
 	
 	final JsonObject createRequestPayloadJson( HttpServletRequest request ) throws IOException {
@@ -192,7 +216,7 @@ public abstract class GenericApi extends HttpServlet {
 		
 		
 		// Logging
-		logRequestPayloadJson( requestPayloadJson );
+		logRequestPayloadJson( requestPayloadJson, request );
 		
 		return requestPayloadJson;
 	}
