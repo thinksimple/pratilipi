@@ -89,13 +89,13 @@ public abstract class GenericApi extends HttpServlet {
 		
 		// Invoking get/put method for API response
 		if( method.equals( "GET" ) && getMethod != null )
-			apiResponse = executeApi( getMethod, requestPayloadJson, getMethodParameterType, request );
+			apiResponse = executeApi( this, getMethod, requestPayloadJson, getMethodParameterType, request );
 		else if( method.equals( "PUT" ) && putMethod != null )
-			apiResponse = executeApi( putMethod, requestPayloadJson, putMethodParameterType, request );
+			apiResponse = executeApi( this, putMethod, requestPayloadJson, putMethodParameterType, request );
 		else if( method.equals( "POST" ) && postMethod != null )
-			apiResponse = executeApi( postMethod, requestPayloadJson, postMethodParameterType, request );
+			apiResponse = executeApi( this, postMethod, requestPayloadJson, postMethodParameterType, request );
 		else if( method.equals( "DELETE" ) && deleteMethod != null )
-			apiResponse = executeApi( deleteMethod, requestPayloadJson, deleteMethodParameterType, request );
+			apiResponse = executeApi( this, deleteMethod, requestPayloadJson, deleteMethodParameterType, request );
 		else
 			apiResponse = new InvalidArgumentException( "Invalid resource or method." );
 		
@@ -183,7 +183,7 @@ public abstract class GenericApi extends HttpServlet {
 		return requestPayloadJson;
 	}
 	
-	final Object executeApi( Method apiMethod, JsonObject requestPayloadJson,
+	final Object executeApi( GenericApi api, Method apiMethod, JsonObject requestPayloadJson,
 			Class<? extends GenericRequest> apiMethodParameterType, HttpServletRequest request ) {
 		
 		try {
@@ -212,7 +212,7 @@ public abstract class GenericApi extends HttpServlet {
 			if( errorMessages.entrySet().size() > 0 )
 				return new InvalidArgumentException( errorMessages );
 			else
-				return apiMethod.invoke( this, apiRequest );
+				return apiMethod.invoke( api, apiRequest );
 
 		} catch( JsonSyntaxException e ) {
 			logger.log( Level.SEVERE, "Invalid JSON in request body.", e );

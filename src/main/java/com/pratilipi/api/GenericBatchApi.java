@@ -45,7 +45,7 @@ public class GenericBatchApi extends GenericApi {
 						: createRequestPayloadJson( reqUrl.substring( index + 1 ) );
 				apiResps.put(
 						apiReq.getKey(),
-						executeApi( api.getMethod, reqPayloadJson, api.getMethodParameterType, request ) );
+						executeApi( api, api.getMethod, reqPayloadJson, api.getMethodParameterType, request ) );
 			}
 			
 			apiResponse = apiResps;
