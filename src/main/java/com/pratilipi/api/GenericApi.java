@@ -6,7 +6,6 @@ import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Level;
@@ -46,15 +45,15 @@ public abstract class GenericApi extends HttpServlet {
 	private static final Logger logger =
 			Logger.getLogger( GenericApi.class.getName() );
 
-	private Method getMethod;
-	private Method putMethod;
-	private Method postMethod;
-	private Method deleteMethod;
+	Method getMethod;
+	Method putMethod;
+	Method postMethod;
+	Method deleteMethod;
 	
-	private Class<? extends GenericRequest> getMethodParameterType;
-	private Class<? extends GenericRequest> putMethodParameterType;
-	private Class<? extends GenericRequest> postMethodParameterType;
-	private Class<? extends GenericRequest> deleteMethodParameterType;
+	Class<? extends GenericRequest> getMethodParameterType;
+	Class<? extends GenericRequest> putMethodParameterType;
+	Class<? extends GenericRequest> postMethodParameterType;
+	Class<? extends GenericRequest> deleteMethodParameterType;
 
 	
 	@SuppressWarnings("unchecked")
@@ -79,50 +78,26 @@ public abstract class GenericApi extends HttpServlet {
 	
 
 	@Override
-	protected final void service(
+	protected void service(
 			HttpServletRequest request,
 			HttpServletResponse response ) throws ServletException, IOException {
 		
-
+		JsonObject requestPayloadJson = createRequestPayloadJson( request );
+		
 		String method = request.getMethod();
 		Object apiResponse = null;
 		
-		// Invoking batch get methods for API response map
-		if( method.equals( "GET" ) && request.getRequestURI().equals( "/" ) ) {
-			
-			Gson gson = new Gson();
-			
-			JsonObject apiReqs = gson.fromJson( request.getParameter( "reqs" ), JsonElement.class ).getAsJsonObject();
-			Map<String, Object> apiResps = new HashMap<>();
-			for( Entry<String, JsonElement> apiReq : apiReqs.entrySet() ) {
-				String reqUrl = apiReq.getValue().getAsString();
-				int index = reqUrl.indexOf( '?' );
-				GenericApi api = index == -1
-						? ApiRegistry.getApi( reqUrl )
-						: ApiRegistry.getApi( reqUrl.substring( 0, index ) );
-				JsonObject reqPayloadJson = index == -1
-						? new JsonObject()
-						: createRequestPayloadJson( reqUrl.substring( index + 1 ) );
-				apiResps.put(
-						apiReq.getKey(),
-						executeApi( api.getMethod, reqPayloadJson, api.getMethodParameterType, request ) );
-			}
-			apiResponse = apiResps;
-
 		// Invoking get/put method for API response
-		} else { 
-			JsonObject requestPayloadJson = createRequestPayloadJson( request );
-			if( method.equals( "GET" ) && getMethod != null )
-				apiResponse = executeApi( getMethod, requestPayloadJson, getMethodParameterType, request );
-			if( method.equals( "PUT" ) && putMethod != null )
-				apiResponse = executeApi( putMethod, requestPayloadJson, putMethodParameterType, request );
-			else if( method.equals( "POST" ) && postMethod != null )
-				apiResponse = executeApi( postMethod, requestPayloadJson, postMethodParameterType, request );
-			else if( method.equals( "DELETE" ) && deleteMethod != null )
-				apiResponse = executeApi( deleteMethod, requestPayloadJson, deleteMethodParameterType, request );
-			else
-				apiResponse = new InvalidArgumentException( "Invalid resource or method." );
-		}
+		if( method.equals( "GET" ) && getMethod != null )
+			apiResponse = executeApi( getMethod, requestPayloadJson, getMethodParameterType, request );
+		else if( method.equals( "PUT" ) && putMethod != null )
+			apiResponse = executeApi( putMethod, requestPayloadJson, putMethodParameterType, request );
+		else if( method.equals( "POST" ) && postMethod != null )
+			apiResponse = executeApi( postMethod, requestPayloadJson, postMethodParameterType, request );
+		else if( method.equals( "DELETE" ) && deleteMethod != null )
+			apiResponse = executeApi( deleteMethod, requestPayloadJson, deleteMethodParameterType, request );
+		else
+			apiResponse = new InvalidArgumentException( "Invalid resource or method." );
 		
 		// Dispatching API response
 		dispatchApiResponse( apiResponse, request, response );
@@ -130,7 +105,7 @@ public abstract class GenericApi extends HttpServlet {
 	}
 	
 	
-	private JsonObject createRequestPayloadJson( String queryStr ) throws JsonSyntaxException, IOException {
+	final JsonObject createRequestPayloadJson( String queryStr ) throws JsonSyntaxException, IOException {
 		JsonObject requestPayloadJson = new JsonObject();
 		for( String paramValue : queryStr.split( "&" ) ) {
 			int index = paramValue.indexOf( '=' );
@@ -143,7 +118,7 @@ public abstract class GenericApi extends HttpServlet {
 		return requestPayloadJson;
 	}
 	
-	private JsonObject createRequestPayloadJson( HttpServletRequest request ) throws JsonSyntaxException, IOException {
+	final JsonObject createRequestPayloadJson( HttpServletRequest request ) throws JsonSyntaxException, IOException {
 		
 		String requestUri = request.getRequestURI();
 		String method = request.getMethod();
@@ -208,7 +183,7 @@ public abstract class GenericApi extends HttpServlet {
 		return requestPayloadJson;
 	}
 	
-	private Object executeApi( Method apiMethod, JsonObject requestPayloadJson,
+	final Object executeApi( Method apiMethod, JsonObject requestPayloadJson,
 			Class<? extends GenericRequest> apiMethodParameterType, HttpServletRequest request ) {
 		
 		try {
@@ -266,7 +241,7 @@ public abstract class GenericApi extends HttpServlet {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private void dispatchApiResponse( Object apiResponse, HttpServletRequest request,
+	final void dispatchApiResponse( Object apiResponse, HttpServletRequest request,
 			HttpServletResponse response ) throws IOException {
 		
 		if( apiResponse instanceof Map ) {

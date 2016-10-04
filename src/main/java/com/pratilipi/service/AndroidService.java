@@ -1,6 +1,7 @@
 package com.pratilipi.service;
 
 import com.pratilipi.api.ApiRegistry;
+import com.pratilipi.api.GenericBatchApi;
 import com.pratilipi.api.GenericService;
 import com.pratilipi.api.impl.author.AuthorApi;
 import com.pratilipi.api.impl.author.AuthorCoverApi;
@@ -46,6 +47,8 @@ import com.pratilipi.api.impl.vote.VoteApi;
 public class AndroidService extends GenericService {
 	
 	static {
+		
+		ApiRegistry.register( GenericBatchApi.class );
 		
 		ApiRegistry.register( InitApi.class );
 		ApiRegistry.register( InitBannerListApi.class );
