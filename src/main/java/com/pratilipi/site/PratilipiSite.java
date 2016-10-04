@@ -383,6 +383,7 @@ public class PratilipiSite extends HttpServlet {
 															.getIndex( indexReq ).getIndex();
 
 					dataModel.put( "pratilipiId", pratilipiId );
+					dataModel.put( "pratilipi", pratilipiResponse );
 					dataModel.put( "pratilipiJson", new Gson().toJson( pratilipiResponse ) );
 					dataModel.put( "indexJson", new Gson().toJson( indexArray ) );
 				}

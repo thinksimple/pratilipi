@@ -16,13 +16,16 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 
 		private Object data;
 
+		private AlignmentType alignment;
+
 
 		@SuppressWarnings("unused")
 		private PageletImpl() {}
 
-		public PageletImpl( PageletType type, Object data ) {
+		public PageletImpl( PageletType type, Object data, AlignmentType alignment ) {
 			this.type = type;
 			this.data = data;
+			this.alignment = alignment;
 		}
 
 
@@ -34,6 +37,11 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 		@Override
 		public Object getData() {
 			return data;
+		}
+
+		@Override
+		public AlignmentType getAlignment() {
+			return alignment;
 		}
 
 	}
@@ -55,9 +63,14 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 
 		@Override
 		public void addPagelet( PageletType type, Object data ) {
+			addPagelet( type, data, null );
+		}
+
+		@Override
+		public void addPagelet( PageletType type, Object data, AlignmentType alignment ) {
 			if( pagelets == null )
 				pagelets = new LinkedList<>();
-			pagelets.add( new PageletImpl( type, data ) );
+			pagelets.add( new PageletImpl( type, data, alignment ) );
 		}
 
 	}

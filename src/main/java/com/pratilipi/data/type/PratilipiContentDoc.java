@@ -10,14 +10,20 @@ public interface PratilipiContentDoc {
 		HEAD_1, HEAD_2, HTML, TEXT, IMAGE, BLOCK_QUOTE
 	}
 
+	enum AlignmentType {
+		LEFT, CENTER, RIGHT, JUSTIFY
+	}
+
 	interface Pagelet {
 		PageletType getType();
 		Object getData();
+		AlignmentType getAlignment();
 	}
 
 	interface Page {
 		List<Pagelet> getPageletList();
 		void addPagelet( PageletType type, Object data );
+		void addPagelet( PageletType type, Object data, AlignmentType alignmentType );
 	}
 
 	interface Chapter {

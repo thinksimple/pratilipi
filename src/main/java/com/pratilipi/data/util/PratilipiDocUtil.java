@@ -50,6 +50,7 @@ import com.pratilipi.data.type.PratilipiContentDoc;
 import com.pratilipi.data.type.PratilipiContentDoc.Chapter;
 import com.pratilipi.data.type.PratilipiContentDoc.Pagelet;
 import com.pratilipi.data.type.PratilipiContentDoc.PageletType;
+import com.pratilipi.data.type.PratilipiContentDoc.AlignmentType;
 import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
 import com.pratilipi.data.type.PratilipiReviewsDoc;
 import com.pratilipi.data.type.UserPratilipi;
@@ -581,12 +582,20 @@ public class PratilipiDocUtil {
 
 
 		for( Node childNode : Jsoup.parse( content ).body().childNodes() ) {
-			if( childNode.nodeName().equals( "p" ) )
-				page.addPagelet( PageletType.TEXT, ( (Element) childNode ).html() );
-			else if( childNode.nodeName().equals( "img" ) )
+			Element element = (Element) childNode;
+			AlignmentType alignment = null;
+			if( childNode.nodeName().equals( "p" ) ) {
+				String[] styles = element.attr( "style" ).split( ";" );
+				for( String style : styles )
+					if( style.substring( 0, style.indexOf( ":" ) ).trim().equals( "text-align" ) )
+						alignment = AlignmentType.valueOf( style.substring( style.indexOf( ":" ) + 1 ).trim().toUpperCase() );
+				page.addPagelet( PageletType.TEXT, element.html(), alignment );
+			} else if( childNode.nodeName().equals( "img" ) ) {
 				page.addPagelet( PageletType.IMAGE, childNode.attr( "src" ) );
-			else if( childNode.nodeName().equals( "blockquote" ) )
-				page.addPagelet( PageletType.BLOCK_QUOTE, ( (Element) childNode ).html() );
+			} else if( childNode.nodeName().equals( "blockquote" ) ) {
+				page.addPagelet( PageletType.BLOCK_QUOTE, element.html() );
+			}
+				
 		}
 
 		docAccessor.save( pratilipiId, pcDoc );
