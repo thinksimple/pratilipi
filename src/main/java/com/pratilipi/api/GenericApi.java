@@ -134,9 +134,11 @@ public abstract class GenericApi extends HttpServlet {
 			requestPayloadJson = new Gson()
 					.fromJson( requestPayloadJson.toString(), JsonElement.class )
 					.getAsJsonObject();
-			for( String sensitiveField : sensitiveFieldList )
+			for( String sensitiveField : sensitiveFieldList ) {
+				logger.log( Level.INFO, sensitiveField + ": " + requestPayloadJson.get( sensitiveField ) );
 				if( requestPayloadJson.get( sensitiveField ) != null )
 					requestPayloadJson.addProperty( sensitiveField, "********" );
+			}
 		}
 		logger.log( Level.INFO, "Enhanced Request Payload: " + requestPayloadJson );
 	}
