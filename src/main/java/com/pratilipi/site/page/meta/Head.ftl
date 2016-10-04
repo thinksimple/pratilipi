@@ -20,16 +20,13 @@
 <script src='http://1.ptlp.co/third-party/ckeditor-4.5.10-full/ckeditor.js'></script>
 
 <#-- Pratilipi dependencies -->
-<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?57'>
+<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?58'>
 
 <#-- Google Analytics -->
 <#include "GoogleAnalytics.ftl">
 
 <#-- Firebase Script -->
 <#include "Firebase.ftl">
-
-<#-- CustomerLabs Tag -->
-<script>!function(t,e,r,c,a,n,s){t.ClAnalyticsObject=a,t[a]=t[a]||[],t[a].methods=["trackSubmit","trackClick","pageview","identify","track"],t[a].factory=function(e){return function(){var r=Array.prototype.slice.call(arguments);return r.unshift(e),t[a].push(r),t[a]}};for(var i=0;i<t[a].methods.length;i++){var o=t[a].methods[i];t[a][o]=t[a].factory(o)};n=e.createElement(r),s=e.getElementsByTagName(r)[0],n.async=1,n.crossOrigin="anonymous",n.src=c,s.parentNode.insertBefore(n,s)}(window,document,"script","//cdn.js.customerlabs.co/cl63u8jemht8.js","_cl");_cl.SNIPPET_VERSION="1.0.0"</script>
 
 <#-- Mobile device -->
 <script>function isMobile(){return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);}</script>

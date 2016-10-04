@@ -16,6 +16,7 @@ import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.PratilipiContentType;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.type.BlobEntry;
+import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.PratilipiContentDoc;
 import com.pratilipi.data.util.PratilipiDataUtil;
 import com.pratilipi.data.util.PratilipiDocUtil;
@@ -107,21 +108,15 @@ public class PratilipiContentApi extends GenericApi {
 	public GenericResponse getPratilipiContent( GetRequest request )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
-		PratilipiContentType contentType = request.contentType;
+		Pratilipi pratilipi = DataAccessorFactory.getDataAccessor().getPratilipi( request.pratilipiId );
 
-		if( request.contentType == null )
-			contentType = DataAccessorFactory.getDataAccessor()
-					.getPratilipi( request.pratilipiId )
-					.getContentType();
-
-
-		if( PratilipiDataUtil.isOldFormatContent( request.pratilipiId ) ) {
+		if( pratilipi.isOldContent() ) {
 
 			Object content = PratilipiDataUtil.getPratilipiContent(
 					request.pratilipiId,
 					request.chapterNo,
 					request.pageNo,
-					contentType );
+					pratilipi.getContentType() );
 
 			if( UxModeFilter.isAndroidApp() ) {
 				return new Response(
@@ -131,7 +126,7 @@ public class PratilipiContentApi extends GenericApi {
 						null,
 						content );
 
-			} else if( contentType == PratilipiContentType.PRATILIPI ) {
+			} else if( pratilipi.getContentType() == PratilipiContentType.PRATILIPI ) {
 				return new Response(
 						request.pratilipiId,
 						request.chapterNo,
@@ -139,7 +134,7 @@ public class PratilipiContentApi extends GenericApi {
 						null,
 						content );
 
-			} else if( contentType == PratilipiContentType.IMAGE ) {
+			} else if( pratilipi.getContentType() == PratilipiContentType.IMAGE ) {
 				BlobEntry blobEntry = ( BlobEntry ) content;
 				return new GenericFileDownloadResponse(
 						blobEntry.getData(),

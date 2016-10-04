@@ -1007,13 +1007,6 @@ public class PratilipiDataUtil {
 		
 	}
 
-	public static Boolean isOldFormatContent( Long pratilipiId ) 
-			throws UnexpectedServerException {
-
-		return DataAccessorFactory.getBlobAccessor().getBlob( CONTENT_FOLDER + "/" + pratilipiId ) != null;
-
-	}
-
 	public static String createNewImage( Long pratilipiId, BlobEntry blobEntry ) 
 			throws UnexpectedServerException {
 
