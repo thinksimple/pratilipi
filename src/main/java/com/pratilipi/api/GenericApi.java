@@ -85,11 +85,12 @@ public abstract class GenericApi extends HttpServlet {
 				postMethod = method;
 				postMethodParameterType = (Class<? extends GenericRequest>) method.getParameterTypes()[0];
 				logger.log( Level.WARNING, postMethodParameterType.getName() );
-				for( Field field : postMethodParameterType.getFields() )
+				for( Field field : postMethodParameterType.getFields() ) {
+					logger.log( Level.INFO, this.getClass().getName() + ":" + field.getName() );
 					if( field.getAnnotation( Sensitive.class ) != null ) {
-						logger.log( Level.INFO, this.getClass().getName() + ":" + field.getName() );
 						postRequestSensitiveFieldList.add( field.getName() );
 					}
+				}
 			} else if( method.getAnnotation( Delete.class ) != null ) {
 				deleteMethod = method;
 				deleteMethodParameterType = (Class<? extends GenericRequest>) method.getParameterTypes()[0];
