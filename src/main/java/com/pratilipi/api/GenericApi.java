@@ -85,7 +85,7 @@ public abstract class GenericApi extends HttpServlet {
 				postMethod = method;
 				postMethodParameterType = (Class<? extends GenericRequest>) method.getParameterTypes()[0];
 				logger.log( Level.WARNING, postMethodParameterType.getName() );
-				for( Field field : postMethodParameterType.getFields() ) {
+				for( Field field : postMethodParameterType.getDeclaredFields() ) {
 					logger.log( Level.INFO, this.getClass().getName() + ":" + field.getName() );
 					if( field.getAnnotation( Sensitive.class ) != null ) {
 						postRequestSensitiveFieldList.add( field.getName() );
