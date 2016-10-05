@@ -95,9 +95,9 @@
 			// Ready function
 			ready: function() {
 				var index = this.index;
+				index = jQuery.parseJSON( index );
+				index = JSON.parse( index );
 				if( index != null ) {
-					index = jQuery.parseJSON( index );
-					index = JSON.parse( index );
 					if( index.length > 0 )
 						this.set( 'hideIndexButton', false );
 
