@@ -35,3 +35,26 @@
 
 <#-- CustomerLabs Tag -->
 <script>!function(t,e,r,c,a,n,s){t.ClAnalyticsObject=a,t[a]=t[a]||[],t[a].methods=["trackSubmit","trackClick","pageview","identify","track"],t[a].factory=function(e){return function(){var r=Array.prototype.slice.call(arguments);return r.unshift(e),t[a].push(r),t[a]}};for(var i=0;i<t[a].methods.length;i++){var o=t[a].methods[i];t[a][o]=t[a].factory(o)};n=e.createElement(r),s=e.getElementsByTagName(r)[0],n.async=1,n.crossOrigin="anonymous",n.src=c,s.parentNode.insertBefore(n,s)}(window,document,"script","//cdn.js.customerlabs.co/cl63u8jemht8.js","_cl");_cl.SNIPPET_VERSION="1.0.0"</script>
+
+<#-- Google Transliterate Api -->
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+	google.load( "elements", "1", {
+		packages: "transliteration"
+	});
+	function onLoad() {
+		if( google.elements.transliteration.isBrowserCompatible() ) {
+			var options = {
+				sourceLanguage:
+					google.elements.transliteration.LanguageCode.ENGLISH,
+				destinationLanguage:
+					[google.elements.transliteration.LanguageCode.${language}],
+				shortcutKey: 'ctrl+g',
+				transliterationEnabled: true
+			};
+	    	var control = new google.elements.transliteration.TransliterationControl( options );
+			control.makeTransliteratable( document.getElementsByTagName( "textarea" ) );
+		} 
+	}
+	google.setOnLoadCallback( onLoad );
+</script>
