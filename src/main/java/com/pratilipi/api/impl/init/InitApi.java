@@ -29,7 +29,11 @@ public class InitApi extends GenericApi {
 		
 		@Validate( required = true )
 		private Language language;
-		
+
+		public void setLanguage( Language language ) {
+			this.language = language;
+		}
+
 	}
 	
 	@SuppressWarnings("unused")
@@ -63,12 +67,16 @@ public class InitApi extends GenericApi {
 		private Response( List<Section> sections ) {
 			this.sections = sections;
 		};
+
+		public List<Section> getSectionList() {
+			return sections;
+		}
 		
 	}
 	
 	
 	@Get
-	public GenericResponse get( GetRequest request ) throws InsufficientAccessException, UnexpectedServerException {
+	public Response get( GetRequest request ) throws InsufficientAccessException, UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		

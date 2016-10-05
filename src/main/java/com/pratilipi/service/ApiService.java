@@ -17,6 +17,7 @@ import com.pratilipi.api.impl.contact.ContactApi;
 import com.pratilipi.api.impl.event.EventApi;
 import com.pratilipi.api.impl.event.EventBannerApi;
 import com.pratilipi.api.impl.event.EventListApi;
+import com.pratilipi.api.impl.init.InitApi;
 import com.pratilipi.api.impl.init.InitBannerApi;
 import com.pratilipi.api.impl.init.InitBannerListApi;
 import com.pratilipi.api.impl.mailinglist.MailingListSubscribeApi;
@@ -51,7 +52,8 @@ import com.pratilipi.api.impl.vote.VoteApi;
 public class ApiService extends GenericService {
 	
 	static {
-		
+
+		ApiRegistry.register( InitApi.class );						// *.pratilipi.com
 		ApiRegistry.register( GenericBatchApi.class );				// *.pratilipi.com
 		
 		ApiRegistry.register( InitBannerApi.class );				// *.pratilipi.com & AWS CloudFront

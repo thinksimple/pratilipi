@@ -32,6 +32,8 @@ import com.pratilipi.api.impl.blogpost.BlogPostApi;
 import com.pratilipi.api.impl.blogpost.BlogPostListApi;
 import com.pratilipi.api.impl.event.EventApi;
 import com.pratilipi.api.impl.event.EventListApi;
+import com.pratilipi.api.impl.init.InitApi;
+import com.pratilipi.api.impl.init.InitApi.Response.Section;
 import com.pratilipi.api.impl.notification.NotificationListApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentApi;
@@ -622,53 +624,21 @@ public class PratilipiSite extends HttpServlet {
 
 		if( filterLanguage == null )
 			filterLanguage = Language.ENGLISH;
-		
-		List<Map<String, Object>> sections = new LinkedList<>();
-		
-		String fileName = "home." + filterLanguage.getCode();
-		InputStream inputStream = DataAccessor.class.getResource( "curated/" + fileName ).openStream();
-		LineIterator it = IOUtils.lineIterator( inputStream, "UTF-8" );
-		while( it.hasNext() ) {
-			
-			String listName = it.next().trim();
-			if( listName.isEmpty() )
-				continue;
-			
-			String title = getListTitle( listName, filterLanguage );
-			if( title == null )
-				continue;
-			
-			if( title.indexOf( '|' ) != -1 )
-				title = title.substring( 0, title.indexOf( '|' ) ).trim();
-			
-			PratilipiFilter pratilipiFilter = new PratilipiFilter();
-			pratilipiFilter.setLanguage( filterLanguage );
-			pratilipiFilter.setListName( listName );
-			pratilipiFilter.setState( PratilipiState.PUBLISHED );
-			
-			DataListCursorTuple<PratilipiData> pratilipiDataListCursorTuple =
-					PratilipiDataUtil.getPratilipiDataList( null, pratilipiFilter, null, null, 6 );
 
-			if( pratilipiDataListCursorTuple.getDataList().size() == 0 )
-				continue;
-			
-			Map<String, Object> section = new HashMap<String, Object>();
-			section.put( "title", title );
-			section.put( "listPageUrl", "/" + listName );
-			section.put( "pratilipiList", toListResponseObject( pratilipiDataListCursorTuple.getDataList() ) );
-			sections.add( section );
-			
-		}
-		LineIterator.closeQuietly( it );
-		
+		InitApi.GetRequest request = new InitApi.GetRequest();
+		request.setLanguage( filterLanguage );
+		List<Section> sections = ApiRegistry.getApi( InitApi.class ).get( request ).getSectionList();
+
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", createPageTitle( I18n.getString( "home_page_title", filterLanguage ), null ) );
+
 		if( basicMode )
 			dataModel.put( "sections", sections );
 		else
 			dataModel.put( "sectionsJson", new Gson().toJson( sections ) );
+
 		return dataModel;
-		
+
 	}
 
 	private Map<String, Object> createDataModelForLibraryPage( boolean basicMode, Language filterLanguage ) throws UnexpectedServerException {
