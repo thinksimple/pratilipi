@@ -479,7 +479,7 @@ blockquote {
 	margin-top: 4px !important;
     background-color: grey;
     height: 34px;
-    font-size: 20px;
+    font-size: 18px;
     display: flex;
 	justify-content: center;
 	align-items: center; 

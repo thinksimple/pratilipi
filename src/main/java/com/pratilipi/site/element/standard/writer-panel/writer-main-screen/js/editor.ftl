@@ -110,7 +110,7 @@ Editor.prototype.promptUrlBox = function() {
 
 Editor.prototype.linkUrlToText = function(url) {
 	if(url.length) {
-	    document.execCommand("createLink", false, url);
+	    document.execCommand( "createLink", false, url+ " " );
 	}
 };
 
@@ -243,7 +243,7 @@ Editor.prototype.addImageListener = function() {
 		                console.log(data);
 		                var parsed_data = jQuery.parseJSON( data );
 		                var image_name = parsed_data.imageName;
-		                var $delete_icon = '<img src="http://0.ptlp.co/resource-all/icon/svg/trash.svg" data-behaviour="remove-image">';
+		                var $delete_icon = '<img class="show-cursor" src="http://0.ptlp.co/resource-all/icon/svg/trash.svg" data-behaviour="remove-image">';
 		                var image_url = "/api/pratilipi/content/image?pratilipiId=${ pratilipiId?c }&name=" + image_name;
 		                $img.attr( "src", image_url ).attr( "name", image_name ).removeClass("blur-image").attr({
 							"tabindex": "-1",
