@@ -2,12 +2,14 @@ var MainWriterPanel = function() {
 	this.$save_button = $( "[data-behaviour='save_button']" );
 	this.$preview_button = $( "[data-behaviour='preview_button']" );
 	this.$publish_button = $( "[data-behaviour='publish_button']" );
+	this.$back_button = $( "[data-behaviour='back_button']" );
 };
 
 
 MainWriterPanel.prototype.init = function() {
     this.addAffixClasses();
     this.setWrappersHeight();
+    this.checkBookLanguage();
     this.initializeGlobalVariables();
     this.$panel_container = $(".panel");
     this.preventFormSubmission();
@@ -76,6 +78,12 @@ MainWriterPanel.prototype.setWrappersHeight = function() {
      $('[data-toggle="popover"]').popover();
 };
 
+MainWriterPanel.prototype.checkBookLanguage = function() {
+	<#if pratilipi.getLanguage() != language >
+		window.location = ( "http://${language?lower_case}"  + ".pratilipi.com" + window.location.pathname + window.location.search );
+	</#if>
+};
+
 MainWriterPanel.prototype.hideProgressBarOnMobileFocus = function() {
      if(navigator.userAgent.indexOf('Android') > -1 ){
 	     this.lastWindowHeight = $(window).height();
@@ -137,16 +145,16 @@ MainWriterPanel.prototype.attachActionButtonListeners = function() {
 	} );
 	
 	this.$publish_button.on('click', function() {
-		//var url = "?action=publish&id=" + "${ pratilipiId?c }";
-		//var $spinner_div = $("<div>").addClass("spinner");
-		//_this.$panel_container.append($spinner_div);
-		//_this.saveChapter( url, false );
+		_this.saveChapter( true );
 	} );
 	
 	this.$preview_button.on('click', function() {
-		var url = _this.pratilipiJson.readPageUrl;
-		_this.saveChapter( url, true );
+		_this.saveChapter( true );
 
+	} );
+	
+	this.$back_button.on('click', function() {
+		_this.saveChapter( true );
 	} );
 	
 };
@@ -217,7 +225,7 @@ MainWriterPanel.prototype.removeChapter = function( chapterNum ) {
 	//first and only chapter, dont remove, just reset content and save.
 	if( this.index.length == 1 ) {
 		this.resetContent();
-		this.saveChapter();
+		this.saveChapter( true );
 		//update index too in save chapter for all cases - remember
 	}
 	else {
@@ -264,7 +272,7 @@ MainWriterPanel.prototype.resetContent = function() {
 	this.chapter_name_object.reset();
 };
 
-MainWriterPanel.prototype.saveChapter = function( url, newTab, autosaveFlag ) {
+MainWriterPanel.prototype.saveChapter = function( autosaveFlag ) {
 	var _this = this;
 	if( this.content_object.hasEmptyText() ) {
 		this.content_object.wrapInParagraph();
@@ -292,15 +300,7 @@ MainWriterPanel.prototype.saveChapter = function( url, newTab, autosaveFlag ) {
 			}	
 			var title = jQuery.parseJSON( response ).chapterTitle;
 			_this.table_of_contents_object.changeCurrentChapterName( _this.currChapter, title );
-			if( url && !(url.originalEvent instanceof Event)) {
-				if( newTab ) {	
-					window.open( url, '_blank' );
-				}
-				else {
-					_this.$panel_container.find(".spinner").remove();
-					window.location.href = url;
-				}
-			}
+
 		},
         fail:function(response){
         	var message = jQuery.parseJSON( response.responseText );
@@ -320,8 +320,8 @@ MainWriterPanel.prototype.setCurrentPage = function( chapterNum ) {
 
 MainWriterPanel.prototype.initializeAutosave = function() {
 	var _this = this;
-	this.chapter_name_object.$chapter_name_container.keyup( $.debounce( 1500, _this.saveChapter.bind(this, null, null, true) ) );
-	this.content_object.$content_container.keyup( $.debounce( 1500, _this.saveChapter.bind(this, null, null, true) ) );
+	this.chapter_name_object.$chapter_name_container.keyup( $.debounce( 1500, _this.saveChapter.bind(this, true) ) );
+	this.content_object.$content_container.keyup( $.debounce( 1500, _this.saveChapter.bind(this, true) ) );
 };
 
 MainWriterPanel.prototype.preventFormSubmission = function() {

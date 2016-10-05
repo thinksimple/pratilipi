@@ -119,12 +119,6 @@ TableOfContents.prototype.validateTitleForm = function() {
 		this.form_validated = false;
 	}
 	
-	if( this.isEmptyStr( $english_title.val() ) ) {
-		$english_title.closest(".form-group").addClass("has-error");
-		$english_title.after('<span class="error-exclamation glyphicon glyphicon-exclamation-sign form-control-feedback" aria-hidden="true"></span>');
-		this.form_validated = false;
-	}
-	
 	if( this.form_validated ) {
 		this.ajaxSubmitForm( $vernacular_title.val(), $english_title.val() );
 	}

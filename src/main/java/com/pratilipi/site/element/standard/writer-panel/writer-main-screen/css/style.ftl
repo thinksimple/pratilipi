@@ -467,9 +467,18 @@ blockquote {
     padding: 6px 12px;
     font-size: 14px;
 }   
+#toast-container.toast-top-center>div {
+    margin-left: auto;
+    margin-right: auto;
+}	
 .toast {
-	background-color: #d0021b;
-	text-align: center;
+    background-color: grey;
+    height: 34px;
+    font-size: 20px;
+    width: 150px;
+    display: flex;
+	justify-content: center;
+	align-items: center; 
 }
 .popover-content {
 	text-align: center;
