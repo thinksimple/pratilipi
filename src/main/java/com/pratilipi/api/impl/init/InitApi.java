@@ -18,7 +18,6 @@ import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
-import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.client.PratilipiData;
 import com.pratilipi.data.util.PratilipiDataUtil;
 
@@ -33,9 +32,9 @@ public class InitApi extends GenericApi {
 		
 	}
 	
+	@SuppressWarnings("unused")
 	public static class Response extends GenericResponse {
 		
-		@SuppressWarnings("unused")
 		public static class Section {
 		
 			private String title;
@@ -44,23 +43,26 @@ public class InitApi extends GenericApi {
 			
 			private Section() {}
 		
-			private Section( String title, String listPageUrl, List<PratilipiData> pratilipiList ) {
+			private Section( String title, String listPageUrl ) {
 				this.title = title;
 				this.listPageUrl = listPageUrl;
 				this.pratilipiList = new ArrayList<PratilipiApi.Response>( pratilipiList.size() );
+			}
+			
+			public void setPratilipiList( List<PratilipiData> pratilipiList ) {
 				for( PratilipiData pratilipiData : pratilipiList )
 					this.pratilipiList.add( new PratilipiApi.Response( pratilipiData, InitApi.class ) );
 			}
 		
 		}
 		
-		private List<Section> sections = new LinkedList<>();
+		private List<Section> sections;
 	
-		Response() {};
+		private Response() {};
 		
-		void addSection( String title, String listPageUrl, List<PratilipiData> pratilipiList ) {
-			sections.add( new Section( title, listPageUrl, pratilipiList ) );
-		}
+		private Response( List<Section> sections ) {
+			this.sections = sections;
+		};
 		
 	}
 	
@@ -70,7 +72,8 @@ public class InitApi extends GenericApi {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
-		Response response = new Response();
+		List<Response.Section> sectionList = new LinkedList<>();
+		List<Long> pratilipiIdMasterList = new LinkedList<>();
 		
 		for( String listName : dataAccessor.getHomeSectionList( request.language ) ) {
 			
@@ -86,17 +89,20 @@ public class InitApi extends GenericApi {
 			pratilipiFilter.setListName( listName );
 			pratilipiFilter.setState( PratilipiState.PUBLISHED );
 			
-			DataListCursorTuple<PratilipiData> pratilipiDataListCursorTuple =
-					PratilipiDataUtil.getPratilipiDataList( null, pratilipiFilter, null, null, 6 );
-
-			if( pratilipiDataListCursorTuple.getDataList().size() == 0 )
+			List<Long> pratilipiIdList = dataAccessor.getPratilipiIdList( pratilipiFilter, null, null, 6 ).getDataList();
+			if( pratilipiIdList.size() < 6 )
 				continue;
 			
-			response.addSection( title, "/" + listName, pratilipiDataListCursorTuple.getDataList() );
-			
+			sectionList.add( new Response.Section( title, "/" + listName ) );
+			pratilipiIdMasterList.addAll( pratilipiIdList );
+
 		}
 		
-		return response;
+		List<PratilipiData> pratilipiDataMasterList = PratilipiDataUtil.createPratilipiDataList( pratilipiIdMasterList, true );
+		for( int i = 0; i < sectionList.size(); i++ )
+			sectionList.get( i ).setPratilipiList( pratilipiDataMasterList.subList( i * 6, i * 6 + 6 ) );
+		
+		return new Response( sectionList );
 		
 	}
 	
