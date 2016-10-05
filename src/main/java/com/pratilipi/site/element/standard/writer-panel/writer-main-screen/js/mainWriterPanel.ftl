@@ -80,7 +80,7 @@ MainWriterPanel.prototype.setWrappersHeight = function() {
 
 MainWriterPanel.prototype.checkBookLanguage = function() {
 	<#if pratilipi.getLanguage() != language >
-		window.location = ( "http://${language?lower_case}"  + ".pratilipi.com" + window.location.pathname + window.location.search );
+		window.location = ( "http://${pratilipi.getLanguage()?lower_case}"  + ".pratilipi.com" + window.location.pathname + window.location.search );
 	</#if>
 };
 
