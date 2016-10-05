@@ -90,7 +90,10 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<button style="opacity: 1; outline: none;" type="button" class="close" data-dismiss="modal" aria-label="Close"><iron-icon style="color: #333;" icon="icons:close"></iron-icon></button>
-						<h6 class="modal-title">${ _strings.writer_add_content_title }</h6>
+						<h6 style="min-height: 20px; line-height: 20px;" class="modal-title">
+							<template is="dom-if" if="{{ createPratilipi }}">${ _strings.writer_add_content_title }</template>
+							<template is="dom-if" if="{{ editPratilipi }}">{{ title }}</template>
+						</h6>
 					</div>
 					<div class="modal-body" style="padding-bottom: 0px;">
 						<div class="row">
@@ -98,7 +101,7 @@
 								<pratilipi-input color="black" disabled always-float-label label="${ _strings.writer_select_language }" value="{{ languageVernacular }}"></pratilipi-input>
 							</div>
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-								<pratilipi-input color="black" label="${ _strings.writer_input_title } *" value="{{ title::input }}" icon="icons:description"></pratilipi-input>
+								<pratilipi-input make-transliterable color="black" label="${ _strings.writer_input_title } *" value="{{ title::input }}" icon="icons:description"></pratilipi-input>
 							</div>
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 								<pratilipi-input color="black" label="${ _strings.writer_input_title_en }" value="{{ titleEn::input }}" icon="icons:description"></pratilipi-input>

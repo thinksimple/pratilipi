@@ -53,7 +53,8 @@
 				transliterationEnabled: true
 			};
 	    	var control = new google.elements.transliteration.TransliterationControl( options );
-			control.makeTransliteratable( document.getElementsByTagName( "textarea" ) );
+	    	var allTextBoxes = $( "[name='pratilipiInputTransliterable'], textarea" ).toArray();
+			control.makeTransliteratable( allTextBoxes );
 		} 
 	}
 	google.setOnLoadCallback( onLoad );

@@ -48,7 +48,7 @@
 
 
 	<template>
-		<paper-input name="pratilipiInput" 
+		<paper-input name="{{ name }}" 
 					 id="pratilipiInput" 
 					 class="pratilipi-blue" 
 					 label="{{ label }}" 
@@ -79,6 +79,7 @@
 				value: { type: String, notify: true },
 				disabled: { type: Boolean, value: false },
 				alwaysFloatLabel: { type: Boolean, value: false },
+				makeTransliterable: { type: Boolean, value: false },
 				icon: { type: String, value: null },
 				type: { type: String, value: "text" },
 				required: { type: Boolean, value: false },
@@ -90,6 +91,7 @@
 					jQuery( this.querySelector( 'paper-input' ) ).removeClass( 'pratilipi-blue' );
 					jQuery( this.querySelector( 'paper-input' ) ).addClass( 'pratilipi-black' );
 				}
+				this.set( 'name', this.makeTransliterable ? 'pratilipiInputTransliterable' : 'pratilipiInput' );
 			},
 			
 			_focus: function() {
