@@ -82,6 +82,11 @@ html, body {
 .horizontal-form-input:hover, .horizontal-form-input:focus {
     box-shadow: none;
 }
+
+.horizontal-form-input:focus {
+    border-color: #d0021b;
+}
+
 .left-align-content {
     text-align: left;
 }
@@ -357,13 +362,39 @@ blockquote {
 	color: #d0021b !important;
     background-color: whitesmoke !important;
 }
+.small-spinner {
+	position: relative;
+}
+
+.small-spinner:before, .small-spinner:after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -10px;
+  margin-top: -10px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #333;
+  opacity: 0.6;
+  content: '';
+  
+  -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+  animation: sk-bounce 2.0s infinite ease-in-out;
+}
+
+.small-spinner:after {
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+}
+
 .spinner {
   position: absolute;
    top: 0;
    left: 0;
    width: 100%;
    height: 100%;
-   background: rgba(255,255,255,0.8);
+   background: rgba(255,255,255,0.5);
 }
 
 .spinner:before, .spinner:after {
@@ -438,6 +469,7 @@ blockquote {
 }   
 .toast {
 	background-color: #d0021b;
+	text-align: center;
 }
 .popover-content {
 	text-align: center;
@@ -479,4 +511,9 @@ blockquote {
  }
  .grey-background {
      background-color: #eee;
+}
+
+.btn-default:focus {
+	background-color: white;
+    outline: none;
 }

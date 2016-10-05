@@ -131,6 +131,8 @@ MainWriterPanel.prototype.initializeData = function() {
 MainWriterPanel.prototype.attachActionButtonListeners = function() {
 	var _this = this;
 	this.$save_button.on('click', function() {
+		$("#header1").addClass("small-spinner");
+		this.$save_button.attr('disabled', 'disabled');
 		_this.saveChapter();
 	} );
 	
@@ -280,9 +282,12 @@ MainWriterPanel.prototype.saveChapter = function( url, newTab, autosaveFlag ) {
         	console.log(response);
 			//alert("Chapter Saved");
 			toastr.options = {
-			positionClass: 'toast-top-center'
+			positionClass: 'toast-top-center',
+			"timeOut": "1100"
 			};
 			if( !autosaveFlag ) {
+				$("#header1").removeClass("small-spinner");
+				_this.$save_button.removeAttr("disabled");
 				toastr.success('${ _strings.writer_changes_saved }');
 			}	
 			var title = jQuery.parseJSON( response ).chapterTitle;
@@ -300,6 +305,8 @@ MainWriterPanel.prototype.saveChapter = function( url, newTab, autosaveFlag ) {
         fail:function(response){
         	var message = jQuery.parseJSON( response.responseText );
         	_this.$panel_container.find(".spinner").remove();
+        	$("#header1").removeClass("small-spinner");
+        	_this.$save_button.removeAttr("disabled");
 			alert(message);
 		}			    		
 		

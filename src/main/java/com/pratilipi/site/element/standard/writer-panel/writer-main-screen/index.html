@@ -2,6 +2,9 @@
     <div class="container" style="height:100%;">
         <div class="header-wrapper">
             <div id="header1" style="background: white;padding-bottom: 10px;">
+                <a style="cursor: pointer;margin-top: 10px;margin-right: 10px;" class="pull-left" href="${ pratilipi.getPageUrl() }" >
+                    <img class="dimension-20" src="http://0.ptlp.co/resource-all/icon/svg/arrow-left2.svg">
+                </a>
                 <div class="dropdown" id="toc_container" style="display: inline;">
                   <div class="dropdown-toggle" id="table_of_contents_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="display:inline;">  
                       <button class="btn btn-default" id="toc_button" style="margin-top: 4px;min-width:230px">
@@ -11,7 +14,7 @@
                       </button>
                   </div> 
                   <ul class="dropdown-menu" aria-labelledby="table_of_contents_dropdown" style="min-width:230px;margin-top:13px;border-radius: 0 0 4px 4px;">
-                    <li style="cursor: pointer;" data-behaviour="edit-title" class="text-center"><strong class="pratilipi-red">${ _strings.writer_edit_title_placeholder }</strong></li>
+                    <li style="cursor: pointer;" data-behaviour="edit-title" class="text-center"><strong class="pratilipi-red">${ _strings.writer_edit_title_placeholder }</strong><img class="dimension-20 pull-right" style="margin-right:10px" src="http://0.ptlp.co/resource-all/icon/svg/pencil-d0021b.svg"></li>
                     <li role="separator" class="divider"></li>
                     <li class="text-center"><strong>${ _strings.writer_table_of_contents }</strong></li>
                     <li role="separator" class="divider"></li>
@@ -149,7 +152,7 @@
               <textarea id="summary" rows="4" class="form-control grey-background" placeholder="${ _strings.writer_write_here_placeholder }..."></textarea>
             </div>	                
 		      </div>
-		      <div class="modal-footer">
+		      <div class="modal-footer" style="text-align: center;">
 		        <button type="submit" class="pratilipi-red-background-modal-button">${ _strings.writer_publish }</button>
 		      </div>
 	      </form>

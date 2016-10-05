@@ -145,6 +145,9 @@ PublishModal.prototype.resetErrorStates = function() {
 };
 
 PublishModal.prototype.ajaxSubmitForm = function() {
+	var $spinner = $("<div>").addClass("spinner");
+	this.$publish_modal_container.find(".modal-content").append( $spinner );
+	var _this = this;
 	var ajax_data = {
 			pratilipiId: ${ pratilipiId?c },
 			type: this.$category_select.val() ,
@@ -161,11 +164,13 @@ PublishModal.prototype.ajaxSubmitForm = function() {
         	
         	var parsed_data = jQuery.parseJSON( response );
         	console.log(parsed_data);
+        	_this.$publish_modal_container.find(".spinner").remove();
   			window.location.href = parsed_data.pageUrl;
 		},
         fail:function(response){
         	var message = jQuery.parseJSON( response.responseText );
 			alert(message);
+			_this.$publish_modal_container.find(".spinner").remove();
 		}			    		
 		
 });	
