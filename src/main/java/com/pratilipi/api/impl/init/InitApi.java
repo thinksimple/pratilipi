@@ -46,10 +46,10 @@ public class InitApi extends GenericApi {
 			private Section( String title, String listPageUrl ) {
 				this.title = title;
 				this.listPageUrl = listPageUrl;
-				this.pratilipiList = new ArrayList<PratilipiApi.Response>( pratilipiList.size() );
 			}
 			
 			public void setPratilipiList( List<PratilipiData> pratilipiList ) {
+				this.pratilipiList = new ArrayList<PratilipiApi.Response>( pratilipiList.size() );
 				for( PratilipiData pratilipiData : pratilipiList )
 					this.pratilipiList.add( new PratilipiApi.Response( pratilipiData, InitApi.class ) );
 			}
