@@ -121,6 +121,7 @@ Content.prototype.populateContent = function( response ) {
 			"data-trigger": "focus",
 			"data-html":"true",
 			"data-content": $delete_icon,
+			"data-template": '<div class="popover" role="tooltip" contenteditable="false"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
 		}).popover();
 		this.$content_container.find("a").data("popover", "absent");
 	}

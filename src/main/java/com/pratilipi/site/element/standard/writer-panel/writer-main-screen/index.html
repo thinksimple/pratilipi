@@ -20,7 +20,7 @@
                     <li role="separator" class="divider"></li>
                     
                     <li role="separator" class="divider"  data-behaviour="chapters_separator_second"></li>
-                    <li class="text-center" data-behaviour="new_chapter"><a href="#"><strong class="pratilipi-red"> + ${ _strings.writer_add_new_chapter }</strong></a></li>
+                    <li class="text-center" data-behaviour="new_chapter"><a class="show-cursor"><strong class="pratilipi-red"> + ${ _strings.writer_add_new_chapter }</strong></a></li>
                   </ul>
                 </div>
               <div class="pull-right">
@@ -79,9 +79,9 @@
     <div id="pagination" style="padding-top: 0.25%;;position: fixed; bottom: 0;right: 0;left: 0;background: whitesmoke;">         <!-- writer footer -->    
         <div class="col-lg-4 col-lg-offset-4 col-xs-6 col-xs-offset-3 text-center">
         	<form class="inline">
-             <a href="#" data-behaviour="previous-page"><img src="http://0.ptlp.co/resource-all/icon/svg/chevron-left.svg"></a>
+             <a class="show-cursor" data-behaviour="previous-page"><img src="http://0.ptlp.co/resource-all/icon/svg/chevron-left.svg"></a>
              <p data-behaviour="page-info" style="display: inline;font-size: 20px;padding: 10px;"><input class="horizontal-form-input" data-behaviour="curr_page" type="text" value="" style="width: 25px;">/1</p>   
-             <a href="#" data-behaviour="next-page"><img src="http://0.ptlp.co/resource-all/icon/svg/chevron-right.svg"></a>
+             <a class="show-cursor" data-behaviour="next-page"><img src="http://0.ptlp.co/resource-all/icon/svg/chevron-right.svg"></a>
              <div class="clearfix"></div>
          </form>    
         </div>
@@ -121,7 +121,7 @@
 	    </div>
 	  </div>
 	</div>          
-	<!-- Modal for publishing content-->
+	<-- Modal for publishing content-->
 	<div class="modal fade" id="publishModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
@@ -131,14 +131,14 @@
 	      </div>
 	      <form class="form-horizontal" id="publish_form">
 		      <div class="modal-body modal-form">	          
-            <div class="form-group has-feedback">
+             <#-- <div class="form-group has-feedback">
               <select class="form-control horizontal-form-input" id="category">
                 <option selected disabled data-role="default_text">${ _strings.writer_select_category } *</option>
               </select>  
-            </div>
+            </div> -->
             <div class="form-group left-align-content">
               <label class="grey-label pull-left" >${ _strings.writer_add_cover }</label>
-              <a href="#">
+              <a class="show-cursor">
                   <div class="pull-left image-container" >
                       <img class="cover-image" src="http://0.ptlp.co/resource-all/icon/png/default-cover-image.png" alt="">
                       <img src="http://0.ptlp.co/resource-all/icon/svg/camera2.svg" alt="" class="camera-icon">                        

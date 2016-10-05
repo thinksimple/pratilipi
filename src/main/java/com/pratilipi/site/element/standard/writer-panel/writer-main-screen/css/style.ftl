@@ -466,16 +466,20 @@ blockquote {
     color: white;
     padding: 6px 12px;
     font-size: 14px;
-}   
+}  
+#toast-container>.toast-success {
+	background-image: none !important;
+} 
 #toast-container.toast-top-center>div {
     margin-left: auto;
     margin-right: auto;
+    width: 270px;
 }	
 .toast {
+	margin-top: 4px !important;
     background-color: grey;
     height: 34px;
     font-size: 20px;
-    width: 150px;
     display: flex;
 	justify-content: center;
 	align-items: center; 

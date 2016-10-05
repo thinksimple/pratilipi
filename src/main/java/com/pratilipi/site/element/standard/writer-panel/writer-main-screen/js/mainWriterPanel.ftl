@@ -322,6 +322,9 @@ MainWriterPanel.prototype.initializeAutosave = function() {
 	var _this = this;
 	this.chapter_name_object.$chapter_name_container.keyup( $.debounce( 1500, _this.saveChapter.bind(this, true) ) );
 	this.content_object.$content_container.keyup( $.debounce( 1500, _this.saveChapter.bind(this, true) ) );
+	setInterval(function () {
+     	_this.saveChapter( true );
+ 	}, 60000);
 };
 
 MainWriterPanel.prototype.preventFormSubmission = function() {

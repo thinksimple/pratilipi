@@ -9,7 +9,7 @@ var PublishModal = function ( publish_modal_container ) {
 }
 
 PublishModal.prototype.init = function() {
-    this.generateCategoryOptions();
+    <#-- this.generateCategoryOptions(); -->
     this.hideCoverImageForm();
     this.prepopulateBookDetails();
     this.attachCoverImageListeners();
@@ -46,9 +46,9 @@ PublishModal.prototype.hideCoverImageForm = function() {
 
 PublishModal.prototype.prepopulateBookDetails = function() {
 	this.setBookName();
-	if ( this.pratilipi_data.type ) {
+	<#-- if ( this.pratilipi_data.type ) {
 		this.$category_select.val( this.pratilipi_data.type );
-	}
+	} -->
 	
 	if( this.pratilipi_data.coverImageUrl ) {
 		this.lastCoverUrl = this.pratilipi_data.coverImageUrl;
@@ -60,9 +60,6 @@ PublishModal.prototype.prepopulateBookDetails = function() {
 	}
 	
 };
-
-PublishModal.prototype.changeName = function(  ) {
-}
 
 PublishModal.prototype.attachCoverImageListeners = function() {
 	var _this = this;
@@ -119,11 +116,12 @@ PublishModal.prototype.attachFormSubmitListener = function() {
 	var _this = this;
 	this.$form.on( "submit", function(e) {
 		e.preventDefault();
-		_this.validateForm();
+		<#-- _this.validateForm(); -->
+		_this.ajaxSubmitForm();
 	} );
 };
 
-PublishModal.prototype.validateForm = function() {
+<#-- PublishModal.prototype.validateForm = function() {
 	this.resetErrorStates();
 	if( this.isEmptyStr( this.$category_select.val() ) ) {
 		this.$category_select.closest(".form-group").addClass("has-error");
@@ -135,7 +133,7 @@ PublishModal.prototype.validateForm = function() {
 		this.ajaxSubmitForm();
 	}
 	
-};
+}; -->
 
 PublishModal.prototype.resetErrorStates = function() {
 	this.form_validated = true;
