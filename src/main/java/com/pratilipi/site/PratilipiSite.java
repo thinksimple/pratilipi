@@ -1096,7 +1096,7 @@ public class PratilipiSite extends HttpServlet {
 		
 		Integer pageCount = null;
 		String indexJson = null;
-		if( pratilipi.getPageCount() > 0 ) {
+		if( pratilipi.isOldContent() ) {
 			pageCount = pratilipi.getPageCount();
 			indexJson = pratilipi.getIndex();
 		} else {
