@@ -132,7 +132,7 @@ MainWriterPanel.prototype.attachActionButtonListeners = function() {
 	var _this = this;
 	this.$save_button.on('click', function() {
 		$("#header1").addClass("small-spinner");
-		this.$save_button.attr('disabled', 'disabled');
+		_this.$save_button.attr('disabled', 'disabled');
 		_this.saveChapter();
 	} );
 	
