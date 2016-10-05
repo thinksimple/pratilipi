@@ -120,7 +120,7 @@
 						</div>
 						<template is="dom-if" if="{{ createPratilipi }}">
 							<div style="padding: 16px 0 16px 16px;">
-								<paper-checkbox id="copyright_checkbox" class="pratilipi-red" noink>${ _strings.writer_you_own_copyright }</paper-checkbox>
+								<paper-checkbox checked="{{ acceptedTerms }}" class="pratilipi-red" noink>${ _strings.writer_you_own_copyright }</paper-checkbox>
 								<br/>
 								<a target="_blank" style="color: #333; text-decoration: underline;" href="/terms-of-service">${ _strings.writer_read_copyright }</a>
 							</div>
@@ -167,6 +167,7 @@
  				editPratilipi: { type: Boolean },
 				pratilipiTypes: { types: Object },
 				selected: { type: Number },
+				acceptedTerms: { type: Boolean, value: false },
  				message: { type: String }
 			},
 			
@@ -256,7 +257,7 @@
 					return;
 				}
 
-				if( this.createPratilipi && !this.$.copyright_checkbox.checked ) {
+				if( this.createPratilipi && !this.acceptedTerms ) {
 					this.message = "Please accept our terms to continue.";
 					return;
 				}
