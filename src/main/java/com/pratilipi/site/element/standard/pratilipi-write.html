@@ -85,7 +85,7 @@
 	
 
 	<template>
-		<div class="modal fade" id="pratilipiWrite" role="dialog">
+		<div class="modal fade" id="pratilipiWrite" role="dialog" tabindex="-1">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -198,7 +198,6 @@
 			},
 
 			_typeObserver: function() {
-				this.set( 'selected', null );
 				if( this.type != null ) {
 					if( this.type == "BOOK" )
 						this.set( 'selected', 0 );
@@ -210,6 +209,8 @@
 						this.set( 'selected', 3 );
 					else if( this.type == "MAGAZINE" )
 						this.set( 'selected', 4 );
+				} else {
+					this.set( 'selected', null );
 				}
 			},
 
@@ -246,18 +247,18 @@
 					return;
 				}
 
+				this.type = this.$.selectPratilipiType.selectedItem != null ? this.$.selectPratilipiType.selectedItem.getAttribute( "value" ) : null;
 				if( this.type == null ) {
 					this.message = "${ _strings.write_select_type }";
 					return;
 				}
 
-				this.type = this.$.selectPratilipiType.selectedItem.getAttribute( "value" );
 				this.message = "${ _strings.working }";
 
 				var body = {
 						title: this.title,
-						type: this.type.toUpperCase(),
-						language: this.language.toUpperCase(),
+						language: this.language,
+						type: this.type,
 						state: this.state
 				};
 
