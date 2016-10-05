@@ -156,7 +156,7 @@
 				if( isMobile() )
 					document.querySelector( 'pratilipi-alert' ).alert( "${ _strings.write_on_desktop_only }", false, 10 * 6000 );
 				else
-					window.location.href = "/pratilipi-write?action=start_writing&aId=" + this.author.authorId;
+					document.querySelector( 'pratilipi-write' ).createNewPratilipi( this.author.authorId );
 			},
 
 			_numberFoundObserver: function() {

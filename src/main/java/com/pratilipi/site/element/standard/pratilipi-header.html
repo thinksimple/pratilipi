@@ -462,7 +462,7 @@
 				if( isMobile() ) {
 					document.querySelector( 'pratilipi-alert' ).alert( '${ _strings.write_on_desktop_only }' );
 				} else {
-					window.location.href = "/pratilipi-write";
+					document.querySelector( 'pratilipi-write' ).createNewPratilipi();
 				}
 			},
 
