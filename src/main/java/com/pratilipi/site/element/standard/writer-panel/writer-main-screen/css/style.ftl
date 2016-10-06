@@ -536,5 +536,5 @@ blockquote {
 }
 
 .white-space-normal {
-    white-space: normal;
+    white-space: normal !important;
 }

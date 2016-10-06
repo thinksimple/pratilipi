@@ -141,9 +141,10 @@ Content.prototype.getContent = function() {
 };
 
 Content.prototype.hasEmptyText = function() {
-	return ( this.$content_container.children().length == 0 );
+	return ( this.$content_container.children().length == 0 || !( this.$content_container.children().first().is("p,blockquote,img") ) );
 };
 
 Content.prototype.wrapInParagraph = function() {
-	this.$content_container.wrapInner("<p>");
+	<#-- this.$content_container.wrapInner("<p>"); -->
+	document.execCommand('formatBlock', false, 'p');
 };
