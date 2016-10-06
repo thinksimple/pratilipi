@@ -117,20 +117,16 @@ MainWriterPanel.prototype.initializeGlobalVariables = function() {
 };
 
 MainWriterPanel.prototype.initializeData = function() {
-	console.log("hello");
 	//if indexJson is not null, book exists, get first chapter and populate the index too.
 	var indexJson = ${ indexJson };
 	//var indexJson = [{"chapterNo":1,"chapterTitle":"Radhika"},{"chapterNo":2}];
 	if ( indexJson ) {
 		//get first chapter and populate it in the writer
-		console.log( indexJson );
 		this.getChapter( 1 );
 		this.table_of_contents_object.populateIndex( indexJson );
-		console.log("indexjson exists");
 	}
 	else {
 		//make a new chapter call asychrolously and populate the index
-		console.log("indexjson doesnt exists");
 		this.addNewChapter();
 		console.log("indexjson doesnt exists");
 	}
@@ -170,10 +166,8 @@ MainWriterPanel.prototype.getChapter = function( chapterNum ) {
         	pageNo:1
         },
         success:function(response){
-        	console.log(response);
         	
         	var parsed_data = jQuery.parseJSON( response );
-        	console.log(parsed_data);
 			_this.populateContent( parsed_data );
 			_this.pagination_object.setProgressPage();
 			_this.editor_object.resetExecCommandIcons();
@@ -201,14 +195,11 @@ MainWriterPanel.prototype.addNewChapter = function( chapterNum ) {
         url: "/api/pratilipi/content/chapter/add",
         data: ajaxData,
         success:function(response){
-        	console.log(response);
         	
         	var index = jQuery.parseJSON( response ).index;
         	_this.index = index;
-        	console.log( _this.index );
         	//increase current chapter and reset 
 			_this.currChapter++;
-			console.log( _this.currChapter );
 			_this.resetContent();
 			
 		},
@@ -235,11 +226,9 @@ MainWriterPanel.prototype.removeChapter = function( chapterNum ) {
 	        url: " /api/pratilipi/content/chapter/delete",
 	        data: ajaxData,
 	        success:function(response){
-	        	console.log(response);
-	        	
+	        
 	        	var index = jQuery.parseJSON( response ).index;
 	        	_this.index = index;
-	        	console.log( _this.index );
 	        	if( _this.currChapter >= chapterNum ) {
 	        		if( _this.currChapter == 1 ) {
 	        			_this.setCurrentPage( 1 );	
@@ -251,10 +240,6 @@ MainWriterPanel.prototype.removeChapter = function( chapterNum ) {
 	        	_this.table_of_contents_object.populateIndex( _this.index );
 	        	// check if we need to change the page number
 	        	
-	        	//increase current chapter and reset 
-				//_this.currChapter++;
-				//console.log( _this.currChapter );
-				//_this.resetContent();
 				
 			},
 	        fail:function(response){
@@ -287,8 +272,6 @@ MainWriterPanel.prototype.saveChapter = function( autosaveFlag ) {
         url: " /api/pratilipi/content",
         data: ajaxData,
         success:function(response){
-        	console.log(response);
-			//alert("Chapter Saved");
 			toastr.options = {
 			positionClass: 'toast-top-center',
 			"timeOut": "1100"
@@ -320,7 +303,7 @@ MainWriterPanel.prototype.setCurrentPage = function( chapterNum ) {
 
 MainWriterPanel.prototype.initializeAutosave = function() {
 	var _this = this;
-	this.chapter_name_object.$chapter_name_container.keyup( $.debounce( 1500, _this.saveChapter.bind(this, true) ) );
+	this.chapter_name_object.$chapter_name_container.keyup( $.debounce( 300, _this.saveChapter.bind(this, true) ) );
 	this.content_object.$content_container.keyup( $.debounce( 1500, _this.saveChapter.bind(this, true) ) );
 	setInterval(function () {
      	_this.saveChapter( true );

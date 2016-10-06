@@ -6,7 +6,6 @@ var TableOfContents = function(toc_container, pagination_object, parent_object) 
     this.$book_name_container = toc_container.find("#book_name_toc");
     this.$chapters_separator_second = this.$dropdown_menu_list.find("[data-behaviour=chapters_separator_second]");
     this.chapters = [];
-    console.log(this.chapters);
     this.pratilipi_data = ${ pratilipiJson };
     this.book_name = this.pratilipi_data.title ? this.pratilipi_data.title : this.pratilipi_data.titleEn;
     this.$new_chapter_button = this.$dropdown_menu_list.find("[data-behaviour=new_chapter]");
@@ -14,7 +13,6 @@ var TableOfContents = function(toc_container, pagination_object, parent_object) 
     this.$deleteConfirmationModal = $("#chapterDeleteModal");
     this.$titleChangeModal = $("#titleChangelModal");
     this.form_validated = true;
-    //console.log( this.book_name );
 
 }
 
@@ -42,7 +40,6 @@ TableOfContents.prototype.populateIndex = function( index ) {
     var _this = this;
     this.emptyChaptersList();
     this.chaptersList = index;
-    console.log( index );
     $.each(this.chaptersList, function(index, chapter) {
         var ch = new Chapter( chapter, _this.parent_object );
         _this.chapters.push(ch);
@@ -144,16 +141,12 @@ TableOfContents.prototype.ajaxSubmitForm = function( vernacular_title, english_t
     		titleEn: english_title,
     		pratilipiId: "${ pratilipiId?c }",          		
     	   };
-	console.log( ajax_data );
     $.ajax({type: "POST",
         url: "/api/pratilipi",
         data: ajax_data,
         success:function(response){
-        	console.log(response);
-        	console.log(typeof response);
         	
         	var parsed_data = jQuery.parseJSON( response );
-        	console.log(parsed_data);
         	_this.pratilipi_data = parsed_data;
         	var book_name = parsed_data.title ? parsed_data.title : parsed_data.titleEn;
         	_this.parent_object.changeName( book_name );

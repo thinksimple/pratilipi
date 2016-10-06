@@ -530,3 +530,7 @@ blockquote {
 	background-color: white;
     outline: none;
 }
+
+.inputapi-transliterate-indic-suggestion-menu  {
+   z-index: 1051 !important;
+}

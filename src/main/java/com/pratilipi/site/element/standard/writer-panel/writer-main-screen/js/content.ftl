@@ -13,9 +13,9 @@ Content.prototype.init = function() {
 
 Content.prototype.changeDefaultToParagraph = function() {
     var _this = this;
-    this.$content_container.one("click", function() {
+    <#-- this.$content_container.one("click", function() {
         document.execCommand('formatBlock', false, 'p');
-    });
+    }); -->
     this.$content_container.on('keypress', function(ev){
         if( ev.keyCode == '13' && !_this.isSelectionInsideElement( "blockquote" ) ) {    
             document.execCommand('formatBlock', false, 'p');
@@ -33,11 +33,9 @@ Content.prototype.unformatPastedData = function() {
     this.$content_container.on("paste", function(e) {
         // cancel paste
         e.preventDefault();
-        // console.log("here");
 
         // get text representation of clipboard
         var text = e.originalEvent.clipboardData.getData("text/plain");
-        // console.log(text);
         // insert text manually
         document.execCommand("insertHTML", false, text);
     });

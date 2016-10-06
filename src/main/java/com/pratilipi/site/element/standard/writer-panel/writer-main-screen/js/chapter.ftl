@@ -35,8 +35,7 @@ Chapter.prototype.getListDomElement = function () {
     		_this.writer_panel_object.setCurrentPage( _this.chapterNo );
     	}
     });
-    
-    // console.log(this.$ListDomElement);
+
     return this.$ListDomElement;        
 
 };

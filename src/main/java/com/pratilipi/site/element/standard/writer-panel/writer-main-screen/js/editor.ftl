@@ -29,7 +29,6 @@ Editor.prototype.init = function() {
 }
 
 Editor.prototype.attachExecCommandListeners = function() {
-    // console.log(this.$execCommandLinks);
     var _this = this;
     this.$execCommandLinks.each(function( i ) {
         $(this).on("click", function(e) {
@@ -83,7 +82,6 @@ Editor.prototype.saveSelection = function() {
 Editor.prototype.restoreSelection = function(range) {
     if (range) {
         if (window.getSelection) {
-        	console.log("pehe wale mein");
             var sel = window.getSelection();
             sel.removeAllRanges();
             sel.addRange(range);
@@ -195,9 +193,7 @@ Editor.prototype.addImageListener = function() {
 	this.$editor_container.find("#insertImage").on('click', function() {
 		$upload_image_select.trigger('click');
 	});
-	console.log($upload_image_select);
 	$upload_image_select.on('change', function(evt) {
-			console.log("idhar hun mai");	
 		    ImageTools.resize(this.files[0], {
 		        width: 480, // maximum width
 		        height: 480 // maximum height
@@ -239,8 +235,6 @@ Editor.prototype.addImageListener = function() {
 		            contentType: false,
 		            processData: false,
 		            success:function(data){
-		                console.log("success");
-		                console.log(data);
 		                var parsed_data = jQuery.parseJSON( data );
 		                var image_name = parsed_data.imageName;
 		                var $delete_icon = '<img class="show-cursor" src="http://0.ptlp.co/resource-all/icon/svg/trash.svg" data-behaviour="remove-image">';
