@@ -100,14 +100,14 @@
 							<div hidden$="{{ editPratilipi }}" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 								<paper-dropdown-menu id="selectPratilipiLanguage" on-click="_languageChanged" noink label="${ _strings.writer_select_language } *" vertical-align="top" horizontal-align="right">
 									<paper-menu noink class="dropdown-content" selected="[[ selectedLanguage ]]" style="white-space: nowrap; width: auto;">
-										<paper-item value="BENGALI">${ _strings.language_bn }</paper-item>
-										<paper-item value="MARATHI">${ _strings.language_mr }</paper-item>
-										<paper-item value="HINDI">${ _strings.language_hi }</paper-item>
-										<paper-item value="GUJARATI">${ _strings.language_gu }</paper-item>
-										<paper-item value="TAMIL">${ _strings.language_ta }</paper-item>
-										<paper-item value="MALAYALAM">${ _strings.language_ml }</paper-item>
-										<paper-item value="TELUGU">${ _strings.language_te }</paper-item>
-										<paper-item value="KANNADA">${ _strings.language_kn }</paper-item>
+										<paper-item value="BENGALI">{{ languageMap.BENGALI }}</paper-item>
+										<paper-item value="MARATHI">{{ languageMap.MARATHI }}</paper-item>
+										<paper-item value="HINDI">{{ languageMap.HINDI }}</paper-item>
+										<paper-item value="GUJARATI">{{ languageMap.GUJARATI }}</paper-item>
+										<paper-item value="TAMIL">{{ languageMap.TAMIL }}</paper-item>
+										<paper-item value="MALAYALAM">{{ languageMap.MALAYALAM }}</paper-item>
+										<paper-item value="TELUGU">{{ languageMap.TELUGU }}</paper-item>
+										<paper-item value="KANNADA">{{ languageMap.KANNADA }}</paper-item>
 									</paper-menu>
 								</paper-dropdown-menu>
 							</div>
@@ -136,7 +136,7 @@
 								<a target="_blank" style="color: #333; text-decoration: underline;" href="/terms-of-service">${ _strings.writer_read_copyright }</a>
 							</div>
 						</template>
-						<div class="display-message-div"><p>{{ message }}</p></div>
+						<div class="display-message-div pratilipi-red"><p>{{ message }}</p></div>
 					</div>
 					<div class="modal-footer" style="border: none; padding-top: 0px;">
 						<button id="pratilipiWriteButton" type="button" on-click="onSubmit">
@@ -177,6 +177,7 @@
  				createPratilipi: { type: Boolean },
  				editPratilipi: { type: Boolean },
 				pratilipiTypes: { types: Object },
+				languageMap: { type: Object },
 				selectedType: { type: Number },
 				selectedLanguage: { type: Number },
 				acceptedTerms: { type: Boolean, value: false },
@@ -232,14 +233,14 @@
 
 			_languageObserver: function() {
 				var languageVernacular = {
-						"HINDI" : "${ _strings.language_hi }",
-						"GUJARATI" : "${ _strings.language_gu }",
-						"TAMIL" : "${ _strings.language_ta }",
-						"MARATHI" : "${ _strings.language_mr }",
-						"MALAYALAM" : "${ _strings.language_ml }",
-						"BENGALI" : "${ _strings.language_bn }",
-						"TELUGU" : "${ _strings.language_te }",
-						"KANNADA" : "${ _strings.language_kn }"
+						"HINDI" : this.languageMap[ "HINDI" ],
+						"GUJARATI" : this.languageMap[ "GUJARATI" ],
+						"TAMIL" : this.languageMap[ "TAMIL" ],
+						"MARATHI" : this.languageMap[ "MARATHI" ],
+						"MALAYALAM" : this.languageMap[ "MALAYALAM" ],
+						"BENGALI" : this.languageMap[ "BENGALI" ],
+						"TELUGU" : this.languageMap[ "TELUGU" ],
+						"KANNADA" : this.languageMap[ "KANNADA" ]
 					};
 				this.set( 'languageVernacular', languageVernacular[ this.language ] );
 
