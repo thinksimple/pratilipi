@@ -463,13 +463,15 @@
 			},
 			
 			_pageNoChanged: function() {
-				if( this.pageNo == this.entry.pageNo ) {
+				var pageNo = this.entry.pageNo != null ? this.entry.pageNo : this.entry.chapterNo;
+				var level = this.entry.level != null ? this.entry.level : this.entry.nesting;
+				if( this.pageNo == pageNo ) {
 					jQuery( this.querySelector( '#entry' ) ).removeClass( "black" );
 					jQuery( this.querySelector( '#entry' ) ).removeClass( "grey" );
 					jQuery( this.querySelector( '#entry' ) ).addClass( "blue" );
 				} else {
 					jQuery( this.querySelector( '#entry' ) ).removeClass( "blue" );
-					if( this.entry.level == 0 )
+					if( level == 0 )
 						jQuery( this.querySelector( '#entry' ) ).addClass( "black" );
 					else
 						jQuery( this.querySelector( '#entry' ) ).addClass( "grey" );
