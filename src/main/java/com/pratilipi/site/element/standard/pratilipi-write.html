@@ -131,7 +131,7 @@
 						</div>
 						<template is="dom-if" if="{{ createPratilipi }}">
 							<div style="padding: 16px 0 16px 16px;">
-								<paper-checkbox checked="{{ acceptedTerms }}" class="pratilipi-red" noink>${ _strings.writer_you_own_copyright }</paper-checkbox>
+								<paper-checkbox checked="{{ acceptedTerms }}" class="pratilipi-red" noink>${ _strings.writer_accept_copyright }</paper-checkbox>
 								<br/>
 								<a target="_blank" style="color: #333; text-decoration: underline;" href="/terms-of-service">${ _strings.writer_read_copyright }</a>
 							</div>
@@ -280,13 +280,13 @@
 			onSubmit: function( event ) {
 
 				if( this.title == null || this.title.trim() == "" ) {
-					this.message = "${ _strings.write_fill_title }";
+					this.message = "${ _strings.writer_error_title_required }";
 					return;
 				}
 
 				this.type = this.$.selectPratilipiType.selectedItem != null ? this.$.selectPratilipiType.selectedItem.getAttribute( "value" ) : null;
 				if( this.type == null ) {
-					this.message = "${ _strings.write_select_type }";
+					this.message = "${ _strings.writer_error_category_required }";
 					return;
 				}
 
@@ -297,7 +297,7 @@
 				}
 
 				if( this.createPratilipi && !this.acceptedTerms ) {
-					this.message = "Please accept our terms to continue.";
+					this.message = "${ _strings.writer_error_copyright_required }";
 					return;
 				}
 

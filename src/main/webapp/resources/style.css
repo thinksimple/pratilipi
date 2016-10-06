@@ -708,6 +708,6 @@ body.sepia-mode #reader-alert-box {
 	border: 1px solid #181715;
 	color: #181715 !important;
 }
-.inputapi-transliterate-indic-suggestion-menu  {
+.inputapi-transliterate-indic-suggestion-menu, .inputapi-transliterate-indic-suggestion-menu-vertical  {
 	z-index: 1051 !important;
 }

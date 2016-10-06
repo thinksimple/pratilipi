@@ -152,7 +152,7 @@
 				</div>
 				<div id="pratilipi-col-right" style="padding: 20px;">
 					<h5 style="margin-top: 0px; display: inline-block;" class="pratilipi-red">{{ title }}</h5>
-					<template is="dom-if" if="{{ hasAccessToUpdate }}">
+					<div hidden$="{{ !hasAccessToUpdate }}">
 						<span style="position: absolute;" class="dropdown">
 							<paper-icon-button style="color: #333; height: 34px; width: 34px; margin-top: -12px;" class="dropdown-trigger" icon="icons:create" noink type="button" data-toggle="dropdown"></paper-icon-button>
 							<ul class="dropdown-menu pull-right">
@@ -174,7 +174,7 @@
 								</li>
 							</ul>
 						</span>
-					</template>
+					</div>
 					<template is="dom-if" if="{{ pratilipi.author }}">
 						<div style="display: block;">
 							<a style="display: inline-block; color: #333;" href="{{ pratilipi.author.pageUrl }}" target="_blank">
@@ -242,7 +242,7 @@
 
 					<div hidden$="{{ !hasAccessToUpdate }}">
 						<div hidden$="{{ toggleSummaryBoolean }}" style="margin: 10px 0px;">
-							<template is="dom-if" if="{{ !hasSummary }}"><div style="cursor: pointer;" on-click="toggleSummary">${ _strings.writer_add_summary }</div></template>
+							<template is="dom-if" if="{{ !hasSummary }}"><div style="cursor: pointer;" on-click="toggleSummary">${ _strings.pratilipi_add_summary }</div></template>
 							<template is="dom-if" if="{{ hasSummary }}"><div style="white-space: pre-wrap;">{{ summary }}</div></template>
 						</div>
 						<div hidden$="{{ !toggleSummaryBoolean }}" style="height: 200px;" class="input-summary">
