@@ -92,13 +92,24 @@
 						<button style="opacity: 1; outline: none;" type="button" class="close" data-dismiss="modal" aria-label="Close"><iron-icon style="color: #333;" icon="icons:close"></iron-icon></button>
 						<h6 style="min-height: 20px; line-height: 20px;" class="modal-title">
 							<template is="dom-if" if="{{ createPratilipi }}">${ _strings.writer_add_content_title }</template>
-							<template is="dom-if" if="{{ editPratilipi }}">{{ title }}</template>
+							<template is="dom-if" if="{{ editPratilipi }}">${ _strings.pratilipi_edit_info }</template>
 						</h6>
 					</div>
 					<div class="modal-body" style="padding-bottom: 0px;">
 						<div class="row">
-							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-								<pratilipi-input color="black" disabled always-float-label label="${ _strings.writer_select_language }" value="{{ languageVernacular }}"></pratilipi-input>
+							<div hidden$="{{ editPratilipi }}" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+								<paper-dropdown-menu id="selectPratilipiLanguage" on-click="_languageChanged" noink label="${ _strings.writer_select_language } *" vertical-align="top" horizontal-align="right">
+									<paper-menu noink class="dropdown-content" selected="[[ selectedLanguage ]]" style="white-space: nowrap; width: auto;">
+										<paper-item value="BENGALI">${ _strings.language_bn }</paper-item>
+										<paper-item value="MARATHI">${ _strings.language_mr }</paper-item>
+										<paper-item value="HINDI">${ _strings.language_hi }</paper-item>
+										<paper-item value="GUJARATI">${ _strings.language_gu }</paper-item>
+										<paper-item value="TAMIL">${ _strings.language_ta }</paper-item>
+										<paper-item value="MALAYALAM">${ _strings.language_ml }</paper-item>
+										<paper-item value="TELUGU">${ _strings.language_te }</paper-item>
+										<paper-item value="KANNADA">${ _strings.language_kn }</paper-item>
+									</paper-menu>
+								</paper-dropdown-menu>
 							</div>
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 								<pratilipi-input make-transliterable color="black" label="${ _strings.writer_input_title } *" value="{{ title::input }}" icon="icons:description"></pratilipi-input>
@@ -107,8 +118,8 @@
 								<pratilipi-input color="black" label="${ _strings.writer_input_title_en }" value="{{ titleEn::input }}" icon="icons:description"></pratilipi-input>
 							</div>
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-								<paper-dropdown-menu id="selectPratilipiType" noink label="${ _strings.writer_select_category } *" value="{{ type }}" vertical-align="bottom" horizontal-align="left">
-									<paper-menu noink class="dropdown-content" selected="[[ selected ]]" style="white-space: nowrap; width: auto;">
+								<paper-dropdown-menu id="selectPratilipiType" noink label="${ _strings.writer_select_category } *" vertical-align="bottom" horizontal-align="right">
+									<paper-menu noink class="dropdown-content" selected="[[ selectedType ]]" style="white-space: nowrap; width: auto;">
 										<paper-item value="BOOK">{{ pratilipiTypes.BOOK.name }}</paper-item>
 										<paper-item value="POEM">{{ pratilipiTypes.POEM.name }}</paper-item>
 										<paper-item value="STORY">{{ pratilipiTypes.STORY.name }}</paper-item>
@@ -166,7 +177,8 @@
  				createPratilipi: { type: Boolean },
  				editPratilipi: { type: Boolean },
 				pratilipiTypes: { types: Object },
-				selected: { type: Number },
+				selectedType: { type: Number },
+				selectedLanguage: { type: Number },
 				acceptedTerms: { type: Boolean, value: false },
  				message: { type: String }
 			},
@@ -204,17 +216,17 @@
 			_typeObserver: function() {
 				if( this.type != null ) {
 					if( this.type == "BOOK" )
-						this.set( 'selected', 0 );
+						this.set( 'selectedType', 0 );
 					else if( this.type == "POEM" )
-						this.set( 'selected', 1 );
+						this.set( 'selectedType', 1 );
 					else if( this.type == "STORY" )
-						this.set( 'selected', 2 );
+						this.set( 'selectedType', 2 );
 					else if( this.type == "ARTICLE" )
-						this.set( 'selected', 3 );
+						this.set( 'selectedType', 3 );
 					else if( this.type == "MAGAZINE" )
-						this.set( 'selected', 4 );
+						this.set( 'selectedType', 4 );
 				} else {
-					this.set( 'selected', null );
+					this.set( 'selectedType', null );
 				}
 			},
 
@@ -230,6 +242,27 @@
 						"KANNADA" : "${ _strings.language_kn }"
 					};
 				this.set( 'languageVernacular', languageVernacular[ this.language ] );
+
+				if( this.language != null ) {
+					if( this.language == "BENGALI" ) this.set( 'selectedLanguage', 0 );
+					else if( this.language == "MARATHI" ) this.set( 'selectedLanguage', 1 );
+					else if( this.language == "HINDI" ) this.set( 'selectedLanguage', 2 );
+					else if( this.language == "GUJARATI" ) this.set( 'selectedLanguage', 3 );
+					else if( this.language == "TAMIL" ) this.set( 'selectedLanguage', 4 );
+					else if( this.language == "MALAYALAM" ) this.set( 'selectedLanguage', 5 );
+					else if( this.language == "TELUGU" ) this.set( 'selectedLanguage', 6 );
+					else if( this.language == "KANNADA" ) this.set( 'selectedLanguage', 7 );
+				} else {
+					this.set( 'selectedLanguage', null );
+				}
+			},
+
+			_languageChanged: function() {
+				if( this.editPratilipi ) return;
+				if( this.$.selectPratilipiLanguage.selectedItem == null ) return;
+				var language = this.$.selectPratilipiLanguage.selectedItem.getAttribute( "value" );
+				if( language == "${ language }" ) return;
+				window.location = "http://" + language.toLowerCase() + ".pratilipi.com";
 			},
 
 			clearAndClose: function() {
@@ -257,6 +290,12 @@
 					return;
 				}
 
+				this.language = this.$.selectPratilipiLanguage.selectedItem != null ? this.$.selectPratilipiLanguage.selectedItem.getAttribute( "value" ) : null;
+				if( this.createPratilipi && this.language != "${ language }" ) {
+					window.location = "http://" + language.toLowerCase() + ".pratilipi.com";
+					return;
+				}
+
 				if( this.createPratilipi && !this.acceptedTerms ) {
 					this.message = "Please accept our terms to continue.";
 					return;
@@ -266,7 +305,6 @@
 
 				var body = {
 						title: this.title,
-						language: this.language,
 						type: this.type,
 						state: this.state
 				};
@@ -280,8 +318,10 @@
 				if( this.authorId != null )
 					body.authorId = this.authorId;
 
-				if( this.createPratilipi )
+				if( this.createPratilipi ) {
 					body.oldContent = false;
+					body.language = "${ language }";
+				}
 
 				jQuery( '#pratilipiWriteButton' ).prop( 'disabled', true );
 
