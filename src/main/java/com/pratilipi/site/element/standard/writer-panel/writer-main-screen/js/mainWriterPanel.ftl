@@ -13,6 +13,7 @@ MainWriterPanel.prototype.init = function() {
     this.initializeGlobalVariables();
     this.$panel_container = $(".panel");
     this.preventFormSubmission();
+    this.preventBackspaceDefaultAction();
     
     var pagination_container = $("#pagination");
     this.pagination_object = new Pagination( pagination_container, this );
@@ -319,4 +320,12 @@ MainWriterPanel.prototype.preventFormSubmission = function() {
 MainWriterPanel.prototype.changeName = function( name ) {
 	this.publish_modal_object.setBookName( name );
 	this.table_of_contents_object.changeName( name );
+};
+
+MainWriterPanel.prototype.preventBackspaceDefaultAction = function() {
+	$(document).on("keydown", function (e) {
+	    if (e.which === 8 && !$(e.target).is("input:not([readonly]):not([type=radio]):not([type=checkbox]), textarea, [contentEditable], [contentEditable=true]")) {
+	        e.preventDefault();
+	    }
+	});
 };
