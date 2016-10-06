@@ -711,3 +711,8 @@ body.sepia-mode #reader-alert-box {
 .inputapi-transliterate-indic-suggestion-menu, .inputapi-transliterate-indic-suggestion-menu-vertical  {
 	z-index: 1051 !important;
 }
+.inputapi-transliterate-indic-suggestion-menuitem-highlight {
+  background-color: #d0021b !important;
+  border-color: #d0021b !important;
+  font-weight: 800;
+}

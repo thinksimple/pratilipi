@@ -1,6 +1,6 @@
 <#include "Font.ftl">
 
-<link type="text/css" rel="stylesheet" href="/resources/style.css?76">
+<link type="text/css" rel="stylesheet" href="/resources/style.css?77">
 
 <script>
 	var didScroll;
