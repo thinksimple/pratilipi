@@ -14,7 +14,7 @@
 	<#if user.isGuest() >
 		<script>
 			$( document ).ready(function() {
-			    window.location.href = "/?action=login&login_success=redirect_writer";
+			    window.location.href = "/?action=start_writing";
 			});
 		</script>
 	<#else>
@@ -31,11 +31,16 @@
 		</#if>
 		
 		<#if action == "start_writing">
-			<#include "../element/standard/writer-panel/writer-start-screen/index.html">
+			<#-- <#include "../element/standard/writer-panel/writer-start-screen/index.html"> -->
+			<script>
+				$( document ).ready(function() {
+				    window.location.href = "/?action=start_writing";
+				});
+			</script>
 		<#elseif ( action == "write" )>	
 			<#include "../element/standard/writer-panel/writer-main-screen/index.html">
 		<#elseif ( action == "publish" )>
-			<#include "../element/standard/writer-panel/writer-final-screen/index.html">
+			<#-- <#include "../element/standard/writer-panel/writer-final-screen/index.html"> -->
 		</#if>		
 	</#if>
 <#include "./meta/Font.ftl">	
