@@ -81,6 +81,15 @@
 			--paper-checkbox-margin: 0 8px 8px 0;
 			--paper-checkbox-vertical-align: top;
 		}
+		input {
+			border: none;
+			box-shadow: none !important;
+			border-bottom: 1px solid black;
+			border-radius: 0px;
+			width: 100%;
+			outline: none;
+			margin-top: 20px;
+		}
 	</style>
 	
 
@@ -112,10 +121,10 @@
 								</paper-dropdown-menu>
 							</div>
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-								<pratilipi-input make-transliterable color="black" label="${ _strings.writer_input_title } *" value="{{ title::input }}" icon="icons:description"></pratilipi-input>
+								<input name="pratilipiInputTransliterable" id="titleInput" placeholder="${ _strings.writer_input_title } *" value="{{ title::input }}">
 							</div>
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-								<pratilipi-input color="black" label="${ _strings.writer_input_title_en }" value="{{ titleEn::input }}" icon="icons:description"></pratilipi-input>
+								<input id="titleInputEn" placeholder="${ _strings.writer_input_title_en }" value="{{ titleEn::input }}">
 							</div>
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 								<paper-dropdown-menu id="selectPratilipiType" noink label="${ _strings.writer_select_category } *" vertical-align="bottom" horizontal-align="right">
@@ -280,7 +289,9 @@
 
 			onSubmit: function( event ) {
 
-				if( this.title == null || this.title.trim() == "" ) {
+				var title = this.$.titleInput.value;
+
+				if( title == null || title.trim() == "" ) {
 					this.message = "${ _strings.writer_error_title_required }";
 					return;
 				}
@@ -305,7 +316,7 @@
 				this.message = "${ _strings.working }";
 
 				var body = {
-						title: this.title,
+						title: title,
 						type: this.type,
 						state: this.state
 				};
@@ -322,7 +333,7 @@
 				if( this.createPratilipi ) {
 					body.oldContent = false;
 					body.language = "${ language }";
-				}
+				}				
 
 				jQuery( '#pratilipiWriteButton' ).prop( 'disabled', true );
 
