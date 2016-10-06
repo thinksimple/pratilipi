@@ -474,12 +474,10 @@ blockquote {
 #toast-container.toast-top-center>div {
     margin-left: auto;
     margin-right: auto;
-    width: 270px;
 }	
 .toast {
 	margin-top: 4px !important;
     background-color: grey;
-    height: 34px;
     font-size: 18px;
     display: flex;
 	justify-content: center;
