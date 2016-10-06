@@ -13,7 +13,8 @@ Chapter.prototype.getListDomElement = function () {
 
     this.$ListDomElement = $("<li>").addClass("toc_chapter_item");
     this.$name = $("<a>", {
-        href: "#"
+        href: "#",
+        "class": "white-space-normal",
     }).text(this.name);
 
     var $delete = $("<img>", {

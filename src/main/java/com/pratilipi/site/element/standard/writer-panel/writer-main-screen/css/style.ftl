@@ -534,3 +534,7 @@ blockquote {
 .inputapi-transliterate-indic-suggestion-menu  {
    z-index: 1051 !important;
 }
+
+.white-space-normal {
+    white-space: normal;
+}
