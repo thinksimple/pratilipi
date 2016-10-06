@@ -457,7 +457,7 @@
 			},
 			
 			closeSummaryEdit: function() {
-				this.set( 'summary', this.pratilipi.summary );
+				this.set( 'summary', this.pratilipi.summary != null && this.pratilipi.summary.trim() != "" ? this.pratilipi.summary : null );
 				this.set( 'toggleSummaryBoolean', false );
 			},
 
