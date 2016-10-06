@@ -72,6 +72,11 @@
 				this.closeAllElements();
 				this.querySelector( 'pratilipi-user-register' ).open();
 			},
+
+			startWriting: function() {
+				this.closeAllElements();
+				document.querySelector( 'pratilipi-header' ).write();
+			},
 			
 			resetPassword: function() {
 				this.closeAllElements();
@@ -115,6 +120,8 @@
 					this.logIn();
 				else if( getValue( 'action' ) == "register" )
 					this.register();
+				else if( getValue( 'action' ) == "start_writing" )
+					this.startWriting();
 
 				if( getValue( 'email' ) !== "" && getValue( 'token' ) !== "" ) {
 
