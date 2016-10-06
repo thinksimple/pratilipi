@@ -538,3 +538,7 @@ blockquote {
 .white-space-normal {
     white-space: normal !important;
 }
+#summary:focus{
+	border-color: #d0021b;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(208,2,27,0.5);
+}

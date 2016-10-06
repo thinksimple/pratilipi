@@ -96,7 +96,8 @@ Editor.prototype.promptUrlBox = function() {
 	var _this = this;
 	this.$urlModal.modal('show');
 	this.$urlModal.find("#input_url").val("");
-	this.$urlModal.find('#url_ok_button').one('click', function() {
+	this.$urlModal.find('form[data-behaviour="url_form"]').one('submit', function(e) {
+		e.preventDefault();
 	    var url = _this.$urlModal.find("#input_url").val();
 	    _this.$urlModal.modal('hide');
 	    _this.restoreSelection( saved_selection );
@@ -272,7 +273,7 @@ Editor.prototype.getSelectionStart = function () {
 Editor.prototype.removeEventListenersOnUrlModalHide = function () {
  	var _this = this; 
 	this.$urlModal.on('hidden.bs.modal', function (e) {
-		_this.$urlModal.find('#url_ok_button').unbind("click");
+		_this.$urlModal.find('form[data-behaviour="url_form"]').unbind("submit");
 	});
 };
 
