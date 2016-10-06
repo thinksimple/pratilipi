@@ -124,6 +124,7 @@ form .form-group {
     margin-right: 10px;
     margin-top: 5px;
     outline: none;
+    font-weight: 800;
 } 
 .go-button {
     margin-top: 20px;
@@ -541,4 +542,10 @@ blockquote {
 #summary:focus{
 	border-color: #d0021b;
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(208,2,27,0.5);
+}
+
+.inputapi-transliterate-indic-suggestion-menuitem-highlight {
+  background-color: #d0021b !important;
+  border-color: #d0021b !important;
+  font-weight: 800;
 }
