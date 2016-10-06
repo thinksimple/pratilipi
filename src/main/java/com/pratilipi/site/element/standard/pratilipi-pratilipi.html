@@ -235,12 +235,27 @@
 		<div id="pratilipi-summary">
 			<paper-card>
 				<div class="summary-container">
-					<h4 style="color: #D0021B;">${ _strings.pratilipi_summary }</h4>
-						<div id="pratilipi-summary-text" style="margin-top: 10px; margin-down: 20px;">{{ summary }}</div>
+					<h4 style="display: inline-block;" class="pratilipi-red">
+						${ _strings.pratilipi_summary }
+					</h4>
+					<div hidden$="{{ !hasAccessToUpdate }}">
+						<iron-icon style="margin-top: -4px; width: 20px; cursor: pointer;" icon="icons:create" on-click="toggleSummary"></iron-icon>
+						<div hidden$="{{ toggleSummaryBoolean }}" style="margin: 10px 0px; cursor: pointer;" on-click="toggleSummary">Please Enter your summary here</div>
+						<div style="height: 200px;" class="input-summary" hidden$="{{ !toggleSummaryBoolean }}">
+							<textarea id="summaryTextbox" value="{{ summary::input }}" style="line-height: 1.5em; font-family: inherit !important; font-size: 14px; width: 100%; height: 150px;"></textarea>
+							<button class="pratilipi-light-blue-button pull-right" on-click="updateSummary">Save</button>
+							<button style="margin-top: 0;" class="pratilipi-grey-button pull-right" on-click="closeSummaryEdit">Cancel</button>
+						</div>
+						<!-- <div hidden$="{{ !toggleSummaryBoolean }}" style="margin-top: 10px; white-space:pre-wrap;">{{ summary }}</div> -->
+					</div>
+
+					<div hidden$="{{ hasAccessToUpdate }}">
+						<div id="pratilipi-summary-text" style="margin-top: 10px; white-space:pre-wrap;">{{ summary }}</div>
 						<div style="text-align: center; padding-top: 10px;">
 							<a id="more" style="font-size: 14px; font-weight: 700;" on-click="_toggleSnippet">(${ _strings.show_more })</a>
 							<a id="less" style="font-size: 14px; font-weight: 700;" on-click="_toggleSnippet">(${ _strings.show_less })</a>
 						</div>
+					</div>
 				</div>
 			</paper-card>
 			<br class="pratilipi-break" />
@@ -299,7 +314,12 @@
 				
 				mobile: { type: Boolean },
 				imageUploaded: { type: Boolean, value: false },
-				moveToDraftsBoolean: { type: Boolean, observer: "_moveToDrafts" }
+				moveToDraftsBoolean: { type: Boolean, observer: "_moveToDrafts" },
+
+				summary: { type: String, observer: "_summaryObserver" },
+				hasSummary: { type: Boolean },
+				toggleSummaryBoolean: { type: Boolean, value: false }
+
 			},
 			
 			updateUserRating: function( userpratilipi ) {
@@ -396,33 +416,49 @@
 				this.set( 'canMoveToDrafts', pratilipi.state != null && pratilipi.state != "DRAFTED" && pratilipi.hasAccessToUpdate );
 				this.set( 'canPublish', pratilipi.state != null && pratilipi.state != "PUBLISHED" && pratilipi.hasAccessToUpdate );
 				this.set( 'canDelete', pratilipi.state != null && pratilipi.state != "DELETED" && this.state != "PUBLISHED" && false && pratilipi.hasAccessToUpdate );
+				this.set( 'summary', pratilipi.summary != null && pratilipi.summary.trim() != "" ? pratilipi.summary : null );
 				if( pratilipi.type != null )
 					this.set( 'type', this.pratilipiTypes[ pratilipi.type.toUpperCase() ].name );
 				<#-- Explicitly setting canDelete to false - awaiting business call -->
+			},
+
+			_summaryObserver: function() {
+				this.set( 'hasSummary', this.summary != null );
 				<#-- Display / Dont display Summary -->
-				if( pratilipi.summary == null || pratilipi.summary.trim() == "" ) { 
-					document.getElementById( "pratilipi-summary" ).style.display = "none";
-				} else {
+				<#-- Author -->
+				if( this.hasAccessToUpdate ) {
 					document.getElementById( "pratilipi-summary" ).style.display = "block";
-					jQuery( '#pratilipi-summary-text' ).removeClass( 'less' );
-					jQuery( '#pratilipi-summary-text' ).removeClass( 'more' );
-					this.summary = pratilipi.summary;
-					var jSummary = jQuery( "#pratilipi-summary-text" );
-					jSummary.html( this.summary );
-					var height = jSummary.height();
-					
-					if( height > 190 ) {
-						jQuery( '#pratilipi-summary-text' ).addClass( 'less' );
-						document.getElementById( "less" ).style.display = "none";
-						document.getElementById( "more" ).style.display = "block";
+					document.getElementById( "less" ).style.display = "none";
+					document.getElementById( "more" ).style.display = "none";
+				} else {
+					if( this.summary == null ) { 
+						document.getElementById( "pratilipi-summary" ).style.display = "none";
 					} else {
-						document.getElementById( "less" ).style.display = "none";
-						document.getElementById( "more" ).style.display = "none";
+						document.getElementById( "pratilipi-summary" ).style.display = "block";
+						jQuery( '#pratilipi-summary-text' ).removeClass( 'less' );
+						jQuery( '#pratilipi-summary-text' ).removeClass( 'more' );
+						var height = jQuery( "#pratilipi-summary-text" ).height();
+
+						if( height > 190 ) {
+							jQuery( '#pratilipi-summary-text' ).addClass( 'less' );
+							document.getElementById( "less" ).style.display = "none";
+							document.getElementById( "more" ).style.display = "block";
+						} else {
+							document.getElementById( "less" ).style.display = "none";
+							document.getElementById( "more" ).style.display = "none";
+						}
 					}
 				}
-				
+			},
+
+			toggleSummary: function() {
+				this.set( 'toggleSummaryBoolean', true );
 			},
 			
+			closeSummaryEdit: function() {
+				this.set( 'toggleSummaryBoolean', false );
+			},
+
 			attached: function() {
 				this.pratilipiTypes = jQuery.parseJSON( this.pratilipiTypes );
 				this.updatePratilipi( this.pratilipiData );
@@ -482,11 +518,18 @@
 					this.set( 'moveToDraftsBoolean', null );
 				this.querySelector( 'pratilipi-confirm-action' ).open();
 			},
+
+			updateSummary: function() {
+				var summary = $( "#summaryTextbox" ).val();
+				this.$.AjaxPost.body = ( "pratilipiId=" + this.pratilipi.pratilipiId + "&" + "summary=" + summary );
+				this.$.AjaxPost.generateRequest();
+			},
 			
 			_handleAjaxPostResponse: function( event ) {
 				var pratilipi = event.detail.response;
 				this.updatePratilipi( pratilipi );
 				document.querySelector( 'pratilipi-alert' ).alert( "${ _strings.updated_pratilipi_info_success }", true, 1500 );
+				this.closeSummaryEdit();
 			},
 			
 			_handleAjaxPostError: function( event ) {
