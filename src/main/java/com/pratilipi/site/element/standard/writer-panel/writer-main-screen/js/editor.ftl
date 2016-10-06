@@ -286,7 +286,7 @@ Editor.prototype.resetExecCommandIcons = function() {
 };
 
 Editor.prototype.addhttp = function (url) {
-    if (!url.match(/^http([s]?):\/\/.*/)) {
+    if ( url.length && !url.match(/^http([s]?):\/\/.*/)) {
         url = "http://" + url;
     }
     return url;

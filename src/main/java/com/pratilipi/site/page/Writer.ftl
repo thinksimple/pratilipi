@@ -38,5 +38,5 @@
 			<#include "../element/standard/writer-panel/writer-final-screen/index.html">
 		</#if>		
 	</#if>
-	
+<#include "./meta/Font.ftl">	
 </html>
