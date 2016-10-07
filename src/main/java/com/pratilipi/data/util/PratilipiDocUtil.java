@@ -583,6 +583,16 @@ public class PratilipiDocUtil {
 
 		if( content != null ) {
 			for( Node childNode : Jsoup.parse( content ).body().childNodes() ) {
+
+				if( childNode.getClass() == org.jsoup.nodes.Comment.class ) {
+					continue;
+				}
+
+				if( childNode.getClass() == TextNode.class ) {
+					page.addPagelet( PageletType.TEXT, ( (TextNode) childNode ).text() );
+					continue;
+				}
+
 				Element element = (Element) childNode;
 				AlignmentType alignment = null;
 				if( childNode.nodeName().equals( "p" ) ) {
