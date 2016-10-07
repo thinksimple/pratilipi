@@ -173,23 +173,6 @@ public class PratilipiSite extends HttpServlet {
 				dataModel.put( "title", "Update Password" );
 				templateName = templateFilePrefix + "PasswordUpdateBasic.ftl";
 
-			} else if( uri.equals( "/create-content" ) ) { // Standard Mode only
-				dataModel = new HashMap<String, Object>();
-				dataModel.put( "title", "Create Content" );
-				templateName = templateFilePrefix + "Content.ftl";
-
-			} else if( uri.equals( "/edit-content" ) ) { // Standard Mode only
-
-				Long pratilipiId = Long.parseLong( request.getParameter( RequestParameter.PRATILIPI_ID.getName() ) );
-				PratilipiApi.GetRequest pratilipiRequest = new PratilipiApi.GetRequest();
-				pratilipiRequest.setPratilipiId( pratilipiId );
-				PratilipiApi.Response pratilipiResponse = ApiRegistry.getApi( PratilipiApi.class ).get( pratilipiRequest );
-
-				dataModel = new HashMap<String, Object>();
-				dataModel.put( "title", "Edit Content" );
-				dataModel.put( "pratilipiJson", new Gson().toJson( pratilipiResponse ) );
-				templateName = templateFilePrefix + "Content.ftl";
-
 			} else if( uri.equals( "/followers" ) ) {
 
 				Long authorId = null;
