@@ -22,8 +22,11 @@ Content.prototype.changeDefaultToParagraph = function() {
             // return false;
         }
         else if( ev.keyCode == '13' && _this.isSelectionInsideElement( "blockquote" ) ) {
-            document.execCommand('InsertParagraph');
-            document.execCommand('Outdent');
+   <#--         document.execCommand('InsertParagraph');
+            document.execCommand('Outdent'); -->
+	      ev.preventDefault();
+	      document.execCommand('insertParagraph', false);
+	      document.execCommand('formatBlock', false, 'p');            
             return false;
         }
     });
