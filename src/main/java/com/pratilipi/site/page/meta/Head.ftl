@@ -1,6 +1,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="description" content="A platform to discover, read and share your favorite stories, poems and books in a language, device and format of your choice.">
 
 <#-- Page Title & Favicon -->
 <title>${ title }</title>
@@ -10,9 +11,7 @@
 <#list resourceList as resource>${ resource }</#list>
 
 <#-- DNS Prefetch -->
-<#list 0..4 as i>
-<link rel="dns-prefetch" href="//${i}.ptlp.co/">
-</#list>
+<#list 0..4 as i><link rel="dns-prefetch" href="//${i}.ptlp.co/"></#list>
 
 <#-- External dependencies -->
 <script src='http://0.ptlp.co/resource-all/jquery.bootstrap.polymer.firebase.compressed.js'></script>
