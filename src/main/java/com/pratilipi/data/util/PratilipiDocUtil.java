@@ -649,8 +649,6 @@ public class PratilipiDocUtil {
 		if( asHtml ) {
 
 			String htmlString = new String();
-			if( chapterTitle != null )
-				htmlString = new Element( Tag.valueOf( "h1" ), "" ).html( chapterTitle ).toString();
 
 			for( Pagelet pagelet : pageletList ) {
 				Element element = null;

@@ -97,6 +97,10 @@ public class PratilipiContentApi extends GenericApi {
 			this.content = content;
 		}
 
+		public String getChapterTitle() {
+			return chapterTitle;
+		}
+
 		public Object getContent() {
 			return content;
 		}

@@ -293,6 +293,9 @@
 				var response = event.detail.response;
 				var content = response != null && response.content != null ? response.content : "";
 
+				if( response != null && response.chapterTitle != null )
+					content = "<h1>" + response.chapterTitle + "</h1>" + content;
+
 				// Populate map
 				this.contentMap[ response.pageNo ] = content;
 
