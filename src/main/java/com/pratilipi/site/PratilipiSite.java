@@ -267,7 +267,7 @@ public class PratilipiSite extends HttpServlet {
 //					resourceList.add( ThirdPartyResource.POLYMER_IRON_ICONS_EDITOR.getTag() );
 				}
 
-				Long pratilipiId = Long.parseLong( request.getParameter( RequestParameter.READER_CONTENT_ID.getName() ) );
+				Long pratilipiId = Long.parseLong( request.getParameter( RequestParameter.CONTENT_ID.getName() ) );
 				String fontSize = AccessTokenFilter.getCookieValue( RequestCookie.FONT_SIZE.getName(), request );
 				String imageSize = AccessTokenFilter.getCookieValue( RequestCookie.IMAGE_SIZE.getName(), request );
 				String action = request.getParameter( "action" ) != null ? request.getParameter( "action" ) : "read";
@@ -366,8 +366,8 @@ public class PratilipiSite extends HttpServlet {
 						? Long.parseLong( request.getParameter( RequestParameter.AUTHOR_ID.getName() ) ) 
 						: null;
 
-				Long pratilipiId = request.getParameter( RequestParameter.READER_CONTENT_ID.getName() ) != null 
-							? Long.parseLong( request.getParameter( RequestParameter.READER_CONTENT_ID.getName() ) ) 
+				Long pratilipiId = request.getParameter( RequestParameter.CONTENT_ID.getName() ) != null 
+							? Long.parseLong( request.getParameter( RequestParameter.CONTENT_ID.getName() ) ) 
 							: null;
 
 
@@ -396,7 +396,7 @@ public class PratilipiSite extends HttpServlet {
 
 				templateName = templateFilePrefix + "Writer.ftl";
 
-			// Internal links
+			// Internal link
 			} else if( ! basicMode && uri.equals( "/authors" ) ) {
 				dataModel = createDataModelForAuthorsPage( filterLanguage );
 				templateName = templateFilePrefix + "AuthorList.ftl";
@@ -405,7 +405,25 @@ public class PratilipiSite extends HttpServlet {
 				dataModel = createDataModelForEventsPage( filterLanguage, basicMode );
 				templateName = templateFilePrefix + ( basicMode ? "EventListBasic.ftl" : "EventList.ftl" );
 			
-			} else if( uri.matches( "^/[a-z0-9-]+$" ) && ( dataModel = createDataModelForListPage( uri.substring( 1 ), basicMode, displayLanguage, filterLanguage, request ) ) != null ) {
+			} else if( uri.equals( "/edit-event" ) ){
+
+				Long eventId = request.getParameter( RequestParameter.CONTENT_ID.getName() ) != null ? 
+						Long.parseLong( request.getParameter( RequestParameter.CONTENT_ID.getName() ) ) : null;
+
+				dataModel = new HashMap<String, Object>();
+				dataModel.put( "title", "Create or Edit Event" );
+				if( eventId != null ) {
+					EventApi.GetRequest eventRequest = new EventApi.GetRequest();
+					eventRequest.setEventId( eventId );
+					EventApi.Response eventResponse = ApiRegistry
+														.getApi( EventApi.class )
+														.get( eventRequest );
+					dataModel.put( "eventJson", new Gson().toJson( eventResponse ) );
+				}
+
+				templateName = templateFilePrefix + "EventEdit.ftl";
+
+			}else if( uri.matches( "^/[a-z0-9-]+$" ) && ( dataModel = createDataModelForListPage( uri.substring( 1 ), basicMode, displayLanguage, filterLanguage, request ) ) != null ) {
 				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
 				
 			} else if( uri.matches( "^/[a-z0-9-/]+$" ) && ( dataModel = createDataModelForStaticPage( uri.substring( 1 ).replaceAll( "/", "_" ), displayLanguage ) ) != null ) {

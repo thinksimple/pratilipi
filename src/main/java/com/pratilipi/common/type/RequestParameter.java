@@ -5,7 +5,7 @@ public enum RequestParameter {
 	ACCESS_TOKEN ( "accessToken" ),
 	LIST_PAGE_NUMBER( "page" ),
 	READER_PAGE_NUMBER( "pageNo" ),
-	READER_CONTENT_ID( "id" ),
+	CONTENT_ID( "id" ),
 	SEARCH_QUERY( "q" ),
 	PRATILIPI_ID( "pId" ),
 	PRATILIPI_REVIEW( "review" ),
