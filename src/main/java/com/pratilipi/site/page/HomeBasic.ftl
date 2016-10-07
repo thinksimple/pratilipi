@@ -53,12 +53,12 @@
 			<div class="container">
 				<#list sections as section>
 					<div class="secondary-500 pratilipi-shadow box" style="padding: 12px 10px;">
-						<h2 class="pratilipi-red" style="display: inline-block;">${ section["title"] }</h2>
+						<h2 class="pratilipi-red" style="display: inline-block;">${ section.getTitle() }</h2>
 						<#if section["listPageUrl"]??>
-							<a href="${ section["listPageUrl"] }" class="link pull-right pratilipi-blue" style="font-size: 13px;">${ _strings.view_more }...</a>
+							<a href="${ section.getListPageUrl() }" class="link pull-right pratilipi-blue" style="font-size: 13px;">${ _strings.view_more }...</a>
 						</#if>
 					</div>
-					<#list section["pratilipiList"] as pratilipi>
+					<#list section.getPratilipiList() as pratilipi>
 						<#include "../element/basic/pratilipi-pratilipi-card.ftl">
 					</#list>
 					<div style="min-height: 10px;"></div>

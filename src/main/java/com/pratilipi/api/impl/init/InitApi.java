@@ -36,7 +36,7 @@ public class InitApi extends GenericApi {
 
 	}
 	
-	@SuppressWarnings("unused")
+
 	public static class Response extends GenericResponse {
 		
 		public static class Section {
@@ -56,6 +56,18 @@ public class InitApi extends GenericApi {
 				this.pratilipiList = new ArrayList<PratilipiApi.Response>( pratilipiList.size() );
 				for( PratilipiData pratilipiData : pratilipiList )
 					this.pratilipiList.add( new PratilipiApi.Response( pratilipiData, InitApi.class ) );
+			}
+
+			public String getTitle() {
+				return title;
+			}
+
+			public String getListPageUrl() {
+				return listPageUrl;
+			}
+
+			public List<PratilipiApi.Response> getPratilipiList() {
+				return pratilipiList;
 			}
 		
 		}
