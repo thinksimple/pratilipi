@@ -50,7 +50,7 @@
 				font-size=${ fontSize }
 				page-no='${ pageNo }'
 				page-count='${ pageCount }'
-				content='${ content! }'
+				content='<#if content??>${ content?replace( "'", "&#39;", 'r' ) }</#if>'
 				content-type='${ contentType }'
 				index='${ indexJson }'
 				></pratilipi-reader-page>
