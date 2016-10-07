@@ -33,6 +33,7 @@ Content.prototype.changeDefaultToParagraph = function() {
 };
 
 Content.prototype.unformatPastedData = function() {
+	var _this = this;
     this.$content_container.on("paste", function(e) {
         // cancel paste
         e.preventDefault();
@@ -40,8 +41,44 @@ Content.prototype.unformatPastedData = function() {
         // get text representation of clipboard
         var text = e.originalEvent.clipboardData.getData("text/plain");
         // insert text manually
-        document.execCommand("insertHTML", false, text);
+        var $closest_element = $( e.target ).closest("p,blockquote");
+        var ptext = _this.convertTextToParagraphs( text );
+        console.log( ptext );
+        
+        if( $closest_element.length ) {
+		    if( $closest_element.text().length == 0) {
+	        	$closest_element.replaceWith( ptext );
+	        }
+	        else {
+	        	$closest_element.after( ptext );
+	        } 
+	    }
+	    // if first line
+	    else {
+	    	_this.$content_container.append( ptext );
+	    }    
     });
+};
+
+Content.prototype.convertTextToParagraphs = function( text ) {
+	var text_array = text.split("\n");
+	var counter = 0;
+	var p_array = text_array.map( function(text) {
+		if( text.length ) {
+			counter = 0;
+			return "<p>" + text + "</p>";
+		}
+		else {
+			counter++;
+			if( counter < 3 ) {
+				return "<p><br></p>"
+			}
+			else {
+				return "";
+			}
+		}
+	});
+	return p_array.join("");
 };
 
 Content.prototype.delegateTargetBlankToLinks = function() {
