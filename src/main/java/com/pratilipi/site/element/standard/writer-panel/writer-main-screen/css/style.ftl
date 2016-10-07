@@ -547,3 +547,7 @@ blockquote {
   border-color: #d0021b !important;
   font-weight: 800;
 }
+
+#chapter-content p {
+    margin: 0 0 7px;
+}

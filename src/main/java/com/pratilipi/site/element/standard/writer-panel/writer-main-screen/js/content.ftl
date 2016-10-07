@@ -62,15 +62,16 @@ Content.prototype.unformatPastedData = function() {
 
 Content.prototype.convertTextToParagraphs = function( text ) {
 	var text_array = text.split("\n");
+	console.log( text_array );
 	var counter = 0;
 	var p_array = text_array.map( function(text) {
-		if( text.length ) {
+		if( text.trim().length ) {
 			counter = 0;
 			return "<p>" + text + "</p>";
 		}
 		else {
 			counter++;
-			if( counter < 3 ) {
+			if( counter < 2 ) {
 				return "<p><br></p>"
 			}
 			else {
