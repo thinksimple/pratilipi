@@ -47,10 +47,10 @@ import com.pratilipi.data.type.CommentDoc;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.PratilipiContentDoc;
+import com.pratilipi.data.type.PratilipiContentDoc.AlignmentType;
 import com.pratilipi.data.type.PratilipiContentDoc.Chapter;
 import com.pratilipi.data.type.PratilipiContentDoc.Pagelet;
 import com.pratilipi.data.type.PratilipiContentDoc.PageletType;
-import com.pratilipi.data.type.PratilipiContentDoc.AlignmentType;
 import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
 import com.pratilipi.data.type.PratilipiReviewsDoc;
 import com.pratilipi.data.type.UserPratilipi;
@@ -649,6 +649,8 @@ public class PratilipiDocUtil {
 		if( asHtml ) {
 
 			String htmlString = new String();
+			if( chapterTitle != null )
+				htmlString = new Element( Tag.valueOf( "h1" ), "" ).html( chapterTitle ).toString();
 
 			for( Pagelet pagelet : pageletList ) {
 				Element element = null;
