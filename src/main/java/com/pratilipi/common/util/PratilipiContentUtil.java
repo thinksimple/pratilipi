@@ -2,30 +2,16 @@ package com.pratilipi.common.util;
 
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Element;
-import org.jsoup.nodes.Node;
-import org.jsoup.parser.Tag;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.pratilipi.common.exception.InvalidArgumentException;
-import com.pratilipi.common.exception.UnexpectedServerException;
-import com.pratilipi.data.DataAccessorFactory;
-import com.pratilipi.data.DocAccessor;
 import com.pratilipi.data.type.Pratilipi;
-import com.pratilipi.data.type.PratilipiContentDoc;
-import com.pratilipi.data.type.PratilipiContentDoc.Chapter;
-import com.pratilipi.data.type.PratilipiContentDoc.Pagelet;
-import com.pratilipi.data.type.PratilipiContentDoc.PageletType;
 
 
 public class PratilipiContentUtil {

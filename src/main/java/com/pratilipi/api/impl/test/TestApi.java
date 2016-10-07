@@ -12,7 +12,6 @@ import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.Language;
-import com.pratilipi.common.util.FirebaseApi;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/test" )

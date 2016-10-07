@@ -348,7 +348,7 @@ public class PratilipiApi extends GenericApi {
 			pratilipiData.setAuthorId( author.getId() );
 		}
 
-		// Admins creating new content
+		// TODO: Remove it as soon as new writer is fixed
 		if( pratilipiData.getId() == null ) {
 			Long userId = AccessTokenFilter.getAccessToken().getUserId();
 			if( userId.equals( 5991416564023296L ) || 
@@ -364,9 +364,7 @@ public class PratilipiApi extends GenericApi {
 					userId.equals( 4790800105865216L ) ||
 					userId.equals( 4900189601005568L ) ||
 					userId.equals( 6243664397336576L ) ||
-					userId.equals( 6264191547604992L )
-					
-					)
+					userId.equals( 6264191547604992L ) )
 			pratilipiData.setOldContent( true );
 		}
 

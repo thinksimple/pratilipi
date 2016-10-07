@@ -1,7 +1,6 @@
 package com.pratilipi.api.impl.pratilipi;
 
 import java.util.List;
-import java.util.Map;
 
 import com.google.gson.JsonObject;
 import com.pratilipi.api.GenericApi;
