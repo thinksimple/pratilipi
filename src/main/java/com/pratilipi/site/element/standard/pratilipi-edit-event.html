@@ -1,57 +1,52 @@
 <dom-module id="pratilipi-edit-event">
-	
+
 	<style>
-	
-		paper-textarea.edit {
-			--paper-input-container-focus-color: #107FE5;
+		img {
+			width: 60px;
+			height: 60px;
+			margin: 20px auto;
 			display: block;
-			--paper-input-container-label: {
-				font-size: 15px;
-				font-family: inherit;
-			};
 		}
-		
-		.modal-fullscreen .modal-dialog .modal-content {max-width: 1000px;padding-left: 20px; padding-right: 20px; padding-top: 15px;}
-		
+
 		textarea {
 			display: block;
 			margin: 20px auto;
 			width: 100%;
 		}
+
+		button {
+			color: #fff;
+			border: 1px solid #d3d3d3;
+			background: #d0021b;
+			outline: none;
+			padding: 6px 12px;
+			font-weight: normal;
+		}
 	</style>
-	
+
 	<template>
-		<div class="modal modal-fullscreen fade" id="pratilipiEditEvent" role="dialog">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-fullscreen-close-button">
-						<paper-icon-button noink icon="close" data-dismiss="modal"></paper-icon-button>
-					</div>
-					<img title="${ _strings.pratilipi }" alt="${ _strings.pratilipi }" src="http://0.ptlp.co/resource-${ lang }/logo/pratilipi_logo.png" />
-					<h5 class="modal-fullscreen-heading">{{ modalTitle }}</h5>
-					<div style="height: 2px; background-color: #FFF; text-align: center; margin-top: 30px; margin-bottom: 10px;"></div>
-					<div class="row">
-						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-							<pratilipi-input label="${ _strings.event_name }" value="{{ name::input }}"></pratilipi-input>
-						</div>
-						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-							<pratilipi-input label="${ _strings.event_name_en }" value="{{ nameEn::input }}"></pratilipi-input>
-						</div>
-					</div>
-					<br/>
-					<span class="edit-summary-text">${ _strings.event_description }</span>
-					<textarea name="eventDescription" id="eventDescription" rows="10" value="{{ description::input }}"></textarea>
-					<br/>
-					<span class="edit-summary-text">${ _strings.event_entries_url_list }</span>
-					<textarea id="urlList" rows="10" value="{{ pratilipiUrlList::input }}"></textarea>
+		<div class="container">
+			<img title="${ _strings.pratilipi }" alt="${ _strings.pratilipi }" src="http://0.ptlp.co/resource-${ lang }/logo/pratilipi_logo.png" />
+			<h3 class="text-center">Create or edit Event</h3>
+			<div style="height: 2px; background-color: #FFF; text-align: center; margin-top: 30px; margin-bottom: 10px;"></div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+					<pratilipi-input label="${ _strings.event_name }" value="{{ name::input }}"></pratilipi-input>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+					<pratilipi-input label="${ _strings.event_name_en }" value="{{ nameEn::input }}"></pratilipi-input>
 				</div>
 			</div>
-			<div class="modal-footer">
-				<div class="display-message-div"><p>{{ message }}</p></div>
-				<button id="eventEditButton" style="position: fixed; bottom: 15px; right: 15px;" class="pratilipi-dark-blue-button" type="button" on-click="onSubmit">{{ modalButtonText }}</button>
-			</div>
-			
+			<br/>
+			<h5>${ _strings.event_description }</h5>
+			<textarea name="eventDescription" id="eventDescription" height="600" rows="20" value="{{ description::input }}"></textarea>
+			<br/>
+			<h5>${ _strings.event_entries_url_list }</h5>
+			<textarea id="urlList" rows="15" value="{{ pratilipiUrlList::input }}"></textarea>
+			<div class="text-center text-danger"><p>{{ message }}</p></div>
+			<button id="eventEditButton" class="pull-right" type="button" on-click="onSubmit">${ _strings.save_changes }</button>
 		</div>
+
 		<iron-ajax
 				id="AjaxPost"
 				url="/api/event"
@@ -62,131 +57,90 @@
 				on-error="_handleAjaxPostError"
 				></iron-ajax>
 	</template>
-	
+
 	<script>
-	HTMLImports.whenReady(function () {
-		if( CKEDITOR != null && document.getElementById( 'eventDescription' ) != null )
-			CKEDITOR.replace( 'eventDescription' );
-	});
+		HTMLImports.whenReady(function () {
+			if( CKEDITOR != null && document.getElementById( 'eventDescription' ) != null )
+				CKEDITOR.replace( "eventDescription", { height: 500 } );
+		});
 		Polymer({
-	
+
 			is: 'pratilipi-edit-event',
-			
+
 			properties: {
+				event: { type: Object, observer: "_process" },
 				eventId: { type: Number },
 				name: { type: String },
 				nameEn: { type: String },
 				language: { type: String },
-				description: { type: String },
+				description: { type: String, observer: "_descriptionObserver" },
 				pratilipiUrlList: { type: String },
-
-				modalTitle: { type: String },
-				modalButtonText: { type: String }
 			},
-			
-			_process: function( event ) {
-				this.eventId = event.eventId == null ? null : event.eventId;
-				this.name = event.name == null ? null : event.name;
-				this.nameEn = event.nameEn == null ? null : event.nameEn;
-				this.language = event.language == null ? "${ language?upper_case }" : event.language;
-				this.description = event.description == null ? null : event.description;
-				
-				// Setting CK editor
+
+			_descriptionObserver: function() {
 				if( CKEDITOR != null && CKEDITOR.instances.eventDescription != null )
 					CKEDITOR.instances.eventDescription.setData( this.description );
-				
-				if( event.pratilipiUrlList == null || event.pratilipiUrlList.length == 0 )
-					this.pratilipiUrlList = null;
-				else 
-					this.pratilipiUrlList = event.pratilipiUrlList.join( "\n" );
 			},
-			
-			editCurrentEvent: function( event ) {
-				this._process( event );
-				this.modalTitle = event.name + " - " + "Edit Event";
-				this.modalButtonText = "${ _strings.event_save_changes }";
-				this.open();
+
+			_process: function( event ) {
+				this.set( 'eventId', event.eventId == null ? null : event.eventId );
+				this.set( 'name', event.name == null ? null : event.name );
+				this.set( 'nameEn', event.nameEn == null ? null : event.nameEn );
+				this.set( 'language', event.language == null ? "${ language }" : event.language );
+				this.set( 'description', event.description == null ? null : event.description );
+				this.set( 'pratilipiUrlList', event.pratilipiUrlList != null && event.pratilipiUrlList.length > 0 ? 
+												event.pratilipiUrlList.join( "\n" ) : null );
 			},
-			
-			createNewEvent: function() {
-				this._process( {} );
-				this.modalTitle = "Create New Event!";
-				this.modalButtonText = "Create New Event";
-				this.open();
-			},
-			
-			open: function() {
-				this.async( function() {
-					jQuery( "#pratilipiEditEvent" ).modal( {backdrop: 'static'} );
-				});
-			},
-			
-			close: function() {
-				jQuery( "#pratilipiEditEvent" ).modal( 'hide' );
-			},
-			
+
 			onSubmit: function( event ) {
-				
+
 				if( this.name == null || this.name.trim() == "" ) {
 					this.message = "Please enter the name.";
 					return;
 				}
-				
+
 				if( this.nameEn == null || this.nameEn.trim() == "" ) {
-					this.message = "Please enter the nameEn.";
+					this.message = "Please enter the name in English.";
 					return;
 				}
-				
+
 				if( CKEDITOR != null && CKEDITOR.instances.eventDescription != null )
 					this.description = CKEDITOR.instances.eventDescription.getData();
-				
-				
+
 				if( this.description == null || this.description.trim() == "" ) {
 					this.message = "Please enter the description.";
 					return;
 				}
-				
+
 				var params = { 	"name" : this.name,
 								"nameEn" : this.nameEn,
 								"language" : this.language,
 								"description" : this.description };
-				
+
 				if( this.eventId != null )
 					params.eventId = this.eventId;
-				
-				var pratilipiUrlList = [];
-				
-				if( this.pratilipiUrlList != null && this.pratilipiUrlList.trim() != "" )
-					pratilipiUrlList = this.pratilipiUrlList.split( "\n" );
 
-				if( pratilipiUrlList.length > 0 )
-					params.pratilipiUrlList = "[\"" + pratilipiUrlList.join( "\",\"" ) + "\"]";
-				else
-					params.pratilipiUrlList = "[]";
-				
+				if( this.pratilipiUrlList != null && this.pratilipiUrlList.trim() != "" ) {
+					var pratilipiUrlList = [];
+					pratilipiUrlList = this.pratilipiUrlList.split( "\n" );
+					if( pratilipiUrlList.length > 0 )
+						params.pratilipiUrlList = "[\"" + pratilipiUrlList.join( "\",\"" ) + "\"]";
+					else
+						params.pratilipiUrlList = "[]";
+				}
+
 				this.message = "Please Wait...";
 				jQuery( '#eventEditButton' ).prop( 'disabled', true );
 				this.$.AjaxPost.body = jQuery.param( params );
 				this.$.AjaxPost.generateRequest();
+
 			},
-			
+
 			_handleAjaxPostResponse: function( event ) {
-				
 				this.message = "Created / Updated Event Successfully!";
-				
-				var event = event.detail.response;
-				
-				this.async( function() {
-					jQuery( '#eventEditButton' ).prop( 'disabled', false );
-					if( document.querySelector( 'pratilipi-event-page' ) != null )
-						document.querySelector( 'pratilipi-event-page' ).updateEvent( event );
-					else
-						window.location.href = event.pageUrl;
-					this.message = null;
-					this.close();
-				}, 1000 );
+				this.async( function() { window.location.href = event.detail.response.pageUrl; }, 1000 );
 			},
-			
+
 			_handleAjaxPostError: function( event ) {
 				jQuery( '#eventEditButton' ).prop( 'disabled', false );
 				if( event.detail.request.xhr.status === 400 || event.detail.request.xhr.status === 401 || event.detail.request.xhr.status === 500 )
@@ -194,8 +148,8 @@
 				else
 					this.message = "Some Error occured! Please try Again."
 			}
-			
+
 		});
 	</script>
-	
+
 </dom-module>

@@ -407,6 +407,7 @@ public class PratilipiSite extends HttpServlet {
 			
 			} else if( uri.equals( "/edit-event" ) ){
 
+				resourceList.add( ThirdPartyResource.CKEDITOR.getTag() );
 				Long eventId = request.getParameter( RequestParameter.CONTENT_ID.getName() ) != null ? 
 						Long.parseLong( request.getParameter( RequestParameter.CONTENT_ID.getName() ) ) : null;
 

@@ -18,7 +18,6 @@
 					<pratilipi-navigation-drawer with-backdrop navigation-list='[[ navigationList ]]'></pratilipi-navigation-drawer>
 					<div style="overflow:hidden; padding: 0 2px;">
 						<template is="dom-if" if="{{ hasAccessToAdd }}">
-							<pratilipi-edit-event></pratilipi-edit-event>
 							<paper-card style="display: block; padding: 45px 20px; margin: 0 auto; text-align: center;">
 								<div style="text-align: center;">
 									<a on-click="createNewEvent">
@@ -64,7 +63,7 @@
 			},
 			
 			createNewEvent: function() {
-				this.querySelector( 'pratilipi-edit-event' ).createNewEvent();
+				window.location.href = "/edit-event";
 			},
 			
 			scrollToTop: function() {
