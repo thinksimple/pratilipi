@@ -348,6 +348,16 @@ public class PratilipiApi extends GenericApi {
 			pratilipiData.setAuthorId( author.getId() );
 		}
 
+		// Admins creating new content
+		if( pratilipiData.getId() == null ) {
+			Long userId = AccessTokenFilter.getAccessToken().getUserId();
+			if( userId.equals( 5991416564023296L ) || 
+					userId.equals( 5664902681198592L ) || 
+					userId.equals( 5743817900687360L ) || 
+					userId.equals( 4900071594262528L ) )
+			pratilipiData.setOldContent( false );
+		}
+
 		// Saving PratilipiData object.
 		pratilipiData = PratilipiDataUtil.savePratilipiData( pratilipiData );
 

@@ -340,7 +340,7 @@ public class PratilipiData implements Serializable {
 		return oldContent;
 	}
 
-	void setOldContent( Boolean oldContent ) {
+	public void setOldContent( Boolean oldContent ) {
 		this.oldContent = oldContent;
 		this.hasOldContent = true;
 	}
