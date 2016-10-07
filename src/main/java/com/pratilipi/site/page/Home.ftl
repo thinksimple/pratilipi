@@ -3,8 +3,6 @@
 <html lang="${lang}">
 
 	<head>
-		<#-- Page Description -->
-		<meta name="description" content="A platform to discover, read and share your favorite stories, poems and books in a language, device and format of your choice.">
 		<#assign mainPage="pratilipi-home-page">
 		<#include "meta/Head.ftl">
 	</head>
