@@ -355,7 +355,7 @@ public class PratilipiApi extends GenericApi {
 					userId.equals( 5664902681198592L ) || 
 					userId.equals( 5743817900687360L ) || 
 					userId.equals( 4900071594262528L ) )
-			pratilipiData.setOldContent( false );
+			pratilipiData.setOldContent( true );
 		}
 
 		// Saving PratilipiData object.
