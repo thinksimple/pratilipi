@@ -3,9 +3,9 @@
 <html lang="${lang}">
 
 	<head>
-		<link rel='import' href='/elements.${lang}/pratilipi-author-list-page.html?201608'>
 		<#assign mainPage="pratilipi-author-list-page">
 		<#include "meta/Head.ftl">
+		<link rel='import' href='/elements.${lang}/pratilipi-author-list-page.html?201608'>
 	</head>
 
 	<body>
