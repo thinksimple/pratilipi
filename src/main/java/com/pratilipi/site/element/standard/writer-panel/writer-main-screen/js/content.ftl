@@ -43,7 +43,6 @@ Content.prototype.unformatPastedData = function() {
         // insert text manually
         var $closest_element = $( e.target ).closest("p,blockquote");
         var ptext = _this.convertTextToParagraphs( text );
-        console.log( ptext );
         
         if( $closest_element.length ) {
 		    if( $closest_element.text().length == 0) {
@@ -62,7 +61,6 @@ Content.prototype.unformatPastedData = function() {
 
 Content.prototype.convertTextToParagraphs = function( text ) {
 	var text_array = text.split("\n");
-	console.log( text_array );
 	var counter = 0;
 	var p_array = text_array.map( function(text) {
 		if( text.trim().length ) {
