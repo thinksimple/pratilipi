@@ -570,7 +570,7 @@ public class PratilipiDocUtil {
 		if( chapter == null )
 			throw new InvalidArgumentException( "Chapter is Missing!" );
 
-		chapter.setTitle( chapterTitle );
+		chapter.setTitle( chapterTitle != null ? chapterTitle.trim() : null );
 
 
 		PratilipiContentDoc.Page page = chapter.getPage( pageNo ); 
@@ -589,7 +589,7 @@ public class PratilipiDocUtil {
 				}
 
 				if( childNode.getClass() == TextNode.class ) {
-					page.addPagelet( PageletType.TEXT, ( (TextNode) childNode ).text() );
+					page.addPagelet( PageletType.TEXT, ( (TextNode) childNode ).text().trim() );
 					continue;
 				}
 
@@ -602,11 +602,11 @@ public class PratilipiDocUtil {
 							if( style.substring( 0, style.indexOf( ":" ) ).trim().equals( "text-align" ) )
 								alignment = AlignmentType.valueOf( style.substring( style.indexOf( ":" ) + 1 ).trim().toUpperCase() );
 					}
-					page.addPagelet( PageletType.TEXT, element.html(), alignment );
+					page.addPagelet( PageletType.TEXT, element.html().trim(), alignment );
 				} else if( childNode.nodeName().equals( "img" ) ) {
-					page.addPagelet( PageletType.IMAGE, childNode.attr( "src" ) );
+					page.addPagelet( PageletType.IMAGE, childNode.attr( "src" ).trim() );
 				} else if( childNode.nodeName().equals( "blockquote" ) ) {
-					page.addPagelet( PageletType.BLOCK_QUOTE, element.html() );
+					page.addPagelet( PageletType.BLOCK_QUOTE, element.html().trim() );
 				}
 
 			}
