@@ -1,53 +1,51 @@
 <dom-module id="pratilipi-edit-blog">
-	
+
 	<style>
-	
-		.modal-fullscreen .modal-dialog .modal-content {max-width: 1000px;padding-left: 20px; padding-right: 20px;}
-		
-		paper-textarea.edit {
-			--paper-input-container-focus-color: #107FE5;
+		img {
+			width: 60px;
+			height: 60px;
+			margin: 20px auto;
 			display: block;
-			--paper-input-container-label: {
-				font-size: 15px;
-				font-family: inherit;
-			};
 		}
-		
+
 		textarea {
-			margin: 35px auto;
 			display: block;
+			margin: 20px auto;
 			width: 100%;
 		}
+
+		button {
+			color: #fff;
+			border: 1px solid #d3d3d3;
+			background: #d0021b;
+			outline: none;
+			padding: 6px 12px;
+			font-weight: normal;
+		}
 	</style>
-	
+
 	<template>
-		<div class="modal modal-fullscreen fade" id="pratilipiEditBlog" role="dialog">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-fullscreen-close-button">
-						<paper-icon-button noink icon="close" data-dismiss="modal"></paper-icon-button>
-					</div>
-					<h5 class="modal-fullscreen-heading">{{ modalTitle }}</h5>
-					<div class="row">
-						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-							<pratilipi-input label="Blog Title" value="{{ title::input }}"></pratilipi-input>
-						</div>
-						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-							<pratilipi-input label="Blog Title (English)" value="{{ titleEn::input }}"></pratilipi-input>
-						</div>
-					</div>
-					<br/>
-					<input style="margin-right: 4px;" type="checkbox" name="checkBlogState" id="checkBlogState">
-					<h6 style="display: inline-block;">Check this box to Publish it!</h6>
-					<textarea name="blogContent" id="blogContent" rows="10" value="{{ content::input }}"></textarea>
+		<div class="container">
+			<img title="${ _strings.pratilipi }" alt="${ _strings.pratilipi }" src="http://0.ptlp.co/resource-${ lang }/logo/pratilipi_logo.png" />
+			<h3 class="text-center">Create or edit Blog</h3>
+			<div style="height: 2px; background-color: #FFF; text-align: center; margin-top: 30px; margin-bottom: 10px;"></div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+					<pratilipi-input label="Blog Title" value="{{ title::input }}"></pratilipi-input>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+					<pratilipi-input label="Blog Title( English )" value="{{ titleEn::input }}"></pratilipi-input>
 				</div>
 			</div>
-			<div class="modal-footer">
-				<div class="display-message-div"><p>{{ message }}</p></div>
-				<button id="blogEditButton" style="position: fixed; bottom: 15px; right: 15px;" class="pratilipi-dark-blue-button" type="button" on-click="onSubmit">{{ modalButtonText }}</button>
-			</div>
-			
+			<input style="margin-right: 4px;" type="checkbox" name="checkBlogState" id="checkBlogState">
+			<h6 style="display: inline-block;">Check this box to Publish it!</h6>
+			<br/>
+			<h5>Content</h5>
+			<textarea name="blogContent" id="blogContent" height="600" rows="20" value="{{ content::input }}"></textarea>
+			<div class="text-center text-danger"><p>{{ message }}</p></div>
+			<button id="blogEditButton" class="pull-right" type="button" on-click="onSubmit">${ _strings.save_changes }</button>
 		</div>
+
 		<iron-ajax
 				id="AjaxPost"
 				url="/api/blogpost"
@@ -58,112 +56,80 @@
 				on-error="_handleAjaxPostError"
 				></iron-ajax>
 	</template>
+
 	<script>
-	HTMLImports.whenReady(function () {
-		if( CKEDITOR != null && document.getElementById( 'blogContent' ) != null )
-			CKEDITOR.replace( 'blogContent' );
-	});
+		HTMLImports.whenReady(function () {
+			if( CKEDITOR != null && document.getElementById( 'blogContent' ) != null )
+				CKEDITOR.replace( "blogContent", { height: 500 } );
+		});
 		Polymer({
-	
+
 			is: 'pratilipi-edit-blog',
-			
+
 			properties: {
-				blogId: { type: String },
-				blogPostId: { type: String },
+				blog: { type: Object, observer: "_process" },
+				blogPostId: { type: Number },
 				title: { type: String },
 				titleEn: { type: String },
-				content: { type: String },
-				state: { type: String },
-				
-				modalTitle: { type: String },
-				modalButtonText: { type: String }
+				language: { type: String },
+				content: { type: String, observer: "_contentObserver" }
 			},
-			
-			_process: function( blogPost ) {
-				this.blogPostId = blogPost.blogPostId == null ? null : blogPost.blogPostId;
-				this.title = blogPost.title == null ? null : blogPost.title;
-				this.titleEn = blogPost.titleEn == null ? null : blogPost.titleEn;
-				this.content = blogPost.content == null ? null : blogPost.content;
-				this.state = blogPost.state == null ? "DRAFTED" : blogPost.state;
-				
-				// Setting CK editor
+
+			_contentObserver: function() {
 				if( CKEDITOR != null && CKEDITOR.instances.blogContent != null )
 					CKEDITOR.instances.blogContent.setData( this.content );
-				
-				document.getElementById( "checkBlogState" ).checked = this.state == "PUBLISHED";
-				// Opening the modal
-				this.open();
 			},
-			
-			createNewBlog: function( blogId ) {
-				this.blogId = blogId;
-				this.modalTitle = "Create New Blog Post";
-				this.modalButtonText = "Create new Blog";
-				this._process( {} );
+
+			_process: function( blogPost ) {
+				this.set( 'blogPostId', blogPost.blogPostId == null ? null : blogPost.blogPostId );
+				this.set( 'title', blogPost.title == null ? null : blogPost.title );
+				this.set( 'titleEn', blogPost.titleEn == null ? null : blogPost.titleEn );
+				this.set( 'language', blogPost.language == null ? "${ language }" : blogPost.language );
+				this.set( 'content', blogPost.content == null ? null : blogPost.content );
 			},
-			
-			editCurrentBlog: function( blogPost ) {
-				this.blogId = blogPost.blogId;
-				this.modalTitle = "Edit Blog Post - " + blogPost.title;
-				this.modalButtonText = "${ _strings.save_changes }";
-				this._process( blogPost );
-			},
-			
-			open: function() {
-				this.async( function() {
-					jQuery( "#pratilipiEditBlog" ).modal( {backdrop: 'static'} );
-				});
-			},
-			
-			close: function() {
-				jQuery( "#pratilipiEditBlog" ).modal( 'hide' );
-			},
-			
-			onSubmit: function( event ) {
-				
+
+			onSubmit: function() {
+
 				if( this.title == null || this.title.trim() == "" ) {
-					this.message = "Please enter the title!";
+					this.message = "Please enter the title.";
 					return;
 				}
-				
+
+				if( this.titleEn == null || this.titleEn.trim() == "" ) {
+					this.message = "Please enter the title in English.";
+					return;
+				}
+
 				if( CKEDITOR != null && CKEDITOR.instances.blogContent != null )
 					this.content = CKEDITOR.instances.blogContent.getData();
-				
-				var params = { 	"blogId" : this.blogId,
-								"title" : this.title,
+
+				if( this.content == null || this.content.trim() == "" ) {
+					this.message = "Please enter the content.";
+					return;
+				}
+
+				var params = { 	"title" : this.title,
+								"titleEn" : this.titleEn,
+								"language" : this.language,
 								"content" : this.content,
 								"state": document.getElementById( "checkBlogState" ).checked ? "PUBLISHED" : "DRAFTED" };
-				
+
 				if( this.blogPostId != null )
 					params.blogPostId = this.blogPostId;
-				
-				if( this.titleEn != null )
-					params.titleEn = this.titleEn;
-				
+
+
 				this.message = "Please Wait...";
 				jQuery( '#blogEditButton' ).prop( 'disabled', true );
 				this.$.AjaxPost.body = jQuery.param( params );
 				this.$.AjaxPost.generateRequest();
-			},
-			
-			_handleAjaxPostResponse: function( event ) {
-				
-				this.message = "Created / Updated Blog successfully!";
-				
-				var blogpost = event.detail.response;
 
-				if( document.querySelector( 'pratilipi-blog-page' ) != null ) {
-					document.querySelector( 'pratilipi-blog-page' ).updateBlogpost( blogpost );
-					this.async( function() {
-						jQuery( '#blogEditButton' ).prop( 'disabled', false );
-						this.message = null;
-						this.close();
-					}, 1000 );
-				} else if( document.querySelector( 'pratilipi-blog-list-page' ) != null ) {
-					window.location.href = event.detail.response.pageUrl;
-				}
 			},
-			
+
+			_handleAjaxPostResponse: function( event ) {
+				this.message = "Created / Updated Blog Successfully!";
+				this.async( function() { window.location.href = event.detail.response.pageUrl; }, 1000 );
+			},
+
 			_handleAjaxPostError: function( event ) {
 				jQuery( '#blogEditButton' ).prop( 'disabled', false );
 				if( event.detail.request.xhr.status === 400 || event.detail.request.xhr.status === 401 || event.detail.request.xhr.status === 500 )
@@ -171,8 +137,8 @@
 				else
 					this.message = "Some Error occured! Please try Again."
 			}
-			
+
 		});
 	</script>
-	
+
 </dom-module>
