@@ -272,7 +272,7 @@
 				if( this.$.selectPratilipiLanguage.selectedItem == null ) return;
 				var language = this.$.selectPratilipiLanguage.selectedItem.getAttribute( "value" );
 				if( language == "${ language }" ) return;
-				window.location = "http://" + language.toLowerCase() + ".pratilipi.com";
+				window.location = "http://" + language.toLowerCase() + ".pratilipi.com/?action=start_writing";
 			},
 
 			clearAndClose: function() {

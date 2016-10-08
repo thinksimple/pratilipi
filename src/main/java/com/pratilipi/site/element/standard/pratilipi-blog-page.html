@@ -1,5 +1,3 @@
-<#include "pratilipi-edit-blog.html">
-
 <dom-module id="pratilipi-blog-page">
 	
 	<style>
@@ -21,7 +19,6 @@
 		<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
 		<pratilipi-write language-map="[[ languageMap ]]" pratilipi-types='[[ pratilipiTypes ]]'></pratilipi-write>
 		<pratilipi-alert></pratilipi-alert>
-		<pratilipi-edit-blog></pratilipi-edit-blog>
 		
 		<div class="header-pos">
    			<pratilipi-header language-map="[[ languageMap ]]" user='[[ user ]]'></pratilipi-header>
@@ -88,7 +85,7 @@
 			},
 			
 			editBlogpost: function() {
-				this.querySelector( 'pratilipi-edit-blog' ).editCurrentBlog( this.blogpost );
+				window.location.href = "/edit-blog?id=" + this.blogpost.blogPostId;
 			},
 			
 			scrollToTop: function() {

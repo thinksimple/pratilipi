@@ -19,7 +19,6 @@
 					<pratilipi-navigation-drawer with-backdrop navigation-list='[[ navigationList ]]'></pratilipi-navigation-drawer>
 					<div style="overflow:hidden; padding: 0 2px;">
 						<template is="dom-if" if="{{ hasAccessToAdd }}">
-							<pratilipi-edit-blog></pratilipi-edit-blog>
 							<div class="secondary-500 pratilipi-shadow pratilipi-card-grid-heading pratilipi-red">
 								Drafted Entries
 							</div>
@@ -125,7 +124,7 @@
 			},
 			
 			createNewBlog: function() {
-				document.querySelector( 'pratilipi-edit-blog' ).createNewBlog( this.blogId );
+				window.location.href = "/edit-blog";
 			},
 			
 			loadDraftedList: function() {

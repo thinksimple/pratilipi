@@ -407,7 +407,26 @@ public class PratilipiSite extends HttpServlet {
 
 				templateName = templateFilePrefix + "EventEdit.ftl";
 
-			}else if( uri.matches( "^/[a-z0-9-]+$" ) && ( dataModel = createDataModelForListPage( uri.substring( 1 ), basicMode, displayLanguage, filterLanguage, request ) ) != null ) {
+			} else if( uri.equals( "/edit-blog" ) ){
+
+				resourceList.add( ThirdPartyResource.CKEDITOR.getTag() );
+				Long blogPostId = request.getParameter( RequestParameter.CONTENT_ID.getName() ) != null ? 
+						Long.parseLong( request.getParameter( RequestParameter.CONTENT_ID.getName() ) ) : null;
+
+				dataModel = new HashMap<String, Object>();
+				dataModel.put( "title", "Create or Edit Blog" );
+				if( blogPostId != null ) {
+					BlogPostApi.GetRequest blogPostRequest = new BlogPostApi.GetRequest();
+					blogPostRequest.setBlogPostId( blogPostId );
+					BlogPostApi.Response blogPostResponse = ApiRegistry
+																.getApi( BlogPostApi.class )
+																.get( blogPostRequest );
+					dataModel.put( "blogPostJson", new Gson().toJson( blogPostResponse ) );
+				}
+
+				templateName = templateFilePrefix + "BlogEdit.ftl";
+
+			} else if( uri.matches( "^/[a-z0-9-]+$" ) && ( dataModel = createDataModelForListPage( uri.substring( 1 ), basicMode, displayLanguage, filterLanguage, request ) ) != null ) {
 				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
 				
 			} else if( uri.matches( "^/[a-z0-9-/]+$" ) && ( dataModel = createDataModelForStaticPage( uri.substring( 1 ).replaceAll( "/", "_" ), displayLanguage ) ) != null ) {
