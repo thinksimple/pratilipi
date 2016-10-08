@@ -135,9 +135,6 @@
 	</template>
 	
 	<script>
-	HTMLImports.whenReady(function () {
-		CKEDITOR.replace( 'authorSummary' );
-	});	
 		Polymer({
 	
 			is: 'pratilipi-edit-author',
@@ -199,12 +196,8 @@
 				this.penNameEn = author.penNameEn == null ? null : author.penNameEn;
 				this.gender = author.gender == null ? null : author.gender;
 				this.dateOfBirth = author.dateOfBirth == null ? null : this.setDateProcess( author.dateOfBirth );
-				
-				// TinyMCE editor - Author Summary
 				this.summary = author.summary == null ? "" : author.summary;				
-				if( CKEDITOR != null && CKEDITOR.instances.authorSummary != null )
-					CKEDITOR.instances.authorSummary.setData( this.summary );
-				
+
 				// paper-dropdown-menu for language
 				this.language = author.language == null ? "${ language?upper_case }" : author.language;
 				if( this.language === "BENGALI" )
@@ -264,9 +257,6 @@
 				
 				this.message = "${ _strings.working }";
 				jQuery( '#authorEditButton' ).prop( 'disabled', true );
-				
-				if( CKEDITOR != null && CKEDITOR.instances.authorSummary != null )
-					this.summary = CKEDITOR.instances.authorSummary.getData();
 				
 				this.language = this.$.authorLanguage.selectedItem.getAttribute( "value" );
 				
