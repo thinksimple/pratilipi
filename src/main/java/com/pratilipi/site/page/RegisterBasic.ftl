@@ -76,7 +76,8 @@
 					data: {
 						'name': name,
 						'email': email, 
-						'password': password
+						'password': password,
+						'language': "${ language }"
 					},
 					
 					success: function( response ) {

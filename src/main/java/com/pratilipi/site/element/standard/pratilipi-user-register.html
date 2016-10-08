@@ -25,9 +25,9 @@
 					<pratilipi-facebook-login></pratilipi-facebook-login>
 					<div style="height: 2px; background-color: #FFF; text-align: center; margin-top: 30px; margin-bottom: 10px;"></div>
 					<h6 class="modal-fullscreen-heading">${ _strings.user_sign_up_for_pratilipi }</h6>
-					<pratilipi-input label="${ _strings.user_full_name }" value="{{ params.name::input }}" icon="icons:account-box"></pratilipi-input>
-					<pratilipi-input label="${ _strings.user_email }" type="email" value="{{ params.email::input }}" icon="icons:mail"></pratilipi-input>
-					<pratilipi-input label="${ _strings.user_password }" type="password" value="{{ params.password::input }}" icon="icons:lock"></pratilipi-input>
+					<pratilipi-input label="${ _strings.user_full_name }" value="{{ name::input }}" icon="icons:account-box"></pratilipi-input>
+					<pratilipi-input label="${ _strings.user_email }" type="email" value="{{ email::input }}" icon="icons:mail"></pratilipi-input>
+					<pratilipi-input label="${ _strings.user_password }" type="password" value="{{ password::input }}" icon="icons:lock"></pratilipi-input>
 					<div class="display-message-div">
 						<p>{{ message }}</p>
 					</div>
@@ -70,7 +70,10 @@
 			is: 'pratilipi-user-register',
 
 			properties: {
-				params: { type: Object, value: {"source":"WEBSITE_M6<#if language??>_${ language }</#if>"} },
+				name: { type: String },
+				email: { type: String },
+				password: { type: String },
+				language: { type: String, value: "${ language }" },
 				message: { type: String, value: null }
 			},
 			
@@ -98,7 +101,7 @@
 
 				this.message = null;
 				
-				if( this.params.name == null || this.params.email == null || this.params.password == null || this.params.name.trim() == "" || this.params.email.trim() == "" ) {
+				if( this.name == null || this.email == null || this.password == null || this.name.trim() == "" || this.email.trim() == "" ) {
 					this.message = "${ _strings.fill_in_the_details }";
 					return;
 				}
@@ -111,7 +114,13 @@
 				this.message = "${ _strings.working }";
 				jQuery( '#registerButton' ).prop( 'disabled', true );
 				
-				this.$.AjaxPost.body = jQuery.param( this.params );
+				var body = {
+					name: this.name,
+					email: this.email,
+					password: this.password,
+					language: this.language
+				};
+				this.$.AjaxPost.body = jQuery.param( body );
 				this.$.AjaxPost.generateRequest();
 			},
 			
@@ -122,7 +131,9 @@
 					this.message = "${ _strings.user_register_success }";
 					this.async( function() {
 						this.message = null;
-						this.params = {"source":"WEBSITE_M6<#if language??>_${ language }</#if>"};
+						this.name = null;
+						this.email = null;
+						this.password = null;
 						jQuery( '#registerButton' ).prop( 'disabled', false );
  						this.close();
 					}, 1000 );
