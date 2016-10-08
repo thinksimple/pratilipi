@@ -126,7 +126,7 @@ public class DocAccessorImpl implements DocAccessor {
 				return clazz.newInstance();
 			else
 				return new Gson().fromJson(
-						new String( blobEntry.getData(), "UTF-8" ),
+						new String( blobEntry.getData(), "UTF-8" ).trim(),
 						clazz );
 		} catch( InstantiationException | IllegalAccessException | JsonSyntaxException | UnsupportedEncodingException e) {
 			logger.log( Level.SEVERE, e.getMessage() );
