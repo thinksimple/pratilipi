@@ -348,26 +348,6 @@ public class PratilipiApi extends GenericApi {
 			pratilipiData.setAuthorId( author.getId() );
 		}
 
-		// TODO: Remove it as soon as new writer is fixed
-		if( pratilipiData.getId() == null ) {
-			Long userId = AccessTokenFilter.getAccessToken().getUserId();
-			if( userId.equals( 5991416564023296L ) || 
-					userId.equals( 5664902681198592L ) || 
-					userId.equals( 5743817900687360L ) || 
-					userId.equals( 4900071594262528L ) ||
-					userId.equals( 5156503382130688L ) ||
-					userId.equals( 5765299529842688L ) ||
-					userId.equals( 5666355716030464L ) ||
-					userId.equals( 5715256422694912L ) ||
-					userId.equals( 5644707593977856L ) ||
-					userId.equals( 5674672871964672L ) ||
-					userId.equals( 4790800105865216L ) ||
-					userId.equals( 4900189601005568L ) ||
-					userId.equals( 6243664397336576L ) ||
-					userId.equals( 6264191547604992L ) )
-			pratilipiData.setOldContent( true );
-		}
-
 		// Saving PratilipiData object.
 		pratilipiData = PratilipiDataUtil.savePratilipiData( pratilipiData );
 
