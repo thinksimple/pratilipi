@@ -21,14 +21,24 @@
 
 <div class="secondary-500 pratilipi-shadow box">
 	<#list indexList as index>
-		<#assign level=index.level?number>
+
+		<#if index.level??>
+			<#assign level=index.level?number>
+		<#elseif index.nesting??>
+			<#assign level=index.nesting?number>
+		<#else>
+			<#assign level=0>
+		</#if>
+
 		<#if index.pageNo??>
 			<#assign page=index.pageNo?number>
 		<#else>
 			<#assign page=index.chapterNo?number>
 		</#if>
+
 		<a class="navigation<#if level == 0> heading <#if page==pageNo> blue <#else> black </#if></#if>    <#if level == 1><#if page==pageNo> blue <#else> grey </#if></#if>" 
 			style="cursor: pointer;"
 			onCLick="gotoPage( ${ page } )">${ index.title }</a>
+
 	</#list>
 </div>
