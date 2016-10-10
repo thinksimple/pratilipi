@@ -34,7 +34,7 @@
 			});
 		</script>
 	</#if>
-
+	<#include "./meta/Font.ftl">
 </html>
 
 </#compress>
