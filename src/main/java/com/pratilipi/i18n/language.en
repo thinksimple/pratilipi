@@ -361,6 +361,7 @@ writer_table_of_contents = Table of Contents
 writer_chapter = Chapter
 writer_chapter_delete_confirmation = Are you sure you want to delete: 
 writer_add_chapter_success = New chapter added successfully
+writer_chapter_delete = Delete Chapter
 writer_delete_chapter_success = Chapter deleted successfully
 writer_editor_bold = Bold
 writer_editor_italics = Italics

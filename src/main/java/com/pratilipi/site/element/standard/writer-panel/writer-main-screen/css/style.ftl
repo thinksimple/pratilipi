@@ -229,6 +229,10 @@ div.righttip div:before{
 .book-name {
     text-align: center;
 }    
+.editor-action {
+    width:30px; 
+    height:20px;
+}
 @media only screen and (max-width: 992px) {
     .book-name {
         text-align: left;

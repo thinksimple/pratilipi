@@ -1,3 +1,5 @@
+<#compress>
+
 <!DOCTYPE html>
 <html lang="${lang}">
 	<head>
@@ -11,38 +13,28 @@
 		<link rel='stylesheet' href='http://1.ptlp.co/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>
 		<#include "./meta/GoogleAnalytics.ftl">
 	</head>
-	
+
+	<#assign hasAccess = true>
+
 	<#if user.isGuest() >
+		<#assign hasAccess = false>
+	<#elseif !pratilipiId?? >
+		<#assign hasAccess = false>
+	<#elseif !pratilipi.hasAccessToUpdate() >
+		<#assign hasAccess = false>
+	</#if>
+
+
+	<#if hasAccess>
+		<#include "../element/standard/writer-panel/writer-main-screen/index.html">
+	<#else>
 		<script>
 			$( document ).ready(function() {
 			    window.location.href = "/?action=start_writing";
 			});
 		</script>
-	<#else>
-		<#if action?? >
-			<#if action!="start_writing" && action!="write" && action!="publish">
-				<#assign action="start_writing">
-			</#if>
-		<#else>
-			<#if pratilipiId??>
-				<#assign action="write">
-			<#else>
-				<#assign action="start_writing">
-			</#if>	
-		</#if>
-		
-		<#if action == "start_writing">
-			<#-- <#include "../element/standard/writer-panel/writer-start-screen/index.html"> -->
-			<script>
-				$( document ).ready(function() {
-				    window.location.href = "/?action=start_writing";
-				});
-			</script>
-		<#elseif ( action == "write" )>	
-			<#include "../element/standard/writer-panel/writer-main-screen/index.html">
-		<#elseif ( action == "publish" )>
-			<#-- <#include "../element/standard/writer-panel/writer-final-screen/index.html"> -->
-		</#if>		
 	</#if>
-<#include "./meta/Font.ftl">	
+
 </html>
+
+</#compress>
