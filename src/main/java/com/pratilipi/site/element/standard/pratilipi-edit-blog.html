@@ -68,6 +68,7 @@
 
 			properties: {
 				blog: { type: Object, observer: "_process" },
+				blogId: { type: Number },
 				blogPostId: { type: Number },
 				title: { type: String },
 				titleEn: { type: String },
@@ -108,7 +109,8 @@
 					return;
 				}
 
-				var params = { 	"title" : this.title,
+				var params = { 	"blogId" : this.blogId,
+								"title" : this.title,
 								"titleEn" : this.titleEn,
 								"language" : this.language,
 								"content" : this.content,

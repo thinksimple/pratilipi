@@ -413,8 +413,12 @@ public class PratilipiSite extends HttpServlet {
 				Long blogPostId = request.getParameter( RequestParameter.CONTENT_ID.getName() ) != null ? 
 						Long.parseLong( request.getParameter( RequestParameter.CONTENT_ID.getName() ) ) : null;
 
+				Long blogId = request.getParameter( "blogId" ) != null ? 
+						Long.parseLong( request.getParameter( "blogId" ) ) : null;
+
 				dataModel = new HashMap<String, Object>();
 				dataModel.put( "title", "Create or Edit Blog" );
+				dataModel.put( "blogId", blogId );
 				if( blogPostId != null ) {
 					BlogPostApi.GetRequest blogPostRequest = new BlogPostApi.GetRequest();
 					blogPostRequest.setBlogPostId( blogPostId );
