@@ -272,7 +272,6 @@ a.pratilipi-dark-blue-button:hover, a.pratilipi-dark-blue-button:focus {
 	border: 1px solid #979797;
 	box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.50);
 	border-radius: 2px;
-	font-family: Helvetica-Bold, 'Noto Sans Tamil';
 	font-size: 13px;
 	color: #4A4A4A;
 	letter-spacing: 0.3px;
@@ -313,7 +312,6 @@ a.pratilipi-white-button:hover, a.pratilipi-white-button:focus {
 	border: 1px solid #F5A623;
 	box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.50);
 	border-radius: 2px;
-	font-family: Helvetica-Bold, 'Noto Sans Tamil';
 	font-size: 12px;
 	color: #F58823;
 	letter-spacing: 0.3px;
@@ -379,7 +377,6 @@ a.pratilipi-new-blue-button:hover {
 
 /* Other Elements */
 .rating-text {
-	font-family: Helvetica;
 	font-size: 12px;
 	color: #333;
 	line-height: 14px;
