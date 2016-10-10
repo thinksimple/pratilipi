@@ -10,7 +10,7 @@
 	<body>
 		<pratilipi-edit-blog 
 			blog='<#if blogPostJson??>${ blogPostJson }<#else>{}</#if>'
-			blog-id="{ blogId?c }"></pratilipi-edit-blog>
+			blog-id="${ blogId?c }"></pratilipi-edit-blog>
 		<#include "meta/Font.ftl">
     </body>
 
