@@ -1,4 +1,5 @@
 new
+two-minute
 series
 satire
 society
