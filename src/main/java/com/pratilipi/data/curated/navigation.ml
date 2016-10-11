@@ -8,15 +8,15 @@
 
 
 വിഭാഗങ്ങൾ 
-/series        തുടര്‍ക്കഥകള്‍            App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"series" }
-/lives         ജീവിതങ്ങള്‍               App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"lives" }
-/memory        ഓര്‍മ്മ                   App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"memory" }
 /love          പ്രണയം                 App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"love" }
-/satire        ആക്ഷേപഹാസ്യം         App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"satire" }   
 /women         സ്ത്രീ                   App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"women" }
+/lives         ജീവിതങ്ങള്‍               App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"lives" }
 /mystery       ദുരൂഹം                  App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"mystery" }
-/letters       കത്തുകള്‍                App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"letters" }
+/series        തുടര്‍ക്കഥകള്‍            App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"series" }
 /society       സമൂഹം                  App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"society" }
+/memory        ഓര്‍മ്മ                   App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"memory" }
+/satire        ആക്ഷേപഹാസ്യം         App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"satire" }   
+/letters       കത്തുകള്‍                App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"letters" }
 /non-fiction   നോണ്‍ ഫിക്ഷന്‍         App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"non-fiction" }
 
 
