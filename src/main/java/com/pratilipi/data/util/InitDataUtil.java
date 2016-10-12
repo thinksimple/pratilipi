@@ -37,11 +37,10 @@ public class InitDataUtil {
 
 		
 		InitBannerDoc[] initBannerDocs = new InitBannerDoc[] {
-				docAccessor.newInitBannerDoc( "pratilipi-hindi-carousel-30.jpg", null, "/event/aajka-rashifal" ),
-				docAccessor.newInitBannerDoc( "pratilipi-hindi-carousel-25.jpg", null, "/mythology" ),
-				docAccessor.newInitBannerDoc( "pratilipi-hindi-carousel-29.jpg", null, "/lovestories" ),
-				docAccessor.newInitBannerDoc( "pratilipi-hindi-carousel-27.jpg", null, "/suspense-aur-thriller" ),
-				docAccessor.newInitBannerDoc( "pratilipi-hindi-carousel-28.jpg", null, "/events" ),
+				docAccessor.newInitBannerDoc( "pratilipi-hindi-carousel-31.jpg", null, "/premchand-sahitya" ),
+				docAccessor.newInitBannerDoc( "pratilipi-hindi-carousel-32.jpg", null, "/horror" ),
+				docAccessor.newInitBannerDoc( "pratilipi-hindi-carousel-33.jpg", null, "/suspense-aur-thriller" ),
+				docAccessor.newInitBannerDoc( "pratilipi-hindi-carousel-34.jpg", null, "/gazals" ),
 		};
 		
 		InitDoc hiInitDoc = docAccessor.newInitDoc();
