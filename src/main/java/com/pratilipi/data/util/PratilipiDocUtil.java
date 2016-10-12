@@ -709,7 +709,7 @@ public class PratilipiDocUtil {
 		PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( pratilipiId );
 		
 		if( pcDoc == null )
-			new ArrayList<>( 0 );
+			return new ArrayList<>( 0 );
 
 		return pcDoc.getIndex();
 
