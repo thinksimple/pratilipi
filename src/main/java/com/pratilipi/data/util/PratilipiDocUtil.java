@@ -507,6 +507,7 @@ public class PratilipiDocUtil {
 		
 	}
 	
+	
 	public static PratilipiContentDoc addChapter( Long pratilipiId, Integer chapterNo ) 
 			throws InsufficientAccessException, UnexpectedServerException {
 
@@ -530,7 +531,7 @@ public class PratilipiDocUtil {
 	}
 
 	public static PratilipiContentDoc deleteChapter( Long pratilipiId, Integer chapterNo ) 
-			throws UnexpectedServerException, InvalidArgumentException, InsufficientAccessException {
+			throws InsufficientAccessException, UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
@@ -542,7 +543,7 @@ public class PratilipiDocUtil {
 		PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( pratilipiId );
 
 		if( pcDoc == null )
-			throw new InvalidArgumentException( "Content is Missing!" );
+			return docAccessor.newPratilipiContentDoc();
 
 		pcDoc.deleteChapter( chapterNo );
 		docAccessor.save( pratilipiId, pcDoc );
@@ -696,7 +697,7 @@ public class PratilipiDocUtil {
 	}
 
 	public static List<JsonObject> getIndex( Long pratilipiId ) 
-			throws InsufficientAccessException, UnexpectedServerException, InvalidArgumentException {
+			throws InsufficientAccessException, UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
@@ -706,8 +707,9 @@ public class PratilipiDocUtil {
 
 		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
 		PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( pratilipiId );
+		
 		if( pcDoc == null )
-			throw new InvalidArgumentException( "Content is Missing!" );
+			new ArrayList<>( 0 );
 
 		return pcDoc.getIndex();
 
