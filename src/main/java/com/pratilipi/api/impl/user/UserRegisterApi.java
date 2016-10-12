@@ -1,6 +1,5 @@
 package com.pratilipi.api.impl.user;
 
-import com.google.gson.JsonObject;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Post;
@@ -14,9 +13,9 @@ import com.pratilipi.common.type.Language;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.util.AuthorDataUtil;
 import com.pratilipi.data.util.UserDataUtil;
-import com.pratilipi.filter.UxModeFilter;
 import com.pratilipi.taskqueue.Task;
 import com.pratilipi.taskqueue.TaskQueueFactory;
+
 
 @SuppressWarnings("serial")
 @Bind( uri= "/user/register" )
@@ -34,8 +33,9 @@ public class UserRegisterApi extends GenericApi {
 		@Validate( required = true, requiredErrMsg = ERR_PASSWORD_REQUIRED, regEx = REGEX_PASSWORD, regExErrMsg = ERR_PASSWORD_INVALID )
 		private String password;
 
+		@Validate( required = true )
 		private Language language;
-
+		
 	}
 	
 	
@@ -43,22 +43,9 @@ public class UserRegisterApi extends GenericApi {
 	public UserApi.Response post( PostRequest request )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
-		if( UxModeFilter.isAndroidApp() && request.language == null ) {
-			JsonObject errorMessages = new JsonObject();
-			errorMessages.addProperty( "language", GenericRequest.ERR_LANGUAGE_REQUIRED );
-			throw new InvalidArgumentException( errorMessages );
-		}
-		
-		
 		String firstName = request.name.trim();
 		String lastName = null;
 		String email = request.email.trim().toLowerCase();
-		Language filterLanguage = UxModeFilter.isAndroidApp()
-				? request.language
-				: UxModeFilter.getFilterLanguage();
-		Language displayLanguage = UxModeFilter.isAndroidApp()
-				? request.language
-				: UxModeFilter.getDisplayLanguage();
 		
 		if( firstName.lastIndexOf( ' ' ) != -1 ) {
 			lastName = firstName.substring( firstName.lastIndexOf( ' ' ) + 1 );
@@ -71,7 +58,7 @@ public class UserRegisterApi extends GenericApi {
 				email, request.password,
 				UserDataUtil.getUserSignUpSource( false, false ) );
 		// Create Author profile for the User.
-		Long authorId = AuthorDataUtil.createAuthorProfile( userData, filterLanguage );
+		Long authorId = AuthorDataUtil.createAuthorProfile( userData, request.language );
 		// Log-in the User.
 		userData = UserDataUtil.loginUser( email, request.password );
 
@@ -79,12 +66,12 @@ public class UserRegisterApi extends GenericApi {
 		Task task1 = TaskQueueFactory.newTask()
 				.setUrl( "/user/email" )
 				.addParam( "userId", userData.getId().toString() )
-				.addParam( "language", displayLanguage.toString() )
+				.addParam( "language", request.language.toString() )
 				.addParam( "sendWelcomeMail", "true" );
 		Task task2 = TaskQueueFactory.newTask()
 				.setUrl( "/user/email" )
 				.addParam( "userId", userData.getId().toString() )
-				.addParam( "language", displayLanguage.toString() )
+				.addParam( "language", request.language.toString() )
 				.addParam( "sendEmailVerificationMail", "true" );
 		Task task3 = TaskQueueFactory.newTask()
 				.setUrl( "/author/process" )
