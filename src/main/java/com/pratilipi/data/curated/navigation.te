@@ -1,4 +1,5 @@
 విషయసూచిక
+/authorofthe week ఈ వారం రచయిత
 /new              కొత్త రచనలు             App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"new" }
 /recommended      తప్పక చదవాల్సినవి        App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"recommended" }
 /mostread         పాఠకులకు ప్రత్యేకం         App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"mostread" }
