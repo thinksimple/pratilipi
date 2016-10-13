@@ -92,9 +92,16 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 		}
 		
 		@Override
+		public String getHtml() {
+			return html;
+		}
+		
+		@Override
 		public void setHtml( String html ) {
 			this.html = html;
 		}
+
+
 
 	}
 

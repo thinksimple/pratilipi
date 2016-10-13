@@ -1,21 +1,16 @@
 package com.pratilipi.api.impl.pratilipi;
 
-import java.util.Map;
-
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.annotation.Validate;
-import com.pratilipi.api.shared.GenericFileDownloadResponse;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
-import com.pratilipi.common.type.PratilipiContentType;
 import com.pratilipi.data.DataAccessorFactory;
-import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.PratilipiContentDoc;
 import com.pratilipi.data.util.PratilipiDataUtil;
@@ -30,19 +25,17 @@ public class PratilipiContentApi extends GenericApi {
 
 	public static class GetRequest extends GenericRequest {
 
-		@Validate( required = true, minLong = 1L, requiredErrMsg = ERR_PRATILIPI_ID_REQUIRED )
+		@Validate( required = true, requiredErrMsg = ERR_PRATILIPI_ID_REQUIRED, minLong = 1L )
 		private Long pratilipiId;
 
-		@Validate( required = true, minInt = 1, requiredErrMsg = ERR_PRATILIPI_CHAPTER_NO_REQUIRED )
+		@Validate( minInt = 1 )
 		private Integer chapterNo;
 
 		@Validate( minInt = 1 )
 		private Integer pageNo;
 
-		private PratilipiContentType contentType;
 
-
-		public void setPratilipiId( Long pratilipiId ) {
+ 		public void setPratilipiId( Long pratilipiId ) {
 			this.pratilipiId = pratilipiId;
 		}
 
@@ -52,10 +45,6 @@ public class PratilipiContentApi extends GenericApi {
 
 		public void setPageNo( Integer pageNo ) {
 			this.pageNo = pageNo;
-		}
-
-		public void setContentType( PratilipiContentType contentType ) {
-			this.contentType = contentType;
 		}
 
 	}
@@ -78,25 +67,26 @@ public class PratilipiContentApi extends GenericApi {
 	}
 
 	@SuppressWarnings("unused")
-	public static class Response extends GenericResponse {
+	public static class GetResponse extends GenericResponse {
 
 		private Long pratilipiId;
 		private Integer chapterNo;
-		private Integer pageNo;
 		private String chapterTitle;
+		private Integer pageNo;
 		private Object content;
 
 
-		private Response() {}
+		private GetResponse() {}
 
-		public Response( Long pratilipiId, Integer chapterNo, Integer pageNo, String chapterTitle, Object content ) {
+		public GetResponse( Long pratilipiId, Integer chapterNo, String chapterTitle, Integer pageNo, Object content ) {
 			this.pratilipiId = pratilipiId;
 			this.chapterNo = chapterNo;
-			this.pageNo = pageNo;
 			this.chapterTitle = chapterTitle;
+			this.pageNo = pageNo;
 			this.content = content;
 		}
 
+		
 		public String getChapterTitle() {
 			return chapterTitle;
 		}
@@ -109,71 +99,104 @@ public class PratilipiContentApi extends GenericApi {
 
 
 	@Get
-	public GenericResponse getPratilipiContent( GetRequest request )
-			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
+	public GetResponse get( GetRequest request )
+			throws InvalidArgumentException, InsufficientAccessException,
+			UnexpectedServerException {
 
-		Pratilipi pratilipi = DataAccessorFactory.getDataAccessor().getPratilipi( request.pratilipiId );
-
-		if( pratilipi.isOldContent() ) {
-
-			Object content = PratilipiDataUtil.getPratilipiContent(
+		if( UxModeFilter.isAndroidApp() ) {
+			
+			Object content = PratilipiDocUtil.getContent(
 					request.pratilipiId,
 					request.chapterNo,
+					request.pageNo );
+			
+			return new GetResponse(
+					request.pratilipiId,
+					request.chapterNo,
+					null,
 					request.pageNo,
-					pratilipi.getContentType() );
-
-			if( UxModeFilter.isAndroidApp() ) {
-				return new Response(
+					content );
+		
+		} else {
+		
+			if( request.chapterNo == null )
+				request.chapterNo = 1;
+		
+			Pratilipi pratilipi = DataAccessorFactory.getDataAccessor().getPratilipi( request.pratilipiId );
+		
+			if( pratilipi.isOldContent() ) {
+				
+				String content = PratilipiDataUtil.getPratilipiContent(
+						request.pratilipiId,
+						request.chapterNo );
+	
+				return new GetResponse(
 						request.pratilipiId,
 						request.chapterNo,
-						request.pageNo,
 						null,
+						request.pageNo,
 						content );
 
-			} else if( pratilipi.getContentType() == PratilipiContentType.PRATILIPI ) {
-				return new Response(
+			} else { // New Content
+
+				Object content = PratilipiDocUtil.getContent(
 						request.pratilipiId,
 						request.chapterNo,
-						request.pageNo,
-						null,
-						content );
+						request.pageNo );
 
-			} else if( pratilipi.getContentType() == PratilipiContentType.IMAGE ) {
-				BlobEntry blobEntry = ( BlobEntry ) content;
-				return new GenericFileDownloadResponse(
-						blobEntry.getData(),
-						blobEntry.getMimeType(),
-						blobEntry.getETag() );
+				
+				if( content == null ) {
+					
+					return new GetResponse(
+							request.pratilipiId,
+							request.chapterNo,
+							null,
+							request.pageNo,
+							"" );
+					
+				} else if( request.pageNo != null ) {
+					
+					PratilipiContentDoc.Page page = (PratilipiContentDoc.Page) content;
+					return new GetResponse(
+							request.pratilipiId,
+							request.chapterNo,
+							null,
+							request.pageNo,
+							page.getHtml() );
 
+				} else {
+					
+					PratilipiContentDoc.Chapter chapter = (PratilipiContentDoc.Chapter) content;
+					
+					String contentHtml = "";
+					for( PratilipiContentDoc.Page page : chapter.getPageList() )
+						contentHtml += page.getHtml();
+					
+					return new GetResponse(
+							request.pratilipiId,
+							request.chapterNo,
+							chapter.getTitle(),
+							request.pageNo,
+							contentHtml );
+					
+				}
+				
 			}
 
-		} else {
-
-			Map<String, Object> contentMap = PratilipiDocUtil.getContent( request.pratilipiId, request.chapterNo, 1, ! UxModeFilter.isAndroidApp() );
-
-			return new Response( request.pratilipiId, 
-					request.chapterNo, 
-					request.pageNo,
-					contentMap != null && contentMap.get( "chapterTitle" ) != null ? contentMap.get( "chapterTitle" ).toString() : null, 
-					contentMap != null && contentMap.get( "content" ) != null ? contentMap.get( "content" ) : null );
-
 		}
-
-		return new GenericResponse();
 
 	}
 
 	@Post
-	public Response postPratilipiContent( PostRequest request )
-			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
+	public GenericResponse post( PostRequest request )
+			throws InsufficientAccessException, UnexpectedServerException {
 
-		@SuppressWarnings("unused")
-		PratilipiContentDoc pcDoc = 
-				PratilipiDocUtil.updateContent( request.pratilipiId, 
-												request.chapterNo, 
-												request.pageNo, 
-												request.chapterTitle, 
-												request.content );
+		PratilipiDocUtil.savePageContent(
+				request.pratilipiId, 
+				request.chapterNo, 
+				request.chapterTitle, 
+				request.pageNo, 
+				request.content );
 
 		Task task = TaskQueueFactory.newTask()
 				.setUrl( "/pratilipi/process" )
@@ -181,11 +204,7 @@ public class PratilipiContentApi extends GenericApi {
 				.addParam( "processContent", "true" );
 		TaskQueueFactory.getPratilipiTaskQueue().add( task );
 
-		return new Response( request.pratilipiId, 
-				request.chapterNo, 
-				request.pageNo,
-				request.chapterTitle, 
-				request.content );
+		return new GenericResponse();
 
 	}
 

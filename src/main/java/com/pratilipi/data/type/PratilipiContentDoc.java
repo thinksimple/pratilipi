@@ -28,6 +28,7 @@ public interface PratilipiContentDoc {
 		void addPagelet( PageletType type, Object data );
 		void addPagelet( PageletType type, Object data, AlignmentType alignmentType );
 		void deleteAllPagelets();
+		String getHtml();
 		void setHtml( String html );
 	}
 

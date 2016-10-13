@@ -1,5 +1,6 @@
 package com.pratilipi.api.impl.pratilipi;
 
+import com.google.gson.JsonArray;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Post;
@@ -7,7 +8,6 @@ import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.UnexpectedServerException;
-import com.pratilipi.data.type.PratilipiContentDoc;
 import com.pratilipi.data.util.PratilipiDocUtil;
 
 @SuppressWarnings("serial")
@@ -24,12 +24,15 @@ public class PratilipiContentChapterAddApi extends GenericApi {
 
 	}
 
+	
 	@Post
-	public PratilipiContentIndexApi.Response addChapter( PostRequest request )
+	public PratilipiContentIndexApi.Response post( PostRequest request )
 			throws InsufficientAccessException, UnexpectedServerException {
 
-		PratilipiContentDoc pcDoc = PratilipiDocUtil.addChapter( request.pratilipiId, request.chapterNo );
-		return new PratilipiContentIndexApi.Response( pcDoc.getIndex() );
+		JsonArray index = PratilipiDocUtil.addChapter(
+				request.pratilipiId,
+				request.chapterNo );
+		return new PratilipiContentIndexApi.Response( index );
 
 	}
 

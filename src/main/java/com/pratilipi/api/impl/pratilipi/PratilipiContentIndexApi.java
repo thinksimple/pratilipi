@@ -1,8 +1,6 @@
 package com.pratilipi.api.impl.pratilipi;
 
-import java.util.List;
-
-import com.google.gson.JsonObject;
+import com.google.gson.JsonArray;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -10,9 +8,9 @@ import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
-import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.data.util.PratilipiDocUtil;
+
 
 @SuppressWarnings("serial")
 @Bind( uri = "/pratilipi/content/index" )
@@ -32,25 +30,27 @@ public class PratilipiContentIndexApi extends GenericApi {
 
 	public static class Response extends GenericResponse {
 
-		private List<JsonObject> index;
+		private JsonArray index;
 
+		
 		@SuppressWarnings("unused")
 		private Response() {}
 
-		public Response( List<JsonObject> index ) {
+		public Response( JsonArray index ) {
 			this.index = index;
 		}
 
 
-		public List<JsonObject> getIndex() {
+		public JsonArray getIndex() {
 			return index;
 		}
 
 	}
 
+	
 	@Get
 	public Response getIndex( GetRequest request )
-			throws UnexpectedServerException, InsufficientAccessException, InvalidArgumentException {
+			throws InsufficientAccessException, UnexpectedServerException {
 
 		return new Response( PratilipiDocUtil.getIndex( request.pratilipiId ) );
 
