@@ -1,0 +1,109 @@
+<#assign cookieName = "USER_NOTIFIED">
+<script>
+	$( document ).ready( function() {
+		if( getCookie( "${ cookieName }" ) != "true" )
+			document.getElementById( 'androidSubsribeAlert' ).style.display = "block";
+	});
+	function setCookie( name, value, days, path ) {
+		var date = new Date();
+		date.setTime( date.getTime() + ( days * 24 * 60 * 60 * 1000 ) );
+		var expires = "; expires=" + date.toGMTString();
+		document.cookie = name + "=" + value + expires + "; path=" + path;
+	}
+	function getCookie( cname ) {
+		var name = cname + "=";
+		var ca = document.cookie.split( ';' );
+		for( var i = 0; i <ca.length; i++ ) {
+			var c = ca[i];
+			while( c.charAt(0) == ' ' ) c = c.substring( 1 );
+			if( c.indexOf( name ) == 0 ) return c.substring(name.length,c.length);
+		}
+		return "";
+	}
+	function validateEmail( email ) {
+		var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		return re.test(email);
+	}
+	function subscribeAndroid( email, phone ) {
+		document.getElementById( 'success-androidSubsribeModal' ).style.display = 'none';
+		document.getElementById( 'failure-androidSubsribeModal' ).style.display = 'none';
+		document.getElementById( 'loading-androidSubsribeModal' ).style.display = 'block';
+		var errMessage = null;
+		if( email == null || email.trim() == "" )
+			errMessage = "Please enter your email";
+		else if( ! validateEmail( email ) )
+			errMessage = "Invalid Email";
+		if( errMessage != null ) {
+			document.getElementById( 'loading-androidSubsribeModal' ).style.display = 'none';
+			document.getElementById( 'failure-androidSubsribeModal' ).style.display = 'block';
+			document.getElementById( 'failure-androidSubsribeModal' ).innerHTML = errMessage;
+			return;
+		}
+		$.ajax({
+			type: 'post',
+			url: '/api/mailinglist/subscribe',
+			data: {
+				'mailingList': "LAUNCH_ANNOUNCEMENT_ANDROID_APP",
+				'email': email,
+				'phone': phone,
+				'language': "${ language }"
+			},
+			success: function( response ) {
+				document.getElementById( 'loading-androidSubsribeModal' ).style.display = 'none';
+				document.getElementById( 'success-androidSubsribeModal' ).style.display = 'block';
+				setCookie( '${ cookieName }', 'true', 365, "/" );
+				setTimeout( function() {
+					document.getElementById( "androidSubsribeForm" ).reset();
+					document.getElementById( 'success-androidSubsribeModal' ).style.display = 'none';
+					document.getElementById( 'androidSubsribeAlert' ).style.display = 'none';
+					jQuery( "#androidSubsribeModal" ).modal( 'hide' );
+				}, 2000);
+			},
+			error: function( response ) {
+				var message = "${ _strings.server_error_message }";
+				var res = jQuery.parseJSON( response.responseText );
+				if( res.email != null ) message = res.email;
+				else if( res.phone != null ) message = res.phone;
+				else if( res.message != null ) message = res.message;
+				document.getElementById( 'loading-androidSubsribeModal' ).style.display = 'none';
+				document.getElementById( 'failure-androidSubsribeModal' ).style.display = 'block';
+				document.getElementById( 'failure-androidSubsribeModal' ).innerHTML = message;
+			}
+		});
+	}
+</script>
+
+
+<div id="androidSubsribeAlert" style="margin-bottom: 4px; border-radius: 0; cursor: pointer; padding: 0; display: none;" class="alert alert-danger alert-dismissible fade in pratilipi-red" role="alert">
+	<button style="color: #D0021B; outline: none; outline: none; right: 6px; top: 15px; opacity: 1;" type="button" class="close pull-right" data-dismiss="alert" aria-label="Close" onclick="setCookie( '${ cookieName }', 'true', 365, '/' )">
+		<iron-icon icon="icons:close"></iron-icon>
+	</button>
+	<div data-toggle="modal" data-target="#androidSubsribeModal" style="padding: 16px 20px; width: 95%; width: calc(100% - 32px); font-size: 15px; font-weight: 700;">${ _strings.android_alert_message }</div>
+</div>
+
+<div id="androidSubsribeModal" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content" style="border-radius: 0;">
+			<div style="border: none;" class="modal-header">
+				<button style="opacity: 0.75; outline: none;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<iron-icon icon="icons:close"></iron-icon>
+				</button>
+			</div>
+			<form id="androidSubsribeForm">
+				<div style="padding-top: 24px;" class="modal-body">
+					<h5 style="margin: 4px 8px; text-align: center;">${ _strings.android_popup_message }<a class="btn pratilipi-red" href="/android-registration" class="pratilipi-red" target="_blank">${ _strings.android_know_more_button }</a></h5>
+					<input style="border: none; box-shadow: none !important; border-bottom: 1px solid black; border-radius: 0px; width: 100%; outline: none; margin-top: 20px;" type="text" id="androidSubscribeEmail" name="androidSubscribeEmailVal" placeholder="${ _strings.user_email } *" />
+					<input style="border: none; box-shadow: none !important; border-bottom: 1px solid black; border-radius: 0px; width: 100%; outline: none; margin-top: 20px;" type="number" id="androidSubscribePhone" name="androidSubscribePhoneVal" placeholder="${ _strings.user_phone }" />
+					<div class="display-message-div" style="margin-top: 12px;">
+						<div style="display: none;" id="loading-androidSubsribeModal">${ _strings.working }</div>
+						<div style="display: none;" id="success-androidSubsribeModal">${ _strings.android_success_feedback }</div>
+						<div style="display: none;" id="failure-androidSubsribeModal"></div>
+					</div>
+				</div>
+				<div style="border: none; padding-top: 4px;" class="modal-footer">
+					<input type="button" class="btn" style="color: #fff; background: #d0021b; border: 1px solid #fbfbfb; font-size: 15px; border-radius: 3px; outline: none;" onclick="subscribeAndroid( this.form.androidSubscribeEmailVal.value, this.form.androidSubscribePhoneVal.value )" value="${ _strings.android_notify_me_button }" />
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
