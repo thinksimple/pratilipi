@@ -62,6 +62,7 @@
         }
         .carousel-control {
           color:black;
+          font-size: 40px !important;
         }
         .carousel-control:focus, .carousel-control:hover {
           color: black;  
@@ -74,10 +75,24 @@
         }
         .carousel-caption {
           color: black;
+          position: relative;
+          right: auto !important;
+          left: auto !important;
         }
-/*        .carousel-caption h3 {
-          background-color: rgba(255,255,255,0.5);
-        }*/
+        .carousel-caption h3 {
+            margin-top: 5px;
+            margin-bottom: 0px;
+        }
+        .carousel-control .glyphicon-chevron-left, .carousel-control .glyphicon-chevron-right, .carousel-control .icon-next, .carousel-control .icon-prev  {
+          width: 48px !important;
+          height: 48px !important;
+        }   
+        .carousel-control .glyphicon-chevron-left, .carousel-control .icon-prev {
+            left: 0%;   
+        }  
+        .carousel-control .glyphicon-chevron-right, .carousel-control .icon-next {
+            right: 0%; 
+        }
     </style>
 </head>
 <body>
@@ -100,7 +115,7 @@
             </form>
 
         </center>
-        <div id="app-image-carousel" class="carousel slide" data-ride="carousel" style="width: 280px;margin: 0 auto;margin-top: 20px;">
+        <div id="app-image-carousel" class="carousel slide" data-ride="carousel" style="width: 280px;margin: 0 auto;margin-top: 20px;height: 360px;">
         <!-- Indicators -->
             <ol class="carousel-indicators">
                 <li data-target="#app-image-carousel" data-slide-to="0" class="active"></li>
@@ -113,31 +128,31 @@
             <!-- Wrapper for slides -->
             <div class="carousel-inner" role="listbox" style="width: 210px;margin: 0 auto;">
                 <div class="item active">
-                    <img src="1.png" alt="..." style="height:360px;margin: 0 auto;">
+                    <img src="https://storage.googleapis.com/devo-pratilipi.appspot.com/app-screenshot/1.png" alt="..." style="height:360px;margin: 0 auto;">
                     <div class="carousel-caption">
                         <h3>Caption 1</h3>
                     </div>
                 </div>
                 <div class="item">
-                    <img src="2.png" alt="..." style="height:360px;margin: 0 auto;">
+                    <img src="https://storage.googleapis.com/devo-pratilipi.appspot.com/app-screenshot/2.png" alt="..." style="height:360px;margin: 0 auto;">
                     <div class="carousel-caption">
                         <h3>Caption 1</h3>
                     </div>
                 </div>
                 <div class="item">
-                    <img src="3.png" alt="..." style="height:360px;margin: 0 auto;">
+                    <img src="https://storage.googleapis.com/devo-pratilipi.appspot.com/app-screenshot/3.png" alt="..." style="height:360px;margin: 0 auto;">
                     <div class="carousel-caption">
                         <h3>Caption 1</h3>
                     </div>
                 </div>
                 <div class="item">
-                    <img src="4.png" alt="..." style="height:360px;margin: 0 auto;">
+                    <img src="https://storage.googleapis.com/devo-pratilipi.appspot.com/app-screenshot/4.png" alt="..." style="height:360px;margin: 0 auto;">
                     <div class="carousel-caption">
                         <h3>Caption 1</h3>
                     </div>
                 </div>
                 <div class="item">
-                    <img src="5.png" alt="..." style="height:360px;margin: 0 auto;">
+                    <img src="https://storage.googleapis.com/devo-pratilipi.appspot.com/app-screenshot/5.png" alt="..." style="height:360px;margin: 0 auto;">
                     <div class="carousel-caption">
                         <h3>Caption 1</h3>
                     </div>
@@ -193,6 +208,38 @@
       }
       
     }; 
+
+    AppRegistration.prototype.ajaxSubmitForm = function() {
+      var _this = this;
+      // var $spinner_div = $("<div>").addClass("spinner");
+      // this.$panel_container.append($spinner_div);
+      var ajax_data = {
+            email: this.$email.val() ,
+            phone: this.$mobile_no.val(),
+            language: "${ language }",
+            mailingList: "LAUNCH_ANNOUNCEMENT_ANDROID_APP",                
+             };
+      console.log( ajax_data );
+        $.ajax({type: "POST",
+            url: "/api/mailinglist/subscribe",
+            data: ajax_data,
+            success:function(response){
+              console.log(response);
+              console.log(typeof response);
+              
+              var parsed_data = jQuery.parseJSON( response );
+              console.log(parsed_data);
+            window.location = window.location.origin + window.location.pathname + "?action=write&id=" + parsed_data.pratilipiId;
+        },
+            fail:function(response){
+              var message = jQuery.parseJSON( response.responseText );
+              alert(message);
+        }             
+        
+      }); 
+      
+    };    
+
     AppRegistration.prototype.resetErrorStates = function() {
       this.form_validated = true;
       this.$form_groups.removeClass("has-error");
