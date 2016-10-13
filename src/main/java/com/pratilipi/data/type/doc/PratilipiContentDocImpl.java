@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.pratilipi.data.type.PratilipiContentDoc;
 
@@ -57,7 +58,7 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 		@Override
 		public List<Pagelet> getPageletList() {
 			return pagelets == null
-					? new ArrayList<Pagelet>( 1 )
+					? new ArrayList<Pagelet>( 0 )
 					: new ArrayList<Pagelet>( pagelets );
 		}
 
@@ -118,13 +119,15 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 			return pages == null || pages.size() < pageNo ? null : pages.get( pageNo - 1 );
 		}
 
+		@Deprecated
 		@Override
 		public Page addPage( int pageNo ) {
-			PageImpl page = new PageImpl();
 			if( pages == null )
 				pages = new LinkedList<>();
-			pages.add( pageNo - 1, page );
-			return page;
+			if( pages.size() < pageNo )
+				for( int i = pages.size(); i < pageNo; i++ )
+					pages.add( new PageImpl() );
+			return pages.get( pageNo - 1 );
 		}
 
 		@Override
@@ -143,7 +146,6 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 					? new ArrayList<Page>( 0 )
 					: new ArrayList<Page>( pages );
 		}
-
 
 		@Override
 		public void deletePage( int pageNo ) {
@@ -174,14 +176,8 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 
 	@Override
 	public Chapter getChapter( int chapterNo ) {
-		if( chapters == null || chapters.size() < chapterNo )
-			return null;
-		int count = 0;
-		for( Chapter chapter : chapters ) {
-			count++;
-			if( count == chapterNo )
-				return chapter;
-		}
+		if( chapters != null && chapters.size() >= chapterNo )
+			return chapters.get( chapterNo - 1 );
 		return null;
 	}
 
@@ -194,27 +190,29 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 
 	@Override
 	public Chapter addChapter( String title ) {
-		return addChapter( title, null, null );
+		return addChapter( null, title, null );
 	}
 
 	@Override
-	public Chapter addChapter( String title, Integer chapterNo ) {
-		return addChapter( title, chapterNo, null );
+	public Chapter addChapter( Integer chapterNo, String title ) {
+		return addChapter( chapterNo, title, null );
 	}
 
 	@Override
-	public Chapter addChapter( String title, Integer chapterNo, Integer nesting ) {
+	public Chapter addChapter( Integer chapterNo, String title, Integer nesting ) {
 
 		if( chapters == null )
 			chapters = new LinkedList<>();
 
-		ChapterImpl chapter = nesting != null ?
-				new ChapterImpl( title, nesting ) : new ChapterImpl( title );
+		ChapterImpl chapter = nesting == null
+				? new ChapterImpl( title )
+				: new ChapterImpl( title, nesting );
 
-		if( chapterNo == null || chapters.size() < chapterNo )
+		if( chapterNo == null )
 			chapters.add( chapter );
 		else
-			chapters.add( chapterNo - 1, chapter );
+			for( int i = chapters.size(); i <= chapterNo; i++ )
+				chapters.add( chapterNo - 1, chapter );
 
 		return chapter;
 
@@ -222,34 +220,24 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 
 	@Override
 	public void deleteChapter( int chapterNo ) {
-
-		if( chapters == null || chapters.size() < chapterNo )
-			return;
-
-		chapters.remove( chapterNo - 1 );
-
+		if( chapters != null && chapters.size() >= chapterNo )
+			chapters.remove( chapterNo - 1 );
 	}
 
 	@Override
-	public List<JsonObject> getIndex() {
-
-		if( chapters == null )
-			return null;
-
-		List<JsonObject> index = new LinkedList<JsonObject>();
-
-		int i = 0;
-		for( Chapter chapter : chapters ) {
-			JsonObject jsonObject = new JsonObject();
-			jsonObject.addProperty( "chapterNo", ++i );
-			jsonObject.addProperty( "nesting", chapter.getNesting() );
-			if( chapter.getTitle() != null )
-				jsonObject.addProperty( "title", chapter.getTitle() );
-			index.add( jsonObject );
+	public JsonArray getIndex() {
+		JsonArray index = new JsonArray();
+		if( chapters != null ) {
+			for( int chapterNo = 1; chapterNo <= chapters.size(); chapterNo++ ) {
+				Chapter chapter = chapters.get( chapterNo );
+				JsonObject indexItem = new JsonObject();
+				indexItem.addProperty( "chapterNo", chapterNo++ );
+				indexItem.addProperty( "title", chapter.getTitle() );
+				indexItem.addProperty( "nesting", chapter.getNesting() );
+				index.add( indexItem );
+			}
 		}
-
 		return index;
-
 	}
 
 }

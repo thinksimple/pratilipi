@@ -2,17 +2,18 @@ package com.pratilipi.data.type;
 
 import java.util.List;
 
-import com.google.gson.JsonObject;
+import com.google.gson.JsonArray;
 
 public interface PratilipiContentDoc {
 
 	enum PageletType {
-		HEAD_1, HEAD_2, HTML, TEXT, IMAGE, BLOCK_QUOTE
+		HEAD_1, HEAD_2, TEXT, HTML, BLOCK_QUOTE, IMAGE
 	}
 
 	enum AlignmentType {
 		LEFT, CENTER, RIGHT, JUSTIFY
 	}
+
 
 	interface Pagelet {
 		PageletType getType();
@@ -32,19 +33,21 @@ public interface PratilipiContentDoc {
 		int getPageCount();
 		Page getPage( int pageNo );
 		List<Page> getPageList();
-		Page addPage( PageletType type, Object data );
+		@Deprecated
 		Page addPage( int pageNo );
+		Page addPage( PageletType type, Object data );
 		void deletePage( int pageNo );
 		int getNesting();
 	}
 
+	
 	int getChapterCount();
 	Chapter getChapter( int chapterNo );
 	List<Chapter> getChapterList();
 	Chapter addChapter( String title );
-	Chapter addChapter( String title, Integer chapterNo );
-	Chapter addChapter( String title, Integer chapterNo, Integer nesting );
+	Chapter addChapter( Integer chapterNo, String title );
+	Chapter addChapter( Integer chapterNo, String title, Integer nesting );
 	void deleteChapter( int chapterNo );
-	List<JsonObject> getIndex();
+	JsonArray getIndex();
 
 }
