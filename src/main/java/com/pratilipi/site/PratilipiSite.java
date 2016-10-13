@@ -407,7 +407,7 @@ public class PratilipiSite extends HttpServlet {
 
 				templateName = templateFilePrefix + "EventEdit.ftl";
 
-			} else if( uri.equals( "/edit-blog" ) ){
+			} else if( uri.equals( "/edit-blog" ) ) {
 
 				resourceList.add( ThirdPartyResource.CKEDITOR.getTag() );
 				Long blogPostId = request.getParameter( RequestParameter.CONTENT_ID.getName() ) != null ? 
@@ -429,6 +429,11 @@ public class PratilipiSite extends HttpServlet {
 				}
 
 				templateName = templateFilePrefix + "BlogEdit.ftl";
+
+			} else if( uri.equals( "/android-registration" ) ) {
+				dataModel = new HashMap<String, Object>();
+				dataModel.put( "title", "Registration for Android App!" );
+				templateName = templateFilePrefix + "AppRegistration.ftl";
 
 			} else if( uri.matches( "^/[a-z0-9-]+$" ) && ( dataModel = createDataModelForListPage( uri.substring( 1 ), basicMode, displayLanguage, filterLanguage, request ) ) != null ) {
 				templateName = templateFilePrefix + ( basicMode ? "ListBasic.ftl" : "List.ftl" );
