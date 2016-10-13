@@ -8,6 +8,7 @@ import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.condition.IfNotNull;
+import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.MailingList;
 import com.pratilipi.data.type.MailingListSubscription;
 
@@ -30,7 +31,11 @@ public class MailingListSubscriptionEntity implements MailingListSubscription {
 	@Index( IfNotNull.class )
 	private String PHONE;
 
+	@Index( IfNotNull.class )
+	private Language LANGUAGE;
+
 	private String COMMENT;
+
 
 	@Index
 	private Date SUBSCRIPTION_DATE;
@@ -103,6 +108,16 @@ public class MailingListSubscriptionEntity implements MailingListSubscription {
 		this.PHONE = phone;
 	}
 
+	@Override
+	public Language getLanguage() {
+		return LANGUAGE;
+	}
+	
+	@Override
+	public void setLanguage( Language language ) {
+		this.LANGUAGE = language;
+	}
+	
 	@Override
 	public String getComment() {
 		return COMMENT;
