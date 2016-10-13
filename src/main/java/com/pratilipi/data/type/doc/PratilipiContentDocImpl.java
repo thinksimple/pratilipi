@@ -128,8 +128,10 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 		public Page addPage( int pageNo ) {
 			if( pages == null )
 				pages = new LinkedList<>();
-			if( pages.size() < pageNo )
-				for( int i = pages.size(); i < pageNo; i++ )
+			if( pageNo <= pages.size() + 1 )
+				pages.add( pageNo - 1, new PageImpl() );
+			else
+				for( int i = pages.size(); i <= pageNo; i++ )
 					pages.add( new PageImpl() );
 			return pages.get( pageNo - 1 );
 		}
@@ -214,10 +216,12 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 
 		if( chapterNo == null )
 			chapters.add( chapter );
+		else if( chapterNo <= chapters.size() + 1 )
+			chapters.add( chapterNo - 1, chapter );
 		else
 			for( int i = chapters.size(); i <= chapterNo; i++ )
-				chapters.add( chapterNo - 1, chapter );
-
+				chapters.add( i - 1, i == chapterNo ? chapter : new ChapterImpl() );
+		
 		return chapter;
 
 	}
