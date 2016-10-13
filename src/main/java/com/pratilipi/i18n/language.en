@@ -384,3 +384,27 @@ writer_error_title_required = Please enter a title
 writer_error_category_required = Please select a category
 writer_error_copyright_required = Please accept Copyright Policy and Terms of Services
 pratilipi_add_summary = Please click here to add summary
+
+# Android App launch
+android_alert_message = Read without internet and download unlimited books. Be first to get Android app.
+android_popup_message = Pratilipi Android app is coming. Please register below and be the first one to get your very own Pratilipi App.
+android_banner_1 = Pratilipi Android App : Download unlimited books and Read without internet 
+android_banner_2 = Register below to get it first.
+android_banner_3 = Please register below and be the first one to get Pratilipi App.
+android_banner_4 = Know More
+android_banner_5 = Pratilipi Android app is coming.
+android_banner_home_1 = Discover, Read, Share
+android_banner_home_2 = Discover trending contents
+android_banner_home_3 = Read from your favourite categories
+android_banner_library_1 = Anytime, anywhere, without internet
+android_banner_library_2 = Download unlimited content to your library
+android_banner_library_3 = Read anytime without internet
+android_banner_notification_1 = Never miss an update
+android_banner_notification_2 = Instantly know about new contents and events
+android_banner_notification_3 = Build your own fan following
+android_banner_reader_1 = Experience the joy of reading
+android_banner_reader_2 = Customize the reader to suit your style
+android_banner_reader_3 = Bookmark, Night Mode, Share, Review
+android_banner_profile_1 = Your Profile, your way
+android_banner_profile_2 = Create profile which defines you
+android_banner_profile_3 = Manage your contents and network
