@@ -17,7 +17,9 @@ public interface PratilipiContentDoc {
 
 	interface Pagelet {
 		PageletType getType();
+		void setType( PageletType type );
 		Object getData();
+		void setData( Object data );
 		AlignmentType getAlignment();
 	}
 
@@ -26,6 +28,7 @@ public interface PratilipiContentDoc {
 		void addPagelet( PageletType type, Object data );
 		void addPagelet( PageletType type, Object data, AlignmentType alignmentType );
 		void deleteAllPagelets();
+		void setHtml( String html );
 	}
 
 	interface Chapter {

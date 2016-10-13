@@ -36,10 +36,20 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 		}
 
 		@Override
+		public void setType( PageletType type ) {
+			this.type = type;
+		}
+		
+		@Override
 		public Object getData() {
 			return data;
 		}
 
+		@Override
+		public void setData( Object data ) {
+			this.data = data;
+		}
+		
 		@Override
 		public AlignmentType getAlignment() {
 			return alignment;
@@ -50,6 +60,8 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 	public static class PageImpl implements PratilipiContentDoc.Page {
 
 		private List<PageletImpl> pagelets;
+		
+		private String html;
 
 
 		public PageImpl() {}
@@ -77,6 +89,11 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 		@Override
 		public void deleteAllPagelets() {
 			pagelets = null;
+		}
+		
+		@Override
+		public void setHtml( String html ) {
+			this.html = html;
 		}
 
 	}

@@ -52,6 +52,7 @@ import com.pratilipi.data.type.PratilipiContentDoc.AlignmentType;
 import com.pratilipi.data.type.PratilipiContentDoc.Chapter;
 import com.pratilipi.data.type.PratilipiContentDoc.Pagelet;
 import com.pratilipi.data.type.PratilipiContentDoc.PageletType;
+import com.pratilipi.filter.UxModeFilter;
 import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
 import com.pratilipi.data.type.PratilipiReviewsDoc;
 import com.pratilipi.data.type.UserPratilipi;
@@ -742,32 +743,9 @@ public class PratilipiDocUtil {
 	
 	}
 	
-	private static String _extractHtml( Node node ) {
-		if( node.getClass() == org.jsoup.nodes.Comment.class )
-			return null;
-		String html = node.getClass() == TextNode.class
-				? ( (TextNode) node ).text()
-				: ( (Element) node ).html();
-		html = html.replace( (char) 160, ' ' ).trim();
-		return html.isEmpty() ? null : html;
-	}
 	
-	private static AlignmentType _extractStyle( Node node, String styleName ) {
-		if( node.getClass() == org.jsoup.nodes.Comment.class
-				|| node.getClass() == TextNode.class )
-			return null;
-		String styleAttr = node.attr( "style" );
-		if( styleAttr == null || styleAttr.trim().isEmpty() )
-			return null;
-		for( String style : styleAttr.split( ";" ) )
-			if( style.substring( 0, style.indexOf( ":" ) ).trim().equals( styleName ) )
-				return AlignmentType.valueOf( style.substring( style.indexOf( ":" ) + 1 ).trim().toUpperCase() );
-		return null;
-	}
-
-	
-	public static Map<String, Object> getContent( Long pratilipiId, Integer chapterNo, Integer pageNo, boolean asHtml ) 
-			throws InvalidArgumentException, UnexpectedServerException, InsufficientAccessException {
+	public static Object getContent( Long pratilipiId, Integer chapterNo, Integer pageNo ) 
+			throws InsufficientAccessException, InvalidArgumentException, UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
@@ -779,70 +757,59 @@ public class PratilipiDocUtil {
 		PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( pratilipiId );
 
 		if( pcDoc == null )
-			throw new InvalidArgumentException( "Content is Missing!" );
-
-		Chapter chapter = pcDoc.getChapter( chapterNo );
-		if( chapter == null )
-			throw new InvalidArgumentException( "Chapter is Missing!" );
-
-		if( chapter.getPage( pageNo ) == null )
 			return null;
-
-		String chapterTitle = chapter.getTitle();
-		List<Pagelet> pageletList = chapter.getPage( pageNo ).getPageletList();
-
-
-		Object content = null;
-
-		if( asHtml ) {
-
-			String htmlString = new String();
-
-			for( Pagelet pagelet : pageletList ) {
-				Element element = null;
-				if( pagelet.getType() == PageletType.TEXT ) {
-					element = new Element( Tag.valueOf( "p" ), "" ).html( pagelet.getData().toString() );
-					if( pagelet.getAlignment() != null )
-						element.attr( "style", "text-align:" + pagelet.getAlignment().toString() );
-				} else if( pagelet.getType() == PageletType.BLOCK_QUOTE ) {
-					element = new Element( Tag.valueOf( "blockquote" ), "" ).html( pagelet.getData().toString() );
-				} else if( pagelet.getType() == PageletType.IMAGE ) {
-					element = new Element( Tag.valueOf( "img" ), "" ).attr( "src", pagelet.getData().toString() );
-				}
-
-				if( element != null )
-					htmlString = htmlString + element.toString();
-			}
-
-			content = htmlString;
-
-		} else {
-
-			// Deleting the page and replacing it with extracted text format
-			chapter.deletePage( pageNo );
-			PratilipiContentDoc.Page page = chapter.addPage( pageNo );
-
-			for( Pagelet pagelet : pageletList ) {
-				if( pagelet.getType() != PageletType.IMAGE ) {
-					String extractedText = HtmlUtil.toPlainText( pagelet.getData().toString() );
-					if( !extractedText.trim().isEmpty() )
-						page.addPagelet( PageletType.TEXT, extractedText );
-				} else {
-					page.addPagelet( pagelet.getType(), pagelet.getData() );
-				}
-			}
-
-			content = chapter;
-
-		}
-
-		Map<String, Object> contentMap = new HashMap<String, Object>();
-		contentMap.put( "chapterTitle", chapterTitle );
-		contentMap.put( "content", content );
-		return contentMap;
+		else if( chapterNo == null )
+			return process( pcDoc );
+		
+		Chapter chapter = pcDoc.getChapter( chapterNo );
+		
+		if( chapter == null )
+			return null;
+		else if( pageNo == null )
+			return process( chapter );
+		
+		return process( chapter.getPage( pageNo ) );
 
 	}
+	
+	private static PratilipiContentDoc process( PratilipiContentDoc pcDoc ) {
+		for( PratilipiContentDoc.Chapter chapterDoc : pcDoc.getChapterList() )
+			process( chapterDoc );
+		return pcDoc;
+	}
 
+	private static PratilipiContentDoc.Chapter process( PratilipiContentDoc.Chapter chapterDoc ) {
+		for( PratilipiContentDoc.Page pageDoc : chapterDoc.getPageList() )
+			process( pageDoc );
+		return chapterDoc;
+	}
+	
+	private static PratilipiContentDoc.Page process( PratilipiContentDoc.Page pageDoc ) {
+		if( UxModeFilter.isAndroidApp() ) {
+			for( PratilipiContentDoc.Pagelet pageletDoc : pageDoc.getPageletList() ) {
+				if( pageletDoc.getType() == PageletType.HTML ) {
+					pageletDoc.setType( PageletType.HTML );
+					pageletDoc.setData( HtmlUtil.toPlainText( (String) pageletDoc.getData() ) );
+				}
+			}
+		} else {
+			String html = "";
+			for( PratilipiContentDoc.Pagelet pageletDoc : pageDoc.getPageletList() ) {
+				if( ( pageletDoc.getType() == PageletType.TEXT || pageletDoc.getType() == PageletType.HTML ) && pageletDoc.getAlignment() == null )
+					html += "<p>" + pageletDoc.getData() + "</p>";
+				else if( ( pageletDoc.getType() == PageletType.TEXT || pageletDoc.getType() == PageletType.HTML ) && pageletDoc.getAlignment() != null )
+					html += "<p style=\"text-align:" + pageletDoc.getAlignment() + "\">" + pageletDoc.getData() + "</p>";
+				else if( pageletDoc.getType() == PageletType.BLOCK_QUOTE )
+					html += "<blockquote>" + pageletDoc.getData() + "</blockquote>";
+				else if( pageletDoc.getType() == PageletType.IMAGE )
+					html += "<img src=\"" + pageletDoc.getData() + "\"/>";
+			}
+			pageDoc.setHtml( html );
+			pageDoc.deleteAllPagelets();
+		}
+		return pageDoc;
+	}
+	
 	public static JsonArray getIndex( Long pratilipiId ) 
 			throws InsufficientAccessException, UnexpectedServerException {
 
