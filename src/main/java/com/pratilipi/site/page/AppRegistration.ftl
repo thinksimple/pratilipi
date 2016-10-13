@@ -9,7 +9,8 @@
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <title>${ title }</title>
+<!--     <link href="toaster.css" rel="stylesheet"/> -->
+    <title>Writer Panel</title>
     <style>
         .horizontal-form-input {
             border: none;
@@ -96,6 +97,14 @@
     </style>
 </head>
 <body>
+    <div class="alert alert-danger alert-dismissible" data-behaviour="email-alert" role="alert" style="margin-bottom: 0;display:none;">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <strong>Invalid email!</strong> 
+    </div>
+    <div class="alert alert-danger alert-dismissible" data-behaviour="mobile-alert" role="alert" style="margin-bottom: 0;display:none;">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <strong>Invalid mobile number!</strong>
+    </div>
     <div class="container">
         <a style="cursor: pointer;margin-top:10px;  " class="pull-left">
             <img style="width: 50px;height: 50px;" src="http://0.ptlp.co/resource-hi/logo/pratilipi_logo.png">
@@ -115,7 +124,7 @@
             </form>
 
         </center>
-        <div id="app-image-carousel" class="carousel slide" data-ride="carousel" style="width: 280px;margin: 0 auto;margin-top: 20px;height: 360px;">
+        <div id="app-image-carousel" class="carousel slide" data-ride="carousel" style="width: 280px;margin: 0 auto;margin-top: 10px;height: 360px;">
         <!-- Indicators -->
             <ol class="carousel-indicators">
                 <li data-target="#app-image-carousel" data-slide-to="0" class="active"></li>
@@ -128,33 +137,53 @@
             <!-- Wrapper for slides -->
             <div class="carousel-inner" role="listbox" style="width: 210px;margin: 0 auto;">
                 <div class="item active">
+                    <div class="carousel-caption" style="bottom: 0;padding-top:0;padding-bottom: 5px;">
+                        <p style="">Discover, Read, Share</p>
+                    </div>
                     <img src="https://storage.googleapis.com/devo-pratilipi.appspot.com/app-screenshot/1.png" alt="..." style="height:360px;margin: 0 auto;">
                     <div class="carousel-caption">
-                        <h3>Caption 1</h3>
+                        <p>Discover trending contents</p>
+                        <p>Read from your favourite categories</p>
                     </div>
                 </div>
                 <div class="item">
+                    <div class="carousel-caption" style="bottom: 0;padding-top:0;padding-bottom: 5px;">
+                        <p style="">Discover, Read, Share</p>
+                    </div>
                     <img src="https://storage.googleapis.com/devo-pratilipi.appspot.com/app-screenshot/2.png" alt="..." style="height:360px;margin: 0 auto;">
                     <div class="carousel-caption">
-                        <h3>Caption 1</h3>
+                        <p>Discover trending contents</p>
+                        <p>Read from your favourite categories</p>
                     </div>
                 </div>
                 <div class="item">
+                    <div class="carousel-caption" style="bottom: 0;padding-top:0;padding-bottom: 5px;">
+                        <p style="">Discover, Read, Share</p>
+                    </div>
                     <img src="https://storage.googleapis.com/devo-pratilipi.appspot.com/app-screenshot/3.png" alt="..." style="height:360px;margin: 0 auto;">
                     <div class="carousel-caption">
-                        <h3>Caption 1</h3>
+                        <p>Discover trending contents</p>
+                        <p>Read from your favourite categories</p>
                     </div>
                 </div>
                 <div class="item">
+                    <div class="carousel-caption" style="bottom: 0;padding-top:0;padding-bottom: 5px;">
+                        <p style="">Discover, Read, Share</p>
+                    </div>
                     <img src="https://storage.googleapis.com/devo-pratilipi.appspot.com/app-screenshot/4.png" alt="..." style="height:360px;margin: 0 auto;">
                     <div class="carousel-caption">
-                        <h3>Caption 1</h3>
+                        <p>Discover trending contents</p>
+                        <p>Read from your favourite categories</p>
                     </div>
                 </div>
                 <div class="item">
+                    <div class="carousel-caption" style="bottom: 0;padding-top:0;padding-bottom: 5px;">
+                        <p style="">Discover, Read, Share</p>
+                    </div>
                     <img src="https://storage.googleapis.com/devo-pratilipi.appspot.com/app-screenshot/5.png" alt="..." style="height:360px;margin: 0 auto;">
                     <div class="carousel-caption">
-                        <h3>Caption 1</h3>
+                        <p>Discover trending contents</p>
+                        <p>Read from your favourite categories</p>
                     </div>
                 </div>                
             </div>
@@ -171,18 +200,24 @@
         </div> 
     </div>                              
 </body>
+<script src="toaster.js"></script>
 <script>
     $(document).ready(function() {  
       var $form = $('form[data-behaviour="app-registration"]');
       var appRegistrationObject = new AppRegistration( $form );
       appRegistrationObject.init();
     });
+
     var AppRegistration = function ( form ) {
       this.$form = form;
       this.$email = this.$form.find("#email");
       this.$mobile_no = this.$form.find("#mobile_no");
       this.$form_groups = this.$form.find(".form-group");
       this.form_validated = true;
+      this.email_regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      this.mobile_no_regex = /^\d{10}$/;
+      this.$email_alert = $('[data-behaviour="email-alert"]');
+      this.$mobile_alert = $('[data-behaviour="mobile-alert"]');
     }
 
     AppRegistration.prototype.init = function() {
@@ -195,12 +230,33 @@
           e.preventDefault();
           _this.validateForm();
       } );
-    }; 
+    };
+
     AppRegistration.prototype.validateForm = function() {
+      var _this = this;
       this.resetErrorStates();
-      if( this.isEmptyStr( this.$email.val() ) && this.isEmptyStr( this.$mobile_no.val() ) ) {
+      var email_val = this.$email.val();
+      var mobile_no_val = this.$mobile_no.val();
+      if( this.isEmptyStr( email_val ) && this.isEmptyStr( mobile_no_val ) ) {
         this.$form_groups.addClass("has-error").append('<span class="error-exclamation glyphicon glyphicon-exclamation-sign form-control-feedback" aria-hidden="true"></span>');
         this.form_validated = false;
+      }
+      else {
+        if( !this.isEmptyStr( email_val ) && this.isNotValidEmail( email_val ) ) {
+            this.form_validated = false;
+            this.$email_alert.show();
+            setTimeout(function(d){
+              _this.$email_alert.hide();
+            }, 2000);            
+        }
+        if ( !this.isEmptyStr( mobile_no_val ) && this.isNotValidMobile( mobile_no_val ) ) {
+            // toastr.error('Wrong number ');
+            this.form_validated = false;
+            this.$mobile_alert.show();
+            setTimeout(function(d){
+              _this.$mobile_alert.hide();
+            }, 2000);             
+        }
       }
       
       if( this.form_validated ) {
@@ -211,8 +267,7 @@
 
     AppRegistration.prototype.ajaxSubmitForm = function() {
       var _this = this;
-      // var $spinner_div = $("<div>").addClass("spinner");
-      // this.$panel_container.append($spinner_div);
+
       var ajax_data = {
             email: this.$email.val() ,
             phone: this.$mobile_no.val(),
@@ -238,7 +293,14 @@
         
       }); 
       
+    };  
+    AppRegistration.prototype.isNotValidEmail = function( email ) {
+      return !this.email_regex.test( email );
+    };
+    AppRegistration.prototype.isNotValidMobile = function( mob_no ) {
+      return !this.mobile_no_regex.test( mob_no );
     };    
+
 
     AppRegistration.prototype.resetErrorStates = function() {
       this.form_validated = true;
