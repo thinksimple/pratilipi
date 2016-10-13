@@ -25,6 +25,7 @@ public interface PratilipiContentDoc {
 		List<Pagelet> getPageletList();
 		void addPagelet( PageletType type, Object data );
 		void addPagelet( PageletType type, Object data, AlignmentType alignmentType );
+		void deleteAllPagelets();
 	}
 
 	interface Chapter {
@@ -33,7 +34,6 @@ public interface PratilipiContentDoc {
 		int getPageCount();
 		Page getPage( int pageNo );
 		List<Page> getPageList();
-		@Deprecated
 		Page addPage( int pageNo );
 		Page addPage( PageletType type, Object data );
 		void deletePage( int pageNo );

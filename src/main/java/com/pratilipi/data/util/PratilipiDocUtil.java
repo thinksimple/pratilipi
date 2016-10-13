@@ -21,6 +21,7 @@ import org.jsoup.parser.Tag;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
@@ -92,7 +93,7 @@ public class PratilipiDocUtil {
 					if( pagelet[0] == PratilipiContentDoc.PageletType.HEAD_1 )
 						chapter = pcDoc.addChapter( (String) pagelet[1] );
 					else if( pagelet[0] == PratilipiContentDoc.PageletType.HEAD_2 )
-						chapter = pcDoc.addChapter( (String) pagelet[1], 1 );
+						chapter = pcDoc.addChapter( null, (String) pagelet[1], 1 );
 					else if( chapter.getPage( 1 ) == null )
 						chapter.addPage( (PratilipiContentDoc.PageletType) pagelet[0], pagelet[1] );
 					else
@@ -508,6 +509,7 @@ public class PratilipiDocUtil {
 	}
 	
 	
+	@Deprecated
 	public static PratilipiContentDoc addChapter( Long pratilipiId, Integer chapterNo ) 
 			throws InsufficientAccessException, UnexpectedServerException {
 
@@ -523,7 +525,7 @@ public class PratilipiDocUtil {
 		if( pcDoc == null )
 			pcDoc = docAccessor.newPratilipiContentDoc();
 
-		pcDoc.addChapter( null, chapterNo );
+		pcDoc.addChapter( chapterNo, null );
 		docAccessor.save( pratilipiId, pcDoc );
 
 		return pcDoc;
@@ -552,8 +554,8 @@ public class PratilipiDocUtil {
 
 	}
 
-	public static PratilipiContentDoc updateContent( Long pratilipiId, Integer chapterNo, Integer pageNo, String chapterTitle, String content ) 
-			throws UnexpectedServerException, InvalidArgumentException, InsufficientAccessException {
+	public static PratilipiContentDoc savePage( Long pratilipiId, Integer chapterNo, String chapterTitle, Integer pageNo, String html ) 
+			throws InsufficientAccessException, InvalidArgumentException, UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
@@ -561,64 +563,209 @@ public class PratilipiDocUtil {
 		if( ! PratilipiDataUtil.hasAccessToUpdatePratilipiContent( pratilipi ) )
 			throw new InsufficientAccessException();
 
+		
 		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
 
+		
+		// Doc
 		PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( pratilipiId );
 		if( pcDoc == null )
-			throw new InvalidArgumentException( "Content is Missing!" );
+			pcDoc = docAccessor.newPratilipiContentDoc();
 
+
+		// Chapter
 		Chapter chapter = pcDoc.getChapter( chapterNo );
 		if( chapter == null )
-			throw new InvalidArgumentException( "Chapter is Missing!" );
+			pcDoc.addChapter( chapterNo, chapterTitle );
+		else
+			chapter.setTitle( chapterTitle );
 
-		chapter.setTitle( chapterTitle != null ? chapterTitle.trim() : null );
-
-
-		PratilipiContentDoc.Page page = chapter.getPage( pageNo ); 
-
-		if( page != null )
-			chapter.deletePage( pageNo );
-
-		page = chapter.addPage( pageNo );
-
-
-		if( content != null ) {
-			for( Node childNode : Jsoup.parse( content ).body().childNodes() ) {
-
-				if( childNode.getClass() == org.jsoup.nodes.Comment.class ) {
-					continue;
+		
+		// Page
+		PratilipiContentDoc.Page page = chapter.getPage( pageNo );
+		if( page == null )
+			page = chapter.addPage( pageNo );
+		else
+			page.deleteAllPagelets();
+		
+		
+		// Pagelets
+		if( html != null && ! html.trim().isEmpty() ) {
+			
+			Node body = Jsoup.parse( html ).body();
+			
+			Node badNode = _validate( body );
+			if( badNode != null ) {
+				String errMsg = "";
+				while( badNode != body ) {
+					errMsg = " > " + badNode.getClass().getName() + errMsg;
+					badNode = badNode.parent();
 				}
+				errMsg = "Invalid node " + errMsg;
+				throw new InvalidArgumentException( errMsg );
+			}
+			
+			for( Node node : body.childNodes() ) {
 
-				if( childNode.getClass() == TextNode.class ) {
-					page.addPagelet( PageletType.TEXT, ( (TextNode) childNode ).text().trim() );
-					continue;
-				}
+				if( node.nodeName().equals( "p" ) ) {
 
-				Element element = (Element) childNode;
-				AlignmentType alignment = null;
-				if( childNode.nodeName().equals( "p" ) ) {
-					if( !element.attr( "style" ).trim().isEmpty() ) {
-						String[] styles = element.attr( "style" ).split( ";" );
-						for( String style : styles )
+					AlignmentType alignment = null;
+					if( node.attr( "style" ) != null && ! node.attr( "style" ).trim().isEmpty() )
+						for( String style : node.attr( "style" ).split( ";" ) )
 							if( style.substring( 0, style.indexOf( ":" ) ).trim().equals( "text-align" ) )
 								alignment = AlignmentType.valueOf( style.substring( style.indexOf( ":" ) + 1 ).trim().toUpperCase() );
-					}
-					page.addPagelet( PageletType.TEXT, element.html().trim(), alignment );
-				} else if( childNode.nodeName().equals( "img" ) ) {
-					page.addPagelet( PageletType.IMAGE, childNode.attr( "src" ).trim() );
-				} else if( childNode.nodeName().equals( "blockquote" ) ) {
-					page.addPagelet( PageletType.BLOCK_QUOTE, element.html().trim() );
+					
+					page.addPagelet( PageletType.TEXT, ( (Element) node ).html(), alignment );
+				
+				} else if( node.nodeName().equals( "img" ) ) { // TODO: Save image to CloudStore
+					
+					page.addPagelet( PageletType.IMAGE, node.attr( "src" ).trim() );
+				
+				} else if( node.nodeName().equals( "blockquote" ) ) {
+					
+					page.addPagelet( PageletType.BLOCK_QUOTE, ( (Element) node ).html() );
+				
 				}
 
 			}
+		
 		}
 
+		
+		// Save
 		docAccessor.save( pratilipiId, pcDoc );
 
 		return pcDoc;
 
 	}
 
+	private static Node _validate( Node node ) {
+		
+		if( node.getClass().getName().equals( "body" ) ) {
+		
+			for( Node childNode : node.childNodes() ) {
+				if( childNode.getClass().getName().equals( "p" ) || childNode.getClass().getName().equals( "blockquote" ) ) {
+					Node badNode = _validate( childNode );
+					if( badNode != null )
+						return badNode;
+				} else if( childNode.getClass().getName().equals( "img" ) ) {
+					// Do Nothing
+				} else {
+					return childNode; // Bad Node
+				}
+			}
+		
+		} else if( node.getClass().getName().equals( "p" ) || node.getClass().getName().equals( "blockquote" ) ) {
+			
+			for( Node childNode : node.childNodes() ) {
+				if( childNode.getClass() == TextNode.class ) {
+					// Do Nothing
+				} else if( childNode.getClass().getName().equals( "b" )
+						|| childNode.getClass().getName().equals( "i" )
+						|| childNode.getClass().getName().equals( "u" )
+						|| childNode.getClass().getName().equals( "a" ) ) {
+					Node badNode = _validate( childNode );
+					if( badNode != null )
+						return badNode;
+				} else {
+					return childNode; // Bad Node
+				}
+			}
+			
+		} else if( node.getClass().getName().equals( "b" ) ) {
+			
+			for( Node childNode : node.childNodes() ) {
+				if( childNode.getClass() == TextNode.class ) {
+					// Do Nothing
+				} else if( childNode.getClass().getName().equals( "i" )
+						|| childNode.getClass().getName().equals( "u" )
+						|| childNode.getClass().getName().equals( "a" ) ) {
+					Node badNode = _validate( childNode );
+					if( badNode != null )
+						return badNode;
+				} else {
+					return childNode; // Bad Node
+				}
+			}
+			
+		} else if( node.getClass().getName().equals( "i" ) ) {
+			
+			for( Node childNode : node.childNodes() ) {
+				if( childNode.getClass() == TextNode.class ) {
+					// Do Nothing
+				} else if( childNode.getClass().getName().equals( "b" )
+						|| childNode.getClass().getName().equals( "u" )
+						|| childNode.getClass().getName().equals( "a" ) ) {
+					Node badNode = _validate( childNode );
+					if( badNode != null )
+						return badNode;
+				} else {
+					return childNode; // Bad Node
+				}
+			}
+			
+		} else if( node.getClass().getName().equals( "u" ) ) {
+			
+			for( Node childNode : node.childNodes() ) {
+				if( childNode.getClass() == TextNode.class ) {
+					// Do Nothing
+				} else if( childNode.getClass().getName().equals( "b" )
+						|| childNode.getClass().getName().equals( "i" )
+						|| childNode.getClass().getName().equals( "a" ) ) {
+					Node badNode = _validate( childNode );
+					if( badNode != null )
+						return badNode;
+				} else {
+					return childNode; // Bad Node
+				}
+			}
+			
+		} else if( node.getClass().getName().equals( "a" ) ) {
+			
+			for( Node childNode : node.childNodes() ) {
+				if( childNode.getClass() == TextNode.class ) {
+					// Do Nothing
+				} else if( childNode.getClass().getName().equals( "b" )
+						|| childNode.getClass().getName().equals( "i" )
+						|| childNode.getClass().getName().equals( "u" ) ) {
+					Node badNode = _validate( childNode );
+					if( badNode != null )
+						return badNode;
+				} else {
+					return childNode; // Bad Node
+				}
+			}
+			
+		}
+		
+		return null;
+	
+	}
+	
+	private static String _extractHtml( Node node ) {
+		if( node.getClass() == org.jsoup.nodes.Comment.class )
+			return null;
+		String html = node.getClass() == TextNode.class
+				? ( (TextNode) node ).text()
+				: ( (Element) node ).html();
+		html = html.replace( (char) 160, ' ' ).trim();
+		return html.isEmpty() ? null : html;
+	}
+	
+	private static AlignmentType _extractStyle( Node node, String styleName ) {
+		if( node.getClass() == org.jsoup.nodes.Comment.class
+				|| node.getClass() == TextNode.class )
+			return null;
+		String styleAttr = node.attr( "style" );
+		if( styleAttr == null || styleAttr.trim().isEmpty() )
+			return null;
+		for( String style : styleAttr.split( ";" ) )
+			if( style.substring( 0, style.indexOf( ":" ) ).trim().equals( styleName ) )
+				return AlignmentType.valueOf( style.substring( style.indexOf( ":" ) + 1 ).trim().toUpperCase() );
+		return null;
+	}
+
+	
 	public static Map<String, Object> getContent( Long pratilipiId, Integer chapterNo, Integer pageNo, boolean asHtml ) 
 			throws InvalidArgumentException, UnexpectedServerException, InsufficientAccessException {
 
@@ -696,7 +843,7 @@ public class PratilipiDocUtil {
 
 	}
 
-	public static List<JsonObject> getIndex( Long pratilipiId ) 
+	public static JsonArray getIndex( Long pratilipiId ) 
 			throws InsufficientAccessException, UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -709,10 +856,10 @@ public class PratilipiDocUtil {
 		PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( pratilipiId );
 		
 		if( pcDoc == null )
-			return new ArrayList<>( 0 );
+			return new JsonArray();
 
 		return pcDoc.getIndex();
-
+		
 	}
 
 }

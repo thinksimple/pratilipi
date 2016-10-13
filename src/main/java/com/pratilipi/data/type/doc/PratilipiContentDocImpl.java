@@ -74,6 +74,11 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 			pagelets.add( new PageletImpl( type, data, alignment ) );
 		}
 
+		@Override
+		public void deleteAllPagelets() {
+			pagelets = null;
+		}
+
 	}
 
 	public static class ChapterImpl implements PratilipiContentDoc.Chapter {
@@ -119,7 +124,6 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 			return pages == null || pages.size() < pageNo ? null : pages.get( pageNo - 1 );
 		}
 
-		@Deprecated
 		@Override
 		public Page addPage( int pageNo ) {
 			if( pages == null )
