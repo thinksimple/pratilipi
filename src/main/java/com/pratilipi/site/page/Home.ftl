@@ -1,8 +1,3 @@
-<#macro compress_single_line>
-<#local captured><#nested></#local>
-${ captured?replace( "^\\s+|\\s+$|\\n|\\r", " ", "rm" ) }
-</#macro>
-<@compress_single_line>
 <!DOCTYPE html>
 <html lang="${lang}">
 
@@ -23,4 +18,3 @@ ${ captured?replace( "^\\s+|\\s+$|\\n|\\r", " ", "rm" ) }
 	</body>
 
 </html>
-</@compress_single_line>
