@@ -1,6 +1,5 @@
 package com.pratilipi.api.impl.mailinglist;
 
-import com.google.gson.JsonObject;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Post;
@@ -17,7 +16,7 @@ import com.pratilipi.filter.AccessTokenFilter;
 @Bind( uri = "/mailinglist/subscribe" )
 public class MailingListSubscribeApi extends GenericApi {
 
-	public class PostRequest extends GenericRequest {
+	public static class PostRequest extends GenericRequest {
 
 		@Validate( required = true )
 		private MailingList mailingList;
