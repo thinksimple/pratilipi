@@ -1,8 +1,8 @@
 package com.pratilipi.data.util;
 
 import java.util.Date;
+import java.util.List;
 
-import com.google.gson.Gson;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.type.AccessType;
@@ -16,36 +16,91 @@ import com.pratilipi.filter.AccessTokenFilter;
 
 public class MailingListSubscriptionDataUtil {
 	
-	public static void subscribe( MailingList mailingList, Long userId, String email, String phone, String comment, Language language )
+	public static void subscribe( MailingList mailingList, Long userId,
+			String email, String phone, Language language, String comment )
 			throws InvalidArgumentException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
-		MailingListSubscription mailingListSubscription = dataAccessor.newMailingListSubscription(); 
-
+		MailingListSubscription mailingListSubscription = null;
+		
 		if( email != null ) {
-			mailingListSubscription = dataAccessor.getMailingListSubscription( mailingList, email );
-			if( mailingListSubscription != null && mailingListSubscription.getMailingList() != MailingList.LAUNCH_ANNOUNCEMENT_OTHER )
-				throw new InvalidArgumentException( GenericRequest.ERR_MAILING_LIST_EMAIL_SUBSCRIBED_ALREDY );
+			
+			List<MailingListSubscription> mailingListSubscriptionList = dataAccessor.getMailingListSubscriptionList( mailingList, email, null );
+			for( MailingListSubscription subs : mailingListSubscriptionList ) {
+				if( language != null && subs.getLanguage() != null && language != subs.getLanguage() )
+					continue;
+				if( phone != null && subs.getPhone() != null && ! phone.equals( subs.getPhone() ) )
+					continue;
+				if( comment != null && subs.getComment() != null && ! comment.equals( subs.getComment() ) )
+					continue;
+				mailingListSubscription = subs;
+				break;
+			}
+		
+		} else if( phone != null ) {
+		
+			List<MailingListSubscription> mailingListSubscriptionList = dataAccessor.getMailingListSubscriptionList( mailingList, null, phone );
+			for( MailingListSubscription subs : mailingListSubscriptionList ) {
+				if( language != null && subs.getLanguage() != null && language != subs.getLanguage() )
+					continue;
+				if( comment != null && subs.getComment() != null && ! comment.equals( subs.getComment() ) )
+					continue;
+				mailingListSubscription = subs;
+				break;
+			}
+			
 		}
+		
+		
+		if( mailingListSubscription == null )
+			mailingListSubscription = dataAccessor.newMailingListSubscription();
+		
+		AuditLog auditLog = dataAccessor.newAuditLog(
+				AccessTokenFilter.getAccessToken().getId(),
+				AccessType.MAILING_LIST_SUBSCRIPTION_ADD,
+				mailingListSubscription );
+		
+		
+		if( mailingListSubscription != null ) {
 
-		Gson gson = new Gson();
+			boolean bool = true;
 
-		AuditLog auditLog = dataAccessor.newAuditLog();
-		auditLog.setAccessId( AccessTokenFilter.getAccessToken().getId() );
-		auditLog.setAccessType( AccessType.MAILING_LIST_SUBSCRIPTION_ADD );
-		auditLog.setEventDataOld( gson.toJson( mailingListSubscription ) );
-
-		mailingListSubscription.setMailingList( mailingList );
-		mailingListSubscription.setUserId( userId );
-		mailingListSubscription.setEmail( email );
-		mailingListSubscription.setPhone( phone );
-		mailingListSubscription.setLanguage( language );
-		mailingListSubscription.setComment( comment );
-		mailingListSubscription.setSubscriptionDate( new Date() );
-
-		auditLog.setEventDataNew( gson.toJson( mailingListSubscription ) );
-
+			if( mailingListSubscription.getMailingList() == null ) // New entry
+				mailingListSubscription.setMailingList( mailingList );
+			
+			if( userId != null && mailingListSubscription.getUserId() == null )
+				mailingListSubscription.setUserId( userId );
+			
+			if( email != null && mailingListSubscription.getEmail() == null ) {
+				mailingListSubscription.setEmail( email );
+				bool = false;
+			}
+			
+			if( phone != null && mailingListSubscription.getPhone() == null ) {
+				mailingListSubscription.setPhone( phone );
+				bool = false;
+			}
+			
+			if( language != null && mailingListSubscription.getLanguage() == null ) {
+				mailingListSubscription.setLanguage( language );
+				bool = false;
+			}
+			
+			if( comment != null && mailingListSubscription.getComment() == null ) {
+				mailingListSubscription.setComment( comment );
+				bool = false;
+			}
+			
+			if( mailingListSubscription.getSubscriptionDate() == null ) // New entry
+				mailingListSubscription.setSubscriptionDate( new Date() );
+			
+			if( bool )
+				throw new InvalidArgumentException( GenericRequest.ERR_MAILING_LIST_EMAIL_SUBSCRIBED_ALREDY );
+		
+			
+		}
+		
 		dataAccessor.createOrUpdateMailingListSubscription( mailingListSubscription, auditLog );
 
 	}
