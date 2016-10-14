@@ -50,6 +50,10 @@ public class MailingListSubscriptionDataUtil {
 				break;
 			}
 			
+		} else {
+			
+			throw new InvalidArgumentException( "Either email or phone must be provided." );
+
 		}
 		
 		
@@ -62,44 +66,40 @@ public class MailingListSubscriptionDataUtil {
 				mailingListSubscription );
 		
 		
-		if( mailingListSubscription != null ) {
+		boolean bool = true;
 
-			boolean bool = true;
-
-			if( mailingListSubscription.getMailingList() == null ) // New entry
-				mailingListSubscription.setMailingList( mailingList );
-			
-			if( userId != null && mailingListSubscription.getUserId() == null )
-				mailingListSubscription.setUserId( userId );
-			
-			if( email != null && mailingListSubscription.getEmail() == null ) {
-				mailingListSubscription.setEmail( email );
-				bool = false;
-			}
-			
-			if( phone != null && mailingListSubscription.getPhone() == null ) {
-				mailingListSubscription.setPhone( phone );
-				bool = false;
-			}
-			
-			if( language != null && mailingListSubscription.getLanguage() == null ) {
-				mailingListSubscription.setLanguage( language );
-				bool = false;
-			}
-			
-			if( comment != null && mailingListSubscription.getComment() == null ) {
-				mailingListSubscription.setComment( comment );
-				bool = false;
-			}
-			
-			if( mailingListSubscription.getSubscriptionDate() == null ) // New entry
-				mailingListSubscription.setSubscriptionDate( new Date() );
-			
-			if( bool )
-				throw new InvalidArgumentException( GenericRequest.ERR_MAILING_LIST_EMAIL_SUBSCRIBED_ALREDY );
+		if( mailingListSubscription.getMailingList() == null ) // New entry
+			mailingListSubscription.setMailingList( mailingList );
 		
-			
+		if( userId != null && mailingListSubscription.getUserId() == null )
+			mailingListSubscription.setUserId( userId );
+		
+		if( email != null && mailingListSubscription.getEmail() == null ) {
+			mailingListSubscription.setEmail( email );
+			bool = false;
 		}
+		
+		if( phone != null && mailingListSubscription.getPhone() == null ) {
+			mailingListSubscription.setPhone( phone );
+			bool = false;
+		}
+		
+		if( language != null && mailingListSubscription.getLanguage() == null ) {
+			mailingListSubscription.setLanguage( language );
+			bool = false;
+		}
+		
+		if( comment != null && mailingListSubscription.getComment() == null ) {
+			mailingListSubscription.setComment( comment );
+			bool = false;
+		}
+		
+		if( mailingListSubscription.getSubscriptionDate() == null ) // New entry
+			mailingListSubscription.setSubscriptionDate( new Date() );
+		
+		if( bool )
+			throw new InvalidArgumentException( GenericRequest.ERR_MAILING_LIST_EMAIL_SUBSCRIBED_ALREDY );
+
 		
 		dataAccessor.createOrUpdateMailingListSubscription( mailingListSubscription, auditLog );
 

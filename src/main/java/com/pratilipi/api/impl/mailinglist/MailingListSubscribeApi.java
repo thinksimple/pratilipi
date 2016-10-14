@@ -38,12 +38,6 @@ public class MailingListSubscribeApi extends GenericApi {
 	@Post
 	public GenericResponse post( PostRequest request ) throws InvalidArgumentException {
 
-		if( request.mailingList != MailingList.LAUNCH_ANNOUNCEMENT_ANDROID_APP && request.email == null ) {
-			JsonObject errorMessages = new JsonObject();
-			errorMessages.addProperty( "email", GenericRequest.ERR_EMAIL_REQUIRED );
-			throw new InvalidArgumentException( errorMessages );
-		}
-
 		MailingListSubscriptionDataUtil.subscribe(
 				request.mailingList,
 				AccessTokenFilter.getAccessToken().getUserId(),

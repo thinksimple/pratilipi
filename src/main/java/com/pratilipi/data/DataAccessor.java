@@ -190,7 +190,7 @@ public interface DataAccessor {
 	
 	// MAILING_LIST_SUBSCRIPTION Table
 	MailingListSubscription newMailingListSubscription();
-	MailingListSubscription getMailingListSubscription( MailingList mailingList, String email );
+	List<MailingListSubscription> getMailingListSubscriptionList( MailingList mailingList, String email, String phone );
 	MailingListSubscription createOrUpdateMailingListSubscription( MailingListSubscription mailingListSubscription, AuditLog auditLog );
 	
 	

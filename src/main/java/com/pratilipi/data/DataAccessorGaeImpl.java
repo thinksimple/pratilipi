@@ -1684,14 +1684,19 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	@Override
-	public MailingListSubscription getMailingListSubscription( MailingList mailingList, String email ) {
+	public List<MailingListSubscription> getMailingListSubscriptionList( MailingList mailingList, String email, String phone ) {
 		
-		return ObjectifyService.ofy().load()
-				.type( MailingListSubscriptionEntity.class )
-				.filter( "MAILING_LIST", mailingList )
-				.filter( "EMAIL", email )
-				.order( "SUBSCRIPTION_DATE" )
-				.first().now();
+		Query<MailingListSubscriptionEntity> query = ObjectifyService.ofy().load().type( MailingListSubscriptionEntity.class );
+		
+		query = query.filter( "MAILING_LIST", mailingList );
+		
+		if( email != null )
+			query = query.filter( "EMAIL", email );
+		
+		if( phone != null )
+			query = query.filter( "PHONE", phone );
+		
+		return new ArrayList<MailingListSubscription>( query.order( "SUBSCRIPTION_DATE" ).list() );
 		
 	}
 	

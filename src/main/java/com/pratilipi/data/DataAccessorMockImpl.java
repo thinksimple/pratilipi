@@ -908,7 +908,7 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 	
 	@Override
-	public MailingListSubscription getMailingListSubscription( MailingList mailingList, String email ) {
+	public List<MailingListSubscription> getMailingListSubscriptionList( MailingList mailingList, String email, String phone ) {
 		// TODO Auto-generated method stub
 		return null;
 	}
