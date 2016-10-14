@@ -237,7 +237,7 @@ Editor.prototype.addImageListener = function() {
 		            processData: false,
 		            success:function(data){
 		                var parsed_data = jQuery.parseJSON( data );
-		                var image_name = parsed_data.imageName;
+		                var image_name = parsed_data.name;
 		                var $delete_icon = '<img class="show-cursor" src="http://0.ptlp.co/resource-all/icon/svg/trash.svg" data-behaviour="remove-image">';
 		                var image_url = "/api/pratilipi/content/image?pratilipiId=${ pratilipiId?c }&name=" + image_name;
 		                $img.attr( "src", image_url ).attr( "name", image_name ).removeClass("blur-image").attr({
