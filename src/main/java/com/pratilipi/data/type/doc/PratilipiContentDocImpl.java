@@ -261,9 +261,9 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 		JsonArray index = new JsonArray();
 		if( chapters != null ) {
 			for( int chapterNo = 1; chapterNo <= chapters.size(); chapterNo++ ) {
-				Chapter chapter = chapters.get( chapterNo );
+				Chapter chapter = chapters.get( chapterNo - 1 );
 				JsonObject indexItem = new JsonObject();
-				indexItem.addProperty( "chapterNo", chapterNo++ );
+				indexItem.addProperty( "chapterNo", chapterNo );
 				indexItem.addProperty( "title", chapter.getTitle() );
 				indexItem.addProperty( "nesting", chapter.getNesting() );
 				index.add( indexItem );
