@@ -164,7 +164,6 @@ MainWriterPanel.prototype.getChapter = function( chapterNum ) {
         	pratilipiId: ${ pratilipiId?c },
         	chapterNo: chapterNum,
         	asHtml: true,
-        	pageNo:1
         },
         success:function(response){
         	
@@ -267,8 +266,7 @@ MainWriterPanel.prototype.saveChapter = function( autosaveFlag ) {
 	var ajaxData = { pratilipiId: ${ pratilipiId?c },
 					chapterNo: this.currChapter,
 					chapterTitle: this.chapter_name_object.getTitle(),
-					content: this.content_object.getContent(),
-					pageNo: 1
+					content: this.content_object.getContent()
 				   };
     $.ajax({type: "POST",
         url: " /api/pratilipi/content",
