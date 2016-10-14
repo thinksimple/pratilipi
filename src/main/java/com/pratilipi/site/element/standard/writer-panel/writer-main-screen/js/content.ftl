@@ -187,3 +187,9 @@ Content.prototype.wrapInParagraph = function() {
 	<#-- this.$content_container.wrapInner("<p>"); -->
 	document.execCommand('formatBlock', false, 'p');
 };
+
+Content.prototype.removeSpanTags = function() {
+	this.$content_container.find("span").replaceWith( function() {
+	  $( this ).replaceWith( $( this ).html() );
+	});
+};

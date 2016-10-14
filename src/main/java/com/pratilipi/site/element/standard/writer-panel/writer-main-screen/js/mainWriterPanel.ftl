@@ -260,6 +260,7 @@ MainWriterPanel.prototype.resetContent = function() {
 
 MainWriterPanel.prototype.saveChapter = function( autosaveFlag ) {
 	var _this = this;
+	this.content_object.removeSpanTags();
 	if( this.content_object.hasEmptyText() ) {
 		this.content_object.wrapInParagraph();
 	}
