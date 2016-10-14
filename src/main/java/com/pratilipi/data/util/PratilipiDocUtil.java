@@ -151,7 +151,7 @@ public class PratilipiDocUtil {
 				else if( pageletDoc.getType() == PageletType.BLOCK_QUOTE )
 					html += "<blockquote>" + pageletDoc.getData() + "</blockquote>";
 				else if( pageletDoc.getType() == PageletType.IMAGE )
-					html += "<img src=\"/api/pratilipi/content/image?name=" + ( (JsonObject) pageletDoc.getData() ).get( "name" ).getAsString() + "\"/>";
+					html += "<img src=\"/api/pratilipi/content/image?name=" + ( new Gson().fromJson( pageletDoc.getData().toString(), JsonObject.class ) ).get( "name" ).getAsString() + "\"/>";
 			}
 			pageDoc.setHtml( html );
 			pageDoc.deleteAllPagelets();
