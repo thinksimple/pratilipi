@@ -5,7 +5,7 @@ var FirstScreenWriterPanel = function (panel_container) {
     this.$english_title = this.$form.find("#title-english");
     this.$copyright_checkbox = this.$form.find("#copyright_checkbox");
     this.form_validated = true;
-}
+};
 
 FirstScreenWriterPanel.prototype.init = function() {
     this.generateAndPopulateLanguageOptions();
@@ -40,7 +40,7 @@ FirstScreenWriterPanel.prototype.generateAndPopulateLanguageOptions = function()
 	  	_this.$select.append( $option );
 	});
 	this.$select.val( "${ language }".toLowerCase() );
-}
+};
 
 FirstScreenWriterPanel.prototype.attachLanguageChangeListener = function() {
 	this.$select.change(function() {

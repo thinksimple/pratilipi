@@ -14,7 +14,7 @@ var Editor = function ( editor_container, content_object ) {
     /* this.$alignmentLinks = this.$editor_container.find( '[data-role="alignment"]' ); */
     this.$urlModal = $('#urlModal');
     this.highlightEditorOptionsFlag = true;
-}
+};
 
 Editor.prototype.init = function() {
     this.attachExecCommandListeners();
@@ -26,7 +26,7 @@ Editor.prototype.init = function() {
     this.addImageListener();
     /* this.addRemoveImageListener(); */
     this.removeEventListenersOnUrlModalHide();
-}
+};
 
 Editor.prototype.attachExecCommandListeners = function() {
     var _this = this;
@@ -40,7 +40,7 @@ Editor.prototype.attachExecCommandListeners = function() {
 
         });
     });
-}
+};
 
 Editor.prototype.attachBlockquoteListener = function() {
     var _this = this;
@@ -49,7 +49,7 @@ Editor.prototype.attachBlockquoteListener = function() {
         _this.toggleBlockquote();
         _this.highlightBlockquoteOption();
     });
-}
+};
 
 
 Editor.prototype.attachLinkListener = function() {
@@ -65,7 +65,7 @@ Editor.prototype.attachLinkListener = function() {
         }
         
     });
-}
+};
 
 Editor.prototype.saveSelection = function() {
     if (window.getSelection) {
@@ -105,7 +105,7 @@ Editor.prototype.promptUrlBox = function() {
 	    _this.linkUrlToText( url );
     });
 
-}
+};
 
 Editor.prototype.linkUrlToText = function(url) {
 	if(url.length) {
@@ -268,7 +268,7 @@ Editor.prototype.addImageListener = function() {
 Editor.prototype.getSelectionStart = function () {
    var node = document.getSelection().anchorNode;
    return (node.nodeType == 3 ? node.parentNode : node);
-}
+};
 
 Editor.prototype.removeEventListenersOnUrlModalHide = function () {
  	var _this = this; 

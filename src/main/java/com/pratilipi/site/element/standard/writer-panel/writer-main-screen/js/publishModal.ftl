@@ -6,7 +6,7 @@ var PublishModal = function ( publish_modal_container ) {
     this.$summary = this.$form.find("#summary");
     this.form_validated = true;
     this.pratilipi_data = ${ pratilipiJson };
-}
+};
 
 PublishModal.prototype.init = function() {
     <#-- this.generateCategoryOptions(); -->
@@ -15,7 +15,7 @@ PublishModal.prototype.init = function() {
     this.attachCoverImageListeners();
     this.attachFormSubmitListener();
 
-}
+};
 
 PublishModal.prototype.setBookName = function( name ){
 	var book_name;

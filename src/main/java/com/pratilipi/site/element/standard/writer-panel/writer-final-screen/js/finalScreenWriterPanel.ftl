@@ -6,7 +6,7 @@ var FinalScreenWriterPanel = function (panel_container) {
     this.$summary = this.$form.find("#summary");
     this.form_validated = true;
     this.pratilipi_data = ${ pratilipiJson };
-}
+};
 
 FinalScreenWriterPanel.prototype.init = function() {
 	this.setBookName();
@@ -17,12 +17,12 @@ FinalScreenWriterPanel.prototype.init = function() {
     this.attachFormSubmitListener();
 	console.log("${pratilipiId?c}");
 
-}
+};
 
 FinalScreenWriterPanel.prototype.setBookName = function(){
 	var book_name = this.pratilipi_data.title ? this.pratilipi_data.title : this.pratilipi_data.titleEn;
 	this.$panel_container.find('[data-behaviour="book_name"]').text( book_name );
-}
+};
 
 FinalScreenWriterPanel.prototype.generateCategoryOptions = function() {
 	var _this = this;

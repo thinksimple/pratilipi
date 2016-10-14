@@ -8,13 +8,13 @@ var Pagination = function(pagination_container, parent_object) {
     this.$curr_page_input = this.$pagination_container.find("[data-behaviour=curr_page]");
     this.$progress_line = this.$pagination_container.find(".progress-bar");
     this.$progress_ball = this.$pagination_container.find("[data-behaviour=progress-ball]");
-}
+};
 
 Pagination.prototype.init = function () {
     this.attachPreviousPageListener();
     this.attachNextPageListener();
     this.attachChapterInputListener();
-}
+};
 
 Pagination.prototype.getPreviousPage = function() {
  return ( this.parent_object.currChapter - 1 );
