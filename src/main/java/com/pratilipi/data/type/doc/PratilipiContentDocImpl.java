@@ -122,7 +122,6 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 		private Integer nesting;
 
 
-		@SuppressWarnings("unused")
 		private ChapterImpl() {}
 
 

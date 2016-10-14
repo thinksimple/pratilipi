@@ -102,36 +102,36 @@ public class PratilipiDocUtil {
 		if( pcDoc == null )
 			return null;
 		else if( chapterNo == null )
-			return _processContent( pcDoc );
+			return _processContent( pratilipiId, pcDoc );
 		
 		Chapter chapter = pcDoc.getChapter( chapterNo );
 		
 		if( chapter == null )
 			return null;
 		else if( pageNo == null )
-			return _processContent( chapter );
+			return _processContent( pratilipiId, chapter );
 		
 		PratilipiContentDoc.Page page = chapter.getPage( pageNo );
 		if( page == null )
 			return null;
 		else
-			return _processContent( chapter.getPage( pageNo ) );
+			return _processContent( pratilipiId, chapter.getPage( pageNo ) );
 
 	}
 	
-	private static PratilipiContentDoc _processContent( PratilipiContentDoc pcDoc ) {
+	private static PratilipiContentDoc _processContent( Long pratilipiId, PratilipiContentDoc pcDoc ) {
 		for( PratilipiContentDoc.Chapter chapterDoc : pcDoc.getChapterList() )
-			_processContent( chapterDoc );
+			_processContent( pratilipiId, chapterDoc );
 		return pcDoc;
 	}
 
-	private static PratilipiContentDoc.Chapter _processContent( PratilipiContentDoc.Chapter chapterDoc ) {
+	private static PratilipiContentDoc.Chapter _processContent( Long pratilipiId, PratilipiContentDoc.Chapter chapterDoc ) {
 		for( PratilipiContentDoc.Page pageDoc : chapterDoc.getPageList() )
-			_processContent( pageDoc );
+			_processContent( pratilipiId, pageDoc );
 		return chapterDoc;
 	}
 	
-	private static PratilipiContentDoc.Page _processContent( PratilipiContentDoc.Page pageDoc ) {
+	private static PratilipiContentDoc.Page _processContent( Long pratilipiId, PratilipiContentDoc.Page pageDoc ) {
 		if( UxModeFilter.isAndroidApp() ) {
 			for( PratilipiContentDoc.Pagelet pageletDoc : pageDoc.getPageletList() ) {
 				if( pageletDoc.getType() == PageletType.HTML ) {
@@ -151,7 +151,7 @@ public class PratilipiDocUtil {
 				else if( pageletDoc.getType() == PageletType.BLOCK_QUOTE )
 					html += "<blockquote>" + pageletDoc.getData() + "</blockquote>";
 				else if( pageletDoc.getType() == PageletType.IMAGE )
-					html += "<img src=\"/api/pratilipi/content/image?name=" + pageletDoc.getData().get( "name" ).getAsString() + "\"/>";
+					html += "<img src=\"/api/pratilipi/content/image?pratilipiId=" + pratilipiId + "&name=" + pageletDoc.getData().get( "name" ).getAsString() + "\"/>";
 			}
 			pageDoc.setHtml( html );
 			pageDoc.deleteAllPagelets();
