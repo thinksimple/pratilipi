@@ -151,7 +151,7 @@ public class PratilipiDocUtil {
 				else if( pageletDoc.getType() == PageletType.BLOCK_QUOTE )
 					html += "<blockquote>" + pageletDoc.getData() + "</blockquote>";
 				else if( pageletDoc.getType() == PageletType.IMAGE )
-					html += "<img src=\"" + pageletDoc.getData() + "\"/>";
+					html += "<img src=\"/api/pratilipi/content/image?name=" + ( (JsonObject) pageletDoc.getData() ).get( "name" ).getAsString() + "\"/>";
 			}
 			pageDoc.setHtml( html );
 			pageDoc.deleteAllPagelets();
@@ -292,9 +292,25 @@ public class PratilipiDocUtil {
 					
 					page.addPagelet( PageletType.HTML, ( (Element) node ).html(), alignment );
 				
-				} else if( node.nodeName().equals( "img" ) ) { // TODO: Save image to CloudStore
+				} else if( node.nodeName().equals( "img" ) ) {
 					
-					page.addPagelet( PageletType.IMAGE, node.attr( "src" ).trim() );
+					String imageUrl = node.attr( "src" );
+					if( imageUrl.indexOf( "name=" ) == -1 )
+						continue;
+					
+					String imageName = imageUrl.substring( imageUrl.indexOf( "name=" ) + 5 );
+					if( imageName.indexOf( '&' ) != -1 )
+						imageName = imageName.substring( 0, imageName.indexOf( '&' ) );
+					imageName = imageName.replace( "%20", " " );
+				
+					BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor().getBlob( _createImageFullName( pratilipiId, imageName ) );
+					
+					JsonObject imgData = new JsonObject();
+					imgData.addProperty( "name", imageName );
+					imgData.addProperty( "height", ImageUtil.getHeight( blobEntry.getData() ) );
+					imgData.addProperty( "width", ImageUtil.getWidth( blobEntry.getData() ) );
+					
+					page.addPagelet( PageletType.IMAGE, imgData );
 				
 				} else if( node.nodeName().equals( "blockquote" ) ) {
 					
@@ -332,12 +348,18 @@ public class PratilipiDocUtil {
 
 	}
 	
+	private static String _createImageFullName( Long pratilipiId, String imageName ) {
+		return "pratilipi/" + pratilipiId + "/images/" + imageName;
+	}
+
 	private static Node _validateContent( Node node ) {
 
 		if( node.nodeName().equals( "body" ) ) {
 		
 			for( Node childNode : node.childNodes() ) {
-				if( childNode.nodeName().equals( "p" ) || childNode.nodeName().equals( "blockquote" ) ) {
+				if( childNode.nodeName().equals( "p" )
+						|| childNode.nodeName().equals( "blockquote" )
+						|| childNode.nodeName().equals( "br" ) ) {
 					Node badNode = _validateContent( childNode );
 					if( badNode != null )
 						return badNode;
@@ -618,10 +640,6 @@ public class PratilipiDocUtil {
 		
 		return pageletList;
 		
-	}
-	
-	private static String _createImageFullName( Long pratilipiId, String imageName ) {
-		return "pratilipi/" + pratilipiId + "/images/" + imageName;
 	}
 	
 	private static String _extractText( Node node ) {
