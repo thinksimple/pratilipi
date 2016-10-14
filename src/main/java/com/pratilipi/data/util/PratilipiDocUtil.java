@@ -145,11 +145,11 @@ public class PratilipiDocUtil {
 			String html = "";
 			for( PratilipiContentDoc.Pagelet pageletDoc : pageDoc.getPageletList() ) {
 				if( ( pageletDoc.getType() == PageletType.TEXT || pageletDoc.getType() == PageletType.HTML ) && pageletDoc.getAlignment() == null )
-					html += "<p>" + pageletDoc.getData() + "</p>";
+					html += "<p>" + pageletDoc.getDataAsString() + "</p>";
 				else if( ( pageletDoc.getType() == PageletType.TEXT || pageletDoc.getType() == PageletType.HTML ) && pageletDoc.getAlignment() != null )
-					html += "<p style=\"text-align:" + pageletDoc.getAlignment() + "\">" + pageletDoc.getData() + "</p>";
+					html += "<p style=\"text-align:" + pageletDoc.getAlignment() + "\">" + pageletDoc.getDataAsString() + "</p>";
 				else if( pageletDoc.getType() == PageletType.BLOCK_QUOTE )
-					html += "<blockquote>" + pageletDoc.getData() + "</blockquote>";
+					html += "<blockquote>" + pageletDoc.getDataAsString() + "</blockquote>";
 				else if( pageletDoc.getType() == PageletType.IMAGE )
 					html += "<img src=\"/api/pratilipi/content/image?pratilipiId=" + pratilipiId + "&name=" + pageletDoc.getData().get( "name" ).getAsString() + "\"/>";
 			}
