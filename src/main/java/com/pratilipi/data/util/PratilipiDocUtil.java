@@ -263,7 +263,7 @@ public class PratilipiDocUtil {
 		else
 			page.deleteAllPagelets();
 		
-		logger.log( Level.INFO, "html = " + html );
+
 		// Pagelets
 		if( html != null && ! html.trim().isEmpty() ) {
 			
@@ -273,7 +273,7 @@ public class PratilipiDocUtil {
 			if( badNode != null ) {
 				String errMsg = "";
 				while( badNode != body ) {
-					errMsg = " > " + badNode.getClass().getName() + errMsg;
+					errMsg = " > " + badNode.nodeName() + errMsg;
 					badNode = badNode.parent();
 				}
 				errMsg = "Invalid node " + errMsg;
@@ -334,31 +334,29 @@ public class PratilipiDocUtil {
 	
 	private static Node _validateContent( Node node ) {
 
-		logger.log( Level.INFO, "node = " + node.getClass().getName() );
-
-		if( node.getClass().getName().equals( "body" ) ) {
+		if( node.nodeName().equals( "body" ) ) {
 		
 			for( Node childNode : node.childNodes() ) {
-				if( childNode.getClass().getName().equals( "p" ) || childNode.getClass().getName().equals( "blockquote" ) ) {
+				if( childNode.nodeName().equals( "p" ) || childNode.nodeName().equals( "blockquote" ) ) {
 					Node badNode = _validateContent( childNode );
 					if( badNode != null )
 						return badNode;
-				} else if( childNode.getClass().getName().equals( "img" ) ) {
+				} else if( childNode.nodeName().equals( "img" ) ) {
 					// Do Nothing
 				} else {
 					return childNode; // Bad Node
 				}
 			}
 		
-		} else if( node.getClass().getName().equals( "p" ) || node.getClass().getName().equals( "blockquote" ) ) {
+		} else if( node.nodeName().equals( "p" ) || node.nodeName().equals( "blockquote" ) ) {
 			
 			for( Node childNode : node.childNodes() ) {
 				if( childNode.getClass() == TextNode.class ) {
 					// Do Nothing
-				} else if( childNode.getClass().getName().equals( "b" )
-						|| childNode.getClass().getName().equals( "i" )
-						|| childNode.getClass().getName().equals( "u" )
-						|| childNode.getClass().getName().equals( "a" ) ) {
+				} else if( childNode.nodeName().equals( "b" )
+						|| childNode.nodeName().equals( "i" )
+						|| childNode.nodeName().equals( "u" )
+						|| childNode.nodeName().equals( "a" ) ) {
 					Node badNode = _validateContent( childNode );
 					if( badNode != null )
 						return badNode;
@@ -367,14 +365,14 @@ public class PratilipiDocUtil {
 				}
 			}
 			
-		} else if( node.getClass().getName().equals( "b" ) ) {
+		} else if( node.nodeName().equals( "b" ) ) {
 			
 			for( Node childNode : node.childNodes() ) {
 				if( childNode.getClass() == TextNode.class ) {
 					// Do Nothing
-				} else if( childNode.getClass().getName().equals( "i" )
-						|| childNode.getClass().getName().equals( "u" )
-						|| childNode.getClass().getName().equals( "a" ) ) {
+				} else if( childNode.nodeName().equals( "i" )
+						|| childNode.nodeName().equals( "u" )
+						|| childNode.nodeName().equals( "a" ) ) {
 					Node badNode = _validateContent( childNode );
 					if( badNode != null )
 						return badNode;
@@ -383,14 +381,14 @@ public class PratilipiDocUtil {
 				}
 			}
 			
-		} else if( node.getClass().getName().equals( "i" ) ) {
+		} else if( node.nodeName().equals( "i" ) ) {
 			
 			for( Node childNode : node.childNodes() ) {
 				if( childNode.getClass() == TextNode.class ) {
 					// Do Nothing
-				} else if( childNode.getClass().getName().equals( "b" )
-						|| childNode.getClass().getName().equals( "u" )
-						|| childNode.getClass().getName().equals( "a" ) ) {
+				} else if( childNode.nodeName().equals( "b" )
+						|| childNode.nodeName().equals( "u" )
+						|| childNode.nodeName().equals( "a" ) ) {
 					Node badNode = _validateContent( childNode );
 					if( badNode != null )
 						return badNode;
@@ -399,14 +397,14 @@ public class PratilipiDocUtil {
 				}
 			}
 			
-		} else if( node.getClass().getName().equals( "u" ) ) {
+		} else if( node.nodeName().equals( "u" ) ) {
 			
 			for( Node childNode : node.childNodes() ) {
 				if( childNode.getClass() == TextNode.class ) {
 					// Do Nothing
-				} else if( childNode.getClass().getName().equals( "b" )
-						|| childNode.getClass().getName().equals( "i" )
-						|| childNode.getClass().getName().equals( "a" ) ) {
+				} else if( childNode.nodeName().equals( "b" )
+						|| childNode.nodeName().equals( "i" )
+						|| childNode.nodeName().equals( "a" ) ) {
 					Node badNode = _validateContent( childNode );
 					if( badNode != null )
 						return badNode;
@@ -415,14 +413,14 @@ public class PratilipiDocUtil {
 				}
 			}
 			
-		} else if( node.getClass().getName().equals( "a" ) ) {
+		} else if( node.nodeName().equals( "a" ) ) {
 			
 			for( Node childNode : node.childNodes() ) {
 				if( childNode.getClass() == TextNode.class ) {
 					// Do Nothing
-				} else if( childNode.getClass().getName().equals( "b" )
-						|| childNode.getClass().getName().equals( "i" )
-						|| childNode.getClass().getName().equals( "u" ) ) {
+				} else if( childNode.nodeName().equals( "b" )
+						|| childNode.nodeName().equals( "i" )
+						|| childNode.nodeName().equals( "u" ) ) {
 					Node badNode = _validateContent( childNode );
 					if( badNode != null )
 						return badNode;
