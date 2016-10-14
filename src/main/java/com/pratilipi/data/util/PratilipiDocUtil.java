@@ -357,9 +357,7 @@ public class PratilipiDocUtil {
 		if( node.nodeName().equals( "body" ) ) {
 		
 			for( Node childNode : node.childNodes() ) {
-				if( childNode.nodeName().equals( "p" )
-						|| childNode.nodeName().equals( "blockquote" )
-						|| childNode.nodeName().equals( "br" ) ) {
+				if( childNode.nodeName().equals( "p" ) || childNode.nodeName().equals( "blockquote" ) ) {
 					Node badNode = _validateContent( childNode );
 					if( badNode != null )
 						return badNode;
@@ -375,7 +373,8 @@ public class PratilipiDocUtil {
 			for( Node childNode : node.childNodes() ) {
 				if( childNode.getClass() == TextNode.class ) {
 					// Do Nothing
-				} else if( childNode.nodeName().equals( "b" )
+				} else if( childNode.nodeName().equals( "br" )
+						|| childNode.nodeName().equals( "b" )
 						|| childNode.nodeName().equals( "i" )
 						|| childNode.nodeName().equals( "u" )
 						|| childNode.nodeName().equals( "a" ) ) {
