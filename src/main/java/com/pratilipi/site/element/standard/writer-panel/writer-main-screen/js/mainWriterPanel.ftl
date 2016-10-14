@@ -163,7 +163,6 @@ MainWriterPanel.prototype.getChapter = function( chapterNum ) {
         data: {
         	pratilipiId: ${ pratilipiId?c },
         	chapterNo: chapterNum,
-        	asHtml: true,
         },
         success:function(response){
         	

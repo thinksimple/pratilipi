@@ -61,7 +61,7 @@
           background-image: none;
         }
         .carousel-control {
-          color:black;
+          color: #222;
           font-size: 40px !important;
         }
         .carousel-control:focus, .carousel-control:hover {
@@ -84,8 +84,9 @@
             margin-bottom: 0px;
         }
         .carousel-control .glyphicon-chevron-left, .carousel-control .glyphicon-chevron-right, .carousel-control .icon-next, .carousel-control .icon-prev  {
-          width: 48px !important;
+          width: 40px !important;
           height: 48px !important;
+          top: 50%;
         }   
         .carousel-control .glyphicon-chevron-left, .carousel-control .icon-prev {
             left: 0%;   
@@ -101,6 +102,7 @@
         }
         .caption-line-2 {
           margin-top: 4px;
+          text-shadow: none;
         }
     </style>
 </head>
@@ -132,7 +134,7 @@
             </form>
 
         </center>
-        <div id="app-image-carousel" class="carousel slide" data-ride="carousel" style="width: 280px;margin: 0 auto;margin-top: 10px;height: 360px;">
+        <div id="app-image-carousel" class="carousel slide" data-ride="carousel" style="width: 280px;margin: 0 auto;margin-top: 10px;height: 410px;">
         <!-- Indicators -->
             <ol class="carousel-indicators">
                 <li data-target="#app-image-carousel" data-slide-to="0" class="active"></li>
@@ -150,8 +152,7 @@
                     </div>
                     <img src="https://storage.googleapis.com/devo-pratilipi.appspot.com/app-screenshot/1.png" alt="..." style="height:360px;margin: 0 auto;">
                     <div class="carousel-caption">
-                        <p class="caption-line-2">${ _strings.android_banner_home_2 }</p>
-                        <p>${ _strings.android_banner_home_3 }</p>
+                        <p class="caption-line-2">${ _strings.android_banner_home_3 }</p>
                     </div>
                 </div>
                 <div class="item">
@@ -161,7 +162,6 @@
                     <img src="https://storage.googleapis.com/devo-pratilipi.appspot.com/app-screenshot/2.png" alt="..." style="height:360px;margin: 0 auto;">
                     <div class="carousel-caption">
                         <p class="caption-line-2">${ _strings.android_banner_library_2 }</p>
-                        <p>${ _strings.android_banner_library_3 }</p>
                     </div>
                 </div>
                 <div class="item">
@@ -170,8 +170,7 @@
                     </div>
                     <img src="https://storage.googleapis.com/devo-pratilipi.appspot.com/app-screenshot/4.png" alt="..." style="height:360px;margin: 0 auto;">
                     <div class="carousel-caption">
-                        <p class="caption-line-2">${ _strings.android_banner_reader_2 }</p>
-                        <p>${ _strings.android_banner_reader_3 }</p>
+                        <p class="caption-line-2">${ _strings.android_banner_reader_3 }</p>
                     </div>
                 </div>                
                 <div class="item">
@@ -181,7 +180,6 @@
                     <img src="https://storage.googleapis.com/devo-pratilipi.appspot.com/app-screenshot/3.png" alt="..." style="height:360px;margin: 0 auto;">
                     <div class="carousel-caption">
                         <p class="caption-line-2">${ _strings.android_banner_notification_2 }</p>
-                        <p>${ _strings.android_banner_notification_3 }</p>
                     </div>
                 </div>
                 <div class="item">
@@ -190,21 +188,20 @@
                     </div>
                     <img src="https://storage.googleapis.com/devo-pratilipi.appspot.com/app-screenshot/5.png" alt="..." style="height:360px;margin: 0 auto;">
                     <div class="carousel-caption">
-                        <p class="caption-line-2">${ _strings.android_banner_profile_2 }</p>
-                        <p>${ _strings.android_banner_profile_3 }</p>
+                        <p class="caption-line-2">${ _strings.android_banner_profile_3 }</p>
                     </div>
-                </div>                
+                </div>                                
             </div>
-
             <!-- Controls -->
             <a class="left carousel-control" href="#app-image-carousel" role="button" data-slide="prev">
-                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon-chevron-left glyphicon-menu-left" aria-hidden="true"></span>
                 <span class="sr-only">Previous</span>
             </a>
             <a class="right carousel-control" href="#app-image-carousel" role="button" data-slide="next">
-                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon-chevron-right glyphicon-menu-right" aria-hidden="true"></span>
                 <span class="sr-only">Next</span>
             </a>
+
         </div> 
     </div>                              
 </body>
