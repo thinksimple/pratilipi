@@ -295,11 +295,12 @@
 				if( response != null && response.chapterTitle != null )
 					content = "<h1>" + response.chapterTitle + "</h1>" + content;
 
+				var pageNo = response.chapterNo;
 				// Populate map
-				this.contentMap[ response.pageNo ] = content;
+				this.contentMap[ pageNo ] = content;
 
 				// Update content if response page no == this page no
-				if( this.pageNo == response.chapterNo )
+				if( this.pageNo == pageNo )
 					this.set( 'content', content );
 			},
 
