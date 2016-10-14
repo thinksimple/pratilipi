@@ -24,15 +24,22 @@
 		var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 		return re.test(email);
 	}
+	function validatePhone( phone ) {
+		var pattern = /^[0-9]{10}$/;
+		return pattern.test(phone);
+	}
 	function subscribeAndroid( email, phone ) {
 		document.getElementById( 'success-androidSubsribeModal' ).style.display = 'none';
 		document.getElementById( 'failure-androidSubsribeModal' ).style.display = 'none';
 		document.getElementById( 'loading-androidSubsribeModal' ).style.display = 'block';
 		var errMessage = null;
-		if( email == null || email.trim() == "" )
-			errMessage = "Please enter your email";
+		if( ( email == null || email.trim() == "" ) 
+				&& ( phone == null || phone.trim() == "" ) )
+			errMessage = "${ _strings.android_email_or_phone_required }";
 		else if( ! validateEmail( email ) )
 			errMessage = "Invalid Email";
+		else if( ! validatePhone( phone ) )
+			errMessage = "Invalid Phone";
 		if( errMessage != null ) {
 			document.getElementById( 'loading-androidSubsribeModal' ).style.display = 'none';
 			document.getElementById( 'failure-androidSubsribeModal' ).style.display = 'block';
@@ -92,7 +99,7 @@
 			<form id="androidSubsribeForm">
 				<div style="padding-top: 24px;" class="modal-body">
 					<h5 style="margin: 4px 8px; text-align: center;">${ _strings.android_popup_message }<a class="btn pratilipi-red" href="/android-registration" class="pratilipi-red" target="_blank">${ _strings.android_know_more_button }</a></h5>
-					<input style="border: none; box-shadow: none !important; border-bottom: 1px solid black; border-radius: 0px; width: 100%; outline: none; margin-top: 20px;" type="text" id="androidSubscribeEmail" name="androidSubscribeEmailVal" placeholder="${ _strings.user_email } *" />
+					<input style="border: none; box-shadow: none !important; border-bottom: 1px solid black; border-radius: 0px; width: 100%; outline: none; margin-top: 20px;" type="text" id="androidSubscribeEmail" name="androidSubscribeEmailVal" placeholder="${ _strings.user_email }" />
 					<input style="border: none; box-shadow: none !important; border-bottom: 1px solid black; border-radius: 0px; width: 100%; outline: none; margin-top: 20px;" type="number" id="androidSubscribePhone" name="androidSubscribePhoneVal" placeholder="${ _strings.user_phone }" />
 					<div class="display-message-div" style="margin-top: 12px;">
 						<div style="display: none;" id="loading-androidSubsribeModal">${ _strings.working }</div>

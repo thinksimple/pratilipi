@@ -391,6 +391,7 @@ android_popup_message = Pratilipi Android app is coming. Please register below a
 android_know_more_button = Know More
 android_notify_me_button = Notify Me
 android_success_feedback = Thank you! We will notify you once our app rolls out.
+android_email_or_phone_required = Please enter your email or phone number.
 android_banner_1 = Pratilipi Android App : Download unlimited books and Read without internet 
 android_banner_2 = Register below to get it first.
 android_banner_3 = Please register below and be the first one to get Pratilipi App.
