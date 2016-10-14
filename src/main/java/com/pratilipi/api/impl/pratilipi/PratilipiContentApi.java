@@ -57,7 +57,7 @@ public class PratilipiContentApi extends GenericApi {
 		@Validate( required = true, requiredErrMsg = ERR_PRATILIPI_CHAPTER_NO_REQUIRED, minInt = 1 )
 		private Integer chapterNo;
 
-		@Validate( required = true, requiredErrMsg = ERR_PRATILIPI_PAGE_NO_REQUIRED, minInt = 1 )
+		@Validate( minInt = 1 )
 		private Integer pageNo;
 
 		private String chapterTitle;
@@ -195,7 +195,7 @@ public class PratilipiContentApi extends GenericApi {
 				request.pratilipiId, 
 				request.chapterNo, 
 				request.chapterTitle, 
-				request.pageNo, 
+				request.pageNo == null ? 1 : request.pageNo,
 				request.content );
 
 		Task task = TaskQueueFactory.newTask()
