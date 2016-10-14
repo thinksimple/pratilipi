@@ -263,7 +263,7 @@ public class PratilipiDocUtil {
 		else
 			page.deleteAllPagelets();
 		
-		
+		logger.log( Level.INFO, "html = " + html );
 		// Pagelets
 		if( html != null && ! html.trim().isEmpty() ) {
 			
@@ -333,7 +333,9 @@ public class PratilipiDocUtil {
 	}
 	
 	private static Node _validateContent( Node node ) {
-		
+
+		logger.log( Level.INFO, "node = " + node.getClass().getName() );
+
 		if( node.getClass().getName().equals( "body" ) ) {
 		
 			for( Node childNode : node.childNodes() ) {
