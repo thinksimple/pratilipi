@@ -388,6 +388,9 @@ pratilipi_add_summary = Please click here to add summary
 # Android App launch
 android_alert_message = Read without internet and download unlimited books. Be first to get Android app.
 android_popup_message = Pratilipi Android app is coming. Please register below and be the first one to get your very own Pratilipi App.
+android_know_more_button = Know More
+android_notify_me_button = Notify Me
+android_success_feedback = Thank you! We will notify you once our app rolls out.
 android_banner_1 = Pratilipi Android App : Download unlimited books and Read without internet 
 android_banner_2 = Register below to get it first.
 android_banner_3 = Please register below and be the first one to get Pratilipi App.
