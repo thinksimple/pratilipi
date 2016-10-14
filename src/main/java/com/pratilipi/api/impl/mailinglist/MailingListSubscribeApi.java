@@ -1,5 +1,6 @@
 package com.pratilipi.api.impl.mailinglist;
 
+import com.google.gson.JsonObject;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Post;
@@ -37,8 +38,12 @@ public class MailingListSubscribeApi extends GenericApi {
 	public GenericResponse post( PostRequest request )
 			throws InvalidArgumentException {
 
-		if( request.mailingList != MailingList.LAUNCH_ANNOUNCEMENT_ANDROID_APP && request.email == null )
-			throw new InvalidArgumentException( GenericRequest.ERR_EMAIL_REQUIRED );
+		if( request.mailingList != MailingList.LAUNCH_ANNOUNCEMENT_ANDROID_APP && request.email == null ) {
+			JsonObject errorMessages = new JsonObject();
+			errorMessages.addProperty( "email", GenericRequest.ERR_EMAIL_REQUIRED );
+			throw new InvalidArgumentException( errorMessages );
+		}
+			
 
 		MailingListSubscriptionDataUtil.subscribe(
 				request.mailingList,
