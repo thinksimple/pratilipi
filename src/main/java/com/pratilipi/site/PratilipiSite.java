@@ -24,7 +24,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+import com.google.gson.JsonArray;
 import com.pratilipi.api.ApiRegistry;
 import com.pratilipi.api.impl.author.AuthorApi;
 import com.pratilipi.api.impl.author.AuthorListApi;
@@ -364,7 +364,7 @@ public class PratilipiSite extends HttpServlet {
 
 					PratilipiContentIndexApi.GetRequest indexReq = new PratilipiContentIndexApi.GetRequest();
 					indexReq.setPratilipiId( pratilipiId );
-					List<JsonObject> indexArray = ApiRegistry.getApi( PratilipiContentIndexApi.class )
+					JsonArray indexArray = ApiRegistry.getApi( PratilipiContentIndexApi.class )
 															.getIndex( indexReq ).getIndex();
 
 					dataModel.put( "pratilipiId", pratilipiId );
@@ -1118,8 +1118,7 @@ public class PratilipiSite extends HttpServlet {
 			req.setPratilipiId( pratilipiId );
 			req.setChapterNo( pageNo );
 			req.setPageNo( pageNo );
-			req.setContentType( pratilipi.getContentType() );
-			PratilipiContentApi.Response res = (PratilipiContentApi.Response) ApiRegistry.getApi( PratilipiContentApi.class ).getPratilipiContent( req );
+			PratilipiContentApi.GetResponse res = (PratilipiContentApi.GetResponse) ApiRegistry.getApi( PratilipiContentApi.class ).get( req );
 			content = res.getContent();
 			if( res.getChapterTitle() != null )
 				content = "<h1>" + res.getChapterTitle() + "</h1>" + content;
