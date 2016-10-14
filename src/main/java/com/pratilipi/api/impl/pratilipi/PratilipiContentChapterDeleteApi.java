@@ -29,7 +29,7 @@ public class PratilipiContentChapterDeleteApi extends GenericApi {
 	public PratilipiContentIndexApi.Response post( PostRequest request ) 
 			throws InsufficientAccessException, UnexpectedServerException {
 
-		JsonArray index = PratilipiDocUtil.deleteChapter(
+		JsonArray index = PratilipiDocUtil.deleteContentChapter(
 				request.pratilipiId,
 				request.chapterNo );
 		return new PratilipiContentIndexApi.Response( index );

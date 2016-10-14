@@ -52,7 +52,7 @@ public class PratilipiContentIndexApi extends GenericApi {
 	public Response getIndex( GetRequest request )
 			throws InsufficientAccessException, UnexpectedServerException {
 
-		return new Response( PratilipiDocUtil.getIndex( request.pratilipiId ) );
+		return new Response( PratilipiDocUtil.getContentIndex( request.pratilipiId ) );
 
 	}
 

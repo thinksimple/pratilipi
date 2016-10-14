@@ -11,7 +11,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.common.exception.InsufficientAccessException;
@@ -52,7 +51,6 @@ import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
 import com.pratilipi.data.type.PratilipiReviewsDoc;
 import com.pratilipi.data.type.UserPratilipi;
 import com.pratilipi.filter.AccessTokenFilter;
-import com.pratilipi.filter.UxModeFilter;
 
 public class PratilipiDataUtil {
 	
@@ -65,8 +63,6 @@ public class PratilipiDataUtil {
 	private static final String KEYWORDS_FOLDER 	 = "pratilipi-keywords/pratilipi";
 	private static final String COVER_FOLDER 		 = "pratilipi-cover/original";
 	private static final String RESOURCE_FOLDER		 = "pratilipi-resource";
-
-	private static final String CONTENT_IMAGE_PREFIX = "CONTENT_IMAGE_";
 
 
 	public static boolean hasAccessToListPratilipiData( PratilipiFilter pratilipiFilter ) {
@@ -300,27 +296,7 @@ public class PratilipiDataUtil {
 		if( includeMetaData )
 			pratilipiData.setLastUpdated( pratilipi.getLastUpdated() );
 
-		if( UxModeFilter.isAndroidApp() ) {
-/*			DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
-			PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( pratilipi.getId() );
-			if( pcDoc != null ) {
-				JsonArray index = new JsonArray();
-				int chapterNo = 1;
-				for( PratilipiContentDoc.Chapter chapter : pcDoc.getChapterList() ) {
-					JsonObject indexItem = new JsonObject();
-					if( chapter.getPageCount() == 0 )
-						indexItem.addProperty( "chapterNo", chapterNo );
-					else
-						indexItem.addProperty( "chapterNo", chapterNo++ );
-					indexItem.addProperty( "title", chapter.getTitle() );
-					indexItem.addProperty( "nesting", chapter.getNesting() );
-					index.add( indexItem );
-				}
-				pratilipiData.setIndex( index );
-			}*/
-		} else {
-			pratilipiData.setIndex( pratilipi.getIndex() );
-		}
+		pratilipiData.setIndex( pratilipi.getIndex() );
 		
 		pratilipiData.setReviewCount( pratilipi.getReviewCount() );
 		pratilipiData.setRatingCount( pratilipi.getRatingCount() );
@@ -1008,20 +984,8 @@ public class PratilipiDataUtil {
 		
 	}
 
-	public static String createNewImage( Long pratilipiId, BlobEntry blobEntry ) 
-			throws UnexpectedServerException {
-
-		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-		String imageName = CONTENT_IMAGE_PREFIX + new Date().getTime();
-		blobEntry.setName( IMAGE_CONTENT_FOLDER + "/" + pratilipiId + "/" + imageName );
-		blobAccessor.createOrUpdateBlob( blobEntry );
-		return imageName;
-
-	}
-
-	public static Object getPratilipiContent( long pratilipiId, Integer chapterNo, Integer pageNo,
-			PratilipiContentType contentType ) throws InvalidArgumentException,
-			InsufficientAccessException, UnexpectedServerException {
+	public static String getPratilipiContent( long pratilipiId, Integer chapterNo )
+			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
@@ -1030,38 +994,13 @@ public class PratilipiDataUtil {
 			throw new InsufficientAccessException();
 
 		
-		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-
-		if( UxModeFilter.isAndroidApp() ) {
-			
-			DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
-			PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( pratilipiId );
-			if( pcDoc == null )
-				return null;
-			else if( chapterNo == null )
-				return pcDoc;
-			else if( chapterNo != null && pageNo == null )
-				return pcDoc.getChapter( chapterNo );
-			else
-				return pcDoc.getChapter( chapterNo ).getPage( pageNo );
-			
-		} if( contentType == PratilipiContentType.PRATILIPI ) {
-
-			BlobEntry blobEntry = blobAccessor.getBlob( CONTENT_FOLDER + "/" + pratilipiId );
-			if( blobEntry == null )
-				return null;
-			String contentHtml = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
-			PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( pratilipi, contentHtml );
-			contentHtml = pratilipiContentUtil.getContent( chapterNo != null ? chapterNo : pageNo );
-			return contentHtml;
-			
-		} else if( contentType == PratilipiContentType.IMAGE ) {
-			
-			return blobAccessor.getBlob( IMAGE_CONTENT_FOLDER + "/" + pratilipiId + "/" + pageNo );
+		BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor().getBlob( CONTENT_FOLDER + "/" + pratilipiId );
+		if( blobEntry == null )
+			return null;
 		
-		} else {
-			throw new InvalidArgumentException( contentType + " content type is not yet supported." );
-		}
+		String contentHtml = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
+		PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( pratilipi, contentHtml );
+		return pratilipiContentUtil.getContent( chapterNo );
 		
 	}
 		
@@ -1139,32 +1078,6 @@ public class PratilipiDataUtil {
 		return pratilipi.getPageCount();
 	}
 	
-	public static BlobEntry getPratilipiContentImage( long pratilipiId, String name, Integer width )
-			throws InsufficientAccessException, UnexpectedServerException {
-
-		Pratilipi pratilipi = DataAccessorFactory.getDataAccessor()
-				.getPratilipi( pratilipiId );
-
-		if( ! hasAccessToReadPratilipiContent( pratilipi ) )
-			throw new InsufficientAccessException();
-		
-		BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor()
-				.getBlob( "pratilipi/" + pratilipiId + "/images/" + name );
-	
-		if( blobEntry == null )
-			blobEntry = DataAccessorFactory.getBlobAccessor()
-					.getBlob( "pratilipi-resource/" + pratilipiId + "/" + name );
-		
-		if( blobEntry == null )
-			blobEntry = DataAccessorFactory.getBlobAccessor()
-					.getBlob( "pratilipi-content/image/" + pratilipiId + "/" + name );
-		
-		if( width != null )
-			blobEntry.setData( ImageUtil.resize( blobEntry.getData(), width ) );
-		
-		return blobEntry;
-		
-	}
 
 	
 	public static String getPratilipiKeywords( Long pratilipiId )

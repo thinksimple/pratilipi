@@ -147,9 +147,6 @@ public class PratilipiApi extends GenericApi {
 			if( pratilipiData.getLastUpdated() != null )
 				this.lastUpdatedMillis = pratilipiData.getLastUpdated().getTime();
 
-			if( UxModeFilter.isAndroidApp() )
-				this.index = pratilipiData.getIndex();
-
 			this.reviewCount = pratilipiData.getReviewCount();
 			this.ratingCount = pratilipiData.getRatingCount();
 			this.averageRating = pratilipiData.getAverageRating();
@@ -180,8 +177,6 @@ public class PratilipiApi extends GenericApi {
 					this.contentType = pratilipi.getContentType();
 				if( UxModeFilter.isAndroidApp() )
 					this.listingDateMillis = pratilipi.getListingDate().getTime();
-				if( UxModeFilter.isAndroidApp() )
-					this.index = pratilipi.getIndex();
 				this.ratingCount = pratilipi.getRatingCount();
 				this.averageRating = pratilipi.getAverageRating();
 				this.readCount = pratilipi.getReadCount();
@@ -207,8 +202,6 @@ public class PratilipiApi extends GenericApi {
 			this.writePageUrl = pratilipi.getWritePageUrl();
 			if( UxModeFilter.isAndroidApp() )
 				this.contentType = pratilipi.getContentType();
-			if( UxModeFilter.isAndroidApp() )
-				this.index = pratilipi.getIndex();
 			this.ratingCount = pratilipi.getRatingCount();
 			this.averageRating = pratilipi.getAverageRating();
 			this.readCount = pratilipi.getReadCount();

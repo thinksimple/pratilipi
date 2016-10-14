@@ -189,9 +189,9 @@ public class PratilipiContentApi extends GenericApi {
 
 	@Post
 	public GenericResponse post( PostRequest request )
-			throws InsufficientAccessException, UnexpectedServerException {
+			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
-		PratilipiDocUtil.savePageContent(
+		PratilipiDocUtil.saveContentPage(
 				request.pratilipiId, 
 				request.chapterNo, 
 				request.chapterTitle, 

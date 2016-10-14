@@ -3,6 +3,7 @@ package com.pratilipi.data.util;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -64,7 +65,9 @@ public class PratilipiDocUtil {
 			Logger.getLogger( PratilipiDocUtil.class.getName() );
 	
 	
-	public static JsonArray getIndex( Long pratilipiId ) 
+	// Content doc
+	
+	public static JsonArray getContentIndex( Long pratilipiId ) 
 			throws InsufficientAccessException, UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -84,7 +87,7 @@ public class PratilipiDocUtil {
 	}
 	
 	public static Object getContent( Long pratilipiId, Integer chapterNo, Integer pageNo ) 
-			throws InsufficientAccessException, InvalidArgumentException, UnexpectedServerException {
+			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
@@ -92,6 +95,7 @@ public class PratilipiDocUtil {
 		if( ! PratilipiDataUtil.hasAccessToReadPratilipiContent( pratilipi ) )
 			throw new InsufficientAccessException();
 
+		
 		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
 		PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( pratilipiId );
 
@@ -107,7 +111,11 @@ public class PratilipiDocUtil {
 		else if( pageNo == null )
 			return _processContent( chapter );
 		
-		return _processContent( chapter.getPage( pageNo ) );
+		PratilipiContentDoc.Page page = chapter.getPage( pageNo );
+		if( page == null )
+			return null;
+		else
+			return _processContent( chapter.getPage( pageNo ) );
 
 	}
 	
@@ -151,7 +159,33 @@ public class PratilipiDocUtil {
 		return pageDoc;
 	}
 	
-	public static JsonArray addChapter( Long pratilipiId, Integer chapterNo ) 
+	public static BlobEntry getContentImage( long pratilipiId, String name, Integer width )
+			throws InsufficientAccessException, UnexpectedServerException {
+
+		Pratilipi pratilipi = DataAccessorFactory.getDataAccessor().getPratilipi( pratilipiId );
+
+		if( ! PratilipiDataUtil.hasAccessToReadPratilipiContent( pratilipi ) )
+			throw new InsufficientAccessException();
+
+		BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor()
+				.getBlob( "pratilipi/" + pratilipiId + "/images/" + name );
+	
+		if( blobEntry == null )
+			blobEntry = DataAccessorFactory.getBlobAccessor()
+					.getBlob( "pratilipi-resource/" + pratilipiId + "/" + name );
+		
+		if( blobEntry == null )
+			blobEntry = DataAccessorFactory.getBlobAccessor()
+					.getBlob( "pratilipi-content/image/" + pratilipiId + "/" + name );
+		
+		if( width != null )
+			blobEntry.setData( ImageUtil.resize( blobEntry.getData(), width ) );
+		
+		return blobEntry;
+		
+	}
+	
+	public static JsonArray addContentChapter( Long pratilipiId, Integer chapterNo ) 
 			throws InsufficientAccessException, UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -173,7 +207,7 @@ public class PratilipiDocUtil {
 
 	}
 
-	public static JsonArray deleteChapter( Long pratilipiId, Integer chapterNo ) 
+	public static JsonArray deleteContentChapter( Long pratilipiId, Integer chapterNo ) 
 			throws InsufficientAccessException, UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -195,8 +229,8 @@ public class PratilipiDocUtil {
 
 	}
 	
-	public static PratilipiContentDoc savePageContent( Long pratilipiId, Integer chapterNo, String chapterTitle, Integer pageNo, String html ) 
-			throws InsufficientAccessException, InvalidArgumentException, UnexpectedServerException {
+	public static void saveContentPage( Long pratilipiId, Integer chapterNo, String chapterTitle, Integer pageNo, String html ) 
+			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
@@ -276,10 +310,28 @@ public class PratilipiDocUtil {
 		// Save
 		docAccessor.save( pratilipiId, pcDoc );
 
-		return pcDoc;
-
 	}
 
+	public static String saveContentImage( Long pratilipiId, BlobEntry blobEntry )
+			throws InsufficientAccessException, UnexpectedServerException {
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+		
+		if( ! PratilipiDataUtil.hasAccessToUpdatePratilipiContent( pratilipi ) )
+			throw new InsufficientAccessException();
+		
+		
+		String contentImageName = new Date().getTime() + "";
+		
+		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
+		blobEntry.setName( _createImageFullName( pratilipiId, contentImageName ) );
+		blobAccessor.createOrUpdateBlob( blobEntry );
+		
+		return contentImageName;
+
+	}
+	
 	private static Node _validateContent( Node node ) {
 		
 		if( node.getClass().getName().equals( "body" ) ) {
@@ -827,12 +879,4 @@ public class PratilipiDocUtil {
 		
 	}
 	
-	
-
-	
-	
-	
-
-	
-
 }

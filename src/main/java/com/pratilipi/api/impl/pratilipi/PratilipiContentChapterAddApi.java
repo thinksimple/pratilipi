@@ -29,7 +29,7 @@ public class PratilipiContentChapterAddApi extends GenericApi {
 	public PratilipiContentIndexApi.Response post( PostRequest request )
 			throws InsufficientAccessException, UnexpectedServerException {
 
-		JsonArray index = PratilipiDocUtil.addChapter(
+		JsonArray index = PratilipiDocUtil.addContentChapter(
 				request.pratilipiId,
 				request.chapterNo );
 		return new PratilipiContentIndexApi.Response( index );
