@@ -14,7 +14,7 @@ var TableOfContents = function(toc_container, pagination_object, parent_object) 
     this.$titleChangeModal = $("#titleChangelModal");
     this.form_validated = true;
 
-}
+};
 
 TableOfContents.prototype.init = function () {
 	this.changeName( this.book_name );
@@ -23,7 +23,7 @@ TableOfContents.prototype.init = function () {
     this.delegateDeleteChapterListeners();
     this.removeEventListenersOnDeleteModalHide();
     this.attachEditTitleListener();
-}
+};
 
 TableOfContents.prototype.changeName = function( name ) {
 	this.book_name = name;
