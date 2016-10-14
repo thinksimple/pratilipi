@@ -9,7 +9,6 @@
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-<!--     <link href="toaster.css" rel="stylesheet"/> -->
     <title>Writer Panel</title>
     <style>
         .horizontal-form-input {
@@ -200,7 +199,6 @@
         </div> 
     </div>                              
 </body>
-<script src="toaster.js"></script>
 <script>
     $(document).ready(function() {  
       var $form = $('form[data-behaviour="app-registration"]');
@@ -250,7 +248,6 @@
             }, 2000);            
         }
         if ( !this.isEmptyStr( mobile_no_val ) && this.isNotValidMobile( mobile_no_val ) ) {
-            // toastr.error('Wrong number ');
             this.form_validated = false;
             this.$mobile_alert.show();
             setTimeout(function(d){
@@ -260,7 +257,7 @@
       }
       
       if( this.form_validated ) {
-        // this.ajaxSubmitForm();
+        /* this.ajaxSubmitForm(); */
       }
       
     }; 
