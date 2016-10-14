@@ -66,28 +66,28 @@
 			
 			<#if action == "setting">
 				function increaseFontSize() {
-					// cutoff = 32
+					<#--  cutoff = 32 -->
 					if( ${ fontSize + 2 } <= 32 ) {
 						setCookie( "fontSize", ${ fontSize + 2 }, 30, "/${ pageUrl }" );
 						window.location.href = getUrl();
 					}
 				}
 				function decreaseFontSize() {
-					// cutoff = 12
+					<#--  cutoff = 12 -->
 					if( ${ fontSize - 2 } >= 12 ) {
 						setCookie( "fontSize", ${ fontSize - 2 }, 30, "/${ pageUrl }" );
 						window.location.href = getUrl();
 					}
 				}
 				function increaseImageSize() {
-					// cutoff = 1500
+					<#--  cutoff = 1500 -->
 					if( ${ imageSize + 50 } <= 1500 ) {
 						setCookie( "imageSize", ${ imageSize + 50 }, 30, "/${ pageUrl }" );
 						window.location.href = getUrl();
 					}
 				}
 				function decreaseImageSize() {
-					// cutoff = 300
+					<#--  cutoff = 300 -->
 					if( ${ imageSize - 50 } >= 300 ) {
 						setCookie( "imageSize", ${ imageSize - 50 }, 30, "/${ pageUrl }" );
 						window.location.href = getUrl();

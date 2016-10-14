@@ -19,7 +19,7 @@ Content.prototype.changeDefaultToParagraph = function() {
     this.$content_container.on('keypress', function(ev){
         if( ev.keyCode == '13' && !_this.isSelectionInsideElement( "blockquote" ) ) {    
             document.execCommand('formatBlock', false, 'p');
-            // return false;
+            /* return false; */
         }
         else if( ev.keyCode == '13' && _this.isSelectionInsideElement( "blockquote" ) ) {
    <#--         document.execCommand('InsertParagraph');
@@ -35,12 +35,12 @@ Content.prototype.changeDefaultToParagraph = function() {
 Content.prototype.unformatPastedData = function() {
 	var _this = this;
     this.$content_container.on("paste", function(e) {
-        // cancel paste
+        /* cancel paste */
         e.preventDefault();
 
-        // get text representation of clipboard
+        /* get text representation of clipboard */
         var text = e.originalEvent.clipboardData.getData("text/plain");
-        // insert text manually
+        /* insert text manually */
         var $closest_element = $( e.target ).closest("p,blockquote");
         var ptext = _this.convertTextToParagraphs( text );
         
@@ -52,7 +52,7 @@ Content.prototype.unformatPastedData = function() {
 	        	$closest_element.after( ptext );
 	        } 
 	    }
-	    // if first line
+	    /* if first line */
 	    else {
 	    	_this.$content_container.append( ptext );
 	    }    
@@ -82,7 +82,7 @@ Content.prototype.convertTextToParagraphs = function( text ) {
 
 Content.prototype.delegateTargetBlankToLinks = function() {
     this.$content_container.on( "click mouseover", "a:not(.tooltip_link)", function( event ) {
-        // window.open( $( this ).attr( "href"), '_blank');
+        /* window.open( $( this ).attr( "href"), '_blank'); */
         if (typeof $(this).data('toggle') == 'undefined' || $(this).data("popover") == "absent") { 
             var href = $(this).attr("href");
             var a_tag = '<a class="tooltip_link" target="_blank" href="' + href + '">' + href + "</a>";
@@ -106,7 +106,7 @@ Content.prototype.delegateTargetBlankToLinks = function() {
 
 Content.prototype.dismissPopoverOnClickingOutside = function() {
     $(document).on('click', function (e) {
-        //did not click a popover toggle or popover
+        /* did not click a popover toggle or popover */
         if ($(e.target).data('toggle') !== 'popover'
             && $(e.target).parents('.popover.in').length === 0) { 
             $('[data-toggle="popover"]').popover('hide');

@@ -52,17 +52,17 @@
 				var email = $( '#inputEmail' ).val();
 				var password = $( '#inputPassword' ).val();
 				if( email == null || email.trim() == "" ) {
-					// Throw message - Please Enter Email
+					<#-- Throw message - Please Enter Email -->
 					alert( "Please Enter your Email" );
 					return;
 				}
 				if( password == null || password.trim() == "" ) {
-					// Throw message - Please Enter Password
+					<#--  Throw message - Please Enter Password -->
 					alert( "Please Enter your Password" );
 					return;
 				}
 				if( ! validateEmail( email ) ) {
-					// Throw message - Email is not valid
+					<#--  Throw message - Email is not valid -->
 					alert( "Please Enter a valid Email" );
 					return;
 				}

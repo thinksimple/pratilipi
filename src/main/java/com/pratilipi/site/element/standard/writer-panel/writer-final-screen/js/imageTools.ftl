@@ -63,9 +63,9 @@ var ImageTools = (function () {
 	    }
 
 	    if (file.type.match(/image\/gif/)) {
-	        // Not attempting, could be an animated gif
+	        /* Not attempting, could be an animated gif */
 	        callback(file, false);
-	        // TODO: use https://github.com/antimatter15/whammy to convert gif to webm
+	        /* TODO: use https://github.com/antimatter15/whammy to convert gif to webm */
 	        return false;
 	    }
 
@@ -77,20 +77,20 @@ var ImageTools = (function () {
 	        var isTooLarge = false;
 
 	        if (width > height && width > maxDimensions.width) {
-	            // width is the largest dimension, and it's too big.
+	            /* width is the largest dimension, and it's too big. */
 	            height *= maxDimensions.width / width;
 	            width = maxDimensions.width;
 	            isTooLarge = true;
 	        } else if (height > maxDimensions.height) {
-	            // either width wasn't over-size or height is the largest dimension
-	            // and the height is over-size
+	            /* either width wasn't over-size or height is the largest dimension */
+	            /* and the height is over-size */
 	            width *= maxDimensions.height / height;
 	            height = maxDimensions.height;
 	            isTooLarge = true;
 	        }
 
 	        if (!isTooLarge) {
-	            // early exit; no need to resize
+	            /* early exit; no need to resize */
 	            callback(file, false);
 	            return;
 	        }
@@ -122,10 +122,10 @@ var ImageTools = (function () {
 	    var dataURIParts = dataURI.split(',');
 	    var byteString = undefined;
 	    if (dataURIParts[0].indexOf('base64') >= 0) {
-	        // Convert base64 to raw binary data held in a string:
+	        /* Convert base64 to raw binary data held in a string: */
 	        byteString = atob(dataURIParts[1]);
 	    } else {
-	        // Convert base64/URLEncoded data component to raw binary data:
+	        /* Convert base64/URLEncoded data component to raw binary data: */
 	        byteString = decodeURIComponent(dataURIParts[1]);
 	    }
 	    var arrayBuffer = new ArrayBuffer(byteString.length);

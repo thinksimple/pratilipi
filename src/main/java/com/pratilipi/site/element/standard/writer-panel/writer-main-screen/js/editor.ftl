@@ -11,7 +11,7 @@ var Editor = function ( editor_container, content_object ) {
     "createLink": {highlighted: "http://0.ptlp.co/resource-all/icon/svg/link-red.svg", unhighlighted: "http://0.ptlp.co/resource-all/icon/svg/link-505050.svg"},
     "insertImage": {highlighted: "http://0.ptlp.co/resource-all/icon/svg/trash-d0021b.svg", unhighlighted: "http://0.ptlp.co/resource-all/icon/svg/camera2.svg"} };
     this.$execCommandLinks = this.$editor_container.find(".execCommand");
-    // this.$alignmentLinks = this.$editor_container.find( '[data-role="alignment"]' );
+    /* this.$alignmentLinks = this.$editor_container.find( '[data-role="alignment"]' ); */
     this.$urlModal = $('#urlModal');
     this.highlightEditorOptionsFlag = true;
 }
@@ -24,7 +24,7 @@ Editor.prototype.init = function() {
     this.attachImageSelectionListener();
     this.addTextSelectionListener();
     this.addImageListener();
-    //this.addRemoveImageListener();
+    /* this.addRemoveImageListener(); */
     this.removeEventListenersOnUrlModalHide();
 }
 
@@ -196,10 +196,10 @@ Editor.prototype.addImageListener = function() {
 	});
 	$upload_image_select.on('change', function(evt) {
 		    ImageTools.resize(this.files[0], {
-		        width: 480, // maximum width
-		        height: 480 // maximum height
+		        width: 480, /* maximum width */
+		        height: 480 /* maximum height */
 		    }, function(blob, didItResize) {
-		        // didItResize will be true if it managed to resize it, otherwise false (and will return the original file as 'blob')
+		        /* didItResize will be true if it managed to resize it, otherwise false (and will return the original file as 'blob') */
 		        var $current_element = $( _this.getSelectionStart() );
 		        var $last_element;
 		        if( $current_element.closest("p").length ) {

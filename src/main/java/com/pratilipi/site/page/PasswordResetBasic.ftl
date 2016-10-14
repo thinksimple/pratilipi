@@ -31,20 +31,18 @@
 				var email = $( '#inputEmail' ).val();
 				
 				if( email == null || email.trim() == "" ) {
-					// Throw message - Please Enter Email
+					<#--  Throw message - Please Enter Email -->
 					alert( "Please Enter your Email" );
 					return;
 				}
 				
 				if( ! validateEmail( email ) ) {
-					// Throw message - Email is not valid
+					<#--  Throw message - Email is not valid -->
 					alert( "Please Enter a valid Email" );
 					return;
 				}
 
 				jQuery( '#passwordResetButton' ).prop( 'disabled', true );
-
-				// Make Ajax call
 
 				$.ajax({
 				

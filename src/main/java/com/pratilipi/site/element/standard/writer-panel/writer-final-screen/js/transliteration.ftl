@@ -1,7 +1,7 @@
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script type="text/javascript">
 
-// Load the Google Transliterate API
+/* Load the Google Transliterate API */
 google.load("elements", "1", {
       packages: "transliteration"
     });
@@ -12,7 +12,7 @@ function onLoad() {
           google.elements.transliteration.LanguageCode.ENGLISH,
       destinationLanguage:
           [google.elements.transliteration.LanguageCode.${ language }],
-      // shortcutKey: 'ctrl+g',
+      /* shortcutKey: 'ctrl+g', */
       transliterationEnabled: true
   };
 

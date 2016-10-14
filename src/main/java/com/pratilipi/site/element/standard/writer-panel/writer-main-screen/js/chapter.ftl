@@ -23,15 +23,15 @@ Chapter.prototype.getListDomElement = function () {
          src: "http://0.ptlp.co/resource-all/icon/svg/trash.svg"
     }).data("relatedObject", this).css({width: "20px", height: "20px"});
     
-    //$delete.on("click", function(e) {
-    	//e.stopPropagation();
-    	//_this.writer_panel_object.removeChapter( _this.chapterNo );
-    //});
+    /*$delete.on("click", function(e) {
+    	e.stopPropagation();
+    	_this.writer_panel_object.removeChapter( _this.chapterNo );
+    });*/
 
     this.$name.append( $delete );
     this.$ListDomElement.append(this.$name);
     this.$ListDomElement.on('click', function(e) {
-    	//make sure it doesnt fire on delete
+    	/* make sure it doesnt fire on delete */
     	if( $(e.target).data("behaviour") != "delete-chapter" ) {
     		_this.writer_panel_object.setCurrentPage( _this.chapterNo );
     	}

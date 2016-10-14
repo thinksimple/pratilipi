@@ -28,7 +28,7 @@
 				<#if !passwordResetFromMail??>
 					var password = $( '#inputPassword' ).val();
 					if( password == null || password.trim() == "" ) {
-						// Throw message - Please Enter Current Password
+						<#--  Throw message - Please Enter Current Password -->
 						alert( "Please Enter the current password!" );
 						return;
 					}
@@ -39,13 +39,13 @@
 				var newPassword2 = $( '#inputNewPassword2' ).val();
 				
 				if( newPassword == null || newPassword.trim() == "" ) {
-					// Throw message - Please Enter new Password
+					<#--  Throw message - Please Enter new Password -->
 					alert( "Please Enter the new password!" );
 					return;
 				}
 				
 				if( newPassword2 == null || newPassword2.trim() == "" ) {
-					// Throw message - Please Enter new password again
+					<#--  Throw message - Please Enter new password again -->
 					alert( "Please Enter the new password again!" );
 					return;
 				}
@@ -56,8 +56,6 @@
 				}
 
 				jQuery( '#passwordUpdateButton' ).prop( 'disabled', true );
-
-				// Make Ajax call
 
 				$.ajax({
 				

@@ -26,7 +26,7 @@
 			return;
 		}
 		
-		// Disable button and Make Ajax call
+		<#-- Disable button and Make Ajax call -->
 		jQuery( '#loginButton' ).prop( 'disabled', true );
 		$.ajax({
 			type: 'post',

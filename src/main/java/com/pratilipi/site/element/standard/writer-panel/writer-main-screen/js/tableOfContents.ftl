@@ -18,7 +18,7 @@ var TableOfContents = function(toc_container, pagination_object, parent_object) 
 
 TableOfContents.prototype.init = function () {
 	this.changeName( this.book_name );
-    //this.populateChapters();
+    /* this.populateChapters(); */
     this.attachNewChapterListener();
     this.delegateDeleteChapterListeners();
     this.removeEventListenersOnDeleteModalHide();
@@ -32,7 +32,7 @@ TableOfContents.prototype.changeName = function( name ) {
 };
 
 TableOfContents.prototype.setListWidth = function() {
-    // setting height of dropdown ul equal to height of the trigger div
+    /* setting height of dropdown ul equal to height of the trigger div */
     this.$dropdown_menu_list.width( this.toc_container.find("#table_of_contents_dropdown").width() - 2);
 };
 
@@ -150,7 +150,7 @@ TableOfContents.prototype.ajaxSubmitForm = function( vernacular_title, english_t
         	_this.pratilipi_data = parsed_data;
         	var book_name = parsed_data.title ? parsed_data.title : parsed_data.titleEn;
         	_this.parent_object.changeName( book_name );
-        	//reset Pratilipi data and table of contents title in frontend
+        	/* reset Pratilipi data and table of contents title in frontend */
 		},
         fail:function(response){
         	var message = jQuery.parseJSON( response.responseText );

@@ -31,7 +31,7 @@
 			return;
 		}
 		
-		// Disable button and Make Ajax call
+		<#-- Disable button and Make Ajax call -->
 		jQuery( '#registerButton' ).prop( 'disabled', true );
 		$.ajax({
 			type: 'post',

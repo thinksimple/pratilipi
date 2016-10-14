@@ -42,7 +42,7 @@ MainWriterPanel.prototype.init = function() {
     this.hideProgressBarOnMobileFocus();
     this.initializeData();
     
-    //add button listeners
+    /* add button listeners */
     this.attachActionButtonListeners();
     this.initializeAutosave();
     
@@ -52,13 +52,13 @@ MainWriterPanel.prototype.addAffixClasses = function() {
     $('#editor').affix({
         offset: {
             top: 50,
-            // bottom: 0
+            /* bottom: 0 */
         }
     });
     $('#header1').affix({
         offset: {
             top: 50,
-            // bottom: 0
+            /* bottom: 0 */
         }
     }); 
 
@@ -68,7 +68,7 @@ MainWriterPanel.prototype.addAffixClasses = function() {
     $('#header1').on('affixed-top.bs.affix', function(e) {
         $("#chapter-content").css("margin-top","10px");
     });
-    //make textarea empty to show placeholder.
+    /* make textarea empty to show placeholder. */
     $("#chapter-content").empty();
                     
 };
@@ -118,16 +118,16 @@ MainWriterPanel.prototype.initializeGlobalVariables = function() {
 };
 
 MainWriterPanel.prototype.initializeData = function() {
-	//if indexJson is not null, book exists, get first chapter and populate the index too.
+	/* if indexJson is not null, book exists, get first chapter and populate the index too. */
 	var indexJson = ${ indexJson };
-	//var indexJson = [{"chapterNo":1,"chapterTitle":"Radhika"},{"chapterNo":2}];
+	/* var indexJson = [{"chapterNo":1,"chapterTitle":"Radhika"},{"chapterNo":2}]; */
 	if ( indexJson ) {
-		//get first chapter and populate it in the writer
+		/* get first chapter and populate it in the writer */
 		this.getChapter( 1 );
 		this.table_of_contents_object.populateIndex( indexJson );
 	}
 	else {
-		//make a new chapter call asychrolously and populate the index
+		/* make a new chapter call asychrolously and populate the index */
 		this.addNewChapter();
 		console.log("indexjson doesnt exists");
 	}
@@ -199,7 +199,7 @@ MainWriterPanel.prototype.addNewChapter = function( chapterNum ) {
         	
         	var index = jQuery.parseJSON( response ).index;
         	_this.index = index;
-        	//increase current chapter and reset 
+        	/* increase current chapter and reset */ 
 			_this.currChapter++;
 			_this.resetContent();
 			
@@ -214,11 +214,11 @@ MainWriterPanel.prototype.addNewChapter = function( chapterNum ) {
 
 MainWriterPanel.prototype.removeChapter = function( chapterNum ) {
 	var _this = this;
-	//first and only chapter, dont remove, just reset content and save.
+	/* first and only chapter, dont remove, just reset content and save. */
 	if( this.index.length == 1 ) {
 		this.resetContent();
 		this.saveChapter( true );
-		//update index too in save chapter for all cases - remember
+		/* update index too in save chapter for all cases - remember */
 	}
 	else {
 		var ajaxData = { pratilipiId: ${ pratilipiId?c } };
@@ -239,7 +239,7 @@ MainWriterPanel.prototype.removeChapter = function( chapterNum ) {
 	        		}
 	        	}	        	
 	        	_this.table_of_contents_object.populateIndex( _this.index );
-	        	// check if we need to change the page number
+	        	/* check if we need to change the page number */
 	        	
 				
 			},

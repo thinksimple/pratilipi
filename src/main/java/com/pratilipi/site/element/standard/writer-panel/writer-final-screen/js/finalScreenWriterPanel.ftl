@@ -69,10 +69,10 @@ FinalScreenWriterPanel.prototype.attachCoverImageListeners = function() {
         e.preventDefault();
         var file = $(this).find("#uploadPratilipiImageInput").get(0).files[0];
 		    ImageTools.resize( file, {
-		        width: 480, // maximum width
-		        height: 480 // maximum height
+		        width: 480, /* maximum width */
+		        height: 480 /* maximum height */
 		    }, function(blob, didItResize) {
-		        // didItResize will be true if it managed to resize it, otherwise false (and will return the original file as 'blob')
+		        /* didItResize will be true if it managed to resize it, otherwise false (and will return the original file as 'blob') */
 		        var $img = _this.$image_container.find(".cover-image");
 		        $img.attr("src", window.URL.createObjectURL(blob) ).addClass("blur-image");
 		        console.log(blob);
@@ -101,7 +101,7 @@ FinalScreenWriterPanel.prototype.attachCoverImageListeners = function() {
 		                $img.removeClass("blur-image").attr("src", _this.lastCoverUrl);
 		            }
 		        });    
-		        // you can also now upload this blob using an XHR.
+		        /* you can also now upload this blob using an XHR. */
 		    });
 		});		               
 };
