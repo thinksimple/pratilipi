@@ -510,8 +510,9 @@ public class PratilipiDocUtil {
 				imgData.addProperty( "height", ImageUtil.getHeight( blobEntry.getData() ) );
 				imgData.addProperty( "width", ImageUtil.getWidth( blobEntry.getData() ) );
 				
-				PratilipiContentDoc.Chapter chapter = pcDoc.addChapter( null );
-				chapter.addPage( PratilipiContentDoc.PageletType.IMAGE, imgData );
+				pcDoc.addChapter( null )
+					.addPage()
+					.addPagelet( PratilipiContentDoc.PageletType.IMAGE, imgData );
 				
 			}
 			

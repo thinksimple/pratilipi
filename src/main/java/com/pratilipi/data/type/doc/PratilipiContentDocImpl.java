@@ -178,16 +178,6 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 		}
 
 		@Override
-		public Page addPage( PageletType type, JsonObject data ) {
-			PageImpl page = new PageImpl();
-			page.addPagelet( type, data );
-			if( pages == null )
-				pages = new LinkedList<>();
-			pages.add( page );
-			return page;
-		}
-
-		@Override
 		public List<Page> getPageList() {
 			return pages == null
 					? new ArrayList<Page>( 0 )

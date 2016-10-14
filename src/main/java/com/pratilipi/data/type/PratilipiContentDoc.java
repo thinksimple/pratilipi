@@ -42,7 +42,6 @@ public interface PratilipiContentDoc {
 		List<Page> getPageList();
 		Page addPage();
 		Page addPage( int pageNo );
-		Page addPage( PageletType type, JsonObject data );
 		void deletePage( int pageNo );
 		int getNesting();
 	}
