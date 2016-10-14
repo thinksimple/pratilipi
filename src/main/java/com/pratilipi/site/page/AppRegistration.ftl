@@ -75,7 +75,7 @@
           border-color: #d0021b;
         }
         .carousel-caption {
-          color: black;
+          color: #333;
           position: relative;
           right: auto !important;
           left: auto !important;
@@ -135,55 +135,55 @@
             </ol>
 
             <!-- Wrapper for slides -->
-            <div class="carousel-inner" role="listbox" style="width: 210px;margin: 0 auto;">
+            <div class="carousel-inner" role="listbox" style="width: 100%;margin: 0 auto;">
                 <div class="item active">
                     <div class="carousel-caption" style="bottom: 0;padding-top:0;padding-bottom: 5px;">
-                        <p style="">Discover, Read, Share</p>
+                        <p style="">${ _strings.android_banner_home_1 }</p>
                     </div>
                     <img src="https://storage.googleapis.com/devo-pratilipi.appspot.com/app-screenshot/1.png" alt="..." style="height:360px;margin: 0 auto;">
                     <div class="carousel-caption">
-                        <p>Discover trending contents</p>
-                        <p>Read from your favourite categories</p>
+                        <p>${ _strings.android_banner_home_2 }</p>
+                        <p>${ _strings.android_banner_home_3 }</p>
                     </div>
                 </div>
                 <div class="item">
                     <div class="carousel-caption" style="bottom: 0;padding-top:0;padding-bottom: 5px;">
-                        <p style="">Discover, Read, Share</p>
+                        <p style="">${ _strings.android_banner_library_1 }</p>
                     </div>
                     <img src="https://storage.googleapis.com/devo-pratilipi.appspot.com/app-screenshot/2.png" alt="..." style="height:360px;margin: 0 auto;">
                     <div class="carousel-caption">
-                        <p>Discover trending contents</p>
-                        <p>Read from your favourite categories</p>
+                        <p>${ _strings.android_banner_library_2 }</p>
+                        <p>${ _strings.android_banner_library_3 }</p>
                     </div>
                 </div>
                 <div class="item">
                     <div class="carousel-caption" style="bottom: 0;padding-top:0;padding-bottom: 5px;">
-                        <p style="">Discover, Read, Share</p>
-                    </div>
-                    <img src="https://storage.googleapis.com/devo-pratilipi.appspot.com/app-screenshot/3.png" alt="..." style="height:360px;margin: 0 auto;">
-                    <div class="carousel-caption">
-                        <p>Discover trending contents</p>
-                        <p>Read from your favourite categories</p>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="carousel-caption" style="bottom: 0;padding-top:0;padding-bottom: 5px;">
-                        <p style="">Discover, Read, Share</p>
+                        <p style="">${ _strings.android_banner_reader_1 }</p>
                     </div>
                     <img src="https://storage.googleapis.com/devo-pratilipi.appspot.com/app-screenshot/4.png" alt="..." style="height:360px;margin: 0 auto;">
                     <div class="carousel-caption">
-                        <p>Discover trending contents</p>
-                        <p>Read from your favourite categories</p>
+                        <p>${ _strings.android_banner_reader_2 }</p>
+                        <p>${ _strings.android_banner_reader_3 }</p>
+                    </div>
+                </div>                
+                <div class="item">
+                    <div class="carousel-caption" style="bottom: 0;padding-top:0;padding-bottom: 5px;">
+                        <p style="">${ _strings.android_banner_notification_1 }</p>
+                    </div>
+                    <img src="https://storage.googleapis.com/devo-pratilipi.appspot.com/app-screenshot/3.png" alt="..." style="height:360px;margin: 0 auto;">
+                    <div class="carousel-caption">
+                        <p>${ _strings.android_banner_notification_2 }</p>
+                        <p>${ _strings.android_banner_notification_3 }</p>
                     </div>
                 </div>
                 <div class="item">
                     <div class="carousel-caption" style="bottom: 0;padding-top:0;padding-bottom: 5px;">
-                        <p style="">Discover, Read, Share</p>
+                        <p style="">${ _strings.android_banner_profile_1 }</p>
                     </div>
                     <img src="https://storage.googleapis.com/devo-pratilipi.appspot.com/app-screenshot/5.png" alt="..." style="height:360px;margin: 0 auto;">
                     <div class="carousel-caption">
-                        <p>Discover trending contents</p>
-                        <p>Read from your favourite categories</p>
+                        <p>${ _strings.android_banner_profile_2 }</p>
+                        <p>${ _strings.android_banner_profile_3 }</p>
                     </div>
                 </div>                
             </div>
@@ -246,7 +246,7 @@
             this.form_validated = false;
             this.$email_alert.show();
             setTimeout(function(d){
-              _this.$email_alert.hide();
+              _this.$email_alert.hide('slow');
             }, 2000);            
         }
         if ( !this.isEmptyStr( mobile_no_val ) && this.isNotValidMobile( mobile_no_val ) ) {
@@ -254,7 +254,7 @@
             this.form_validated = false;
             this.$mobile_alert.show();
             setTimeout(function(d){
-              _this.$mobile_alert.hide();
+              _this.$mobile_alert.hide('slow');
             }, 2000);             
         }
       }
