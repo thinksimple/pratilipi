@@ -218,7 +218,7 @@
       this.mobile_no_regex = /^\d{10}$/;
       this.$email_alert = $('[data-behaviour="email-alert"]');
       this.$mobile_alert = $('[data-behaviour="mobile-alert"]');
-    }
+    };
 
     AppRegistration.prototype.init = function() {
       this.attachFormSubmitListener();
@@ -294,13 +294,14 @@
       }); 
       
     };  
+    
     AppRegistration.prototype.isNotValidEmail = function( email ) {
       return !this.email_regex.test( email );
     };
+    
     AppRegistration.prototype.isNotValidMobile = function( mob_no ) {
       return !this.mobile_no_regex.test( mob_no );
     };    
-
 
     AppRegistration.prototype.resetErrorStates = function() {
       this.form_validated = true;
@@ -308,6 +309,7 @@
       this.$form.find(".error-exclamation").remove();
       
     };
+    
     AppRegistration.prototype.isEmptyStr = function(str) {
       return ( str.length === 0 || !str.trim() );
     };             
