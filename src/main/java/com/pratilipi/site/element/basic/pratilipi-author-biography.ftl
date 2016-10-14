@@ -3,7 +3,7 @@
 		var datePart = input.match(/\d+/g);
 		var day = datePart[0], month = datePart[1], year = datePart[2];
 		return year+'-'+month+'-'+day;
-	}
+	};
 	$( document ).ready(function() {
 	    $( "#since-date-${ author.getId()?c }" ).append( convertDate( ${ author.getRegistrationDateMillis()?c } ) );
 	    <#if author.getDateOfBirth()?? >
