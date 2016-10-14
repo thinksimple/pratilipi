@@ -1,4 +1,3 @@
-<#compress>
 <!DOCTYPE html>
 <html lang="${lang}">
 
@@ -71,4 +70,3 @@
 		<#include "meta/Foot.ftl">
 	</body>
 </html>
-</#compress>

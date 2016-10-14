@@ -1,4 +1,3 @@
-<#compress>
 <!DOCTYPE html>
 <html lang="${lang}">
 
@@ -79,4 +78,3 @@
 		}
 	</script>	
 </html>
-</#compress>

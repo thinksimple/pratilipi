@@ -1,5 +1,3 @@
-<#compress>
-
 <!DOCTYPE html>
 <html lang="${lang}">
 	<head>
@@ -36,5 +34,3 @@
 	</#if>
 	<#include "./meta/Font.ftl">
 </html>
-
-</#compress>

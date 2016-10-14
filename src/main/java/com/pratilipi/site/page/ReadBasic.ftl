@@ -1,4 +1,3 @@
-<#compress>
 <#assign pageUrl="read">
 
 <!DOCTYPE html>
@@ -200,4 +199,3 @@
 	</body>
 	
 </html>
-</#compress>
