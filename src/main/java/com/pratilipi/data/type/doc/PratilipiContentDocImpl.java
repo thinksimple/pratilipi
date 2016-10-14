@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.pratilipi.data.type.PratilipiContentDoc;
@@ -41,8 +42,15 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 		}
 		
 		@Override
-		public Object getData() {
-			return data;
+		public String getDataAsString() {
+			return (String) data;
+		}
+
+		@Override
+		public JsonObject getData() {
+			if( data.getClass() != JsonObject.class )
+				data = new Gson().toJsonTree( data ).getAsJsonObject();
+			return (JsonObject) data;
 		}
 
 		@Override
@@ -149,6 +157,15 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 		}
 
 		@Override
+		public Page addPage() {
+			if( pages == null )
+				pages = new LinkedList<>();
+			PageImpl page = new PageImpl();
+			pages.add( page );
+			return page;
+		}
+
+		@Override
 		public Page addPage( int pageNo ) {
 			if( pages == null )
 				pages = new LinkedList<>();
@@ -161,7 +178,7 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 		}
 
 		@Override
-		public Page addPage( PageletType type, Object data ) {
+		public Page addPage( PageletType type, JsonObject data ) {
 			PageImpl page = new PageImpl();
 			page.addPagelet( type, data );
 			if( pages == null )

@@ -669,7 +669,7 @@ public class PratilipiDataUtil {
 				for( PratilipiContentDoc.Page page : chapter.getPageList() )
 					for( PratilipiContentDoc.Pagelet pagelet : page.getPageletList() )
 						if( pagelet.getType() == PageletType.TEXT )
-							wordCount += ( (String) pagelet.getData() ).split( "[\\s]+" ).length;
+							wordCount += pagelet.getDataAsString().split( "[\\s]+" ).length;
 						else if( pagelet.getType() == PageletType.IMAGE )
 							imageCount++;
 			}

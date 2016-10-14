@@ -136,9 +136,9 @@ public class PratilipiDocUtil {
 			for( PratilipiContentDoc.Pagelet pageletDoc : pageDoc.getPageletList() ) {
 				if( pageletDoc.getType() == PageletType.HTML ) {
 					pageletDoc.setType( PageletType.TEXT );
-					pageletDoc.setData( HtmlUtil.toPlainText( (String) pageletDoc.getData() ) );
+					pageletDoc.setData( HtmlUtil.toPlainText( pageletDoc.getDataAsString() ) );
 				} else if( pageletDoc.getType() == PageletType.BLOCK_QUOTE ) {
-					pageletDoc.setData( HtmlUtil.toPlainText( (String) pageletDoc.getData() ) );
+					pageletDoc.setData( HtmlUtil.toPlainText( pageletDoc.getDataAsString() ) );
 				}
 			}
 		} else {
@@ -151,7 +151,7 @@ public class PratilipiDocUtil {
 				else if( pageletDoc.getType() == PageletType.BLOCK_QUOTE )
 					html += "<blockquote>" + pageletDoc.getData() + "</blockquote>";
 				else if( pageletDoc.getType() == PageletType.IMAGE )
-					html += "<img src=\"/api/pratilipi/content/image?name=" + ( new Gson().fromJson( pageletDoc.getData().toString(), JsonObject.class ) ).get( "name" ).getAsString() + "\"/>";
+					html += "<img src=\"/api/pratilipi/content/image?name=" + pageletDoc.getData().get( "name" ).getAsString() + "\"/>";
 			}
 			pageDoc.setHtml( html );
 			pageDoc.deleteAllPagelets();
@@ -467,30 +467,36 @@ public class PratilipiDocUtil {
 		
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 		
-		if( pratilipi.getContentType() == PratilipiContentType.PRATILIPI ) {
+		if( ! pratilipi.isOldContent() ) {
+			
+			return;
+			
+		} else if( pratilipi.getContentType() == PratilipiContentType.PRATILIPI ) {
 		
 			BlobEntry blobEntry = blobAccessor.getBlob( "pratilipi-content/pratilipi/" + pratilipiId );
 			if( blobEntry == null )
-				return;
+				throw new UnexpectedServerException( "Blob entry is null !" );
 			String contentHtml = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
 			
 			List<Object[]> pageletList = _createPageletList( pratilipi, Jsoup.parse( contentHtml ).body() );
 			
 			if( pageletList.size() > 0 ) {
+				
 				PratilipiContentDoc.Chapter chapter = null;
-				if( pageletList.get( 0 )[0] != PratilipiContentDoc.PageletType.HEAD_1 )
+				if( pageletList.get( 0 )[0] != PratilipiContentDoc.PageletType.HEAD )
 					chapter = pcDoc.addChapter( pratilipi.getTitle() == null ? pratilipi.getTitleEn() : pratilipi.getTitle() );
 				
 				for( Object[] pagelet : pageletList ) {
-					if( pagelet[0] == PratilipiContentDoc.PageletType.HEAD_1 )
+					if( pagelet[0] == PratilipiContentDoc.PageletType.HEAD ) {
 						chapter = pcDoc.addChapter( (String) pagelet[1] );
-					else if( pagelet[0] == PratilipiContentDoc.PageletType.HEAD_2 )
-						chapter = pcDoc.addChapter( null, (String) pagelet[1], 1 );
-					else if( chapter.getPage( 1 ) == null )
-						chapter.addPage( (PratilipiContentDoc.PageletType) pagelet[0], pagelet[1] );
-					else
-						chapter.getPage( 1 ).addPagelet( (PratilipiContentDoc.PageletType) pagelet[0], pagelet[1] );
+					} else {
+						PratilipiContentDoc.Page page = chapter.getPage( 1 );
+						if( page == null )
+							page = chapter.addPage();
+						page.addPagelet( (PratilipiContentDoc.PageletType) pagelet[0], pagelet[1] );
+					}
 				}
+				
 			}
 			
 		} else if( pratilipi.getContentType() == PratilipiContentType.IMAGE ) {
@@ -508,6 +514,10 @@ public class PratilipiDocUtil {
 				chapter.addPage( PratilipiContentDoc.PageletType.IMAGE, imgData );
 				
 			}
+			
+		} else {
+			
+			throw new UnexpectedServerException( "ContentType " + pratilipi.getContentType() + " is not supported !" );
 			
 		}
 		
@@ -530,27 +540,16 @@ public class PratilipiDocUtil {
 				pagelet = null;
 				pageletList.addAll( _createPageletList( pratilipi, childNode ) );
 				
-			} else if( childNode.nodeName().equals( "h1" ) ) {
+			} else if( childNode.nodeName().equals( "h1" ) || childNode.nodeName().equals( "h2" ) ) {
 				
 				String text = _extractText( childNode );
 				if( text == null )
 					continue;
-				if( pagelet != null && ( pagelet[0] == PratilipiContentDoc.PageletType.HEAD_1 || pagelet[0] == PratilipiContentDoc.PageletType.HEAD_2 ) ) {
+				
+				if( pagelet != null && pagelet[0] == PratilipiContentDoc.PageletType.HEAD ) {
 					pagelet[1] = pagelet[1] + " - " + text;
 				} else {
-					pagelet = new Object[] { PratilipiContentDoc.PageletType.HEAD_1, text };
-					pageletList.add( pagelet );
-				}
-				
-			} else if( childNode.nodeName().equals( "h2" ) ) {
-				
-				String text = _extractText( childNode );
-				if( text == null )
-					continue;
-				if( pagelet != null && pagelet[0] == PratilipiContentDoc.PageletType.HEAD_2 ) {
-					pagelet[1] = pagelet[1] + " - " + text;
-				} else {
-					pagelet = new Object[] { PratilipiContentDoc.PageletType.HEAD_2, text };
+					pagelet = new Object[] { PratilipiContentDoc.PageletType.HEAD, text };
 					pageletList.add( pagelet );
 				}
 				
@@ -569,9 +568,14 @@ public class PratilipiDocUtil {
 					imageName = imageName.replace( "%20", " " );
 					String fileName = _createImageFullName( pratilipi.getId(), imageName );
 					blobEntry = blobAccessor.getBlob( fileName );
-					if( blobEntry == null ) // TODO: Remove this when all images from old resource folder are migrated to new resource location
+					if( blobEntry == null ) { // Copying from old resource location
 						blobEntry = blobAccessor.getBlob( "pratilipi-resource/" + pratilipi.getId() + "/" + imageName );
-					if( blobEntry == null && imageUrl.indexOf( "pratilipiId=" ) != -1 ) { // TODO: Remove this when all images from old resource folder are migrated to new resource location
+						if( blobEntry != null ) {
+							blobEntry.setName( fileName );
+							blobAccessor.createOrUpdateBlob( blobEntry );
+						}
+					}
+					if( blobEntry == null && imageUrl.indexOf( "pratilipiId=" ) != -1 ) { // Copying from old resource location of another Pratilipi
 						String pratilipiIdStr = imageUrl.substring( imageUrl.indexOf( "pratilipiId=" ) + 12 );
 						if( pratilipiIdStr.indexOf( '&' ) != -1 )
 							pratilipiIdStr = pratilipiIdStr.substring( 0, pratilipiIdStr.indexOf( '&' ) );

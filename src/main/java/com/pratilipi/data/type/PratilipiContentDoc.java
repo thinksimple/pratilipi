@@ -3,11 +3,12 @@ package com.pratilipi.data.type;
 import java.util.List;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 public interface PratilipiContentDoc {
 
 	enum PageletType {
-		HEAD_1, HEAD_2, TEXT, HTML, BLOCK_QUOTE, IMAGE
+		HEAD, @Deprecated HEAD_1, @Deprecated HEAD_2, TEXT, HTML, BLOCK_QUOTE, IMAGE
 	}
 
 	enum AlignmentType {
@@ -18,7 +19,8 @@ public interface PratilipiContentDoc {
 	interface Pagelet {
 		PageletType getType();
 		void setType( PageletType type );
-		Object getData();
+		JsonObject getData();
+		String getDataAsString();
 		void setData( Object data );
 		AlignmentType getAlignment();
 	}
@@ -38,8 +40,9 @@ public interface PratilipiContentDoc {
 		int getPageCount();
 		Page getPage( int pageNo );
 		List<Page> getPageList();
+		Page addPage();
 		Page addPage( int pageNo );
-		Page addPage( PageletType type, Object data );
+		Page addPage( PageletType type, JsonObject data );
 		void deletePage( int pageNo );
 		int getNesting();
 	}
