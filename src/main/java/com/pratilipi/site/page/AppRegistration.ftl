@@ -207,7 +207,9 @@
             </a>
 
         </div> 
-    </div>                              
+        
+    </div> 
+            <a href="whatsapp://send?text=Hello%20World!">Hello, world!</a>                             
 </body>
 <script>
     $(document).ready(function() {  
