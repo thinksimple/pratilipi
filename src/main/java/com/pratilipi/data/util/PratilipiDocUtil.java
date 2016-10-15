@@ -23,6 +23,7 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -69,7 +70,6 @@ public class PratilipiDocUtil {
 			Logger.getLogger( PratilipiDocUtil.class.getName() );
 	
 	private static final String nonKeywordsPattern = "&nbsp;|&lt;|&gt;|&amp;|&cent;|&pound;|&yen;|&euro;|&copy;|&reg;|<[^>]*>|[!-/:-@\\[-`{-~]|।";
-	private static final String keywordsSplitPattern = "\\s+(\\w\\s+)*";
 
 	
 	// Content doc
@@ -707,34 +707,25 @@ public class PratilipiDocUtil {
 		
 		for( PratilipiContentDoc.Chapter chapter : pcDoc.getChapterList() ) {
 			
-			if( chapter.getTitle() != null ) {
-				String[] words = chapter.getTitle()
-						.replaceAll( nonKeywordsPattern, " " )
-						.split( keywordsSplitPattern );
+			String content = "";
+			for( PratilipiContentDoc.Page page : chapter.getPageList() ) {
+				for( PratilipiContentDoc.Pagelet pagelet : page.getPageletList() ) {
+					if( pagelet.getType() == PratilipiContentDoc.PageletType.IMAGE )
+						imageCount++;
+					else
+						content += " " + pagelet.getDataAsString();
+				}
+			}
+
+			content = content.trim();
+			if( content.length() > 1 ) {
+				String[] words = content.replaceAll( nonKeywordsPattern, " " ).split( "[\\s]+" );
 				for( String word : words ) {
 					Integer count = wordCounts.get( word );
 					count = count == null ? 1 : count++;
 					wordCounts.put( word, count );
 				}
 				wordCount += words.length;
-			}
-			
-			for( PratilipiContentDoc.Page page : chapter.getPageList() ) {
-				for( PratilipiContentDoc.Pagelet pagelet : page.getPageletList() ) {
-					if( pagelet.getType() == PratilipiContentDoc.PageletType.IMAGE ) {
-						imageCount++;
-					} else {
-						String[] words = pagelet.getDataAsString()
-								.replaceAll( nonKeywordsPattern, " " )
-								.split( keywordsSplitPattern );
-						for( String word : words ) {
-							Integer count = wordCounts.get( word );
-							count = count == null ? 1 : count++;
-							wordCounts.put( word, count );
-						}
-						wordCount += words.length;
-					}
-				}
 			}
 			
 			chapterCount++;
