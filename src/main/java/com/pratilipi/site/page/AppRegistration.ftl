@@ -136,7 +136,7 @@
                 </div>                  
                 <button type="submit" class="pratilipi-red-background-button go-button">Submit</button>
             </form>
-
+			<a href="whatsapp://send" data-text="Pratilipi Android app is coming. Download unlimited books and Read without internet" data-href=" http://hindi.gamma.pratilipi.com/android-registration">Share on WhatsApp</a>
         </center>
         <div id="app-image-carousel" class="carousel slide" data-ride="carousel" style="width: 280px;margin: 0 auto;margin-top: 10px;height: 410px;">
         <!-- Indicators -->
@@ -208,8 +208,7 @@
 
         </div> 
         
-    </div> 
-            <a href="whatsapp://send?text=Hello%20World!">Hello, world!</a>                             
+    </div>                             
 </body>
 <script>
     $(document).ready(function() {  
