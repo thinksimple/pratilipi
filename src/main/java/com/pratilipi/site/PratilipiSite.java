@@ -364,13 +364,13 @@ public class PratilipiSite extends HttpServlet {
 
 					PratilipiContentIndexApi.GetRequest indexReq = new PratilipiContentIndexApi.GetRequest();
 					indexReq.setPratilipiId( pratilipiId );
-					JsonArray indexArray = ApiRegistry.getApi( PratilipiContentIndexApi.class )
-															.getIndex( indexReq ).getIndex();
+					PratilipiContentIndexApi.Response indexResponse = ApiRegistry.getApi( PratilipiContentIndexApi.class )
+															.getIndex( indexReq );
 
 					dataModel.put( "pratilipiId", pratilipiId );
 					dataModel.put( "pratilipi", pratilipiResponse );
 					dataModel.put( "pratilipiJson", new Gson().toJson( pratilipiResponse ) );
-					dataModel.put( "indexJson", new Gson().toJson( indexArray ) );
+					dataModel.put( "indexJson", new Gson().toJson( indexResponse ) );
 				}
 
 				String action = request.getParameter( "action" );
