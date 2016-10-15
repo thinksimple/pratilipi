@@ -383,3 +383,24 @@ writer_error_title_required = ഒരു ശീർഷകം നൽകുക
 writer_error_category_required = ഒരു വിഭാഗം തിരഞ്ഞെടുക്കുക
 writer_error_copyright_required = ഞാൻ  പകർപ്പവകാശ നയം ഒപ്പം സേവന നിബന്ധനകൾ  സമ്മതിക്കുന്നു
 pratilipi_add_summary = സംഗ്രഹം ചേർക്കാൻ ഇവിടെ ക്ലിക്ക് ചെയ്യുക
+
+# Android App launch
+android_banner_1 = പ്രതിലിപി ആന്‍ഡ്രോയിഡ് ആപ്പ് : ഒട്ടേറെ  രചനകള്‍ ഡൌണ്‍ലോഡ് ചെയ്യാം , ഇന്റര്‍നെറ്റ് ഇല്ലാതെയും  വായിക്കാം.
+android_banner_3 = പ്രതിലിപി ആപ്പ് ലഭിക്കുന്ന ആദ്യ വ്യക്തിയാവാന്‍ താഴെ  രജിസ്റ്റര്‍ ചെയ്യൂ.
+android_banner_4 = കൂടുതല്‍ അറിയാന്‍ 
+android_banner_5 = വരുന്നൂ  പ്രതിലിപി ആന്‍ഡ്രോയിഡ് ആപ്പ്.
+android_banner_home_1 = കണ്ടെത്താം, വായിക്കാം, പങ്കുവെക്കാം 
+android_banner_home_3 = നിങ്ങള്‍ക്കിഷ്ടമുള്ള വിഭാഗങ്ങളില്‍ നിന്ന് വായിക്കാം 
+android_banner_library_1 = എവിടെയും , എപ്പോഴും, ഇന്റര്‍നെറ്റ് ഇല്ലാതെയും 
+android_banner_library_2 = നിങ്ങളുടെ ലൈബ്രറിയിലേക്ക് ഒട്ടേറെ രചനകള്‍ ചേര്‍ക്കാം 
+android_banner_notification_1 = അപ്ഡേറ്റുകള്‍ കാണാതെ പോകല്ലേ 
+android_banner_notification_2 = രചനകളെക്കുറിച്ചും മത്സരങ്ങളെക്കുറിച്ചും ഉടന്‍ തന്നെ അറിയാം 
+android_banner_profile_1 = നിങ്ങളുടെ പ്രൊഫൈല്‍, നിങ്ങളുടെ രീതിയില്‍ 
+android_banner_profile_3 = നിങ്ങളുടെ രചനകളും നെറ്റ് വര്‍ക്കും കൈകാര്യം ചെയ്യൂ 
+android_banner_reader_1 = വായനയുടെ ആനന്ദം അനുഭവിക്കാം 
+android_banner_reader_3 = ബുക്ക്മാര്‍ക്ക്, നൈറ്റ്‌ മോഡ് , ഷെയര്‍ , റിവ്യൂ 
+android_email_incorrect = ഇമെയില്‍ ഐഡി തെറ്റായാണ് ചേര്‍ത്തിരിക്കുന്നത് 
+android_invite_friends = സുഹൃത്തുകളെ ക്ഷണിക്കൂ 
+android_mobile_incorrect = മൊബൈല്‍ നമ്പര്‍ തെറ്റായാണ് ചേര്‍ത്തിരിക്കുന്നത് 
+android_submit = സമര്‍പ്പിക്കൂ
+android_success_feedback = ആപ്പ് പുറത്തിറങ്ങിയ ഉടനെ ഞങ്ങള്‍ താങ്കളെ  അറിയിക്കുന്നതാണ് 
