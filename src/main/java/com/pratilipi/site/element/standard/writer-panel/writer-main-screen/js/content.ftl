@@ -193,3 +193,7 @@ Content.prototype.removeSpanTags = function() {
 	  $( this ).replaceWith( $( this ).html() );
 	});
 };
+
+Content.prototype.hasNoSpanTags = function() {
+	return !this.$content_container.find("span").length;
+};

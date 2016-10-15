@@ -101,8 +101,12 @@
             -o-box-shadow: 0 0 10px  rgba(0,0,0,0.9);
         }
         .caption-line-2 {
-          margin-top: 4px;
+          margin-top: 10px;
           text-shadow: none;
+          font-size: 16px;
+        }
+        .subcaption {
+          padding-bottom: 0;
         }
     </style>
 </head>
@@ -151,7 +155,7 @@
                         <h4>${ _strings.android_banner_home_1 }</h4>
                     </div>
                     <img src="https://storage.googleapis.com/devo-pratilipi.appspot.com/app-screenshot/1.png" alt="..." style="height:360px;margin: 0 auto;">
-                    <div class="carousel-caption">
+                    <div class="carousel-caption subcaption">
                         <p class="caption-line-2">${ _strings.android_banner_home_3 }</p>
                     </div>
                 </div>
@@ -160,7 +164,7 @@
                         <h4>${ _strings.android_banner_library_1 }</h4>
                     </div>
                     <img src="https://storage.googleapis.com/devo-pratilipi.appspot.com/app-screenshot/2.png" alt="..." style="height:360px;margin: 0 auto;">
-                    <div class="carousel-caption">
+                    <div class="carousel-caption subcaption">
                         <p class="caption-line-2">${ _strings.android_banner_library_2 }</p>
                     </div>
                 </div>
@@ -169,7 +173,7 @@
                         <h4>${ _strings.android_banner_reader_1 }</h4>
                     </div>
                     <img src="https://storage.googleapis.com/devo-pratilipi.appspot.com/app-screenshot/4.png" alt="..." style="height:360px;margin: 0 auto;">
-                    <div class="carousel-caption">
+                    <div class="carousel-caption subcaption">
                         <p class="caption-line-2">${ _strings.android_banner_reader_3 }</p>
                     </div>
                 </div>                
@@ -178,7 +182,7 @@
                         <h4>${ _strings.android_banner_notification_1 }</h4>
                     </div>
                     <img src="https://storage.googleapis.com/devo-pratilipi.appspot.com/app-screenshot/3.png" alt="..." style="height:360px;margin: 0 auto;">
-                    <div class="carousel-caption">
+                    <div class="carousel-caption subcaption">
                         <p class="caption-line-2">${ _strings.android_banner_notification_2 }</p>
                     </div>
                 </div>
@@ -187,7 +191,7 @@
                         <h4>${ _strings.android_banner_profile_1 }</h4>
                     </div>
                     <img src="https://storage.googleapis.com/devo-pratilipi.appspot.com/app-screenshot/5.png" alt="..." style="height:360px;margin: 0 auto;">
-                    <div class="carousel-caption">
+                    <div class="carousel-caption subcaption">
                         <p class="caption-line-2">${ _strings.android_banner_profile_3 }</p>
                     </div>
                 </div>                                
