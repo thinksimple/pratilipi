@@ -283,7 +283,7 @@ MainWriterPanel.prototype.saveChapter = function( autosaveFlag ) {
 					_this.$save_button.removeAttr("disabled");
 					toastr.success('${ _strings.writer_changes_saved }');
 				}	
-				var title = jQuery.parseJSON( response ).chapterTitle;
+				var title = ajaxData.chapterTitle;
 				_this.table_of_contents_object.changeCurrentChapterName( _this.currChapter, title );
 	
 			},
