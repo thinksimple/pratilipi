@@ -270,7 +270,7 @@ MainWriterPanel.prototype.saveChapter = function( autosaveFlag ) {
 					chapterTitle: this.chapter_name_object.getTitle(),
 					content: this.content_object.getContent()
 				   };
-	if( !autosaveFlag || ( !autosaveFlag.originalEvent instanceof Event && _this.content_object.hasNoSpanTags() ) ) {			   
+	if( !autosaveFlag || ( !( autosaveFlag.originalEvent instanceof Event ) && _this.content_object.hasNoSpanTags() ) ) {			   
 	    $.ajax({type: "POST",
 	        url: " /api/pratilipi/content",
 	        data: ajaxData,
