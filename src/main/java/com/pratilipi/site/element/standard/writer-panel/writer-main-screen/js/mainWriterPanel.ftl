@@ -109,7 +109,7 @@ MainWriterPanel.prototype.initializeGlobalVariables = function() {
 	this.pratilipiJson = ${ pratilipiJson };
 	var indexJson = ${ indexJson };
 	if ( indexJson.index.length ) {
-		this.index = ${ indexJson.index };
+		this.index =  indexJson.index ;
 		this.currChapter = 1;
 	}
 	else {
