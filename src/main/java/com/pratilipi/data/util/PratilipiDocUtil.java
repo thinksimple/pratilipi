@@ -23,6 +23,7 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -468,9 +469,34 @@ public class PratilipiDocUtil {
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 		
 		if( ! pratilipi.isOldContent() ) {
-			
-			return;
-			
+
+			pcDoc = docAccessor.getPratilipiContentDoc( pratilipiId );
+
+			if( pcDoc == null )
+				return;
+
+			for( Chapter chapter : pcDoc.getChapterList() ) {
+				for( PratilipiContentDoc.Page page : chapter.getPageList() ) {
+					for( PratilipiContentDoc.Pagelet pagelet : page.getPageletList() ) {
+						if( pagelet.getType() == PageletType.IMAGE ) {
+							String jsonString = pagelet.getDataAsString();
+							try {
+								@SuppressWarnings("unused")
+								JsonObject jsonObject = new Gson().fromJson( jsonString, JsonObject.class );
+							} catch( JsonSyntaxException e ) {
+								BlobEntry blobEntry = blobAccessor.getBlob( "pratilipi-content/image" + "/" + pratilipiId + "/" + jsonString );
+								JsonObject imgData = new JsonObject();
+								imgData.addProperty( "name", jsonString );
+								imgData.addProperty( "height", ImageUtil.getHeight( blobEntry.getData() ) );
+								imgData.addProperty( "width", ImageUtil.getWidth( blobEntry.getData() ) );
+								pagelet.setData( imgData );
+							}
+							
+						}
+					}
+				}
+			}
+
 		} else if( pratilipi.getContentType() == PratilipiContentType.PRATILIPI ) {
 		
 			BlobEntry blobEntry = blobAccessor.getBlob( "pratilipi-content/pratilipi/" + pratilipiId );
