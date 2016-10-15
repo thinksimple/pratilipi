@@ -1122,7 +1122,7 @@ public class PratilipiSite extends HttpServlet {
 			if( res.getChapterTitle() != null )
 				content = "<h1>" + res.getChapterTitle() + "</h1>" + content;
 		} else if( pratilipi.getContentType() == PratilipiContentType.IMAGE ) {
-			content = "<img src=\"/api/pratilipi/content?pratilipiId=" + pratilipi.getId() + "&pageNo=" + pageNo + "&chapterNo=" + pageNo + "\" />";
+			content = "<img src=\"/api/pratilipi/content/image?pratilipiId=" + pratilipi.getId() + "&pageNo=" + pageNo + "\" />";
 		}
 		
 		Gson gson = new Gson();
