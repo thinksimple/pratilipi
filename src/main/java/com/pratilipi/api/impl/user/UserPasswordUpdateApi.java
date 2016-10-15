@@ -3,6 +3,7 @@ package com.pratilipi.api.impl.user;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Post;
+import com.pratilipi.api.annotation.Sensitive;
 import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.common.exception.InsufficientAccessException;
@@ -21,8 +22,10 @@ public class UserPasswordUpdateApi extends GenericApi {
 		
 		private String verificationToken;
 		
+		@Sensitive
 		private String password;
 		
+		@Sensitive
 		@Validate( required = true, requiredErrMsg = ERR_PASSWORD_REQUIRED, regEx = REGEX_PASSWORD, regExErrMsg = ERR_PASSWORD_INVALID )
 		private String newPassword;
 		
