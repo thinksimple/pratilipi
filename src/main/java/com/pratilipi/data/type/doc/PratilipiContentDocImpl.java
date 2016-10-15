@@ -43,7 +43,7 @@ public class PratilipiContentDocImpl implements PratilipiContentDoc {
 		
 		@Override
 		public String getDataAsString() {
-			return (String) data;
+			return data.toString();
 		}
 
 		@Override
