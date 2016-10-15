@@ -121,7 +121,7 @@ MainWriterPanel.prototype.initializeData = function() {
 	/* if indexJson is not null, book exists, get first chapter and populate the index too. */
 	var indexJson = ${ indexJson };
 	/* var indexJson = [{"chapterNo":1,"chapterTitle":"Radhika"},{"chapterNo":2}]; */
-	if ( indexJson ) {
+	if ( indexJson.length ) {
 		/* get first chapter and populate it in the writer */
 		this.getChapter( 1 );
 		this.table_of_contents_object.populateIndex( indexJson );
@@ -129,7 +129,6 @@ MainWriterPanel.prototype.initializeData = function() {
 	else {
 		/* make a new chapter call asychrolously and populate the index */
 		this.addNewChapter();
-		console.log("indexjson doesnt exists");
 	}
 };
 
