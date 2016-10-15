@@ -3,6 +3,7 @@
 <head>  
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta property="og:image" content="http://0.ptlp.co/resource-hi/logo/pratilipi_logo.png"/> 
     <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -108,6 +109,11 @@
         .subcaption {
           padding-bottom: 0;
         }
+        .glyph-red-background {
+            background-color: #d0021b;
+            border-radius: 50%;
+            padding: 7px 7px;
+        }
     </style>
 </head>
 <body>
@@ -126,7 +132,7 @@
         
         <center>
             <h3> Register for App </h3>
-            <form data-behaviour="app-registration" style="width: 80%; margin: 0 auto;">
+            <form data-behaviour="app-registration" style="width: 80%; margin: 0 auto;display:none;">
                 <div class="form-group has-feedback" style="margin-top:0px;">
                   <input  class="form-control horizontal-form-input" id="mobile_no" placeholder="Phone No">
                 </div>   
@@ -136,7 +142,16 @@
                 </div>                  
                 <button type="submit" class="pratilipi-red-background-button go-button">Submit</button>
             </form>
-			<a href="whatsapp://send?text=Pratilipi+Android+app+is+coming.+Download+unlimited+books+and+Read+without+internet%0Ahttp%3A%2F%2Fhindi.gamma.pratilipi.com%2Fandroid-registration">Share on WhatsApp</a>
+            <div class="well" style="width: 90%; margin: 0 auto;background-color: white;margin-top:20px;">
+                <span class="glyph-red-background badge">
+                    <img style="width:20px;height:20px;" src="http://0.ptlp.co/resource-all/icon/svg/user-check-white-red.svg">
+                </span><br>
+                You have been successfully registered. We'll inform you when we launch our app.
+                <h3> Invite friends! </h3>
+                <a href="https://www.facebook.com/Pratilipidotcom/" target="_blank"><img style="width:40px;height:40px;" class="img-circle" src="http://0.ptlp.co/resource-all/icon/footer/facebook.png"></a>
+				<a href="https://twitter.com/TeamPratilipi" target="_blank"><img style="width:40px;height:40px;" class="img-circle" src="http://0.ptlp.co/resource-all/icon/footer/twitter.png"></a>            
+            </div>
+            <a href="whatsapp://send?text=Pratilipi+Android+app+is+coming.+Download+unlimited+books+and+Read+without+internet%0Ahttp%3A%2F%2Fhindi.gamma.pratilipi.com%2Fandroid-registration">Share on WhatsApp</a>
         </center>
         <div id="app-image-carousel" class="carousel slide" data-ride="carousel" style="width: 280px;margin: 0 auto;margin-top: 10px;height: 410px;">
         <!-- Indicators -->
@@ -268,7 +283,7 @@
       }
       
       if( this.form_validated ) {
-      	_this.ajaxSubmitForm();
+        _this.ajaxSubmitForm();
       }
       
     }; 
@@ -292,7 +307,6 @@
               
               var parsed_data = jQuery.parseJSON( response );
               console.log(parsed_data);
-            window.location = window.location.origin + window.location.pathname + "?action=write&id=" + parsed_data.pratilipiId;
         },
             fail:function(response){
               var message = jQuery.parseJSON( response.responseText );
