@@ -309,7 +309,11 @@ public class PratilipiDocUtil {
 						imageName = imageName.substring( 0, imageName.indexOf( '&' ) );
 					imageName = imageName.replace( "%20", " " );
 				
-					BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor().getBlob( _createImageFullName( pratilipiId, imageName ) );
+					BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
+					BlobEntry blobEntry = blobAccessor.getBlob( _createImageFullName( pratilipiId, imageName ) );
+					// TODO: remove this when all images are migrated.
+					if( blobEntry == null ) // Falling back to the other resource location
+						blobEntry = blobAccessor.getBlob( "pratilipi-content/image/" + pratilipi.getId() + "/" + imageName );
 					
 					JsonObject imgData = new JsonObject();
 					imgData.addProperty( "name", imageName );
