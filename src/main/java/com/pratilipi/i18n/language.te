@@ -383,3 +383,24 @@ writer_error_title_required = దయచేసి శీర్షికను ర
 writer_error_category_required = దయచేేసి విభాగాన్ని ఎంచుకోండి
 writer_error_copyright_required = దయచేసి కాపీరైటు పాలసీ మరియు నిబంధనలను అంగీకరించండి
 pratilipi_add_summary = దయచేసి ఇక్కడ క్లిక్ చేసి సంగ్రహాన్ని రాయండి
+
+# Android App launch
+android_banner_1 = ప్రతిలిపి ఆండ్రాయిడ్ యాప్ : ఇంటర్నెట్ లేకుండా చదవండి మరియు అపరిమిత పుస్తకాలను డౌన్‌లోడ్ చేసుకోండి
+android_banner_3 = ఈ క్రింది లింక్ ద్వారా రిజిస్టర్ చేసుకోండి మరియు ప్రతిలిపి యాప్‌ను తొలిసారిగా డౌన్‌లోడ్ చేసుకోండి
+android_banner_4 = మరింత సమాచారం తెలుసుకోండి
+android_banner_5 = ప్రతిలిపి ఆండ్రాయిడ్ యాప్ వస్తోంది
+android_banner_home_1 = అన్వేషించండి, చదవండి, పంచుకోండి
+android_banner_home_3 = మీ అభిమాన విభాగాల నుండి చదవండి
+android_banner_library_1 = ఎక్కడైనా, ఎప్పుడైనా, ఇంటర్నెట్ లేకుండా
+android_banner_library_2 = మీ గ్రంథాలయం నుండి లెక్కలేనన్ని రచనలను డౌన్‌లోడ్ చేసుకోండి 
+android_banner_notification_1 = తాజా సమాచారాన్ని ఎప్పుడూ మిస్ అవ్వద్దు
+android_banner_notification_2 = కొత్త రచనలు మరియు కార్యక్రమాల గురించి తాజా సమాచారం పొందండి
+android_banner_profile_1 = మీ సమాచారం, మీ పయనం
+android_banner_profile_3 = మీ రచనలు మరియు నెట్‌వర్క్‌ని మేనేజ్ చేయండి
+android_banner_reader_1 = సాహిత్య పఠనంలో ఉన్న ఆనందాన్ని అనుభవించండి
+android_banner_reader_3 = బుక్‌మార్క్, నైట్ మోడ్, షేర్, సమీక్ష
+android_email_incorrect = మీరు ఈమెయిల్ ఐడిని తప్పుగా టైపు చేశారు
+android_invite_friends = స్నేహితులను ఆహ్వానించండి
+android_mobile_incorrect = మీరు మొబైల్ నెంబరు తప్పుగా టైపు చేశారు
+android_submit = సబ్మిట్ 
+android_success_feedback = యాప్ ఒక్కసారి ప్రారంభయ్యాక సమాచారాన్ని మీతో పంచుకోగలము
