@@ -136,7 +136,7 @@
                 </div>                  
                 <button type="submit" class="pratilipi-red-background-button go-button">Submit</button>
             </form>
-			<a href="whatsapp://send?text=http%3A%2F%2Fhindi.gamma.pratilipi.com%2Fandroid-registration">Share on WhatsApp</a>
+			<a href="whatsapp://send?text=http%3A%2F%2Fhindi.gamma.pratilipi.com%2Fandroid-registration+yoyo">Share on WhatsApp</a>
         </center>
         <div id="app-image-carousel" class="carousel slide" data-ride="carousel" style="width: 280px;margin: 0 auto;margin-top: 10px;height: 410px;">
         <!-- Indicators -->
