@@ -46,6 +46,7 @@ import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
+import com.pratilipi.data.type.PratilipiMetaDoc;
 import com.pratilipi.data.type.PratilipiReviewsDoc;
 import com.pratilipi.data.type.UserPratilipi;
 import com.pratilipi.filter.AccessTokenFilter;
@@ -1047,26 +1048,20 @@ public class PratilipiDataUtil {
 	
 
 	
-	public static String getPratilipiKeywords( Long pratilipiId )
-			throws UnexpectedServerException {
+	public static String getPratilipiKeywords( Long pratilipiId ) throws UnexpectedServerException {
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-
-		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
+		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
 		
-		if( pratilipi.getContentType() == PratilipiContentType.PRATILIPI ) {
-			
-			BlobEntry blobEntry = blobAccessor.getBlob( KEYWORDS_FOLDER + "/" + pratilipiId );
-			if( blobEntry == null )
-				return null;
-			return new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
-
-		} else {
-
+		PratilipiMetaDoc pmDoc = docAccessor.getPratilipiMetaDoc( pratilipiId );
+		if( pmDoc == null )
 			return null;
-			
-		}
+		
+		String keywords = "";
+		for( String str : pmDoc.getWordCounts().keySet() )
+			keywords += str + " ";
+		
+		keywords = keywords.trim();
+		return keywords.isEmpty() ? null : keywords;
 		
 	}
 		
