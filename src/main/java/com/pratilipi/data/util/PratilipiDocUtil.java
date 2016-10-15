@@ -714,7 +714,8 @@ public class PratilipiDocUtil {
 		
 		for( PratilipiContentDoc.Chapter chapter : pcDoc.getChapterList() ) {
 			
-			String content = "";
+			String content = chapter.getTitle() == null ? "" : chapter.getTitle();
+			
 			for( PratilipiContentDoc.Page page : chapter.getPageList() ) {
 				for( PratilipiContentDoc.Pagelet pagelet : page.getPageletList() ) {
 					if( pagelet.getType() == PratilipiContentDoc.PageletType.IMAGE )
