@@ -102,37 +102,37 @@ public class PratilipiDocUtil {
 		if( pcDoc == null )
 			return null;
 		else if( chapterNo == null )
-			return _processContent( pratilipiId, pcDoc );
+			return _processContent( pratilipi, pcDoc );
 		
 		Chapter chapter = pcDoc.getChapter( chapterNo );
 		
 		if( chapter == null )
 			return null;
 		else if( pageNo == null )
-			return _processContent( pratilipiId, chapter );
+			return _processContent( pratilipi, chapter );
 		
 		PratilipiContentDoc.Page page = chapter.getPage( pageNo );
 		if( page == null )
 			return null;
 		else
-			return _processContent( pratilipiId, chapter.getPage( pageNo ) );
+			return _processContent( pratilipi, chapter.getPage( pageNo ) );
 
 	}
 	
-	private static PratilipiContentDoc _processContent( Long pratilipiId, PratilipiContentDoc pcDoc ) {
+	private static PratilipiContentDoc _processContent( Pratilipi pratilipi, PratilipiContentDoc pcDoc ) {
 		for( PratilipiContentDoc.Chapter chapterDoc : pcDoc.getChapterList() )
-			_processContent( pratilipiId, chapterDoc );
+			_processContent( pratilipi, chapterDoc );
 		return pcDoc;
 	}
 
-	private static PratilipiContentDoc.Chapter _processContent( Long pratilipiId, PratilipiContentDoc.Chapter chapterDoc ) {
+	private static PratilipiContentDoc.Chapter _processContent( Pratilipi pratilipi, PratilipiContentDoc.Chapter chapterDoc ) {
 		for( PratilipiContentDoc.Page pageDoc : chapterDoc.getPageList() )
-			_processContent( pratilipiId, pageDoc );
+			_processContent( pratilipi, pageDoc );
 		return chapterDoc;
 	}
 	
-	private static PratilipiContentDoc.Page _processContent( Long pratilipiId, PratilipiContentDoc.Page pageDoc ) {
-		if( UxModeFilter.isAndroidApp() ) {
+	private static PratilipiContentDoc.Page _processContent( Pratilipi pratilipi, PratilipiContentDoc.Page pageDoc ) {
+		if( UxModeFilter.isAndroidApp() || pratilipi.getContentType() == PratilipiContentType.IMAGE ) {
 			for( PratilipiContentDoc.Pagelet pageletDoc : pageDoc.getPageletList() ) {
 				if( pageletDoc.getType() == PageletType.HTML ) {
 					pageletDoc.setType( PageletType.TEXT );
@@ -151,7 +151,7 @@ public class PratilipiDocUtil {
 				else if( pageletDoc.getType() == PageletType.BLOCK_QUOTE )
 					html += "<blockquote>" + pageletDoc.getDataAsString() + "</blockquote>";
 				else if( pageletDoc.getType() == PageletType.IMAGE )
-					html += "<img src=\"/api/pratilipi/content/image?pratilipiId=" + pratilipiId + "&name=" + pageletDoc.getData().get( "name" ).getAsString() + "\"/>";
+					html += "<img src=\"/api/pratilipi/content/image?pratilipiId=" + pratilipi.getId() + "&name=" + pageletDoc.getData().get( "name" ).getAsString() + "\"/>";
 			}
 			pageDoc.setHtml( html );
 			pageDoc.deleteAllPagelets();
