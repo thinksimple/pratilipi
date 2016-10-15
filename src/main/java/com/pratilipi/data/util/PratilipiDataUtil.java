@@ -45,8 +45,6 @@ import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
-import com.pratilipi.data.type.PratilipiContentDoc;
-import com.pratilipi.data.type.PratilipiContentDoc.PageletType;
 import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
 import com.pratilipi.data.type.PratilipiReviewsDoc;
 import com.pratilipi.data.type.UserPratilipi;
@@ -632,48 +630,25 @@ public class PratilipiDataUtil {
 	}
 	
 	
-	public static void updatePratilipiIndex( Long pratilipiId )
-			throws InvalidArgumentException, UnexpectedServerException {
+	public static void updatePratilipiIndex( Long pratilipiId ) throws UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 		
-		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-
-		if( pratilipi.getContentType() == PratilipiContentType.PRATILIPI ) {
+		if( pratilipi.isOldContent() && pratilipi.getContentType() == PratilipiContentType.PRATILIPI ) {
 			
+			BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
 			BlobEntry blobEntry = blobAccessor.getBlob( CONTENT_FOLDER + "/" + pratilipiId );
 			
 			String index = null;
 			Integer pageCount = 0;
 			if( blobEntry != null ) {
 				String content = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
-				
 				PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( content );
 				index = pratilipiContentUtil.generateIndex();
 				pageCount = pratilipiContentUtil.getPageCount();
 			}
 
-			
-			DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
-			PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( pratilipiId );
-			int wordCount = 0;
-			int imageCount = 0;
-			int chapterCount = 0;
-			for( PratilipiContentDoc.Chapter chapter : pcDoc.getChapterList() ) {
-				if( chapter.getTitle() != null )
-					wordCount += chapter.getTitle().split( "[\\s]+" ).length;
-				if( chapter.getPageCount() == 0 )
-					continue;
-				chapterCount++;
-				for( PratilipiContentDoc.Page page : chapter.getPageList() )
-					for( PratilipiContentDoc.Pagelet pagelet : page.getPageletList() )
-						if( pagelet.getType() == PageletType.TEXT )
-							wordCount += pagelet.getDataAsString().split( "[\\s]+" ).length;
-						else if( pagelet.getType() == PageletType.IMAGE )
-							imageCount++;
-			}
-			
 			
 			AuditLog auditLog = dataAccessor.newAuditLog(
 					AccessTokenFilter.getAccessToken().getId(),
@@ -690,17 +665,9 @@ public class PratilipiDataUtil {
 				
 			}
 
-			if( pratilipi.getWordCount() != wordCount
-					|| pratilipi.getImageCount() != imageCount
-					|| pratilipi.getPageCount() != pageCount
-					|| pratilipi.getChapterCount() != chapterCount ) {
-				
-				pratilipi.setWordCount( wordCount );
-				pratilipi.setImageCount( imageCount );
+			if( pratilipi.getPageCount() != pageCount ) {
 				pratilipi.setPageCount( pageCount );
-				pratilipi.setChapterCount( chapterCount );
 				isChanged = true;
-				
 			}
 
 			if( isChanged )
@@ -999,7 +966,7 @@ public class PratilipiDataUtil {
 			return null;
 		
 		String contentHtml = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
-		PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( pratilipi, contentHtml );
+		PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( contentHtml );
 		return pratilipiContentUtil.getContent( chapterNo );
 		
 	}

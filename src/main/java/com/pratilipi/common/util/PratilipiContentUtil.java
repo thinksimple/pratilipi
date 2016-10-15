@@ -1,8 +1,5 @@
 package com.pratilipi.common.util;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -11,7 +8,6 @@ import java.util.regex.Pattern;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.pratilipi.data.type.Pratilipi;
 
 
 public class PratilipiContentUtil {
@@ -32,22 +28,13 @@ public class PratilipiContentUtil {
 			"<h1.*?>(<.+?>)*(?<title>.+?)(</.+?>)*</h1>"
 			+ "|"
 			+ "<h2.*?>(<.+?>)*(?<subTitle>.+?)(</.+?>)*</h2>" );
-	
-	private static final String nonKeywordsPattern = "&nbsp;|&lt;|&gt;|&amp;|&cent;|&pound;|&yen;|&euro;|&copy;|&reg;|<[^>]*>|[!-/:-@\\[-`{-~]|।";
 
 	
-	private Pratilipi pratilipi;
 	private String content;
 	private Matcher matcher;
 	
 	
 	public PratilipiContentUtil( String content ) {
-		this.content = content;
-		matcher = pageBreakPattern.matcher( content );
-	}
-
-	public PratilipiContentUtil( Pratilipi pratilipi, String content ) {
-		this.pratilipi = pratilipi;
 		this.content = content;
 		matcher = pageBreakPattern.matcher( content );
 	}
@@ -244,22 +231,6 @@ public class PratilipiContentUtil {
 		}
 		
 		return new Gson().toJson( index );
-	}
-
-	public String generateKeywords() {
-		String[] words = this.content
-				.replaceAll( nonKeywordsPattern, " " )
-				.split( "\\s+(\\w\\s+)*" );
-		
-		Set<String> wordSet = new HashSet<String>( Arrays.asList( words ) );
-		words = wordSet.toArray( new String[ wordSet.size() ] );
-		
-		String keywords = "";
-		for( String word : words  )
-			if( word.length() > 1 )
-				keywords = keywords + word + " ";
-		
-		return keywords.trim();
 	}
 
 }

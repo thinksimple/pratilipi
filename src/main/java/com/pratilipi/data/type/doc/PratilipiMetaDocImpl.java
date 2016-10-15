@@ -20,10 +20,7 @@ public class PratilipiMetaDocImpl implements PratilipiMetaDoc {
 	
 	@Override
 	public void setWordCounts( Map<String, Integer> wordCounts ) {
-		if( ( wordCounts == null || wordCounts.size() == 0 ) && this.wordCounts != null )
-			wordCounts = null;
-		else
-			this.wordCounts = wordCounts;
+		this.wordCounts = wordCounts == null || wordCounts.size() == 0 ? null : wordCounts;
 		lastUpdated = new Date();
 	}	
 	
