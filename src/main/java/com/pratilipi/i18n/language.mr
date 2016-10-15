@@ -383,3 +383,24 @@ writer_error_title_required = कृपया शिर्षक लिहा
 writer_error_category_required = कृपया  श्रेणी निवडा 
 writer_error_copyright_required = कृपया कॉपीराइट धोरण आणि सेवा अटी स्वीकार करा
 pratilipi_add_summary = सारांश जोडण्यासाठी करण्यासाठी येथे क्लिक करा
+
+# Android App launch
+android_banner_1 = प्रतिलिपि एंड्राइड एप्लीकेशन:  इंटरनेट विना वाचा आणि डाउनलोड करा अगणित पुस्तके 
+android_banner_3 = सर्व प्रथम वाचकांना सहभागी करण्यासाठी रजिस्टर करा 
+android_banner_4 = आणि अधिक जाणून घ्या
+android_banner_5 = प्रतिलिपि एंड्राइड एप्लीकेशन लवकरच येत आहे  
+android_banner_home_1 = शोधा, वाचा आणि शेअर
+android_banner_home_3 = आपल्या आवडत्या श्रेणी वाचा
+android_banner_library_1 = कधी ही, कुठेही, इंटरनेटविना
+android_banner_library_2 = आपल्या वाचनालयात अगणित पुस्तके जोडा
+android_banner_notification_1 = कोणतेही अपडेट कधी सुटू नये 
+android_banner_notification_2 = झटपट नवीन वाचन साहित्य आणि इव्हेंट याविषयी जाणून घ्या
+android_banner_profile_1 = आपले प्रोफाइल, आपले मार्ग
+android_banner_profile_3 = आपले वाचन साहित्य आणि नेटवर्क व्यवस्थापित करा
+android_banner_reader_1 = वाचन आनंदाचा अनुभव
+android_banner_reader_3 = बुकमार्क, रात्री मोड करा, पुनरावलोकन शेअर करा 
+android_email_incorrect = दिलेला इ-मेल आइडी चुकीचा आहे
+android_invite_friends = मित्रांना आमंत्रित करा 
+android_mobile_incorrect = दिलेला फ़ोन नंबर चुकीचा आहे
+android_submit = सादर करा 
+android_success_feedback = एप्लीकेशनचे  लॉंच झाले कि आम्ही आपल्याला सूचित करू ....
