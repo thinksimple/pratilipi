@@ -10,6 +10,7 @@ import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.PratilipiContentType;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.PratilipiContentDoc;
@@ -103,7 +104,9 @@ public class PratilipiContentApi extends GenericApi {
 			throws InvalidArgumentException, InsufficientAccessException,
 			UnexpectedServerException {
 
-		if( UxModeFilter.isAndroidApp() ) {
+		Pratilipi pratilipi = DataAccessorFactory.getDataAccessor().getPratilipi( request.pratilipiId );
+		
+		if( UxModeFilter.isAndroidApp() || pratilipi.getContentType() == PratilipiContentType.IMAGE ) {
 			
 			Object content = PratilipiDocUtil.getContent(
 					request.pratilipiId,
@@ -121,8 +124,6 @@ public class PratilipiContentApi extends GenericApi {
 		
 			if( request.chapterNo == null )
 				request.chapterNo = 1;
-		
-			Pratilipi pratilipi = DataAccessorFactory.getDataAccessor().getPratilipi( request.pratilipiId );
 		
 			if( pratilipi.isOldContent() ) {
 				
