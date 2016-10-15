@@ -9,7 +9,7 @@
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <title>Writer Panel</title>
+    <title>${ title }</title>
     <style>
         .horizontal-form-input {
             border: none;
@@ -136,7 +136,7 @@
                 </div>                  
                 <button type="submit" class="pratilipi-red-background-button go-button">Submit</button>
             </form>
-			<a href="whatsapp://send?text=http%3A%2F%2Fhindi.gamma.pratilipi.com%2Fandroid-registration+yoyo">Share on WhatsApp</a>
+			<a href="whatsapp://send?text=Pratilipi+Android+app+is+coming.+Download+unlimited+books+and+Read+without+internet%0Ahttp%3A%2F%2Fhindi.gamma.pratilipi.com%2Fandroid-registration">Share on WhatsApp</a>
         </center>
         <div id="app-image-carousel" class="carousel slide" data-ride="carousel" style="width: 280px;margin: 0 auto;margin-top: 10px;height: 410px;">
         <!-- Indicators -->
@@ -268,6 +268,7 @@
       }
       
       if( this.form_validated ) {
+      	_this.ajaxSubmitForm();
       }
       
     }; 
