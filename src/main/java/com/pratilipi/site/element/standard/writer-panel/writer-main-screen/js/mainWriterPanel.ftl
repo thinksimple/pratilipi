@@ -121,7 +121,7 @@ MainWriterPanel.prototype.initializeData = function() {
 	/* if indexJson is not null, book exists, get first chapter and populate the index too. */
 	var indexJson = ${ indexJson };
 	/* var indexJson = [{"chapterNo":1,"chapterTitle":"Radhika"},{"chapterNo":2}]; */
-	if ( indexJson.length ) {
+	if ( indexJson.index.length ) {
 		/* get first chapter and populate it in the writer */
 		this.getChapter( 1 );
 		this.table_of_contents_object.populateIndex( indexJson );

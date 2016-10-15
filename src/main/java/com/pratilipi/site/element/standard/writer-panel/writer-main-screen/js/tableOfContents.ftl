@@ -39,7 +39,7 @@ TableOfContents.prototype.setListWidth = function() {
 TableOfContents.prototype.populateIndex = function( index ) {
     var _this = this;
     this.emptyChaptersList();
-    this.chaptersList = index;
+    this.chaptersList = index["index"];
     $.each(this.chaptersList, function(index, chapter) {
         var ch = new Chapter( chapter, _this.parent_object );
         _this.chapters.push(ch);
