@@ -23,7 +23,6 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -486,7 +485,9 @@ public class PratilipiDocUtil {
 					for( PratilipiContentDoc.Pagelet pagelet : page.getPageletList() ) {
 						if( pagelet.getType() == PageletType.IMAGE ) {
 							String imageUrl = pagelet.getDataAsString();
-							if( imageUrl.contains( "/api/pratilipi/content/image" ) ) {
+							if( imageUrl.startsWith( "/api/pratilipi/content/image" ) ) {
+								if( imageUrl.indexOf( "name=" ) == -1 )
+									throw new UnexpectedServerException();
 								String imageName = imageUrl.substring( imageUrl.indexOf( "name=" ) + 5 );
 								if( imageName.indexOf( "&" ) != -1 )
 									imageName = imageName.substring( 0, imageName.indexOf( "&" ) );
@@ -496,6 +497,8 @@ public class PratilipiDocUtil {
 								imgData.addProperty( "height", ImageUtil.getHeight( blobEntry.getData() ) );
 								imgData.addProperty( "width", ImageUtil.getWidth( blobEntry.getData() ) );
 								pagelet.setData( imgData );
+							} else {
+								logger.log( Level.WARNING, "Ignoring " + imageUrl );
 							}
 						}
 					}
