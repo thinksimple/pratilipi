@@ -383,3 +383,24 @@ writer_error_title_required = શીર્ષક આપો
 writer_error_category_required = શ્રેણી પસંદ કરો 
 writer_error_copyright_required = કોપીરાઈટ પોલિસી અને સેવાની શરતોનો સ્વીકાર કરો. 
 pratilipi_add_summary = સારાંશ લખવા માટે અહી ક્લિક કરો. 
+
+# Android App launch
+android_banner_1 = પ્રતિલિપિ એન્ડ્રોઈડ એપ્લિકેશન: હવે વાંચો ઈન્ટરનેટ વિના, અને અગણિત પુસ્તકો ડાઉનલોડ કરો 
+android_banner_3 = સર્વપ્રથમ વાચકોમાં જોડાવા માટે નીચે રજિસ્ટર કરો 
+android_banner_4 = વધુ જાણો 
+android_banner_5 = પ્રતિલિપિ એન્ડ્રોઈડ એપ્લિકેશન જલ્દી આવી રહી છે.
+android_banner_home_1 = શોધો, વાંચો અને શેર કરો 
+android_banner_home_3 = આપની મનપસંદ શ્રેણીઓમાંથી વાંચો 
+android_banner_library_1 = ક્યારેય પણ, ક્યાંય પણ, ઈન્ટરનેટ વિના 
+android_banner_library_2 = આપની લાઈબ્રેરીમાં અગણિત પુસ્તકો જોડો 
+android_banner_notification_1 = કોઈ અપડેટ ક્યારેય ચુકાય નહી 
+android_banner_notification_2 = નવી વાંચન સામગ્રી અને સ્પર્ધાઓ વિશે તુરંત જાણો 
+android_banner_profile_1 = આપની પ્રોફાઈલ, આપની રીતે 
+android_banner_profile_3 = આપની વાંચન સામગ્રી અને નેટવર્કનો પ્રબંધ કરો 
+android_banner_reader_1 = વાંચનના આનંદનો અનુભવ લો 
+android_banner_reader_3 = બુકમાર્ક,રાત્રી મોડ, શેર કરો 
+android_email_incorrect = દર્જ કરેલ ઈમેલ આઈડી ખોટી છે 
+android_invite_friends = મિત્રોને આમંત્રિત કરો 
+android_mobile_incorrect = દર્જ કરેલ મોબાઈલ નંબર ખોટો છે 
+android_submit = દર્જ કરો
+android_success_feedback = એપ્લીકેશન લોંચ થતા જ અમે તમને સુચના આપીશું 
