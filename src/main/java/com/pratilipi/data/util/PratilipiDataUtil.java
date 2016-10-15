@@ -1102,58 +1102,7 @@ public class PratilipiDataUtil {
 		}
 		
 	}
-	
-	public static boolean updatePratilipiKeywords( Long pratilipiId ) 
-			throws InvalidArgumentException, UnexpectedServerException {
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-
-		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-		
-		if( pratilipi.getContentType() == PratilipiContentType.PRATILIPI ) {
-		
-			BlobEntry blobEntry = blobAccessor.getBlob( CONTENT_FOLDER + "/" + pratilipiId );
-			BlobEntry keywordsBlobEntry = blobAccessor.getBlob( KEYWORDS_FOLDER + "/" + pratilipiId );
-			
-			String generatedKeywords = null;
-			if( blobEntry != null ) {
-				String content = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
-				PratilipiContentUtil pratilipiContentUtil = new PratilipiContentUtil( content );
-				generatedKeywords = pratilipiContentUtil.generateKeywords();
-			}
-			
-			if( generatedKeywords == null || generatedKeywords.isEmpty() ) {
-
-				if( keywordsBlobEntry == null ) {
-					return false;
-				} else {
-					blobAccessor.deleteBlob( keywordsBlobEntry );
-					return true;
-				}
-				
-			} else {
-				
-				if( keywordsBlobEntry == null )
-					keywordsBlobEntry = blobAccessor.newBlob( KEYWORDS_FOLDER + "/" + pratilipiId, null, "text/plain" );
-				else if( generatedKeywords.equals( new String( keywordsBlobEntry.getData(), Charset.forName( "UTF-8" ) ) ) )
-					return false;
-
-				keywordsBlobEntry.setData( generatedKeywords.getBytes( Charset.forName( "UTF-8" ) ) );
-				blobAccessor.createOrUpdateBlob( keywordsBlobEntry );
-				return true;
-				
-			}
-			
-		} else {
-			
-			return false;
-			// throw new InvalidArgumentException( "Keywords generation for " + pratilipi.getContentType() + " content type is not yet supported." );
-		
-		}
-		
-	}
-	
 	
 	public static String getPratilipiResourceFolder( Long pratilipiId ) {
 		return RESOURCE_FOLDER + "/" + pratilipiId;

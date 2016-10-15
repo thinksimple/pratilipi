@@ -23,10 +23,10 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.CommentParentType;
 import com.pratilipi.common.type.CommentState;
 import com.pratilipi.common.type.PageType;
@@ -43,6 +43,7 @@ import com.pratilipi.data.BlobAccessor;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DocAccessor;
+import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.Comment;
 import com.pratilipi.data.type.CommentDoc;
@@ -53,10 +54,12 @@ import com.pratilipi.data.type.PratilipiContentDoc.AlignmentType;
 import com.pratilipi.data.type.PratilipiContentDoc.Chapter;
 import com.pratilipi.data.type.PratilipiContentDoc.PageletType;
 import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
+import com.pratilipi.data.type.PratilipiMetaDoc;
 import com.pratilipi.data.type.PratilipiReviewsDoc;
 import com.pratilipi.data.type.UserPratilipi;
 import com.pratilipi.data.type.UserPratilipiDoc;
 import com.pratilipi.data.type.Vote;
+import com.pratilipi.filter.AccessTokenFilter;
 import com.pratilipi.filter.UxModeFilter;
 
 
@@ -65,6 +68,9 @@ public class PratilipiDocUtil {
 	private static final Logger logger =
 			Logger.getLogger( PratilipiDocUtil.class.getName() );
 	
+	private static final String nonKeywordsPattern = "&nbsp;|&lt;|&gt;|&amp;|&cent;|&pound;|&yen;|&euro;|&copy;|&reg;|<[^>]*>|[!-/:-@\\[-`{-~]|।";
+	private static final String keywordsSplitPattern = "\\s+(\\w\\s+)*";
+
 	
 	// Content doc
 	
@@ -469,34 +475,9 @@ public class PratilipiDocUtil {
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 		
 		if( ! pratilipi.isOldContent() ) {
-
-			pcDoc = docAccessor.getPratilipiContentDoc( pratilipiId );
-
-			if( pcDoc == null )
-				return;
-
-			for( Chapter chapter : pcDoc.getChapterList() ) {
-				for( PratilipiContentDoc.Page page : chapter.getPageList() ) {
-					for( PratilipiContentDoc.Pagelet pagelet : page.getPageletList() ) {
-						if( pagelet.getType() == PageletType.IMAGE ) {
-							String jsonString = pagelet.getDataAsString();
-							try {
-								@SuppressWarnings("unused")
-								JsonObject jsonObject = new Gson().fromJson( jsonString, JsonObject.class );
-							} catch( JsonSyntaxException e ) {
-								BlobEntry blobEntry = blobAccessor.getBlob( "pratilipi-content/image" + "/" + pratilipiId + "/" + jsonString );
-								JsonObject imgData = new JsonObject();
-								imgData.addProperty( "name", jsonString );
-								imgData.addProperty( "height", ImageUtil.getHeight( blobEntry.getData() ) );
-								imgData.addProperty( "width", ImageUtil.getWidth( blobEntry.getData() ) );
-								pagelet.setData( imgData );
-							}
-							
-						}
-					}
-				}
-			}
-
+			
+			return;
+			
 		} else if( pratilipi.getContentType() == PratilipiContentType.PRATILIPI ) {
 		
 			BlobEntry blobEntry = blobAccessor.getBlob( "pratilipi-content/pratilipi/" + pratilipiId );
@@ -682,6 +663,92 @@ public class PratilipiDocUtil {
 		return text.isEmpty() ? null : text;
 	}
 	
+	
+	public static boolean updateMeta( Long pratilipiId ) throws UnexpectedServerException {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+
+		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
+		PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( pratilipiId );
+		PratilipiMetaDoc pmDoc = docAccessor.getPratilipiMetaDoc( pratilipiId );
+		if( pmDoc == null )
+			pmDoc = docAccessor.newPratilipiMetaDoc();
+		
+		
+		int wordCount = 0;
+		int imageCount = 0;
+		int chapterCount = 0;
+		Map<String, Integer> wordCounts = new HashMap<>();
+		
+		for( PratilipiContentDoc.Chapter chapter : pcDoc.getChapterList() ) {
+			
+			if( chapter.getTitle() != null ) {
+				String[] words = chapter.getTitle()
+						.replaceAll( nonKeywordsPattern, " " )
+						.split( keywordsSplitPattern );
+				for( String word : words ) {
+					Integer count = wordCounts.get( word );
+					count = count == null ? 1 : count++;
+					wordCounts.put( word, count );
+				}
+				wordCount += words.length;
+			}
+			
+			for( PratilipiContentDoc.Page page : chapter.getPageList() ) {
+				for( PratilipiContentDoc.Pagelet pagelet : page.getPageletList() ) {
+					if( pagelet.getType() == PratilipiContentDoc.PageletType.IMAGE ) {
+						imageCount++;
+					} else {
+						String[] words = pagelet.getDataAsString()
+								.replaceAll( nonKeywordsPattern, " " )
+								.split( keywordsSplitPattern );
+						for( String word : words ) {
+							Integer count = wordCounts.get( word );
+							count = count == null ? 1 : count++;
+							wordCounts.put( word, count );
+						}
+						wordCount += words.length;
+					}
+				}
+			}
+			
+			chapterCount++;
+			
+		}
+
+		
+		boolean isChanged = wordCounts.size() != pmDoc.getWordCounts().size();
+		if( ! isChanged ) {
+			for( Entry<String, Integer> entry : pmDoc.getWordCounts().entrySet() ) {
+				if( ! entry.getValue().equals( wordCounts.get( entry.getKey() ) ) ) {
+					isChanged = true;
+					break;
+				}
+			}
+		}
+		
+		
+		if( isChanged ) {
+			// Update & Save Pratilipi Meta Doc
+			pmDoc.setWordCounts( wordCounts );
+			docAccessor.save( pratilipiId, pmDoc );
+			// Update counts in Pratilipi Entity
+			AuditLog auditLog = dataAccessor.newAuditLog(
+					AccessTokenFilter.getAccessToken().getId(),
+					AccessType.PRATILIPI_UPDATE,
+					pratilipi );
+			pratilipi.setWordCount( wordCount );
+			pratilipi.setImageCount( imageCount );
+			pratilipi.setChapterCount( chapterCount );
+			pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi, auditLog );
+		}
+
+		
+		return isChanged;
+		
+	}
+
 	
 	public static void updatePratilipiReviews( Long pratilipiId ) throws UnexpectedServerException {
 		

@@ -6,6 +6,7 @@ import com.pratilipi.data.type.InitBannerDoc;
 import com.pratilipi.data.type.InitDoc;
 import com.pratilipi.data.type.PratilipiContentDoc;
 import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
+import com.pratilipi.data.type.PratilipiMetaDoc;
 import com.pratilipi.data.type.PratilipiReviewsDoc;
 import com.pratilipi.data.type.UserPratilipiDoc;
 
@@ -27,6 +28,11 @@ public interface DocAccessor {
 	PratilipiContentDoc newPratilipiContentDoc();
 	PratilipiContentDoc getPratilipiContentDoc( Long pratilipiId ) throws UnexpectedServerException;
 	void save( Long pratilipiId, PratilipiContentDoc contentDoc ) throws UnexpectedServerException;
+	
+	// Pratilipi Meta Doc
+	PratilipiMetaDoc newPratilipiMetaDoc();
+	PratilipiMetaDoc getPratilipiMetaDoc( Long pratilipiId ) throws UnexpectedServerException;
+	void save( Long pratilipiId, PratilipiMetaDoc metaDoc ) throws UnexpectedServerException;
 	
 	// Pratilipi Reviews Doc
 	PratilipiReviewsDoc newPratilipiReviewsDoc();

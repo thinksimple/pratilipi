@@ -198,10 +198,11 @@ public class PratilipiProcessApi extends GenericApi {
 		if( request.processContent() ) {
 			for( Long pratilipiId : pratilipiIdList ) {
 				
+				// TODO: Remove following two lines as soon as old (HTML) format is migrated to new (JSON) format
 				PratilipiDocUtil.updatePratilipiContent( pratilipiId );
 				PratilipiDataUtil.updatePratilipiIndex( pratilipiId );
 				
-				boolean changed = PratilipiDataUtil.updatePratilipiKeywords( pratilipiId );
+				boolean changed = PratilipiDocUtil.updateMeta( pratilipiId );
 				if( changed )
 					PratilipiDataUtil.updatePratilipiSearchIndex( pratilipiId, null );
 				
