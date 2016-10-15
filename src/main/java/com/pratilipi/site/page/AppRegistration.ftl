@@ -11,6 +11,18 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <title>${ title }</title>
+    <script>
+    	var isMobile;
+    	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+		 	console.log("mobile");
+		 	isMobile = true;
+		}
+		else {
+			isMobile = false;
+			console.log("not mobile");
+		}
+		console.log( isMobile );
+    </script>
     <style>
         .horizontal-form-input {
             border: none;
@@ -132,7 +144,7 @@
         
         <center>
             <h3> Register for App </h3>
-            <form data-behaviour="app-registration" style="width: 80%; margin: 0 auto;display:none;">
+            <form data-behaviour="app-registration" style="width: 80%; margin: 0 auto;">
                 <div class="form-group has-feedback" style="margin-top:0px;">
                   <input  class="form-control horizontal-form-input" id="mobile_no" placeholder="Phone No">
                 </div>   
@@ -142,16 +154,15 @@
                 </div>                  
                 <button type="submit" class="pratilipi-red-background-button go-button">Submit</button>
             </form>
-            <div class="well" style="width: 90%; margin: 0 auto;background-color: white;margin-top:20px;">
+            <div data-behaviour="invite_friends" class="well" style="width: 90%; margin: 0 auto;background-color: white;margin-top:20px;">
                 <span class="glyph-red-background badge">
                     <img style="width:20px;height:20px;" src="http://0.ptlp.co/resource-all/icon/svg/user-check-white-red.svg">
                 </span><br>
                 You have been successfully registered. We'll inform you when we launch our app.
                 <h3> Invite friends! </h3>
-                <a href="https://www.facebook.com/Pratilipidotcom/" target="_blank"><img style="width:40px;height:40px;" class="img-circle" src="http://0.ptlp.co/resource-all/icon/footer/facebook.png"></a>
-				<a href="https://twitter.com/TeamPratilipi" target="_blank"><img style="width:40px;height:40px;" class="img-circle" src="http://0.ptlp.co/resource-all/icon/footer/twitter.png"></a>            
+                <a href="http://www.facebook.com/sharer.php?u=http://hindi.pratilipi.com/android-registration" target="_blank"><img style="width:40px;height:40px;" class="img-circle" src="http://0.ptlp.co/resource-all/icon/footer/facebook.png"></a>
+                <a style="margin-left: 7px;" data-behaviour="share_whatsapp" href="whatsapp://send?text=Pratilipi+Android+app+is+coming.+Download+unlimited+books+and+Read+without+internet%0Ahttp%3A%2F%2Fhindi.gamma.pratilipi.com%2Fandroid-registration"><img style="width:40px;height:40px;" class="img-circle" src="http://0.ptlp.co/resource-all/home-page/WhatsAppLogo.png"></a>            
             </div>
-            <a href="whatsapp://send?text=Pratilipi+Android+app+is+coming.+Download+unlimited+books+and+Read+without+internet%0Ahttp%3A%2F%2Fhindi.gamma.pratilipi.com%2Fandroid-registration">Share on WhatsApp</a>
         </center>
         <div id="app-image-carousel" class="carousel slide" data-ride="carousel" style="width: 280px;margin: 0 auto;margin-top: 10px;height: 410px;">
         <!-- Indicators -->
@@ -234,6 +245,7 @@
 
     var AppRegistration = function ( form ) {
       this.$form = form;
+      this.$invite_block = $('[data-behaviour="invite_friends"]');
       this.$email = this.$form.find("#email");
       this.$mobile_no = this.$form.find("#mobile_no");
       this.$form_groups = this.$form.find(".form-group");
@@ -245,6 +257,7 @@
     };
 
     AppRegistration.prototype.init = function() {
+      this.$invite_block.hide();
       this.attachFormSubmitListener();
     }; 
 
@@ -297,16 +310,18 @@
             language: "${ language }",
             mailingList: "LAUNCH_ANNOUNCEMENT_ANDROID_APP",                
              };
-      console.log( ajax_data );
         $.ajax({type: "POST",
             url: "/api/mailinglist/subscribe",
             data: ajax_data,
             success:function(response){
-              console.log(response);
-              console.log(typeof response);
               
               var parsed_data = jQuery.parseJSON( response );
-              console.log(parsed_data);
+              
+              if( !isMobile ) {
+              	 _this.$invite_block.find('[data-behaviour="share_whatsapp"]').css("display","none");
+              }
+              _this.$form.hide();
+              _this.$invite_block.show();
         },
             fail:function(response){
               var message = jQuery.parseJSON( response.responseText );
