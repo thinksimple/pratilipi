@@ -301,8 +301,10 @@ public class PratilipiDocUtil {
 				} else if( node.nodeName().equals( "img" ) ) {
 					
 					String imageUrl = node.attr( "src" );
-					if( imageUrl.indexOf( "name=" ) == -1 )
+					if( imageUrl.indexOf( "name=" ) == -1 ) {
+						logger.log( Level.SEVERE, "Ignoring image " + imageUrl );
 						continue;
+					}
 					
 					String imageName = imageUrl.substring( imageUrl.indexOf( "name=" ) + 5 );
 					if( imageName.indexOf( '&' ) != -1 )
@@ -479,35 +481,7 @@ public class PratilipiDocUtil {
 		
 		if( ! pratilipi.isOldContent() ) {
 
-			pcDoc = docAccessor.getPratilipiContentDoc( pratilipiId );
-
-			if( pcDoc == null )
-				return;
-
-			for( Chapter chapter : pcDoc.getChapterList() ) {
-				for( PratilipiContentDoc.Page page : chapter.getPageList() ) {
-					for( PratilipiContentDoc.Pagelet pagelet : page.getPageletList() ) {
-						if( pagelet.getType() == PageletType.IMAGE ) {
-							String imageUrl = pagelet.getDataAsString();
-							if( imageUrl.startsWith( "/api/pratilipi/content/image" ) ) {
-								if( imageUrl.indexOf( "name=" ) == -1 )
-									throw new UnexpectedServerException();
-								String imageName = imageUrl.substring( imageUrl.indexOf( "name=" ) + 5 );
-								if( imageName.indexOf( "&" ) != -1 )
-									imageName = imageName.substring( 0, imageName.indexOf( "&" ) );
-								BlobEntry blobEntry = blobAccessor.getBlob( "pratilipi-content/image" + "/" + pratilipiId + "/" + imageName );
-								JsonObject imgData = new JsonObject();
-								imgData.addProperty( "name", imageName );
-								imgData.addProperty( "height", ImageUtil.getHeight( blobEntry.getData() ) );
-								imgData.addProperty( "width", ImageUtil.getWidth( blobEntry.getData() ) );
-								pagelet.setData( imgData );
-							} else {
-								logger.log( Level.WARNING, "Ignoring " + imageUrl );
-							}
-						}
-					}
-				}
-			}
+			return;
 			
 		} else if( pratilipi.getContentType() == PratilipiContentType.PRATILIPI ) {
 		
