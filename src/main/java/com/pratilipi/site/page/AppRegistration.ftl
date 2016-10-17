@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
-<head>  
+<head> 
+    <meta property="og:image" content="http://0.ptlp.co/resource-hi/logo/pratilipi_logo.png"/> 
 	<#include "meta/Head.ftl"> 
-    <meta property="og:image" content="http://0.ptlp.co/resource-hi/logo/pratilipi_logo.png"/>
 <#--    <script>
     	var isMobile;
     	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
