@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head> 
-	<#include "meta/Head.ftl"> 
-	<meta property="og:image" itemprop="image" content="http://0.ptlp.co/resource-hi/logo/pratilipi_logo.png"/> 
+	<#include "meta/Head.ftl">  
+    <meta property="og:site_name" content="Pratilipi">
+	<meta property="og:title" content="Pratilipi Android App Registration" />
+	<meta property="og:description" content="A platform to share stories" />
+	<meta property="og:image" itemprop="image" content="http://0.ptlp.co/resource-hi/logo/pratilipi_logo.png">
+	<meta property="og:type" content="website" />
     <style>
+	.blur-image {
+		opacity: 0.6;
+	}
         .horizontal-form-input {
             border: none;
             box-shadow: none !important;
@@ -182,7 +189,7 @@
                     <div class="carousel-caption" style="bottom: 0;padding-top:0;padding-bottom: 5px;">
                         <h4>${ _strings.android_banner_reader_1 }</h4>
                     </div>
-                    <img src="http://0.ptlp.co/resource-${lang}/android-app-launch/android-registration-${lang}-4.png" alt="..." style="height:360px;margin: 0 auto;">
+                    <img src="http://0.ptlp.co/resource-${lang}/android-app-launch/android-registration-${lang}-5.png" alt="..." style="height:360px;margin: 0 auto;">
                     <div class="carousel-caption subcaption">
                         <p class="caption-line-2">${ _strings.android_banner_reader_3 }</p>
                     </div>
@@ -200,7 +207,7 @@
                     <div class="carousel-caption" style="bottom: 0;padding-top:0;padding-bottom: 5px;">
                         <h4>${ _strings.android_banner_profile_1 }</h4>
                     </div>
-                    <img src="http://0.ptlp.co/resource-${lang}/android-app-launch/android-registration-${lang}-5.png" alt="..." style="height:360px;margin: 0 auto;">
+                    <img src="http://0.ptlp.co/resource-${lang}/android-app-launch/android-registration-${lang}-4.png" alt="..." style="height:360px;margin: 0 auto;">
                     <div class="carousel-caption subcaption">
                         <p class="caption-line-2">${ _strings.android_banner_profile_3 }</p>
                     </div>
