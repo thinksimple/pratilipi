@@ -17,6 +17,7 @@
 					<!-- Navigation & Search bar for extra-small & small screens. -->
 					<pratilipi-navigation-drawer with-backdrop navigation-list='[[ navigationList ]]'></pratilipi-navigation-drawer>
 					<div style="overflow:hidden; padding: 0 2px;">
+						<#include "app-launch/pratilipi-android-launch.html">
 						<template is="dom-if" if="{{ hasAccessToAdd }}">
 							<paper-card style="display: block; padding: 45px 20px; margin: 0 auto; text-align: center;">
 								<div style="text-align: center;">

@@ -18,6 +18,7 @@
 					<!-- Navigation & Search bar for extra-small & small screens. -->
 					<pratilipi-navigation-drawer with-backdrop navigation-list='[[ navigationList ]]'></pratilipi-navigation-drawer>
 					<div style="overflow:hidden; padding: 0 2px;">
+						<#include "app-launch/pratilipi-android-launch.html">
 						<template is="dom-if" if="{{ hasAccessToAdd }}">
 							<div class="secondary-500 pratilipi-shadow pratilipi-card-grid-heading pratilipi-red">
 								Drafted Entries
