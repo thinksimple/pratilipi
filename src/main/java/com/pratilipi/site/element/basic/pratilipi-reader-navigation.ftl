@@ -39,7 +39,7 @@
 		<#if index.title ??>
 			<#assign title=index.title>
 		<#else>
-			<#assign title="${ writer_chapter } ${ page }">
+			<#assign title="${ _strings.writer_chapter } ${ page }">
 		</#if>
 
 		<a class="navigation<#if level == 0> heading <#if page==pageNo> blue <#else> black </#if></#if>    <#if level == 1><#if page==pageNo> blue <#else> grey </#if></#if>" 
