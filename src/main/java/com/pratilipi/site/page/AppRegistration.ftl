@@ -205,7 +205,7 @@
     </div>
     <div class="alert alert-danger alert-dismissible" data-behaviour="mobile-alert" role="alert" style="margin-bottom: 0;display:none;">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      <strong>${ _strings.android_mobile_incorrect }</strong>
+      <strong>${ _strings.android_phone_incorrect }</strong>
     </div>
     <div class="alert alert-danger alert-dismissible" data-behaviour="server-error-alert" role="alert" style="margin-bottom: 0;display:none;">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
