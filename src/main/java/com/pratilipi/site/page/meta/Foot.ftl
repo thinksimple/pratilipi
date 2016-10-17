@@ -20,7 +20,8 @@
 HTMLImports.whenReady(function () {
 	$( document ).ready( function() {
 		if( getCookie( "${ cookieName }" ) != "true" )
-			document.getElementById( 'androidSubsribeAlert' ).style.display = "block";
+			if( document.getElementById( 'androidSubsribeAlert' ) != null )
+				document.getElementById( 'androidSubsribeAlert' ).style.display = "block";
 	});
 });
 function setCookie( name, value, days, path ) {

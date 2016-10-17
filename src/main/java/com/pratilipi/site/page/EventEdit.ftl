@@ -7,6 +7,7 @@
 	</head>
 
 	<body>
+		<#include "meta/PolymerDependencies.ftl">
 		<pratilipi-edit-event event='<#if eventJson??>${ eventJson }<#else>{}</#if>'></pratilipi-edit-event>
 		<#include "meta/Font.ftl">
     </body>

@@ -8,6 +8,7 @@
 	</head>
 
 	<body>
+		<#include "meta/PolymerDependencies.ftl">
 		<pratilipi-author-list-page 
 			user-data='${ userJson }'
 			author-list='${ authorListJson }'

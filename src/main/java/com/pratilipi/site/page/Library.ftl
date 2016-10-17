@@ -7,7 +7,7 @@
 	</head>
 	
 	<body>
-		
+		<#include "meta/PolymerDependencies.ftl">
 		<pratilipi-library-page 
 			user-data='${ userJson }'
 			pratilipi-list='${ pratilipiListJson! }'

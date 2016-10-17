@@ -7,6 +7,7 @@
 	</head>
 
 	<body>
+		<#include "meta/PolymerDependencies.ftl">
 		<pratilipi-notification-page 
 			user-data='${ userJson }'
 			notification-object='${ notificationListJson }'

@@ -7,6 +7,7 @@
 	</head>
 
 	<body>
+		<#include "meta/PolymerDependencies.ftl">
 		<pratilipi-edit-blog 
 			blog='<#if blogPostJson??>${ blogPostJson }<#else>{}</#if>'
 			blog-id="${ blogId?c }"></pratilipi-edit-blog>

@@ -7,6 +7,7 @@
 	</head>
 
 	<body>
+		<#include "meta/PolymerDependencies.ftl">
 		<pratilipi-list-page 
 			user-data='${ userJson }'
 			heading='${ _strings.search_results }'
