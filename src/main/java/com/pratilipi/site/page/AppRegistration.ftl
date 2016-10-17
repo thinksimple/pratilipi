@@ -8,9 +8,81 @@
 	<meta property="og:image" itemprop="image" content="http://0.ptlp.co/resource-hi/logo/pratilipi_logo.png">
 	<meta property="og:type" content="website" />
     <style>
-	.blur-image {
-		opacity: 0.6;
-	}
+    .small-spinner {
+	position: relative;
+}
+
+.small-spinner:before, .small-spinner:after {
+  position: absolute;
+  top: 52%;
+  left: 50%;
+  margin-left: -15px;
+  margin-top: -15px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #333;
+  opacity: 0.6;
+  content: '';
+  
+  -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+  animation: sk-bounce 2.0s infinite ease-in-out;
+}
+
+.small-spinner:after {
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+}
+
+.spinner {
+  position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background: rgba(255,255,255,0.5);
+}
+
+.spinner:before, .spinner:after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -50px;
+  margin-top: -50px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #333;
+  opacity: 0.6;
+  content: '';
+  
+  -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+  animation: sk-bounce 2.0s infinite ease-in-out;
+}
+
+.spinner:after {
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+}
+
+@-webkit-keyframes sk-bounce {
+  0%, 100% { -webkit-transform: scale(0.0) }
+  50% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes sk-bounce {
+  0%, 100% { 
+    transform: scale(0.0);
+    -webkit-transform: scale(0.0);
+  } 50% { 
+    transform: scale(1.0);
+    -webkit-transform: scale(1.0);
+  }
+}
+
+.blur-image {
+	opacity: 0.6;
+}
         .horizontal-form-input {
             border: none;
             box-shadow: none !important;
@@ -134,7 +206,7 @@
         </a>
         
         <center>
-            <h3> ${ _strings.android_banner_5 } </h3>
+            <h3 style="font-size: 20px;padding-left: 52px;"> ${ _strings.android_banner_5 } </h3>
             <form data-behaviour="app-registration" style="width: 80%; margin: 0 auto;">
                 <div class="form-group has-feedback" style="margin-top:0px;">
                   <input  class="form-control horizontal-form-input" id="mobile_no" placeholder="${ _strings.user_phone }">
@@ -151,7 +223,7 @@
                 </span><br>
                 ${ _strings.android_success_feedback }
                 <h3> ${ _strings.android_invite_friends }! </h3>
-                <a href="http://www.facebook.com/sharer.php?u=http://${ language?lower_case }.gamma.pratilipi.com/android-app-registration?utm_source=facebook&utm_campaign=android_register" target="_blank"><img style="width:40px;height:40px;" class="img-circle" src="http://0.ptlp.co/resource-all/icon/footer/facebook.png"></a>
+                <a href="http://www.facebook.com/sharer.php?u=http%3A%2F%2F${ language?lower_case }.gamma.pratilipi.com%2Fandroid-app-registration%3Futm_source%3Dfacebook%26utm_campaign%3Dandroid_register" target="_blank"><img style="width:40px;height:40px;" class="img-circle" src="http://0.ptlp.co/resource-all/icon/footer/facebook.png"></a>
                 <a style="margin-left: 7px;" data-behaviour="share_whatsapp" href="whatsapp://send?text=${ _strings.android_whatsapp_share_description?replace(" ", "+") }%0Ahttp%3A%2F%2F${ language?lower_case }.gamma.pratilipi.com%2Fandroid-app-registration%3Futm_source%3Dwhatsapp%26utm_campaign%3Dandroid_register"><img style="width:40px;height:40px;" class="img-circle" src="http://0.ptlp.co/resource-all/home-page/WhatsAppLogo.png"></a>            
             </div>
         </center>
@@ -295,7 +367,7 @@
 
     AppRegistration.prototype.ajaxSubmitForm = function() {
       var _this = this;
-	  <#-- this.$form.addClass( "small-spinner" ); -->
+	  this.$form.closest("center").addClass( "small-spinner" ); 
       var ajax_data = {
             email: this.$email.val() ,
             phone: this.$mobile_no.val(),
@@ -306,12 +378,12 @@
             url: "/api/mailinglist/subscribe",
             data: ajax_data,
             success:function(response){
-              <#-- _this.$form.removeClass("spinner");	-->
+              _this.$form.closest("center").removeClass( "small-spinner" ); 
               var parsed_data = jQuery.parseJSON( response );
               _this.showInviteBlock();
         },
             error:function(xhr, status, text){
-            	<#-- _this.$form.removeClass("small-spinner");	-->
+            	_this.$form.closest("center").removeClass( "small-spinner" );
 				if (xhr.status == 400) {
 				  _this.showInviteBlock();
 				} 
