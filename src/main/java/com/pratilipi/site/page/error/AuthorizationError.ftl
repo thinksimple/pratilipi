@@ -7,7 +7,7 @@
 		<#include "../meta/Head.ftl">
 	</head>
 	<body>
-		<#include "meta/PolymerDependencies.ftl">
+		<#include "../meta/PolymerDependencies.ftl">
 		<dom-module id="pratilipi-authorization-error">
 			<template>
 				<pratilipi-user user='{{ user }}' user-data='${ userJson }'></pratilipi-user>

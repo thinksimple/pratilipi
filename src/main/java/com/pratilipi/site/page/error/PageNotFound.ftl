@@ -8,7 +8,7 @@
 	</head>
 	
 	<body>
-		<#include "meta/PolymerDependencies.ftl">
+		<#include "../meta/PolymerDependencies.ftl">
 		<dom-module id="pratilipi-page-not-found-error">
 			<template>
 				<pratilipi-user user='{{ user }}' user-data='${ userJson }'></pratilipi-user>
