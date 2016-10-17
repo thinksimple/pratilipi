@@ -77,17 +77,13 @@ function subscribeAndroid( email, phone ) {
 			'language': "${ language }"
 		},
 		success: function( response ) {
-			document.getElementById( 'loading-androidSubsribeModal' ).style.display = 'none';
-			document.getElementById( 'success-androidSubsribeModal' ).style.display = 'block';
-			setCookie( '${ cookieName }', 'true', 365, "/" );
-			setTimeout( function() {
-				document.getElementById( "androidSubsribeForm" ).reset();
-				document.getElementById( 'success-androidSubsribeModal' ).style.display = 'none';
-				document.getElementById( 'androidSubsribeAlert' ).style.display = 'none';
-				jQuery( "#androidSubsribeModal" ).modal( 'hide' );
-			}, 2000);
+			handleSuccessResponse();
 		},
 		error: function( response ) {
+			if( response.status == 400 ) {
+				handleSuccessResponse();
+				return;
+			}
 			var message = "${ _strings.server_error_message }";
 			var res = jQuery.parseJSON( response.responseText );
 			if( res.email != null ) message = res.email;
@@ -98,5 +94,20 @@ function subscribeAndroid( email, phone ) {
 			document.getElementById( 'failure-androidSubsribeModal' ).innerHTML = message;
 		}
 	});
+}
+function handleSuccessResponse() {
+	document.getElementById( 'loading-androidSubsribeModal' ).style.display = 'none';
+	document.getElementById( 'success-androidSubsribeModal' ).style.display = 'block';
+	setCookie( '${ cookieName }', 'true', 365, "/" );
+	setTimeout( function() {
+		document.getElementById( "androidSubsribeForm" ).reset();
+		document.getElementById( 'success-androidSubsribeModal' ).style.display = 'none';
+		document.getElementById( 'androidSubsribeAlert' ).style.display = 'none';
+		<#-- jQuery( "#androidSubsribeModal" ).modal( 'hide' ); -->
+		document.getElementById( 'androidSubsribeForm' ).style.display = 'none';
+		document.getElementById( 'inviteFriends' ).style.display = 'block';
+		if( isMobile() )
+			document.getElementById( 'whatsappShareAndroidRegistration' ).style.display = 'inline-block';
+	}, 2000);
 }
 </script>
