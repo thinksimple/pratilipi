@@ -37,9 +37,9 @@ public class InitDataUtil {
 
 		
 		InitBannerDoc[] initBannerDocs = new InitBannerDoc[] {
-				docAccessor.newInitBannerDoc( "pratilipi-hindi-carousel-31.jpg", null, "/premchand-sahitya" ),
+				docAccessor.newInitBannerDoc( "pratilipi-hindi-carousel-38.jpg", null, "/upanyas" ),
 				docAccessor.newInitBannerDoc( "pratilipi-hindi-carousel-32.jpg", null, "/horror" ),
-				docAccessor.newInitBannerDoc( "pratilipi-hindi-carousel-33.jpg", null, "/suspense-aur-thriller" ),
+				docAccessor.newInitBannerDoc( "pratilipi-hindi-carousel-36.jpg", null, "/suspense-aur-thriller" ),
 				docAccessor.newInitBannerDoc( "pratilipi-hindi-carousel-34.jpg", null, "/gazals" ),
 		};
 		
@@ -49,9 +49,9 @@ public class InitDataUtil {
 		
 		
 		initBannerDocs = new InitBannerDoc[] {
-				docAccessor.newInitBannerDoc( "pratilipi-gujarati-carousel-31.jpg", null, "/yangistaan" ),
-				docAccessor.newInitBannerDoc( "pratilipi-gujarati-carousel-28.jpg", null, "/rahasyamay-ane-romanchak" ),
-				docAccessor.newInitBannerDoc( "pratilipi-gujarati-carousel-29.jpg", null, "/romance" ),
+				docAccessor.newInitBannerDoc( "pratilipi-gujarati-carousel-32.jpg", null, "/diwali-vacation" ),
+				docAccessor.newInitBannerDoc( "pratilipi-gujarati-carousel-33.jpg", null, "/rahasyamay-ane-romanchak" ),
+				docAccessor.newInitBannerDoc( "pratilipi-gujarati-carousel-34.jpg", null, "/october-ni-shreshth" ),
 				docAccessor.newInitBannerDoc( "pratilipi-gujarati-carousel-30.jpg", null, "/bal-sahitya" ),
 		};
 			
