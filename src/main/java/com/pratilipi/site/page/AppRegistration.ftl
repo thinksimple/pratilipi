@@ -1,20 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head> 
-    <meta property="og:image" itemprop="image" content="http://0.ptlp.co/resource-hi/logo/pratilipi_logo.png"/> 
 	<#include "meta/Head.ftl"> 
-<#--    <script>
-    	var isMobile;
-    	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-		 	console.log("mobile");
-		 	isMobile = true;
-		}
-		else {
-			isMobile = false;
-			console.log("not mobile");
-		}
-		console.log( isMobile );
-    </script> -->
+	<meta property="og:image" itemprop="image" content="http://0.ptlp.co/resource-hi/logo/pratilipi_logo.png"/> 
     <style>
         .horizontal-form-input {
             border: none;
@@ -144,7 +132,7 @@
                 <div class="form-group has-feedback" style="margin-top:0px;">
                   <input  class="form-control horizontal-form-input" id="mobile_no" placeholder="${ _strings.user_phone }">
                 </div>   
-                <h5 style="margin: 0;">OR</h5>         
+                <h5 style="margin: 0;">${ _strings.or }</h5>         
                 <div class="form-group has-feedback" style="margin-top: 0px;">
                   <input  class="form-control horizontal-form-input" id="email" placeholder="${ _strings.user_email }">
                 </div>                  
