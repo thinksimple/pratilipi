@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head> 
-    <meta property="og:image" content="http://0.ptlp.co/resource-hi/logo/pratilipi_logo.png"/> 
+    <meta property="og:image" itemprop="image" content="http://0.ptlp.co/resource-hi/logo/pratilipi_logo.png"/> 
 	<#include "meta/Head.ftl"> 
 <#--    <script>
     	var isMobile;
@@ -157,7 +157,7 @@
                 ${ _strings.android_success_feedback }
                 <h3> ${ _strings.android_invite_friends }! </h3>
                 <a href="http://www.facebook.com/sharer.php?u=http://${ language?lower_case }.gamma.pratilipi.com/android-app-registration" target="_blank"><img style="width:40px;height:40px;" class="img-circle" src="http://0.ptlp.co/resource-all/icon/footer/facebook.png"></a>
-                <a style="margin-left: 7px;" data-behaviour="share_whatsapp" href="whatsapp://send?text=Pratilipi+Android+app+is+coming.+Download+unlimited+books+and+Read+without+internet%0Ahttp%3A%2F%2F${ language?lower_case }.gamma.pratilipi.com%2Fandroid-app-registration"><img style="width:40px;height:40px;" class="img-circle" src="http://0.ptlp.co/resource-all/home-page/WhatsAppLogo.png"></a>            
+                <a style="margin-left: 7px;" data-behaviour="share_whatsapp" href="whatsapp://send?text=${ android_whatsapp_share_description?replace(" ", "+") }%0Ahttp%3A%2F%2F${ language?lower_case }.gamma.pratilipi.com%2Fandroid-app-registration"><img style="width:40px;height:40px;" class="img-circle" src="http://0.ptlp.co/resource-all/home-page/WhatsAppLogo.png"></a>            
             </div>
         </center>
         <div id="app-image-carousel" class="carousel slide" data-ride="carousel" style="width: 300px;margin: 0 auto;margin-top: 10px;height: 410px;">
