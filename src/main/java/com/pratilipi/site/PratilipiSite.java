@@ -430,7 +430,7 @@ public class PratilipiSite extends HttpServlet {
 
 				templateName = "BlogEdit.ftl";
 
-			} else if( uri.equals( "/android-registration" ) ) {
+			} else if( uri.equals( "/android-app-registration" ) ) {
 				dataModel = new HashMap<String, Object>();
 				dataModel.put( "title", "Registration for Android App!" );
 				templateName = "AppRegistration.ftl";
