@@ -24,6 +24,76 @@
 		console.log( isMobile );
     </script>
     <style>
+    .small-spinner {
+		position: relative;
+	}
+
+	.small-spinner:before, .small-spinner:after {
+	  position: absolute;
+	  top: 50%;
+	  left: 50%;
+	  margin-left: -10px;
+	  margin-top: -10px;
+	  width: 20px;
+	  height: 20px;
+	  border-radius: 50%;
+	  background-color: #333;
+	  opacity: 0.6;
+	  content: '';
+	  
+	  -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+	  animation: sk-bounce 2.0s infinite ease-in-out;
+	}
+	
+	.small-spinner:after {
+	  -webkit-animation-delay: -1.0s;
+	  animation-delay: -1.0s;
+	}
+	.spinner {
+	  position: absolute;
+	   top: 0;
+	   left: 0;
+	   width: 100%;
+	   height: 100%;
+	   background: rgba(255,255,255,0.5);
+	}
+	
+	.spinner:before, .spinner:after {
+	  position: absolute;
+	  top: 50%;
+	  left: 50%;
+	  margin-left: -50px;
+	  margin-top: -50px;
+	  width: 100px;
+	  height: 100px;
+	  border-radius: 50%;
+	  background-color: #333;
+	  opacity: 0.6;
+	  content: '';
+	  
+	  -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+	  animation: sk-bounce 2.0s infinite ease-in-out;
+	}
+	
+	.spinner:after {
+	  -webkit-animation-delay: -1.0s;
+	  animation-delay: -1.0s;
+	}
+	
+	@-webkit-keyframes sk-bounce {
+	  0%, 100% { -webkit-transform: scale(0.0) }
+	  50% { -webkit-transform: scale(1.0) }
+	}
+	
+	@keyframes sk-bounce {
+	  0%, 100% { 
+	    transform: scale(0.0);
+	    -webkit-transform: scale(0.0);
+	  } 50% { 
+	    transform: scale(1.0);
+	    -webkit-transform: scale(1.0);
+	  }
+	}    
         .horizontal-form-input {
             border: none;
             box-shadow: none !important;
@@ -164,8 +234,8 @@
                 </span><br>
                 ${ _strings.android_success_feedback }
                 <h3> ${ _strings.android_invite_friends }! </h3>
-                <a href="http://www.facebook.com/sharer.php?u=http://hindi.pratilipi.com/android-registration" target="_blank"><img style="width:40px;height:40px;" class="img-circle" src="http://0.ptlp.co/resource-all/icon/footer/facebook.png"></a>
-                <a style="margin-left: 7px;" data-behaviour="share_whatsapp" href="whatsapp://send?text=Pratilipi+Android+app+is+coming.+Download+unlimited+books+and+Read+without+internet%0Ahttp%3A%2F%2Fhindi.gamma.pratilipi.com%2Fandroid-registration"><img style="width:40px;height:40px;" class="img-circle" src="http://0.ptlp.co/resource-all/home-page/WhatsAppLogo.png"></a>            
+                <a href="http://www.facebook.com/sharer.php?u=http://${ language }.pratilipi.com/android-registration" target="_blank"><img style="width:40px;height:40px;" class="img-circle" src="http://0.ptlp.co/resource-all/icon/footer/facebook.png"></a>
+                <a style="margin-left: 7px;" data-behaviour="share_whatsapp" href="whatsapp://send?text=Pratilipi+Android+app+is+coming.+Download+unlimited+books+and+Read+without+internet%0Ahttp%3A%2F%2F${ language }.gamma.pratilipi.com%2Fandroid-registration"><img style="width:40px;height:40px;" class="img-circle" src="http://0.ptlp.co/resource-all/home-page/WhatsAppLogo.png"></a>            
             </div>
         </center>
         <div id="app-image-carousel" class="carousel slide" data-ride="carousel" style="width: 280px;margin: 0 auto;margin-top: 10px;height: 410px;">
@@ -184,7 +254,7 @@
                     <div class="carousel-caption" style="bottom: 0;padding-top:0;padding-bottom: 5px;">
                         <h4>${ _strings.android_banner_home_1 }</h4>
                     </div>
-                    <img src="http://0.ptlp.co/resource-hi/android-app-launch/android-registration-${lang}-1.png" alt="..." style="height:360px;margin: 0 auto;">
+                    <img src="http://0.ptlp.co/resource-${lang}/android-app-launch/android-registration-${lang}-1.png" alt="..." style="height:360px;margin: 0 auto;">
                     <div class="carousel-caption subcaption">
                         <p class="caption-line-2">${ _strings.android_banner_home_3 }</p>
                     </div>
@@ -193,7 +263,7 @@
                     <div class="carousel-caption" style="bottom: 0;padding-top:0;padding-bottom: 5px;">
                         <h4>${ _strings.android_banner_library_1 }</h4>
                     </div>
-                    <img src="http://0.ptlp.co/resource-hi/android-app-launch/android-registration-${lang}-2.png" alt="..." style="height:360px;margin: 0 auto;">
+                    <img src="http://0.ptlp.co/resource-${lang}/android-app-launch/android-registration-${lang}-2.png" alt="..." style="height:360px;margin: 0 auto;">
                     <div class="carousel-caption subcaption">
                         <p class="caption-line-2">${ _strings.android_banner_library_2 }</p>
                     </div>
@@ -202,7 +272,7 @@
                     <div class="carousel-caption" style="bottom: 0;padding-top:0;padding-bottom: 5px;">
                         <h4>${ _strings.android_banner_reader_1 }</h4>
                     </div>
-                    <img src="http://0.ptlp.co/resource-hi/android-app-launch/android-registration-${lang}-4.png" alt="..." style="height:360px;margin: 0 auto;">
+                    <img src="http://0.ptlp.co/resource-${lang}/android-app-launch/android-registration-${lang}-4.png" alt="..." style="height:360px;margin: 0 auto;">
                     <div class="carousel-caption subcaption">
                         <p class="caption-line-2">${ _strings.android_banner_reader_3 }</p>
                     </div>
@@ -211,7 +281,7 @@
                     <div class="carousel-caption" style="bottom: 0;padding-top:0;padding-bottom: 5px;">
                         <h4>${ _strings.android_banner_notification_1 }</h4>
                     </div>
-                    <img src="http://0.ptlp.co/resource-hi/android-app-launch/android-registration-${lang}-3.png" alt="..." style="height:360px;margin: 0 auto;">
+                    <img src="http://0.ptlp.co/resource-${lang}/android-app-launch/android-registration-${lang}-3.png" alt="..." style="height:360px;margin: 0 auto;">
                     <div class="carousel-caption subcaption">
                         <p class="caption-line-2">${ _strings.android_banner_notification_2 }</p>
                     </div>
@@ -220,7 +290,7 @@
                     <div class="carousel-caption" style="bottom: 0;padding-top:0;padding-bottom: 5px;">
                         <h4>${ _strings.android_banner_profile_1 }</h4>
                     </div>
-                    <img src="http://0.ptlp.co/resource-hi/android-app-launch/android-registration-${lang}-5.png" alt="..." style="height:360px;margin: 0 auto;">
+                    <img src="http://0.ptlp.co/resource-${lang}/android-app-launch/android-registration-${lang}-5.png" alt="..." style="height:360px;margin: 0 auto;">
                     <div class="carousel-caption subcaption">
                         <p class="caption-line-2">${ _strings.android_banner_profile_3 }</p>
                     </div>
@@ -308,7 +378,7 @@
 
     AppRegistration.prototype.ajaxSubmitForm = function() {
       var _this = this;
-
+	  <#-- this.$form.addClass( "small-spinner" ); -->
       var ajax_data = {
             email: this.$email.val() ,
             phone: this.$mobile_no.val(),
@@ -319,18 +389,21 @@
             url: "/api/mailinglist/subscribe",
             data: ajax_data,
             success:function(response){
-              
+              <#-- _this.$form.removeClass("spinner");	-->
               var parsed_data = jQuery.parseJSON( response );
               _this.showInviteBlock();
         },
             error:function(xhr, status, text){
+            	<#-- _this.$form.removeClass("small-spinner");	-->
 				if (xhr.status == 400) {
 				  _this.showInviteBlock();
-				} else {
+				} 
+				else {
                   _this.$server_error_alert.show();
                   setTimeout(function(d){
                     _this.$server_error_alert.hide('slow');
-                  }, 2000); 					
+                  }, 2000); 
+                				
 				}
      
         }             
