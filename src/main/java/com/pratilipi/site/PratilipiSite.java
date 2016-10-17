@@ -143,7 +143,7 @@ public class PratilipiSite extends HttpServlet {
 					dataModel = createDataModelForMasterHomePage( filterLanguage );
 					templateName = "MasterHome.ftl";
 				} else {
-					dataModel = createDataModelForHomePage( basicMode, filterLanguage );
+					dataModel = createDataModelForMasterHomePage( filterLanguage );
 					templateName = ( basicMode ? "HomeBasic.ftl" : "Home.ftl" );
 				}
 				
@@ -466,6 +466,7 @@ public class PratilipiSite extends HttpServlet {
 
 		
 		// Adding common data to the Data Model
+		Gson gson = new Gson();
 		UserData userData = UserDataUtil.getCurrentUser();
 		UserApi.Response userResponse = new UserApi.Response( userData, UserApi.class );
 
@@ -496,20 +497,19 @@ public class PratilipiSite extends HttpServlet {
 		dataModel.put( "language", displayLanguage );
 		dataModel.put( "website_host", UxModeFilter.getWebsite().getHostName() );
 		dataModel.put( "website_mobile_host", UxModeFilter.getWebsite().getMobileHostName() );
-		dataModel.put( "languageMap", new Gson().toJson( languageMap ) );
+		dataModel.put( "languageMap", gson.toJson( languageMap ) );
 		dataModel.put( "_strings", I18n.getStrings( displayLanguage ) );
 		dataModel.put( "resourceList", resourceList );
 		dataModel.put( "user", userResponse );
-		dataModel.put( "pratilipiTypesJson", new Gson().toJson( pratilipiTypes ) );
+		dataModel.put( "userJson", gson.toJson( userResponse ) );
+		dataModel.put( "pratilipiTypesJson", gson.toJson( pratilipiTypes ) );
 
 		if( basicMode ) {
 			StringBuffer requestUrl = new StringBuffer( request.getRequestURI() );
 			if( request.getQueryString() != null )
 				requestUrl.append( '?' ).append( request.getQueryString() );
-			dataModel.put( "requestUrl", URLEncoder.encode( requestUrl.toString() ) );
+			dataModel.put( "requestUrl", URLEncoder.encode( requestUrl.toString(), "UTF-8" ) );
 		} else {
-			Gson gson = new Gson();
-			dataModel.put( "userJson", gson.toJson( userResponse ) );
 			dataModel.put( "navigationList", gson.toJson( navigationList ) );
 		}
 
