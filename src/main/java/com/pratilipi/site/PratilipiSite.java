@@ -143,7 +143,7 @@ public class PratilipiSite extends HttpServlet {
 					dataModel = createDataModelForMasterHomePage( filterLanguage );
 					templateName = "MasterHome.ftl";
 				} else {
-					dataModel = createDataModelForMasterHomePage( filterLanguage );
+					dataModel = createDataModelForHomePage( basicMode, filterLanguage );
 					templateName = ( basicMode ? "HomeBasic.ftl" : "Home.ftl" );
 				}
 				
