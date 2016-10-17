@@ -3,11 +3,11 @@
 
 	<head>
 		<#include "meta/Head.ftl">
-		<link rel='import' href='/elements.${lang}/pratilipi-edit-blog.html?2'>
 	</head>
 
 	<body>
 		<#include "meta/PolymerDependencies.ftl">
+		<link rel='import' href='/elements.${lang}/pratilipi-edit-blog.html?2'>
 		<pratilipi-edit-blog 
 			blog='<#if blogPostJson??>${ blogPostJson }<#else>{}</#if>'
 			blog-id="${ blogId?c }"></pratilipi-edit-blog>
