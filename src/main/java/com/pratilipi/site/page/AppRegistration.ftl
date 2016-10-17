@@ -1,17 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>  
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta property="og:image" content="http://0.ptlp.co/resource-hi/logo/pratilipi_logo.png"/> 
-    <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <title>${ title }</title>
-    <script>
+	<#include "meta/Head.ftl"> 
+    <meta property="og:image" content="http://0.ptlp.co/resource-hi/logo/pratilipi_logo.png"/>
+<#--    <script>
     	var isMobile;
     	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
 		 	console.log("mobile");
@@ -22,78 +14,8 @@
 			console.log("not mobile");
 		}
 		console.log( isMobile );
-    </script>
+    </script> -->
     <style>
-    .small-spinner {
-		position: relative;
-	}
-
-	.small-spinner:before, .small-spinner:after {
-	  position: absolute;
-	  top: 50%;
-	  left: 50%;
-	  margin-left: -10px;
-	  margin-top: -10px;
-	  width: 20px;
-	  height: 20px;
-	  border-radius: 50%;
-	  background-color: #333;
-	  opacity: 0.6;
-	  content: '';
-	  
-	  -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
-	  animation: sk-bounce 2.0s infinite ease-in-out;
-	}
-	
-	.small-spinner:after {
-	  -webkit-animation-delay: -1.0s;
-	  animation-delay: -1.0s;
-	}
-	.spinner {
-	  position: absolute;
-	   top: 0;
-	   left: 0;
-	   width: 100%;
-	   height: 100%;
-	   background: rgba(255,255,255,0.5);
-	}
-	
-	.spinner:before, .spinner:after {
-	  position: absolute;
-	  top: 50%;
-	  left: 50%;
-	  margin-left: -50px;
-	  margin-top: -50px;
-	  width: 100px;
-	  height: 100px;
-	  border-radius: 50%;
-	  background-color: #333;
-	  opacity: 0.6;
-	  content: '';
-	  
-	  -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
-	  animation: sk-bounce 2.0s infinite ease-in-out;
-	}
-	
-	.spinner:after {
-	  -webkit-animation-delay: -1.0s;
-	  animation-delay: -1.0s;
-	}
-	
-	@-webkit-keyframes sk-bounce {
-	  0%, 100% { -webkit-transform: scale(0.0) }
-	  50% { -webkit-transform: scale(1.0) }
-	}
-	
-	@keyframes sk-bounce {
-	  0%, 100% { 
-	    transform: scale(0.0);
-	    -webkit-transform: scale(0.0);
-	  } 50% { 
-	    transform: scale(1.0);
-	    -webkit-transform: scale(1.0);
-	  }
-	}    
         .horizontal-form-input {
             border: none;
             box-shadow: none !important;
@@ -238,7 +160,7 @@
                 <a style="margin-left: 7px;" data-behaviour="share_whatsapp" href="whatsapp://send?text=Pratilipi+Android+app+is+coming.+Download+unlimited+books+and+Read+without+internet%0Ahttp%3A%2F%2F${ language }.gamma.pratilipi.com%2Fandroid-registration"><img style="width:40px;height:40px;" class="img-circle" src="http://0.ptlp.co/resource-all/home-page/WhatsAppLogo.png"></a>            
             </div>
         </center>
-        <div id="app-image-carousel" class="carousel slide" data-ride="carousel" style="width: 280px;margin: 0 auto;margin-top: 10px;height: 410px;">
+        <div id="app-image-carousel" class="carousel slide" data-ride="carousel" style="width: 300px;margin: 0 auto;margin-top: 10px;height: 410px;">
         <!-- Indicators -->
             <ol class="carousel-indicators">
                 <li data-target="#app-image-carousel" data-slide-to="0" class="active"></li>
@@ -413,7 +335,7 @@
     };  
     
     AppRegistration.prototype.showInviteBlock = function() {
-	      if( !isMobile ) {
+	      if( !isMobile() ) {
 	      	 this.$invite_block.find('[data-behaviour="share_whatsapp"]').css("display","none");
 	      }
 	      this.$form.hide();
@@ -440,4 +362,5 @@
       return ( str.length === 0 || !str.trim() );
     };             
 </script>
+	<#include "./meta/Font.ftl">
 </html>
