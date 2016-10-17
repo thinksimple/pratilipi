@@ -174,7 +174,15 @@ public class PratilipiDocUtil {
 			throw new InsufficientAccessException();
 
 		BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor()
-				.getBlob( _createImageFullName( pratilipiId, name ) );
+				.getBlob( "pratilipi/" + pratilipiId + "/images/" + name );
+	
+		if( blobEntry == null )
+			blobEntry = DataAccessorFactory.getBlobAccessor()
+					.getBlob( "pratilipi-resource/" + pratilipiId + "/" + name );
+		
+		if( blobEntry == null )
+			blobEntry = DataAccessorFactory.getBlobAccessor()
+					.getBlob( "pratilipi-content/image/" + pratilipiId + "/" + name );
 		
 		if( width != null )
 			blobEntry.setData( ImageUtil.resize( blobEntry.getData(), width ) );
