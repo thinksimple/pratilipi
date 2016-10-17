@@ -317,8 +317,6 @@
              };
         $.ajax({type: "POST",
             url: "/api/mailinglist/subscribe",
-            dataType: "jsonp",
-            jsonpCallback: "onJSONPLoad",
             data: ajax_data,
             success:function(response){
               
