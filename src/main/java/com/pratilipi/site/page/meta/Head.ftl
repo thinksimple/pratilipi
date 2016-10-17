@@ -17,9 +17,6 @@
 <script src='http://0.ptlp.co/resource-all/jquery.bootstrap.polymer.firebase.jsapi.compressed.js'></script>
 <link rel='stylesheet' href='http://1.ptlp.co/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>
 
-<#-- Pratilipi dependencies -->
-<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?94'>
-
 <#-- Google Analytics -->
 <#include "GoogleAnalytics.ftl">
 
