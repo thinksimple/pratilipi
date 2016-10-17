@@ -5,7 +5,7 @@
 	</button>
 	<div data-toggle="modal" data-target="#androidSubsribeModal" style="padding: 8px 20px; width: 95%; width: calc(100% - 32px); display: flex;">
 		<img style="width: 36px; height: 36px; margin-right: 12px; margin-top: -8px; align-self: center;" src="http://0.ptlp.co/resource-all/home-page/google_playstore.png"/>
-		<span style="font-size: 15px; font-weight: 400;">${ _strings.android_alert_message }</span>
+		<span style="font-size: 13px; font-weight: 400;">${ _strings.android_banner_1 }</span>
 	</div>
 </div>
 
@@ -13,21 +13,20 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content" style="border-radius: 0;">
 			<div style="border: none;" class="modal-header">
-				<#-- <img style="width: 36px; height: 36px;" src="http://0.ptlp.co/resource-${ lang }/logo/pratilipi_logo.png"> -->
+				<img style="width: 30px; height: 30px;" src="http://0.ptlp.co/resource-all/home-page/google_playstore.png">
 				<button style="opacity: 0.75; outline: none;" type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<iron-icon icon="icons:close"></iron-icon>
 				</button>
 			</div>
 			<form id="androidSubsribeForm">
 				<div style="padding-top: 24px;" class="modal-body">
-					<h5 style="margin: 4px 8px; text-align: center; line-height: 24px;">
-						<img style="width: 30px; height: 30px;" src="http://0.ptlp.co/resource-all/home-page/google_playstore.png">
+					<h6 style="margin: 4px 8px; text-align: center; line-height: 24px; font-size: 14px; font-weight: 600;">
 						${ _strings.android_popup_message }
-						<a style="white-space: nowrap;" class="btn pratilipi-red" href="/android-app-registration" class="pratilipi-red" target="_blank">${ _strings.android_know_more_button }</a>
-					</h5>
+					</h6>
+					<a style="white-space: nowrap; display: block;" class="btn pratilipi-red text-center" href="/android-app-registration" class="pratilipi-red" target="_blank">${ _strings.android_know_more_button }</a>
 					<input style="border: none; box-shadow: none !important; border-bottom: 1px solid black; border-radius: 0px; width: 100%; outline: none; margin-top: 20px;" type="number" id="androidSubscribePhone" name="androidSubscribePhoneVal" placeholder="${ _strings.user_phone }" />
-					<div style="text-align: center; margin-top: 32px; margin-bottom: -4px;">${ _strings.or }</div>
-					<input style="border: none; box-shadow: none !important; border-bottom: 1px solid black; border-radius: 0px; width: 100%; outline: none; margin-top: 20px;" type="text" id="androidSubscribeEmail" name="androidSubscribeEmailVal" placeholder="${ _strings.user_email }" />
+					<div style="text-align: center; margin-top: 20px; font-size: 12px;">${ _strings.or }</div>
+					<input style="border: none; box-shadow: none !important; border-bottom: 1px solid black; border-radius: 0px; width: 100%; outline: none; margin-top: 8px;" type="text" id="androidSubscribeEmail" name="androidSubscribeEmailVal" placeholder="${ _strings.user_email }" />
 					<div class="display-message-div" style="margin-top: 12px;">
 						<div style="display: none;" id="loading-androidSubsribeModal">${ _strings.working }</div>
 						<div style="display: none;" id="success-androidSubsribeModal">${ _strings.android_success_feedback }</div>

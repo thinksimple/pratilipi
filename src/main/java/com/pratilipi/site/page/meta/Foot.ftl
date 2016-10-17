@@ -56,9 +56,9 @@ function subscribeAndroid( email, phone ) {
 	if( ( email == null || email.trim() == "" ) 
 			&& ( phone == null || phone.trim() == "" ) )
 		errMessage = "${ _strings.android_email_or_phone_required }";
-	else if( ! validatePhone( phone ) )
+	else if( phone != null && phone.trim() != "" && ! validatePhone( phone ) )
 		errMessage = "${ _strings.android_phone_incorrect }";
-	else if( ! validateEmail( email ) )
+	else if( email != null && email.trim() != "" && ! validateEmail( email ) )
 		errMessage = "${ _strings.android_email_incorrect }";
 
 	if( errMessage != null ) {
