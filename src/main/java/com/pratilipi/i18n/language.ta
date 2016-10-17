@@ -361,6 +361,7 @@ writer_table_of_contents = பொருளடக்கம்
 writer_chapter = அத்தியாயம் 
 writer_chapter_delete_confirmation = நிச்சயமாக இதனை அழிக்கவேண்டுமா :
 writer_add_chapter_success = புது அத்தியாயம் வெற்றிகரமாக சேர்க்கப்பட்டது
+writer_chapter_delete = Delete Chapter
 writer_delete_chapter_success = அத்தியாயம் வெற்றிகரமாக அழிக்கப்பட்டது
 writer_editor_bold = போல்ட்
 writer_editor_italics = இட்டாலிக்ஸ்
