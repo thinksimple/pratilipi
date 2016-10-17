@@ -131,35 +131,39 @@
 <body>
     <div class="alert alert-danger alert-dismissible" data-behaviour="email-alert" role="alert" style="margin-bottom: 0;display:none;">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      <strong>Invalid email!</strong> 
+      <strong>${ _strings.android_email_incorrect }</strong> 
     </div>
     <div class="alert alert-danger alert-dismissible" data-behaviour="mobile-alert" role="alert" style="margin-bottom: 0;display:none;">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      <strong>Invalid mobile number!</strong>
+      <strong>${ _strings.android_mobile_incorrect }</strong>
     </div>
+    <div class="alert alert-danger alert-dismissible" data-behaviour="server-error-alert" role="alert" style="margin-bottom: 0;display:none;">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <strong>${ _strings.server_error_message }</strong>
+    </div>    
     <div class="container">
         <a style="cursor: pointer;margin-top:10px;  " class="pull-left">
             <img style="width: 50px;height: 50px;" src="http://0.ptlp.co/resource-hi/logo/pratilipi_logo.png">
         </a>
         
         <center>
-            <h3> Register for App </h3>
+            <h3> ${ _strings.android_banner_5 } </h3>
             <form data-behaviour="app-registration" style="width: 80%; margin: 0 auto;">
                 <div class="form-group has-feedback" style="margin-top:0px;">
-                  <input  class="form-control horizontal-form-input" id="mobile_no" placeholder="Phone No">
+                  <input  class="form-control horizontal-form-input" id="mobile_no" placeholder="${ _strings.user_phone }">
                 </div>   
                 <h5 style="margin: 0;">OR</h5>         
                 <div class="form-group has-feedback" style="margin-top: 0px;">
-                  <input  class="form-control horizontal-form-input" id="email" placeholder="Email">
+                  <input  class="form-control horizontal-form-input" id="email" placeholder="${ _strings.user_email }">
                 </div>                  
-                <button type="submit" class="pratilipi-red-background-button go-button">Submit</button>
+                <button type="submit" class="pratilipi-red-background-button go-button">${ _strings.android_submit }</button>
             </form>
             <div data-behaviour="invite_friends" class="well" style="width: 90%; margin: 0 auto;background-color: white;margin-top:20px;">
                 <span class="glyph-red-background badge">
                     <img style="width:20px;height:20px;" src="http://0.ptlp.co/resource-all/icon/svg/user-check-white-red.svg">
                 </span><br>
-                You have been successfully registered. We'll inform you when we launch our app.
-                <h3> Invite friends! </h3>
+                ${ _strings.android_success_feedback }
+                <h3> ${ _strings.android_invite_friends }! </h3>
                 <a href="http://www.facebook.com/sharer.php?u=http://hindi.pratilipi.com/android-registration" target="_blank"><img style="width:40px;height:40px;" class="img-circle" src="http://0.ptlp.co/resource-all/icon/footer/facebook.png"></a>
                 <a style="margin-left: 7px;" data-behaviour="share_whatsapp" href="whatsapp://send?text=Pratilipi+Android+app+is+coming.+Download+unlimited+books+and+Read+without+internet%0Ahttp%3A%2F%2Fhindi.gamma.pratilipi.com%2Fandroid-registration"><img style="width:40px;height:40px;" class="img-circle" src="http://0.ptlp.co/resource-all/home-page/WhatsAppLogo.png"></a>            
             </div>
@@ -180,7 +184,7 @@
                     <div class="carousel-caption" style="bottom: 0;padding-top:0;padding-bottom: 5px;">
                         <h4>${ _strings.android_banner_home_1 }</h4>
                     </div>
-                    <img src="https://storage.googleapis.com/devo-pratilipi.appspot.com/app-screenshot/1.png" alt="..." style="height:360px;margin: 0 auto;">
+                    <img src="http://0.ptlp.co/resource-hi/android-app-launch/android-registration-${lang}-1.png" alt="..." style="height:360px;margin: 0 auto;">
                     <div class="carousel-caption subcaption">
                         <p class="caption-line-2">${ _strings.android_banner_home_3 }</p>
                     </div>
@@ -189,7 +193,7 @@
                     <div class="carousel-caption" style="bottom: 0;padding-top:0;padding-bottom: 5px;">
                         <h4>${ _strings.android_banner_library_1 }</h4>
                     </div>
-                    <img src="https://storage.googleapis.com/devo-pratilipi.appspot.com/app-screenshot/2.png" alt="..." style="height:360px;margin: 0 auto;">
+                    <img src="http://0.ptlp.co/resource-hi/android-app-launch/android-registration-${lang}-2.png" alt="..." style="height:360px;margin: 0 auto;">
                     <div class="carousel-caption subcaption">
                         <p class="caption-line-2">${ _strings.android_banner_library_2 }</p>
                     </div>
@@ -198,7 +202,7 @@
                     <div class="carousel-caption" style="bottom: 0;padding-top:0;padding-bottom: 5px;">
                         <h4>${ _strings.android_banner_reader_1 }</h4>
                     </div>
-                    <img src="https://storage.googleapis.com/devo-pratilipi.appspot.com/app-screenshot/4.png" alt="..." style="height:360px;margin: 0 auto;">
+                    <img src="http://0.ptlp.co/resource-hi/android-app-launch/android-registration-${lang}-4.png" alt="..." style="height:360px;margin: 0 auto;">
                     <div class="carousel-caption subcaption">
                         <p class="caption-line-2">${ _strings.android_banner_reader_3 }</p>
                     </div>
@@ -207,7 +211,7 @@
                     <div class="carousel-caption" style="bottom: 0;padding-top:0;padding-bottom: 5px;">
                         <h4>${ _strings.android_banner_notification_1 }</h4>
                     </div>
-                    <img src="https://storage.googleapis.com/devo-pratilipi.appspot.com/app-screenshot/3.png" alt="..." style="height:360px;margin: 0 auto;">
+                    <img src="http://0.ptlp.co/resource-hi/android-app-launch/android-registration-${lang}-3.png" alt="..." style="height:360px;margin: 0 auto;">
                     <div class="carousel-caption subcaption">
                         <p class="caption-line-2">${ _strings.android_banner_notification_2 }</p>
                     </div>
@@ -216,7 +220,7 @@
                     <div class="carousel-caption" style="bottom: 0;padding-top:0;padding-bottom: 5px;">
                         <h4>${ _strings.android_banner_profile_1 }</h4>
                     </div>
-                    <img src="https://storage.googleapis.com/devo-pratilipi.appspot.com/app-screenshot/5.png" alt="..." style="height:360px;margin: 0 auto;">
+                    <img src="http://0.ptlp.co/resource-hi/android-app-launch/android-registration-${lang}-5.png" alt="..." style="height:360px;margin: 0 auto;">
                     <div class="carousel-caption subcaption">
                         <p class="caption-line-2">${ _strings.android_banner_profile_3 }</p>
                     </div>
@@ -254,6 +258,7 @@
       this.mobile_no_regex = /^\d{10}$/;
       this.$email_alert = $('[data-behaviour="email-alert"]');
       this.$mobile_alert = $('[data-behaviour="mobile-alert"]');
+      this.$server_error_alert = $('[data-behaviour="server-error-alert"]');
     };
 
     AppRegistration.prototype.init = function() {
@@ -312,25 +317,37 @@
              };
         $.ajax({type: "POST",
             url: "/api/mailinglist/subscribe",
+            dataType: "jsonp",
+            jsonpCallback: "onJSONPLoad",
             data: ajax_data,
             success:function(response){
               
               var parsed_data = jQuery.parseJSON( response );
-              
-              if( !isMobile ) {
-              	 _this.$invite_block.find('[data-behaviour="share_whatsapp"]').css("display","none");
-              }
-              _this.$form.hide();
-              _this.$invite_block.show();
+              _this.showInviteBlock();
         },
-            fail:function(response){
-              var message = jQuery.parseJSON( response.responseText );
-              alert(message);
+            error:function(xhr, status, text){
+				if (xhr.status == 400) {
+				  _this.showInviteBlock();
+				} else {
+                  _this.$server_error_alert.show();
+                  setTimeout(function(d){
+                    _this.$server_error_alert.hide('slow');
+                  }, 2000); 					
+				}
+     
         }             
         
       }); 
       
     };  
+    
+    AppRegistration.prototype.showInviteBlock = function() {
+	      if( !isMobile ) {
+	      	 this.$invite_block.find('[data-behaviour="share_whatsapp"]').css("display","none");
+	      }
+	      this.$form.hide();
+	      this.$invite_block.show();        	
+    };
 
     AppRegistration.prototype.isNotValidEmail = function( email ) {
       return !this.email_regex.test( email );
