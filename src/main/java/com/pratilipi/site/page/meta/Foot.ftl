@@ -78,6 +78,7 @@ function subscribeAndroid( email, phone ) {
 		},
 		success: function( response ) {
 			handleSuccessResponse();
+			ga( 'send', 'event', 'modal_submit', 'register', 'android_registration' );
 		},
 		error: function( response ) {
 			if( response.status == 400 ) {
