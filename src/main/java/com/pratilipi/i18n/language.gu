@@ -386,9 +386,9 @@ writer_error_copyright_required = કોપીરાઈટ પોલિસી �
 pratilipi_add_summary = સારાંશ લખવા માટે અહી ક્લિક કરો. 
 
 # Android App launch
-android_alert_message = Read without internet and download unlimited books. Be first to get Android app.
-android_popup_message = Pratilipi Android app is coming. Please register below and be the first one to get your very own Pratilipi App.
-android_know_more_button = Know More
+android_alert_message = ઈન્ટરનેટ વિના વાંચો અને અગણિત પુસ્તકો ડાઉનલોડ કરો. એન્ડ્રોઈડ એપ્લિકેશન મેળવનાર પ્રથમ વાચક બનો.
+android_popup_message = પ્રતિલિપિ એન્ડ્રોઈડ એપ્લિકેશન જલ્દી આવી રહી છે.સર્વ પ્રથમ વાચક બનવા માટે નીચે રજીસ્ટર કરો.
+android_know_more_button = વધુ જાણો 
 android_submit = દર્જ કરો
 android_invite_friends = મિત્રોને આમંત્રિત કરો
 android_success_feedback = એપ્લીકેશન લોંચ થતા જ અમે તમને સુચના આપીશું

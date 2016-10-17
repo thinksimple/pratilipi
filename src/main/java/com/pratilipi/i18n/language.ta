@@ -386,14 +386,14 @@ writer_error_copyright_required = தனியுரிமைக் கொள்
 pratilipi_add_summary = சிறுகுறிப்பைச் சேர்க்க இங்கே கிளிக் செய்யவும்
 
 # Android App launch
-android_alert_message = Read without internet and download unlimited books. Be first to get Android app.
-android_popup_message = Pratilipi Android app is coming. Please register below and be the first one to get your very own Pratilipi App.
-android_know_more_button = Know More
+android_alert_message = எண்ணிலடங்கா படைப்புகளை தரவிறக்கம் செய்து இணைய தொடர்பு இல்லாமலேயே படிக்கலாம். ஆண்ட்ராய்ட் செயலியை முதல் ஆளாய் பெற முந்துங்கள்.
+android_popup_message = பிரதிலிபி ஆண்ட்ராய்ட் செயலி வரவிருக்கிறது. கீழே பதிவு செய்து முதல் ஆளாய் உங்களது செயலியை பெற்றுக்கொள்ளுங்கள்
+android_know_more_button = மேலும் தெரிந்துகொள்ள
 android_submit = சமர்பிக்க
 android_invite_friends = நண்பர்களை அழைக்க
 android_success_feedback = பிரதிலிபி ஆண்ட்ராய்ட் செயலியை நாங்கள் வெளியிட்டவுடன் உங்களுக்குத் தெரிவிக்கிறோம்
 android_email_incorrect = மின்னஞ்சல் முகவரி தவறாக பதிவிடப்பட்டுள்ளது
-android_phone_incorrect = Mobile number has been entered incorrectly
+android_phone_incorrect = கைபேசி எண் தவறாக பதிவிடப்பட்டுள்ளது
 android_email_or_phone_required = Please enter your email or phone number.
 android_banner_1 = பிரதிலிபி ஆண்ட்ராய்ட் செயலி : எண்ணிலடங்கா படைப்புகளை தரவிறக்கம் செய்து இணைய தொடர்பு இல்லாமலேயே படிக்கலாம்.
 android_banner_2 = Register below to get it first.
