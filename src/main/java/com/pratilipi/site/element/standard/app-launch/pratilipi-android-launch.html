@@ -1,9 +1,9 @@
 <#assign cookieName = "USER_NOTIFIED">
 <div id="androidSubsribeAlert" style="margin-bottom: 4px; border-radius: 0; cursor: pointer; padding: 0; display: none; color: #fff; background-color: #222; border-color: #333;" class="alert alert-dismissible fade in" role="alert">
-	<button style="outline: none; right: 6px; margin-top: 10px; opacity: 1;" type="button" class="close pull-right" data-dismiss="alert" aria-label="Close" onclick="setCookie( '${ cookieName }', 'true', 7, '/' )">
+	<button style="outline: none; right: 6px; margin-top: 10px; opacity: 1; color: #fff!important;" type="button" class="close pull-right" data-dismiss="alert" aria-label="Close" onclick="setCookie( '${ cookieName }', 'true', 7, '/' ); ga( 'send', 'event', 'android_banner', 'banner_close', 'android_registration' );">
 		<iron-icon icon="icons:close"></iron-icon>
 	</button>
-	<div data-toggle="modal" data-target="#androidSubsribeModal" style="padding: 8px 20px; width: 95%; width: calc(100% - 32px); display: flex;">
+	<div data-toggle="modal" data-target="#androidSubsribeModal" style="padding: 8px 20px; width: 95%; width: calc(100% - 32px); display: flex;" onclick="ga( 'send', 'event', 'android_banner', 'banner_click', 'android_registration' );">
 		<img style="width: 40px; height: 40px; margin-right: 12px; align-self: center;" src="http://0.ptlp.co/resource-all/home-page/google_playstore.png"/>
 		<span style="font-size: 13px; font-weight: 400; align-self: center;">${ _strings.android_banner_1 }</span>
 	</div>
@@ -23,7 +23,7 @@
 					<h6 style="margin: 4px 8px; text-align: center; line-height: 24px; font-size: 14px; font-weight: 600;">
 						${ _strings.android_popup_message }
 					</h6>
-					<a style="white-space: nowrap; display: block;" class="btn pratilipi-red text-center" href="/android-app-registration" class="pratilipi-red" target="_blank">${ _strings.android_know_more_button }</a>
+					<a style="white-space: nowrap; display: block;" class="btn pratilipi-red text-center" onclick="ga( 'send', 'event', 'modal_knowmore', 'knowmore_click', 'android_registration' );" href="/android-app-registration" class="pratilipi-red" target="_blank">${ _strings.android_know_more_button }</a>
 					<input style="border: none; box-shadow: none !important; border-bottom: 1px solid black; border-radius: 0px; width: 100%; outline: none; margin-top: 20px;" type="number" id="androidSubscribePhone" name="androidSubscribePhoneVal" placeholder="${ _strings.user_phone }" value="{{ user.phone }}" />
 					<div style="text-align: center; margin-top: 20px; font-size: 12px;">${ _strings.or }</div>
 					<input style="border: none; box-shadow: none !important; border-bottom: 1px solid black; border-radius: 0px; width: 100%; outline: none; margin-top: 8px;" type="text" id="androidSubscribeEmail" name="androidSubscribeEmailVal" placeholder="${ _strings.user_email }" value="{{ user.email }}" />
