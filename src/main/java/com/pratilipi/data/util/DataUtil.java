@@ -2,6 +2,9 @@ package com.pratilipi.data.util;
 import java.io.IOException;
 import java.util.List;
 
+import com.google.appengine.tools.cloudstorage.GcsService;
+import com.google.appengine.tools.cloudstorage.GcsServiceFactory;
+import com.google.appengine.tools.cloudstorage.RetryParams;
 import com.google.appengine.tools.remoteapi.RemoteApiInstaller;
 import com.google.appengine.tools.remoteapi.RemoteApiOptions;
 import com.googlecode.objectify.ObjectifyService;
@@ -26,7 +29,7 @@ import com.pratilipi.data.type.gae.UserPratilipiEntity;
 
 public class DataUtil {
 
-	public static void main( String ... args ) throws IOException, UnexpectedServerException {
+	public static void main( String ... args ) throws IOException, UnexpectedServerException, InterruptedException {
 		
 		RemoteApiOptions options = new RemoteApiOptions()
 				.server( "m.gamma.pratilipi.com", 80 )
@@ -42,7 +45,8 @@ public class DataUtil {
 		SearchAccessor searchAccessor = DataAccessorFactory.getSearchAccessor();
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
 		Memcache memcache = DataAccessorFactory.getL2CacheAccessor();
-
+		GcsService gcsService = GcsServiceFactory.createGcsService( RetryParams.getDefaultInstance() );
+		
 		
 		// START
 		
@@ -83,6 +87,66 @@ public class DataUtil {
 		TaskQueueFactory.getPratilipiOfflineTaskQueue().addAll( taskList );
 		
 		System.out.println( taskList.size() ); */
+
+		
+		/*String bucketName = "static.pratilipi.com";
+		String filePrefix = null;
+		
+		ListOptions.Builder listOptions = new ListOptions.Builder();
+		listOptions.setPrefix( filePrefix );
+		
+		System.out.println( filePrefix );
+		
+		ListResult result = gcsService.list( bucketName, listOptions.build() );
+
+		int count = 0;
+		while( result.hasNext() ) {
+			try {
+				
+				ListItem source = result.next();
+				if( source.isDirectory() )
+					continue;
+				
+				count++;
+				
+				String[] tokens = source.getName().split( "/" );
+				if( tokens.length != 4 ) {
+					System.out.println( "\n" + count + "> e " + source.getName() );
+					continue;
+				}
+				
+				String destName = "pratilipi/" + tokens[2] + "/images/" + tokens[3];
+				
+				if( tokens[3].equals( "Thumbs.db" ) ) {
+					System.out.println( "\n" + count + "> x " + source.getName() );
+					continue;
+				}
+				
+				GcsFileMetadata dest = gcsService.getMetadata( new GcsFilename( bucketName, destName ) );
+				if( dest != null && dest.getLength() == source.getLength() && dest.getEtag().equals( source.getEtag() ) ) {
+//					System.out.println( count + "> = " + source.getName() );
+					System.out.print( "." );
+					if( count % 100 == 0 )
+						System.out.println();
+					continue;
+				}
+				
+				if( dest != null ) {
+					System.out.println( "\n" + count + "> o " + source.getName() );
+					continue;
+				}
+	
+				System.out.println( "\n" + count + "> c " + source.getName() );
+//				gcsService.copy(
+//						new GcsFilename( "static.pratilipi.com", source.getName() ),
+//						new GcsFilename( "static.pratilipi.com", destName ) );
+				
+			} catch( Exception e ) {
+				System.out.println( "\n" + count + "> r " + e.getMessage() );
+			}
+		}
+
+		System.out.println( "\nDone !" );*/
 		
 		
 		// END
