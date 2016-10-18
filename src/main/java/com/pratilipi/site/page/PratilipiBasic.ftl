@@ -81,6 +81,8 @@
 		<div class="parent-container">
 			<div class="container">
 				
+				<#include "../element/basic/pratilipi-android-launch.ftl">
+				
 				<#-- review param is null -->
 				<#if !reviewParam??>
 					<#assign reviewParam = "pratilipi">

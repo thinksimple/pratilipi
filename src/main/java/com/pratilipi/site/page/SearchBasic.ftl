@@ -9,6 +9,7 @@
 		<#include "../element/basic/pratilipi-header.ftl">
 		<div class="parent-container">
 			<div class="container">
+				<#include "../element/basic/pratilipi-android-launch.ftl">
 				<#if pratilipiList?has_content>
 					<#list pratilipiList as pratilipi>
 						<#include "../element/basic/pratilipi-pratilipi-card.ftl">
