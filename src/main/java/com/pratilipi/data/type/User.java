@@ -14,6 +14,10 @@ public interface User extends GenericOfyType, Serializable {
 	String getFacebookId();
 	
 	void setFacebookId( String facebookId );
+
+	String getGoogleId();
+	
+	void setGoogleId( String googleId );
 	
 	String getPassword();
 	

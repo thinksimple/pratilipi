@@ -24,6 +24,9 @@ public class UserEntity implements User {
 	
 	@Index( IfNotNull.class )
 	private String FACEBOOK_ID;
+
+	@Index( IfNotNull.class )
+	private String GOOGLE_ID;
 	
 	@Index
 	private String PASSWORD;
@@ -101,6 +104,16 @@ public class UserEntity implements User {
 	@Override
 	public void setFacebookId( String facebookId ) {
 		this.FACEBOOK_ID = facebookId;
+	}
+
+	@Override
+	public String getGoogleId() {
+		return GOOGLE_ID;
+	}
+	
+	@Override
+	public void setGoogleId( String googleId ) {
+		this.GOOGLE_ID = googleId;
 	}
 	
 	@Override
