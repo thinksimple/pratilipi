@@ -112,7 +112,7 @@
 			},
 
 			attached: function() {
-				if( getCookie( "PREFERRED_READING_MODE" ) == "NORMAL_MODE" || getCookie( "PREFERRED_READING_MODE" ) == "" )
+				if( getCookie( "PREFERRED_READING_MODE" ) == null || getCookie( "PREFERRED_READING_MODE" ) == "NORMAL_MODE" )
 					this.normalReadingMode();
 				else if( getCookie( "PREFERRED_READING_MODE" ) == "NIGHT_MODE" )
 					this.nightReadingMode();

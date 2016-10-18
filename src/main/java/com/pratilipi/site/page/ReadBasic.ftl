@@ -12,12 +12,6 @@
 			   else
 				   return null;
 			}
-			function setCookie( name, value, days, path ) {
-				var date = new Date();
-				date.setTime( date.getTime() + ( days * 24 * 60 * 60 * 1000 ) );
-				var expires = "; expires=" + date.toGMTString();
-				document.cookie = name + "=" + value + expires + "; path=" + path;
-			}
 			function gotoPage( pageNo ) {
 				var redirectUrl = "${ pratilipi.getReadPageUrl() }" + ( "${ pratilipi.getReadPageUrl() }".indexOf( "?" ) == -1 ? "?" : "&" ) + "pageNo=" + pageNo;
 

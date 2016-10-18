@@ -24,30 +24,6 @@ HTMLImports.whenReady(function () {
 				document.getElementById( 'androidSubsribeAlert' ).style.display = "block";
 	});
 });
-function setCookie( name, value, days, path ) {
-	var date = new Date();
-	date.setTime( date.getTime() + ( days * 24 * 60 * 60 * 1000 ) );
-	var expires = "; expires=" + date.toGMTString();
-	document.cookie = name + "=" + value + expires + "; path=" + path;
-}
-function getCookie( cname ) {
-	var name = cname + "=";
-	var ca = document.cookie.split( ';' );
-	for( var i = 0; i <ca.length; i++ ) {
-		var c = ca[i];
-		while( c.charAt(0) == ' ' ) c = c.substring( 1 );
-		if( c.indexOf( name ) == 0 ) return c.substring(name.length,c.length);
-	}
-	return "";
-}
-function validateEmail( email ) {
-	var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-	return re.test(email);
-}
-function validatePhone( phone ) {
-	var pattern = /^[0-9]{10}$/;
-	return pattern.test(phone);
-}
 function subscribeAndroid( email, phone ) {
 	document.getElementById( 'success-androidSubsribeModal' ).style.display = 'none';
 	document.getElementById( 'failure-androidSubsribeModal' ).style.display = 'none';

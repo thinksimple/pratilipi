@@ -25,3 +25,6 @@
 
 <#-- Mobile device -->
 <script>function isMobile(){return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);}</script>
+
+<#-- Basic functions -->
+<#include "Scripts.ftl">
