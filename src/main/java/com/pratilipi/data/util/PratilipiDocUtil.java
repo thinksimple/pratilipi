@@ -504,7 +504,7 @@ public class PratilipiDocUtil {
 			
 			for( int i = 1; i <= pratilipi.getPageCount(); i++ ) {
 				
-				BlobEntry blobEntry = blobAccessor.getBlob( "pratilipi-content/image/" + pratilipiId + "/" + i );
+				BlobEntry blobEntry = blobAccessor.getBlob( "pratilipi/" + pratilipiId + "/images/" + i );
 				
 				JsonObject imgData = new JsonObject();
 				imgData.addProperty( "name", i + "" );
