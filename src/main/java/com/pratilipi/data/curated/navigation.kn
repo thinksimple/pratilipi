@@ -1,4 +1,5 @@
 ಪ್ರಖ್ಯಾತ ಬರಹಗಳು 
+/event/kanmatu ಕಣ್ಮಾತು ಸ್ಪರ್ಧೆ        App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"/event/kanmatu" }
 /most-read   ಹೆಚ್ಚು ಓದಲ್ಪಟ್ಟ        App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"most-read" }
 /new         ಹೊಸ  ಬರಹಗಳು     App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"new" } 
 /recommended ಶಿಫಾರಸ್ಸು ಮಾಡಲ್ಪಟ್ಟ  App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"recommended" } 
