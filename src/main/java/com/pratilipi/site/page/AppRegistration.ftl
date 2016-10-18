@@ -381,6 +381,8 @@
               _this.$form.closest("center").removeClass( "small-spinner" ); 
               var parsed_data = jQuery.parseJSON( response );
               _this.showInviteBlock();
+              <#assign cookieName = "USER_NOTIFIED">
+              setCookie( '${ cookieName }', 'true', 7, '/' );
               ga( 'send', 'event', 'main_submit', 'register', 'android_registration' );
         },
             error:function(xhr, status, text){

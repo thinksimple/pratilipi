@@ -1,0 +1,12 @@
+<#if !userNotifed??>
+<#assign cookieName = "USER_NOTIFIED">
+<div id="androidSubsribeAlert" style="margin-bottom: 4px; border-radius: 0; cursor: pointer; padding: 0; color: #fff; background-color: #222; border-color: #333; margin-top: 8px;" class="alert alert-dismissible fade in" role="alert">
+	<button style="outline: none; right: 6px; margin-top: 16px; opacity: 1; color: #fff !important;" type="button" class="close pull-right" data-dismiss="alert" aria-label="Close" onclick="setCookie( '${ cookieName }', 'true', 7, '/' )">
+		<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+	</button>
+	<div style="padding: 8px 20px; width: 95%; width: calc(100% - 32px); display: flex;" onclick="window.open('/android-app-registration');">
+		<img style="width: 40px; height: 40px; margin-right: 12px; align-self: center;" src="http://0.ptlp.co/resource-all/home-page/google_playstore.png"/>
+		<span style="font-size: 13px; font-weight: 400; align-self: center;">${ _strings.android_banner_1 }</span>
+	</div>
+</div>
+</#if>

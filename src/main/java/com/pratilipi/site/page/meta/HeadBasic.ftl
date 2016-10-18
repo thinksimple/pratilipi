@@ -13,9 +13,8 @@
 <#-- DNS Prefetch -->
 <#list 0..4 as i><link rel="dns-prefetch" href="//${i}.ptlp.co/"></#list>
 
-<#-- Custom Stylesheet -->
-<link type="text/css" rel="stylesheet" href="/resources/style-basic.css?20160812">
 
+<#-- Load Facebook sdk -->
 <script>
 	window.fbAsyncInit = function() {
 		FB.init({
@@ -35,8 +34,14 @@
 </script>
 
 
-
+<#-- Google Analytics -->
 <#include "GoogleAnalytics.ftl">
+
+<#-- Font -->
+<#include "Font.ftl">
+
+<#-- Custom Stylesheet -->
+<link type="text/css" rel="stylesheet" href="/resources/style-basic.css?1">
 
 <#-- Basic functions -->
 <#include "Scripts.ftl">

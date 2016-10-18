@@ -12,6 +12,7 @@
 		<#include "../element/basic/pratilipi-header.ftl">
 		<div class="parent-container" style="">
 			<div class="container">
+				<#include "../element/basic/pratilipi-android-launch.ftl">
 				<#if ( ( action == "edit_profile") && author.hasAccessToUpdate() )>
 					<#include "../element/basic/pratilipi-author-settings.ftl">
 				<#elseif action == "list_contents">
