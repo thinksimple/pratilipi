@@ -54,4 +54,21 @@
 		                                  '${ _strings.month_oct }','${ _strings.month_nov }','${ _strings.month_dec }']; return months[m]; }
 		return [ weekday( d.getDay() ), day( d.getDate() ), month( d.getMonth() ), d.getFullYear(), getHoursMin( d.getHours(), d.getMinutes() ) ].join(' ');
 	}
+	function getUrlParameter( key ) {
+	   if( key = ( new RegExp( '[?&]' +encodeURIComponent( key ) + '=([^&]*)' ) ).exec( location.search ) )
+	      return decodeURIComponent( key[1] );
+		return null;
+	}
+	function getUrlParameters() {
+		var str = decodeURI( location.search.substring(1) ), 
+			res = str.split("&"), 
+			retObj = {};
+		for( var i = 0; i < res.length; i++ ){
+			var key = res[i].substring( 0, res[i].indexOf( '=' ) );
+			var value = res[i].substring( res[i].indexOf( '=' ) + 1 );
+			retObj[ key ] = value;
+		}
+		if( retObj[""] != null ) delete retObj[""];
+		return retObj;
+	}
 </script>

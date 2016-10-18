@@ -79,19 +79,6 @@
     	}
     }
     
-	function getUrlParameters() {
-		var str = decodeURI( location.search.substring(1) ), 
-			res = str.split("&"), 
-			retObj = {};
-		for( var i = 0; i < res.length; i++ ){
-			var key = res[i].substring( 0, res[i].indexOf( '=' ) );
-			var value = res[i].substring( res[i].indexOf( '=' ) + 1 );
-			retObj[ key ] = value;
-		}
-		if( retObj[""] != null ) delete retObj[""];
-		return retObj;
-	}
-	    
 	function redirectToPreviousPage() {
 		var retUrl = getUrlParameters().ret;
 		if(  retUrl != null )

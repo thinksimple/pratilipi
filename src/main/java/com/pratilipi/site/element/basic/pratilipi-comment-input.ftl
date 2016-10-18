@@ -28,15 +28,9 @@
 </style>
 
 <script>
-	function getParameter( key ) {
-	   if( key = ( new RegExp( '[?&]' +encodeURIComponent( key ) + '=([^&]*)' ) ).exec( location.search ) )
-	      return decodeURIComponent( key[1] );
-	   else
-		   return null;
-	}
 	function addComment() {
-		var parentId = getParameter( "parentId" );
-		if( parentId == null )
+		var parentId = getUrlParameter( "parentId" );
+		if( parentId == null || parentId.trim() == "" )
 			return;
 		
 		var content = jQuery( '#comment-input' ).val();

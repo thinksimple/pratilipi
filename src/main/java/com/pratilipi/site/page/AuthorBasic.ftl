@@ -32,12 +32,6 @@
 		</div>
 		<#include "../element/basic/pratilipi-footer.ftl">
 		<script>
-			function getUrlParameter( key ) {
-			   if( key = ( new RegExp( '[?&]' +encodeURIComponent( key ) + '=([^&]*)' ) ).exec( location.search ) )
-			      return decodeURIComponent( key[1] );
-			   else
-				   return null;
-			}
 			function roundOffRating(n) {
 			    return (Math.round(n*2)/2).toFixed(1);
 			};

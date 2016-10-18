@@ -11,17 +11,6 @@
 			}
 		</style>
 		<script type="text/javascript">
-			function getUrlParameters() {
-				var str = decodeURI( location.search.substring(1) ), 
-					res = str.split("&"), 
-					retObj = {};
-				for( var i = 0; i < res.length; i++ ){
-					var key = res[i].substring( 0, res[i].indexOf( '=' ) );
-					var value = res[i].substring( res[i].indexOf( '=' ) + 1 );
-					retObj[ key ] = value;
-				}
-				return retObj;
-			}
 			function logout() {
 				$.ajax({
 					type: 'get',

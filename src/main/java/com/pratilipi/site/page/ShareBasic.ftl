@@ -10,12 +10,6 @@
 	
 	<body>
 		<script>
-			function getUrlParameter( key ) {
-			   if( key = ( new RegExp( '[?&]' +encodeURIComponent( key ) + '=([^&]*)' ) ).exec( location.search ) )
-			      return decodeURIComponent( key[1] );
-			   else
-				   return null;
-			}		
 			function shareOnFacebook() {
 				var url = encodeURIComponent( getUrlParameter( "url" ) );
 				url += encodeURIComponent( "&utm_source=facebook" )

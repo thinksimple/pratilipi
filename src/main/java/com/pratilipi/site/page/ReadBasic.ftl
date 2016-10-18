@@ -6,12 +6,6 @@
 	<head>
 		<#include "meta/HeadBasic.ftl">
 		<script>
-			function getUrlParameter( key ) {
-			   if( key = ( new RegExp( '[?&]' +encodeURIComponent( key ) + '=([^&]*)' ) ).exec( location.search ) )
-			      return decodeURIComponent( key[1] );
-			   else
-				   return null;
-			}
 			function gotoPage( pageNo ) {
 				var redirectUrl = "${ pratilipi.getReadPageUrl() }" + ( "${ pratilipi.getReadPageUrl() }".indexOf( "?" ) == -1 ? "?" : "&" ) + "pageNo=" + pageNo;
 

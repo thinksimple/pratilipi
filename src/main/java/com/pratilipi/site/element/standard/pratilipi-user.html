@@ -26,14 +26,7 @@
 	</template>
 	
 	<script>
-		
-		function getValue( key ) {
-		   if( key = ( new RegExp( '[?&]' +encodeURIComponent( key ) + '=([^&]*)' ) ).exec( location.search ) )
-		      return decodeURIComponent( key[1] );
-		   else
-			   return "";
-		}
-	
+
 		Polymer({
 			
 	 		is: 'pratilipi-user',
@@ -116,22 +109,25 @@
 				
 				this.updateUser( this.userData );
 
-				if( getValue( 'action' ) == "login" )
-					this.logIn();
-				else if( getValue( 'action' ) == "register" )
-					this.register();
-				else if( getValue( 'action' ) == "start_writing" )
-					this.startWriting();
+				if( getUrlParameter( 'action' ) != null ) {
+					if( getUrlParameter( 'action' ) == "login" )
+						this.logIn();
+					else if( getUrlParameter( 'action' ) == "register" )
+						this.register();
+					else if( getUrlParameter( 'action' ) == "start_writing" )
+						this.startWriting();
+					return;
+				}
 
-				if( getValue( 'email' ) !== "" && getValue( 'token' ) !== "" ) {
+				if( getUrlParameter( 'email' ) != null && getUrlParameter( 'token' ) != null ) {
 
 					this.closeAllElements();
 
-					if( getValue( 'verifyUser' ) == "true" ) {
-						this.querySelector( 'pratilipi-user-verification' ).verifyUser( getValue( 'email' ), getValue( 'token' ) );
+					if( getUrlParameter( 'verifyUser' ) == "true" ) {
+						this.querySelector( 'pratilipi-user-verification' ).verifyUser( getUrlParameter( 'email' ), getUrlParameter( 'token' ) );
 					}
-					else if( getValue( 'passwordReset' ) == "true" ) {
-						this.querySelector( 'pratilipi-user-password-update' ).openPasswordUpdate( getValue( 'email' ), getValue( 'token' ) );
+					else if( getUrlParameter( 'passwordReset' ) == "true" ) {
+						this.querySelector( 'pratilipi-user-password-update' ).openPasswordUpdate( getUrlParameter( 'email' ), getUrlParameter( 'token' ) );
 					}
 				}
 

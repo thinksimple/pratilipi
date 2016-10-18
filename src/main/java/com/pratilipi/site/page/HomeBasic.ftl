@@ -7,23 +7,17 @@
 		
 		<#include "meta/HeadBasic.ftl">
 		<script>
-			function getParameter( key ) {
-			   if( key = ( new RegExp( '[?&]' +encodeURIComponent( key ) + '=([^&]*)' ) ).exec( location.search ) )
-			      return decodeURIComponent( key[1] );
-			   else
-				   return null;
-			}
 			$( document ).ready(function() {
-				if( getParameter( 'email' ) != null && getParameter( 'token' ) != null ) {
-					if( getParameter( 'passwordReset' ) == "true" ) {
-						window.location.href = "/updatepassword" + "?" + "email=" + getParameter( 'email' ) + "&" + "token=" + getParameter( 'token' );
-					} else if( getParameter( 'verifyUser' ) == "true" ) {
+				if( getUrlParameter( 'email' ) != null && getUrlParameter( 'token' ) != null ) {
+					if( getUrlParameter( 'passwordReset' ) == "true" ) {
+						window.location.href = "/updatepassword" + "?" + "email=" + getUrlParameter( 'email' ) + "&" + "token=" + getUrlParameter( 'token' );
+					} else if( getUrlParameter( 'verifyUser' ) == "true" ) {
 						$.ajax({
 							type: 'post',
 							url: '/api/user/verification',
 							data: {
-								'email' : getParameter( 'email' ),
-								'verificationToken': getParameter( 'token' )
+								'email' : getUrlParameter( 'email' ),
+								'verificationToken': getUrlParameter( 'token' )
 							},
 							success: function( response ) {
 								alert( "${ _strings.user_verified_success }" );

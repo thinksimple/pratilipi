@@ -35,3 +35,6 @@
 
 
 <#include "GoogleAnalytics.ftl">
+
+<#-- Basic functions -->
+<#include "Scripts.ftl">
