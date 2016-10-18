@@ -219,7 +219,8 @@ Editor.prototype.addImageListener = function() {
 					$img.insertAfter( $last_element );
 				}
 				else {
-					_this.content_object.$content_container.append($img);
+					var $p = $("<p> &nbsp; </p>");
+					_this.content_object.$content_container.append($p).append($img);
 				}
 				$("<p><br></p>").insertAfter($img);
 				var cur_page = _this.content_object.parent_object.currChapter;
