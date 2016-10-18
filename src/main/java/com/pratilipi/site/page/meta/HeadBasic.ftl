@@ -19,7 +19,7 @@
 <script>
 	window.fbAsyncInit = function() {
 		FB.init({
-			appId      : '${ fbAppId }',
+			appId      : '293990794105516',
 			cookie     : true,
 			xfbml      : true,
 			version    : 'v2.6' 
