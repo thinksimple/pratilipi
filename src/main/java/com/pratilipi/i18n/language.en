@@ -387,6 +387,7 @@ writer_error_copyright_required = Please accept Copyright Policy and Terms of Se
 pratilipi_add_summary = Please click here to add summary
 
 # Android App launch
+android_pratilipi_app = Pratilipi Android App
 android_alert_message = Read without internet and download unlimited books. Be first to get Android app.
 android_popup_message = Pratilipi Android app is coming. Please register below and be the first one to get your very own Pratilipi App.
 android_know_more_button = Know More

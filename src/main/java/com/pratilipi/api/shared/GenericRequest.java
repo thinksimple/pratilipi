@@ -73,7 +73,7 @@ public class GenericRequest {
 	public static final String ERR_COMMENT_PARENT_ID_REQUIRED	= "Parent id is required.";
 	public static final String ERR_COMMENT_CONTENT_REQUIRED		= "Content is required.";
 	
-	public static final String ERR_MAILING_LIST_EMAIL_SUBSCRIBED_ALREDY = "Email already subscribed to this mailing list.";
+	public static final String ERR_MAILING_LIST_SUBSCRIBED_ALREDY = "Email/Phone already subscribed to this mailing list.";
 
 	
 	public GenericRequest() {}

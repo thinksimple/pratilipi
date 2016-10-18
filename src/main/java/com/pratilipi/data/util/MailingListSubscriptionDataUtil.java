@@ -98,7 +98,7 @@ public class MailingListSubscriptionDataUtil {
 			mailingListSubscription.setSubscriptionDate( new Date() );
 		
 		if( bool )
-			throw new InvalidArgumentException( GenericRequest.ERR_MAILING_LIST_EMAIL_SUBSCRIBED_ALREDY );
+			throw new InvalidArgumentException( GenericRequest.ERR_MAILING_LIST_SUBSCRIBED_ALREDY );
 
 		
 		dataAccessor.createOrUpdateMailingListSubscription( mailingListSubscription, auditLog );
