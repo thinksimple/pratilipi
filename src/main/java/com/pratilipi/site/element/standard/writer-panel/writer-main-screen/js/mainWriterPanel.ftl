@@ -310,9 +310,29 @@ MainWriterPanel.prototype.initializeAutosave = function() {
 	var _this = this;
 	this.chapter_name_object.$chapter_name_container.keyup( $.debounce( 300, _this.saveChapter.bind(this, true) ) );
 	this.content_object.$content_container.keyup( $.debounce( 1500, _this.saveChapter.bind(this, true) ) );
-	setInterval(function () {
-     	_this.saveChapter( true );
- 	}, 60000);
+	this.activateRegularAutosaveCalls();
+};
+
+MainWriterPanel.prototype.activateRegularAutosaveCalls = function() {
+	var _this = this;
+	$(window).on("blur focus", function(e) {
+	    var prevType = $(this).data("prevType");
+	
+	    if (prevType != e.type) {
+	        switch (e.type) {
+	            case "blur":
+	                clearInterval( _this.autosaveIntervalId );
+	                break;
+	            case "focus":
+                	_this.autosaveIntervalId = setInterval(function () {
+				     	_this.saveChapter( true );
+				 	}, 60000);
+	                break;
+	        }
+	    }
+	
+	    $(this).data("prevType", e.type);
+	});
 };
 
 MainWriterPanel.prototype.preventFormSubmission = function() {
