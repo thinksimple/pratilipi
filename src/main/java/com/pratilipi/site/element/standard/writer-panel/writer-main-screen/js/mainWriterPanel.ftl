@@ -316,9 +316,9 @@ MainWriterPanel.prototype.initializeAutosave = function() {
 MainWriterPanel.prototype.activateRegularAutosaveCalls = function() {
 	var _this = this;
 	$(window).on("blur focus", function(e) {
-	    var prevType = $(this).data("prevType");
+	    var prevTypeVal = $(this).data("prevTypeVal");
 	
-	    if (prevType != e.type) {
+	    if (prevTypeVal != e.type) {
 	        switch (e.type) {
 	            case "blur":
 	                clearInterval( _this.autosaveIntervalId );
@@ -331,7 +331,7 @@ MainWriterPanel.prototype.activateRegularAutosaveCalls = function() {
 	        }
 	    }
 	
-	    $(this).data("prevType", e.type);
+	    $(this).data("prevTypeVal", e.type);
 	});
 };
 
