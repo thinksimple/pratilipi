@@ -55,6 +55,7 @@ public class PratilipiSiteFilter implements Filter {
 	
 	{
 		redirections.put( "/favicon.ico", "/favicon.png" );
+		redirections.put( "/theme.pratilipi/logo.png", "/logo.png" );
 //		redirections.put( "/apple-touch-icon.png", "/theme.pratilipi/favicon.png" );
 //		redirections.put( "/apple-touch-icon-precomposed.png", "/theme.pratilipi/favicon.png" );
 
