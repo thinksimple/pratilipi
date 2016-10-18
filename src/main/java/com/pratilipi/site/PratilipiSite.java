@@ -24,7 +24,6 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.pratilipi.api.ApiRegistry;
 import com.pratilipi.api.impl.author.AuthorApi;
 import com.pratilipi.api.impl.author.AuthorListApi;
@@ -504,6 +503,11 @@ public class PratilipiSite extends HttpServlet {
 		dataModel.put( "user", userResponse );
 		dataModel.put( "userJson", gson.toJson( userResponse ) );
 		dataModel.put( "pratilipiTypesJson", gson.toJson( pratilipiTypes ) );
+
+		// Android App Registration
+		if( AccessTokenFilter.getCookieValue( "USER_NOTIFIED", request ) != null ) {
+			dataModel.put( "userNotifed", true );
+		}
 
 		if( basicMode ) {
 			StringBuffer requestUrl = new StringBuffer( request.getRequestURI() );

@@ -524,8 +524,10 @@
 			},
 
 			updateNewNotificationCount: function( newNotificationCount ) {
-				this.set( 'newNotificationCount', newNotificationCount );
-				this.getNotificationData();
+				if( newNotificationCount != this.newNotificationCount ) {
+					this.set( 'newNotificationCount', newNotificationCount );
+					this.getNotificationData();
+				}
 			}
 
 		});
