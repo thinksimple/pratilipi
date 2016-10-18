@@ -4,7 +4,7 @@
 	<#include "meta/Head.ftl">  
     <meta property="og:site_name" content="Pratilipi">
 	<meta property="og:title" content="Pratilipi Android App Registration" />
-	<meta property="og:description" content="A platform to share stories" />
+	<meta property="og:description" content="${ _strings.android_whatsapp_share_description }" />
 	<meta property="og:image" itemprop="image" content="http://0.ptlp.co/resource-hi/logo/pratilipi_logo.png">
 	<meta property="og:type" content="website" />
     <style>

@@ -261,9 +261,11 @@ MainWriterPanel.prototype.saveChapter = function( autosaveFlag ) {
 		this.content_object.removeSpanTags();
 	}
 		
-	if( this.content_object.hasEmptyText() ) {
+	<#-- if( this.content_object.hasEmptyText() ) {
 		this.content_object.wrapInParagraph();
-	}
+	} -->
+	this.content_object.convertTextToParagraphs();
+	
 	var ajaxData = { pratilipiId: ${ pratilipiId?c },
 					chapterNo: this.currChapter,
 					chapterTitle: this.chapter_name_object.getTitle(),

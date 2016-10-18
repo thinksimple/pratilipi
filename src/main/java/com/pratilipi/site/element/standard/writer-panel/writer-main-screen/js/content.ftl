@@ -188,6 +188,12 @@ Content.prototype.wrapInParagraph = function() {
 	document.execCommand('formatBlock', false, 'p');
 };
 
+Content.prototype.convertTextToParagraphs = function() {
+	this.$content_container.contents().filter(function() {
+	  return this.nodeType == 3;
+	}).replaceWith("<p>" + $(this).text() + "</p>");
+};
+
 Content.prototype.removeSpanTags = function() {
 	this.$content_container.find("span").replaceWith( function() {
 	  $( this ).replaceWith( $( this ).html() );
