@@ -209,11 +209,11 @@
             <h3 style="font-size: 20px;padding-left: 52px;"> ${ _strings.android_banner_5 } </h3>
             <form data-behaviour="app-registration" style="width: 80%; margin: 0 auto;">
                 <div class="form-group has-feedback" style="margin-top:0px;">
-                  <input  class="form-control horizontal-form-input" id="mobile_no" placeholder="${ _strings.user_phone }">
+                  <input  class="form-control horizontal-form-input" id="mobile_no" placeholder="${ _strings.user_phone }" <#if user.getPhone() ??>value="${ user.getPhone() }"</#if> >
                 </div>   
                 <h5 style="margin: 0;">${ _strings.or }</h5>         
                 <div class="form-group has-feedback" style="margin-top: 0px;">
-                  <input  class="form-control horizontal-form-input" id="email" placeholder="${ _strings.user_email }">
+                  <input  class="form-control horizontal-form-input" id="email" placeholder="${ _strings.user_email }" <#if user.getEmail() ??>value="${ user.getEmail() }"</#if> >
                 </div>                  
                 <button type="submit" class="pratilipi-red-background-button go-button">${ _strings.android_submit }</button>
             </form>
@@ -382,7 +382,7 @@
               var parsed_data = jQuery.parseJSON( response );
               _this.showInviteBlock();
               <#assign cookieName = "USER_NOTIFIED">
-              setCookie( '${ cookieName }', 'true', 7, '/' );
+              setCookie( '${ cookieName }', 'true', 365, '/' );
               ga( 'send', 'event', 'main_submit', 'register', 'android_registration' );
         },
             error:function(xhr, status, text){

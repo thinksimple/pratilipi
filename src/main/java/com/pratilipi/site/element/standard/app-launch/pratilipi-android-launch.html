@@ -24,9 +24,9 @@
 						${ _strings.android_popup_message }
 					</h6>
 					<a style="white-space: nowrap; display: block;" class="btn pratilipi-red text-center" href="/android-app-registration" class="pratilipi-red" target="_blank">${ _strings.android_know_more_button }</a>
-					<input style="border: none; box-shadow: none !important; border-bottom: 1px solid black; border-radius: 0px; width: 100%; outline: none; margin-top: 20px;" type="number" id="androidSubscribePhone" name="androidSubscribePhoneVal" placeholder="${ _strings.user_phone }" />
+					<input style="border: none; box-shadow: none !important; border-bottom: 1px solid black; border-radius: 0px; width: 100%; outline: none; margin-top: 20px;" type="number" id="androidSubscribePhone" name="androidSubscribePhoneVal" placeholder="${ _strings.user_phone }" value="{{ user.phone }}" />
 					<div style="text-align: center; margin-top: 20px; font-size: 12px;">${ _strings.or }</div>
-					<input style="border: none; box-shadow: none !important; border-bottom: 1px solid black; border-radius: 0px; width: 100%; outline: none; margin-top: 8px;" type="text" id="androidSubscribeEmail" name="androidSubscribeEmailVal" placeholder="${ _strings.user_email }" />
+					<input style="border: none; box-shadow: none !important; border-bottom: 1px solid black; border-radius: 0px; width: 100%; outline: none; margin-top: 8px;" type="text" id="androidSubscribeEmail" name="androidSubscribeEmailVal" placeholder="${ _strings.user_email }" value="{{ user.email }}" />
 					<div class="display-message-div" style="margin-top: 12px;">
 						<div style="display: none;" id="loading-androidSubsribeModal">${ _strings.working }</div>
 						<div style="display: none;" id="success-androidSubsribeModal">${ _strings.android_success_feedback }</div>
