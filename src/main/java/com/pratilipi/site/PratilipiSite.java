@@ -241,7 +241,7 @@ public class PratilipiSite extends HttpServlet {
 				dataModel = createDataModelForBlogPostPage( page.getPrimaryContentId(), basicMode );
 				templateName = ( basicMode ? "BlogPostBasic.ftl" : "BlogPost.ftl" );
 			
-			} else if( uri.equals( "/read" ) ) {
+			} else if( page != null && page.getType() == PageType.READ ) {
 				if( !basicMode ) {
 //					resourceList.add( ThirdPartyResource.POLYMER_PAPER_FAB.getTag() );
 //					resourceList.add( ThirdPartyResource.POLYMER_PAPER_SLIDER.getTag() );
@@ -274,10 +274,11 @@ public class PratilipiSite extends HttpServlet {
 				dataModel = createDataModelForSearchPage( basicMode, filterLanguage, request );
 				templateName = ( basicMode ? "SearchBasic.ftl" : "Search.ftl" );
 
-			} else if( uri.equals( "/share" ) ) {
+			} else if( uri.equals( "/share" ) && basicMode ) {
 				dataModel = new HashMap<String, Object>();
 				dataModel.put( "title", "Share" );
-				templateName = ( basicMode ? "ShareBasic.ftl" : "Share.ftl" );
+				templateName = "ShareBasic.ftl";
+
 			} else if( uri.equals( "/notifications" ) ) {
 				dataModel = createDataModelForNotificationsPage( filterLanguage, basicMode );
 				templateName = ( basicMode ? "NotificationBasic.ftl" : "Notification.ftl" );
