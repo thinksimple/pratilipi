@@ -1,4 +1,7 @@
 <script>
+	function isMobile() {
+		return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test( navigator.userAgent );
+	}
 	function setCookie( name, value, days, path ) {
 		var date = new Date();
 		date.setTime( date.getTime() + ( days * 24 * 60 * 60 * 1000 ) );
