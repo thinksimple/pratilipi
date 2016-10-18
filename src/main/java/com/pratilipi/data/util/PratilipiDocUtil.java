@@ -305,9 +305,6 @@ public class PratilipiDocUtil {
 				
 					BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
 					BlobEntry blobEntry = blobAccessor.getBlob( _createImageFullName( pratilipiId, imageName ) );
-					// TODO: remove this when all images are migrated.
-					if( blobEntry == null ) // Falling back to the other resource location
-						blobEntry = blobAccessor.getBlob( "pratilipi-content/image/" + pratilipi.getId() + "/" + imageName );
 					
 					JsonObject imgData = new JsonObject();
 					imgData.addProperty( "name", imageName );

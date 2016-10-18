@@ -147,11 +147,18 @@ public class PratilipiSiteFilter implements Filter {
 			response.setHeader( "Location", redirections.get( requestUri ) );
 
 			
+		} else if( "/api.pratilipi/pratilipi/resource".equals( requestUri ) ) { // Redirecting to new Pratilipi content image url
+			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
+			String queryString = request.getQueryString();
+			if( queryString == null || queryString.isEmpty() )
+				response.setHeader( "Location", "/api/pratilipi/content/image" );
+			else
+				response.setHeader( "Location", "/api/pratilipi/content/image" + "?" + request.getQueryString() );
+
+
 		} else if( oldPratilipiCoverUrlRegEx.matcher( requestUri ).matches() ) { // Redirecting to new Pratilipi cover url
 			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
-			String pratilipiIdStr = requestUri.indexOf( '?' ) == -1
-					? requestUri.substring( requestUri.lastIndexOf( '/' ) + 1 )
-					: requestUri.substring( requestUri.lastIndexOf( '/' ) + 1, requestUri.indexOf( '?' ) );
+			String pratilipiIdStr = requestUri.substring( requestUri.lastIndexOf( '/' ) + 1 );
 			Long pratilipiId = Long.parseLong( pratilipiIdStr );
 			Pratilipi pratilipi = DataAccessorFactory.getDataAccessor().getPratilipi( pratilipiId );
 			response.setHeader( "Location", PratilipiDataUtil.createPratilipiCoverUrl( pratilipi, 150 ) );
@@ -159,9 +166,7 @@ public class PratilipiSiteFilter implements Filter {
 
 		} else if( oldAuthorImageUrlRegEx.matcher( requestUri ).matches() ) { // Redirecting to new Author image url
 			response.setStatus( HttpServletResponse.SC_MOVED_PERMANENTLY );
-			String authorIdStr = requestUri.indexOf( '?' ) == -1
-					? requestUri.substring( requestUri.lastIndexOf( '/' ) + 1 )
-					: requestUri.substring( requestUri.lastIndexOf( '/' ) + 1, requestUri.indexOf( '?' ) );
+			String authorIdStr = requestUri.substring( requestUri.lastIndexOf( '/' ) + 1 );
 			Long authorId = Long.parseLong( authorIdStr );
 			Author author = DataAccessorFactory.getDataAccessor().getAuthor( authorId );
 			response.setHeader( "Location", AuthorDataUtil.createAuthorProfileImageUrl( author, 150 ) );
