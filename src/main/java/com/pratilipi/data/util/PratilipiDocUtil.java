@@ -249,7 +249,7 @@ public class PratilipiDocUtil {
 		// Chapter
 		Chapter chapter = pcDoc.getChapter( chapterNo );
 		if( chapter == null )
-			pcDoc.addChapter( chapterNo, chapterTitle );
+			chapter = pcDoc.addChapter( chapterNo, chapterTitle );
 		else
 			chapter.setTitle( chapterTitle );
 
