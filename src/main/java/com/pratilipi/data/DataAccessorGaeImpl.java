@@ -322,6 +322,32 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 
 	@Override
+	public User getUserByGoogleId( String googleId ) {
+		
+		String memcacheId = "DataStore.User-google::" + googleId;
+		
+		User user = memcache.get( memcacheId );
+		if( user != null )
+			return user;
+		
+		
+		user = ObjectifyService.ofy().load()
+				.type( UserEntity.class )
+				.filter( "GOOGLE_ID", googleId )
+				.filter( "STATE !=", UserState.DELETED )
+				.order( "STATE" )
+				.order( "SIGN_UP_DATE" )
+				.first().now();
+		
+		if( user != null )
+			memcache.put( memcacheId, user );
+		
+		
+		return user;
+		
+	}
+
+	@Override
 	public Map<Long, User> getUsers( List<Long> idList ) {
 		return getEntities( UserEntity.class, idList );
 	}

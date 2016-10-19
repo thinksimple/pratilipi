@@ -187,6 +187,18 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 	
 	@Override
+	public User getUserByGoogleId( String googleId ) {
+		if( googleId == null )
+			return null;
+		
+		for( User user : UserMock.USER_TABLE )
+			if( user.getGoogleId() != null && user.getGoogleId().equals( googleId ) )
+				return user;
+				
+		return null;
+	}
+
+	@Override
 	public Map<Long, User> getUsers( List<Long> idList ) {
 
 		Map<Long, User> userMap = new HashMap<Long, User>();

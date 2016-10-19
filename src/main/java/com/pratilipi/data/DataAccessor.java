@@ -53,6 +53,7 @@ public interface DataAccessor {
 	User getUser( Long id );
 	User getUserByEmail( String email );
 	User getUserByFacebookId( String facebookId );
+	User getUserByGoogleId( String googleId );
 	Map<Long, User> getUsers( List<Long> idList );
 	List<User> getUserList( List<Long> idList );
 	DataListCursorTuple<User> getUserList( String cursorStr, Integer resultCount );
