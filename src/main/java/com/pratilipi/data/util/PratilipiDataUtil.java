@@ -60,7 +60,6 @@ public class PratilipiDataUtil {
 	private static final String CONTENT_FOLDER 		 = "pratilipi-content/pratilipi";
 	private static final String IMAGE_CONTENT_FOLDER = "pratilipi-content/image";
 	private static final String COVER_FOLDER 		 = "pratilipi-cover/original";
-	private static final String RESOURCE_FOLDER		 = "pratilipi-resource";
 
 
 	public static boolean hasAccessToListPratilipiData( PratilipiFilter pratilipiFilter ) {
@@ -1064,55 +1063,5 @@ public class PratilipiDataUtil {
 		
 	}
 		
-	
-	public static String getPratilipiResourceFolder( Long pratilipiId ) {
-		return RESOURCE_FOLDER + "/" + pratilipiId;
-	}
-	
-	public static BlobEntry getPratilipiResource( long pratilipiId, String fileName )
-			throws UnexpectedServerException {
-
-		return DataAccessorFactory.getBlobAccessor().getBlob( getPratilipiResourceFolder( pratilipiId ) + "/" + fileName );
-		
-	}
-	
-	public static boolean savePratilipiResource(
-			Long pratilipiId, BlobEntry blobEntry, boolean overwrite )
-			throws InsufficientAccessException, UnexpectedServerException {
-		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-
-		if( ! hasAccessToUpdatePratilipiContent( pratilipi ) )
-			throw new InsufficientAccessException();
-
-		String fileName = getPratilipiResourceFolder( pratilipiId ) + "/" + blobEntry.getName().replaceAll( "/", "-" );
-		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-		
-		if( !overwrite &&  blobAccessor.getBlob( fileName ) != null ) {
-		
-			return false;
-
-		} else {
-
-			blobEntry.setName( fileName );
-			blobAccessor.createOrUpdateBlob( blobEntry );
-			
-			Gson gson = new Gson();
-
-/*			AccessToken accessToken = AccessTokenFilter.getAccessToken();
-			AuditLog auditLog = dataAccessor.newAuditLog();
-			auditLog.setAccessId( accessToken.getId() );
-			auditLog.setAccessType( AccessType.PRATILIPI_UPDATE );
-			auditLog.setEventDataOld( gson.toJson( pratilipi ) );
-			auditLog.setEventDataNew( gson.toJson( pratilipi ) );
-			auditLog.setEventComment( "Uploaded content image (resource)." );
-			auditLog = dataAccessor.createAuditLog( auditLog );*/
-			
-			return true;
-			
-		}
-		
-	}
 	
 }
