@@ -163,6 +163,8 @@ MainWriterPanel.prototype.attachActionButtonListeners = function() {
 
 MainWriterPanel.prototype.getChapter = function( chapterNum ) {
 	var _this = this;
+	var $spinner = $("<div>").addClass("spinner");
+	this.$panel_container.append( $spinner );
     $.ajax({type: "GET",
         url: "/api/pratilipi/content",
         data: {
@@ -181,6 +183,9 @@ MainWriterPanel.prototype.getChapter = function( chapterNum ) {
         fail:function(response){
         	var message = jQuery.parseJSON( response.responseText );
 			alert(message);
+		},
+		complete: function() {
+			$spinner.remove();
 		}			    		
 		
 	});	
