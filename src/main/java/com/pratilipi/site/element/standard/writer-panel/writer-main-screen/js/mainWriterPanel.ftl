@@ -110,7 +110,13 @@ MainWriterPanel.prototype.initializeGlobalVariables = function() {
 	var indexJson = ${ indexJson };
 	if ( indexJson.index.length ) {
 		this.index =  indexJson.index ;
-		this.currChapter = 1;
+		var curr_page_cookie = getCookie( "writer_current_page_${ pratilipiId }" );
+		if( curr_page_cookie ) {
+			this.currChapter = parseInt( curr_page_cookie, 10 );
+		}
+		else {
+			this.currChapter = 1;
+		}
 	}
 	else {
 		this.currChapter = 0;	
@@ -123,7 +129,7 @@ MainWriterPanel.prototype.initializeData = function() {
 	var indexJson = ${ indexJson };
 	if ( indexJson.index.length ) {
 		/* get first chapter and populate it in the writer */
-		this.getChapter( 1 );
+		this.getChapter( this.currChapter );
 		this.table_of_contents_object.populateIndex( indexJson.index );
 	}
 	else {
@@ -170,6 +176,7 @@ MainWriterPanel.prototype.getChapter = function( chapterNum ) {
 			_this.pagination_object.setProgressPage();
 			_this.editor_object.resetExecCommandIcons();
 			_this.lastSavedContent = parsed_data.content;
+			setCookie( "writer_current_page_${ pratilipiId }", _this.currChapter, 15, "/pratilipi-write");
 		},
         fail:function(response){
         	var message = jQuery.parseJSON( response.responseText );
@@ -201,7 +208,7 @@ MainWriterPanel.prototype.addNewChapter = function( chapterNum ) {
 			_this.currChapter++;
 			_this.resetContent();
 			_this.lastSavedContent = "";
-			
+			setCookie( "writer_current_page_${ pratilipiId }", _this.currChapter, 15, "/pratilipi-write");			
 		},
         fail:function(response){
         	var message = jQuery.parseJSON( response.responseText );
@@ -334,7 +341,7 @@ MainWriterPanel.prototype.activateRegularAutosaveCalls = function() {
                 		if( _this.lastSavedContent != _this.content_object.getContent()  ) {
 				     		_this.saveChapter( true );
 				     	}
-				 	}, 10000);
+				 	}, 60000);
 	                break;
 	        }
 	    }
