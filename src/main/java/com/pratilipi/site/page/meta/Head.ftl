@@ -25,3 +25,6 @@
 
 <#-- Basic functions -->
 <#include "Scripts.ftl">
+
+<#-- Google Login -->
+<script src="https://apis.google.com/js/api:client.js"></script>

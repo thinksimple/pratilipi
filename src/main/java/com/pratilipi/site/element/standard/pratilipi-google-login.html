@@ -1,0 +1,110 @@
+<dom-module id="pratilipi-google-login">
+
+	<style>		
+		:host {
+			display: block;
+			text-align: center;
+		}
+		.customBtn {
+			margin: 0 auto;
+			background: white;
+			color: #444;
+			border-radius: 5px;
+			border: thin solid #888;
+			box-shadow: 1px 1px 1px grey;
+			white-space: nowrap;
+			cursor: pointer;
+			outline: none;
+		}
+		span.icon {
+			background: url('/identity/sign-in/g-normal.png') transparent 5px 50% no-repeat;
+			display: inline-block;
+			vertical-align: middle;
+			width: 32px;
+			height: 32px;
+		}
+		span.buttonText {
+			display: inline-block;
+			vertical-align: middle;
+			padding-left: 32px;
+			padding-right: 32px;
+			font-size: 14px;
+			font-weight: bold;
+		}
+	</style>
+
+	<template>
+		<button id="googleLoginButton" class="customBtn">
+			<span class="icon"></span>
+			<span class="buttonText">Sign in with Google</span>
+		</button>
+
+		<iron-ajax
+					id="AjaxPost"
+					url="/api/user/login/google"
+					method="POST"
+					content-type="application/x-www-form-urlencoded"
+					handle-as="json"
+					on-response="_handleAjaxPostResponse"
+					on-error="_handleAjaxPostError"
+					></iron-ajax>
+	</template>
+
+	<script>
+		function sendData( googleIdToken ) {
+			document.querySelector( 'pratilipi-google-login' ).sendData( googleIdToken );
+		}
+
+		Polymer ({
+
+			is: 'pratilipi-google-login',
+
+			properties: {
+				requestOnFlight: { type: Boolean, value: false }
+			},
+
+			attached: function() {
+
+				var element = this.querySelector( '#googleLoginButton' );
+
+				gapi.load( 'auth2', function() {
+
+					auth2 = gapi.auth2.init({
+						client_id: '659873510744-kfim969enh181h4gbctffrjg5j47tfuq.apps.googleusercontent.com',
+						cookiepolicy: 'single_host_origin',
+					});
+
+					auth2.attachClickHandler( element, {},
+						function( googleUser ) {
+							this.requestOnFlight = true;
+							sendData( googleUser.getAuthResponse().id_token );
+						}, function( error ) {
+							alert( JSON.stringify( error, undefined, 2 ) );
+						});
+
+				});
+
+			},
+
+			sendData: function( googleIdToken ) {
+				if( this.requestOnFlight || googleIdToken == null )
+					return;
+				this.requestOnFlight = true;
+				this.$.AjaxPost.body = ( "googleIdToken=" + googleIdToken );
+				this.$.AjaxPost.generateRequest();
+			},
+
+			_handleAjaxPostResponse: function( event ) {
+				this.requestOnFlight = false;
+				document.querySelector( 'pratilipi-user' ).updateUser( event.detail.response );
+				document.querySelector( 'pratilipi-user' ).closeAllElements();
+			},
+
+			_handleAjaxPostError: function( event ) {
+				this.requestOnFlight = false;
+				alert( event.detail.request.xhr.response.message );
+			}
+
+		});
+	</script>
+</dom-module>
