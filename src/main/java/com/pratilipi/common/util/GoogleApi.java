@@ -17,6 +17,7 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.analytics.Analytics;
+import com.google.gson.JsonObject;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.data.client.UserData;
@@ -69,12 +70,17 @@ public class GoogleApi {
 			idToken = verifier.verify( googleIdToken );
 			Payload payload = idToken.getPayload();
 
+			if( payload == null || ! payload.getAuthorizedParty().equals( getWebClientId() ) ) {
+				JsonObject jsonObject = new JsonObject();
+				jsonObject.addProperty( "googleIdToken", "Invalid GoogleIdToken!" );
+				throw new InvalidArgumentException( jsonObject );
+			}
+
 			UserData userData = new UserData();
 			userData.setGoogleId( payload.getSubject() );
 			userData.setFirstName( (String) payload.get( "given_name" ) );
 			userData.setLastName( (String) payload.get( "family_name" ) );
 			userData.setEmail( payload.getEmail() );
-			payload.getEmailVerified();
 
 			return userData;
 
