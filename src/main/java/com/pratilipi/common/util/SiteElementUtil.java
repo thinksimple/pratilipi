@@ -42,6 +42,7 @@ public class SiteElementUtil {
 				dataModel.put( "language", language );
 				dataModel.put( "domain", language.getHostName() );
 				dataModel.put( "fbAppId", "293990794105516" );
+				dataModel.put( "googleClientId", "659873510744-kfim969enh181h4gbctffrjg5j47tfuq.apps.googleusercontent.com" );
 				dataModel.put( "_strings", I18n.getStrings( language ) );
 
 				// I18n element file output stream
