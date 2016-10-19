@@ -10,6 +10,7 @@
 		<script src='http://0.ptlp.co/resource-all/jquery.bootstrap.polymer.firebase.jsapi.compressed.js'></script>
 		<link rel='stylesheet' href='http://1.ptlp.co/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>
 		<#include "./meta/GoogleAnalytics.ftl">
+		<#include "./meta/Scripts.ftl">
 	</head>
 
 	<#assign hasAccess = true>
