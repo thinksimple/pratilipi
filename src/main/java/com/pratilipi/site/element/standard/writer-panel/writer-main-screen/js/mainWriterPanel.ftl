@@ -271,15 +271,15 @@ MainWriterPanel.prototype.saveChapter = function( autosaveFlag ) {
 					chapterTitle: this.chapter_name_object.getTitle(),
 					content: this.content_object.getContent()
 				   };
+	toastr.options = {
+		positionClass: 'toast-top-center',
+		"timeOut": "1100"
+	};			   
 	if( !autosaveFlag || ( !( autosaveFlag.originalEvent instanceof Event ) && _this.content_object.hasNoSpanTags() ) ) {			   
 	    $.ajax({type: "POST",
 	        url: " /api/pratilipi/content",
 	        data: ajaxData,
 	        success:function(response){
-				toastr.options = {
-				positionClass: 'toast-top-center',
-				"timeOut": "1100"
-				};
 				if( !autosaveFlag ) {
 					$("#header1").removeClass("small-spinner");
 					_this.$save_button.removeAttr("disabled");
@@ -289,12 +289,12 @@ MainWriterPanel.prototype.saveChapter = function( autosaveFlag ) {
 				_this.table_of_contents_object.changeCurrentChapterName( _this.currChapter, title );
 	
 			},
-	        fail:function(response){
-	        	var message = jQuery.parseJSON( response.responseText );
+	        error:function(response){
 	        	_this.$panel_container.find(".spinner").remove();
 	        	$("#header1").removeClass("small-spinner");
 	        	_this.$save_button.removeAttr("disabled");
-				alert(message);
+	        	toastr.success('${ _strings.server_error_message }');
+				
 			}			    		
 			
 		});
