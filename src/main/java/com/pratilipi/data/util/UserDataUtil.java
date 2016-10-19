@@ -21,6 +21,7 @@ import com.pratilipi.common.type.UserSignUpSource;
 import com.pratilipi.common.type.UserState;
 import com.pratilipi.common.util.FacebookApi;
 import com.pratilipi.common.util.FirebaseApi;
+import com.pratilipi.common.util.GoogleApi;
 import com.pratilipi.common.util.PasswordUtil;
 import com.pratilipi.common.util.UserAccessUtil;
 import com.pratilipi.data.DataAccessor;
@@ -358,52 +359,48 @@ public class UserDataUtil {
 
 	}
 
-	public static UserData loginUser( String fbUserAccessToken, UserSignUpSource signUpSource )
-			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
-		
-		UserData fbUserData = FacebookApi.getUserData( fbUserAccessToken );
+	private static UserData processFederatedLoginData( UserData apiUserData, User user, UserSignUpSource signUpSource ) 
+			throws InsufficientAccessException {
 
-		boolean isNew = false;
-		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		User user = dataAccessor.getUserByFacebookId( fbUserData.getFacebookId() );
+		boolean isNew = false;
 
-		// * Users having Facebook Id can never be in GUEST or REFERRAL state.
+		// * Users having Facebook or google Id can never be in GUEST or REFERRAL state.
 		// * No action required for REGISTERED or ACTIVE users.
-		
-		if( user == null || user.getState() == UserState.DELETED ) {
-			
-			if( fbUserData.getEmail() != null )
-				user = dataAccessor.getUserByEmail( fbUserData.getEmail() );
-			
+
+		if( user == null ) {
+
+			if( apiUserData.getEmail() != null )
+				user = dataAccessor.getUserByEmail( apiUserData.getEmail() );
+
 			Gson gson = new Gson();
-			
+
 			AuditLog auditLog = dataAccessor.newAuditLog();
 			auditLog.setAccessId( AccessTokenFilter.getAccessToken().getId() );
 
 			if( user == null || user.getState() == UserState.DELETED ) {
-				
+
 				user = dataAccessor.newUser();
-				
+
 				auditLog.setAccessType( AccessType.USER_ADD );
 				auditLog.setEventDataOld( gson.toJson( user ) );
-				
-				user.setEmail( fbUserData.getEmail() );
-				user.setState( UserState.ACTIVE ); // Counting on Facebook for e-mail/user verification
+
+				user.setEmail( apiUserData.getEmail() );
+				user.setState( UserState.ACTIVE ); // Counting on Facebook / google for e-mail/user verification
 				user.setSignUpDate( new Date() );
 				user.setSignUpSource( signUpSource );
-				
+
 				isNew = true;
-				
+
 			} else if( user.getState() == UserState.REFERRAL ) {
-				
+
 				auditLog.setAccessType( AccessType.USER_ADD );
 				auditLog.setEventDataOld( gson.toJson( user ) );
-				
-				user.setState( UserState.ACTIVE ); // Counting on Facebook for e-mail/user verification
+
+				user.setState( UserState.ACTIVE ); // Counting on Facebook / google for e-mail/user verification
 				user.setSignUpDate( new Date() );
 				user.setSignUpSource( signUpSource );
-				
+
 				isNew = true;
 
 			} else if( user.getState() == UserState.REGISTERED ) {
@@ -411,40 +408,70 @@ public class UserDataUtil {
 				auditLog.setAccessType( AccessType.USER_UPDATE );
 				auditLog.setEventDataOld( gson.toJson( user ) );
 
-				user.setState( UserState.ACTIVE ); // Counting on Facebook for e-mail/user verification
+				user.setState( UserState.ACTIVE ); // Counting on Facebook / google for e-mail/user verification
+				user.setLastUpdated( new Date() );
 
 			} else { // user.getState() == UserState.ACTIVE || user.getState() == UserState.BLOCKED
-				
+
 				auditLog.setAccessType( AccessType.USER_UPDATE );
 				auditLog.setEventDataOld( gson.toJson( user ) );
 
+				user.setLastUpdated( new Date() );
+
 			}
-			
-			user.setFacebookId( fbUserData.getFacebookId() );
-			
+
+			if( apiUserData.getFacebookId() != null )
+				user.setFacebookId( apiUserData.getFacebookId() );
+
+			if( apiUserData.getGoogleId() != null )
+				user.setGoogleId( apiUserData.getGoogleId() );
+
 			auditLog.setEventDataNew( gson.toJson( user ) );
 
 			user = dataAccessor.createOrUpdateUser( user, auditLog );
-		
+
 		}
-		
-		
+
+
 		if( user.getState() == UserState.BLOCKED )
 			throw new InsufficientAccessException( GenericRequest.ERR_ACCOUNT_BLOCKED );
 
-		
+
 		_loginUser( AccessTokenFilter.getAccessToken(), user );
-		
-		
+
+
 		UserData userData = createUserData( user );
 		if( isNew ) {
-			userData.setFirstName( fbUserData.getFirstName() );
-			userData.setLastName( fbUserData.getLastName() );
-			userData.setGender( fbUserData.getGender() );
-			userData.setDateOfBirth( fbUserData.getDateOfBirth() );
+			userData.setFirstName( apiUserData.getFirstName() );
+			userData.setLastName( apiUserData.getLastName() );
+			userData.setGender( apiUserData.getGender() );
+			userData.setDateOfBirth( apiUserData.getDateOfBirth() );
 		}
+
 		return userData;
-		
+
+	}
+
+	public static UserData loginUserWithFacebook( String fbUserAccessToken, UserSignUpSource signUpSource )
+			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
+
+		UserData fbUserData = FacebookApi.getUserData( fbUserAccessToken );
+
+		return processFederatedLoginData( fbUserData, 
+						DataAccessorFactory.getDataAccessor().getUserByFacebookId( fbUserData.getFacebookId() ), 
+						signUpSource );
+
+	}
+	
+	public static UserData loginUserWithGoogle( String googleIdToken, UserSignUpSource signUpSource )
+			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
+
+		UserData googleUserData = GoogleApi.getUserData( googleIdToken );
+
+		return processFederatedLoginData( googleUserData, 
+						DataAccessorFactory.getDataAccessor().getUserByFacebookId( googleUserData.getFacebookId() ), 
+						signUpSource );
+
 	}
 	
 	private static void _loginUser( AccessToken accessToken, User user ) {
