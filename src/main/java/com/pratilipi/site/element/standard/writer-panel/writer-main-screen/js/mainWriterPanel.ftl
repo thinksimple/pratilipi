@@ -115,6 +115,7 @@ MainWriterPanel.prototype.initializeGlobalVariables = function() {
 	else {
 		this.currChapter = 0;	
 	}	
+	this.lastSavedContent = "";
 };
 
 MainWriterPanel.prototype.initializeData = function() {
@@ -168,6 +169,7 @@ MainWriterPanel.prototype.getChapter = function( chapterNum ) {
 			_this.populateContent( parsed_data );
 			_this.pagination_object.setProgressPage();
 			_this.editor_object.resetExecCommandIcons();
+			_this.lastSavedContent = parsed_data.content;
 		},
         fail:function(response){
         	var message = jQuery.parseJSON( response.responseText );
@@ -198,6 +200,7 @@ MainWriterPanel.prototype.addNewChapter = function( chapterNum ) {
         	/* increase current chapter and reset */ 
 			_this.currChapter++;
 			_this.resetContent();
+			_this.lastSavedContent = "";
 			
 		},
         fail:function(response){
@@ -286,6 +289,7 @@ MainWriterPanel.prototype.saveChapter = function( autosaveFlag ) {
 					toastr.success('${ _strings.writer_changes_saved }');
 				}	
 				var title = ajaxData.chapterTitle;
+				_this.lastSavedContent = ajaxData.content;
 				_this.table_of_contents_object.changeCurrentChapterName( _this.currChapter, title );
 	
 			},
@@ -293,7 +297,9 @@ MainWriterPanel.prototype.saveChapter = function( autosaveFlag ) {
 	        	_this.$panel_container.find(".spinner").remove();
 	        	$("#header1").removeClass("small-spinner");
 	        	_this.$save_button.removeAttr("disabled");
-	        	toastr.success('${ _strings.server_error_message }');
+	        	if( !autosaveFlag ) {
+	        		toastr.success('${ _strings.server_error_message }');
+	        	}	
 				
 			}			    		
 			
@@ -325,8 +331,10 @@ MainWriterPanel.prototype.activateRegularAutosaveCalls = function() {
 	                break;
 	            case "focus":
                 	_this.autosaveIntervalId = setInterval(function () {
-				     	_this.saveChapter( true );
-				 	}, 60000);
+                		if( _this.lastSavedContent != _this.content_object.getContent()  ) {
+				     		_this.saveChapter( true );
+				     	}
+				 	}, 10000);
 	                break;
 	        }
 	    }
