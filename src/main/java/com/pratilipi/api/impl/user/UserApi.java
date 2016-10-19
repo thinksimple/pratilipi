@@ -111,7 +111,7 @@ public class UserApi extends GenericApi {
 		public Response( UserData userData, Class<? extends GenericApi> clazz ) {
 			
 			if( clazz == UserApi.class
-					|| clazz == UserLoginApi.class || clazz == UserLoginFacebookApi.class
+					|| clazz == UserLoginApi.class || clazz == UserLoginFacebookApi.class || clazz == UserLoginGoogleApi.class
 					|| clazz == UserLogoutApi.class
 					|| clazz == UserRegisterApi.class
 					|| clazz == UserPasswordUpdateApi.class

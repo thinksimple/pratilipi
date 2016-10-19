@@ -24,17 +24,18 @@ import com.pratilipi.api.impl.mailinglist.MailingListSubscribeApi;
 import com.pratilipi.api.impl.notification.NotificationApi;
 import com.pratilipi.api.impl.notification.NotificationListApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiApi;
-import com.pratilipi.api.impl.pratilipi.PratilipiContentChapterAddApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentApi;
+import com.pratilipi.api.impl.pratilipi.PratilipiContentChapterAddApi;
+import com.pratilipi.api.impl.pratilipi.PratilipiContentChapterDeleteApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentImageApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentIndexApi;
-import com.pratilipi.api.impl.pratilipi.PratilipiContentChapterDeleteApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiCoverApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiListApi;
 import com.pratilipi.api.impl.user.UserApi;
 import com.pratilipi.api.impl.user.UserEmailApi;
 import com.pratilipi.api.impl.user.UserLoginApi;
 import com.pratilipi.api.impl.user.UserLoginFacebookApi;
+import com.pratilipi.api.impl.user.UserLoginGoogleApi;
 import com.pratilipi.api.impl.user.UserLogoutApi;
 import com.pratilipi.api.impl.user.UserPasswordUpdateApi;
 import com.pratilipi.api.impl.user.UserRegisterApi;
@@ -61,6 +62,7 @@ public class ApiService extends GenericService {
 		
 		ApiRegistry.register( UserLoginApi.class );					// *.pratilipi.com
 		ApiRegistry.register( UserLoginFacebookApi.class );			// *.pratilipi.com
+		ApiRegistry.register( UserLoginGoogleApi.class );			// *.pratilipi.com
 		ApiRegistry.register( UserEmailApi.class );					// *.pratilipi.com
 		ApiRegistry.register( UserLogoutApi.class );				// *.pratilipi.com
 		ApiRegistry.register( UserRegisterApi.class );				// *.pratilipi.com
