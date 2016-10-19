@@ -104,7 +104,7 @@
 
 			_handleAjaxPostError: function( event ) {
 				this.requestOnFlight = false;
-				alert( event.detail.request.xhr.response.message );
+				alert( event.detail.request.xhr.response.googleIdToken != null ? event.detail.request.xhr.response.googleIdToken : event.detail.request.xhr.response.message );
 			}
 
 		});

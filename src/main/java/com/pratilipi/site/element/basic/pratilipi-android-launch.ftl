@@ -5,7 +5,7 @@
 		<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 	</button>
 	<div style="padding: 8px 20px; width: 95%; width: calc(100% - 32px); display: flex;" onclick="ga( 'send', 'event', 'android_banner', 'banner_click', 'android_registration' ); window.open('/android-app-registration');">
-		<img style="width: 40px; height: 40px; margin-right: 12px; align-self: center;" src="http://0.ptlp.co/resource-all/home-page/google_playstore.png"/>
+		<img style="max-width: 40px; max-height: 40px; margin-right: 12px; align-self: center;" src="http://0.ptlp.co/resource-all/home-page/google_playstore.png"/>
 		<span style="font-size: 13px; font-weight: 400; align-self: center;">${ _strings.android_banner_1 }</span>
 	</div>
 </div>
