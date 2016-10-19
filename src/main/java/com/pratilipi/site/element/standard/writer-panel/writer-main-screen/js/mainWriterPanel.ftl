@@ -110,7 +110,7 @@ MainWriterPanel.prototype.initializeGlobalVariables = function() {
 	var indexJson = ${ indexJson };
 	if ( indexJson.index.length ) {
 		this.index =  indexJson.index ;
-		var curr_page_cookie = getCookie( "writer_current_page_${ pratilipiId }" );
+		var curr_page_cookie = getCookie( "writer_current_page_${ pratilipiId?c }" );
 		if( curr_page_cookie ) {
 			this.currChapter = parseInt( curr_page_cookie, 10 );
 		}
@@ -176,7 +176,7 @@ MainWriterPanel.prototype.getChapter = function( chapterNum ) {
 			_this.pagination_object.setProgressPage();
 			_this.editor_object.resetExecCommandIcons();
 			_this.lastSavedContent = parsed_data.content;
-			setCookie( "writer_current_page_${ pratilipiId }", _this.currChapter, 15, "/pratilipi-write");
+			setCookie( "writer_current_page_${ pratilipiId?c }", _this.currChapter, 15, "/pratilipi-write");
 		},
         fail:function(response){
         	var message = jQuery.parseJSON( response.responseText );
@@ -208,7 +208,7 @@ MainWriterPanel.prototype.addNewChapter = function( chapterNum ) {
 			_this.currChapter++;
 			_this.resetContent();
 			_this.lastSavedContent = "";
-			setCookie( "writer_current_page_${ pratilipiId }", _this.currChapter, 15, "/pratilipi-write");			
+			setCookie( "writer_current_page_${ pratilipiId?c }", _this.currChapter, 15, "/pratilipi-write");			
 		},
         fail:function(response){
         	var message = jQuery.parseJSON( response.responseText );
