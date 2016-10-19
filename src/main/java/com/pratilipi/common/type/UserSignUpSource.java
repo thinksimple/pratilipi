@@ -12,6 +12,7 @@ public enum UserSignUpSource {
 	// Mark-6/6+
 	WEBSITE_M6,
 	WEBSITE_M6_FACEBOOK,
+	WEBSITE_M6_GOOGLE,
 	@Deprecated
 	WEBSITE_M6_TAMIL,
 	@Deprecated

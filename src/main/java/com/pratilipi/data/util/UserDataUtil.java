@@ -86,6 +86,8 @@ public class UserDataUtil {
 			
 			if( isFbLogin )
 				return UserSignUpSource.WEBSITE_M6_FACEBOOK;
+			else if( isGpLogin )
+				return UserSignUpSource.WEBSITE_M6_GOOGLE;
 			else
 				return UserSignUpSource.WEBSITE_M6;
 			
