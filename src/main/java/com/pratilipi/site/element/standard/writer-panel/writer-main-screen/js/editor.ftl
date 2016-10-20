@@ -241,6 +241,9 @@ Editor.prototype.addImageListener = function() {
 		                var image_name = parsed_data.name;
 		                var $delete_icon = '<img class="show-cursor" src="http://0.ptlp.co/resource-all/icon/svg/trash.svg" data-behaviour="remove-image">';
 		                var image_url = "/api/pratilipi/content/image?pratilipiId=${ pratilipiId?c }&name=" + image_name;
+		                if( isMobile() ) {
+		                	image_url += "&width=240";
+		                }
 		                $img.attr( "src", image_url ).attr( "name", image_name ).removeClass("blur-image").attr({
 							"tabindex": "-1",
 							'data-toggle': "popover",

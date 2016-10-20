@@ -63,16 +63,17 @@ Pagination.prototype.attachChapterInputListener = function() {
 
 Pagination.prototype.setProgressPage = function() {
 	this.parent_object.table_of_contents_object.setCurrentChapterActive();
+
 	if( this.parent_object.index.length == 1 ) {
 		this.$pagination_container.hide();
 	}
 	
 	else {
 		this.$pagination_container.show();
-		this.setCurrentPageNo();
-		this.setTotalPageNo();
-		this.setProgressBar();
 	}
+	this.setCurrentPageNo();
+	this.setTotalPageNo();
+	this.setProgressBar();
 };
 
 Pagination.prototype.setCurrentPageNo = function() {
