@@ -69,6 +69,9 @@ html, body {
    outline: 0 none;
 
 }
+#toc_button {
+	margin-top: 4px; 
+}
 .open #toc_button {
     border-radius: 4px 4px 0 0;
 }        
@@ -247,7 +250,7 @@ div.righttip div:before{
 }
 @media only screen and (max-width: 600px) {
     .small-screen-hidden {
-        display: none;
+        display: none !important;
     }
     #editor {
         padding: 2px 0 0 0;
@@ -259,10 +262,6 @@ div.righttip div:before{
         width: 100% !important;
         padding: 7px 0 !important;
     }  
-    #toc_button {
-        padding-left: 0;
-        padding-right: 0;
-    }
     .editor-action {
         width: 9% !important;
     }
@@ -280,6 +279,9 @@ div.righttip div:before{
     .big-screen-hidden {
         display: none;
     }
+    #toc_button {
+    	min-width:230px;
+    }	
 }  
 
 /*media queries for header and editor on being scrolled*/

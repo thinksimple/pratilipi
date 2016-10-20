@@ -7,10 +7,10 @@
 				</a>
 				<div class="dropdown" id="toc_container" style="display: inline;">
 					<div class="dropdown-toggle" id="table_of_contents_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="display: inline;">
-						<button class="btn btn-default white-space-normal" id="toc_button" style="margin-top: 4px; min-width:230px">
+						<button class="btn btn-default white-space-normal" id="toc_button" style="">
 							<img class="pull-left" style="width: 28px; height: 20px;" src="http://0.ptlp.co/resource-all/icon/svg/list2.svg">
-							<h4 id="book_name_toc" style="margin-top: 10px; margin-bottom: 5px; display: inline;">${ pratilipi.getTitle() }</h4>
-							<img class="pull-right" style="width: 28px; height: 20px;" src="http://0.ptlp.co/resource-all/icon/svg/angle-down.svg" alt="${ pratilipi.getTitle() }">
+							<h4 class="small-screen-hidden" id="book_name_toc" style="margin-top: 10px; margin-bottom: 5px; display: inline;">${ pratilipi.getTitle() }</h4>
+							<img class="small-screen-hidden pull-right" style="width: 28px; height: 20px;" src="http://0.ptlp.co/resource-all/icon/svg/angle-down.svg" alt="${ pratilipi.getTitle() }">
 						</button>
 					</div> 
 					<ul class="dropdown-menu" aria-labelledby="table_of_contents_dropdown" style="min-width: 230px; margin-top: 13px; border-radius: 0 0 4px 4px;height: auto;overflow-x: hidden;max-height: calc(100vh - 106px);max-height: -o-calc(100vh - 106px);max-height: -webkit-calc(100vh - 106px);max-height: -moz-calc(100vh - 106px);">
@@ -24,17 +24,17 @@
 				</div>
 				<div class="pull-right">
 					<button class="pratilipi-red-background-button" style="padding: 6px 12px; margin-right: 0px; border-radius: 4px;" data-toggle="modal" data-target="#publishModal" data-behaviour="publish_button">${ _strings.writer_finish }</button>
-					<button class="btn btn-default small-screen-hidden" style="margin: 0 5px 0 10px; font-size: 13px;" data-behaviour="save_button">${ _strings.writer_save }</button>
-					<a href="${ pratilipi.getReadPageUrl() }" target="_blank" class="btn btn-default small-screen-hidden" style="margin: 0 0px 0 5px; font-size: 13px;" data-behaviour="preview_button">${ _strings.writer_preview }</a>
+					<button class="btn btn-default small-screen-hidden" style="margin: 0 5px 0 10px; font-size: 13px;" data-behaviour="save_button_desktop">${ _strings.writer_save }</button>
+					<a href="${ pratilipi.getReadPageUrl() }" target="_blank" class="btn btn-default small-screen-hidden" style="margin: 0 0px 0 5px; font-size: 13px;" data-behaviour="preview_button_desktop">${ _strings.writer_preview }</a>
 					<img 	style="width: 48px; height: 25px; margin-right: -12px;" 
 							src="http://0.ptlp.co/resource-all/icon/svg/dots-three-vertical.svg" 
-							class="big-screen-hidden"
+							class="big-screen-hidden mobile_options_container"
 							data-container="body" 
 							data-toggle="popover"
 							data-content="
-								<a href='${ pratilipi.getReadPageUrl() }' target='_blank' class='pratilipi-red'>${ _strings.writer_preview }</a>
+								<a href='${ pratilipi.getReadPageUrl() }' target='_blank' class='pratilipi-red' data-behaviour='preview_button_mobile'>${ _strings.writer_preview }</a>
 								<hr style='margin: 1px 0;'>
-								<a data-behaviour='save_button' class='pratilipi-red'>${ _strings.writer_save }</a>" 
+								<a data-behaviour='save_button_mobile' class='pratilipi-red'>${ _strings.writer_save }</a>" 
 							data-html="true" 
 							data-placement="bottom">
 				</div>

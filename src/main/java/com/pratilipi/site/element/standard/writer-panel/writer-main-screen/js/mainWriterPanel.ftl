@@ -1,6 +1,6 @@
 var MainWriterPanel = function() {
-	this.$save_button = $( "[data-behaviour='save_button']" );
-	this.$preview_button = $( "[data-behaviour='preview_button']" );
+	this.$save_button = $( "[data-behaviour='save_button_desktop']" );
+	this.$preview_button = $( "[data-behaviour='preview_button_desktop']" );
 	this.$publish_button = $( "[data-behaviour='publish_button']" );
 	this.$back_button = $( "[data-behaviour='back_button']" );
 };
@@ -145,6 +145,18 @@ MainWriterPanel.prototype.attachActionButtonListeners = function() {
 		_this.$save_button.attr('disabled', 'disabled');
 		_this.saveChapter();
 	} );
+	
+	if( isMobile() ) {
+		$(document).on( "click", "a[data-behaviour='save_button_mobile']", function( event ) {
+	    	event.preventDefault();
+	    	$("#header1").addClass("small-spinner");
+	    	$(".mobile_options_container").popover('hide');
+	    	_this.saveChapter();
+		});
+		$(document).on( "click", "[data-behaviour='preview_button_mobile']", function( event ) {
+	    	_this.saveChapter();
+		});		
+	}
 	
 	this.$publish_button.on('click', function() {
 		_this.saveChapter( true );
