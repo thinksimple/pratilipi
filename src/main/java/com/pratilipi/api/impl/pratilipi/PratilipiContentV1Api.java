@@ -14,25 +14,26 @@ import com.pratilipi.common.type.PratilipiContentType;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.PratilipiContentDoc;
+import com.pratilipi.data.util.PratilipiDataUtil;
 import com.pratilipi.data.util.PratilipiDocUtil;
 import com.pratilipi.filter.UxModeFilter;
 import com.pratilipi.taskqueue.Task;
 import com.pratilipi.taskqueue.TaskQueueFactory;
 
 @SuppressWarnings( "serial" )
-@Bind( uri = "/pratilipi/content" )
-public class PratilipiContentApi extends GenericApi {
+@Bind( uri = "/pratilipi/content", ver = "1" )
+public class PratilipiContentV1Api extends GenericApi {
 
 	public static class GetRequest extends GenericRequest {
 
 		@Validate( required = true, requiredErrMsg = ERR_PRATILIPI_ID_REQUIRED, minLong = 1L )
-		private Long pratilipiId;
+		protected Long pratilipiId;
 
 		@Validate( minInt = 1 )
-		private Integer chapterNo;
+		protected Integer chapterNo;
 
 		@Validate( minInt = 1 )
-		private Integer pageNo;
+		protected Integer pageNo;
 
 
  		public void setPratilipiId( Long pratilipiId ) {
@@ -78,7 +79,7 @@ public class PratilipiContentApi extends GenericApi {
 
 		private GetResponse() {}
 
-		public GetResponse( Long pratilipiId, Integer chapterNo, String chapterTitle, Integer pageNo, Object content ) {
+		protected GetResponse( Long pratilipiId, Integer chapterNo, String chapterTitle, Integer pageNo, Object content ) {
 			this.pratilipiId = pratilipiId;
 			this.chapterNo = chapterNo;
 			this.chapterTitle = chapterTitle;
@@ -124,45 +125,62 @@ public class PratilipiContentApi extends GenericApi {
 			if( request.chapterNo == null )
 				request.chapterNo = 1;
 		
-			Object content = PratilipiDocUtil.getContent(
-					request.pratilipiId,
-					request.chapterNo,
-					request.pageNo );
-
-			
-			if( content == null ) {
+			if( pratilipi.isOldContent() ) {
 				
+				String content = PratilipiDataUtil.getPratilipiContent(
+						request.pratilipiId,
+						request.chapterNo );
+	
 				return new GetResponse(
 						request.pratilipiId,
 						request.chapterNo,
 						null,
 						request.pageNo,
-						"" );
-				
-			} else if( request.pageNo != null ) {
-				
-				PratilipiContentDoc.Page page = (PratilipiContentDoc.Page) content;
-				return new GetResponse(
-						request.pratilipiId,
-						request.chapterNo,
-						null,
-						request.pageNo,
-						page.getHtml() );
+						content );
 
-			} else {
-				
-				PratilipiContentDoc.Chapter chapter = (PratilipiContentDoc.Chapter) content;
-				
-				String contentHtml = "";
-				for( PratilipiContentDoc.Page page : chapter.getPageList() )
-					contentHtml += page.getHtml();
-				
-				return new GetResponse(
+			} else { // New Content
+
+				Object content = PratilipiDocUtil.getContent(
 						request.pratilipiId,
 						request.chapterNo,
-						chapter.getTitle(),
-						request.pageNo,
-						contentHtml );
+						request.pageNo );
+
+				
+				if( content == null ) {
+					
+					return new GetResponse(
+							request.pratilipiId,
+							request.chapterNo,
+							null,
+							request.pageNo,
+							"" );
+					
+				} else if( request.pageNo != null ) {
+					
+					PratilipiContentDoc.Page page = (PratilipiContentDoc.Page) content;
+					return new GetResponse(
+							request.pratilipiId,
+							request.chapterNo,
+							null,
+							request.pageNo,
+							page.getHtml() );
+
+				} else {
+					
+					PratilipiContentDoc.Chapter chapter = (PratilipiContentDoc.Chapter) content;
+					
+					String contentHtml = "";
+					for( PratilipiContentDoc.Page page : chapter.getPageList() )
+						contentHtml += page.getHtml();
+					
+					return new GetResponse(
+							request.pratilipiId,
+							request.chapterNo,
+							chapter.getTitle(),
+							request.pageNo,
+							contentHtml );
+					
+				}
 				
 			}
 
