@@ -1086,7 +1086,6 @@ public class PratilipiSite extends HttpServlet {
 
 	}
 	
-	@SuppressWarnings("deprecation")
 	public Map<String, Object> createDataModelForReadPage( Long pratilipiId, Integer pageNo, boolean basicMode )
 			throws InvalidArgumentException, UnexpectedServerException, InsufficientAccessException {
 
@@ -1101,20 +1100,13 @@ public class PratilipiSite extends HttpServlet {
 		if( pratilipi.getPageCount() > 0 && pageNo > pratilipi.getPageCount() )
 			pageNo = pratilipi.getPageCount();
 		
-		Integer pageCount = null;
-		String indexJson = null;
-		if( pratilipi.isOldContent() ) {
-			pageCount = pratilipi.getPageCount();
-			indexJson = pratilipi.getIndex();
-		} else {
-			PratilipiContentIndexApi.GetRequest indexReq = new PratilipiContentIndexApi.GetRequest();
-			indexReq.setPratilipiId( pratilipiId );
-			PratilipiContentIndexApi.Response indexRes = ApiRegistry
-														.getApi( PratilipiContentIndexApi.class )
-														.getIndex( indexReq ); 
-			indexJson = indexRes.getIndex().toString();
-			pageCount = indexRes.getIndex().size();
-		}
+		PratilipiContentIndexApi.GetRequest indexReq = new PratilipiContentIndexApi.GetRequest();
+		indexReq.setPratilipiId( pratilipiId );
+		PratilipiContentIndexApi.Response indexRes = ApiRegistry
+													.getApi( PratilipiContentIndexApi.class )
+													.getIndex( indexReq ); 
+		String indexJson = indexRes.getIndex().toString();
+		Integer pageCount = indexRes.getIndex().size();
 
 		Object content = null;
 
