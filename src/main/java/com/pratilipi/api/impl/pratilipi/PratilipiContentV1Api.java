@@ -202,7 +202,7 @@ public class PratilipiContentV1Api extends GenericApi {
 		Task task = TaskQueueFactory.newTask()
 				.setUrl( "/pratilipi/process" )
 				.addParam( "pratilipiId", request.pratilipiId.toString() )
-				.addParam( "processContent", "true" );
+				.addParam( "processContentDoc", "true" );
 		TaskQueueFactory.getPratilipiTaskQueue().add( task );
 
 		return new GenericResponse();
