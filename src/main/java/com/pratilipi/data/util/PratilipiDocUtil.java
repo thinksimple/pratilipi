@@ -476,7 +476,7 @@ public class PratilipiDocUtil {
 		
 			BlobEntry blobEntry = blobAccessor.getBlob( "pratilipi-content/pratilipi/" + pratilipiId );
 			if( blobEntry == null )
-				throw new UnexpectedServerException( "Blob entry is null !" );
+				return;
 			String contentHtml = new String( blobEntry.getData(), Charset.forName( "UTF-8" ) );
 			
 			List<Object[]> pageletList = _createPageletList( pratilipi, Jsoup.parse( contentHtml ).body() );
@@ -505,6 +505,15 @@ public class PratilipiDocUtil {
 			for( int i = 1; i <= pratilipi.getPageCount(); i++ ) {
 				
 				BlobEntry blobEntry = blobAccessor.getBlob( "pratilipi/" + pratilipiId + "/images/" + i );
+				
+				if( pratilipi.getId() == 5639838220943360L && i <= 5 )
+					continue; // Skipping first 5 pages as per Shally's request
+
+				if( blobEntry == null && (
+						pratilipi.getId() == 5385510763626496L
+						|| pratilipi.getId() == 5768181499035648L
+						|| pratilipi.getId() == 5486454792781824L ) )
+					continue; // Known issues. Ignoring this just to keep task queue clear
 				
 				JsonObject imgData = new JsonObject();
 				imgData.addProperty( "name", i + "" );
@@ -666,7 +675,8 @@ public class PratilipiDocUtil {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-
+		
+		
 		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
 		PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( pratilipiId );
 		PratilipiMetaDoc pmDoc = docAccessor.getPratilipiMetaDoc( pratilipiId );
