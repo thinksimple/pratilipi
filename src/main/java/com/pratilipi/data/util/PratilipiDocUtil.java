@@ -587,6 +587,8 @@ public class PratilipiDocUtil {
 							blobAccessor.createOrUpdateBlob( blobEntry );
 						}
 					}
+					if( blobEntry == null )
+						continue;
 				} else if( imageUrl.startsWith( "http" ) ) {
 					imageName = imageUrl.replaceAll( "[:/.?=&+]+", "_" );
 					String fileName = _createImageFullName( pratilipi.getId(), imageName );
