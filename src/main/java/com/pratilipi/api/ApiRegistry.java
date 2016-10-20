@@ -24,7 +24,7 @@ public final class ApiRegistry {
 			try {
 				GenericApi api = clazz.newInstance();
 				api.init();
-				uriServletMap.put( bind.uri(), api );
+				uriServletMap.put( bind.uri() + "?" + bind.ver(), api );
 				classServletMap.put( clazz, api );
 			} catch( InstantiationException | IllegalAccessException | ServletException e ) {
 				logger.log( Level.SEVERE, "API registration failed.", e );
@@ -33,7 +33,11 @@ public final class ApiRegistry {
 	}
 	
 	public static GenericApi getApi( String uri ) {
-		return uriServletMap.get( uri );
+		return getApi( uri, "1" );
+	}
+	
+	public static GenericApi getApi( String uri, String version ) {
+		return uriServletMap.get( uri + "?" + version );
 	}
 	
 	@SuppressWarnings("unchecked")

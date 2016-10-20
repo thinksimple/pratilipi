@@ -2,6 +2,8 @@ package com.pratilipi.common.type;
 
 public enum RequestParameter {
 	
+	API_VERSION( "_apiVer" ),
+	
 	ACCESS_TOKEN ( "accessToken" ),
 	LIST_PAGE_NUMBER( "page" ),
 	READER_PAGE_NUMBER( "pageNo" ),

@@ -11,4 +11,6 @@ public @interface Bind {
 	
 	public String uri() default "";
 	
+	public String ver() default "1";
+	
 }

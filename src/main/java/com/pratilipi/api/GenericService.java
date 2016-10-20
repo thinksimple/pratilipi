@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.pratilipi.common.type.RequestParameter;
+
 @SuppressWarnings("serial")
 public abstract class GenericService extends HttpServlet {
 	
@@ -27,7 +29,11 @@ public abstract class GenericService extends HttpServlet {
 		if( requestUri.isEmpty() )
 			requestUri = "/";
 
-		GenericApi api = ApiRegistry.getApi( requestUri );
+		String apiVer = request.getParameter( RequestParameter.API_VERSION.getName() );
+		
+		GenericApi api = apiVer == null
+				? ApiRegistry.getApi( requestUri )
+				: ApiRegistry.getApi( requestUri, apiVer );
 		
 		if( api == null )
 			super.service( request, response );
