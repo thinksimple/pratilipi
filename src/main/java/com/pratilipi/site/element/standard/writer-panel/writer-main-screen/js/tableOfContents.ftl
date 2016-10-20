@@ -3,7 +3,12 @@ var TableOfContents = function(toc_container, pagination_object, parent_object) 
 	this.pagination_object = pagination_object;
     this.toc_container = toc_container;
     this.$dropdown_menu_list = toc_container.find(".dropdown-menu");
-    this.$book_name_container = toc_container.find("#book_name_toc");
+    if( isMobile() ) {
+    	this.$book_name_container = toc_container.find("[data-behaviour=edit-title] strong");
+    }
+    else {
+    	this.$book_name_container = toc_container.find("#book_name_toc");
+    }
     this.$chapters_separator_second = this.$dropdown_menu_list.find("[data-behaviour=chapters_separator_second]");
     this.chapters = [];
     this.pratilipi_data = ${ pratilipiJson };

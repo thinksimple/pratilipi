@@ -236,6 +236,10 @@ div.righttip div:before{
     width:30px; 
     height:20px;
 }
+#editor a:focus, #editor a:hover {
+    color: #23527c;
+    text-decoration: none;
+}
 @media only screen and (max-width: 992px) {
     .book-name {
         text-align: left;
