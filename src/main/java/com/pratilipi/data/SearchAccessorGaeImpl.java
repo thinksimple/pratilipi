@@ -239,27 +239,27 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 				
 				.addField( Field.newBuilder().setName( "summary" ).setHTML( pratilipiData.getSummary() ) );
 
-		if( pratilipiData.getType() != null )
-			docBuilder.addField( Field.newBuilder().setName( "docType" ).setAtom( "Pratilipi-" + pratilipiData.getType().getName() ) );
+		if( pratilipiData.getType() != null ) {
+			docBuilder.addField( Field.newBuilder().setName( "docType" ).setAtom( "Pratilipi-" + pratilipiData.getType().getName() ) )
+					// 4x weightage to PratilipiType
+					.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getName() ) )
+					.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getName() ) )
+					.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getName() ) )
+					.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getName() ) )
+					.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getNamePlural() ) )
+					.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getNamePlural() ) )
+					.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getNamePlural() ) )
+					.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getNamePlural() ) )
+					
+					.addField( Field.newBuilder().setName( "readCount" ).setNumber( pratilipiData.getReadCount() ) )
+					.addField( Field.newBuilder().setName( "relevance" ).setNumber( pratilipiData.getRelevance() ) );
+		}
 		
 		if( keywords != null && ! keywords.isEmpty() )
 			docBuilder.addField( Field.newBuilder().setName( "keywords" ).setText(
 					keywords.length() > 262144 ? keywords.substring( 0, 262144 ) : keywords // 1048576/4 = 262144
 			) );
 				
-				// 4x weightage to PratilipiType
-		docBuilder.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getName() ) )
-				.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getName() ) )
-				.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getName() ) )
-				.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getName() ) )
-				.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getNamePlural() ) )
-				.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getNamePlural() ) )
-				.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getNamePlural() ) )
-				.addField( Field.newBuilder().setName( "keyword" ).setAtom( pratilipiData.getType().getNamePlural() ) )
-				
-				.addField( Field.newBuilder().setName( "readCount" ).setNumber( pratilipiData.getReadCount() ) )
-				.addField( Field.newBuilder().setName( "relevance" ).setNumber( pratilipiData.getRelevance() ) );
-		
 		if( pratilipiData.getAuthorId() != null )
 			docBuilder.addField( Field.newBuilder().setName( "author" ).setAtom( pratilipiData.getAuthorId().toString() ) )
 					// 3x weightage to Author Name
