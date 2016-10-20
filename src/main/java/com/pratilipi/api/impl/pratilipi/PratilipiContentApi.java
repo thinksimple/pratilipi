@@ -14,7 +14,6 @@ import com.pratilipi.common.type.PratilipiContentType;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.PratilipiContentDoc;
-import com.pratilipi.data.util.PratilipiDataUtil;
 import com.pratilipi.data.util.PratilipiDocUtil;
 import com.pratilipi.filter.UxModeFilter;
 import com.pratilipi.taskqueue.Task;
@@ -125,62 +124,45 @@ public class PratilipiContentApi extends GenericApi {
 			if( request.chapterNo == null )
 				request.chapterNo = 1;
 		
-			if( pratilipi.isOldContent() ) {
+			Object content = PratilipiDocUtil.getContent(
+					request.pratilipiId,
+					request.chapterNo,
+					request.pageNo );
+
+			
+			if( content == null ) {
 				
-				String content = PratilipiDataUtil.getPratilipiContent(
-						request.pratilipiId,
-						request.chapterNo );
-	
 				return new GetResponse(
 						request.pratilipiId,
 						request.chapterNo,
 						null,
 						request.pageNo,
-						content );
-
-			} else { // New Content
-
-				Object content = PratilipiDocUtil.getContent(
+						"" );
+				
+			} else if( request.pageNo != null ) {
+				
+				PratilipiContentDoc.Page page = (PratilipiContentDoc.Page) content;
+				return new GetResponse(
 						request.pratilipiId,
 						request.chapterNo,
-						request.pageNo );
+						null,
+						request.pageNo,
+						page.getHtml() );
 
+			} else {
 				
-				if( content == null ) {
-					
-					return new GetResponse(
-							request.pratilipiId,
-							request.chapterNo,
-							null,
-							request.pageNo,
-							"" );
-					
-				} else if( request.pageNo != null ) {
-					
-					PratilipiContentDoc.Page page = (PratilipiContentDoc.Page) content;
-					return new GetResponse(
-							request.pratilipiId,
-							request.chapterNo,
-							null,
-							request.pageNo,
-							page.getHtml() );
-
-				} else {
-					
-					PratilipiContentDoc.Chapter chapter = (PratilipiContentDoc.Chapter) content;
-					
-					String contentHtml = "";
-					for( PratilipiContentDoc.Page page : chapter.getPageList() )
-						contentHtml += page.getHtml();
-					
-					return new GetResponse(
-							request.pratilipiId,
-							request.chapterNo,
-							chapter.getTitle(),
-							request.pageNo,
-							contentHtml );
-					
-				}
+				PratilipiContentDoc.Chapter chapter = (PratilipiContentDoc.Chapter) content;
+				
+				String contentHtml = "";
+				for( PratilipiContentDoc.Page page : chapter.getPageList() )
+					contentHtml += page.getHtml();
+				
+				return new GetResponse(
+						request.pratilipiId,
+						request.chapterNo,
+						chapter.getTitle(),
+						request.pageNo,
+						contentHtml );
 				
 			}
 
