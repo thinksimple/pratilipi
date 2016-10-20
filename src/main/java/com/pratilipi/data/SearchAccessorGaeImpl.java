@@ -220,7 +220,6 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 				.setId( docId )
 				.addField( Field.newBuilder().setName( "docId" ).setAtom( pratilipiData.getId().toString() ) )
 				.addField( Field.newBuilder().setName( "docType" ).setAtom( "Pratilipi" ) )
-				.addField( Field.newBuilder().setName( "docType" ).setAtom( "Pratilipi-" + pratilipiData.getType().getName() ) )
 
 				// 2x weightage to Title
 				.addField( Field.newBuilder().setName( "title" ).setText( pratilipiData.getTitle() ) )
@@ -239,7 +238,10 @@ public class SearchAccessorGaeImpl implements SearchAccessor {
 				.addField( Field.newBuilder().setName( "language" ).setText( pratilipiData.getLanguage().getNameEn() ) )
 				
 				.addField( Field.newBuilder().setName( "summary" ).setHTML( pratilipiData.getSummary() ) );
-				
+
+		if( pratilipiData.getType() != null )
+			docBuilder.addField( Field.newBuilder().setName( "docType" ).setAtom( "Pratilipi-" + pratilipiData.getType().getName() ) );
+		
 		if( keywords != null && ! keywords.isEmpty() )
 			docBuilder.addField( Field.newBuilder().setName( "keywords" ).setText(
 					keywords.length() > 262144 ? keywords.substring( 0, 262144 ) : keywords // 1048576/4 = 262144
