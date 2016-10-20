@@ -406,10 +406,10 @@ blockquote {
   position: absolute;
   top: 50%;
   left: 50%;
-  margin-left: -50px;
-  margin-top: -50px;
-  width: 100px;
-  height: 100px;
+  margin-left: -35px;
+  margin-top: -35px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   background-color: #333;
   opacity: 0.6;

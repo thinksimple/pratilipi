@@ -198,6 +198,8 @@ MainWriterPanel.prototype.populateContent = function( parsed_data ) {
 
 MainWriterPanel.prototype.addNewChapter = function( chapterNum ) {
 	var _this = this;
+	var $spinner = $("<div>").addClass("spinner");
+	this.$panel_container.append( $spinner );
 	var ajaxData = { pratilipiId: ${ pratilipiId?c } };
 	if ( chapterNum !== undefined ){
     	ajaxData.chapterNo = chapterNum;   
@@ -218,7 +220,10 @@ MainWriterPanel.prototype.addNewChapter = function( chapterNum ) {
         fail:function(response){
         	var message = jQuery.parseJSON( response.responseText );
 			alert(message);
-		}			    		
+		},
+		complete: function() {
+			$spinner.remove();
+		}					    		
 		
 	});	
 };
