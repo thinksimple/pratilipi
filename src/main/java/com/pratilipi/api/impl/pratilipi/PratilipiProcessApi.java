@@ -225,6 +225,7 @@ public class PratilipiProcessApi extends GenericApi {
 					pratilipiList.remove( i );
 					pratilipiIdList.remove( i );
 					i--;
+					continue;
 				}
 				PratilipiDataUtil.updatePratilipiStats( pratilipi.getId() );
 				if( pratilipi.getAuthorId() != null ) { // Creating tasks to update author entities
