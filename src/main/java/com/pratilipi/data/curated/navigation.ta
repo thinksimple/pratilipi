@@ -1,6 +1,5 @@
 பிரபலமானவை
 /event/memories              ஞாபகம் வருதே        App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "eventId":5115598167080960 }
-/featured                    பரிந்துரை            App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"featured" }
 /new                         புதியவை             App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"new" }
 /most-read                   வாசகர் தேர்வு        App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"most-read" }
 /fiveminstories              ஐந்து நிமிடக்கதைகள்  App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"fiveminstories" } 
