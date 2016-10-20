@@ -582,8 +582,10 @@ public class PratilipiDocUtil {
 						if( pratilipiIdStr.indexOf( '&' ) != -1 )
 							pratilipiIdStr = pratilipiIdStr.substring( 0, pratilipiIdStr.indexOf( '&' ) );
 						blobEntry = blobAccessor.getBlob( "pratilipi-resource/" + pratilipiIdStr + "/" + imageName );
-						blobEntry.setName( fileName );
-						blobAccessor.createOrUpdateBlob( blobEntry );
+						if( blobEntry != null ) {
+							blobEntry.setName( fileName );
+							blobAccessor.createOrUpdateBlob( blobEntry );
+						}
 					}
 				} else if( imageUrl.startsWith( "http" ) ) {
 					imageName = imageUrl.replaceAll( "[:/.?=&+]+", "_" );
