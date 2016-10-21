@@ -182,6 +182,7 @@ MainWriterPanel.prototype.getChapter = function( chapterNum ) {
         data: {
         	pratilipiId: ${ pratilipiId?c },
         	chapterNo: chapterNum,
+        	_apiVer: getUrlParameter( "_apiVer" ) != null ? getUrlParameter( "_apiVer" ) : "2"
         },
         success:function(response){
         	
