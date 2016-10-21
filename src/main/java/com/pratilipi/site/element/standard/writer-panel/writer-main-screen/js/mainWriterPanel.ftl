@@ -301,7 +301,8 @@ MainWriterPanel.prototype.saveChapter = function( autosaveFlag ) {
 	var ajaxData = { pratilipiId: ${ pratilipiId?c },
 					chapterNo: this.currChapter,
 					chapterTitle: this.chapter_name_object.getTitle(),
-					content: this.content_object.getContent()
+					content: this.content_object.getContent(),
+					_apiVer: getUrlParameter( "_apiVer" ) != null ? getUrlParameter( "_apiVer" ) : "2"
 				   };
 	toastr.options = {
 		positionClass: 'toast-top-center',
