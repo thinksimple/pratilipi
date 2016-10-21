@@ -15,8 +15,6 @@
 /horror                      மர்மம் / திகில்       App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"horror" }
 /experience                  அனுபவம்            App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"experience" }
 /cinema                      சினிமா               App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"cinema" }
-/self-help                   சுயமுன்னேற்றம்         App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"self-help" }
-/book-review                 புத்தக விமர்சனம்        App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"book-review" }
 /humour                      நகைச்சுவை         App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"humour" }
 /history                     வரலாறு           App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"history" }
 /others                      மற்றவை           App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"others" }
