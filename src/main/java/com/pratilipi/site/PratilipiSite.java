@@ -1100,14 +1100,21 @@ public class PratilipiSite extends HttpServlet {
 		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
 		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author, false );
 
-		PratilipiContentIndexApi.GetRequest indexReq = new PratilipiContentIndexApi.GetRequest();
-		indexReq.setPratilipiId( pratilipiId );
-		PratilipiContentIndexApi.Response indexRes = ApiRegistry
-													.getApi( PratilipiContentIndexApi.class )
-													.getIndex( indexReq );
+		String indexJson = null;
+		Integer pageCount = null;
 
-		String indexJson = indexRes.getIndex().toString();
-		Integer pageCount = indexRes.getIndex().size() > 0 ? indexRes.getIndex().size() : 1;
+		if( version.equals( "1" ) ) {
+			indexJson = pratilipi.getIndex();
+			pageCount = pratilipi.getPageCount() > 0 ? pratilipi.getPageCount() : 1;
+		} else {
+			PratilipiContentIndexApi.GetRequest indexReq = new PratilipiContentIndexApi.GetRequest();
+			indexReq.setPratilipiId( pratilipiId );
+			PratilipiContentIndexApi.Response indexRes = ApiRegistry
+														.getApi( PratilipiContentIndexApi.class )
+														.getIndex( indexReq );
+			indexJson = indexRes.getIndex().toString();
+			pageCount = indexRes.getIndex().size() > 0 ? indexRes.getIndex().size() : 1;
+		}
 
 		if( pageNo < 1 )
 			pageNo = 1;
