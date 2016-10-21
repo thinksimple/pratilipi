@@ -182,7 +182,7 @@ MainWriterPanel.prototype.getChapter = function( chapterNum ) {
         data: {
         	pratilipiId: ${ pratilipiId?c },
         	chapterNo: chapterNum,
-        	_apiVer: getUrlParameter( "_apiVer" ) != null ? getUrlParameter( "_apiVer" ) : "2"
+        	_apiVer: getUrlParameter( "_apiVer" ) != null ? getUrlParameter( "_apiVer" ) : "1"
         },
         success:function(response){
         	
@@ -297,7 +297,6 @@ MainWriterPanel.prototype.saveChapter = function( autosaveFlag ) {
 	<#-- if( this.content_object.hasEmptyText() ) {
 		this.content_object.wrapInParagraph();
 	} -->
-	this.content_object.changeBrToSpaces();
 	this.content_object.convertTextNodesToParagraphs();
 	this.content_object.checkFirstChild();
 	
@@ -305,7 +304,7 @@ MainWriterPanel.prototype.saveChapter = function( autosaveFlag ) {
 					chapterNo: this.currChapter,
 					chapterTitle: this.chapter_name_object.getTitle(),
 					content: this.content_object.getContent(),
-					_apiVer: getUrlParameter( "_apiVer" ) != null ? getUrlParameter( "_apiVer" ) : "2"
+					_apiVer: getUrlParameter( "_apiVer" ) != null ? getUrlParameter( "_apiVer" ) : "1"
 				   };
 	toastr.options = {
 		positionClass: 'toast-top-center',

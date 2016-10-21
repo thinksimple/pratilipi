@@ -194,10 +194,6 @@ Content.prototype.convertTextNodesToParagraphs = function() {
 	});
 };
 
-Content.prototype.changeBrToSpaces = function() {
-	this.$content_container.find("br").replaceWith("&nbsp;");
-};
-
 Content.prototype.checkFirstChild = function() {
 	<#-- test it properly -->
 	if( !( this.$content_container.children().first().is("p,blockquote,img") ) ) {
