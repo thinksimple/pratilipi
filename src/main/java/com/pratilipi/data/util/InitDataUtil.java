@@ -74,10 +74,9 @@ public class InitDataUtil {
 		
 		
 		initBannerDocs = new InitBannerDoc[] {
-				docAccessor.newInitBannerDoc( "pratilipi-marathi-carousel-29.jpg", null, "/aai-vina-jag-sare" ),
-				docAccessor.newInitBannerDoc( "pratilipi-marathi-carousel-26.jpg", null, "/search?q=poems" ),
-				docAccessor.newInitBannerDoc( "pratilipi-marathi-carousel-27.jpg", null, "/bodhkatha" ),
-				docAccessor.newInitBannerDoc( "pratilipi-marathi-carousel-28.jpg", null, "/events" ),
+				docAccessor.newInitBannerDoc( "pratilipi-marathi-carousel-30.jpg", null, "/diwalichya" ),
+				docAccessor.newInitBannerDoc( "pratilipi-marathi-carousel-31.jpg", null, "/rahasyakatha" ),
+				docAccessor.newInitBannerDoc( "pratilipi-marathi-carousel-32.jpg", null, "/search?q=stories" ),
 		};
 			
 		InitDoc mrInitDoc = docAccessor.newInitDoc();
@@ -86,10 +85,10 @@ public class InitDataUtil {
 		
 		
 		initBannerDocs = new InitBannerDoc[] {
+				docAccessor.newInitBannerDoc( "pratilipi-malayalam-carousel-11.jpg", null, "/society" ),
+				docAccessor.newInitBannerDoc( "pratilipi-malayalam-carousel-12.jpg", null, "/mystery" ),
+				docAccessor.newInitBannerDoc( "pratilipi-malayalam-carousel-13.jpg", null, "/lives" ),
 				docAccessor.newInitBannerDoc( "pratilipi-malayalam-carousel-09.jpg", null, "/event/katha" ),
-				docAccessor.newInitBannerDoc( "pratilipi-malayalam-carousel-10.jpg", null, "/women" ),
-				docAccessor.newInitBannerDoc( "pratilipi-malayalam-carousel-06.jpg", null, "/love" ),
-				docAccessor.newInitBannerDoc( "pratilipi-malayalam-carousel-07.jpg", null, "/memory" ),
 		};
 			
 		InitDoc mlInitDoc = docAccessor.newInitDoc();
@@ -98,10 +97,9 @@ public class InitDataUtil {
 		
 		
 		initBannerDocs = new InitBannerDoc[] {
-				docAccessor.newInitBannerDoc( "pratilipi-bengali-carousel-26.jpg", null, "/bhoutik-galpo" ),
-				docAccessor.newInitBannerDoc( "pratilipi-bengali-carousel-27.jpg", null, "/rahashyogalpo" ),
-				docAccessor.newInitBannerDoc( "pratilipi-bengali-carousel-28.jpg", null, "/aleek-kahini" ),
-				docAccessor.newInitBannerDoc( "pratilipi-bengali-carousel-29.jpg", null, "/events" ),
+				docAccessor.newInitBannerDoc( "pratilipi-bengali-carousel-30.jpg", null, "/diwali-ki-chhutiya" ),
+				docAccessor.newInitBannerDoc( "pratilipi-bengali-carousel-31.jpg", null, "/rahashyogalpo" ),
+				docAccessor.newInitBannerDoc( "pratilipi-bengali-carousel-32.jpg", null, "/premkahini" ),
 		};
 			
 		InitDoc bnInitDoc = docAccessor.newInitDoc();
@@ -110,11 +108,10 @@ public class InitDataUtil {
 		
 		
 		initBannerDocs = new InitBannerDoc[] {
-				docAccessor.newInitBannerDoc( "pratilipi-telugu-carousel-17.jpg", null, "/event/firstlove" ),
-				docAccessor.newInitBannerDoc( "pratilipi-telugu-carousel-16.jpg", null, "/children" ),
-				docAccessor.newInitBannerDoc( "pratilipi-telugu-carousel-10.jpg", null, "/love" ),
-				docAccessor.newInitBannerDoc( "pratilipi-telugu-carousel-14.jpg", null, "/social" ),
-				docAccessor.newInitBannerDoc( "pratilipi-telugu-carousel-15.jpg", null, "/women" ),
+				docAccessor.newInitBannerDoc( "pratilipi-telugu-carousel-18.jpg", null, "/life" ),
+				docAccessor.newInitBannerDoc( "pratilipi-telugu-carousel-17.jpg", null, "/spiritual" ),
+				docAccessor.newInitBannerDoc( "pratilipi-telugu-carousel-10.jpg", null, "/women" ),
+				docAccessor.newInitBannerDoc( "pratilipi-telugu-carousel-14.jpg", null, "/children" ),
 		};
 			
 		InitDoc teInitDoc = docAccessor.newInitDoc();
