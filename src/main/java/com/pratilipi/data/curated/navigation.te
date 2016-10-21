@@ -11,8 +11,7 @@
 /nonfiction       ఇతర రచనలు            App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"nonfiction" }
 /children         బాల సాహిత్యం            App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"children" }
 /life             జీవితం                App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"life" }
-/social           సామాజికం              App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"social" }
-/love             ప్రేమ                   App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"love" }          
+/social           సామాజికం              App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"social" }     
 /ministories      మినీకథలు               App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"ministories" }
 /women            మహిళ                  App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"women" }
 /spiritual        ఆధ్యాత్మికం             App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"spiritual" }
