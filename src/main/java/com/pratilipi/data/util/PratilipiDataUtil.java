@@ -280,10 +280,7 @@ public class PratilipiDataUtil {
 		if( writePage != null && writePage.getUriAlias() != null ) {
 			pratilipiData.setWritePageUrl( writePage.getUriAlias() );
 		} else {
-			if( pratilipi.isOldContent() )
-				pratilipiData.setWritePageUrl( PageType.WRITE.getUrlPrefix() + pratilipi.getId() );
-			else
-				pratilipiData.setWritePageUrl( "/pratilipi-write?id=" + pratilipi.getId() );
+			pratilipiData.setWritePageUrl( PageType.WRITE.getUrlPrefix() + pratilipi.getId() );
 		}
 
 		pratilipiData.setType( pratilipi.getType() );

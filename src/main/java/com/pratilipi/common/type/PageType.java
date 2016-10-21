@@ -6,7 +6,7 @@ public enum PageType {
 
 	PRATILIPI( "/pratilipi/" ),
 	READ( "/read?id=" ),
-	WRITE( "/write?id=" ),
+	WRITE( "/pratilipi-write?id=" ),
 
 	AUTHOR( "/author/" ),
 	AUTHOR_DASHBOARD( null ),
