@@ -70,7 +70,7 @@ Content.prototype.convertTextToParagraphs = function( text ) {
 		else {
 			counter++;
 			if( counter < 2 ) {
-				return "<p><br></p>"
+				return "<p><br></p>";
 			}
 			else {
 				return "";
@@ -151,7 +151,8 @@ Content.prototype.populateContent = function( response ) {
 	else {
 		this.$content_container.html( response );
 		var $delete_icon = '<img src="http://0.ptlp.co/resource-all/icon/svg/trash.svg" class="show-cursor" data-behaviour="remove-image">';
-		this.$content_container.find("img").addClass("writer-image").attr({
+		var $all_images = this.$content_container.find("img");
+		$all_images.addClass("writer-image").attr({
 			"tabindex": "-1",
 			'data-toggle': "popover",
 			"data-placement": "top",
@@ -160,6 +161,11 @@ Content.prototype.populateContent = function( response ) {
 			"data-content": $delete_icon,
 			"data-template": '<div class="popover" role="tooltip" contenteditable="false"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
 		}).popover();
+		if( isMobile ) {
+			$all_images.attr( "src", function( ) {
+		     	return $(this).attr("src") + "&width=240";
+			});
+		}
 		this.$content_container.find("a").data("popover", "absent");
 	}
 }; 
@@ -186,6 +192,10 @@ Content.prototype.convertTextNodesToParagraphs = function() {
 	}).replaceWith(function() {
 	  return "<p>" + $(this).text() + "</p>";
 	});
+};
+
+Content.prototype.changeBrToSpaces = function() {
+	this.$content_container.find("br").replaceWith("&nbsp;");
 };
 
 Content.prototype.hasEmptyText = function() {

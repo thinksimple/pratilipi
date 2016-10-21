@@ -449,6 +449,10 @@ blockquote {
 	opacity: 0.6;
 }
 
+.mobile-blur-image {
+	width: 240px;
+}
+
 .opaque-image{
 	opacity: 1;
 }

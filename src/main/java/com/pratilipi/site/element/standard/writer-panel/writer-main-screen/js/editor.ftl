@@ -215,6 +215,9 @@ Editor.prototype.addImageListener = function() {
 					"src": window.URL.createObjectURL(blob),
 					"tabindex": -1,
 				} ).addClass("writer-image").addClass("blur-image");
+				if( isMobile ) {
+					$img.addClass("mobile-blur-image");
+				}
 				if( $last_element ) {
 					$img.insertAfter( $last_element );
 				}
