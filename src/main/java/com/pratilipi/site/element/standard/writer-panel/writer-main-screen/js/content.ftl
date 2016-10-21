@@ -161,7 +161,7 @@ Content.prototype.populateContent = function( response ) {
 			"data-content": $delete_icon,
 			"data-template": '<div class="popover" role="tooltip" contenteditable="false"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
 		}).popover();
-		if( isMobile ) {
+		if( isMobile() ) {
 			$all_images.attr( "src", function( ) {
 		     	return $(this).attr("src") + "&width=240";
 			});
@@ -196,6 +196,15 @@ Content.prototype.convertTextNodesToParagraphs = function() {
 
 Content.prototype.changeBrToSpaces = function() {
 	this.$content_container.find("br").replaceWith("&nbsp;");
+};
+
+Content.prototype.checkFirstChild = function() {
+	<#-- test it properly -->
+	if( !( this.$content_container.children().first().is("p,blockquote,img") ) ) {
+		this.$content_container.children().first().replaceWith( function() {
+	  		return "<p>" + this.outerHTML + "</p>";
+		} );
+	}
 };
 
 Content.prototype.hasEmptyText = function() {

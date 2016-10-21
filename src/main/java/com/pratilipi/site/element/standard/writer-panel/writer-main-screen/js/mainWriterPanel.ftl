@@ -297,8 +297,9 @@ MainWriterPanel.prototype.saveChapter = function( autosaveFlag ) {
 	<#-- if( this.content_object.hasEmptyText() ) {
 		this.content_object.wrapInParagraph();
 	} -->
-	this.content_object.convertTextNodesToParagraphs();
 	this.content_object.changeBrToSpaces();
+	this.content_object.convertTextNodesToParagraphs();
+	this.content_object.checkFirstChild();
 	
 	var ajaxData = { pratilipiId: ${ pratilipiId?c },
 					chapterNo: this.currChapter,
