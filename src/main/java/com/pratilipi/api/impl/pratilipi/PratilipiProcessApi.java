@@ -78,7 +78,11 @@ public class PratilipiProcessApi extends GenericApi {
 
 		// Updating AppProperty.
 		if( pratilipiIdList.size() > 0 ) {
-			appProperty.setValue( dataAccessor.getPratilipi( pratilipiIdList.get( pratilipiIdList.size() - 1 ) ).getLastUpdated() );
+			Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiIdList.get( pratilipiIdList.size() - 1 ) );
+			Date lastUpdatedDate = pratilipi.getLastUpdated();
+			logger.log( Level.INFO, "Processing all contents updated from " + (Date) appProperty.getValue()  + " to " + lastUpdatedDate + "." );
+			logger.log( Level.INFO, "Last Updated PratilipiID : " + pratilipi.getId() );
+			appProperty.setValue( lastUpdatedDate );
 			appProperty = dataAccessor.createOrUpdateAppProperty( appProperty );
 		}
 		
