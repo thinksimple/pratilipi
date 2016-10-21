@@ -264,7 +264,7 @@ public class PratilipiSite extends HttpServlet {
 				else
 					pageNo = 1;
 
-				String version = "2";
+				String version = "1";
 				if( request.getParameter( RequestParameter.API_VERSION.getName() ) != null )
 					version = request.getParameter( RequestParameter.API_VERSION.getName() );
 
