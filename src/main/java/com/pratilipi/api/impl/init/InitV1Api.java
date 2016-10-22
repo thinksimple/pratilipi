@@ -11,24 +11,26 @@ import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.impl.pratilipi.PratilipiV1Api;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
-import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.DocAccessor;
 import com.pratilipi.data.client.PratilipiData;
+import com.pratilipi.data.type.PratilipiContentDoc;
 import com.pratilipi.data.util.PratilipiDataUtil;
+import com.pratilipi.filter.UxModeFilter;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/init" )
-public class InitApi extends GenericApi {
+public class InitV1Api extends GenericApi {
 	
 	public static class GetRequest extends GenericRequest {
 		
 		@Validate( required = true )
-		private Language language;
+		protected Language language;
 
 		public void setLanguage( Language language ) {
 			this.language = language;
@@ -45,9 +47,10 @@ public class InitApi extends GenericApi {
 			private String listPageUrl;
 			private List<PratilipiV1Api.Response> pratilipiList;
 			
+			@SuppressWarnings("unused")
 			private Section() {}
 		
-			private Section( String title, String listPageUrl ) {
+			protected Section( String title, String listPageUrl ) {
 				this.title = title;
 				this.listPageUrl = listPageUrl;
 			}
@@ -55,7 +58,7 @@ public class InitApi extends GenericApi {
 			public void setPratilipiList( List<PratilipiData> pratilipiList ) {
 				this.pratilipiList = new ArrayList<PratilipiV1Api.Response>( pratilipiList.size() );
 				for( PratilipiData pratilipiData : pratilipiList )
-					this.pratilipiList.add( new PratilipiV1Api.Response( pratilipiData, InitApi.class ) );
+					this.pratilipiList.add( new PratilipiV1Api.Response( pratilipiData, InitV1Api.class ) );
 			}
 
 			public String getTitle() {
@@ -72,14 +75,18 @@ public class InitApi extends GenericApi {
 		
 		}
 		
+		
 		private List<Section> sections;
 	
+		
+		@SuppressWarnings("unused")
 		private Response() {};
 		
-		private Response( List<Section> sections ) {
+		protected Response( List<Section> sections ) {
 			this.sections = sections;
 		};
 
+		
 		public List<Section> getSectionList() {
 			return sections;
 		}
@@ -88,7 +95,7 @@ public class InitApi extends GenericApi {
 	
 	
 	@Get
-	public Response get( GetRequest request ) throws InsufficientAccessException, UnexpectedServerException {
+	public Response get( GetRequest request ) throws UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
@@ -119,6 +126,17 @@ public class InitApi extends GenericApi {
 		}
 		
 		List<PratilipiData> pratilipiDataMasterList = PratilipiDataUtil.createPratilipiDataList( pratilipiIdMasterList, true );
+		
+		if( UxModeFilter.isAndroidApp() ) {
+			DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
+			for( PratilipiData pratilipiData : pratilipiDataMasterList ) {
+				PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( pratilipiData.getId() );
+				if( pcDoc == null )
+					continue;
+				pratilipiData.setIndex( pcDoc.getIndex() );
+			}
+		}
+
 		for( int i = 0; i < sectionList.size(); i++ )
 			sectionList.get( i ).setPratilipiList( pratilipiDataMasterList.subList( i * 6, i * 6 + 6 ) );
 		

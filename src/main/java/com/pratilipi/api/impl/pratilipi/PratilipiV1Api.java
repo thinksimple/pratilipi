@@ -7,7 +7,8 @@ import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.impl.author.AuthorApi;
-import com.pratilipi.api.impl.init.InitApi;
+import com.pratilipi.api.impl.init.InitV1Api;
+import com.pratilipi.api.impl.init.InitV2Api;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
@@ -123,7 +124,7 @@ public class PratilipiV1Api extends GenericApi {
 		
 		
 		@SuppressWarnings("unused")
-		private Response() { }
+		protected Response() { }
 		
 		// TODO: change this to package level access ASAP
 		public Response( PratilipiData pratilipiData ) {
@@ -162,7 +163,7 @@ public class PratilipiV1Api extends GenericApi {
 
 		public Response( PratilipiData pratilipi, Class<? extends GenericApi> clazz ) {
 			
-			if( clazz == InitApi.class || clazz == PratilipiListApi.class ) {
+			if( clazz == InitV1Api.class || clazz == InitV2Api.class || clazz == PratilipiListApi.class ) {
 				
 				this.pratilipiId = pratilipi.getId();
 				this.title = pratilipi.getTitle() == null ? pratilipi.getTitleEn() : pratilipi.getTitle();
@@ -314,7 +315,7 @@ public class PratilipiV1Api extends GenericApi {
 	
 	
 	@Get
-	public Response get( GetRequest request ) throws InsufficientAccessException, UnexpectedServerException {
+	public Response get( GetRequest request ) throws UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( request.pratilipiId );
