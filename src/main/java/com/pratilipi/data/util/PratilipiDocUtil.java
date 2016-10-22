@@ -534,7 +534,7 @@ public class PratilipiDocUtil {
 			
 		}
 		
-//		docAccessor.save( pratilipiId, pcDoc );
+		docAccessor.save( pratilipiId, pcDoc );
 		
 	}
 	
