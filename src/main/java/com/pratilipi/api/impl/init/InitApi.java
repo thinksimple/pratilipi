@@ -8,7 +8,7 @@ import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.annotation.Validate;
-import com.pratilipi.api.impl.pratilipi.PratilipiApi;
+import com.pratilipi.api.impl.pratilipi.PratilipiV1Api;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
@@ -43,7 +43,7 @@ public class InitApi extends GenericApi {
 		
 			private String title;
 			private String listPageUrl;
-			private List<PratilipiApi.Response> pratilipiList;
+			private List<PratilipiV1Api.Response> pratilipiList;
 			
 			private Section() {}
 		
@@ -53,9 +53,9 @@ public class InitApi extends GenericApi {
 			}
 			
 			public void setPratilipiList( List<PratilipiData> pratilipiList ) {
-				this.pratilipiList = new ArrayList<PratilipiApi.Response>( pratilipiList.size() );
+				this.pratilipiList = new ArrayList<PratilipiV1Api.Response>( pratilipiList.size() );
 				for( PratilipiData pratilipiData : pratilipiList )
-					this.pratilipiList.add( new PratilipiApi.Response( pratilipiData, InitApi.class ) );
+					this.pratilipiList.add( new PratilipiV1Api.Response( pratilipiData, InitApi.class ) );
 			}
 
 			public String getTitle() {
@@ -66,7 +66,7 @@ public class InitApi extends GenericApi {
 				return listPageUrl;
 			}
 
-			public List<PratilipiApi.Response> getPratilipiList() {
+			public List<PratilipiV1Api.Response> getPratilipiList() {
 				return pratilipiList;
 			}
 		

@@ -85,10 +85,7 @@ public class PratilipiDocUtil {
 		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
 		PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( pratilipiId );
 		
-		if( pcDoc == null )
-			return new JsonArray();
-
-		return pcDoc.getIndex();
+		return pcDoc == null ? null : pcDoc.getIndex();
 		
 	}
 	
@@ -497,7 +494,7 @@ public class PratilipiDocUtil {
 						PratilipiContentDoc.Page page = chapter.getPage( 1 );
 						if( page == null )
 							page = chapter.addPage();
-						page.addPagelet( (PratilipiContentDoc.PageletType) pagelet[0], pagelet[1] );
+						page.addPagelet( (PratilipiContentDoc.PageletType) pagelet[0], pagelet[1], (PratilipiContentDoc.AlignmentType) pagelet[2] );
 					}
 				}
 				
@@ -562,9 +559,10 @@ public class PratilipiDocUtil {
 						for( String style : node.attr( "style" ).split( ";" ) )
 							if( style.substring( 0, style.indexOf( ":" ) ).trim().equals( "text-align" ) )
 								alignment = AlignmentType.valueOf( style.substring( style.indexOf( ":" ) + 1 ).trim().toUpperCase() );
+					logger.log( Level.WARNING, alignment + " " + node.attr( "style" ).trim().isEmpty() );
 					if( alignment != null )
 						for( Object[] pagelet : pList )
-							if( pagelet[2] == null && ( pagelet[1] == PratilipiContentDoc.PageletType.TEXT || pagelet[1] == PratilipiContentDoc.PageletType.HTML ) )
+							if( pagelet[2] == null && ( pagelet[0] == PratilipiContentDoc.PageletType.TEXT || pagelet[0] == PratilipiContentDoc.PageletType.HTML ) )
 								pagelet[2] = alignment;
 					pageletList.addAll( pList );
 				}

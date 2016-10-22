@@ -19,9 +19,11 @@ import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.PratilipiType;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.DocAccessor;
 import com.pratilipi.data.client.PratilipiData;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.type.PratilipiContentDoc;
 import com.pratilipi.data.util.PratilipiDataUtil;
 import com.pratilipi.filter.AccessTokenFilter;
 import com.pratilipi.filter.UxModeFilter;
@@ -30,17 +32,18 @@ import com.pratilipi.taskqueue.TaskQueueFactory;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/pratilipi" )
-public class PratilipiApi extends GenericApi {
+public class PratilipiV1Api extends GenericApi {
 	
 	public static class GetRequest extends GenericRequest {
 
 		@Validate( required = true, minLong = 1L, requiredErrMsg = ERR_PRATILIPI_ID_REQUIRED )
-		private Long pratilipiId;
+		protected Long pratilipiId;
 
 
 		public void setPratilipiId( Long pratilipiId ) {
 			this.pratilipiId = pratilipiId;
 		}
+		
 	}
 	
 	@SuppressWarnings("unused")
@@ -130,7 +133,7 @@ public class PratilipiApi extends GenericApi {
 			this.title = pratilipiData.getTitle();
 			this.titleEn = pratilipiData.getTitleEn();
 			this.language = pratilipiData.getLanguage();
-			this.author = new AuthorApi.Response( pratilipiData.getAuthor(), PratilipiApi.class );
+			this.author = new AuthorApi.Response( pratilipiData.getAuthor(), PratilipiV1Api.class );
 			this.summary = pratilipiData.getSummary();
 			
 			this.pageUrl = pratilipiData.getPageUrl();
@@ -311,7 +314,7 @@ public class PratilipiApi extends GenericApi {
 	
 	
 	@Get
-	public Response get( GetRequest request ) throws UnexpectedServerException {
+	public Response get( GetRequest request ) throws InsufficientAccessException, UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( request.pratilipiId );
@@ -320,6 +323,12 @@ public class PratilipiApi extends GenericApi {
 				: dataAccessor.getAuthor( pratilipi.getAuthorId() );
 		
 		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author );
+		
+		if( UxModeFilter.isAndroidApp() ) {
+			DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
+			PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( request.pratilipiId );
+			pratilipiData.setIndex( pcDoc == null ? null : pcDoc.getIndex() );
+		}
 
 		return new Response( pratilipiData );
 		

@@ -23,7 +23,7 @@ import com.pratilipi.api.impl.init.InitBannerListApi;
 import com.pratilipi.api.impl.mailinglist.MailingListSubscribeApi;
 import com.pratilipi.api.impl.notification.NotificationApi;
 import com.pratilipi.api.impl.notification.NotificationListApi;
-import com.pratilipi.api.impl.pratilipi.PratilipiApi;
+import com.pratilipi.api.impl.pratilipi.PratilipiV1Api;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentChapterAddApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentChapterDeleteApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentImageApi;
@@ -70,7 +70,7 @@ public class ApiService extends GenericService {
 		ApiRegistry.register( UserVerificationApi.class );			// *.pratilipi.com
 		ApiRegistry.register( UserPasswordUpdateApi.class );		// *.pratilipi.com
 
-		ApiRegistry.register( PratilipiApi.class );					// *.pratilipi.com
+		ApiRegistry.register( PratilipiV1Api.class );					// *.pratilipi.com
 		ApiRegistry.register( PratilipiListApi.class );				// *.pratilipi.com
 		ApiRegistry.register( PratilipiCoverApi.class );			// *.pratilipi.com & AWS CloudFront
 		ApiRegistry.register( PratilipiContentV1Api.class );			// *.pratilipi.com

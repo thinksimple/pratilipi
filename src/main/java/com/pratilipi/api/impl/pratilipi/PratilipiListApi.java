@@ -16,8 +16,10 @@ import com.pratilipi.common.type.PratilipiType;
 import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
+import com.pratilipi.data.DocAccessor;
 import com.pratilipi.data.client.PratilipiData;
 import com.pratilipi.data.type.Event;
+import com.pratilipi.data.type.PratilipiContentDoc;
 import com.pratilipi.data.util.EventDataUtil;
 import com.pratilipi.data.util.PratilipiDataUtil;
 import com.pratilipi.filter.UxModeFilter;
@@ -96,7 +98,7 @@ public class PratilipiListApi extends GenericApi {
 
 		private String bannerUrl;
 		private String description;
-		private List<PratilipiApi.Response> pratilipiList;
+		private List<PratilipiV1Api.Response> pratilipiList;
 		private String cursor;
 		private Long numberFound;
 
@@ -106,7 +108,7 @@ public class PratilipiListApi extends GenericApi {
 		public Response( List<PratilipiData> pratilipiList, String cursor, Long numberFound ) {
 			this.pratilipiList = new ArrayList<>( pratilipiList.size() ); 
 			for( PratilipiData pratilipi : pratilipiList )
-				this.pratilipiList.add( new PratilipiApi.Response( pratilipi, PratilipiListApi.class ) );
+				this.pratilipiList.add( new PratilipiV1Api.Response( pratilipi, PratilipiListApi.class ) );
 			this.cursor = cursor;
 			this.numberFound = numberFound;
 		}
@@ -120,7 +122,7 @@ public class PratilipiListApi extends GenericApi {
 			this.description = description;
 		}
 		
-		public List<PratilipiApi.Response> getPratilipiList() {
+		public List<PratilipiV1Api.Response> getPratilipiList() {
 			return pratilipiList;
 		}
 
@@ -158,6 +160,16 @@ public class PratilipiListApi extends GenericApi {
 
 		
 		// Preparing & returning response object.
+		
+		if( UxModeFilter.isAndroidApp() ) {
+			DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
+			for( PratilipiData pratilipiData : pratilipiListCursorTuple.getDataList() ) {
+				PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( pratilipiData.getId() );
+				if( pcDoc == null )
+					continue;
+				pratilipiData.setIndex( pcDoc.getIndex() );
+			}
+		}
 		
 		Response response = new Response(
 				pratilipiListCursorTuple.getDataList(),
