@@ -32,14 +32,14 @@ import com.pratilipi.api.impl.blogpost.BlogPostApi;
 import com.pratilipi.api.impl.blogpost.BlogPostListApi;
 import com.pratilipi.api.impl.event.EventApi;
 import com.pratilipi.api.impl.event.EventListApi;
-import com.pratilipi.api.impl.init.InitApi;
-import com.pratilipi.api.impl.init.InitApi.Response.Section;
+import com.pratilipi.api.impl.init.InitV1Api;
+import com.pratilipi.api.impl.init.InitV1Api.Response.Section;
 import com.pratilipi.api.impl.notification.NotificationListApi;
-import com.pratilipi.api.impl.pratilipi.PratilipiApi;
+import com.pratilipi.api.impl.pratilipi.PratilipiV1Api;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentIndexApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentV1Api;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentV2Api;
-import com.pratilipi.api.impl.pratilipi.PratilipiListApi;
+import com.pratilipi.api.impl.pratilipi.PratilipiListV1Api;
 import com.pratilipi.api.impl.user.UserApi;
 import com.pratilipi.api.impl.userauthor.UserAuthorFollowApi;
 import com.pratilipi.api.impl.userauthor.UserAuthorFollowListApi;
@@ -367,9 +367,9 @@ public class PratilipiSite extends HttpServlet {
 					dataModel.put( "authorId", authorId );
 
 				if( pratilipiId != null ) {
-					PratilipiApi.GetRequest pratilipiRequest = new PratilipiApi.GetRequest();
+					PratilipiV1Api.GetRequest pratilipiRequest = new PratilipiV1Api.GetRequest();
 					pratilipiRequest.setPratilipiId( pratilipiId );
-					PratilipiApi.Response pratilipiResponse = ApiRegistry.getApi( PratilipiApi.class ).get( pratilipiRequest );
+					PratilipiV1Api.Response pratilipiResponse = ApiRegistry.getApi( PratilipiV1Api.class ).get( pratilipiRequest );
 
 					PratilipiContentIndexApi.GetRequest indexReq = new PratilipiContentIndexApi.GetRequest();
 					indexReq.setPratilipiId( pratilipiId );
@@ -672,9 +672,9 @@ public class PratilipiSite extends HttpServlet {
 		if( filterLanguage == null )
 			filterLanguage = Language.ENGLISH;
 
-		InitApi.GetRequest request = new InitApi.GetRequest();
+		InitV1Api.GetRequest request = new InitV1Api.GetRequest();
 		request.setLanguage( filterLanguage );
-		List<Section> sections = ApiRegistry.getApi( InitApi.class ).get( request ).getSectionList();
+		List<Section> sections = ApiRegistry.getApi( InitV1Api.class ).get( request ).getSectionList();
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", createPageTitle( I18n.getString( "home_page_title", filterLanguage ), null ) );
@@ -721,7 +721,7 @@ public class PratilipiSite extends HttpServlet {
 		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author, false );
 		UserPratilipiData userPratilipiData = UserPratilipiDataUtil.getUserPratilipi( AccessTokenFilter.getAccessToken().getUserId(), pratilipiId );
 
-		PratilipiApi.Response pratilipiResponse = new PratilipiApi.Response( pratilipiData );
+		PratilipiV1Api.Response pratilipiResponse = new PratilipiV1Api.Response( pratilipiData );
 		UserPratilipiApi.Response userPratilipiResponse = userPratilipiData == null
 				? null : new UserPratilipiApi.Response( userPratilipiData );
 		
@@ -800,13 +800,13 @@ public class PratilipiSite extends HttpServlet {
 										: PratilipiState.PUBLISHED;
 
 			Integer resultCount = 10;
-			PratilipiListApi.GetRequest pratilipiListRequest = new PratilipiListApi.GetRequest();
+			PratilipiListV1Api.GetRequest pratilipiListRequest = new PratilipiListV1Api.GetRequest();
 			pratilipiListRequest.setAuthorId( authorId );
 			pratilipiListRequest.setState( pratilipiState );
 			pratilipiListRequest.setResultCount( resultCount );
 			pratilipiListRequest.setOffset( ( pageCurr - 1 ) * resultCount );
-			PratilipiListApi.Response pratilipiListResponse = ApiRegistry
-								.getApi( PratilipiListApi.class )
+			PratilipiListV1Api.Response pratilipiListResponse = ApiRegistry
+								.getApi( PratilipiListV1Api.class )
 								.get( pratilipiListRequest );
 
 			dataModel.put( "state", pratilipiState.toString() );
@@ -842,12 +842,12 @@ public class PratilipiSite extends HttpServlet {
 				.get( followingListRequest );
 
 		Integer resultCount = basicMode ? 3 : 12;
-		PratilipiListApi.GetRequest publishedPratilipiListRequest = new PratilipiListApi.GetRequest();
+		PratilipiListV1Api.GetRequest publishedPratilipiListRequest = new PratilipiListV1Api.GetRequest();
 		publishedPratilipiListRequest.setAuthorId( authorId );
 		publishedPratilipiListRequest.setState( PratilipiState.PUBLISHED );
 		publishedPratilipiListRequest.setResultCount( resultCount );
-		PratilipiListApi.Response publishedPratilipiListResponse = ApiRegistry
-				.getApi( PratilipiListApi.class )
+		PratilipiListV1Api.Response publishedPratilipiListResponse = ApiRegistry
+				.getApi( PratilipiListV1Api.class )
 				.get( publishedPratilipiListRequest );
 
 		if( basicMode ) {
@@ -863,12 +863,12 @@ public class PratilipiSite extends HttpServlet {
 		}
 
 		if( basicMode && authorResponse.hasAccessToUpdate() ) {
-			PratilipiListApi.GetRequest draftedPratilipiListRequest = new PratilipiListApi.GetRequest();
+			PratilipiListV1Api.GetRequest draftedPratilipiListRequest = new PratilipiListV1Api.GetRequest();
 			draftedPratilipiListRequest.setAuthorId( authorId );
 			draftedPratilipiListRequest.setState( PratilipiState.DRAFTED );
 			draftedPratilipiListRequest.setResultCount( resultCount );
-			PratilipiListApi.Response draftedPratilipiListResponse = ApiRegistry
-					.getApi( PratilipiListApi.class )
+			PratilipiListV1Api.Response draftedPratilipiListResponse = ApiRegistry
+					.getApi( PratilipiListV1Api.class )
 					.get( draftedPratilipiListRequest );
 			dataModel.put( "draftedPratilipiList", draftedPratilipiListResponse.getPratilipiList() );
 		}
@@ -1006,10 +1006,10 @@ public class PratilipiSite extends HttpServlet {
 											.get( eventRequest );
 
 		Integer resultCount = basicMode ? 10 : 12;
-		PratilipiListApi.GetRequest pratilipiListApiRequest = new PratilipiListApi.GetRequest();
-		pratilipiListApiRequest.setEventId( eventId );
-		pratilipiListApiRequest.setState( PratilipiState.PUBLISHED );
-		pratilipiListApiRequest.setResultCount( resultCount );
+		PratilipiListV1Api.GetRequest PratilipiListV1ApiRequest = new PratilipiListV1Api.GetRequest();
+		PratilipiListV1ApiRequest.setEventId( eventId );
+		PratilipiListV1ApiRequest.setState( PratilipiState.PUBLISHED );
+		PratilipiListV1ApiRequest.setResultCount( resultCount );
 
 		String action = request.getParameter( "action" ) != null ? request.getParameter( "action" ) : "event_page";
 		Integer pageCurr = null;
@@ -1017,27 +1017,27 @@ public class PratilipiSite extends HttpServlet {
 			pageCurr = request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() ) != null
 					? Integer.parseInt( request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() ) )
 					: 1;
-			pratilipiListApiRequest.setOffset( ( pageCurr - 1 ) * resultCount );
+			PratilipiListV1ApiRequest.setOffset( ( pageCurr - 1 ) * resultCount );
 		}
 
-		PratilipiListApi.Response pratilipiListApiResponse = ApiRegistry
-									.getApi( PratilipiListApi.class )
-									.get( pratilipiListApiRequest );
+		PratilipiListV1Api.Response PratilipiListV1ApiResponse = ApiRegistry
+									.getApi( PratilipiListV1Api.class )
+									.get( PratilipiListV1ApiRequest );
 
 		dataModel.put( "title", createPageTitle( eventResponse.getName(), eventResponse.getNameEn() ) );
 
 		if( basicMode ) {
 			dataModel.put( "action", action );
 			dataModel.put( "event", eventResponse );
-			dataModel.put( "pratilipiList", pratilipiListApiResponse.getPratilipiList() );
-			dataModel.put( "numberFound", pratilipiListApiResponse.getNumberFound() );
+			dataModel.put( "pratilipiList", PratilipiListV1ApiResponse.getPratilipiList() );
+			dataModel.put( "numberFound", PratilipiListV1ApiResponse.getNumberFound() );
 			dataModel.put( "pratilipiListPageCurr", pageCurr );
-			Integer pageMax = pratilipiListApiResponse.getNumberFound() != null ?
-					(int) Math.ceil( ( (double) pratilipiListApiResponse.getNumberFound() ) / resultCount ) : 1;
+			Integer pageMax = PratilipiListV1ApiResponse.getNumberFound() != null ?
+					(int) Math.ceil( ( (double) PratilipiListV1ApiResponse.getNumberFound() ) / resultCount ) : 1;
 			dataModel.put( "pratilipiListPageMax", pageMax );
 		} else {
 			dataModel.put( "eventJson", gson.toJson( eventResponse ) );
-			dataModel.put( "pratilipiListObjectJson", gson.toJson( pratilipiListApiResponse ) );
+			dataModel.put( "pratilipiListObjectJson", gson.toJson( PratilipiListV1ApiResponse ) );
 		}
 		return dataModel;
 		
@@ -1173,7 +1173,7 @@ public class PratilipiSite extends HttpServlet {
 		}
 		
 		Gson gson = new Gson();
-		PratilipiApi.Response pratilipiResponse = new PratilipiApi.Response( pratilipiData );
+		PratilipiV1Api.Response pratilipiResponse = new PratilipiV1Api.Response( pratilipiData );
 		UserPratilipiApi.Response userPratilipiResponse = userPratilipiData != null ?
 						new UserPratilipiApi.Response( userPratilipiData ) : null;
 		
@@ -1227,18 +1227,18 @@ public class PratilipiSite extends HttpServlet {
 			pageCurr = Integer.parseInt( pageNoString );
 
 
-		PratilipiListApi.GetRequest pratilipiListApiRequest = new PratilipiListApi.GetRequest();
-		pratilipiListApiRequest.setLanguage( language );
-		pratilipiListApiRequest.setState( pratilipiState );
-		pratilipiListApiRequest.setResultCount( resultCount );
-		pratilipiListApiRequest.setOffset( ( pageCurr - 1 ) * resultCount );
+		PratilipiListV1Api.GetRequest PratilipiListV1ApiRequest = new PratilipiListV1Api.GetRequest();
+		PratilipiListV1ApiRequest.setLanguage( language );
+		PratilipiListV1ApiRequest.setState( pratilipiState );
+		PratilipiListV1ApiRequest.setResultCount( resultCount );
+		PratilipiListV1ApiRequest.setOffset( ( pageCurr - 1 ) * resultCount );
 		if( searchQuery != null )
-			pratilipiListApiRequest.setSearchQuery( searchQuery );
+			PratilipiListV1ApiRequest.setSearchQuery( searchQuery );
 		if( authorId != null )
-			pratilipiListApiRequest.setAuthorId( authorId );
-		PratilipiListApi.Response response = ApiRegistry
-												.getApi( PratilipiListApi.class )
-												.get( pratilipiListApiRequest );
+			PratilipiListV1ApiRequest.setAuthorId( authorId );
+		PratilipiListV1Api.Response response = ApiRegistry
+												.getApi( PratilipiListV1Api.class )
+												.get( PratilipiListV1ApiRequest );
 
 
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
@@ -1333,14 +1333,14 @@ public class PratilipiSite extends HttpServlet {
 			}
 		}
 		
-		PratilipiListApi.GetRequest pratilipiListRequest = new PratilipiListApi.GetRequest();
+		PratilipiListV1Api.GetRequest pratilipiListRequest = new PratilipiListV1Api.GetRequest();
 		pratilipiListRequest.setListName( listName );
 		pratilipiListRequest.setLanguage( filterLanguage );
 		pratilipiListRequest.setType( type );
 		pratilipiListRequest.setState( PratilipiState.PUBLISHED );
 		pratilipiListRequest.setOffset( offset );
-		PratilipiListApi.Response pratilipiListResponse = ApiRegistry
-				.getApi( PratilipiListApi.class )
+		PratilipiListV1Api.Response pratilipiListResponse = ApiRegistry
+				.getApi( PratilipiListV1Api.class )
 				.get( pratilipiListRequest );
 		
 		PratilipiFilter pratilipiFilter = new PratilipiFilter();
@@ -1396,10 +1396,10 @@ public class PratilipiSite extends HttpServlet {
 		return dataModel;
 	}
 
-	private List<PratilipiApi.Response> toListResponseObject( List<PratilipiData> pratilipiDataList ) {
-		List<PratilipiApi.Response> pratilipiList = new ArrayList<>( pratilipiDataList.size() );
+	private List<PratilipiV1Api.Response> toListResponseObject( List<PratilipiData> pratilipiDataList ) {
+		List<PratilipiV1Api.Response> pratilipiList = new ArrayList<>( pratilipiDataList.size() );
 		for( PratilipiData pratilipiData : pratilipiDataList )
-			pratilipiList.add( new PratilipiApi.Response( pratilipiData, true ) );
+			pratilipiList.add( new PratilipiV1Api.Response( pratilipiData, true ) );
 		return pratilipiList;
 	}
 
