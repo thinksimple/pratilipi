@@ -59,6 +59,7 @@ import com.pratilipi.common.type.Website;
 import com.pratilipi.common.util.FacebookApi;
 import com.pratilipi.common.util.FreeMarkerUtil;
 import com.pratilipi.common.util.PratilipiFilter;
+import com.pratilipi.common.util.SystemProperty;
 import com.pratilipi.common.util.ThirdPartyResource;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
@@ -267,7 +268,7 @@ public class PratilipiSite extends HttpServlet {
 				else
 					pageNo = 1;
 
-				String version = "1";
+				String version = SystemProperty.STAGE.equals( "gamma" ) ? "2" : "1";
 				if( request.getParameter( RequestParameter.API_VERSION.getName() ) != null )
 					version = request.getParameter( RequestParameter.API_VERSION.getName() );
 
@@ -511,6 +512,7 @@ public class PratilipiSite extends HttpServlet {
 		dataModel.put( "user", userResponse );
 		dataModel.put( "userJson", gson.toJson( userResponse ) );
 		dataModel.put( "pratilipiTypesJson", gson.toJson( pratilipiTypes ) );
+		dataModel.put( "stage", SystemProperty.STAGE );
 
 		// Android App Registration
 		if( AccessTokenFilter.getCookieValue( "USER_NOTIFIED", request ) != null ) {
@@ -1180,6 +1182,7 @@ public class PratilipiSite extends HttpServlet {
 		dataModel.put( "pageNo", pageNo );
 		dataModel.put( "pageCount", pageCount );
 		dataModel.put( "content", content );
+		dataModel.put( "version", version );
 		dataModel.put( "contentType", pratilipi.getContentType() );
 		if( basicMode ) {
 			dataModel.put( "pratilipi", pratilipiResponse );

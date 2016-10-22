@@ -37,6 +37,7 @@
 				content='<#if content??>${ content?replace( "'", "&#39;", 'r' ) }</#if>'
 				content-type='${ contentType }'
 				index='${ indexJson }'
+				version='${ version }'
 				></pratilipi-reader-page>
 	</body>
 	<#include "meta/Foot.ftl">

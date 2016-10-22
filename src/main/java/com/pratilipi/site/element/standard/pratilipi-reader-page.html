@@ -28,7 +28,8 @@
 							font-size="{{ fontSize }}"
 							page-no="{{ pageNo }}"
 							page-count="{{ pageCount }}"
-							pratilipi-id="{{ pratilipi.pratilipiId }}"></pratilipi-reader-content>
+							pratilipi-id="{{ pratilipi.pratilipiId }}"
+							version="{{ version }}"></pratilipi-reader-content>
 					</div>
 				</div>
 			</div>
@@ -77,6 +78,7 @@
 				contentType: { type: String },
 				content: { types: String },
 				index: { types: Array, value: [] },
+				version: { type: String },
 				
 				addToLibClicked: { type: Boolean, value: false },
 				goToLibraryBoolean: { type: Boolean, value: false },
