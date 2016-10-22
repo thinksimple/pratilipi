@@ -62,6 +62,8 @@ import com.pratilipi.data.type.Vote;
 import com.pratilipi.filter.AccessTokenFilter;
 import com.pratilipi.filter.UxModeFilter;
 
+import mediautil.gen.Log;
+
 
 public class PratilipiDocUtil {
 	
@@ -532,7 +534,7 @@ public class PratilipiDocUtil {
 			
 		}
 		
-		docAccessor.save( pratilipiId, pcDoc );
+//		docAccessor.save( pratilipiId, pcDoc );
 		
 	}
 	
@@ -555,11 +557,10 @@ public class PratilipiDocUtil {
 					pageletList.add( new Object[] { PratilipiContentDoc.PageletType.HTML, "<br/>", null } );
 				} else {
 					AlignmentType alignment = null;
-					if( childNode.hasAttr( "style" ) && ! node.attr( "style" ).trim().isEmpty() )
-						for( String style : node.attr( "style" ).split( ";" ) )
+					if( childNode.hasAttr( "style" ) && ! childNode.attr( "style" ).trim().isEmpty() )
+						for( String style : childNode.attr( "style" ).split( ";" ) )
 							if( style.substring( 0, style.indexOf( ":" ) ).trim().equals( "text-align" ) )
 								alignment = AlignmentType.valueOf( style.substring( style.indexOf( ":" ) + 1 ).trim().toUpperCase() );
-					logger.log( Level.WARNING, alignment + " " + node.attr( "style" ).trim().isEmpty() );
 					if( alignment != null )
 						for( Object[] pagelet : pList )
 							if( pagelet[2] == null && ( pagelet[0] == PratilipiContentDoc.PageletType.TEXT || pagelet[0] == PratilipiContentDoc.PageletType.HTML ) )
