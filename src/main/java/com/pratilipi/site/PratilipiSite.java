@@ -1128,7 +1128,9 @@ public class PratilipiSite extends HttpServlet {
 				PratilipiContentV1Api.GetRequest req = new PratilipiContentV1Api.GetRequest();
 				req.setPratilipiId( pratilipiId );
 				req.setChapterNo( pageNo );
-				PratilipiContentV1Api.GetResponse res = (PratilipiContentV1Api.GetResponse) ApiRegistry.getApi( PratilipiContentV1Api.class ).get( req );
+				PratilipiContentV1Api.GetResponse res = (PratilipiContentV1Api.GetResponse) ApiRegistry
+																		.getApi( PratilipiContentV1Api.class )
+																		.get( req );
 				content = res.getContent();
 				if( res.getChapterTitle() != null )
 					content = "<h1>" + res.getChapterTitle() + "</h1>" + content;
@@ -1136,13 +1138,20 @@ public class PratilipiSite extends HttpServlet {
 				PratilipiContentV2Api.GetRequest req = new PratilipiContentV2Api.GetRequest();
 				req.setPratilipiId( pratilipiId );
 				req.setChapterNo( pageNo );
-				PratilipiContentV2Api.GetResponse res = (PratilipiContentV2Api.GetResponse) ApiRegistry.getApi( PratilipiContentV2Api.class ).get( req );
+				PratilipiContentV2Api.GetResponse res = (PratilipiContentV2Api.GetResponse) ApiRegistry
+																		.getApi( PratilipiContentV2Api.class )
+																		.get( req );
 				content = res.getContent();
 				if( res.getChapterTitle() != null )
 					content = "<h1>" + res.getChapterTitle() + "</h1>" + content;
 			}
 		} else if( pratilipi.getContentType() == PratilipiContentType.IMAGE ) {
-			content = "<img src=\"/api/pratilipi/content/image?pratilipiId=" + pratilipi.getId() + "&pageNo=" + pageNo + "\" />";
+			PratilipiContentV2Api.GetRequest req = new PratilipiContentV2Api.GetRequest();
+			req.setPratilipiId( pratilipiId );
+			PratilipiContentV2Api.GetResponse res = (PratilipiContentV2Api.GetResponse) ApiRegistry
+																		.getApi( PratilipiContentV2Api.class )
+																		.get( req );
+			content = res.getContent();
 		}
 		
 		Gson gson = new Gson();
