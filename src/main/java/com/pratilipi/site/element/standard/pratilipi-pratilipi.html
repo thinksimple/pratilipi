@@ -312,6 +312,7 @@
 				pratilipiData: { type: Object },
 				userpratilipi: { type: Object },
 				pratilipiTypes: { types: Object },
+				stage: { type: String },
 				
 				mobile: { type: Boolean },
 				imageUploaded: { type: Boolean, value: false },
@@ -353,7 +354,10 @@
 			},
 			
 			openWriterPanel: function() {
-				window.location.href = this.pratilipi.writePageUrl + "&ret=" + window.location.pathname;
+				if( this.stage == "gamma" )
+					window.location.href = "/pratilipi-write?id=" + this.pratilipi.pratilipiId + "&ret=" + window.location.pathname;
+				else
+					window.location.href = this.pratilipi.writePageUrl + "&ret=" + window.location.pathname;
 			},
 			
 			redirectToReader: function() {

@@ -18,7 +18,8 @@
 				cursor='${ reviewListCursor! }'
 				pratilipi-types='${ pratilipiTypesJson }'
 				navigation-list='${ navigationList }'
-				language-map='${ languageMap }'></pratilipi-pratilipi-page>
+				language-map='${ languageMap }'
+				stage="${ stage }"></pratilipi-pratilipi-page>
 
 		<#include "meta/Foot.ftl">
 	</body>
