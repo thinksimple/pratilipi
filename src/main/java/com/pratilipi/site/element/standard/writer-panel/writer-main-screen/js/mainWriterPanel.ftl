@@ -45,6 +45,7 @@ MainWriterPanel.prototype.init = function() {
     /* add button listeners */
     this.attachActionButtonListeners();
     this.initializeAutosave();
+    this.preventUserFromLeaving();
     
 };
 
@@ -391,5 +392,13 @@ MainWriterPanel.prototype.preventBackspaceDefaultAction = function() {
 	    if (e.which === 8 && !$(e.target).is("input:not([readonly]):not([type=radio]):not([type=checkbox]), textarea, [contentEditable], [contentEditable=true]")) {
 	        e.preventDefault();
 	    }
+	});
+};
+
+MainWriterPanel.prototype.preventUserFromLeaving = function() {
+	$(window).bind("beforeunload",function(event) {
+		if( this.lastSavedContent != _this.content_object.getContent() ) {
+		    return true;
+		}
 	});
 };
