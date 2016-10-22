@@ -3,7 +3,7 @@ package com.pratilipi.api.impl.userpratilipi;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
-import com.pratilipi.api.impl.pratilipi.PratilipiListApi;
+import com.pratilipi.api.impl.pratilipi.PratilipiListV1Api;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -25,7 +25,7 @@ public class UserPratilipiLibraryListApi extends GenericApi {
 	
 	
 	@Get
-	public static PratilipiListApi.Response get( GetRequest request ) 
+	public static PratilipiListV1Api.Response get( GetRequest request ) 
 			throws InsufficientAccessException, UnexpectedServerException {
 		
 		DataListCursorTuple<PratilipiData> pratilipiDataListCursorTuple
@@ -35,7 +35,7 @@ public class UserPratilipiLibraryListApi extends GenericApi {
 						null,
 						request.resultCount == null ? 20 : request.resultCount );
 		
-		return new PratilipiListApi.Response(
+		return new PratilipiListV1Api.Response(
 				pratilipiDataListCursorTuple.getDataList(),
 				pratilipiDataListCursorTuple.getCursor(),
 				pratilipiDataListCursorTuple.getNumberFound() );

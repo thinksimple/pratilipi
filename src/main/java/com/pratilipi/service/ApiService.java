@@ -31,7 +31,7 @@ import com.pratilipi.api.impl.pratilipi.PratilipiContentIndexApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentV1Api;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentV2Api;
 import com.pratilipi.api.impl.pratilipi.PratilipiCoverApi;
-import com.pratilipi.api.impl.pratilipi.PratilipiListApi;
+import com.pratilipi.api.impl.pratilipi.PratilipiListV1Api;
 import com.pratilipi.api.impl.user.UserApi;
 import com.pratilipi.api.impl.user.UserEmailApi;
 import com.pratilipi.api.impl.user.UserLoginApi;
@@ -71,7 +71,7 @@ public class ApiService extends GenericService {
 		ApiRegistry.register( UserPasswordUpdateApi.class );		// *.pratilipi.com
 
 		ApiRegistry.register( PratilipiV1Api.class );					// *.pratilipi.com
-		ApiRegistry.register( PratilipiListApi.class );				// *.pratilipi.com
+		ApiRegistry.register( PratilipiListV1Api.class );				// *.pratilipi.com
 		ApiRegistry.register( PratilipiCoverApi.class );			// *.pratilipi.com & AWS CloudFront
 		ApiRegistry.register( PratilipiContentV1Api.class );			// *.pratilipi.com
 		ApiRegistry.register( PratilipiContentV2Api.class );			// *.pratilipi.com

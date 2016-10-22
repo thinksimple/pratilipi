@@ -26,23 +26,23 @@ import com.pratilipi.filter.UxModeFilter;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/pratilipi/list" )
-public class PratilipiListApi extends GenericApi {
+public class PratilipiListV1Api extends GenericApi {
 
 	public static class GetRequest extends GenericRequest {
 
-		private String searchQuery;
-		private Long authorId;
-		private Long eventId;
-		private Language language;
-		private PratilipiType type;
-		private String listName;
-		private PratilipiState state;
+		protected String searchQuery;
+		protected Long authorId;
+		protected Long eventId;
+		protected Language language;
+		protected PratilipiType type;
+		protected String listName;
+		protected PratilipiState state;
 
-		private Boolean orderByLastUpdated;
+		protected Boolean orderByLastUpdated;
 
-		private String cursor;
-		private Integer offset;
-		private Integer resultCount;
+		protected String cursor;
+		protected Integer offset;
+		protected Integer resultCount;
 
 
 		public void setSearchQuery( String searchQuery ) {
@@ -108,17 +108,17 @@ public class PratilipiListApi extends GenericApi {
 		public Response( List<PratilipiData> pratilipiList, String cursor, Long numberFound ) {
 			this.pratilipiList = new ArrayList<>( pratilipiList.size() ); 
 			for( PratilipiData pratilipi : pratilipiList )
-				this.pratilipiList.add( new PratilipiV1Api.Response( pratilipi, PratilipiListApi.class ) );
+				this.pratilipiList.add( new PratilipiV1Api.Response( pratilipi, PratilipiListV1Api.class ) );
 			this.cursor = cursor;
 			this.numberFound = numberFound;
 		}
 
 
-		private void setBannerUrl( String bannerUrl ) {
+		public void setBannerUrl( String bannerUrl ) {
 			this.bannerUrl = bannerUrl;
 		}
 		
-		private void setDescription( String description ) {
+		public void setDescription( String description ) {
 			this.description = description;
 		}
 		

@@ -163,14 +163,14 @@ public class PratilipiV1Api extends GenericApi {
 
 		public Response( PratilipiData pratilipi, Class<? extends GenericApi> clazz ) {
 			
-			if( clazz == InitV1Api.class || clazz == InitV2Api.class || clazz == PratilipiListApi.class ) {
+			if( clazz == InitV1Api.class || clazz == InitV2Api.class || clazz == PratilipiListV1Api.class ) {
 				
 				this.pratilipiId = pratilipi.getId();
 				this.title = pratilipi.getTitle() == null ? pratilipi.getTitleEn() : pratilipi.getTitle();
 				if( UxModeFilter.isAndroidApp() )
 					this.language = pratilipi.getLanguage();
 				if( pratilipi.getAuthor() != null )
-					this.author = new AuthorApi.Response( pratilipi.getAuthor(), PratilipiListApi.class );
+					this.author = new AuthorApi.Response( pratilipi.getAuthor(), PratilipiListV1Api.class );
 				if( UxModeFilter.isAndroidApp() )
 					this.summary = pratilipi.getSummary();
 				this.pageUrl = pratilipi.getPageUrl();
@@ -197,7 +197,7 @@ public class PratilipiV1Api extends GenericApi {
 			if( UxModeFilter.isAndroidApp() )
 				this.language = pratilipi.getLanguage();
 			if( pratilipi.getAuthor() != null )
-				this.author = new AuthorApi.Response( pratilipi.getAuthor(), PratilipiListApi.class );
+				this.author = new AuthorApi.Response( pratilipi.getAuthor(), PratilipiListV1Api.class );
 			if( UxModeFilter.isAndroidApp() )
 				this.summary = pratilipi.getSummary();
 			this.pageUrl = pratilipi.getPageUrl();
