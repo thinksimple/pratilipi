@@ -396,8 +396,9 @@ MainWriterPanel.prototype.preventBackspaceDefaultAction = function() {
 };
 
 MainWriterPanel.prototype.preventUserFromLeaving = function() {
+	var _this = this;
 	$(window).bind("beforeunload",function(event) {
-		if( this.lastSavedContent != this.content_object.getContent() ) {
+		if( _this.lastSavedContent != _this.content_object.getContent() ) {
 		    return true;
 		}
 	});
