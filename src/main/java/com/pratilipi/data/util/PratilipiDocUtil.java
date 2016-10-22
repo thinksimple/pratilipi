@@ -392,7 +392,8 @@ public class PratilipiDocUtil {
 			for( Node childNode : node.childNodes() ) {
 				if( childNode.getClass() == TextNode.class ) {
 					// Do Nothing
-				} else if( childNode.nodeName().equals( "i" )
+				} else if( childNode.nodeName().equals( "br" )
+						|| childNode.nodeName().equals( "i" )
 						|| childNode.nodeName().equals( "u" )
 						|| childNode.nodeName().equals( "a" ) ) {
 					Node badNode = _validateContent( childNode );
@@ -408,7 +409,8 @@ public class PratilipiDocUtil {
 			for( Node childNode : node.childNodes() ) {
 				if( childNode.getClass() == TextNode.class ) {
 					// Do Nothing
-				} else if( childNode.nodeName().equals( "b" )
+				} else if( childNode.nodeName().equals( "br" )
+						|| childNode.nodeName().equals( "b" )
 						|| childNode.nodeName().equals( "u" )
 						|| childNode.nodeName().equals( "a" ) ) {
 					Node badNode = _validateContent( childNode );
@@ -424,7 +426,8 @@ public class PratilipiDocUtil {
 			for( Node childNode : node.childNodes() ) {
 				if( childNode.getClass() == TextNode.class ) {
 					// Do Nothing
-				} else if( childNode.nodeName().equals( "b" )
+				} else if( childNode.nodeName().equals( "br" )
+						|| childNode.nodeName().equals( "b" )
 						|| childNode.nodeName().equals( "i" )
 						|| childNode.nodeName().equals( "a" ) ) {
 					Node badNode = _validateContent( childNode );
@@ -631,20 +634,17 @@ public class PratilipiDocUtil {
 				
 			} else if( childNode.nodeName().equals( "br" ) ) {
 				
-				// Create new pagelet after 2 consecutive line breaks.
-				if( prevNode != null && prevNode.nodeName().equals( "br" ) )
-					pagelet = null;
+				if( pagelet != null )
+					pagelet[1] = pagelet[1] + "<br/>";
 				
 			} else {
 				
 				String text  = _extractText( childNode );
 				if( text == null )
 					continue;
-				if( pagelet == null || pagelet[0] != PratilipiContentDoc.PageletType.TEXT ) {
-					pagelet = new Object[] { PratilipiContentDoc.PageletType.TEXT, text };
+				if( pagelet == null || pagelet[0] != PratilipiContentDoc.PageletType.HTML ) {
+					pagelet = new Object[] { PratilipiContentDoc.PageletType.HTML, text };
 					pageletList.add( pagelet );
-				} else if( prevNode != null && prevNode.nodeName().equals( "br" ) ) {
-					pagelet[1] = pagelet[1] + "\n" + text;
 				} else {
 					pagelet[1] = pagelet[1] + " " + text;
 				}
@@ -655,6 +655,11 @@ public class PratilipiDocUtil {
 			prevNode = childNode;
 			
 		}
+		
+		
+		if( pageletList.size() == 0 )
+			pageletList.add( new Object[] { PratilipiContentDoc.PageletType.TEXT, "" } );
+		
 		
 		return pageletList;
 		
