@@ -397,7 +397,7 @@ MainWriterPanel.prototype.preventBackspaceDefaultAction = function() {
 
 MainWriterPanel.prototype.preventUserFromLeaving = function() {
 	$(window).bind("beforeunload",function(event) {
-		if( this.lastSavedContent != _this.content_object.getContent() ) {
+		if( this.lastSavedContent != this.content_object.getContent() ) {
 		    return true;
 		}
 	});
