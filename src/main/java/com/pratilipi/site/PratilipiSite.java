@@ -1158,7 +1158,7 @@ public class PratilipiSite extends HttpServlet {
 																		.get( req );
 
 			if( basicMode ) {
-				PratilipiContentDoc.Chapter chapter = new Gson().fromJson( res.getContent().toString(), PratilipiContentDocImpl.ChapterImpl.class );
+				PratilipiContentDoc.Chapter chapter = new Gson().fromJson( new Gson().toJson( res.getContent() ), PratilipiContentDocImpl.ChapterImpl.class );
 				JsonObject jsonObject = new Gson().fromJson( chapter.getPage( 1 ).getPageletList().get( 0 ).getData(), JsonObject.class );
 				String imageName = jsonObject.get( "name" ).getAsString();
 				content = "<img src=\"/api/pratilipi/content/image?pratilipiId=" + pratilipi.getId() + "&name=" + imageName + "\" />";
