@@ -38,6 +38,7 @@
 				content-type='${ contentType }'
 				index='${ indexJson }'
 				version='${ version }'
+				stage='${ stage }'
 				></pratilipi-reader-page>
 	</body>
 	<#include "meta/Foot.ftl">

@@ -13,7 +13,8 @@
     				hide-index-button="[[ hideIndexButton ]]"
     				page-no="[[ pageNo ]]"
     				index="{{ index }}"
-    				content-type="{{ contentType }}"></pratilipi-reader-header>
+    				content-type="{{ contentType }}"
+    				stage="{{ stage }}"></pratilipi-reader-header>
 		</header>
 		<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
 		<pratilipi-alert></pratilipi-alert>
@@ -79,6 +80,7 @@
 				content: { types: String },
 				index: { types: Array, value: [] },
 				version: { type: String },
+				stage: { type: String },
 				
 				addToLibClicked: { type: Boolean, value: false },
 				goToLibraryBoolean: { type: Boolean, value: false },

@@ -304,6 +304,22 @@
 										</paper-item>
 									</a>
 								</li>
+								<template is="dom-if" if="{{ switchReaderOptions }}">
+									<li>
+										<a style="padding: 5px; margin: 0;" href="/read?id={{ pratilipi.pratilipiId }}&_apiVer=1">
+											<paper-item>
+												<paper-item-body>Go To Old Reader</paper-item-body>
+											</paper-item>
+										</a>
+									</li>
+									<li>
+										<a style="padding: 5px; margin: 0;" href="/read?id={{ pratilipi.pratilipiId }}&_apiVer=2">
+											<paper-item>
+												<paper-item-body>Go To New Reader</paper-item-body>
+											</paper-item>
+										</a>
+									</li>
+								</template>
 							</ul>
 						</div>
 					</td>
@@ -327,7 +343,8 @@
 				showEditContent: { type: Boolean, value: false },
 				index: { type: Array },
 				pageNo: { type: Number },
-				contentType: { type: String }
+				contentType: { type: String },
+				stage: { type: String }
 			},
 			
 			_entryClicked: function( event ) {
@@ -353,6 +370,9 @@
 				jQuery( "#navigationdropdown" ).css( 'max-height', Math.min( 500, height - 75 ) + "px", "important" );
 				jQuery( "#navigationdropdown" ).css( 'min-width', Math.min( 300, width - 20 ) + "px", "important" );
 				jQuery( "#navigationdropdown" ).css( 'max-width', ( width - 20 ) + "px", "important" );
+				
+				
+				this.set( "switchReaderOptions", this.stage == "gamma" );
 			},
 			
 			shareOnFacebook: function() {
