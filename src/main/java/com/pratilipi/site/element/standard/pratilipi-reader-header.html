@@ -305,20 +305,24 @@
 									</a>
 								</li>
 								<template is="dom-if" if="{{ switchReaderOptions }}">
-									<li>
-										<a style="padding: 5px; margin: 0;" target="_blank" href="/read?id={{ pratilipi.pratilipiId }}&_apiVer=1">
-											<paper-item>
-												<paper-item-body>Go To Old Reader</paper-item-body>
-											</paper-item>
-										</a>
-									</li>
-									<li>
-										<a style="padding: 5px; margin: 0;" target="_blank" href="/read?id={{ pratilipi.pratilipiId }}&_apiVer=2">
-											<paper-item>
-												<paper-item-body>Go To New Reader</paper-item-body>
-											</paper-item>
-										</a>
-									</li>
+									<template is="dom-if" if="{{ isVersion2 }}">
+										<li>
+											<a style="padding: 5px; margin: 0;" target="_blank" href="/read?id={{ pratilipi.pratilipiId }}&_apiVer=1">
+												<paper-item>
+													<paper-item-body>Go To Old Reader</paper-item-body>
+												</paper-item>
+											</a>
+										</li>
+									</template>
+									<template is="dom-if" if="{{ isVersion1 }}">
+										<li>
+											<a style="padding: 5px; margin: 0;" target="_blank" href="/read?id={{ pratilipi.pratilipiId }}&_apiVer=2">
+												<paper-item>
+													<paper-item-body>Go To New Reader</paper-item-body>
+												</paper-item>
+											</a>
+										</li>
+									</template>
 								</template>
 							</ul>
 						</div>
@@ -344,7 +348,8 @@
 				index: { type: Array },
 				pageNo: { type: Number },
 				contentType: { type: String },
-				stage: { type: String }
+				stage: { type: String },
+				version: { type: String }
 			},
 			
 			_entryClicked: function( event ) {
@@ -373,6 +378,8 @@
 				
 				
 				this.set( "switchReaderOptions", this.stage == "gamma" );
+				this.set( "isVersion1", this.version == "1" );
+				this.set( "isVersion2", this.version == "2" );
 			},
 			
 			shareOnFacebook: function() {

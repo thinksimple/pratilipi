@@ -14,7 +14,8 @@
     				page-no="[[ pageNo ]]"
     				index="{{ index }}"
     				content-type="{{ contentType }}"
-    				stage="{{ stage }}"></pratilipi-reader-header>
+    				stage="{{ stage }}"
+    				version="{{ version }}"></pratilipi-reader-header>
 		</header>
 		<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
 		<pratilipi-alert></pratilipi-alert>
@@ -261,10 +262,16 @@
 			
 			// Reader functions
 			redirectToWriterPanel: function() {
-				window.location.href = this.pratilipi.writePageUrl +
-					( this.pratilipi.writePageUrl.indexOf( "?" ) != -1 ? "&" : "?" ) + 
-					"ret=" +
-					( getUrlParameter( "ret" ) != null ? getUrlParameter( "ret" ) : this.pratilipi.pageUrl );
+				if( this.stage == "gamma" ) {
+					window.location.href = "/pratilipi-write?id=" + this.pratilipi.pratilipiId;
+					
+				} else {
+					window.location.href = this.pratilipi.writePageUrl +
+						( this.pratilipi.writePageUrl.indexOf( "?" ) != -1 ? "&" : "?" ) + 
+						"ret=" +
+						( getUrlParameter( "ret" ) != null ? getUrlParameter( "ret" ) : this.pratilipi.pageUrl );
+				}
+				
 			},
 			
 			exitReader: function() {
