@@ -1151,7 +1151,7 @@ public class PratilipiSite extends HttpServlet {
 			PratilipiContentV2Api.GetResponse res = (PratilipiContentV2Api.GetResponse) ApiRegistry
 																		.getApi( PratilipiContentV2Api.class )
 																		.get( req );
-			content = res.getContent();
+			content = new Gson().toJson( res.getContent() );
 		}
 		
 		Gson gson = new Gson();
