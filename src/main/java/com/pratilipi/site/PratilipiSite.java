@@ -24,6 +24,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.pratilipi.api.ApiRegistry;
 import com.pratilipi.api.impl.author.AuthorApi;
 import com.pratilipi.api.impl.author.AuthorListApi;
@@ -72,6 +73,8 @@ import com.pratilipi.data.type.Blog;
 import com.pratilipi.data.type.Navigation;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.type.PratilipiContentDoc;
+import com.pratilipi.data.type.doc.PratilipiContentDocImpl;
 import com.pratilipi.data.util.BlogPostDataUtil;
 import com.pratilipi.data.util.EventDataUtil;
 import com.pratilipi.data.util.PratilipiDataUtil;
@@ -1148,10 +1151,23 @@ public class PratilipiSite extends HttpServlet {
 		} else if( pratilipi.getContentType() == PratilipiContentType.IMAGE ) {
 			PratilipiContentV2Api.GetRequest req = new PratilipiContentV2Api.GetRequest();
 			req.setPratilipiId( pratilipiId );
+			if( basicMode )
+				req.setChapterNo( pageNo );
 			PratilipiContentV2Api.GetResponse res = (PratilipiContentV2Api.GetResponse) ApiRegistry
 																		.getApi( PratilipiContentV2Api.class )
 																		.get( req );
-			content = new Gson().toJson( res.getContent() );
+
+			if( basicMode ) {
+				PratilipiContentDoc.Chapter chapter = new Gson().fromJson( res.getContent().toString(), PratilipiContentDocImpl.ChapterImpl.class );
+				JsonObject jsonObject = new Gson().fromJson( chapter.getPage( 1 ).getPageletList().get( 0 ).getData(), JsonObject.class );
+				String imageName = jsonObject.get( "name" ).getAsString();
+				content = "<img src=\"/api/pratilipi/content/image?pratilipiId=" + pratilipi.getId() + "&name=" + imageName + "\" />";
+
+			} else {
+				content = new Gson().toJson( res.getContent() );
+
+			}
+
 		}
 		
 		Gson gson = new Gson();

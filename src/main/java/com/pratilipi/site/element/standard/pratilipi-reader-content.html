@@ -216,7 +216,7 @@
 
 			// Content
 			_onContentChange: function() {
-				if( this.contentMap == null || jQuery.isEmptyObject( this.contentMap ) ) {
+				if( this.contentType == "IMAGE" && ( this.contentMap == null || jQuery.isEmptyObject( this.contentMap ) ) ) {
 					jQuery( this.querySelector( '#reader-content' ) ).html( "<paper-spinner class=\"pratilipi-spinner-center\" active></paper-spinner>" );
 					return;
 				}
@@ -242,7 +242,7 @@
 			getImageUrl: function( pageNo ) {
 				return "<img src='/api/pratilipi/content/image?pratilipiId=" + 
 							this.pratilipiId + "&" + 
-							"pageNo=" + this.contentMap[ pageNo ] + "' />";
+							"name=" + this.contentMap[ pageNo ] + "' />";
 			},
 
 			_precache: function() {
