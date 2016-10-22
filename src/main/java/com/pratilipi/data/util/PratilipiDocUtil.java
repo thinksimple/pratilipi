@@ -283,7 +283,7 @@ public class PratilipiDocUtil {
 				if( node.nodeName().equals( "p" ) ) {
 
 					AlignmentType alignment = null;
-					if( node.attr( "style" ) != null && ! node.attr( "style" ).trim().isEmpty() )
+					if( node.hasAttr( "style" ) && ! node.attr( "style" ).trim().isEmpty() )
 						for( String style : node.attr( "style" ).split( ";" ) )
 							if( style.substring( 0, style.indexOf( ":" ) ).trim().equals( "text-align" ) )
 								alignment = AlignmentType.valueOf( style.substring( style.indexOf( ":" ) + 1 ).trim().toUpperCase() );
@@ -543,16 +543,31 @@ public class PratilipiDocUtil {
 		
 		List<Object[]> pageletList = new LinkedList<>();
 		
-		Node prevNode = null;
-		Object[] pagelet = null;
+		Object[] currPagelet = null;
 		for( Node childNode : node.childNodes() ) {
 			
 			if( childNode.nodeName().equals( "body" )
 					|| childNode.nodeName().equals( "div" )
 					|| childNode.nodeName().equals( "p" ) ) {
 				
-				pagelet = null;
-				pageletList.addAll( _createPageletList( pratilipi, childNode ) );
+				currPagelet = null;
+
+				List<Object[]> pList = _createPageletList( pratilipi, childNode );
+				
+				if( pList.size() == 0 ) {
+					pageletList.add( new Object[] { PratilipiContentDoc.PageletType.HTML, "<br/>", null } );
+				} else {
+					AlignmentType alignment = null;
+					if( childNode.hasAttr( "style" ) && ! node.attr( "style" ).trim().isEmpty() )
+						for( String style : node.attr( "style" ).split( ";" ) )
+							if( style.substring( 0, style.indexOf( ":" ) ).trim().equals( "text-align" ) )
+								alignment = AlignmentType.valueOf( style.substring( style.indexOf( ":" ) + 1 ).trim().toUpperCase() );
+					if( alignment != null )
+						for( Object[] pagelet : pList )
+							if( pagelet[2] == null && ( pagelet[1] == PratilipiContentDoc.PageletType.TEXT || pagelet[1] == PratilipiContentDoc.PageletType.HTML ) )
+								pagelet[2] = alignment;
+					pageletList.addAll( pList );
+				}
 				
 			} else if( childNode.nodeName().equals( "h1" ) || childNode.nodeName().equals( "h2" ) ) {
 				
@@ -560,16 +575,16 @@ public class PratilipiDocUtil {
 				if( text == null )
 					continue;
 				
-				if( pagelet != null && pagelet[0] == PratilipiContentDoc.PageletType.HEAD ) {
-					pagelet[1] = pagelet[1] + " - " + text;
+				if( currPagelet != null && currPagelet[0] == PratilipiContentDoc.PageletType.HEAD ) {
+					currPagelet[1] = currPagelet[1] + " - " + text;
 				} else {
-					pagelet = new Object[] { PratilipiContentDoc.PageletType.HEAD, text };
-					pageletList.add( pagelet );
+					currPagelet = new Object[] { PratilipiContentDoc.PageletType.HEAD, text, null };
+					pageletList.add( currPagelet );
 				}
 				
 			} else if( childNode.nodeName().equals( "img" ) ) {
 				
-				pagelet = null;
+				currPagelet = null;
 				
 				BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
 				BlobEntry blobEntry = null;
@@ -630,36 +645,28 @@ public class PratilipiDocUtil {
 				imgData.addProperty( "height", ImageUtil.getHeight( blobEntry.getData() ) );
 				imgData.addProperty( "width", ImageUtil.getWidth( blobEntry.getData() ) );
 				
-				pageletList.add( new Object[] { PratilipiContentDoc.PageletType.IMAGE, imgData } );
+				pageletList.add( new Object[] { PratilipiContentDoc.PageletType.IMAGE, imgData, null } );
 				
 			} else if( childNode.nodeName().equals( "br" ) ) {
 				
-				if( pagelet != null )
-					pagelet[1] = pagelet[1] + "<br/>";
+				if( currPagelet != null && ( currPagelet[0] == PratilipiContentDoc.PageletType.TEXT ||  currPagelet[0] == PratilipiContentDoc.PageletType.HTML ) )
+					currPagelet[1] = currPagelet[1] + "<br/>";
 				
 			} else {
 				
 				String text  = _extractText( childNode );
 				if( text == null )
 					continue;
-				if( pagelet == null || pagelet[0] != PratilipiContentDoc.PageletType.HTML ) {
-					pagelet = new Object[] { PratilipiContentDoc.PageletType.HTML, text };
-					pageletList.add( pagelet );
+				if( currPagelet == null || currPagelet[0] != PratilipiContentDoc.PageletType.HTML ) {
+					currPagelet = new Object[] { PratilipiContentDoc.PageletType.HTML, text, null };
+					pageletList.add( currPagelet );
 				} else {
-					pagelet[1] = pagelet[1] + " " + text;
+					currPagelet[1] = currPagelet[1] + " " + text;
 				}
 				
 			}
 			
-			
-			prevNode = childNode;
-			
 		}
-		
-		
-		if( pageletList.size() == 0 )
-			pageletList.add( new Object[] { PratilipiContentDoc.PageletType.TEXT, "" } );
-		
 		
 		return pageletList;
 		
