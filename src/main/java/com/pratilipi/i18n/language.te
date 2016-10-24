@@ -353,6 +353,7 @@ writer_read_copyright = కాపీరైటు పాలసీని చదవ
 writer_to_next_screen = తరువాత
 writer_publish = ప్రచురించండి
 writer_save = సేవ్ చేయండి
+writer_dont_save = సేవ్ చేయవద్దు
 writer_preview = ప్రివ్యూ
 writer_changes_saved = మీ చేసిన మార్పులు సేవ్ చేయబడ్డాయి
 writer_add_new_chapter = కొత్త అధ్యాయం
@@ -384,6 +385,7 @@ writer_accept_copyright = నేను కాపీరైటు పాలసీ 
 writer_error_title_required = దయచేసి శీర్షికను రాయండి
 writer_error_category_required = దయచేేసి విభాగాన్ని ఎంచుకోండి
 writer_error_copyright_required = దయచేసి కాపీరైటు పాలసీ మరియు నిబంధనలను అంగీకరించండి
+writer_save_changes_confirmation = మీరు ముందుకెళ్లేందుకు ఈ మార్పులు సేవ్ చేయాలని భావిస్తున్నారా?
 pratilipi_add_summary = దయచేసి ఇక్కడ క్లిక్ చేసి సంగ్రహాన్ని రాయండి
 
 # Android App launch

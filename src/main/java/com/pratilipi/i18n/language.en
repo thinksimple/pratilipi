@@ -353,6 +353,7 @@ writer_read_copyright = Read copyright policy here
 writer_to_next_screen = Next
 writer_publish = Publish
 writer_save = Save
+writer_dont_save = Don't save
 writer_preview = Preview
 writer_changes_saved = All changes saved
 writer_add_new_chapter = New Chapter
@@ -384,6 +385,7 @@ writer_accept_copyright = I accept Copyright Policy and Terms of Services
 writer_error_title_required = Please enter a title
 writer_error_category_required = Please select a category
 writer_error_copyright_required = Please accept Copyright Policy and Terms of Services
+writer_save_changes_confirmation = Do you want to save these changes before going forward?
 pratilipi_add_summary = Please click here to add summary
 
 # Android App launch

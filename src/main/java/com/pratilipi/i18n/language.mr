@@ -353,6 +353,7 @@ writer_read_copyright = कॉपीराईट पॉलिसी इथे �
 writer_to_next_screen = पुढे 
 writer_publish = प्रकाशित करा 
 writer_save = जतन करा 
+writer_dont_save = Don't save
 writer_preview = पूर्वावलोकन
 writer_changes_saved = सर्व बदल जतन 
 writer_add_new_chapter = नवीन धडा
@@ -384,6 +385,7 @@ writer_accept_copyright = मी कॉपीराइट धोरण आणि
 writer_error_title_required = कृपया शिर्षक लिहा
 writer_error_category_required = कृपया  श्रेणी निवडा 
 writer_error_copyright_required = कृपया कॉपीराइट धोरण आणि सेवा अटी स्वीकार करा
+writer_save_changes_confirmation = Do you want to save these changes before going forward?
 pratilipi_add_summary = सारांश जोडण्यासाठी करण्यासाठी येथे क्लिक करा
 
 # Android App launch

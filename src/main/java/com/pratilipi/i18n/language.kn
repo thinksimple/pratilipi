@@ -352,7 +352,8 @@ writer_you_own_copyright = ಬರಹದ ಕೃತಿಸ್ವಾಮ್ಯ ನಿ
 writer_read_copyright = ಕೃತಿಸ್ವಾಮ್ಯ ನೀತಿಯನ್ನು ಇಲ್ಲಿ ಓದಿರಿ 
 writer_to_next_screen = ನಂತರ 
 writer_publish = ಪ್ರಕಟಿಸಿ 
-writer_save = ಸಂರಕ್ಷಿಸಿ 
+writer_save = ಸಂರಕ್ಷಿಸಿ
+writer_dont_save = ಸಂರಕ್ಷಿಸುವುದು ಬೇಡ  
 writer_preview = ಪ್ರಿವ್ಯೂ 
 writer_changes_saved = ಬದಲಾವಣೆಗಳು ಸಂರಕ್ಷಿತವಾಗಿವೆ 
 writer_add_new_chapter = ಹೊಸ ಅಧ್ಯಾಯ
@@ -383,7 +384,8 @@ writer_saving = ಸಂರಕ್ಷಿತವಾಗುತ್ತಿದೆ
 writer_accept_copyright = ನಾನು ಕೃತಿಸ್ವಾಮ್ಯ ನೀತಿ ಹಾಗೂ ಸೇವಾ ನಿಯಮಗಳನ್ನು ಒಪ್ಪಿಕೊಳ್ಳುತ್ತೇನೆ 
 writer_error_title_required = ದಯವಿಟ್ಟು ಶೀರ್ಷಿಕೆಯನ್ನು ನಮೂದಿಸಿ 
 writer_error_category_required = ದಯವಿಟ್ಟು ಪ್ರಭೇದವನ್ನು ಆಯ್ಕೆಮಾಡಿಕೊಳ್ಳಿ 
-writer_error_copyright_required = ದಯವಿಟ್ಟು ಕೃತಿಸ್ವಾಮ್ಯ ನೀತಿ ಹಾಗೂ ಸೇವಾ ನಿಯಮಗಳಿಗೆ ಒಪ್ಪಿಗೆ ನೀಡಿ 
+writer_error_copyright_required = ದಯವಿಟ್ಟು ಕೃತಿಸ್ವಾಮ್ಯ ನೀತಿ ಹಾಗೂ ಸೇವಾ ನಿಯಮಗಳಿಗೆ ಒಪ್ಪಿಗೆ ನೀಡಿ
+writer_save_changes_confirmation = ಮುಂದಿನ ಕ್ರಿಯೆಗೆ ಸಾಗುವ ಮುನ್ನ ನೀವು ಈ ಬದಲಾವಣೆಗಳನ್ನು ಸಂರಕ್ಷಿಸಲು ಬಯಸುವಿರಾ? 
 pratilipi_add_summary = ಸಾರಾಂಶವನ್ನು ಸೇರಿಸಲು ದಯವಿಟ್ಟು ಇಲ್ಲಿ ಕ್ಲಿಕ್ ಮಾಡಿ 
 
 # Android App launch

@@ -111,9 +111,9 @@
 				this.updateUser( this.userData );
 
 				if( getUrlParameter( 'action' ) != null ) {
-					if( getUrlParameter( 'action' ) == "login" )
+					if( getUrlParameter( 'action' ) == "login" && this.user.isGuest )
 						this.logIn();
-					else if( getUrlParameter( 'action' ) == "register" )
+					else if( getUrlParameter( 'action' ) == "register" && this.user.isGuest )
 						this.register();
 					else if( getUrlParameter( 'action' ) == "start_writing" )
 						this.startWriting();
