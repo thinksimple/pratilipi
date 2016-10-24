@@ -160,7 +160,7 @@ MainWriterPanel.prototype.attachActionButtonListeners = function() {
 	}
 	
 	this.$publish_button.on('click', function() {
-		_this.saveChapter( true );
+		_this.saveChapter();
 	} );
 	
 	this.$preview_button.on('click', function() {
@@ -169,9 +169,18 @@ MainWriterPanel.prototype.attachActionButtonListeners = function() {
 	} );
 	
 	this.$back_button.on('click', function(e) {
-		if( this.lastSavedContent != this.content_object.getContent() ) {
-		    alert("Please save your changes before leaving");
-		    e.preventDefault();
+		var _this = this;
+		if( this.hasUnsavedChanges() ) {
+			  e.preventDefault();
+			  var a = this.confirmLeavingWithoutSaving();
+			  a.then(function (b) {
+			    if( b == "save" ) {
+			    	_this.saveChapter();
+			    }
+			    else {
+					window.location = "${ pratilipi.getPageUrl() }";
+			    }
+			  });
 		}
 	} );
 	
@@ -218,7 +227,6 @@ MainWriterPanel.prototype.addNewChapter = function( chapterNum ) {
 	if( this.hasUnsavedChanges() ) {
 		  var a = this.confirmLeavingWithoutSaving();
 		  a.then(function (b) {
-		    console.log(b);
 		    if( b == "save" ) {
 		    	_this.saveChapter();
 		    }
@@ -368,9 +376,9 @@ MainWriterPanel.prototype.setCurrentPage = function( chapterNum ) {
 	if( this.hasUnsavedChanges() ) {
 		  var a = this.confirmLeavingWithoutSaving();
 		  a.then(function (b) {
-		    console.log(b);
 		    if( b == "save" ) {
 		    	_this.saveChapter();
+		    	_this.pagination_object.setCurrentPageNo();
 		    }
 		    else {
 		    	_this.ajaxSetCurrentPage( chapterNum );

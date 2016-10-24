@@ -84,7 +84,6 @@ TableOfContents.prototype.delegateDeleteChapterListeners = function() {
 		if( _this.parent_object.hasUnsavedChanges() && ( _this.parent_object.currChapter >= chapterNum ) && _this.parent_object.currChapter != 1) {
 			  var a = _this.parent_object.confirmLeavingWithoutSaving();
 			  a.then(function (b) {
-			    console.log(b);
 			    if( b == "save" ) {
 			    	_this.parent_object.saveChapter();
 			    }
