@@ -80,6 +80,7 @@ TableOfContents.prototype.delegateDeleteChapterListeners = function() {
 	this.$dropdown_menu_list.on("click", "img[data-behaviour=delete-chapter]", function(e) {
 		e.stopPropagation();
 		var chapter_object = $(this).data("relatedObject");
+		var chapterNum = chapter_object.chapterNo;
 		if( _this.parent_object.hasUnsavedChanges() && ( _this.parent_object.currChapter >= chapterNum ) && _this.parent_object.currChapter != 1) {
 			  var a = _this.parent_object.confirmLeavingWithoutSaving();
 			  a.then(function (b) {
