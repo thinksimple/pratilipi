@@ -177,6 +177,7 @@ MainWriterPanel.prototype.attachActionButtonListeners = function() {
 			  a.then(function (b) {
 			    if( b == "save" ) {
 			    	_this.saveChapter();
+			    	_this.writer_back_button_active = false;
 			    }
 			    else {
 					window.location = "${ pratilipi.getPageUrl() }";
