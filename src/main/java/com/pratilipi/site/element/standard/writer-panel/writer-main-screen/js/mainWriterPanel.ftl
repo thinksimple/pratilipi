@@ -180,6 +180,7 @@ MainWriterPanel.prototype.attachActionButtonListeners = function() {
 			    	_this.writer_back_button_active = false;
 			    }
 			    else {
+			    	_this.saveChapter( true );
 					window.location = "${ pratilipi.getPageUrl() }";
 			    }
 			  });
