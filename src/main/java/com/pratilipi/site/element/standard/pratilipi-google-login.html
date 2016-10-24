@@ -5,40 +5,41 @@
 			display: block;
 			text-align: center;
 		}
-		.customBtn {
+		button.google-button {
 			margin: 0 auto;
-			background: white;
-			color: #FFFFFF;
-			border-radius: 2px;
-			border: thin solid #4285F4;
-			white-space: nowrap;
-			cursor: pointer;
-			outline: none;
+			margin-bottom: 12px;
 			background-color: #4285F4;
-			padding: 1px;
+			color: #FFFFFF;
+			border: none;
+			border-radius: 2px;
+			white-space: nowrap;
+			outline: none;
+			padding: 2px;
+			width: 270px;
 		}
-		span.icon {
-			background: url('http://0.ptlp.co/resource-all/icon/png/g-logo.png');
-			background-size: contain;
+		button.google-button span.icon {
 			display: inline-block;
+			background-image: url('http://0.ptlp.co/resource-all/icon/png/g-logo.png');
+			background-size: contain;
 			vertical-align: middle;
 			width: 36px;
 			height: 36px;
+			float: left;
 		}
-		span.buttonText {
+		button.google-button span.button-text {
 			display: inline-block;
 			vertical-align: middle;
-			padding-left: 32px;
-			padding-right: 32px;
+			text-align: center;
 			font-size: 14px;
 			font-weight: bold;
+			line-height: 36px;
 		}
 	</style>
 
 	<template>
-		<button id="googleLoginButton" class="customBtn">
+		<button id="googleLoginButton" class="google-button">
 			<span class="icon"></span>
-			<span class="buttonText">Sign in with Google</span>
+			<span class="button-text">Sign in with Google</span>
 		</button>
 
 		<iron-ajax
