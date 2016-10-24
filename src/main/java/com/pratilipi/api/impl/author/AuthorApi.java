@@ -7,6 +7,7 @@ import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.impl.pratilipi.PratilipiListV1Api;
+import com.pratilipi.api.impl.pratilipi.PratilipiListV2Api;
 import com.pratilipi.api.impl.pratilipi.PratilipiV1Api;
 import com.pratilipi.api.impl.pratilipi.PratilipiV2Api;
 import com.pratilipi.api.impl.user.UserApi;
@@ -323,7 +324,8 @@ public class AuthorApi extends GenericApi {
 
 				this.hasAccessToUpdate = authorData.hasAccessToUpdate();
 				
-			} else if( clazz == PratilipiV1Api.class || clazz == PratilipiV2Api.class || clazz == PratilipiListV1Api.class ) {
+			} else if( clazz == PratilipiV1Api.class || clazz == PratilipiV2Api.class
+					|| clazz == PratilipiListV1Api.class || clazz == PratilipiListV2Api.class ) {
 
 				if( UxModeFilter.isAndroidApp() )
 					this.authorId = authorData.getId();
