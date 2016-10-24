@@ -16,6 +16,7 @@ import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.analytics.Analytics;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -83,12 +84,14 @@ public class GoogleApi {
 			}
 
 			Payload payload = idToken.getPayload();
-			
+			logger.log( Level.INFO, "GoogleApi Payload : " + new Gson().toJson( payload ) );
+
 			UserData userData = new UserData();
 			userData.setGoogleId( payload.getSubject() );
 			userData.setFirstName( (String) payload.get( "given_name" ) );
 			userData.setLastName( (String) payload.get( "family_name" ) );
 			userData.setEmail( payload.getEmail() );
+
 			return userData;
 
 		} catch( GeneralSecurityException | IOException e ) {
