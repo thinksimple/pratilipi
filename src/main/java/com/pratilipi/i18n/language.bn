@@ -156,6 +156,7 @@ write_select_type			= শ্রেণী
 user_sign_in			= সাইন ইন করুন
 user_to_sign_in			= আরম্ভ  করুন
 user_sign_in_with_facebook	= ফেসবুকের সাথে সাইন ইন করুন
+user_sign_in_with_google	= গুগল সাইন ইন
 user_sign_in_to_pratilipi	= প্রতিলিপিতে সাইন ইন করুন
 user_sign_out			= সাইন আউট করুন
 user_sign_up			= নতুন একাউন্ট বানান

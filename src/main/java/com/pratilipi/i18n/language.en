@@ -156,6 +156,7 @@ write_select_type			= Please select the type.
 user_sign_in				= Sign In
 user_to_sign_in				= To Sign In
 user_sign_in_with_facebook	= Sign In with Facebook
+user_sign_in_with_google	= Sign In with Google
 user_sign_in_to_pratilipi	= Sign in to Pratilipi
 user_sign_out				= Sign Out
 user_sign_up				= Sign Up !
