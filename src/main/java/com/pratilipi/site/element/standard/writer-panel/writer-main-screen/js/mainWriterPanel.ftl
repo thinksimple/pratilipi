@@ -123,6 +123,7 @@ MainWriterPanel.prototype.initializeGlobalVariables = function() {
 		this.currChapter = 0;	
 	}	
 	this.lastSavedContent = "";
+	this.writer_back_button_active = false;
 };
 
 MainWriterPanel.prototype.initializeData = function() {
@@ -169,6 +170,7 @@ MainWriterPanel.prototype.attachActionButtonListeners = function() {
 	} );
 	
 	this.$back_button.on('click', function(e) {
+		_this.writer_back_button_active = true;
 		if( _this.hasUnsavedChanges() ) {
 			  e.preventDefault();
 			  var a = _this.confirmLeavingWithoutSaving();
@@ -468,8 +470,9 @@ MainWriterPanel.prototype.preventBackspaceDefaultAction = function() {
 MainWriterPanel.prototype.preventUserFromLeaving = function() {
 	var _this = this;
 	$(window).bind("beforeunload",function(event) {
-		if( _this.lastSavedContent != _this.content_object.getContent() ) {
+		if( _this.lastSavedContent != _this.content_object.getContent() && !_this.writer_back_button_active ) {
 		    return true;
 		}
+		_this.writer_back_button_active = false;
 	});
 };
