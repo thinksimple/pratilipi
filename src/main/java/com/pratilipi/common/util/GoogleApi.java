@@ -20,7 +20,9 @@ import com.google.api.services.analytics.Analytics;
 import com.google.gson.JsonObject;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.client.UserData;
+import com.pratilipi.data.type.AppProperty;
 
 public class GoogleApi {
 
@@ -31,7 +33,7 @@ public class GoogleApi {
 			Logger.getLogger( GoogleApi.class.getName() );
 
 	private static String getWebClientId() {
-		return null;
+		return DataAccessorFactory.getDataAccessor().getAppProperty( AppProperty.GOOGLE_WEB_CLIENT_ID ).getValue();
 	}
 
 	private static HttpRequestInitializer getCredential( Collection<String> scopes ) {
