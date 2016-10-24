@@ -170,9 +170,9 @@ MainWriterPanel.prototype.attachActionButtonListeners = function() {
 	
 	this.$back_button.on('click', function(e) {
 		var _this = this;
-		if( this.hasUnsavedChanges() ) {
+		if( _this.hasUnsavedChanges() ) {
 			  e.preventDefault();
-			  var a = this.confirmLeavingWithoutSaving();
+			  var a = _this.confirmLeavingWithoutSaving();
 			  a.then(function (b) {
 			    if( b == "save" ) {
 			    	_this.saveChapter();
