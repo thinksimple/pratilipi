@@ -369,7 +369,7 @@
 		<iron-ajax
 				id="NotificationListApi"
 				url="/api/notification/list"
-				params='{"resultCount": 5}'
+				params='{"resultCount": 20}'
 				method="GET"
 				content-type="application/json"
 				handle-as="json"
@@ -521,8 +521,6 @@
 
 			_notificationListApiError: function( ajaxResponse ) {
 				this.set( 'loadingNotifications', false );
-				var re = {"notificationList":[{"notificationId":5410737481580544,"androidHandler":"NOTIFICATION_FOLLOWERS","message":"\u003cb\u003eAnuja Shukla\u003c/b\u003e உங்களைப் பின் தொடர்கிறார்","sourceId":"6417298248171520","sourceUrl":"/followers?notifId\u003d5410737481580544","displayImageUrl":"http://3.ptlp.co/author/image?authorId\u003d5682053174525952\u0026version\u003d1473855987627","state":"UNREAD","lastUpdatedMillis":1474281361040},{"notificationId":4818471423574016,"androidHandler":"NOTIFICATION_FOLLOWERS","sourceId":"6417298248171520","sourceUrl":"/followers?notifId\u003d4818471423574016","state":"UNREAD","lastUpdatedMillis":1474032300479},{"notificationId":6607432542322688,"androidHandler":"NOTIFICATION_BOOK","message":"\u003cb\u003eविभव शुक्ला\u003c/b\u003e ஒரு படைப்பைப் பதிப்பித்துள்ளார் :  \u003c/b\u003eबस यूँ ही...\u003c/b\u003e ","sourceId":"5735433986113536","sourceUrl":"/pratilipi/5735433986113536?notifId\u003d6607432542322688","sourceImageUrl":"http://10.ptlp.co/pratilipi/cover","displayImageUrl":"http://2.ptlp.co/author/image?authorId\u003d6016261670567936\u0026version\u003d1452117650000","state":"READ","lastUpdatedMillis":1473852780881},{"notificationId":4665451201167360,"androidHandler":"NOTIFICATION_FOLLOWERS","sourceId":"6417298248171520","sourceUrl":"/followers?notifId\u003d4665451201167360","state":"UNREAD","lastUpdatedMillis":1473315660665},{"notificationId":5438396550873088,"androidHandler":"NOTIFICATION_BOOK","sourceId":"5699950235090944","state":"UNREAD","lastUpdatedMillis":1473238200626}],"cursor":"Ck4KGQoMTEFTVF9VUERBVEVEEgkI0Nb4_O_8zgISLWoQc35wcm9kLXByYXRpbGlwaXIZCxIMTk9USUZJQ0FUSU9OGICAwPSVxtQJDBgAIAE"};
-				this.set( 'popupNotificationList', re.notificationList );
 			},
 
 			updateNewNotificationCount: function( newNotificationCount ) {
