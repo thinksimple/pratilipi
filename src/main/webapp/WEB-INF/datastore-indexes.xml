@@ -7,6 +7,12 @@
 	</datastore-index>
 
 	<datastore-index kind="USER" ancestor="false" source="manual">
+		<property name="GOOGLE_ID" direction="asc"/>
+		<property name="STATE" direction="asc"/>
+		<property name="SIGN_UP_DATE" direction="asc"/>
+	</datastore-index>
+
+	<datastore-index kind="USER" ancestor="false" source="manual">
 		<property name="EMAIL" direction="asc"/>
 		<property name="STATE" direction="asc"/>
 		<property name="SIGN_UP_DATE" direction="asc"/>
