@@ -135,7 +135,7 @@ MainWriterPanel.prototype.initializeData = function() {
 	}
 	else {
 		/* make a new chapter call asychrolously and populate the index */
-		this.addNewChapter();
+		this.ajaxAddNewChapter();
 	}
 };
 
@@ -285,10 +285,10 @@ MainWriterPanel.prototype.removeChapter = function( chapterNum ) {
 	        	_this.index = index;
 	        	if( _this.currChapter >= chapterNum ) {
 	        		if( _this.currChapter == 1 ) {
-	        			_this.setCurrentPage( 1 );	
+	        			_this.ajaxSetCurrentPage( 1 );	
 	        		}
 	        		else {
-	        			_this.setCurrentPage( _this.currChapter - 1 );
+	        			_this.ajaxSetCurrentPage( _this.currChapter - 1 );
 	        		}
 	        	}	        	
 	        	_this.table_of_contents_object.populateIndex( _this.index );
@@ -373,15 +373,18 @@ MainWriterPanel.prototype.setCurrentPage = function( chapterNum ) {
 		    	_this.saveChapter();
 		    }
 		    else {
-		    	_this.currChapter = chapterNum;
-				_this.getChapter( chapterNum );
+		    	_this.ajaxSetCurrentPage( chapterNum );
 		    }
 		  });
 	}
 	else {
-		this.currChapter = chapterNum;
-		this.getChapter( chapterNum );
+		this.ajaxSetCurrentPage( chapterNum );
 	}
+};
+
+MainWriterPanel.prototype.ajaxSetCurrentPage = function( chapterNum ) {
+	this.currChapter = chapterNum;
+	this.getChapter( chapterNum );
 };
 
 MainWriterPanel.prototype.confirmLeavingWithoutSaving = function() {

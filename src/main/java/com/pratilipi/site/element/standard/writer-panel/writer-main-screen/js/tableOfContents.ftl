@@ -80,16 +80,35 @@ TableOfContents.prototype.delegateDeleteChapterListeners = function() {
 	this.$dropdown_menu_list.on("click", "img[data-behaviour=delete-chapter]", function(e) {
 		e.stopPropagation();
 		var chapter_object = $(this).data("relatedObject");
-		_this.$deleteConfirmationModal.find(".modal-title").text( chapter_object.name );
-		_this.$deleteConfirmationModal.modal('show');
-		
-		_this.$deleteConfirmationModal.find('#ok_button').one('click', function() {
-		    _this.$deleteConfirmationModal.modal('hide');
-		    _this.parent_object.removeChapter( chapter_object.chapterNo );
-	    });		
-		
+		if( _this.parent_object.hasUnsavedChanges() && ( _this.parent_object.currChapter >= chapterNum ) && _this.parent_object.currChapter != 1) {
+			  var a = _this.parent_object.confirmLeavingWithoutSaving();
+			  a.then(function (b) {
+			    console.log(b);
+			    if( b == "save" ) {
+			    	_this.parent_object.saveChapter();
+			    }
+			    else {
+					_this.deleteSelectedChapter( chapter_object );
+			    }
+			  });
+		}
+		else {
+			_this.deleteSelectedChapter( chapter_object );
+		}
+			
 	});
 };
+
+TableofContent.prototype.deleteSelectedChapter = function( chapter_object ) {
+	var _this = this;
+	this.$deleteConfirmationModal.find(".modal-title").text( chapter_object.name );
+	this.$deleteConfirmationModal.modal('show');
+	
+	this.$deleteConfirmationModal.find('#ok_button').one('click', function() {
+	    _this.$deleteConfirmationModal.modal('hide');
+	    _this.parent_object.removeChapter( chapter_object.chapterNo );
+    });	
+}; 
 
 TableOfContents.prototype.removeEventListenersOnDeleteModalHide = function () {
  	var _this = this; 
