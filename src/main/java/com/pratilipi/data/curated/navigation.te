@@ -7,7 +7,7 @@
 /blog             బ్లాగు                  App#BlogPostList::{ "language":"TELUGU", "blogId":5683739602452480 }
 
 విభాగాలు
-/firstlove        తొలిప్రేమ రచనలు
+/firstlove        తొలిప్రేమ రచనలు        App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"firstlove" }
 /teluguculture    తెలుగు సంస్కృతి        App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"teluguculture" }
 /nonfiction       ఇతర రచనలు            App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"nonfiction" }
 /children         బాల సాహిత్యం            App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"children" }
