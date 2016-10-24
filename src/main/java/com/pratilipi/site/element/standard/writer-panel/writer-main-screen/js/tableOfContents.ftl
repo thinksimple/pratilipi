@@ -99,7 +99,7 @@ TableOfContents.prototype.delegateDeleteChapterListeners = function() {
 	});
 };
 
-TableofContent.prototype.deleteSelectedChapter = function( chapter_object ) {
+TableofContents.prototype.deleteSelectedChapter = function( chapter_object ) {
 	var _this = this;
 	this.$deleteConfirmationModal.find(".modal-title").text( chapter_object.name );
 	this.$deleteConfirmationModal.modal('show');
