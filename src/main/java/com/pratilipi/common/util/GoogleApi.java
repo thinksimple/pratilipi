@@ -33,7 +33,7 @@ public class GoogleApi {
 			Logger.getLogger( GoogleApi.class.getName() );
 
 	private static String getWebClientId() {
-		return DataAccessorFactory.getDataAccessor().getAppProperty( AppProperty.GOOGLE_WEB_CLIENT_ID ).getValue();
+		return "659873510744-kfim969enh181h4gbctffrjg5j47tfuq.apps.googleusercontent.com";
 	}
 
 	private static HttpRequestInitializer getCredential( Collection<String> scopes ) {
