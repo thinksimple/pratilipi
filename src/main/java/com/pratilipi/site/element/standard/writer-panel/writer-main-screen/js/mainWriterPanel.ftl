@@ -344,16 +344,17 @@ MainWriterPanel.prototype.saveChapter = function( autosaveFlag ) {
 };
 
 MainWriterPanel.prototype.setCurrentPage = function( chapterNum ) {
+	var _this = this;
 	if( this.hasUnsavedChanges() ) {
 		  var a = this.confirmLeavingWithoutSaving();
 		  a.then(function (b) {
 		    console.log(b);
 		    if( b == "save" ) {
-		    	this.saveChapter();
+		    	_this.saveChapter();
 		    }
 		    else {
-		    	this.currChapter = chapterNum;
-				this.getChapter( chapterNum );
+		    	_this.currChapter = chapterNum;
+				_this.getChapter( chapterNum );
 		    }
 		  });
 	}
