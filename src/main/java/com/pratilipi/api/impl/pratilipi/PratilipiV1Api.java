@@ -103,6 +103,7 @@ public class PratilipiV1Api extends GenericApi {
 		private String coverImageUrl;
 		private String readPageUrl;
 		private String writePageUrl;
+		private Boolean oldContent;
 
 		private PratilipiType type;
 		private PratilipiContentType contentType;
@@ -141,6 +142,7 @@ public class PratilipiV1Api extends GenericApi {
 			this.coverImageUrl = pratilipiData.getCoverImageUrl();
 			this.readPageUrl = pratilipiData.getReadPageUrl();
 			this.writePageUrl = pratilipiData.getWritePageUrl();
+			this.oldContent = pratilipiData.isOldContent();
 			if( UxModeFilter.isAndroidApp() )
 				this.contentType = pratilipiData.getContentType();
 

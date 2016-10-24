@@ -286,6 +286,7 @@ public class PratilipiDataUtil {
 				pratilipiData.setWritePageUrl( PageType.WRITE.getUrlPrefix() + pratilipi.getId() );
 		}
 
+		pratilipiData.setOldContent( pratilipi.isOldContent() );
 		pratilipiData.setType( pratilipi.getType() );
 		pratilipiData.setContentType( pratilipi.getContentType() );
 		pratilipiData.setState( pratilipi.getState() );
