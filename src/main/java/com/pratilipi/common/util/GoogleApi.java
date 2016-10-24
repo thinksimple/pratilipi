@@ -66,19 +66,16 @@ public class GoogleApi {
 		    							.setIssuer( "accounts.google.com" )
 		    							.build();
 
-		GoogleIdToken idToken;
-		logger.log( Level.INFO, "Google WEB client ID: " + getWebClientId() );
 		try {
 
-			idToken = verifier.verify( googleIdToken );
-			Payload payload = idToken.getPayload();
-
-			if( payload == null || ! payload.getAuthorizedParty().equals( getWebClientId() ) ) {
+			GoogleIdToken idToken = verifier.verify( googleIdToken );
+			if( idToken == null || idToken.getPayload() == null || ! idToken.getPayload().getAuthorizedParty().equals( getWebClientId() ) ) {
 				JsonObject jsonObject = new JsonObject();
 				jsonObject.addProperty( "googleIdToken", "Invalid GoogleIdToken!" );
 				throw new InvalidArgumentException( jsonObject );
 			}
 
+			Payload payload = idToken.getPayload();
 			UserData userData = new UserData();
 			userData.setGoogleId( payload.getSubject() );
 			userData.setFirstName( (String) payload.get( "given_name" ) );
