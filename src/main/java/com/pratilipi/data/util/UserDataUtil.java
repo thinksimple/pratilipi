@@ -471,7 +471,7 @@ public class UserDataUtil {
 		UserData googleUserData = GoogleApi.getUserData( googleIdToken );
 
 		return processFederatedLoginData( googleUserData, 
-						DataAccessorFactory.getDataAccessor().getUserByFacebookId( googleUserData.getFacebookId() ), 
+						DataAccessorFactory.getDataAccessor().getUserByGoogleId( googleUserData.getGoogleId() ), 
 						signUpSource );
 
 	}
