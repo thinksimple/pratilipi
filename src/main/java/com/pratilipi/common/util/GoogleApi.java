@@ -67,6 +67,7 @@ public class GoogleApi {
 		    							.build();
 
 		GoogleIdToken idToken;
+		logger.log( Level.INFO, "Google WEB client ID: " + getWebClientId() );
 		try {
 
 			idToken = verifier.verify( googleIdToken );
