@@ -508,12 +508,11 @@ public class PratilipiDocUtil {
 				
 				if( pratilipi.getId() == 5639838220943360L && i <= 5 )
 					continue; // Skipping first 5 pages as per Shally's request
-
-				else if( blobEntry == null
-						&& ( pratilipi.getId() == 5385510763626496L
-						|| pratilipi.getId() == 5768181499035648L
-						|| pratilipi.getId() == 5486454792781824L ) )
-					continue; // Known issues. Ignoring this just to keep task queue clear
+				else if( blobEntry == null && pratilipi.getId() == 5768181499035648L )
+					continue; // Skipping missing pages as per Dileepan's request
+				
+				else if( blobEntry == null && ( pratilipi.getId() == 5749258686824448L || pratilipi.getId() == 5486454792781824L ) )
+					continue; // Known issues. Waiting on Shally
 				
 				JsonObject imgData = new JsonObject();
 				imgData.addProperty( "name", i + "" );
