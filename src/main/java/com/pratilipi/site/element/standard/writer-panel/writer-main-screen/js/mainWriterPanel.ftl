@@ -215,6 +215,26 @@ MainWriterPanel.prototype.populateContent = function( parsed_data ) {
 
 MainWriterPanel.prototype.addNewChapter = function( chapterNum ) {
 	var _this = this;
+	if( this.hasUnsavedChanges() ) {
+		  var a = this.confirmLeavingWithoutSaving();
+		  a.then(function (b) {
+		    console.log(b);
+		    if( b == "save" ) {
+		    	_this.saveChapter();
+		    }
+		    else {
+				_this.ajaxAddNewChapter( chapterNum );
+		    }
+		  });
+	}
+	else {
+		this.ajaxAddNewChapter( chapterNum );
+	}
+};
+
+
+MainWriterPanel.prototype.ajaxAddNewChapter = function( chapterNum ) {
+	var _this = this;
 	var $spinner = $("<div>").addClass("spinner");
 	this.$panel_container.append( $spinner );
 	var ajaxData = { pratilipiId: ${ pratilipiId?c } };
