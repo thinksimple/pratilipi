@@ -169,7 +169,6 @@ MainWriterPanel.prototype.attachActionButtonListeners = function() {
 	} );
 	
 	this.$back_button.on('click', function(e) {
-		var _this = this;
 		if( _this.hasUnsavedChanges() ) {
 			  e.preventDefault();
 			  var a = _this.confirmLeavingWithoutSaving();
