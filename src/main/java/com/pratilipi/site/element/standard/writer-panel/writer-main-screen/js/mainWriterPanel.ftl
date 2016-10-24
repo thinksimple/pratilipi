@@ -168,8 +168,11 @@ MainWriterPanel.prototype.attachActionButtonListeners = function() {
 
 	} );
 	
-	this.$back_button.on('click', function() {
-		_this.saveChapter( true );
+	this.$back_button.on('click', function(e) {
+		if( this.lastSavedContent != this.content_object.getContent() ) {
+		    alert("Please save your changes before leaving");
+		    e.preventDefault();
+		}
 	} );
 	
 };
@@ -341,8 +344,44 @@ MainWriterPanel.prototype.saveChapter = function( autosaveFlag ) {
 };
 
 MainWriterPanel.prototype.setCurrentPage = function( chapterNum ) {
-	this.currChapter = chapterNum;
-	this.getChapter( chapterNum );
+	if( this.hasUnsavedChanges() ) {
+		  var a = this.confirmLeavingWithoutSaving();
+		  a.then(function (b) {
+		    console.log(b);
+		    if( b == "save" ) {
+		    	this.saveChapter();
+		    }
+		    else {
+		    	this.currChapter = chapterNum;
+				this.getChapter( chapterNum );
+		    }
+		  });
+	}
+	else {
+		this.currChapter = chapterNum;
+		this.getChapter( chapterNum );
+	}
+};
+
+MainWriterPanel.prototype.confirmLeavingWithoutSaving = function() {
+	  var dfd = jQuery.Deferred();
+	  var $confirm = $('#saveChangesModal');
+	  $confirm.modal('show');
+	  $confirm.find('[data-behaviour=save]').off('click').click(function () {
+	    $confirm.modal('hide');
+	    dfd.resolve("save");
+	    return 1;
+	  });
+	  $confirm.find('[data-behaviour=cancel]').off('click').click(function () {
+	    $confirm.modal('hide');
+	    dfd.resolve("cancel");
+	    return 1;
+	  });
+	  return dfd.promise();	
+};
+
+MainWriterPanel.prototype.hasUnsavedChanges = function() {
+	return ( this.lastSavedContent != this.content_object.getContent() );
 };
 
 MainWriterPanel.prototype.initializeAutosave = function() {
