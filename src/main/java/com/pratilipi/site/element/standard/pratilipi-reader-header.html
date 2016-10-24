@@ -313,6 +313,13 @@
 												</paper-item>
 											</a>
 										</li>
+										<li>
+											<a style="padding: 5px; margin: 0;" on-click="finaliseV2Version">
+												<paper-item>
+													<paper-item-body>Everything seems Okay!</paper-item-body>
+												</paper-item>
+											</a>
+										</li>
 									</template>
 									<template is="dom-if" if="{{ isVersion1 }}">
 										<li>
@@ -331,6 +338,14 @@
 				</tr>
 			</table>
 		</paper-card>
+		<iron-ajax
+				id="PratilipiApi"
+				url="/api/pratilipi"
+				method="GET"
+				content-type="application/json"
+				handle-as="json"
+				on-response="_handlePratilipiApiResponse"
+				></iron-ajax>
 	</template>
 
 	<script>
@@ -377,7 +392,7 @@
 				jQuery( "#navigationdropdown" ).css( 'max-width', ( width - 20 ) + "px", "important" );
 				
 				
-				this.set( "switchReaderOptions", this.stage == "gamma" );
+				this.set( "switchReaderOptions", this.stage == "gamma" && this.pratilipi.oldContent );
 				this.set( "isVersion1", this.version == "1" );
 				this.set( "isVersion2", this.version == "2" );
 			},
@@ -444,6 +459,18 @@
 
 			sepiaReadingMode: function() {
 				document.querySelector( 'pratilipi-reader-page' ).sepiaReadingMode();
+			},
+			
+			
+			finaliseV2Version: function() {
+				this.$.PratilipiApi.params.pratilipiId = this.pratilipi.pratilipiId;
+				this.$.PratilipiApi.params.oldContent = false;
+				this.$.PratilipiApi.generateRequest();
+			},
+			
+			_handlePratilipiApiResponse: function( event ) {
+				alert( "Success!" );
+				window.location.reload();
 			}
 			
 		});
