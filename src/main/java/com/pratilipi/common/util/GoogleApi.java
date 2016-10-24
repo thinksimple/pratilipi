@@ -23,15 +23,17 @@ import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.type.AppProperty;
+import com.pratilipi.filter.UxModeFilter;
 
 public class GoogleApi {
 
 	private static final Logger logger =
 			Logger.getLogger( GoogleApi.class.getName() );
 
-	private static GoogleIdTokenVerifier idTokenVerifier;
+	private static GoogleIdTokenVerifier webTokenVerifier;
+	private static GoogleIdTokenVerifier androidTokenVerifier;
 
-	
+
 	private static HttpRequestInitializer getCredential( Collection<String> scopes ) {
 		return new AppIdentityCredential( scopes ); // Works only on Google AppEngine
 	}
@@ -42,15 +44,28 @@ public class GoogleApi {
 				.getValue();
 	}
 
-	
-	public static GoogleIdTokenVerifier getIdTokenVerifier() {
-		if( idTokenVerifier == null )
-			 idTokenVerifier = new GoogleIdTokenVerifier
+	private static String getAppClientId() {
+		return null;
+	}
+
+	public static GoogleIdTokenVerifier getWebIdTokenVerifier() {
+		if( webTokenVerifier == null )
+			webTokenVerifier = new GoogleIdTokenVerifier
 					.Builder( new NetHttpTransport(), new JacksonFactory() )
 					.setAudience( Arrays.asList( getWebClientId() ) )
 					.setIssuer( "accounts.google.com" )
 					.build();
-		return idTokenVerifier;
+		return webTokenVerifier;
+	}
+
+	public static GoogleIdTokenVerifier getAndroidIdTokenVerifier() {
+		if( androidTokenVerifier == null )
+			androidTokenVerifier = new GoogleIdTokenVerifier
+					.Builder( new NetHttpTransport(), new JacksonFactory() )
+					.setAudience( Arrays.asList( getWebClientId() ) )
+					.setIssuer( "https://accounts.google.com" )
+					.build();
+		return androidTokenVerifier;
 	}
 	
 	public static Analytics getAnalytics( Collection<String> scopes )
@@ -76,8 +91,12 @@ public class GoogleApi {
 
 		try {
 
-			GoogleIdToken idToken = getIdTokenVerifier().verify( googleIdToken );
-			if( idToken == null || idToken.getPayload() == null || ! idToken.getPayload().getAuthorizedParty().equals( getWebClientId() ) ) {
+			GoogleIdToken idToken = UxModeFilter.isAndroidApp() 
+									? getAndroidIdTokenVerifier().verify( googleIdToken ) 
+									: getWebIdTokenVerifier().verify( googleIdToken );
+
+			String authorisedParty = UxModeFilter.isAndroidApp() ? getAppClientId() : getWebClientId();
+			if( idToken == null || idToken.getPayload() == null || ! idToken.getPayload().getAuthorizedParty().equals( authorisedParty ) ) {
 				JsonObject jsonObject = new JsonObject();
 				jsonObject.addProperty( "googleIdToken", "Invalid GoogleIdToken !" );
 				throw new InvalidArgumentException( jsonObject );
