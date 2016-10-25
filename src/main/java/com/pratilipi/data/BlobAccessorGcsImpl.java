@@ -87,6 +87,9 @@ public class BlobAccessorGcsImpl implements BlobAccessor {
 					= ByteBuffer.allocate( (int) gcsFileMetadata.getLength() );
 			gcsInputChannel.read( byteBuffer );
 		
+			if( byteBuffer.position() != gcsFileMetadata.getLength() )
+				logger.log( Level.SEVERE, "Byte buffer size of " + byteBuffer.position() + " is not same as content lenght of " + gcsFileMetadata.getLength() );
+			
 			return new BlobEntryGcsImpl( byteBuffer, gcsFileMetadata );
 			
 		} catch( IOException ex ) {
