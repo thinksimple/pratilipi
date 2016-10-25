@@ -406,7 +406,7 @@ public class PratilipiDataUtil {
 		// Processing search query
 		if( searchQuery != null )
 			searchQuery = searchQuery.toLowerCase().trim()
-					.replaceAll( ",|\\sor\\s", " " )
+					.replaceAll( ":|,|\\sor\\s", " " ).trim()
 					.replaceAll( "[\\s]+", " OR " );
 
 		// Fetching Pratilipi id list from DataStore/SearchIndex/Event
