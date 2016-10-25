@@ -45,7 +45,9 @@ public class GoogleApi {
 	}
 
 	private static String getAppClientId() {
-		return null;
+		return DataAccessorFactory.getDataAccessor()
+				.getAppProperty( AppProperty.GOOGLE_ANDROID_CLIENT_ID )
+				.getValue();
 	}
 
 	public static GoogleIdTokenVerifier getWebIdTokenVerifier() {
