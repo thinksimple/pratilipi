@@ -32,7 +32,7 @@ import com.pratilipi.taskqueue.Task;
 import com.pratilipi.taskqueue.TaskQueueFactory;
 
 @SuppressWarnings("serial")
-@Bind( uri = "/pratilipi" )
+@Bind( uri = "/pratilipi", ver = "1" )
 public class PratilipiV1Api extends GenericApi {
 	
 	public static class GetRequest extends GenericRequest {
@@ -165,7 +165,8 @@ public class PratilipiV1Api extends GenericApi {
 
 		public Response( PratilipiData pratilipi, Class<? extends GenericApi> clazz ) {
 			
-			if( clazz == InitV1Api.class || clazz == InitV2Api.class || clazz == PratilipiListV1Api.class ) {
+			if( clazz == InitV1Api.class || clazz == InitV2Api.class
+					|| clazz == PratilipiListV1Api.class || clazz == PratilipiListV2Api.class ) {
 				
 				this.pratilipiId = pratilipi.getId();
 				this.title = pratilipi.getTitle() == null ? pratilipi.getTitleEn() : pratilipi.getTitle();

@@ -34,9 +34,12 @@ public class GenericBatchApi extends GenericApi {
 	protected final void service( HttpServletRequest request, HttpServletResponse response )
 			throws ServletException, IOException {
 		
+		// Logging
 		if( SystemProperty.STAGE != SystemProperty.STAGE_PROD )
 			logHeaders( request );
+		logRequestParams( request );
 
+		
 		String method = request.getMethod();
 		Object apiResponse = null;
 		
@@ -76,7 +79,6 @@ public class GenericBatchApi extends GenericApi {
 	}
 	
 	final JsonObject createRequestPayloadJson( String queryStr, HttpServletRequest request ) {
-		
 		JsonObject requestPayloadJson = new JsonObject();
 		for( String paramValue : queryStr.split( "&" ) ) {
 			int index = paramValue.indexOf( '=' );
@@ -85,12 +87,7 @@ public class GenericBatchApi extends GenericApi {
 			requestPayloadJson.addProperty( param, value );
 			requestPayloadJson.addProperty( "has" + Character.toUpperCase( param.charAt( 0 ) ) + param.substring( 1 ), true );
 		}
-		
-		// Logging
-		logRequestPayloadJson( requestPayloadJson, request );
-		
 		return requestPayloadJson;
-	
 	}
 
 	final void dispatchApiResponse( Map<String, Object> apiResps, HttpServletRequest request,

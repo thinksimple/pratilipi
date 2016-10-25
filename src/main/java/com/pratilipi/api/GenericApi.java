@@ -28,10 +28,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
-import com.pratilipi.api.annotation.Delete;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.annotation.Post;
-import com.pratilipi.api.annotation.Put;
 import com.pratilipi.api.annotation.Sensitive;
 import com.pratilipi.api.shared.GenericFileDownloadResponse;
 import com.pratilipi.api.shared.GenericFileUploadRequest;
@@ -49,19 +47,13 @@ public abstract class GenericApi extends HttpServlet {
 			Logger.getLogger( GenericApi.class.getName() );
 
 	Method getMethod;
-	Method putMethod;
 	Method postMethod;
-	Method deleteMethod;
 	
 	Class<? extends GenericRequest> getMethodParameterType;
-	Class<? extends GenericRequest> putMethodParameterType;
 	Class<? extends GenericRequest> postMethodParameterType;
-	Class<? extends GenericRequest> deleteMethodParameterType;
 
 	List<String> getRequestSensitiveFieldList = new LinkedList<>();
-	List<String> putRequestSensitiveFieldList = new LinkedList<>();
 	List<String> postRequestSensitiveFieldList = new LinkedList<>();
-	List<String> deleteRequestSensitiveFieldList = new LinkedList<>();
 	
 	
 	@SuppressWarnings("unchecked")
@@ -75,27 +67,14 @@ public abstract class GenericApi extends HttpServlet {
 				for( Field field : getMethodParameterType.getDeclaredFields() )
 					if( field.getAnnotation( Sensitive.class ) != null )
 						getRequestSensitiveFieldList.add( field.getName() );
-			} else if( method.getAnnotation( Put.class ) != null ) {
-				putMethod = method;
-				putMethodParameterType = (Class<? extends GenericRequest>) method.getParameterTypes()[0];
-				for( Field field : putMethodParameterType.getDeclaredFields() )
-					if( field.getAnnotation( Sensitive.class ) != null )
-						putRequestSensitiveFieldList.add( field.getName() );
 			} else if( method.getAnnotation( Post.class ) != null ) {
 				postMethod = method;
 				postMethodParameterType = (Class<? extends GenericRequest>) method.getParameterTypes()[0];
 				for( Field field : postMethodParameterType.getDeclaredFields() )
 					if( field.getAnnotation( Sensitive.class ) != null )
 						postRequestSensitiveFieldList.add( field.getName() );
-			} else if( method.getAnnotation( Delete.class ) != null ) {
-				deleteMethod = method;
-				deleteMethodParameterType = (Class<? extends GenericRequest>) method.getParameterTypes()[0];
-				for( Field field : deleteMethodParameterType.getDeclaredFields() )
-					if( field.getAnnotation( Sensitive.class ) != null )
-						deleteRequestSensitiveFieldList.add( field.getName() );
 			}
 		}
-		
 		
 	}
 	
@@ -104,11 +83,15 @@ public abstract class GenericApi extends HttpServlet {
 	protected void service( HttpServletRequest request, HttpServletResponse response )
 			throws ServletException, IOException {
 		
+		// Logging
 		if( SystemProperty.STAGE != SystemProperty.STAGE_PROD )
 			logHeaders( request );
+		logRequestParams( request );
+
 		
 		// Creating request payload json
 		JsonObject requestPayloadJson = createRequestPayloadJson( request );
+
 		
 		String method = request.getMethod();
 		Object apiResponse = null;
@@ -116,12 +99,8 @@ public abstract class GenericApi extends HttpServlet {
 		// Invoking get/put method for API response
 		if( method.equals( "GET" ) && getMethod != null )
 			apiResponse = executeApi( this, getMethod, requestPayloadJson, getMethodParameterType, request );
-		else if( method.equals( "PUT" ) && putMethod != null )
-			apiResponse = executeApi( this, putMethod, requestPayloadJson, putMethodParameterType, request );
 		else if( method.equals( "POST" ) && postMethod != null )
 			apiResponse = executeApi( this, postMethod, requestPayloadJson, postMethodParameterType, request );
-		else if( method.equals( "DELETE" ) && deleteMethod != null )
-			apiResponse = executeApi( this, deleteMethod, requestPayloadJson, deleteMethodParameterType, request );
 		else
 			apiResponse = new InvalidArgumentException( "Invalid resource or method." );
 		
@@ -140,85 +119,68 @@ public abstract class GenericApi extends HttpServlet {
 		}
 	}
 	
-	final void logRequestPayloadJson( JsonObject requestPayloadJson, HttpServletRequest request ) {
+	final void logRequestParams( HttpServletRequest request ) {
 		
 		String method = request.getMethod();
 		List<String> sensitiveFieldList = null;
-		
 		if( method.equals( "GET" ) )
 			sensitiveFieldList = getRequestSensitiveFieldList;
-		else if( method.equals( "PUT" ) )
-			sensitiveFieldList = putRequestSensitiveFieldList;
 		else if( method.equals( "POST" ) )
 			sensitiveFieldList = postRequestSensitiveFieldList;
-		else if( method.equals( "DELETE" ) )
-			sensitiveFieldList = deleteRequestSensitiveFieldList;
-		
-		if( sensitiveFieldList.size() != 0 ) {
-			requestPayloadJson = new Gson()
-					.fromJson( requestPayloadJson.toString(), JsonElement.class )
-					.getAsJsonObject();
-			for( String sensitiveField : sensitiveFieldList )
-				if( requestPayloadJson.get( sensitiveField ) != null )
-					requestPayloadJson.addProperty( sensitiveField, "********" );
+
+		@SuppressWarnings("unchecked")
+		Enumeration<String> requestParams = request.getParameterNames();
+		while( requestParams.hasMoreElements() ) {
+			String param = requestParams.nextElement();
+			String value = sensitiveFieldList.contains( param )
+					? "********"
+					: request.getParameter( param ).trim();
+			logger.log( Level.INFO, "Pram " + param + " = " + value ) ;
 		}
-		
-		logger.log( Level.INFO, "Enhanced Request Payload: " + requestPayloadJson );
 		
 	}
 	
-	final JsonObject createRequestPayloadJson( HttpServletRequest request ) throws IOException {
+	
+	final JsonObject createRequestPayloadJson( HttpServletRequest request ) {
 		
-		String method = request.getMethod();
 		Gson gson = new Gson();
 
-		// Creating JsonObject from request parameters
+		
+		// Creating Json string from request parameters
 		@SuppressWarnings("unchecked")
-		Enumeration<String> queryParams = request.getParameterNames();
-		StringBuilder queryParamsStr = new StringBuilder( "{" );
-		while( queryParams.hasMoreElements() ) {
-			String param = queryParams.nextElement();
+		Enumeration<String> requestParams = request.getParameterNames();
+		StringBuilder requestParamsStr = new StringBuilder( "{" );
+		while( requestParams.hasMoreElements() ) {
+			String param = requestParams.nextElement();
 			String value = request.getParameter( param ).trim();
 			if( value.startsWith( "{" ) || value.startsWith( "[" ) ) { // Value could be a valid JSON string.
-				queryParamsStr.append( "\"" + param + "\":" + value + "," );
+				requestParamsStr.append( "\"" + param + "\":" + value + "," );
 			} else {
 				if( value.isEmpty() || value.equals( "null" ) || value.equals( "undefined" ) ) {
-					queryParamsStr.append( "\"" + param + "\":" + null + "," );
+					requestParamsStr.append( "\"" + param + "\":" + null + "," );
 				} else {
-					queryParamsStr.append( "\"" + param + "\":\"" + value.replaceAll( "\"", "\\\\\"" ) + "\"," );
+					requestParamsStr.append( "\"" + param + "\":\"" + value.replaceAll( "\"", "\\\\\"" ) + "\"," );
 				}
 			}
 		}
 		
-		if( queryParamsStr.length() > 1 )
-			queryParamsStr.setCharAt( queryParamsStr.length() - 1, '}' );
+		if( requestParamsStr.length() > 1 )
+			requestParamsStr.setCharAt( requestParamsStr.length() - 1, '}' );
 		else
-			queryParamsStr.append( "}" );
+			requestParamsStr.append( "}" );
 
 		
-		JsonObject queryParamsJson = gson.fromJson( queryParamsStr.toString(), JsonElement.class ).getAsJsonObject();
-
-		// Creating JsonObject from request body (JSON)
-		JsonObject requestBodyJson = method.equals( "PUT" )
-				? gson.fromJson( IOUtils.toString( request.getInputStream(), "UTF-8" ), JsonElement.class ).getAsJsonObject()
-				: new JsonObject();
-
-		
+		// Creating JsonObject from Json string
+		JsonObject requestParamsJson = gson.fromJson( requestParamsStr.toString(), JsonElement.class ).getAsJsonObject();
 		JsonObject requestPayloadJson = new JsonObject();
-		for( Entry<String, JsonElement> entry : queryParamsJson.entrySet() ) {
-			requestPayloadJson.add( entry.getKey(), entry.getValue() );
-			requestPayloadJson.addProperty( "has" + Character.toUpperCase( entry.getKey().charAt( 0 ) ) + entry.getKey().substring( 1 ), true );
-		}
-		for( Entry<String, JsonElement> entry : requestBodyJson.entrySet() ) {
+		for( Entry<String, JsonElement> entry : requestParamsJson.entrySet() ) {
 			requestPayloadJson.add( entry.getKey(), entry.getValue() );
 			requestPayloadJson.addProperty( "has" + Character.toUpperCase( entry.getKey().charAt( 0 ) ) + entry.getKey().substring( 1 ), true );
 		}
 		
-		
-		// Logging
-		logRequestPayloadJson( requestPayloadJson, request );
 		
 		return requestPayloadJson;
+		
 	}
 	
 	final Object executeApi( GenericApi api, Method apiMethod, JsonObject requestPayloadJson,
