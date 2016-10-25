@@ -114,10 +114,16 @@
 		onSubmit: function( event ) {
 			if( event.keyCode != null && event.keyCode != 0 && event.keyCode != 13 || this.query == null || this.query.trim() == "" )
 				return;
+
+			var query = jQuery( "#searchBarInput" ).val();
+			query = query.replace( /[^A-Z0-9]+/ig, " " );
+			this.set( 'query', query );
+
 			var str = decodeURI( window.location.pathname );
 			if( str == "/search" ) {
 				document.querySelector( 'pratilipi-card-grid' ).setSearchQuery( this.query );
 			} else {
+				jQuery( "#searchBarInput" ).val( query );
 				jQuery( "#searchBarForm" ).prop( "action", "/search" );
 				jQuery( "#searchBarForm" ).submit();
 			}
