@@ -88,7 +88,7 @@ public class PratilipiBackupApi extends GenericApi {
 							.append( CSV_SEPARATOR ).append( pratilipi.getType() )
 							.append( CSV_SEPARATOR ).append( pratilipi.getContentType() )
 							.append( CSV_SEPARATOR ).append( pratilipi.getState() )
-							.append( CSV_SEPARATOR ).append( pratilipi.hasCustomCover() )
+							.append( CSV_SEPARATOR ).append( pratilipi.getCoverImage() != null )
 							.append( CSV_SEPARATOR ).append( csvDateFormat.format( pratilipi.getListingDate() ) )
 							.append( CSV_SEPARATOR ).append( pratilipi.getReviewCount() )
 							.append( CSV_SEPARATOR ).append( pratilipi.getRatingCount() )

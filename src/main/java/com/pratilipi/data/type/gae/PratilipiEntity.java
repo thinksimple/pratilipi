@@ -58,6 +58,10 @@ public class PratilipiEntity implements Pratilipi {
 	private PratilipiState STATE;
 	
 	@Index
+	private String COVER_IMAGE;
+	
+	@Deprecated
+	@Index
 	private Boolean CUSTOM_COVER;
 
 	@Index
@@ -220,13 +224,15 @@ public class PratilipiEntity implements Pratilipi {
 	}
 	
 	@Override
-	public Boolean hasCustomCover() {
-		return CUSTOM_COVER == null ? false : CUSTOM_COVER;
+	public String getCoverImage() {
+		return COVER_IMAGE == null
+				? ( CUSTOM_COVER != null && CUSTOM_COVER ? PRATILIPI_ID.toString() : null )
+				: COVER_IMAGE;
 	}
 
 	@Override
-	public void setCustomCover( Boolean customCover ) {
-		this.CUSTOM_COVER = customCover;
+	public void setCoverImage( String coverImage ) {
+		this.COVER_IMAGE = coverImage;
 	}
 	
 	@Override

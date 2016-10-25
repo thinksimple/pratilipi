@@ -59,7 +59,6 @@ public class PratilipiDataUtil {
 	
 	private static final String CONTENT_FOLDER 		 = "pratilipi-content/pratilipi";
 	private static final String IMAGE_CONTENT_FOLDER = "pratilipi-content/image";
-	private static final String COVER_FOLDER 		 = "pratilipi-cover/original";
 
 
 	public static boolean hasAccessToListPratilipiData( PratilipiFilter pratilipiFilter ) {
@@ -220,17 +219,17 @@ public class PratilipiDataUtil {
 	
 	public static String createPratilipiCoverUrl( Pratilipi pratilipi, Integer width ) {
 		String url = "/pratilipi/cover";
-		if( pratilipi.hasCustomCover() ) {
-			url = url + "?pratilipiId=" + pratilipi.getId() + "&version=" + pratilipi.getLastUpdated().getTime();
-			if( width != null )
-				url = url + "&width=" + width;
-			if( SystemProperty.CDN != null )
-				url = SystemProperty.CDN.replace( "*", pratilipi.getId() % 5 + "" ) + url;
-		} else {
+		if( pratilipi.getCoverImage() == null ) {
 			if( width != null )
 				url = url + "?width=" + width;
 			if( SystemProperty.CDN != null )
 				url = SystemProperty.CDN.replace( "*", "10" ) + url;
+		} else {
+			url = url + "?pratilipiId=" + pratilipi.getId() + "&version=" + pratilipi.getCoverImage();
+			if( width != null )
+				url = url + "&width=" + width;
+			if( SystemProperty.CDN != null )
+				url = SystemProperty.CDN.replace( "*", pratilipi.getId() % 5 + "" ) + url;
 		}
 		return url;
 	}
@@ -580,12 +579,13 @@ public class PratilipiDataUtil {
 		Pratilipi pratilipi = pratilipiId == null ? null : DataAccessorFactory.getDataAccessor().getPratilipi( pratilipiId );
 		
 		BlobEntry blobEntry = null;
-		
-		if( pratilipi != null && pratilipi.hasCustomCover() )
-			blobEntry = DataAccessorFactory.getBlobAccessor().getBlob( COVER_FOLDER + "/" + pratilipiId );
-		
-		if( blobEntry == null )
-			blobEntry = DataAccessorFactory.getBlobAccessor().getBlob( COVER_FOLDER + "/" + "pratilipi" );
+		if( pratilipi == null || pratilipi.getCoverImage() == null ) {
+			blobEntry = DataAccessorFactory.getBlobAccessor().getBlob( "pratilipi/default/images/cover" );
+		} else {
+			blobEntry = DataAccessorFactory.getBlobAccessor().getBlob( "pratilipi/" + pratilipiId + "/images/" + pratilipi.getCoverImage() );
+			if( blobEntry == null )
+				blobEntry = DataAccessorFactory.getBlobAccessor().getBlob( "pratilipi-cover/original/" + pratilipiId );
+		}
 		
 		if( width != null )
 			blobEntry = ImageUtil.resize( blobEntry, width, (int) ( 1.5 * width ) );
@@ -600,29 +600,25 @@ public class PratilipiDataUtil {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 
-		if( !hasAccessToUpdatePratilipiData( pratilipi, null ) )
+		if( ! hasAccessToUpdatePratilipiData( pratilipi, null ) )
 			throw new InsufficientAccessException();
-
+		
+		
+		String coverImageName = new Date().getTime() + "";
 		
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-		blobEntry.setName( COVER_FOLDER + "/" + pratilipiId );
+		blobEntry.setName( "pratilipi/" + pratilipiId + "/images/" + coverImageName );
 		blobAccessor.createOrUpdateBlob( blobEntry );
 		
 		
-		Gson gson = new Gson();
+		AuditLog auditLog = dataAccessor.newAuditLog(
+				AccessTokenFilter.getAccessToken().getId(),
+				AccessType.PRATILIPI_UPDATE,
+				pratilipi );
 
-		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		AuditLog auditLog = dataAccessor.newAuditLog();
-		auditLog.setAccessId( accessToken.getId() );
-		auditLog.setAccessType( AccessType.PRATILIPI_UPDATE );
-		auditLog.setEventDataOld( gson.toJson( pratilipi ) );
-
-		pratilipi.setCustomCover( true );
+		pratilipi.setCoverImage( coverImageName );
 		pratilipi.setLastUpdated( new Date() );
 
-		auditLog.setEventDataNew( gson.toJson( pratilipi ) );
-		auditLog.setEventComment( "Uploaded cover image." );
-		
 		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi, auditLog );
 		
 		return createPratilipiCoverUrl( pratilipi );

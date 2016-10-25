@@ -46,9 +46,9 @@ public interface Pratilipi extends GenericOfyType {
 	
 	void setState( PratilipiState state );
 	
-	Boolean hasCustomCover();
+	String getCoverImage();
 
-	void setCustomCover( Boolean customCover );
+	void setCoverImage( String coverImage );
 
 	Date getListingDate();
 	

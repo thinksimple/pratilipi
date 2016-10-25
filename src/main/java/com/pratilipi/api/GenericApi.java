@@ -135,7 +135,7 @@ public abstract class GenericApi extends HttpServlet {
 			String value = sensitiveFieldList.contains( param )
 					? "********"
 					: request.getParameter( param ).trim();
-			logger.log( Level.INFO, "Pram " + param + " = " + value ) ;
+			logger.log( Level.INFO, "Param " + param + " = " + value ) ;
 		}
 		
 	}
