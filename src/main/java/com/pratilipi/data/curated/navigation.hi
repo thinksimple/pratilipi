@@ -24,7 +24,6 @@
 /mythology               प्राचीन साहित्य               App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"mythology" }
 /yatra-vrutant           यात्रा – वृत्तांत               App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"yatra-vrutant" }
 /self-help               स्व - विकास               App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"self-help" }
-/swasthya-sukh           स्वास्थ्य सुख                  App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"swasthya-sukh" }
 /swad-ka-tadka           स्वाद का तड़का       App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"swad-ka-tadka" }
 /numerology              अंकों में छुपे रहस्य        App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"numerology" }
 /etihasik-dastavej       ऐतिहासिक दस्तावेज      App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"etihasik-dastavej" }
