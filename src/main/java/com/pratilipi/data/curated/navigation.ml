@@ -8,16 +8,17 @@
 
 
 വിഭാഗങ്ങൾ 
-/love          പ്രണയം                 App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"love" }
-/women         സ്ത്രീ                   App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"women" }
-/lives         ജീവിതങ്ങള്‍               App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"lives" }
-/mystery       ദുരൂഹം                  App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"mystery" }
 /series        തുടര്‍ക്കഥകള്‍            App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"series" }
-/society       സമൂഹം                  App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"society" }
+/lives         ജീവിതങ്ങള്‍               App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"lives" }
+/satire        ആക്ഷേപഹാസ്യം         App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"satire" }  
 /memory        ഓര്‍മ്മ                   App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"memory" }
-/satire        ആക്ഷേപഹാസ്യം         App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"satire" }   
-/letters       കത്തുകള്‍                App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"letters" }
+/mystery       ദുരൂഹം                  App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"mystery" }
+/women         സ്ത്രീ                   App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"women" }
+/love          പ്രണയം                 App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"love" }
+/society       സമൂഹം                  App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"society" }
 /non-fiction   നോണ്‍ ഫിക്ഷന്‍         App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"non-fiction" }
+/letters       കത്തുകള്‍                App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"letters" }
+
 
 
 സാഹിത്യ രൂപങ്ങൾ 
