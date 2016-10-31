@@ -149,13 +149,9 @@
 				}
 
 				// Checking if user has review
-				if( this.userpratilipi != null && this.userpratilipi.reviewState != "BLOCKED" && this.userpratilipi.reviewState != "DELETED"
+				this.set( 'reviewAvailable', this.userpratilipi != null && this.userpratilipi.reviewState != "BLOCKED" && this.userpratilipi.reviewState != "DELETED"
 						&& this.userpratilipi.review != null && this.userpratilipi.review.trim() != "" )
-					this.set( 'reviewAvailable', true )
-				else
-					this.set( 'reviewAvailable', false )
-					
-				
+
 				if( ! this.reviewAvailable )
 					return;
 
@@ -188,7 +184,8 @@
 			},
 			
 			checkForZeroResults: function() {
-				if( this.reviewAvailable ) {
+
+				if( this.reviewAvailable || ! this.isFinished ) {
 					this.set( 'zeroReviewResults', false );
 					return;
 				}
@@ -238,7 +235,7 @@
 			_makeAjaxRequest: function() {
 
 				// Spinner Active
-				this.set( 'isLoading', false );
+				this.set( 'isLoading', true );
 				this.set( 'isFinished', false );
 				this.set( 'zeroReviewResults', false );
 
