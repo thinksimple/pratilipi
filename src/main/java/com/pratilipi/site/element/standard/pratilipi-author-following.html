@@ -7,7 +7,9 @@
 				follow-list="{{ followList }}"
 				number-found="{{ numberFound }}"
 				title="${ _strings.author_following_heading }"
+				empty-list="{{ emptyList }}"
 				empty-list-message="${ _strings.author_no_following }"
+				show-modal-button="{{ showModalButton }}"
 				is-finished="{{ isFinished }}"></pratilipi-follow-author-grid>
 		</template>
 
@@ -37,10 +39,7 @@
 				numberFound: { type: Number },
 				resultCount: { type: Number, value: 20 },
 				isFinished: { type: Boolean, value: false },
-				noDisplay: { type: Boolean, value: false },
-
-				// local variable
-				refreshFollowList: { type: Boolean, value: false }
+				noDisplay: { type: Boolean, value: false }
 			},
 
 			_authorObserver: function() {
@@ -78,6 +77,8 @@
 				this.set( 'cursor', followListObject.cursor );
 				this.set( 'numberFound', followListObject.numberFound );
 				this.set( 'isFinished', followListObject.cursor == null || followList.length < this.resultCount );
+				this.set( "emptyList", followListObject.numberFound > 0 );
+				this.set( "showModalButton", followListObject.numberFound > 4 );
 			},
 			
 			attached: function() {
@@ -89,7 +90,6 @@
 				this.set( 'cursor', null );
 				this.set( 'numberFound', 0 );
 				this.set( 'isFinished', false );
-				this.set( 'refreshFollowList', true );
 				this.loadMore();
 			},
 
@@ -105,10 +105,6 @@
 
 			_userAuthorFollowListApiResponse: function( response ) {
 				this._pushToFollowList( this.processAuthorListObject( response.detail.response ) );
-				if( this.refreshFollowList ) {
-					this.set( 'refreshFollowList', false );
-					this.querySelector( 'pratilipi-follow-author-grid' ).updateReducedFollowList();
-				}
 			},
 
 			_userAuthorFollowListApiError: function( response ) {

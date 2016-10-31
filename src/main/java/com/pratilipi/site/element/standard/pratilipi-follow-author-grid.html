@@ -127,25 +127,12 @@
 
 			properties: {
 				followList: { type: Array },
-				reducedFollowList: { type: Array, value: function() { return []; } },
 				numberFound: { type: Number },
 				title: { type: String },
+				emptyList: { type: Boolean },
 				emptyListMessage: { type: String },
-				showModalButton: { type: Boolean, value: false },
+				showModalButton: { type: Boolean },
 				isFinished: { type: Boolean }
-			},
-
-			updateReducedFollowList: function() {
-				var itemsToShow = 4;
-				this.set( 'reducedFollowList', [] );
-				for( var i = 0; i < Math.min( this.followList.length, itemsToShow ); i++ )
-					this.push( 'reducedFollowList', this.followList[i] );
-				this.set( 'showModalButton', this.followList.length > itemsToShow );
-				this.set( 'emptyList', this.followList.length == 0 );
-			},
-
-			attached: function() {
-				this.updateReducedFollowList();
 			},
 
 			openModal: function() {
