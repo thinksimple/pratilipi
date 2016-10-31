@@ -21,8 +21,12 @@ public class UserPratilipiApi extends GenericApi {
 	
 	public static class GetRequest extends GenericRequest {
 
-		@Validate( required = true )
+		@Validate( required = true, minLong = 1L )
 		private Long pratilipiId;
+
+		public void setPratilipiId( Long pratilipiId ) {
+			this.pratilipiId = pratilipiId;
+		}
 
 	}
 	
@@ -170,7 +174,7 @@ public class UserPratilipiApi extends GenericApi {
 		}
 		
 
-		public Boolean getHasAccessToReview() {
+		public Boolean hasAccessToReview() {
 			return hasAccessToReview;
 		}
 

@@ -702,25 +702,23 @@ public class PratilipiSite extends HttpServlet {
 	
 	public Map<String, Object> createDataModelForPratilipiPage( Long pratilipiId, boolean basicMode, HttpServletRequest request )
 			throws InsufficientAccessException, UnexpectedServerException {
-		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-		if( ! PratilipiDataUtil.hasAccessToReadPratilipiContent( pratilipi ) )
-			throw new InsufficientAccessException();
-		
-		Gson gson = new Gson();
-		
-		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
-		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author, false );
-		UserPratilipiData userPratilipiData = UserPratilipiDataUtil.getUserPratilipi( AccessTokenFilter.getAccessToken().getUserId(), pratilipiId );
 
-		PratilipiV1Api.Response pratilipiResponse = new PratilipiV1Api.Response( pratilipiData );
-		UserPratilipiApi.Response userPratilipiResponse = userPratilipiData == null
-				? null : new UserPratilipiApi.Response( userPratilipiData );
+		PratilipiV1Api.GetRequest pratilipiRequest = new PratilipiV1Api.GetRequest();
+		pratilipiRequest.setPratilipiId( pratilipiId );
+		PratilipiV1Api.Response pratilipiResponse = ApiRegistry
+														.getApi( PratilipiV1Api.class )
+														.get( pratilipiRequest );
+
+		UserPratilipiApi.GetRequest userPratilipiRequest = new UserPratilipiApi.GetRequest();
+		userPratilipiRequest.setPratilipiId( pratilipiId );
+		UserPratilipiApi.Response userPratilipiResponse = ApiRegistry
+														.getApi( UserPratilipiApi.class )
+														.getUserPratilipi( userPratilipiRequest );
 		
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put( "title", createPratilipiPageTitle( pratilipiData ) );
+		Gson gson = new Gson();
+		dataModel.put( "title", createPratilipiPageTitle( gson.fromJson( gson.toJson( pratilipiResponse ), PratilipiData.class ) ) );
 		if( basicMode ) {
 			dataModel.put( "pratilipi", pratilipiResponse );
 			dataModel.put( "userpratilipi", userPratilipiResponse );
@@ -737,10 +735,10 @@ public class PratilipiSite extends HttpServlet {
 						UserPratilipiDataUtil.getPratilipiReviewList( pratilipiId, null, ( reviewPageCurr - 1 ) * reviewPageSize, reviewPageSize );
 				dataModel.put( "reviewList", toGenericReviewResponseList( reviewListCursorTuple.getDataList() ) );
 				dataModel.put( "reviewListPageCurr", reviewPageCurr );
-				if( pratilipi.getReviewCount() != 0 )
-					dataModel.put( "reviewListPageMax", (int) Math.ceil( ( (double) pratilipi.getReviewCount() ) / reviewPageSize ) );
+				if( pratilipiResponse.getReviewCount() != 0 )
+					dataModel.put( "reviewListPageMax", (int) Math.ceil( ( (double) pratilipiResponse.getReviewCount() ) / reviewPageSize ) );
 				dataModel.put( "reviewParam", reviewParam );
-			} else if( reviewParam != null && reviewParam.trim().equals( "write" ) && userPratilipiData != null && userPratilipiData.hasAccessToReview() ) {
+			} else if( reviewParam != null && reviewParam.trim().equals( "write" ) && userPratilipiResponse != null && userPratilipiResponse.hasAccessToReview() ) {
 				dataModel.put( "reviewParam", reviewParam );
 			} else if( reviewParam != null && reviewParam.trim().equals( "reply" ) ) {
 				dataModel.put( "reviewParam", reviewParam );

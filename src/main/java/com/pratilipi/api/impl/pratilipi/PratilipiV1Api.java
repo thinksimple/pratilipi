@@ -37,7 +37,7 @@ public class PratilipiV1Api extends GenericApi {
 	
 	public static class GetRequest extends GenericRequest {
 
-		@Validate( required = true, minLong = 1L, requiredErrMsg = ERR_PRATILIPI_ID_REQUIRED )
+		@Validate( required = true, minLong = 1L )
 		protected Long pratilipiId;
 
 
