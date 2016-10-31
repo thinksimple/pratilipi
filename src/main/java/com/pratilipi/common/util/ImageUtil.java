@@ -50,6 +50,7 @@ public class ImageUtil {
 			image = imagesService.applyTransform( resize, image, OutputEncoding.PNG );
 		} else {
 			OutputSettings settings = new OutputSettings( ImagesService.OutputEncoding.WEBP );
+			settings.setQuality( 70 );
 			image = imagesService.applyTransform( resize, image, settings );
 			blobEntry.setMimeType( "image/webp" );
 		}
