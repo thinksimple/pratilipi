@@ -558,20 +558,28 @@ public class PratilipiSite extends HttpServlet {
 		return pageTitle;
 	}
 	
-	
 	private String createPratilipiPageTitle( PratilipiData pratilipiData ) {
+
 		if( pratilipiData == null )
 			return null;
+
+		return createPratilipiPageTitle( new PratilipiV1Api.Response( pratilipiData ) );
+	}
+
+	private String createPratilipiPageTitle( PratilipiV1Api.Response pratilipiResponse ) {
+
+		if( pratilipiResponse == null )
+			return null;
 		
-		String title = createAuthorPageTitle( new AuthorApi.Response( pratilipiData.getAuthor(), AuthorListApi.class ) );
+		String title = createAuthorPageTitle( pratilipiResponse.getAuthor() );
 		title = title == null ? "" : " « " + title;
 		
-		if( pratilipiData.getTitle() != null && pratilipiData.getTitleEn() == null )
-			return pratilipiData.getTitle() + title;
-		else if( pratilipiData.getTitle() == null && pratilipiData.getTitleEn() != null )
-			return pratilipiData.getTitleEn() + title;
-		else if( pratilipiData.getTitle() != null && pratilipiData.getTitleEn() != null )
-			return pratilipiData.getTitle() + " / " + pratilipiData.getTitleEn() + title;
+		if( pratilipiResponse.getTitle() != null && pratilipiResponse.getTitleEn() == null )
+			return pratilipiResponse.getTitle() + title;
+		else if( pratilipiResponse.getTitle() == null && pratilipiResponse.getTitleEn() != null )
+			return pratilipiResponse.getTitleEn() + title;
+		else if( pratilipiResponse.getTitle() != null && pratilipiResponse.getTitleEn() != null )
+			return pratilipiResponse.getTitle() + " / " + pratilipiResponse.getTitleEn() + title;
 		return null;
 	}
 	
@@ -718,7 +726,7 @@ public class PratilipiSite extends HttpServlet {
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		Gson gson = new Gson();
-		dataModel.put( "title", createPratilipiPageTitle( gson.fromJson( gson.toJson( pratilipiResponse ), PratilipiData.class ) ) );
+		dataModel.put( "title", createPratilipiPageTitle( pratilipiResponse ) );
 		if( basicMode ) {
 			dataModel.put( "pratilipi", pratilipiResponse );
 			dataModel.put( "userpratilipi", userPratilipiResponse );

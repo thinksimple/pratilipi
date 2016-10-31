@@ -69,36 +69,42 @@ public class UserPratilipiApi extends GenericApi {
 			
 			this( userPratilipiData, true );
 			
-			userId = userPratilipiData.getUserId();
-			pratilipiId = userPratilipiData.getPratilipiId();
-			
-			addedToLib = userPratilipiData.isAddedToLib();
-			
-			hasAccessToReview = userPratilipiData.hasAccessToReview();
-			
+			if( userPratilipiData != null ) {
+
+				userId = userPratilipiData.getUserId();
+				pratilipiId = userPratilipiData.getPratilipiId();
+				
+				addedToLib = userPratilipiData.isAddedToLib();
+				
+				hasAccessToReview = userPratilipiData.hasAccessToReview();
+			}
+
 		}
 		
 		// TODO: Change access to package level ASAP
 		public Response( UserPratilipiData userPratilipiData, boolean asReview ) {
 
-			userPratilipiId = userPratilipiData.getId();
-			
-			userName = userPratilipiData.getUserName();
-			userImageUrl = userPratilipiData.getUserImageUrl();
-			userProfilePageUrl = userPratilipiData.getUserProfilePageUrl();
+			if( userPratilipiData != null ) {
 
-			user = new UserApi.Response( userPratilipiData.getUser(), UserPratilipiApi.class );
-			
-			rating = userPratilipiData.getRating();
-			review = userPratilipiData.getReview();
-			reviewState = userPratilipiData.getReviewState();
-			reviewDateMillis = userPratilipiData.getReviewDate() == null ? null : userPratilipiData.getReviewDate().getTime();
+				userPratilipiId = userPratilipiData.getId();
+				
+				userName = userPratilipiData.getUserName();
+				userImageUrl = userPratilipiData.getUserImageUrl();
+				userProfilePageUrl = userPratilipiData.getUserProfilePageUrl();
 
-			commentCount = userPratilipiData.getCommentCount();
-			likeCount = userPratilipiData.getLikeCount();
-			
-			isLiked = userPratilipiData.isLiked();
-			
+				user = new UserApi.Response( userPratilipiData.getUser(), UserPratilipiApi.class );
+				
+				rating = userPratilipiData.getRating();
+				review = userPratilipiData.getReview();
+				reviewState = userPratilipiData.getReviewState();
+				reviewDateMillis = userPratilipiData.getReviewDate() == null ? null : userPratilipiData.getReviewDate().getTime();
+
+				commentCount = userPratilipiData.getCommentCount();
+				likeCount = userPratilipiData.getLikeCount();
+				
+				isLiked = userPratilipiData.isLiked();
+			}
+
 		}
 
 		
