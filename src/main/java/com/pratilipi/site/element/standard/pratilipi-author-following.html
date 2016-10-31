@@ -95,7 +95,10 @@
 
 			loadMore: function() {
 				this.$.UserAuthorFollowListApi.params.userId = this.userId;
-				this.$.UserAuthorFollowListApi.params.cursor = this.cursor;
+				if( this.cursor != null )
+					this.$.UserAuthorFollowListApi.params.cursor = this.cursor;
+				else
+					delete this.$.UserAuthorFollowListApi.params.cursor;
 				this.$.UserAuthorFollowListApi.params.resultCount = this.resultCount;
 				this.$.UserAuthorFollowListApi.generateRequest();
 			},
