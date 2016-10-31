@@ -123,6 +123,7 @@
 				reviewList: { type: Array, value: [], notify: true },
 				zeroReviewResults: { type: Boolean, value: true },
 				cursor: { type: String, value: null },
+				resultCount: { type: Number, value: 20 },
 
 				isLoading: { type: Boolean, value: false },
 				isFinished: { type: Boolean, value: false },
@@ -203,81 +204,85 @@
 			},
 			
 			reset: function() {
-				
-				var ajaxGet = this.$.AjaxGet;
 
-				if( ajaxGet.lastRequest )
-					ajaxGet.lastRequest.abort();
-				
 				this.set( 'reviewList', [] );
-				
 				// Setting the flags and clearing the cursor.
 				this.cursor = null;
-				this.isLoading = true;
-				this.isFinished = false;
-				
-				// Set params and make ajax GET call.
-				ajaxGet.params.pratilipiId = this.pratilipi.pratilipiId;
-				delete ajaxGet.params.cursor;
-				ajaxGet.generateRequest();
+				// make ajax GET call.
+				this._makeAjaxRequest();
+
 			},
 			
 			loadMore: function( scrollTop ) {
 
 				// Return if there is an active call or cursor = null.
-				if( this.isLoading || this.isFinished || this.cursor == null || this.pratilipi == null || this.cursor == "" )
+				if( this.isLoading || this.isFinished || this.cursor == null || this.pratilipi == null )
 					return;
-				
+
 				// Check for window height.
 				var reqHeight = scrollTop
 						- jQuery( this ).context.offsetTop
 						+ jQuery( window ).height()
 						+ 2 * jQuery( window ).height();
-		
+
 				if( jQuery( this ).outerHeight( true ) >= reqHeight )
 					return;
 
-				// Spinner Active
-				this.isLoading = true;
-				
 				// Set params and make ajax GET call.
+				this._makeAjaxRequest();
+
+			},
+
+			_makeAjaxRequest: function() {
+
+				// Spinner Active
+				this.set( 'isLoading', false );
+				this.set( 'isFinished', false );
+
+				if( this.$.AjaxGet.lastRequest )
+					this.$.AjaxGet.lastRequest.abort();
+
 				this.$.AjaxGet.params.pratilipiId = this.pratilipi.pratilipiId;
-				this.$.AjaxGet.params.cursor = this.cursor;
+				this.$.AjaxGet.params.resultCount = this.resultCount;
+
+				if( this.cursor == null )
+					delete this.$.AjaxGet.params.cursor;
+				else
+					this.$.AjaxGet.params.cursor = this.cursor;
+
 				this.$.AjaxGet.generateRequest();
+
 			},
 			
 			_handleAjaxGetResponse: function( event ) {
 				
 				// Disable spinner
-				this.isLoading = false;
-				
+				this.set( 'isLoading', false );
+
 				// Call didn't succeed.
 				if( event.detail.xhr.status == 0 )
 					return;
-				
+
 				var reviewList = event.detail.response.reviewList;
 				for( var i = 0; i < reviewList.length; i++ ) {
 					if( reviewList[i].userPratilipiId != this.userpratilipi.userPratilipiId )
 						this.push( 'reviewList', reviewList[i] );
 				}
 
-				if( event.detail.response.cursor == null || reviewList.length < 20 )
-					this.isFinished = true;
-				else
-					this.cursor = event.detail.response.cursor;
-				
+				this.set( 'cursor', event.detail.response.cursor );
+				this.set( 'isFinished', event.detail.response.cursor == null || reviewList.length < this.resultCount );
+
 				this.checkForZeroResults();
 
 			},
 
 			_handleAjaxGetError: function() {
-				this.isLoading = false;
+				// Disable spinner
+				this.set( 'isLoading', false );
 			},
 			
-			attached: function() {
-				if( this.reviewList.length < 20 )
-					this.isFinished = true;
-				this.checkForZeroResults();
+			ready: function() {
+				this._makeAjaxRequest();
 			}
 			
 		});

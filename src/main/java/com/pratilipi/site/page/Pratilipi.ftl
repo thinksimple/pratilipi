@@ -13,9 +13,6 @@
 				pratilipi-id='${ pratilipi.getId()?c }'
 				pratilipi-data='${ pratilipiJson }'
 				userpratilipi-data='${ userpratilipiJson! }'
-				
-				review-list='${ reviewListJson }'
-				cursor='${ reviewListCursor! }'
 				pratilipi-types='${ pratilipiTypesJson }'
 				navigation-list='${ navigationList }'
 				language-map='${ languageMap }'
