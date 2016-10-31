@@ -3,9 +3,10 @@ package com.pratilipi.common.util;
 import com.google.appengine.api.images.Image;
 import com.google.appengine.api.images.ImagesService;
 import com.google.appengine.api.images.ImagesService.OutputEncoding;
-import com.pratilipi.data.type.BlobEntry;
 import com.google.appengine.api.images.ImagesServiceFactory;
+import com.google.appengine.api.images.OutputSettings;
 import com.google.appengine.api.images.Transform;
+import com.pratilipi.data.type.BlobEntry;
 
 public class ImageUtil {
 
@@ -48,7 +49,9 @@ public class ImageUtil {
 		if( blobEntry.getMimeType().equalsIgnoreCase( "image/png" ) ) {
 			image = imagesService.applyTransform( resize, image, OutputEncoding.PNG );
 		} else {
-			image = imagesService.applyTransform( resize, image, OutputEncoding.JPEG );
+			OutputSettings settings = new OutputSettings( ImagesService.OutputEncoding.JPEG );
+			settings.setQuality( 50 );
+			image = imagesService.applyTransform( resize, image, settings );
 			blobEntry.setMimeType( "image/jpeg" );
 		}
 		blobEntry.setData( image.getImageData() );
