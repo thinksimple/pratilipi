@@ -623,20 +623,20 @@ public class PratilipiSite extends HttpServlet {
 	@SuppressWarnings("deprecation")
 	private List<String> createFbOpenGraphTags( Long pratilipiId ) throws UnexpectedServerException {
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-		Page pratilipiPage = dataAccessor.getPage( PageType.PRATILIPI, pratilipiId );
-		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
-		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author, false );
+		PratilipiV1Api.GetRequest pratilipiRequest = new PratilipiV1Api.GetRequest();
+		pratilipiRequest.setPratilipiId( pratilipiId );
+		PratilipiV1Api.Response pratilipi = ApiRegistry
+														.getApi( PratilipiV1Api.class )
+														.get( pratilipiRequest );
 
 		String ogFbAppId = FacebookApi.getAppId();
 		String ogLocale = pratilipi.getLanguage().getCode() + "_IN";
 		String ogType = "books.book";
-		String ogAuthor = "http://" + Website.ALL_LANGUAGE.getHostName() + ( author == null ? "/team-pratilipi" : pratilipiData.getAuthor().getPageUrl() );
+		String ogAuthor = "http://" + Website.ALL_LANGUAGE.getHostName() + ( pratilipi.getAuthor() == null ? "/team-pratilipi" : pratilipi.getAuthor().getPageUrl() );
 		String ogBooksIsbn = pratilipi.getId().toString();
-		String ogUrl = "http://" + Website.ALL_LANGUAGE.getHostName() + pratilipiPage.getUri(); // Warning: Changing it to anything else will cause loss of like-share count.
-		String ogTitle = createPratilipiPageTitle( pratilipiData );
-		String ogImage = pratilipiData.getCoverImageUrl();
+		String ogUrl = "http://" + Website.ALL_LANGUAGE.getHostName() + pratilipi.getPageUrl(); // Warning: Changing it to anything else will cause loss of like-share count.
+		String ogTitle = createPratilipiPageTitle( pratilipi );
+		String ogImage = pratilipi.getCoverImageUrl();
 		String ogDescription = "";
 		if( pratilipi.getType() == PratilipiType.BOOK && pratilipi.getSummary() != null ) {
 			ogDescription = pratilipi.getSummary();
@@ -756,13 +756,9 @@ public class PratilipiSite extends HttpServlet {
 				dataModel.put( "reviewList", toGenericReviewResponseList( reviewListCursorTuple.getDataList() ) );
 			}
 		} else {
-			DataListCursorTuple<UserPratilipiData> reviewListCursorTuple =
-					UserPratilipiDataUtil.getPratilipiReviewList( pratilipiId, null, null, 20 );
 			dataModel.put( "pratilipi", pratilipiResponse );
 			dataModel.put( "pratilipiJson", gson.toJson( pratilipiResponse ) );
 			dataModel.put( "userpratilipiJson", gson.toJson( userPratilipiResponse ) );
-			dataModel.put( "reviewListJson", gson.toJson( toGenericReviewResponseList( reviewListCursorTuple.getDataList() ) ) );
-			dataModel.put( "reviewListCursor", reviewListCursorTuple.getCursor() );
 		}
 		return dataModel;
 		
