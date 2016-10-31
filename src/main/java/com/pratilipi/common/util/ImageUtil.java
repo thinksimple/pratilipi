@@ -49,10 +49,9 @@ public class ImageUtil {
 		if( blobEntry.getMimeType().equalsIgnoreCase( "image/png" ) ) {
 			image = imagesService.applyTransform( resize, image, OutputEncoding.PNG );
 		} else {
-			OutputSettings settings = new OutputSettings( ImagesService.OutputEncoding.JPEG );
-			settings.setQuality( 50 );
+			OutputSettings settings = new OutputSettings( ImagesService.OutputEncoding.WEBP );
 			image = imagesService.applyTransform( resize, image, settings );
-			blobEntry.setMimeType( "image/jpeg" );
+			blobEntry.setMimeType( "image/webp" );
 		}
 		blobEntry.setData( image.getImageData() );
 		return blobEntry;
