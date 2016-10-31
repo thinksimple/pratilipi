@@ -339,11 +339,6 @@ public class PratilipiSite extends HttpServlet {
 				dataModel.put( "title", "Login" );
 				templateName = ( basicMode ? "LoginBasic.ftl" : "Login.ftl" );
 				
-			} else if( uri.equals( "/logout" ) ) {
-				dataModel = new HashMap<String, Object>();
-				dataModel.put( "title", "Logout" );
-				templateName = ( basicMode ? "LogoutBasic.ftl" : "Logout.ftl" );
-				
 			} else if( uri.equals( "/resetpassword" ) ) {
 				dataModel = new HashMap<String, Object>();
 				dataModel.put( "title", "Reset Password" );

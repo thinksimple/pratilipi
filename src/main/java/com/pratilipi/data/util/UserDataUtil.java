@@ -345,6 +345,9 @@ public class UserDataUtil {
 		if( user.getPassword() == null && user.getFacebookId() != null )
 			throw new InvalidArgumentException( GenericRequest.ERR_EMAIL_REGISTERED_WITH_FB );
 		
+		if( user.getPassword() == null && user.getGoogleId() != null )
+			throw new InvalidArgumentException( GenericRequest.ERR_EMAIL_REGISTERED_WITH_GOOGLE );
+
 		if( PasswordUtil.check( password, user.getPassword() ) ) {
 			_loginUser( AccessTokenFilter.getAccessToken(), user );
 			return createUserData( user );
