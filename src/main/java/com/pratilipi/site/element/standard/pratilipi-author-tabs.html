@@ -67,20 +67,14 @@
 						pratilipi-list-object="[[ publishedPratilipiList ]]" 
 						author="[[ author ]]"></pratilipi-author-published-contents>
 
-				<#--
-				<template is="dom-if" if="{{ hasAccessToUpdate }}">
-					<pratilipi-author-library-contents></pratilipi-author-library-contents>
-				</template>
-				-->
-
 			</div>
 			<div role="tabpanel" class="tab-pane fade" id="author-about">
 				<pratilipi-author-biography author="[[ author ]]"></pratilipi-author-biography>
 				<#-- For Authors without user profile -->
 				<template is="dom-if" if="{{ hasUserId }}">
-					<pratilipi-author-following author="[[ author ]]" author-list="{{ followingList }}" user-id="{{ userId }}"></pratilipi-author-following>
+					<pratilipi-author-following author="[[ author ]]" user-id="{{ userId }}"></pratilipi-author-following>
 				</template>
-				<pratilipi-author-followers author="[[ author ]]" user-list="{{ followersList }}" author-id="{{ authorId }}"></pratilipi-author-followers>
+				<pratilipi-author-followers author="[[ author ]]" author-id="{{ authorId }}"></pratilipi-author-followers>
 			</div>
 		</div>
 		<iron-ajax
@@ -102,9 +96,6 @@
 			author: { type: Object, observer: "_authorObserver" },
 
 			publishedPratilipiList: { type: Object },
-
-			followingList: { type: Object },
-			followersList: { type: Object }
 		},
 		
 		_authorObserver: function() {

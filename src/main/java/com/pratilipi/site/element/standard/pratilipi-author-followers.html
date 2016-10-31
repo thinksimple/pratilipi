@@ -1,6 +1,7 @@
 <dom-module id="pratilipi-author-followers">
 
 	<template>
+		<#-- Do not remove the noDisplay flag. Used in following and followers page -->
 		<template is="dom-if" if="{{ !noDisplay }}">
 			<pratilipi-follow-author-grid 
 				follow-list="{{ followList }}"
@@ -35,6 +36,7 @@
 				followList: { type: Array, value: function() { return []; } },
 				cursor: { type: String },
 				numberFound: { type: Number },
+				resultCount: { type: Number, value: 20 },
 				isFinished: { type: Boolean, value: false },
 				noDisplay: { type: Boolean, value: false },
 
@@ -76,12 +78,11 @@
 					this.push( 'followList', followList[i] );
 				this.set( 'cursor', followListObject.cursor );
 				this.set( 'numberFound', followListObject.numberFound );
-				this.set( 'isFinished', followListObject.cursor == null || followList.length < 20 );
+				this.set( 'isFinished', followListObject.cursor == null || followList.length < this.resultCount );
 			},
 			
 			attached: function() {
-				if( this.userList != null )
-					this._pushToFollowList( this.processUserListObject( this.userList ) );
+				this.loadMore();
 			},
 			
 			resetList: function() {
@@ -96,6 +97,7 @@
 			loadMore: function() {
 				this.$.UserAuthorFollowListApi.params.authorId = this.authorId;
 				this.$.UserAuthorFollowListApi.params.cursor = this.cursor;
+				this.$.UserAuthorFollowListApi.params.resultCount = this.resultCount;
 				this.$.UserAuthorFollowListApi.generateRequest();
 			},
 
