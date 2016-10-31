@@ -10,7 +10,6 @@
 		<#include "meta/PolymerDependencies.ftl">
 		<pratilipi-home-page 
 			user-data='${ userJson }'
-			sections-list='${ sectionsJson }'
 			pratilipi-types='${ pratilipiTypesJson }'
 			navigation-list='${ navigationList }'
 			language-map='${ languageMap }'></pratilipi-home-page>

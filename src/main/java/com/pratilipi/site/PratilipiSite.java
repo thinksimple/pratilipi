@@ -669,20 +669,18 @@ public class PratilipiSite extends HttpServlet {
 	private Map<String, Object> createDataModelForHomePage( boolean basicMode, Language filterLanguage )
 			throws InsufficientAccessException, IOException, UnexpectedServerException {
 
-		if( filterLanguage == null )
-			filterLanguage = Language.ENGLISH;
-
-		InitV1Api.GetRequest request = new InitV1Api.GetRequest();
-		request.setLanguage( filterLanguage );
-		List<Section> sections = ApiRegistry.getApi( InitV1Api.class ).get( request ).getSectionList();
-
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", createPageTitle( I18n.getString( "home_page_title", filterLanguage ), null ) );
 
-		if( basicMode )
+		if( basicMode ) {
+			if( filterLanguage == null )
+				filterLanguage = Language.ENGLISH;
+
+			InitV1Api.GetRequest request = new InitV1Api.GetRequest();
+			request.setLanguage( filterLanguage );
+			List<Section> sections = ApiRegistry.getApi( InitV1Api.class ).get( request ).getSectionList();
 			dataModel.put( "sections", sections );
-		else
-			dataModel.put( "sectionsJson", new Gson().toJson( sections ) );
+		}
 
 		return dataModel;
 

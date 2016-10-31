@@ -2,6 +2,14 @@
 	<#include "pratilipi-${ language?lower_case }-carousel.html">
 </#if>
 <dom-module id="pratilipi-home-page">
+	<style>
+		paper-spinner.pratilipi-spinner {
+			--paper-spinner-layer-1-color: #D0021B;
+			--paper-spinner-layer-2-color: #107FE5;
+			--paper-spinner-layer-3-color: #D0021B;
+			--paper-spinner-layer-4-color: #107FE5;
+		}
+	</style>
 	<template>
 		<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
 		<pratilipi-write language-map="[[ languageMap ]]" pratilipi-types='[[ pratilipiTypes ]]'></pratilipi-write>
@@ -23,6 +31,7 @@
 						<#include "app-launch/pratilipi-android-launch.html">
 						<pratilipi-${ language?lower_case }-carousel style="text-align: center;"></pratilipi-${ language?lower_case }-carousel>
 						<br class="pratilipi-break"/>
+						<paper-spinner class="pratilipi-spinner pratilipi-spinner-center" active="{{ loadingSections }}"></paper-spinner>
 						<template is="dom-repeat" items="[[ sectionsList ]]">
 							<pratilipi-card-grid
 								heading='[[ item.title ]]'
@@ -41,6 +50,15 @@
 		<div class="scroll-top-button">
 			<a id="scrollToTop" on-click="scrollToTop"><paper-fab mini noink style="background: #c0c0c0;" icon="icons:arrow-upward"></paper-fab></a>
 		</div>
+		<iron-ajax
+				id="InitApi"
+				url="/api/init"
+				params='{"language": "${ language }"}'
+				method="GET"
+				content-type="application/json"
+				handle-as="json"
+				on-response="_handleInitApiResponse"
+				></iron-ajax>
 	</template>
 		
 
@@ -52,6 +70,7 @@
 			properties: {
 				userData: { type: Object },
 				sectionsList: { type: Array },
+				loadingSections: { type: Boolean, value: true },
 				navigationList: { type: Array },
 				pratilipiTypes: { types: Object },
 				languageMap: { type: Object },
@@ -64,6 +83,12 @@
 			
 			ready: function() {
 				jQuery( '#scrollToTop' ).css( "display", "none" );
+				this.$.InitApi.generateRequest();
+			},
+			
+			_handleInitApiResponse: function( event ) {
+				this.set( 'loadingSections', false );
+				this.set( 'sectionsList', event.detail.response.sections );
 			},
 			
 			scrollHandler: function( st ) {
