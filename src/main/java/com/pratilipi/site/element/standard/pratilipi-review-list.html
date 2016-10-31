@@ -121,7 +121,7 @@
 				userpratilipi: { type: Object, observer:"_userPratilipiChanged" },
 				
 				reviewList: { type: Array, value: [], notify: true },
-				zeroReviewResults: { type: Boolean, value: true },
+				zeroReviewResults: { type: Boolean, value: false },
 				cursor: { type: String, value: null },
 				resultCount: { type: Number, value: 20 },
 
@@ -189,18 +189,20 @@
 			
 			checkForZeroResults: function() {
 				if( this.reviewAvailable ) {
-					this.zeroReviewResults = false;
+					this.set( 'zeroReviewResults', false );
 					return;
 				}
 				var zeroReviewResults = true;
 				for( var i = 0; i < this.reviewList.length; i ++ ) {
-					if( this.reviewList[i].reviewState != "BLOCKED" && this.reviewList[i].reviewState != "DELETED" && 
-							this.reviewList[i].review != null && this.reviewList[i].review.trim() != "" ) {
+					if( this.reviewList[i].reviewState != "BLOCKED" && this.reviewList[i].reviewState != "DELETED" 
+							&& this.reviewList[i].review != null && this.reviewList[i].review.trim() != ""
+							&& this.reviewList[i].userPratilipiId != this.userpratilipi.userPratilipiId ) {
 						zeroReviewResults = false;
 						break;
 					}
 				}
 				this.set( 'zeroReviewResults', zeroReviewResults );
+
 			},
 			
 			reset: function() {
@@ -238,6 +240,7 @@
 				// Spinner Active
 				this.set( 'isLoading', false );
 				this.set( 'isFinished', false );
+				this.set( 'zeroReviewResults', false );
 
 				if( this.$.AjaxGet.lastRequest )
 					this.$.AjaxGet.lastRequest.abort();
@@ -265,8 +268,10 @@
 
 				var reviewList = event.detail.response.reviewList;
 				for( var i = 0; i < reviewList.length; i++ ) {
-					if( reviewList[i].userPratilipiId != this.userpratilipi.userPratilipiId )
-						this.push( 'reviewList', reviewList[i] );
+					if( reviewList[i].reviewState != "BLOCKED" && reviewList[i].reviewState != "DELETED" 
+						&& reviewList[i].review != null && reviewList[i].review.trim() != ""
+						&& reviewList[i].userPratilipiId != this.userpratilipi.userPratilipiId )
+							this.push( 'reviewList', reviewList[i] );
 				}
 
 				this.set( 'cursor', event.detail.response.cursor );
