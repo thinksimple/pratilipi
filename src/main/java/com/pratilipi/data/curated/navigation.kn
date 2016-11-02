@@ -5,19 +5,17 @@
 /event/fday  ಸ್ನೇಹಿತರ ದಿನ ಸ್ಪರ್ಧೆ     App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "eventId":4596858014924800 }
 
 ಪ್ರಭೇದಗಳು 
-/satire     ವಿಡಂಬನೆ           App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"satire" } 
-/love       ಪ್ರೀತಿ              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"love" }
-/spiritual  ಅನುಭಾವ           App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"spiritual" } 
 /politics   ರಾಜಕೀಯ          App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"politics" }
 /gender     ಲಿಂಗ             App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"gender" }
 /society    ಸಮಾಜ            App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"society" } 
-
+/satire     ವಿಡಂಬನೆ           App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"satire" } 
+/love       ಪ್ರೀತಿ              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"love" }
+/spiritual  ಅನುಭಾವ           App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"spiritual" } 
 
 ಪ್ರಕಾರಗಳು 
-/articles     ಲೇಖನಗಳು       App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"articles" } 
-/books        ಪುಸ್ತಕಗಳು        App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"books" } 
 /stories      ಕಥೆಗಳು         App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"stories" } 
 /poems        ಕವಿತೆಗಳು        App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"poems" } 
-
+/articles     ಲೇಖನಗಳು       App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"articles" } 
+/books        ಪುಸ್ತಕಗಳು        App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"books" } 
 
 
