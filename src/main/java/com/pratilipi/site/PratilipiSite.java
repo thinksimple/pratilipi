@@ -35,11 +35,11 @@ import com.pratilipi.api.impl.event.EventListApi;
 import com.pratilipi.api.impl.init.InitV1Api;
 import com.pratilipi.api.impl.init.InitV1Api.Response.Section;
 import com.pratilipi.api.impl.notification.NotificationListApi;
-import com.pratilipi.api.impl.pratilipi.PratilipiV1Api;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentIndexApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentV1Api;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentV2Api;
 import com.pratilipi.api.impl.pratilipi.PratilipiListV1Api;
+import com.pratilipi.api.impl.pratilipi.PratilipiV1Api;
 import com.pratilipi.api.impl.user.UserApi;
 import com.pratilipi.api.impl.userauthor.UserAuthorFollowApi;
 import com.pratilipi.api.impl.userauthor.UserAuthorFollowListApi;
@@ -69,7 +69,6 @@ import com.pratilipi.data.client.BlogPostData;
 import com.pratilipi.data.client.EventData;
 import com.pratilipi.data.client.PratilipiData;
 import com.pratilipi.data.client.UserData;
-import com.pratilipi.data.client.UserPratilipiData;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Blog;
 import com.pratilipi.data.type.Navigation;
@@ -1013,42 +1012,44 @@ public class PratilipiSite extends HttpServlet {
 											.getApi( EventApi.class )
 											.get( eventRequest );
 
-		Integer resultCount = basicMode ? 10 : 12;
-		PratilipiListV1Api.GetRequest PratilipiListV1ApiRequest = new PratilipiListV1Api.GetRequest();
-		PratilipiListV1ApiRequest.setEventId( eventId );
-		PratilipiListV1ApiRequest.setState( PratilipiState.PUBLISHED );
-		PratilipiListV1ApiRequest.setResultCount( resultCount );
-
-		String action = request.getParameter( "action" ) != null ? request.getParameter( "action" ) : "event_page";
-		Integer pageCurr = null;
-		if( basicMode && action.equals( "list_contents" ) ) {
-			pageCurr = request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() ) != null
-					? Integer.parseInt( request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() ) )
-					: 1;
-			PratilipiListV1ApiRequest.setOffset( ( pageCurr - 1 ) * resultCount );
-		}
-
-		PratilipiListV1Api.Response PratilipiListV1ApiResponse = ApiRegistry
-									.getApi( PratilipiListV1Api.class )
-									.get( PratilipiListV1ApiRequest );
-
 		dataModel.put( "title", createPageTitle( eventResponse.getName(), eventResponse.getNameEn() ) );
+		if( basicMode )
+			dataModel.put( "event", eventResponse );
+		else
+			dataModel.put( "eventJson", gson.toJson( eventResponse ) );
+
 
 		if( basicMode ) {
+
+			String action = request.getParameter( "action" ) != null ? request.getParameter( "action" ) : "event_page";
 			dataModel.put( "action", action );
-			dataModel.put( "event", eventResponse );
+			Integer pageCurr = request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() ) != null
+					? Integer.parseInt( request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() ) )
+					: 1;
+
+			Integer resultCount = 10;
+			PratilipiListV1Api.GetRequest PratilipiListV1ApiRequest = new PratilipiListV1Api.GetRequest();
+			PratilipiListV1ApiRequest.setEventId( eventId );
+			PratilipiListV1ApiRequest.setState( PratilipiState.PUBLISHED );
+			PratilipiListV1ApiRequest.setResultCount( resultCount );
+			if( action.equals( "list_contents" ) ) {
+				PratilipiListV1ApiRequest.setOffset( ( pageCurr - 1 ) * resultCount );
+			}
+
+			PratilipiListV1Api.Response PratilipiListV1ApiResponse = ApiRegistry
+										.getApi( PratilipiListV1Api.class )
+										.get( PratilipiListV1ApiRequest );
+
 			dataModel.put( "pratilipiList", PratilipiListV1ApiResponse.getPratilipiList() );
 			dataModel.put( "numberFound", PratilipiListV1ApiResponse.getNumberFound() );
 			dataModel.put( "pratilipiListPageCurr", pageCurr );
-			Integer pageMax = PratilipiListV1ApiResponse.getNumberFound() != null ?
-					(int) Math.ceil( ( (double) PratilipiListV1ApiResponse.getNumberFound() ) / resultCount ) : 1;
-			dataModel.put( "pratilipiListPageMax", pageMax );
-		} else {
-			dataModel.put( "eventJson", gson.toJson( eventResponse ) );
-			dataModel.put( "pratilipiListObjectJson", gson.toJson( PratilipiListV1ApiResponse ) );
+			dataModel.put( "pratilipiListPageMax", PratilipiListV1ApiResponse.getNumberFound() != null ?
+					(int) Math.ceil( ( (double) PratilipiListV1ApiResponse.getNumberFound() ) / resultCount ) : 1 );
+
 		}
+
 		return dataModel;
-		
+
 	}
 	
 	public Map<String, Object> createDataModelForBlogPage( Long blogId, Language language, boolean basicMode ) 

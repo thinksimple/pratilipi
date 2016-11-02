@@ -11,7 +11,6 @@
 		<pratilipi-event-page 
 			user-data='${ userJson }'
 			event='${ eventJson }'
-			pratilipi-list-object='${ pratilipiListObjectJson }'
 			pratilipi-types='${ pratilipiTypesJson }'
 			navigation-list='${ navigationList }'
 			language-map='${ languageMap }'></pratilipi-event-page>
