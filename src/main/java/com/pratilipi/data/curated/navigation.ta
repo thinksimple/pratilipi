@@ -1,20 +1,19 @@
 பிரபலமானவை
+/fiveminstories              ஐந்து நிமிடக்கதைகள்  App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"fiveminstories" } 
+/most-read                   வாசகர் தேர்வு        App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"most-read" }
+/ministories                 குட்டிக்கதைகள்       App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"ministories" } 
 /event/memories              ஞாபகம் வருதே        App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "eventId":5115598167080960 }
 /new                         புதியவை             App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"new" }
-/most-read                   வாசகர் தேர்வு        App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"most-read" }
-/fiveminstories              ஐந்து நிமிடக்கதைகள்  App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"fiveminstories" } 
-/ministories                 குட்டிக்கதைகள்       App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"ministories" } 
 /nationalised-books          நாட்டுடைமை நூல்கள்   App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"nationalised-books" }
 /events                      போட்டிகள்          App#EventList::{ "language":"TAMIL" }
 
 பிரிவுகள்
-/politics                    அரசியல்             App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"politics" }
+/cinema                      சினிமா               App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"cinema" }/politics                    அரசியல்             App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"politics" }
+/experience                  அனுபவம்            App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"experience" }
 /family                      இல்லறம்  / உறவு      App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"family" }
 /education                   கல்வி             App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"education" }
 /spiritual                   ஆன்மீகம்            App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"spiritual" }
 /horror                      மர்மம் / திகில்       App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"horror" }
-/experience                  அனுபவம்            App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"experience" }
-/cinema                      சினிமா               App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"cinema" }
 /humour                      நகைச்சுவை         App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"humour" }
 /history                     வரலாறு           App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"history" }
 /others                      மற்றவை           App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"others" }
