@@ -95,7 +95,7 @@
 				</#if>
 				
 				<#-- 2. Author reviewing his own book -->
-				<#if reviewParam == "write" && userpratilipi?? && userpratilipi.getHasAccessToReview() == false >
+				<#if reviewParam == "write" && userpratilipi?? && userpratilipi.hasAccessToReview() == false >
 					<div class="box" style="padding: 20px auto; text-align: center;">
 						Sorry! You are not Authorized to write review for this book! You can review this book from logging in from a different account!
 					</div>
