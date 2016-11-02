@@ -101,19 +101,18 @@
 				on-error="_pratilipiListApiError"
 				></iron-ajax>
 	</template>
-	
+
 	<script>
 		Polymer({
 
 			is: 'pratilipi-author-published-contents',
 
 			properties: {
-				pratilipiListObject: { type: Object },
 				author: { type: Object, observer: "_authorObserver" },
 
 				pratilipiList: { type: Array, value: function() { return []; } },
-				cursor: { type: String },
-				numberFound: { type: Number, observer: "_numberFoundObserver" },
+				cursor: { type: String, value: null },
+				numberFound: { type: Number, value: null, observer: "_numberFoundObserver" },
 				showMore: { type: Boolean, value: false }
 			},
 
@@ -174,21 +173,8 @@
 				this.set( 'showMore', this.pratilipiList.length < this.numberFound );
 			},
 			
-			_checkEmptyList: function( pratilipiListObject ) {
-				return 	pratilipiListObject != null && 
-						pratilipiListObject.pratilipiList != null && 
-						pratilipiListObject.pratilipiList.length > 0; 
-			},
-
 			ready: function() {
-				if( this._checkEmptyList( this.pratilipiListObject ) )
-					this.processPratilipiListObject( this.pratilipiListObject );
-				else {
-					this.set( 'cursor', null );
-					this.set( 'numberFound', 0 );
-					this.set( 'showMore', false );
-				}
-
+				this.loadMore();
 			},
 
 			loadMore: function() {

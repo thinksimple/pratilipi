@@ -64,7 +64,6 @@
 				</template>
 
 				<pratilipi-author-published-contents 
-						pratilipi-list-object="[[ publishedPratilipiList ]]" 
 						author="[[ author ]]"></pratilipi-author-published-contents>
 
 			</div>
@@ -94,8 +93,6 @@
 		
 		properties: {
 			author: { type: Object, observer: "_authorObserver" },
-
-			publishedPratilipiList: { type: Object },
 		},
 		
 		_authorObserver: function() {

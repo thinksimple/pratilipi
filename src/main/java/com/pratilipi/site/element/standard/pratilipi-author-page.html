@@ -34,8 +34,7 @@
 								user-author='[[ userAuthor ]]'></pratilipi-author-details>
 						<pratilipi-author-tabs 
 								user="[[ user ]]"
-								author="[[ author ]]"
-								published-pratilipi-list="{{ publishedPratilipiList }}"></pratilipi-author-tabs>
+								author="[[ author ]]"></pratilipi-author-tabs>
 						<pratilipi-author-settings author="[[ author ]]" user="[[ user ]]"></pratilipi-author-settings>
 					</div>
 				</div>
@@ -79,7 +78,6 @@
 				<#-- Workaround for userObserver - called when once user is set first time -->
 				loadUser: { type: Boolean, value: false },
 				
-				publishedPratilipiList: { type: Object },
 				pratilipiTypes: { types: Object },
 				navigationList: { type: Array },
 				languageMap: { type: Object },

@@ -12,7 +12,6 @@
 			user-data='${ userJson }'
 			author='${ authorJson }'
 			user-author='${ userAuthorJson }'
-			published-pratilipi-list='${ publishedPratilipiListObjectJson }'
 			pratilipi-types='${ pratilipiTypesJson }'
 			navigation-list='${ navigationList }'
 			language-map='${ languageMap }'></pratilipi-author-page>
