@@ -44,6 +44,7 @@ import com.pratilipi.api.impl.user.UserApi;
 import com.pratilipi.api.impl.userauthor.UserAuthorFollowApi;
 import com.pratilipi.api.impl.userauthor.UserAuthorFollowListApi;
 import com.pratilipi.api.impl.userpratilipi.UserPratilipiApi;
+import com.pratilipi.api.impl.userpratilipi.UserPratilipiReviewListApi;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -739,9 +740,15 @@ public class PratilipiSite extends HttpServlet {
 				String pageNoStr = request.getParameter( RequestParameter.LIST_PAGE_NUMBER.getName() );
 				if( pageNoStr != null && ! pageNoStr.trim().isEmpty() )
 					reviewPageCurr = Integer.parseInt( pageNoStr );
-				DataListCursorTuple<UserPratilipiData> reviewListCursorTuple =
-						UserPratilipiDataUtil.getPratilipiReviewList( pratilipiId, null, ( reviewPageCurr - 1 ) * reviewPageSize, reviewPageSize );
-				dataModel.put( "reviewList", toGenericReviewResponseList( reviewListCursorTuple.getDataList() ) );
+
+				UserPratilipiReviewListApi.GetRequest reviewListRequest = new UserPratilipiReviewListApi.GetRequest();
+				reviewListRequest.setPratilipiId( pratilipiId );
+				reviewListRequest.setOffset( ( reviewPageCurr - 1 ) * reviewPageSize );
+				reviewListRequest.setResultCount( reviewPageSize );
+				UserPratilipiReviewListApi.Response reviewListResponse = ApiRegistry
+																			.getApi( UserPratilipiReviewListApi.class )
+																			.get( reviewListRequest );
+				dataModel.put( "reviewList", reviewListResponse.getReviewList() );
 				dataModel.put( "reviewListPageCurr", reviewPageCurr );
 				if( pratilipiResponse.getReviewCount() != 0 )
 					dataModel.put( "reviewListPageMax", (int) Math.ceil( ( (double) pratilipiResponse.getReviewCount() ) / reviewPageSize ) );
@@ -751,9 +758,13 @@ public class PratilipiSite extends HttpServlet {
 			} else if( reviewParam != null && reviewParam.trim().equals( "reply" ) ) {
 				dataModel.put( "reviewParam", reviewParam );
 			} else { // if( reviewParam == null || reviewParam.trim().isEmpty() ) {
-				DataListCursorTuple<UserPratilipiData> reviewListCursorTuple =
-						UserPratilipiDataUtil.getPratilipiReviewList( pratilipiId, null, null, 10 );
-				dataModel.put( "reviewList", toGenericReviewResponseList( reviewListCursorTuple.getDataList() ) );
+				UserPratilipiReviewListApi.GetRequest reviewListRequest = new UserPratilipiReviewListApi.GetRequest();
+				reviewListRequest.setPratilipiId( pratilipiId );
+				reviewListRequest.setResultCount( 10 );
+				UserPratilipiReviewListApi.Response reviewListResponse = ApiRegistry
+																			.getApi( UserPratilipiReviewListApi.class )
+																			.get( reviewListRequest );
+				dataModel.put( "reviewList", reviewListResponse.getReviewList() );
 			}
 		} else {
 			dataModel.put( "pratilipi", pratilipiResponse );
@@ -1098,7 +1109,6 @@ public class PratilipiSite extends HttpServlet {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-		UserPratilipiData userPratilipiData = UserPratilipiDataUtil.getUserPratilipi( AccessTokenFilter.getAccessToken().getUserId(), pratilipiId );
 		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
 		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author, false );
 
@@ -1171,9 +1181,12 @@ public class PratilipiSite extends HttpServlet {
 		
 		Gson gson = new Gson();
 		PratilipiV1Api.Response pratilipiResponse = new PratilipiV1Api.Response( pratilipiData );
-		UserPratilipiApi.Response userPratilipiResponse = userPratilipiData != null ?
-						new UserPratilipiApi.Response( userPratilipiData ) : null;
-		
+		UserPratilipiApi.GetRequest userPratilipiRequest = new UserPratilipiApi.GetRequest();
+		userPratilipiRequest.setPratilipiId( pratilipiId );
+		UserPratilipiApi.Response userPratilipiResponse = ApiRegistry
+														.getApi( UserPratilipiApi.class )
+														.getUserPratilipi( userPratilipiRequest );
+
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", createReadPageTitle( pratilipiData, 1, 1 ) );
 		dataModel.put( "pageNo", pageNo );
@@ -1400,11 +1413,4 @@ public class PratilipiSite extends HttpServlet {
 		return pratilipiList;
 	}
 
-	private List<UserPratilipiApi.Response> toGenericReviewResponseList( List<UserPratilipiData> userPratilipiList ) {
-		List<UserPratilipiApi.Response> reviewList = new ArrayList<>( userPratilipiList.size() );
-		for( UserPratilipiData userPratilipiData : userPratilipiList )
-			reviewList.add( new UserPratilipiApi.Response( userPratilipiData, true ) );
-		return reviewList;
-	}
-	
 }

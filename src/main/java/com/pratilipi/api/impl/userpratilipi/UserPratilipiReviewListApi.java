@@ -20,11 +20,28 @@ public class UserPratilipiReviewListApi extends GenericApi {
 
 	public static class GetRequest extends GenericRequest {
 
-		@Validate( required = true )
+		@Validate( required = true, minLong = 1L )
 		private Long pratilipiId;
 		
 		private String cursor;
+		private Integer offset;
 		private Integer resultCount;
+
+		public void setPratilipiId( Long pratilipiId ) {
+			this.pratilipiId = pratilipiId;
+		}
+		
+		public void setCursor( String cursor ) {
+			this.cursor = cursor;
+		}
+		
+		public void setOffset( Integer offset ) {
+			this.offset = offset;
+		}
+		
+		public void setResultCount( Integer resultCount ) {
+			this.resultCount = resultCount;
+		}
 
 	}
 	
@@ -43,7 +60,14 @@ public class UserPratilipiReviewListApi extends GenericApi {
 				this.reviewList.add( new UserPratilipiApi.Response( review, UserPratilipiReviewListApi.class ) );
 			this.cursor = cursor;
 		}
+
+		public List<UserPratilipiApi.Response> getReviewList() {
+			return reviewList;
+		}
 		
+		public String getCursor() {
+			return cursor;
+		}
 	}
 
 	
@@ -54,7 +78,7 @@ public class UserPratilipiReviewListApi extends GenericApi {
 				UserPratilipiDataUtil.getPratilipiReviewList(
 						request.pratilipiId,
 						request.cursor,
-						null,
+						request.offset,
 						request.resultCount == null ? 20 : request.resultCount );
 		
 		return new Response(
