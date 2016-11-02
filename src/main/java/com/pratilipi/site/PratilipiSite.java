@@ -776,6 +776,7 @@ public class PratilipiSite extends HttpServlet {
 				.getApi( AuthorApi.class )
 				.get( authorApiGetRequest );
 		dataModel.put( "title", createAuthorPageTitle( authorResponse ) );
+
 		if( basicMode )
 			dataModel.put( "author", authorResponse );
 		else
@@ -821,21 +822,6 @@ public class PratilipiSite extends HttpServlet {
 				.getApi( UserAuthorFollowApi.class )
 				.get( getRequest );
 
-		Integer followResultCount = basicMode ? 3 : 20;
-		UserAuthorFollowListApi.GetRequest followersListRequest = new UserAuthorFollowListApi.GetRequest();
-		followersListRequest.setAuthorId( authorId );
-		followersListRequest.setResultCount( followResultCount );
-		UserAuthorFollowListApi.Response followersList = ApiRegistry
-				.getApi( UserAuthorFollowListApi.class )
-				.get( followersListRequest );
-
-		UserAuthorFollowListApi.GetRequest followingListRequest = new UserAuthorFollowListApi.GetRequest();
-		followingListRequest.setUserId( authorResponse.getUser().getId() );
-		followingListRequest.setResultCount( followResultCount );
-		UserAuthorFollowListApi.Response followingList= ApiRegistry
-				.getApi( UserAuthorFollowListApi.class )
-				.get( followingListRequest );
-
 		Integer resultCount = basicMode ? 3 : 12;
 		PratilipiListV1Api.GetRequest publishedPratilipiListRequest = new PratilipiListV1Api.GetRequest();
 		publishedPratilipiListRequest.setAuthorId( authorId );
@@ -846,14 +832,26 @@ public class PratilipiSite extends HttpServlet {
 				.get( publishedPratilipiListRequest );
 
 		if( basicMode ) {
+			Integer followResultCount = 3;
+			UserAuthorFollowListApi.GetRequest followersListRequest = new UserAuthorFollowListApi.GetRequest();
+			followersListRequest.setAuthorId( authorId );
+			followersListRequest.setResultCount( followResultCount );
+			UserAuthorFollowListApi.Response followersList = ApiRegistry
+					.getApi( UserAuthorFollowListApi.class )
+					.get( followersListRequest );
+
+			UserAuthorFollowListApi.GetRequest followingListRequest = new UserAuthorFollowListApi.GetRequest();
+			followingListRequest.setUserId( authorResponse.getUser().getId() );
+			followingListRequest.setResultCount( followResultCount );
+			UserAuthorFollowListApi.Response followingList= ApiRegistry
+					.getApi( UserAuthorFollowListApi.class )
+					.get( followingListRequest );
 			dataModel.put( "userAuthor", userAuthorResponse );
 			dataModel.put( "followersList", followersList );
 			dataModel.put( "followingList", followingList );
 			dataModel.put( "publishedPratilipiList", publishedPratilipiListResponse.getPratilipiList() );
 		} else {
 			dataModel.put( "userAuthorJson", gson.toJson( userAuthorResponse ) );
-			dataModel.put( "followersListJson", gson.toJson( followersList ) );
-			dataModel.put( "followingListJson", gson.toJson( followingList ) );
 			dataModel.put( "publishedPratilipiListObjectJson", gson.toJson( publishedPratilipiListResponse ) );
 		}
 
