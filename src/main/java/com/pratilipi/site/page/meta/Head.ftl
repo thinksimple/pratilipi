@@ -29,7 +29,7 @@
 <#-- Google Login -->
 <script src="https://apis.google.com/js/api:client.js"></script>
 
-<#if lang=="hi">
+<#if lang=="hi" && stage=="prod">
 <#-- Facebook Pixel Code only on hindi pratilipi -->
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -44,3 +44,4 @@ fbq('track', "PageView");</script>
 src="https://www.facebook.com/tr?id=1569748966613739&ev=PageView&noscript=1"
 /></noscript>
 </#if>
+function trackPixelEvents(eventName){if(typeof(fbq)!='undefined')fbq('trackCustom',eventName);}

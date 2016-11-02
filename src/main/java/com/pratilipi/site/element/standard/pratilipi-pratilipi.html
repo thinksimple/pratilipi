@@ -361,7 +361,7 @@
 			},
 			
 			redirectToReader: function() {
-				fbq( 'trackCustom', 'ReadOnSummaryPage' );
+				trackPixelEvents( "ReadOnSummaryPage" );
 				window.location.href = this.pratilipi.readPageUrl + "&ret=" + window.location.pathname;
 			},
 			
