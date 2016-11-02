@@ -8,14 +8,16 @@
 /events                      போட்டிகள்          App#EventList::{ "language":"TAMIL" }
 
 பிரிவுகள்
-/cinema                      சினிமா               App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"cinema" }/politics                    அரசியல்             App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"politics" }
-/experience                  அனுபவம்            App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"experience" }
+/romance                     காதல்                App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"romance" }  
+/cinema                      சினிமா               App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"cinema" }         
+/அனுபவம்                  அனுபவம்           App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"experience" }
 /family                      இல்லறம்  / உறவு      App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"family" }
 /education                   கல்வி             App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"education" }
 /spiritual                   ஆன்மீகம்            App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"spiritual" }
 /horror                      மர்மம் / திகில்       App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"horror" }
 /humour                      நகைச்சுவை         App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"humour" }
 /history                     வரலாறு           App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"history" }
+/politics                    அரசியல்          App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"politics" }
 /others                      மற்றவை           App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"others" }
 /blog                        வலைப்பதிவுகள்      App#BlogPostList::{ "language":"TAMIL", "blogId":5683739602452480 }
 
