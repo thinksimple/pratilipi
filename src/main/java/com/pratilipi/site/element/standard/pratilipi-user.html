@@ -50,11 +50,7 @@
 			},
 			
 			closeAllElements: function() {
-				this.querySelector( 'pratilipi-user-login' ).close();
-				this.querySelector( 'pratilipi-user-register' ).close();
-				this.querySelector( 'pratilipi-user-password-reset' ).close();
-				this.querySelector( 'pratilipi-user-password-update' ).close();
-				this.querySelector( 'pratilipi-user-verification' ).close();
+				jQuery( '.modal' ).modal( 'hide' );
 			},
 
 			logIn: function( requireAccess, customMessage ) {

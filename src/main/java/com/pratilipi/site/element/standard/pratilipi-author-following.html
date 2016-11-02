@@ -39,6 +39,7 @@
 				numberFound: { type: Number },
 				resultCount: { type: Number, value: 20 },
 				isFinished: { type: Boolean, value: false },
+				emptyList: { type: Boolean, value: true },
 				noDisplay: { type: Boolean, value: false }
 			},
 
@@ -77,7 +78,7 @@
 				this.set( 'cursor', followListObject.cursor );
 				this.set( 'numberFound', followListObject.numberFound );
 				this.set( 'isFinished', followListObject.cursor == null || followList.length < this.resultCount );
-				this.set( "emptyList", followListObject.numberFound > 0 );
+				this.set( "emptyList", followListObject.numberFound == 0 );
 				this.set( "showModalButton", followListObject.numberFound > 4 );
 			},
 			

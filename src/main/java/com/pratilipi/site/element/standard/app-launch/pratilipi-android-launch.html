@@ -1,7 +1,7 @@
 <#assign cookieName = "USER_NOTIFIED">
 <div id="androidSubsribeAlert" style="margin-bottom: 4px; border-radius: 0; cursor: pointer; padding: 0; display: none; color: #fff; background-color: #D0021B; border-color: #D0021B;" class="alert alert-dismissible fade in" role="alert">
 	<button style="outline: none; right: 6px; margin-top: 10px; opacity: 1; color: #fff!important;" type="button" class="close pull-right" data-dismiss="alert" aria-label="Close" onclick="setCookie( '${ cookieName }', 'true', 7, '/' ); ga( 'send', 'event', 'android_banner', 'banner_close', 'android_registration' );">
-		<iron-icon icon="icons:close"></iron-icon>
+		<iron-icon style="color: #fff;" icon="icons:close"></iron-icon>
 	</button>
 	<div data-toggle="modal" data-target="#androidSubsribeModal" style="padding: 8px 20px; width: 95%; width: calc(100% - 32px); display: flex;" onclick="ga( 'send', 'event', 'android_banner', 'banner_click', 'android_registration' );">
 		<img style="width: 40px; height: 40px; margin-right: 12px; align-self: center;" src="http://0.ptlp.co/resource-all/home-page/google_playstore.png"/>
