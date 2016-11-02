@@ -44,4 +44,4 @@ fbq('track', "PageView");</script>
 src="https://www.facebook.com/tr?id=1569748966613739&ev=PageView&noscript=1"
 /></noscript>
 </#if>
-function trackPixelEvents(eventName){if(typeof(fbq)!='undefined')fbq('trackCustom',eventName);}
+<script>function trackPixelEvents(eventName){if(typeof(fbq)!='undefined')fbq('trackCustom',eventName);}</script>
