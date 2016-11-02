@@ -41,19 +41,14 @@ public class ImageUtil {
 	}
 	
 	public static BlobEntry resize( BlobEntry blobEntry, int width, int height ) {
-		Image image = ImagesServiceFactory.makeImage( blobEntry.getData() );
 		Transform resize = ImagesServiceFactory.makeResize(
 				width < 4000 ? width : 4000,
 				height < 4000 ? height : 4000,
 				true );
-		if( blobEntry.getMimeType().equalsIgnoreCase( "image/png" ) ) {
-			image = imagesService.applyTransform( resize, image, OutputEncoding.PNG );
-		} else {
-			OutputSettings settings = new OutputSettings( ImagesService.OutputEncoding.WEBP );
-			settings.setQuality( 70 );
-			image = imagesService.applyTransform( resize, image, settings );
-			blobEntry.setMimeType( "image/webp" );
-		}
+		Image image = ImagesServiceFactory.makeImage( blobEntry.getData() );
+		OutputSettings settings = new OutputSettings( ImagesService.OutputEncoding.WEBP );
+		image = imagesService.applyTransform( resize, image, settings );
+		blobEntry.setMimeType( "image/webp" );
 		blobEntry.setData( image.getImageData() );
 		return blobEntry;
 	}
