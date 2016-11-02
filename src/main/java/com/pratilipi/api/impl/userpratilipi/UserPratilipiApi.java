@@ -65,6 +65,7 @@ public class UserPratilipiApi extends GenericApi {
 		
 		private Response( UserPratilipiData userPratilipiData ) {
 			
+			this( userPratilipiData, UserPratilipiApi.class );
 			
 		}
 		

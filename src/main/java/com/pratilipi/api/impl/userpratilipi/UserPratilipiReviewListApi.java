@@ -40,7 +40,7 @@ public class UserPratilipiReviewListApi extends GenericApi {
 		Response( List<UserPratilipiData> reviewList, String cursor ) {
 			this.reviewList = new ArrayList<>( reviewList.size() );
 			for( UserPratilipiData review : reviewList )
-				this.reviewList.add( new UserPratilipiApi.Response( review, UserPratilipiLibraryApi.class ) );
+				this.reviewList.add( new UserPratilipiApi.Response( review, UserPratilipiReviewListApi.class ) );
 			this.cursor = cursor;
 		}
 		
