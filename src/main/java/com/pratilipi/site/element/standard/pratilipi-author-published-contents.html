@@ -112,6 +112,7 @@
 
 				pratilipiList: { type: Array, value: function() { return []; } },
 				cursor: { type: String, value: null },
+				resultCount: { type: Number, value: 12 },
 				numberFound: { type: Number, observer: "_numberFoundObserver" },
 				showMore: { type: Boolean, value: false }
 			},
@@ -175,7 +176,7 @@
 					this.push( 'pratilipiList', pratilipiList[i] );
 				this.set( 'cursor', pratilipiListObject.cursor != null ? pratilipiListObject.cursor : null );
 				this.set( 'numberFound', pratilipiListObject.numberFound != null ? pratilipiListObject.numberFound : 0 );
-				this.set( 'showMore', this.pratilipiList.length < this.numberFound );
+				this.set( 'showMore', pratilipiList.length == this.resultCount );
 			},
 			
 			ready: function() {
@@ -187,6 +188,7 @@
 				this.set( 'showMore', false );
 				this.$.PratilipiListApi.params.authorId = this.author.authorId;
 				this.$.PratilipiListApi.params.state = "PUBLISHED";
+				this.$.PratilipiListApi.params.resultCount = this.resultCount;
 				if( this.cursor != null )
 					this.$.PratilipiListApi.params.cursor = this.cursor;
 				else
