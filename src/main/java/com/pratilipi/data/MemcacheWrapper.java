@@ -20,12 +20,14 @@ public class MemcacheWrapper implements Memcache {
 	@Override
 	public <K, T extends Serializable> T get( K key ) {
 		T value = cacheL1.get( key );
-		if( value != null )
-			return value;
-		return cacheL2.get( key );
+		if( value == null ) {
+			value = cacheL2.get( key );
+			if( value != null )
+				cacheL1.put( key, value );
+		}
+		return value;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public <K, T extends Serializable> Map<K, T> getAll( Collection<K> keys ) {
 
@@ -36,10 +38,11 @@ public class MemcacheWrapper implements Memcache {
 			if( values.get( key ) == null )
 				missingKeys.add( key );
 
-		if( missingKeys.size() == 0 )
-			return values;
-		
-		values.putAll( (Map<? extends K, ? extends T>) cacheL2.getAll( missingKeys ) );
+		if( missingKeys.size() > 0 ) {
+			Map<K, T> moreValues = cacheL2.getAll( missingKeys );
+			cacheL1.putAll( moreValues );
+			values.putAll( moreValues );
+		}
 		
 		return values;
 		
