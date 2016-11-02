@@ -120,7 +120,7 @@
 	</div>
 	
 	<div style="padding-top: 20px; padding-bottom: 20px;">
-		<a class="pratilipi-light-blue-button" onClick="trackPixelEvents( "ReadOnSummaryPage" );" href="${ pratilipi.readPageUrl }&ret=${ pratilipi.getPageUrl() }">${ _strings.read }</a>
+		<a class="pratilipi-light-blue-button" onClick="trackPixelEvents( 'ReadOnSummaryPage' );" href="${ pratilipi.readPageUrl }&ret=${ pratilipi.getPageUrl() }">${ _strings.read }</a>
 		<br />
 		<#if userpratilipi?? && userpratilipi.isAddedtoLib()??>
 			<button style="margin-top: 15px;" type="button" class="pratilipi-grey-button" onclick="addToOrRemoveFromLibrary()">
