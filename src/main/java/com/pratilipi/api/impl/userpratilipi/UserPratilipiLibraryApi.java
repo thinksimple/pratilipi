@@ -35,7 +35,7 @@ public class UserPratilipiLibraryApi extends GenericApi {
 				request.pratilipiId,
 				request.addedToLib );
 
-		return new UserPratilipiApi.Response( userPratilipiData );
+		return new UserPratilipiApi.Response( userPratilipiData, UserPratilipiLibraryApi.class );
 		
 	}
 

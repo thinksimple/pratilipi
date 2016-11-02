@@ -48,7 +48,7 @@ public class UserPratilipiReviewApi extends GenericApi {
 				.addParam( "updateUserPratilipiStats", "true" );
 		TaskQueueFactory.getPratilipiTaskQueue().add( task );
 		
-		return new UserPratilipiApi.Response( userPratilipiData );
+		return new UserPratilipiApi.Response( userPratilipiData, UserPratilipiReviewApi.class );
 		
 	}		
 
