@@ -116,7 +116,7 @@
 				return;
 
 			var query = jQuery( "#searchBarInput" ).val();
-			query = query.replace( /[^A-Z0-9]+/ig, " " );
+			/* query = query.replace( /[^A-Z0-9]+/ig, " " ); */
 			this.set( 'query', query );
 
 			var str = decodeURI( window.location.pathname );

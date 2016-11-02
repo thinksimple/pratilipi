@@ -490,7 +490,7 @@
 					return;
 
 				var query = jQuery( "#search-input" ).val();
-				query = query.replace( /[^A-Z0-9]+/ig, " " );
+				/* query = query.replace( /[^A-Z0-9]+/ig, " " ); */
 				this.set( 'query', query );
 
 				var str = decodeURI( window.location.pathname );
