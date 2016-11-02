@@ -60,10 +60,6 @@ public class PratilipiEntity implements Pratilipi {
 	@Index
 	private String COVER_IMAGE;
 	
-	@Deprecated
-	@Index
-	private Boolean CUSTOM_COVER;
-
 	@Index
 	private Date LISTING_DATE;
 
@@ -222,12 +218,10 @@ public class PratilipiEntity implements Pratilipi {
 	public void setState( PratilipiState state ) {
 		this.STATE = state;
 	}
-	
+
 	@Override
 	public String getCoverImage() {
-		return COVER_IMAGE == null
-				? ( CUSTOM_COVER != null && CUSTOM_COVER ? PRATILIPI_ID.toString() : null )
-				: COVER_IMAGE;
+		return COVER_IMAGE;
 	}
 
 	@Override
