@@ -143,10 +143,11 @@
 			this.async( function() { window.location.reload(); }, 2000 );
 		},
 
-		attached: function() {
-			if( ( this.publishedPratilipiList == null || this.publishedPratilipiList.numberFound == 0 )
-					&& ! this.hasAccessToUpdate ) {
+		switchTabs: function() {
+			if( jQuery( ".nav-tabs li.active" ).attr( 'id' ) == "author-activity-tab" ) {
 				jQuery( '.nav-tabs a[href="#author-about"]' ).tab( 'show' );
+			} else if( jQuery( ".nav-tabs li.active" ).attr( 'id' ) == "author-about-tab" ) {
+				jQuery( '.nav-tabs a[href="#author-activity"]' ).tab( 'show' );
 			}
 		}
 		
