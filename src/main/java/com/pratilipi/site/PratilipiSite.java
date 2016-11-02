@@ -816,22 +816,40 @@ public class PratilipiSite extends HttpServlet {
 
 		}
 
+
 		UserAuthorFollowApi.GetRequest getRequest = new UserAuthorFollowApi.GetRequest();
 		getRequest.setAuthorId( authorId );
 		UserAuthorFollowApi.Response userAuthorResponse = ApiRegistry
 				.getApi( UserAuthorFollowApi.class )
 				.get( getRequest );
+		if( basicMode )
+			dataModel.put( "userAuthor", userAuthorResponse );
+		else
+			dataModel.put( "userAuthorJson", gson.toJson( userAuthorResponse ) );
 
-		Integer resultCount = basicMode ? 3 : 12;
-		PratilipiListV1Api.GetRequest publishedPratilipiListRequest = new PratilipiListV1Api.GetRequest();
-		publishedPratilipiListRequest.setAuthorId( authorId );
-		publishedPratilipiListRequest.setState( PratilipiState.PUBLISHED );
-		publishedPratilipiListRequest.setResultCount( resultCount );
-		PratilipiListV1Api.Response publishedPratilipiListResponse = ApiRegistry
-				.getApi( PratilipiListV1Api.class )
-				.get( publishedPratilipiListRequest );
 
 		if( basicMode ) {
+
+			Integer resultCount = 3;
+			PratilipiListV1Api.GetRequest publishedPratilipiListRequest = new PratilipiListV1Api.GetRequest();
+			publishedPratilipiListRequest.setAuthorId( authorId );
+			publishedPratilipiListRequest.setState( PratilipiState.PUBLISHED );
+			publishedPratilipiListRequest.setResultCount( resultCount );
+			PratilipiListV1Api.Response publishedPratilipiListResponse = ApiRegistry
+					.getApi( PratilipiListV1Api.class )
+					.get( publishedPratilipiListRequest );
+
+			if( authorResponse.hasAccessToUpdate() ) {
+				PratilipiListV1Api.GetRequest draftedPratilipiListRequest = new PratilipiListV1Api.GetRequest();
+				draftedPratilipiListRequest.setAuthorId( authorId );
+				draftedPratilipiListRequest.setState( PratilipiState.DRAFTED );
+				draftedPratilipiListRequest.setResultCount( resultCount );
+				PratilipiListV1Api.Response draftedPratilipiListResponse = ApiRegistry
+						.getApi( PratilipiListV1Api.class )
+						.get( draftedPratilipiListRequest );
+				dataModel.put( "draftedPratilipiList", draftedPratilipiListResponse.getPratilipiList() );
+			}
+
 			Integer followResultCount = 3;
 			UserAuthorFollowListApi.GetRequest followersListRequest = new UserAuthorFollowListApi.GetRequest();
 			followersListRequest.setAuthorId( authorId );
@@ -846,24 +864,10 @@ public class PratilipiSite extends HttpServlet {
 			UserAuthorFollowListApi.Response followingList= ApiRegistry
 					.getApi( UserAuthorFollowListApi.class )
 					.get( followingListRequest );
-			dataModel.put( "userAuthor", userAuthorResponse );
+			
 			dataModel.put( "followersList", followersList );
 			dataModel.put( "followingList", followingList );
 			dataModel.put( "publishedPratilipiList", publishedPratilipiListResponse.getPratilipiList() );
-		} else {
-			dataModel.put( "userAuthorJson", gson.toJson( userAuthorResponse ) );
-			dataModel.put( "publishedPratilipiListObjectJson", gson.toJson( publishedPratilipiListResponse ) );
-		}
-
-		if( basicMode && authorResponse.hasAccessToUpdate() ) {
-			PratilipiListV1Api.GetRequest draftedPratilipiListRequest = new PratilipiListV1Api.GetRequest();
-			draftedPratilipiListRequest.setAuthorId( authorId );
-			draftedPratilipiListRequest.setState( PratilipiState.DRAFTED );
-			draftedPratilipiListRequest.setResultCount( resultCount );
-			PratilipiListV1Api.Response draftedPratilipiListResponse = ApiRegistry
-					.getApi( PratilipiListV1Api.class )
-					.get( draftedPratilipiListRequest );
-			dataModel.put( "draftedPratilipiList", draftedPratilipiListResponse.getPratilipiList() );
 		}
 
 		return dataModel;
