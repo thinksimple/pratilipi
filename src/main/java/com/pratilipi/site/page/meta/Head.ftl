@@ -29,7 +29,7 @@
 <#-- Google Login -->
 <script src="https://apis.google.com/js/api:client.js"></script>
 
-<#if lang=="hi" && stage=="prod">
+<#if lang=="hi">
 <#-- Facebook Pixel Code only on hindi pratilipi -->
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
