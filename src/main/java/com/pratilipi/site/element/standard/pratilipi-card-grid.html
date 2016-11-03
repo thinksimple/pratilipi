@@ -211,6 +211,7 @@
 					ajaxGet.params.state = "PUBLISHED";
 				
 				delete ajaxGet.params.cursor;
+				ajaxGet.params._apiVer = "2";
 				this.async( function() { ajaxGet.generateRequest(); });
 			},
 			
@@ -247,6 +248,7 @@
 					ajaxGet.params.state = "PUBLISHED";
 				
 				ajaxGet.params.cursor = this.cursor;
+				ajaxGet._apiVer = "2";
 				this.async( function() { ajaxGet.generateRequest(); });
 			},
 			
