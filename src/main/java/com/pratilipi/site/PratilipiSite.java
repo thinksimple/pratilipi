@@ -30,7 +30,7 @@ import com.pratilipi.api.impl.blogpost.BlogPostApi;
 import com.pratilipi.api.impl.blogpost.BlogPostListApi;
 import com.pratilipi.api.impl.event.EventApi;
 import com.pratilipi.api.impl.event.EventListApi;
-import com.pratilipi.api.impl.init.InitV1Api;
+import com.pratilipi.api.impl.init.InitV2Api;
 import com.pratilipi.api.impl.init.InitV1Api.Response.Section;
 import com.pratilipi.api.impl.notification.NotificationListApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentIndexApi;
@@ -671,9 +671,9 @@ public class PratilipiSite extends HttpServlet {
 			if( filterLanguage == null )
 				filterLanguage = Language.ENGLISH;
 
-			InitV1Api.GetRequest request = new InitV1Api.GetRequest();
+			InitV2Api.GetRequest request = new InitV2Api.GetRequest();
 			request.setLanguage( filterLanguage );
-			List<Section> sections = ApiRegistry.getApi( InitV1Api.class ).get( request ).getSectionList();
+			List<Section> sections = ApiRegistry.getApi( InitV2Api.class ).get( request ).getSectionList();
 			dataModel.put( "sections", sections );
 		}
 
