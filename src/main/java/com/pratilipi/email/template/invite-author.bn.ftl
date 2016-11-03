@@ -24,8 +24,8 @@
 														<tr>
 															<td>
 																<br/>
-																<h3 style="margin: 0; font-size: 18px;">क्या आपके पास कहानी है कहने के लिए ?</h3>
-																<p style="margin: 8px 0 16px 0; font-size: 15px; text-align: justify; line-height: 20px;">प्रतिलिपि भारत का पहला सेल्फ-पब्लिशिंग प्लेटफॉर्म है जहां लेखक और पाठक अपनी मातृभाषा में अपनी अभ्य्क्तियों का आदान - प्रदान कर सकते हैं | हमारे हजारों पाठक आपकी कहानियों को पढ़ना चाहते हैं | प्रतिलिपि पर आप अपने फैन्स बना सकते हैं जो आपको फौलो कर आपका साहित्य पढेंगे | इसके साथ ही आप अपने पाठकों से सीधे सम्वाद भी कर सकते हैं |</p>
+																<h3 style="margin: 0; font-size: 18px;">আপনার কাছে কি বলার মতো কোন কাহিনী আছে?</h3>
+																<p style="margin: 8px 0 16px 0; font-size: 15px; text-align: justify; line-height: 20px;">যে সকল লেখক এবং পাঠকগণ মাতৃভাষার প্রতি তাদের প্রেম লালন করেন প্রতিলিপি হল তাদের জন্য ভারতের প্রথম স্ব-প্রকাশনার মঞ্চ । সহস্রাধিক পাঠক অপেক্ষা করে আছেন আপনার কাহিনীর জন্য। প্রতিলিপির মঞ্চে আপনি আপনার নিজস্ব অনুসরণকারী তৈরির সাথে সাথে আপনার পাঠকদের সঙ্গেও যোগাসূত্র স্থাপন করতে পারেন।</p>
 															</td>
 														</tr>
 													</table>
@@ -44,7 +44,7 @@
 																	</tr>
 																	<tr>
 																		<td align="center">
-																			<p style="text-align:center; margin: 0px; font-size: 13px;">विश्व के सम्पर्क में रहें</p>
+																			<p style="text-align:center; margin: 0px; font-size: 13px;"> বিশ্বের সাথে যোগ স্থাপন করুন</p>
 																		</td>
 																	</tr>
 																</table>
@@ -58,7 +58,7 @@
 																	</tr>
 																	<tr>
 																		<td align="center">
-																			<p style="text-align:center; margin: 0px; font-size: 13px;">अपने पाठक से संवाद करें</p>
+																			<p style="text-align:center; margin: 0px; font-size: 13px;">আপনার পাঠকদের সাথে যুক্ত হন</p>
 																		</td>
 																	</tr>
 																</table>
@@ -73,7 +73,7 @@
 														<tr>
 															<td>
 																<br/>
-																<p style="margin: 0; font-size: 16px; margin-top: 16px; font-weight: 700;">यह कैसे काम करता है ?</p>
+																<p style="margin: 0; font-size: 16px; margin-top: 16px; font-weight: 700;">এটি কিভাবে কাজ করে?</p>
 																<br/>
 															</td>
 														</tr>
@@ -117,7 +117,7 @@
 																<table style="width: 100%; padding: 0; border-spacing: 0;">
 																	<tr>
 																		<td align="center">
-																			<p style="text-align:center; margin: 4px; font-size: 13px;">1. मुफ्त  साईन अप  करें</p>
+																			<p style="text-align:center; margin: 4px; font-size: 13px;">১।বিনামূল্যে সাইন আপ করুন</p>
 																		</td>
 																	</tr>
 																</table>
@@ -126,7 +126,7 @@
 																<table style="width: 100%; padding: 0; border-spacing: 0;">
 																	<tr>
 																		<td align="center">
-																			<p style="text-align:center; margin: 4px; font-size: 13px;">2. अपनी  कहानी  लिखें</p>
+																			<p style="text-align:center; margin: 4px; font-size: 13px;">২।কাহিনী লিখুন</p>
 																		</td>
 																	</tr>
 																</table>
@@ -135,7 +135,7 @@
 																<table style="width: 100%; padding: 0; border-spacing: 0;">
 																	<tr>
 																		<td align="center">
-																			<p style="text-align:center; margin: 4px; font-size: 13px;">3. प्रकाशित  करें</p>
+																			<p style="text-align:center; margin: 4px; font-size: 13px;">৩।প্রকাশিত করুন</p>
 																		</td>
 																	</tr>
 																</table>
@@ -151,7 +151,7 @@
 															<td>
 																<br/>
 																<br/>
-																<p style="margin: 0; font-size: 16px; margin-top: 16px; font-weight: 700;">सबे  बड़े लेखक  समूह  से  जुड़ें</p>
+																<p style="margin: 0; font-size: 16px; margin-top: 16px; font-weight: 700;">বৃহৎ লেখক সম্প্রদায়ের সাথে যোগ দিন</p>
 																<br/>
 															</td>
 														</tr>
@@ -166,15 +166,15 @@
 																<table style="width: 100%; padding: 5px; border-spacing: 0;">
 																	<tr>
 																		<td width="25%" align="center">
-																			<a href="http://hindi.pratilipi.com/author/5650245983666176" style="color: inherit; text-decoration: none;">
-																				<img style="border-radius: 50%;" src="http://0.ptlp.co/author/image?authorId=5650245983666176&version=1475054770261&width=140" width="70" height="70" />
-																				<div>केदारनाथ सिंह</div>
+																			<a href="http://bengali.pratilipi.com/author/5998742121480192" style="color: inherit; text-decoration: none;">
+																				<img style="border-radius: 50%;" src="http://0.ptlp.co/author/image?authorId=5998742121480192&version=1446359029000&width=140" width="70" height="70" />
+																				<div>বাসু মুখার্জী</div>
 																			</a>
 																		</td>
 																		<td width="25%" align="center">
-																			<a href="http://hindi.pratilipi.com/author/6295918122893312" style="color: inherit; text-decoration: none;">
-																				<img style="border-radius: 50%;" src="http://0.ptlp.co/author/image?authorId=6295918122893312&version=1447233661000&width=140" width="70" height="70" />
-																				<div>नरेश सक्सेना</div>
+																			<a href="http://bengali.pratilipi.com/author/5682897505746944" style="color: inherit; text-decoration: none;">
+																				<img style="border-radius: 50%;" src="http://0.ptlp.co/author/image?authorId=5682897505746944&version=1455383477000&width=140" width="70" height="70" />
+																				<div>অয়ন দাস</div>
 																			</a>
 																		</td>
 																	</tr>
@@ -184,15 +184,15 @@
 																<table style="width: 100%; padding: 5px; border-spacing: 0;">
 																	<tr>
 																		<td width="25%" align="center">
-																			<a href="http://hindi.pratilipi.com/author/5651199835504640" style="color: inherit; text-decoration: none;">
-																				<img style="border-radius: 50%;" src="http://0.ptlp.co/author/image?authorId=5651199835504640&version=1450864085000&width=140" width="70" height="70" />
-																				<div>मृदुला गर्ग</div>
+																			<a href="http://bengali.pratilipi.com/author/4920263888076800" style="color: inherit; text-decoration: none;">
+																				<img style="border-radius: 50%;" src="http://0.ptlp.co/author/image?authorId=4920263888076800&version=1445966015000&width=140" width="70" height="70" />
+																				<div>প্রদীপ ঘটক</div>
 																			</a>
 																		</td>
 																		<td width="25%" align="center">
-																			<a href="http://hindi.pratilipi.com/author/5759509293170688" style="color: inherit; text-decoration: none;">
-																				<img style="border-radius: 50%;" src="http://0.ptlp.co/author/image?authorId=5759509293170688&version=1438760295000&width=140" width="70" height="70" />
-																				<div>जयश्री रॉय</div>
+																			<a href="http://bengali.pratilipi.com/author/5758529661042688" style="color: inherit; text-decoration: none;">
+																				<img style="border-radius: 50%;" src="http://0.ptlp.co/author/image?authorId=5758529661042688&version=1472727480342&width=140" width="70" height="70" />
+																				<div>পৃথ্বী ব্যানার্জী</div>
 																			</a>
 																		</td>
 																	</tr>
@@ -204,15 +204,15 @@
 																<table style="width: 100%; padding: 5px; border-spacing: 0;">
 																	<tr>
 																		<td width="25%" align="center">
-																			<a href="http://hindi.pratilipi.com/author/5720434527961088" style="color: inherit; text-decoration: none;">
-																				<img style="border-radius: 50%;" src="http://0.ptlp.co/author/image?authorId=5720434527961088&version=1419996610000&width=140" width="70" height="70" />
-																				<div>गीता श्री</div>
+																			<a href="http://bengali.pratilipi.com/author/6221665604206592" style="color: inherit; text-decoration: none;">
+																				<img style="border-radius: 50%;" src="http://0.ptlp.co/author/image?authorId=6221665604206592&version=1450441915000&width=140" width="70" height="70" />
+																				<div>সরিৎ চ্যাটার্জি</div>
 																			</a>
 																		</td>
 																		<td width="25%" align="center">
-																			<a href="http://hindi.pratilipi.com/author/5728451931668480" style="color: inherit; text-decoration: none;">
-																				<img style="border-radius: 50%;" src="http://0.ptlp.co/author/image?authorId=5728451931668480&version=1437315225000&width=140" width="70" height="70" />
-																				<div>रजनी गुप्त</div>
+																			<a href="http://bengali.pratilipi.com/author/6235157094727680" style="color: inherit; text-decoration: none;">
+																				<img style="border-radius: 50%;" src="http://0.ptlp.co/author/image?authorId=6235157094727680&version=1467119737000&width=140" width="70" height="70" />
+																				<div>সোমাদ্রি সাহা</div>
 																			</a>
 																		</td>
 																	</tr>
@@ -222,15 +222,15 @@
 																<table style="width: 100%; padding: 5px; border-spacing: 0;">
 																	<tr>
 																		<td width="25%" align="center">
-																			<a href="http://hindi.pratilipi.com/author/6189898852728832" style="color: inherit; text-decoration: none;">
-																				<img style="border-radius: 50%;" src="http://0.ptlp.co/author/image?authorId=6189898852728832&version=1476201214249&width=140" width="70" height="70" />
-																				<div>प्रफुल्ल कोलख्यान</div>
+																			<a href="http://bengali.pratilipi.com/author/6052985642680320" style="color: inherit; text-decoration: none;">
+																				<img style="border-radius: 50%;" src="http://0.ptlp.co/author/image?authorId=6052985642680320&version=1470207941000&width=140" width="70" height="70" />
+																				<div>ঈপ্সিতা মিত্র</div>
 																			</a>
 																		</td>
 																			<td width="25%" align="center">
-																				<a href="http://hindi.pratilipi.com/author/5017915745107968" style="color: inherit; text-decoration: none;">
-																					<img style="border-radius: 50%;" src="http://0.ptlp.co/author/image?authorId=5017915745107968&version=1444903692000&width=140" width="70" height="70" />
-																					<div>मृदुल पाण्डेय</div>
+																				<a href="http://bengali.pratilipi.com/author/6019667500990464" style="color: inherit; text-decoration: none;">
+																					<img style="border-radius: 50%;" src="http://0.ptlp.co/author/image?authorId=6019667500990464&version=1473316465588&width=140" width="70" height="70" />
+																					<div>অনুরক্তি দাস</div>
 																				</a>
 																			</td>
 																		</tr>
@@ -253,9 +253,9 @@
 								<table style="width: 100%; padding: 0px; border-spacing: 0; margin: 0 auto;">
 									<tr>
 										<td align="center" width="auto" height="40" style="-webkit-border-radius: 5px; -moz-border-radius: 5px;border-radius: 5px; display: block;">
-										<a href="http://hindi.pratilipi.com" target="_blank" style="font-size: 18px; text-decoration: none; line-height: 40px; width: 200px; display: inline-block; background-color: #D0021B; border-radius: 2px;">
+										<a href="http://bengali.pratilipi.com" target="_blank" style="font-size: 18px; text-decoration: none; line-height: 40px; width: 200px; display: inline-block; background-color: #D0021B; border-radius: 2px;">
 											<span style="color: #ffffff; padding-left: 15px; padding-right: 15px;">
-												शुरू  करें
+												এবার শুরু করা যাক
 											</span>
 										</a>
 									</td>
