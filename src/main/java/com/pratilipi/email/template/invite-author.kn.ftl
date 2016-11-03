@@ -25,7 +25,7 @@
 															<td>
 																<br/>
 																<h3 style="margin: 0; font-size: 18px;">ನಿಮ್ಮ ಬಳಿ ಹೇಳಲು ಕಥೆ ಇದೆಯೇ?</h3>
-																<p style="margin: 8px 0 16px 0; font-size: 15px; text-align: justify; line-height: 20px;">Pratilipi is India's first self-publishing platform for writers and readers who cherish their love for native languages. We have thousands of readers waiting for your stories. On Pratilipi you can build your own fan following and interact to your readers.</p>
+																<p style="margin: 8px 0 16px 0; font-size: 15px; text-align: justify; line-height: 20px;">ಪ್ರತಿಲಿಪಿಯು ಸ್ಥಳೀಯ ಭಾಷೆಗಳನ್ನು ಪ್ರೀತಿಸುವ ಓದುಗರು ಮತ್ತು ಬರಹಗಾರರಿಗಾಗಿ ಇರುವ ಭಾರತದ ಮೊಟ್ಟಮೊದಲ ಸ್ವ-ಪ್ರಕಾಶನ ವೇದಿಕೆ. ನಿಮ್ಮ ಕಥೆಗಳಿಗಾಗಿ ಕಾಯುತ್ತಿರುವ ಸಾವಿರಾರು ಓದುಗರು ನಮ್ಮ ವೇದಿಕೆಯಲ್ಲಿದ್ದಾರೆ. ಪ್ರತಿಲಿಪಿಯಲ್ಲಿ ನೀವು ನಿಮ್ಮ ಅಭಿಮಾನಿಗಳ ಬಳಗವನ್ನು ನಿರ್ಮಿಸಿಕೊಳ್ಳಬಹುದು ಮತ್ತು ಓದುಗರ ಜೊತೆಯಲ್ಲಿ ಚರ್ಚಿಸಬಹುದು. </p>
 															</td>
 														</tr>
 													</table>
