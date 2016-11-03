@@ -98,8 +98,6 @@ PublishModal.prototype.attachCoverImageListeners = function() {
 		                _this.lastCoverUrl = image_url;
 		            },
 		            error: function(data){
-		                console.log("error");
-		                console.log(data);
 		                $img.removeClass("blur-image").attr("src", _this.lastCoverUrl);
 		            }
 		        });    

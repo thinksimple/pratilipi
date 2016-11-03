@@ -4,8 +4,6 @@
 		        url: "/api/userauthor/follow",
 		        data: { authorId: authorId, following: follow },
 		        success:function(response){
-		        	console.log(response);
-		        	console.log(typeof response);
 		        	
 		        	var parsed_data = jQuery.parseJSON( response );
 		  			if ( parsed_data.following == follow ) {

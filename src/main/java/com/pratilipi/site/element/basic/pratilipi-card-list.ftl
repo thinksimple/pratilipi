@@ -4,8 +4,6 @@
 	            url: "/api/userpratilipi/library",
 	            data: { pratilipiId: bookId, addedToLib: addToLib },
 	            success:function(response){
-	            	console.log(response);
-	            	console.log(typeof response);
 	            	
 	            	var parsed_data = jQuery.parseJSON( response );
 	      			if ( parsed_data.addedToLib == addToLib ) {

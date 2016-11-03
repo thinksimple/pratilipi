@@ -15,7 +15,6 @@ FinalScreenWriterPanel.prototype.init = function() {
     this.prepopulateBookDetails();
     this.attachCoverImageListeners();
     this.attachFormSubmitListener();
-	console.log("${pratilipiId?c}");
 
 };
 
@@ -75,7 +74,6 @@ FinalScreenWriterPanel.prototype.attachCoverImageListeners = function() {
 		        /* didItResize will be true if it managed to resize it, otherwise false (and will return the original file as 'blob') */
 		        var $img = _this.$image_container.find(".cover-image");
 		        $img.attr("src", window.URL.createObjectURL(blob) ).addClass("blur-image");
-		        console.log(blob);
 			    var fd = new FormData();
 					fd.append('data', blob);
 					fd.append('pratilipiId', ${ pratilipiId?c } );  
@@ -88,16 +86,12 @@ FinalScreenWriterPanel.prototype.attachCoverImageListeners = function() {
 		            contentType: false,
 		            processData: false,
 		            success:function(data){
-		                console.log("success");
-		                console.log(data);
 		                var image_url = jQuery.parseJSON( data ).coverImageUrl;
 		                $img.attr( "src", image_url ).removeClass("blur-image");
 		                $("#uploadPratilipiImageInput").val("");
 		                _this.lastCoverUrl = image_url;
 		            },
 		            error: function(data){
-		                console.log("error");
-		                console.log(data);
 		                $img.removeClass("blur-image").attr("src", _this.lastCoverUrl);
 		            }
 		        });    
@@ -142,16 +136,11 @@ FinalScreenWriterPanel.prototype.ajaxSubmitForm = function() {
     		summary: this.$summary.val(),
     		state: "PUBLISHED",            		
     	   };
-	console.log( ajax_data );
     $.ajax({type: "POST",
         url: "/api/pratilipi",
         data: ajax_data,
         success:function(response){
-        	console.log(response);
-        	console.log(typeof response);
-        	
         	var parsed_data = jQuery.parseJSON( response );
-        	console.log(parsed_data);
   			window.location.href = parsed_data.pageUrl;
 		},
         fail:function(response){

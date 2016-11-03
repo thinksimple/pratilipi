@@ -56,7 +56,6 @@
             success:function(response){
             	
             	var parsed_data = jQuery.parseJSON( response );
-            	console.log(parsed_data);
       			window.location = ( window.location.href.split("/")[0] + parsed_data.pageUrl );
             },
             error: function(data){

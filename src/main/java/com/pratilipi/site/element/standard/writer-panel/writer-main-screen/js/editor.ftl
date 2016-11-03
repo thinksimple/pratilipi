@@ -259,8 +259,6 @@ Editor.prototype.addImageListener = function() {
 		            	$upload_image_select.val("");
 		            },
 		            error: function(data){
-		                console.log("error");
-		                console.log(data);
 		                $img.remove();
 		                $upload_image_select.val("");
 		            }

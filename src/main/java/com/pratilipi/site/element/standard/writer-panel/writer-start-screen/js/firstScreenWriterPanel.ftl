@@ -16,10 +16,8 @@ FirstScreenWriterPanel.prototype.init = function() {
 FirstScreenWriterPanel.prototype.attachTranslateToEnglishListener = function() {
 	var _this = this;
 	this.$vernacular_title.on('keypress', function(e) {
-	    console.log("inside heere");
 		if( e.keyCode == 32 ) {
 		var english_title_text = _this.$english_title.val();
-		console.log($(this).val().split(" ").pop());
 		var last_word = $(this).val().split(" ").pop();
 		if( english_title_text == "" ) 
 			_this.$english_title.val( last_word );
@@ -104,16 +102,11 @@ FirstScreenWriterPanel.prototype.ajaxSubmitForm = function() {
 	<#if ( authorId?? )>
 		ajax_data.authorId = authorId;
 	</#if>
-	console.log( ajax_data );
     $.ajax({type: "POST",
         url: "/api/pratilipi",
         data: ajax_data,
         success:function(response){
-        	console.log(response);
-        	console.log(typeof response);
-        	
         	var parsed_data = jQuery.parseJSON( response );
-        	console.log(parsed_data);
         	$spinner_div.remove();
   			window.location = window.location.origin + window.location.pathname + "?action=write&id=" + parsed_data.pratilipiId;
 		},
