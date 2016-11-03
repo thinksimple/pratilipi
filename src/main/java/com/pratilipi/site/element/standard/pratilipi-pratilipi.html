@@ -277,6 +277,7 @@
 				id="AjaxGet"
 				url="/api/pratilipi"
 				method="GET"
+				params='{"_apiVer": "2"}'
 				content-type="application/json"
 				handle-as="json"
 				on-response="_handleAjaxGetResponse"
@@ -505,18 +506,18 @@
 			},
 			
 			publishPratilipi: function() {
-				this.$.AjaxPost.body = ( "pratilipiId=" + this.pratilipi.pratilipiId + "&" + "state=PUBLISHED" );
+				this.$.AjaxPost.body = jQuery.param( { "pratilipiId": this.pratilipi.pratilipiId, "state": "PUBLISHED", "_apiVer": "2" } );
 				this.$.AjaxPost.generateRequest();
 			},
 
 			deleteContent: function() {
-				this.$.AjaxPost.body = ( "pratilipiId=" + this.pratilipi.pratilipiId + "&" + "state=DELETED" );
+				this.$.AjaxPost.body = jQuery.param( { "pratilipiId": this.pratilipi.pratilipiId, "state": "DELETED", "_apiVer": "2" } );
 				this.$.AjaxPost.generateRequest();
 			},
 
 			_moveToDrafts: function() {
 				if( !this.moveToDraftsBoolean ) return;
-				this.$.AjaxPost.body = ( "pratilipiId=" + this.pratilipi.pratilipiId + "&" + "state=DRAFTED" );
+				this.$.AjaxPost.body = jQuery.param( { "pratilipiId": this.pratilipi.pratilipiId, "state": "DRAFTED", "_apiVer": "2" } );
 				this.$.AjaxPost.generateRequest();
 			},
 			
@@ -527,7 +528,7 @@
 			},
 
 			updateSummary: function() {
-				this.$.AjaxPost.body = ( "pratilipiId=" + this.pratilipi.pratilipiId + "&" + "summary=" + this.summary );
+				this.$.AjaxPost.body = jQuery.param( { "pratilipiId": this.pratilipi.pratilipiId, "summary": this.summary, "_apiVer": "2" } );
 				this.$.AjaxPost.generateRequest();
 			},
 			

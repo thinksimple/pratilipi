@@ -464,7 +464,7 @@
 			
 			
 			finaliseV2Version: function() {
-				this.$.PratilipiApi.body = jQuery.param( { "pratilipiId": this.pratilipi.pratilipiId, "oldContent": false } );
+				this.$.PratilipiApi.body = jQuery.param( { "pratilipiId": this.pratilipi.pratilipiId, "oldContent": false, "_apiVer": "2" } );
 				this.$.PratilipiApi.generateRequest();
 			},
 			

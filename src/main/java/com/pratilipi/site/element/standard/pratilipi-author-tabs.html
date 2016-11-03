@@ -106,22 +106,22 @@
 			var pratilipi = this.querySelector( 'pratilipi-author-published-contents' ).getPratilipiById( pratilipiId );
 			this.querySelector( 'pratilipi-author-published-contents' ).removeFromPratilipiList( pratilipiId );
 			this.querySelector( 'pratilipi-author-drafted-contents' ).addToPratilipiList( pratilipi );
-			this._pratilipiApiGetCall( pratilipiId, "DRAFTED" );
+			this._pratilipiApiPostCall( pratilipiId, "DRAFTED" );
 		},
 
 		publishContent: function( pratilipiId ) {
 			var pratilipi = this.querySelector( 'pratilipi-author-drafted-contents' ).getPratilipiById( pratilipiId );
 			this.querySelector( 'pratilipi-author-drafted-contents' ).removeFromPratilipiList( pratilipiId );
 			this.querySelector( 'pratilipi-author-published-contents' ).addToPratilipiList( pratilipi );
-			this._pratilipiApiGetCall( pratilipiId, "PUBLISHED" );
+			this._pratilipiApiPostCall( pratilipiId, "PUBLISHED" );
 		},
 
 		deleteContent: function( pratilipiId ) {
-			this._pratilipiApiGetCall( pratilipiId, "DELETED" );
+			this._pratilipiApiPostCall( pratilipiId, "DELETED" );
 		},
 
-		_pratilipiApiGetCall: function( pratilipiId, state ) {
-			this.$.PratilipiApi.body = jQuery.param( { "pratilipiId": pratilipiId, "state": state } );
+		_pratilipiApiPostCall: function( pratilipiId, state ) {
+			this.$.PratilipiApi.body = jQuery.param( { "pratilipiId": pratilipiId, "state": state, "_apiVer": "2" } );
 			this.$.PratilipiApi.generateRequest();
 		},
 
@@ -134,12 +134,8 @@
 		},
 
 		_pratilipiApiError: function( response ) {
-			if( response != null && response.detail.request.xhr.response.message != null ) {
-				document.querySelector( 'pratilipi-alert' ).alert( response.detail.request.xhr.response.message, false );
-			} else {
-				document.querySelector( 'pratilipi-alert' ).alert( "${ _strings.server_error_message }", false );
-				console.log( response );
-			}
+			document.querySelector( 'pratilipi-alert' ).alert( response != null && response.detail.request.xhr.response.message != null ? 
+						response.detail.request.xhr.response.message : "${ _strings.server_error_message }", false );
 			this.async( function() { window.location.reload(); }, 2000 );
 		},
 

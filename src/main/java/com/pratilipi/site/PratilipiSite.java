@@ -37,7 +37,7 @@ import com.pratilipi.api.impl.pratilipi.PratilipiContentIndexApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentV1Api;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentV2Api;
 import com.pratilipi.api.impl.pratilipi.PratilipiListV1Api;
-import com.pratilipi.api.impl.pratilipi.PratilipiV1Api;
+import com.pratilipi.api.impl.pratilipi.PratilipiV2Api;
 import com.pratilipi.api.impl.user.UserApi;
 import com.pratilipi.api.impl.userauthor.UserAuthorFollowApi;
 import com.pratilipi.api.impl.userauthor.UserAuthorFollowListApi;
@@ -360,9 +360,9 @@ public class PratilipiSite extends HttpServlet {
 					dataModel.put( "authorId", authorId );
 
 				if( pratilipiId != null ) {
-					PratilipiV1Api.GetRequest pratilipiRequest = new PratilipiV1Api.GetRequest();
+					PratilipiV2Api.GetRequest pratilipiRequest = new PratilipiV2Api.GetRequest();
 					pratilipiRequest.setPratilipiId( pratilipiId );
-					PratilipiV1Api.Response pratilipiResponse = ApiRegistry.getApi( PratilipiV1Api.class ).get( pratilipiRequest );
+					PratilipiV2Api.Response pratilipiResponse = ApiRegistry.getApi( PratilipiV2Api.class ).get( pratilipiRequest );
 
 					PratilipiContentIndexApi.GetRequest indexReq = new PratilipiContentIndexApi.GetRequest();
 					indexReq.setPratilipiId( pratilipiId );
@@ -561,10 +561,10 @@ public class PratilipiSite extends HttpServlet {
 		if( pratilipiData == null )
 			return null;
 
-		return createPratilipiPageTitle( new PratilipiV1Api.Response( pratilipiData ) );
+		return createPratilipiPageTitle( new PratilipiV2Api.Response( pratilipiData ) );
 	}
 
-	private String createPratilipiPageTitle( PratilipiV1Api.Response pratilipiResponse ) {
+	private String createPratilipiPageTitle( PratilipiV2Api.Response pratilipiResponse ) {
 
 		if( pratilipiResponse == null )
 			return null;
@@ -620,10 +620,10 @@ public class PratilipiSite extends HttpServlet {
 	
 	private List<String> createFbOpenGraphTags( Long pratilipiId ) throws UnexpectedServerException {
 
-		PratilipiV1Api.GetRequest pratilipiRequest = new PratilipiV1Api.GetRequest();
+		PratilipiV2Api.GetRequest pratilipiRequest = new PratilipiV2Api.GetRequest();
 		pratilipiRequest.setPratilipiId( pratilipiId );
-		PratilipiV1Api.Response pratilipi = ApiRegistry
-														.getApi( PratilipiV1Api.class )
+		PratilipiV2Api.Response pratilipi = ApiRegistry
+														.getApi( PratilipiV2Api.class )
 														.get( pratilipiRequest );
 
 		String ogFbAppId = FacebookApi.getAppId();
@@ -703,10 +703,10 @@ public class PratilipiSite extends HttpServlet {
 	public Map<String, Object> createDataModelForPratilipiPage( Long pratilipiId, boolean basicMode, HttpServletRequest request )
 			throws InsufficientAccessException, UnexpectedServerException {
 
-		PratilipiV1Api.GetRequest pratilipiRequest = new PratilipiV1Api.GetRequest();
+		PratilipiV2Api.GetRequest pratilipiRequest = new PratilipiV2Api.GetRequest();
 		pratilipiRequest.setPratilipiId( pratilipiId );
-		PratilipiV1Api.Response pratilipiResponse = ApiRegistry
-														.getApi( PratilipiV1Api.class )
+		PratilipiV2Api.Response pratilipiResponse = ApiRegistry
+														.getApi( PratilipiV2Api.class )
 														.get( pratilipiRequest );
 
 		UserPratilipiApi.GetRequest userPratilipiRequest = new UserPratilipiApi.GetRequest();
@@ -1173,7 +1173,7 @@ public class PratilipiSite extends HttpServlet {
 		}
 		
 		Gson gson = new Gson();
-		PratilipiV1Api.Response pratilipiResponse = new PratilipiV1Api.Response( pratilipiData );
+		PratilipiV2Api.Response pratilipiResponse = new PratilipiV2Api.Response( pratilipiData );
 		UserPratilipiApi.GetRequest userPratilipiRequest = new UserPratilipiApi.GetRequest();
 		userPratilipiRequest.setPratilipiId( pratilipiId );
 		UserPratilipiApi.Response userPratilipiResponse = ApiRegistry
@@ -1399,10 +1399,10 @@ public class PratilipiSite extends HttpServlet {
 		return dataModel;
 	}
 
-	private List<PratilipiV1Api.Response> toListResponseObject( List<PratilipiData> pratilipiDataList ) {
-		List<PratilipiV1Api.Response> pratilipiList = new ArrayList<>( pratilipiDataList.size() );
+	private List<PratilipiV2Api.Response> toListResponseObject( List<PratilipiData> pratilipiDataList ) {
+		List<PratilipiV2Api.Response> pratilipiList = new ArrayList<>( pratilipiDataList.size() );
 		for( PratilipiData pratilipiData : pratilipiDataList )
-			pratilipiList.add( new PratilipiV1Api.Response( pratilipiData, true ) );
+			pratilipiList.add( new PratilipiV2Api.Response( pratilipiData, true ) );
 		return pratilipiList;
 	}
 

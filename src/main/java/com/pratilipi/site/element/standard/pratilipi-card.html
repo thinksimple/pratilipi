@@ -208,12 +208,12 @@
 			},
 			
 			publishNow: function() {
-				this.$.AjaxPost.body = ( "pratilipiId=" + this.pratilipi.pratilipiId + "&" + "state=PUBLISHED" );
+				this.$.AjaxPost.body = jQuery.param( { "pratilipiId": this.pratilipi.pratilipiId, "state": "PUBLISHED", "_apiVer": "2" } );
 				this.$.AjaxPost.generateRequest();
 			},
 			
 			moveToDrafts: function() {
-				this.$.AjaxPost.body = ( "pratilipiId=" + this.pratilipi.pratilipiId + "&" + "state=DRAFTED" );
+				this.$.AjaxPost.body = jQuery.param( { "pratilipiId": this.pratilipi.pratilipiId, "state": "DRAFTED", "_apiVer": "2" } );
 				this.$.AjaxPost.generateRequest();
 			},
 			
