@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.Website;
+import com.pratilipi.common.util.SystemProperty;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.type.Author;
@@ -133,7 +134,7 @@ public class UxModeFilter implements Filter {
 			
 			boolean basicBrowser = false;
 			
-			if( isWebApp ) {
+			if( isWebApp && SystemProperty.STAGE.equals( "prod" ) ) {
 				
 				if( userAgent == null || userAgent.isEmpty() ) {
 					basicBrowser = true;
