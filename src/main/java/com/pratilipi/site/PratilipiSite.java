@@ -12,8 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -620,9 +618,8 @@ public class PratilipiSite extends HttpServlet {
 	}
 
 	
-	@SuppressWarnings("deprecation")
 	private List<String> createFbOpenGraphTags( Long pratilipiId ) throws UnexpectedServerException {
-		
+
 		PratilipiV1Api.GetRequest pratilipiRequest = new PratilipiV1Api.GetRequest();
 		pratilipiRequest.setPratilipiId( pratilipiId );
 		PratilipiV1Api.Response pratilipi = ApiRegistry
@@ -634,18 +631,13 @@ public class PratilipiSite extends HttpServlet {
 		String ogType = "books.book";
 		String ogAuthor = "http://" + Website.ALL_LANGUAGE.getHostName() + ( pratilipi.getAuthor() == null ? "/team-pratilipi" : pratilipi.getAuthor().getPageUrl() );
 		String ogBooksIsbn = pratilipi.getId().toString();
-		String ogUrl = "http://" + Website.ALL_LANGUAGE.getHostName() + pratilipi.getPageUrl(); // Warning: Changing it to anything else will cause loss of like-share count.
+		String ogUrl = "http://" + Website.ALL_LANGUAGE.getHostName() + "/pratilipi/" + pratilipi.getId(); // Warning: Changing it to anything else will cause loss of like-share count.
 		String ogTitle = createPratilipiPageTitle( pratilipi );
 		String ogImage = pratilipi.getCoverImageUrl();
 		String ogDescription = "";
-		if( pratilipi.getType() == PratilipiType.BOOK && pratilipi.getSummary() != null ) {
+		if( pratilipi.getSummary() != null )
 			ogDescription = pratilipi.getSummary();
-			Pattern htmlPattern = Pattern.compile( "<[^>]+>" );
-			Matcher matcher = htmlPattern.matcher( pratilipi.getSummary() );
-			while( matcher.find() )
-				ogDescription = ogDescription.replace( matcher.group(), "" );
-		}
-		
+
 		List<String> fbOgTags = new LinkedList<String>();
 		fbOgTags.add( "<meta property='fb:app_id' content='" + ogFbAppId + "' />" );
 		fbOgTags.add( "<meta property='og:locale' content='" + ogLocale + "' />" );
