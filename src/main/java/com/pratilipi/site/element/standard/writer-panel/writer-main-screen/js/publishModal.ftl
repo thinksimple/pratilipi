@@ -144,7 +144,8 @@ PublishModal.prototype.ajaxSubmitForm = function() {
 			pratilipiId: ${ pratilipiId?c },
 			type: this.$category_select.val() ,
     		summary: this.$summary.val(),
-    		state: "PUBLISHED",            		
+    		state: "PUBLISHED",
+			_apiVer: "2"
     	   };
     $.ajax({type: "POST",
         url: "/api/pratilipi",

@@ -97,7 +97,8 @@ FirstScreenWriterPanel.prototype.ajaxSubmitForm = function() {
     		titleEn: this.$english_title.val(),
     		language: "${ language }",
     		state: "DRAFTED",
-    		oldContent: "false",            		
+    		oldContent: "false", 
+    		_apiVer: "2"           		
     	   };
 	<#if ( authorId?? )>
 		ajax_data.authorId = authorId;

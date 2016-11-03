@@ -163,7 +163,8 @@ TableOfContents.prototype.ajaxSubmitForm = function( vernacular_title, english_t
 	var ajax_data = {
 			title: vernacular_title ,
     		titleEn: english_title,
-    		pratilipiId: "${ pratilipiId?c }",          		
+    		pratilipiId: "${ pratilipiId?c }",
+    		_apiVer: "2"          		
     	   };
     $.ajax({type: "POST",
         url: "/api/pratilipi",

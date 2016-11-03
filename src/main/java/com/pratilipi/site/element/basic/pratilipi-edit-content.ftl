@@ -51,7 +51,8 @@
             		titleEn: form.find("#titleEn").val(),
             		type: form.find("#type").val(),
             		language: "${ pratilipi.getLanguage() }",
-            		summary: form.find("#summary").val(),	            		
+            		summary: form.find("#summary").val(),
+					_apiVer: "2"
 	               },
             success:function(response){
             	
