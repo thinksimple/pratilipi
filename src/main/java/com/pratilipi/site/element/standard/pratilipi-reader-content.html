@@ -148,8 +148,13 @@
 
 				} else if( this.contentType == "IMAGE" ) {
 					var chapters = jQuery.parseJSON( this.content )["chapters"];
-					for( var i = 1; i <= chapters.length; i++ )
-						this.contentMap[ i ] = chapters[i-1].pages[0].pagelets[0].data.name;
+					var c = 1;
+					for( var i = 0; i < chapters.length; i++ ) {
+						var pages = chapters[i].pages;
+						for( var j = 0; j < pages.length; j++ ) {
+							this.contentMap[ c++ ] = pages[j].pagelets[0].data.name;
+						}
+					}
 
 					this.set( 'content', this.getImageUrl( this.pageNo ) );
 					this._setImageSize();
