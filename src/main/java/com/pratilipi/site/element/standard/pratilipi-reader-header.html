@@ -385,9 +385,8 @@
 				// Hide Edit Content button in Mobile
 				var width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 				var height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-				if( width > 600 && this.hasAccessToUpdate )
-					this.set( 'showEditContent', true );
-				
+				this.set( 'showEditContent', ! isMobile() && this.hasAccessToUpdate && this.pratilipiContentType );
+
 				jQuery( "#navigationdropdown" ).css( 'max-height', Math.min( 500, height - 75 ) + "px", "important" );
 				jQuery( "#navigationdropdown" ).css( 'min-width', Math.min( 300, width - 20 ) + "px", "important" );
 				jQuery( "#navigationdropdown" ).css( 'max-width', ( width - 20 ) + "px", "important" );
