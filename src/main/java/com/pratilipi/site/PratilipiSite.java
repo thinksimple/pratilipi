@@ -73,7 +73,7 @@ import com.pratilipi.data.type.Navigation;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.PratilipiContentDoc;
-import com.pratilipi.data.type.doc.PratilipiContentDocImpl;
+import com.pratilipi.data.type.PratilipiContentDoc.Chapter;
 import com.pratilipi.data.util.BlogPostDataUtil;
 import com.pratilipi.data.util.EventDataUtil;
 import com.pratilipi.data.util.PratilipiDataUtil;
@@ -263,7 +263,8 @@ public class PratilipiSite extends HttpServlet {
 					pageNo = Integer.parseInt( request.getParameter( RequestParameter.READER_PAGE_NUMBER.getName() ) );
 				else if( AccessTokenFilter.getCookieValue( pageNoPattern, request ) != null )
 					pageNo = Integer.parseInt( AccessTokenFilter.getCookieValue( pageNoPattern, request ) );
-				else
+
+				if( pageNo == null || pageNo < 1 )
 					pageNo = 1;
 
 				String version = SystemProperty.STAGE.equals( "gamma" ) ? "2" : "1";
@@ -1107,8 +1108,11 @@ public class PratilipiSite extends HttpServlet {
 
 		String indexJson = null;
 		Integer pageCount = null;
+		Object content = null;
+		boolean oldContent = version.equals( "1" ) && pratilipi.isOldContent(); 
 
-		if( version.equals( "1" ) && pratilipi.isOldContent() ) {
+		// Index and pageCount for all contents
+		if( oldContent ) {
 			indexJson = pratilipi.getIndex();
 			pageCount = pratilipi.getPageCount() > 0 ? pratilipi.getPageCount() : 1;
 		} else {
@@ -1121,15 +1125,12 @@ public class PratilipiSite extends HttpServlet {
 			pageCount = indexRes.getIndex().size() > 0 ? indexRes.getIndex().size() : 1;
 		}
 
-		if( pageNo < 1 )
-			pageNo = 1;
-		if( pageNo > pageCount )
-			pageNo = pageCount;
-
-		Object content = null;
 
 		if( pratilipi.getContentType() == PratilipiContentType.PRATILIPI ) {
-			if( version.equals( "1" ) ) {
+
+			if( pageNo > pageCount ) pageNo = pageCount;
+
+			if( oldContent ) {
 				PratilipiContentV1Api.GetRequest req = new PratilipiContentV1Api.GetRequest();
 				req.setPratilipiId( pratilipiId );
 				req.setChapterNo( pageNo );
@@ -1137,8 +1138,7 @@ public class PratilipiSite extends HttpServlet {
 																		.getApi( PratilipiContentV1Api.class )
 																		.get( req );
 				content = res.getContent();
-				if( res.getChapterTitle() != null )
-					content = "<h1>" + res.getChapterTitle() + "</h1>" + content;
+
 			} else {
 				PratilipiContentV2Api.GetRequest req = new PratilipiContentV2Api.GetRequest();
 				req.setPratilipiId( pratilipiId );
@@ -1150,24 +1150,40 @@ public class PratilipiSite extends HttpServlet {
 				if( res.getChapterTitle() != null )
 					content = "<h1>" + res.getChapterTitle() + "</h1>" + content;
 			}
+
 		} else if( pratilipi.getContentType() == PratilipiContentType.IMAGE ) {
 			PratilipiContentV2Api.GetRequest req = new PratilipiContentV2Api.GetRequest();
 			req.setPratilipiId( pratilipiId );
-			if( basicMode )
-				req.setChapterNo( pageNo );
 			PratilipiContentV2Api.GetResponse res = (PratilipiContentV2Api.GetResponse) ApiRegistry
 																		.getApi( PratilipiContentV2Api.class )
 																		.get( req );
 
+			PratilipiContentDoc pcDoc = (PratilipiContentDoc) res.getContent();
+
+			// Image books can have more than one page in a chapter
+			pageCount = 0;
+			for( Chapter chapter : pcDoc.getChapterList() )
+				pageCount += chapter.getPageCount();
+
+			if( pageNo > pageCount ) pageNo = pageCount;
+
 			if( basicMode ) {
-				PratilipiContentDoc.Chapter chapter = new Gson().fromJson( new Gson().toJson( res.getContent() ), PratilipiContentDocImpl.ChapterImpl.class );
-				JsonObject jsonObject = new Gson().fromJson( chapter.getPage( 1 ).getPageletList().get( 0 ).getData(), JsonObject.class );
+				JsonObject jsonObject = null;
+				int c = 0;
+				for( int i = 1; i <= pcDoc.getChapterCount(); i++ ) {
+					for( int j = 1; j <= pcDoc.getChapter( i ).getPageCount(); j++ ) {
+						if( ++c == pageNo ) {
+							jsonObject = pcDoc.getChapter( i ).getPage( j ).getPageletList().get( 0 ).getData();
+							break;
+						}
+					}
+				}
+
 				String imageName = jsonObject.get( "name" ).getAsString();
 				content = "<img src=\"/api/pratilipi/content/image?pratilipiId=" + pratilipi.getId() + "&name=" + imageName + "\" />";
 
 			} else {
 				content = new Gson().toJson( res.getContent() );
-
 			}
 
 		}
