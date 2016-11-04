@@ -110,12 +110,15 @@
 			},
 
 			attached: function() {
-				if( getCookie( "PREFERRED_READING_MODE" ) == null || getCookie( "PREFERRED_READING_MODE" ) == "NORMAL_MODE" )
-					this.normalReadingMode();
-				else if( getCookie( "PREFERRED_READING_MODE" ) == "NIGHT_MODE" )
-					this.nightReadingMode();
-				else if( getCookie( "PREFERRED_READING_MODE" ) == "SEPIA_MODE" )
-					this.sepiaReadingMode();
+				// Color modes available only on PRATILIPI contents
+				if( this.contentType == "PRATILIPI" ) {
+					if( getCookie( "PREFERRED_READING_MODE" ) == null || getCookie( "PREFERRED_READING_MODE" ) == "NORMAL_MODE" )
+						this.normalReadingMode();
+					else if( getCookie( "PREFERRED_READING_MODE" ) == "NIGHT_MODE" )
+						this.nightReadingMode();
+					else if( getCookie( "PREFERRED_READING_MODE" ) == "SEPIA_MODE" )
+						this.sepiaReadingMode();
+				}
 			},
 
 			// Setting Page Number
