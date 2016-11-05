@@ -141,6 +141,9 @@ public class UxModeFilter implements Filter {
 				} else if( userAgent.startsWith( "facebookexternalhit/1.1" ) ) { // Facebook Scraping requests
 					basicBrowser = false;
 
+				} else if( userAgent.startsWith( "WhatsApp" ) ) {
+					basicBrowser = false;
+
 				} else if( userAgent.contains( "UCBrowser" ) ) { // UCBrowser
 					/*
 					 * UCBrowser on Android 4.3
