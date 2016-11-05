@@ -134,11 +134,42 @@ public class UxModeFilter implements Filter {
 			
 			boolean basicBrowser = false;
 			
-			if( isWebApp && SystemProperty.STAGE.equals( "prod" ) ) {
+			if( isWebApp ) {
 				
-				if( userAgent == null || userAgent.isEmpty() ) {
+				if( userAgent == null || userAgent.trim().isEmpty() ) {
 					basicBrowser = true;
-					
+
+				} else if( userAgent.startsWith( "facebookexternalhit/1.1" ) ) { // Facebook Scraping requests
+					basicBrowser = false;
+
+				} else if( userAgent.contains( "UCBrowser" ) ) { // UCBrowser
+					/*
+					 * UCBrowser on Android 4.3
+					 *   "Mozilla/5.0 (Linux; U; Android 4.3; en-US; GT-I9300 Build/JSS15J) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 UCBrowser/10.0.1.512 U3/0.8.0 Mobile Safari/533.1"
+					 */
+					basicBrowser = true; // Polymer 1.0 not supported !
+
+				} else if( userAgent.contains( "Opera Mobi" ) ) { // Opera Classic
+					/*
+					 * Opera Classic on Android 4.3
+					 *   "Opera/9.80 (Android 4.3; Linux; Opera Mobi/ADR-1411061201) Presto/2.11.355 Version/12.10"
+					 */
+					basicBrowser = true; // Not sure whether Polymer 1.0 is supported or not
+
+				} else if( userAgent.contains( "Opera Mini" ) ) { // Opera Mini
+					/*
+					 * Opera Mini on Android 4.3
+					 *   "Opera/9.80 (Android; Opera Mini/7.6.40077/35.5706; U; en) Presto/2.8.119 Version/11.10"
+					 */
+					basicBrowser = true; // Polymer 1.0 is not supported !
+
+				} else if( userAgent.contains( "Trident/7" ) && userAgent.contains( "rv:11" ) ) { // Microsoft Internet Explorer 11
+					/*
+					 * Microsoft Internet Explorer 11 on Microsoft Windows 8.1
+					 *   "Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; LCJB; rv:11.0) like Gecko"
+					 */
+					basicBrowser = true;
+
 				} else if( userAgent.contains( "OPR" ) ) { // Opera
 					/*
 					 * Opera on Microsoft Windows 8.1
@@ -148,22 +179,24 @@ public class UxModeFilter implements Filter {
 					 */
 					String userAgentSubStr = userAgent.substring( userAgent.indexOf( "OPR" ) + 4 );
 					int version = Integer.parseInt( userAgentSubStr.substring( 0, userAgentSubStr.indexOf( "." ) ) );
-					basicBrowser = version <= 22; // Not sure whether Polymer 1.0 is supported in older versions or not
-	
-				} else if( userAgent.contains( "Opera" ) && userAgent.contains( "Opera Mobi" ) ) { // Opera Classic
-					/*
-					 * Opera Classic on Android 4.3
-					 *   "Opera/9.80 (Android 4.3; Linux; Opera Mobi/ADR-1411061201) Presto/2.11.355 Version/12.10"
+					basicBrowser = version < 20;
+
+				} else if( userAgent.contains( "Edge" ) ) {
+					/* 
+					 * Microsoft Edge browser on Windows 10
+					 * Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.79 Safari/537.36 Edge/14.14393    
 					 */
-					basicBrowser = true; // Not sure whether Polymer 1.0 is supported or not
-					
-				} else if( userAgent.contains( "Opera" ) && userAgent.contains( "Opera Mini" ) ) { // Opera Mini
+					basicBrowser = false;
+
+				} else if( userAgent.contains( "Safari" ) ) { // Apple Safari
 					/*
-					 * Opera Mini on Android 4.3
-					 *   "Opera/9.80 (Android; Opera Mini/7.6.40077/35.5706; U; en) Presto/2.8.119 Version/11.10"
+					 * Apple Safari on Microsoft Windows 8.1
+					 *   Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/534.57.2 (KHTML, like Gecko) Version/5.1.7 Safari/534.57.2
 					 */
-					basicBrowser = true; // Polymer 1.0 is not supported !
-					
+					String userAgentSubStr = userAgent.substring( userAgent.indexOf( "Safari" ) + 7 );
+					int version = Integer.parseInt( userAgentSubStr.substring( 0, userAgentSubStr.indexOf( "." ) ) );
+					basicBrowser = version < 538;
+
 				} else if( userAgent.contains( "Chrome" ) && ! userAgent.contains( "(Chrome)" ) ) { // Google Chrome
 					/*
 					 * Google Chrome on Microsoft Windows 8.1
@@ -173,15 +206,8 @@ public class UxModeFilter implements Filter {
 					 */
 					String userAgentSubStr = userAgent.substring( userAgent.indexOf( "Chrome" ) + 7 );
 					int version = Integer.parseInt( userAgentSubStr.substring( 0, userAgentSubStr.indexOf( "." ) ) );
-					basicBrowser = version <= 35; // Not sure whether Polymer 1.0 is supported or not
-				
-				} else if( userAgent.contains( "UCBrowser" ) ) { // UCBrowser
-					/*
-					 * UCBrowser on Android 4.3
-					 *   "Mozilla/5.0 (Linux; U; Android 4.3; en-US; GT-I9300 Build/JSS15J) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 UCBrowser/10.0.1.512 U3/0.8.0 Mobile Safari/533.1"
-					 */
-					basicBrowser = true; // Polymer 1.0 not supported !
-					
+					basicBrowser = version < 35;
+
 				} else if( userAgent.contains( "Firefox" ) ) { // Mozilla Firefox
 					/*
 					 * Mozilla Firefox on Microsoft 8.1
@@ -193,25 +219,8 @@ public class UxModeFilter implements Filter {
 					 */
 					String userAgentSubStr = userAgent.substring( userAgent.indexOf( "Firefox" ) + 8 );
 					int version = Integer.parseInt( userAgentSubStr.substring( 0, userAgentSubStr.indexOf( "." ) ) );
-					basicBrowser = version <= 30; // Not sure whether Polymer 1.0 is supported or not
-					
-				} else if( userAgent.contains( "Trident/7" ) && userAgent.contains( "rv:11" ) ) { // Microsoft Internet Explorer 11
-					/*
-					 * Microsoft Internet Explorer 11 on Microsoft Windows 8.1
-					 *   "Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; LCJB; rv:11.0) like Gecko"
-					 */
-					basicBrowser = userAgent.contains( "IEMobile" ); // Shadow DOM not supported on Mobile devices
-					
-				} else if( userAgent.contains( "Safari" ) ) { // Apple Safari
-					/*
-					 * Apple Safari on Microsoft Windows 8.1
-					 *   "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/534.57.2 (KHTML, like Gecko) Version/5.1.7 Safari/534.57.2"
-					 */
-					basicBrowser = false;
-	
-				} else if( userAgent.startsWith( "facebookexternalhit/1.1" ) ) { // Facebook Scraping requests
-					basicBrowser = false;
-					
+					basicBrowser = version < 28;
+
 				} else { // Unknown Browsers
 					basicBrowser = true;
 
