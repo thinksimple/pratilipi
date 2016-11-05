@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.Website;
-import com.pratilipi.common.util.SystemProperty;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.type.Author;
@@ -188,15 +187,6 @@ public class UxModeFilter implements Filter {
 					 */
 					basicBrowser = false;
 
-				} else if( userAgent.contains( "Safari" ) ) { // Apple Safari
-					/*
-					 * Apple Safari on Microsoft Windows 8.1
-					 *   Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/534.57.2 (KHTML, like Gecko) Version/5.1.7 Safari/534.57.2
-					 */
-					String userAgentSubStr = userAgent.substring( userAgent.indexOf( "Safari" ) + 7 );
-					int version = Integer.parseInt( userAgentSubStr.substring( 0, userAgentSubStr.indexOf( "." ) ) );
-					basicBrowser = version < 538;
-
 				} else if( userAgent.contains( "Chrome" ) && ! userAgent.contains( "(Chrome)" ) ) { // Google Chrome
 					/*
 					 * Google Chrome on Microsoft Windows 8.1
@@ -207,6 +197,22 @@ public class UxModeFilter implements Filter {
 					String userAgentSubStr = userAgent.substring( userAgent.indexOf( "Chrome" ) + 7 );
 					int version = Integer.parseInt( userAgentSubStr.substring( 0, userAgentSubStr.indexOf( "." ) ) );
 					basicBrowser = version < 35;
+
+				} else if( userAgent.contains( "Safari" ) ) { // Apple Safari
+					/*
+					 * Apple Safari on Microsoft Windows 8.1
+					 *   Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/534.57.2 (KHTML, like Gecko) Version/5.1.7 Safari/534.57.2
+					 */
+					if( userAgent.contains( "Version" ) ) {
+						String userAgentSubStr = userAgent.substring( userAgent.indexOf( "Version" ) + 8 );
+						int version = Integer.parseInt( userAgentSubStr.substring( 0, userAgentSubStr.indexOf( "." ) ) );
+						basicBrowser = version < 8;
+					} else {
+						String userAgentSubStr = userAgent.substring( userAgent.indexOf( "Safari" ) + 7 );
+						int version = Integer.parseInt( userAgentSubStr.substring( 0, userAgentSubStr.indexOf( "." ) ) );
+						basicBrowser = version < 538;
+					}
+					
 
 				} else if( userAgent.contains( "Firefox" ) ) { // Mozilla Firefox
 					/*
