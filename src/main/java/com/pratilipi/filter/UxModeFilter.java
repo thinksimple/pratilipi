@@ -213,7 +213,7 @@ public class UxModeFilter implements Filter {
 					} else {
 						String userAgentSubStr = userAgent.substring( userAgent.indexOf( "Safari" ) + 7 );
 						int version = Integer.parseInt( userAgentSubStr.substring( 0, userAgentSubStr.indexOf( "." ) ) );
-						basicBrowser = version < 538;
+						basicBrowser = version < 538 || version > 620;
 					}
 					
 
