@@ -45,11 +45,11 @@ public class DocAccessorImpl implements DocAccessor {
 	
 	// BatchProcess Doc
 	
-	public BatchProcessDoc newProcessDoc() {
+	public BatchProcessDoc newBatchProcessDoc() {
 		return new BatchProcessDocImpl();
 	}
 	
-	public BatchProcessDoc getProcessDoc( Long processId ) throws UnexpectedServerException {
+	public BatchProcessDoc getBatchProcessDoc( Long processId ) throws UnexpectedServerException {
 		if( processId != null )
 			return _get( "batch-process/" + processId, BatchProcessDocImpl.class );
 		return null;

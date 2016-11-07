@@ -14,9 +14,9 @@ import com.pratilipi.data.type.UserPratilipiDoc;
 public interface DocAccessor {
 
 	// BatchProcess Doc
-	BatchProcessDoc newProcessDoc();
-	BatchProcessDoc getProcessDoc( Long processId ) throws UnexpectedServerException;
-	void save( Long processId, BatchProcessDoc processDoc ) throws UnexpectedServerException;
+	BatchProcessDoc newBatchProcessDoc();
+	BatchProcessDoc getBatchProcessDoc( Long batchProcessId ) throws UnexpectedServerException;
+	void save( Long processId, BatchProcessDoc batchProcessDoc ) throws UnexpectedServerException;
 	
 	
 	// UserPratilipi Doc
