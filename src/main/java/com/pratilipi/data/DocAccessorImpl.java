@@ -9,6 +9,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.util.GsonLongDateAdapter;
+import com.pratilipi.data.type.BatchProcessDoc;
 import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.CommentDoc;
 import com.pratilipi.data.type.InitBannerDoc;
@@ -18,6 +19,7 @@ import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
 import com.pratilipi.data.type.PratilipiMetaDoc;
 import com.pratilipi.data.type.PratilipiReviewsDoc;
 import com.pratilipi.data.type.UserPratilipiDoc;
+import com.pratilipi.data.type.doc.BatchProcessDocImpl;
 import com.pratilipi.data.type.doc.CommentDocImpl;
 import com.pratilipi.data.type.doc.InitBannerDocImpl;
 import com.pratilipi.data.type.doc.InitDocImpl;
@@ -40,6 +42,24 @@ public class DocAccessorImpl implements DocAccessor {
 	private static final Logger logger =
 			Logger.getLogger( DocAccessorImpl.class.getName() );
 
+	
+	// BatchProcess Doc
+	
+	public BatchProcessDoc newProcessDoc() {
+		return new BatchProcessDocImpl();
+	}
+	
+	public BatchProcessDoc getProcessDoc( Long processId ) throws UnexpectedServerException {
+		if( processId != null )
+			return _get( "batch-process/" + processId, BatchProcessDocImpl.class );
+		return null;
+	}
+	
+	public void save( Long processId, BatchProcessDoc processDoc ) throws UnexpectedServerException {
+		if( processId != null )
+			_save( "batch-process/" + processId, processDoc );
+	}
+	
 	
 	// UserPratilipi Doc
 	

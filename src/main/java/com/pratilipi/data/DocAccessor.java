@@ -1,6 +1,7 @@
 package com.pratilipi.data;
 
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.data.type.BatchProcessDoc;
 import com.pratilipi.data.type.CommentDoc;
 import com.pratilipi.data.type.InitBannerDoc;
 import com.pratilipi.data.type.InitDoc;
@@ -12,6 +13,12 @@ import com.pratilipi.data.type.UserPratilipiDoc;
 
 public interface DocAccessor {
 
+	// BatchProcess Doc
+	BatchProcessDoc newProcessDoc();
+	BatchProcessDoc getProcessDoc( Long processId ) throws UnexpectedServerException;
+	void save( Long processId, BatchProcessDoc processDoc ) throws UnexpectedServerException;
+	
+	
 	// UserPratilipi Doc
 	UserPratilipiDoc newUserPratilipiDoc();
 	
