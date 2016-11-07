@@ -2,29 +2,29 @@ package com.pratilipi.data.type;
 
 import java.util.Date;
 
-import com.pratilipi.common.type.ProcessState;
-import com.pratilipi.common.type.ProcessType;
+import com.pratilipi.common.type.BatchProcessState;
+import com.pratilipi.common.type.BatchProcessType;
 
 public interface BatchProcess extends GenericOfyType {
 
 	Long getId();
 	
-	ProcessType getType();
+	BatchProcessType getType();
 	
-	void setType( ProcessType type );
+	void setType( BatchProcessType type );
 
 	String getInitDoc();
 	
 	void setInitDoc( String initDoc );
 	
 	
-	ProcessState getStateInProgress();
+	BatchProcessState getStateInProgress();
 	
-	void setStateInProgress( ProcessState state );
+	void setStateInProgress( BatchProcessState state );
 	
-	ProcessState getStateCompleted();
+	BatchProcessState getStateCompleted();
 	
-	void setStateCompleted( ProcessState state );
+	void setStateCompleted( BatchProcessState state );
 	
 
 	Date getCreationDate();

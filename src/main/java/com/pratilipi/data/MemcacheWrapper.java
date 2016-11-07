@@ -38,7 +38,7 @@ public class MemcacheWrapper implements Memcache {
 			if( values.get( key ) == null )
 				missingKeys.add( key );
 
-		if( missingKeys.size() > 0 ) {
+		if( missingKeys.size() != 0 ) {
 			Map<K, T> moreValues = cacheL2.getAll( missingKeys );
 			cacheL1.putAll( moreValues );
 			values.putAll( moreValues );

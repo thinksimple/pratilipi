@@ -7,8 +7,8 @@ import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
-import com.pratilipi.common.type.ProcessState;
-import com.pratilipi.common.type.ProcessType;
+import com.pratilipi.common.type.BatchProcessState;
+import com.pratilipi.common.type.BatchProcessType;
 import com.pratilipi.data.type.BatchProcess;
 
 @Cache
@@ -18,13 +18,13 @@ public class BatchProcessEntity implements BatchProcess {
 	@Id
 	private Long BATCH_PROCESS_ID;
 	@Index
-	private ProcessType TYPE;
+	private BatchProcessType TYPE;
 	private String INIT_DOC;
 
 	@Index
-	private ProcessState STATE_IN_PROGRESS;
+	private BatchProcessState STATE_IN_PROGRESS;
 	@Index
-	private ProcessState STATE_COMPLETED;
+	private BatchProcessState STATE_COMPLETED;
 	
 	@Index
 	private Date CREATION_DATE;
@@ -61,12 +61,12 @@ public class BatchProcessEntity implements BatchProcess {
 	
 
 	@Override
-	public ProcessType getType() {
+	public BatchProcessType getType() {
 		return TYPE;
 	}
 
 	@Override
-	public void setType( ProcessType type ) {
+	public void setType( BatchProcessType type ) {
 		this.TYPE = type;
 	}
 
@@ -82,22 +82,22 @@ public class BatchProcessEntity implements BatchProcess {
 
 	
 	@Override
-	public ProcessState getStateInProgress() {
+	public BatchProcessState getStateInProgress() {
 		return STATE_IN_PROGRESS;
 	}
 
 	@Override
-	public void setStateInProgress( ProcessState state ) {
+	public void setStateInProgress( BatchProcessState state ) {
 		this.STATE_IN_PROGRESS = state;
 	}
 
 	@Override
-	public ProcessState getStateCompleted() {
+	public BatchProcessState getStateCompleted() {
 		return STATE_COMPLETED;
 	}
 
 	@Override
-	public void setStateCompleted( ProcessState state ) {
+	public void setStateCompleted( BatchProcessState state ) {
 		this.STATE_COMPLETED = state;
 	}
 
