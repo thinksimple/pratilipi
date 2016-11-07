@@ -134,15 +134,9 @@ public class UxModeFilter implements Filter {
 			boolean basicBrowser = false;
 			
 			if( isWebApp ) {
-				
+
 				if( userAgent == null || userAgent.trim().isEmpty() ) {
 					basicBrowser = true;
-
-				} else if( userAgent.startsWith( "facebookexternalhit/1.1" ) ) { // Facebook Scraping requests
-					basicBrowser = false;
-
-				} else if( userAgent.startsWith( "WhatsApp" ) ) {
-					basicBrowser = false;
 
 				} else if( userAgent.contains( "UCBrowser" ) ) { // UCBrowser
 					/*
@@ -215,7 +209,6 @@ public class UxModeFilter implements Filter {
 						int version = Integer.parseInt( userAgentSubStr.substring( 0, userAgentSubStr.indexOf( "." ) ) );
 						basicBrowser = version < 538 || version > 620;
 					}
-					
 
 				} else if( userAgent.contains( "Firefox" ) ) { // Mozilla Firefox
 					/*
@@ -229,6 +222,12 @@ public class UxModeFilter implements Filter {
 					String userAgentSubStr = userAgent.substring( userAgent.indexOf( "Firefox" ) + 8 );
 					int version = Integer.parseInt( userAgentSubStr.substring( 0, userAgentSubStr.indexOf( "." ) ) );
 					basicBrowser = version < 28;
+
+				} else if( userAgent.startsWith( "facebookexternalhit/1.1" ) ) { // Facebook Scraping requests
+					basicBrowser = false;
+
+				} else if( userAgent.startsWith( "WhatsApp" ) ) {
+					basicBrowser = false;
 
 				} else { // Unknown Browsers
 					basicBrowser = true;
