@@ -21,6 +21,7 @@ import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
+import com.pratilipi.data.type.BatchProcess;
 import com.pratilipi.data.type.Blog;
 import com.pratilipi.data.type.BlogPost;
 import com.pratilipi.data.type.Category;
@@ -212,5 +213,11 @@ public interface DataAccessor {
 	List<I18n> getI18nList( I18nGroup i18nGroup );
 	Map<String, String> getI18nStrings( I18nGroup i18nGroup, Language language );
 	I18n createOrUpdateI18n( I18n i18n );
+	
+	
+	// BatchProcess Table
+	BatchProcess newBatchProcess();
+	BatchProcess getBatchProcess( Long batchProcessId );
+	BatchProcess createOrUpdateBatchProcess( BatchProcess batchProcess );
 	
 }

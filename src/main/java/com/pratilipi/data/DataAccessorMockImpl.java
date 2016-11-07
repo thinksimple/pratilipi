@@ -48,6 +48,7 @@ import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
+import com.pratilipi.data.type.BatchProcess;
 import com.pratilipi.data.type.Blog;
 import com.pratilipi.data.type.BlogPost;
 import com.pratilipi.data.type.Category;
@@ -70,6 +71,7 @@ import com.pratilipi.data.type.gae.AccessTokenEntity;
 import com.pratilipi.data.type.gae.AppPropertyEntity;
 import com.pratilipi.data.type.gae.AuditLogEntity;
 import com.pratilipi.data.type.gae.AuthorEntity;
+import com.pratilipi.data.type.gae.BatchProcessEntity;
 import com.pratilipi.data.type.gae.BlogEntity;
 import com.pratilipi.data.type.gae.BlogPostEntity;
 import com.pratilipi.data.type.gae.CommentEntity;
@@ -1068,6 +1070,23 @@ public class DataAccessorMockImpl implements DataAccessor {
 	public DataListCursorTuple<Notification> getNotificationListOrderByLastUpdated( String cursor, Integer resultCount  ) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	
+	// BatchProcess Table
+	
+	public BatchProcess newBatchProcess() {
+		return new BatchProcessEntity();
+	}
+	
+	public BatchProcess getBatchProcess( Long batchProcessId ) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public BatchProcess createOrUpdateBatchProcess( BatchProcess batchProcess ) {
+		// TODO Auto-generated method stub
+		return batchProcess;
 	}
 	
 }
