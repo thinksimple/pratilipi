@@ -1,21 +1,19 @@
 విషయసూచిక
-/recommended      తప్పక చదవాల్సినవి        App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"recommended" }
-/new              కొత్త రచనలు             App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"new" }
-/fivemin          కథ చదివేయండి.. అయిదే నిమిషాల్లో  App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"fivemin" }
 /mostread         పాఠకులకు ప్రత్యేకం         App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"mostread" }
 /event/lb         లేఖారచన పోటీ           App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "eventId":5659096691769344 }
+/new              కొత్త రచనలు             App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"new" }
+/fivemin          కథ చదివేయండి.. అయిదే నిమిషాల్లో  App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"fivemin" }
 /event/frday      ఫ్రెండ్ షిప్ డే కంటెస్ట్      App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "eventId":6004824194678784 }
 /blog             బ్లాగు                  App#BlogPostList::{ "language":"TELUGU", "blogId":5683739602452480 }
 
 విభాగాలు
-/firstlove        తొలిప్రేమ రచనలు        App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"firstlove" }
+/women            మహిళ                  App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"women" }
 /teluguculture    తెలుగు సంస్కృతి        App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"teluguculture" }
-/nonfiction       ఇతర రచనలు            App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"nonfiction" }
 /children         బాల సాహిత్యం            App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"children" }
+/nonfiction       ఇతర రచనలు            App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"nonfiction" }
 /life             జీవితం                App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"life" }
 /social           సామాజికం              App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"social" }     
 /ministories      మినీకథలు               App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"ministories" }
-/women            మహిళ                  App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"women" }
 
 గ్రంథాలయం
 /articles         వ్యాసాలు               App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"articles" }
