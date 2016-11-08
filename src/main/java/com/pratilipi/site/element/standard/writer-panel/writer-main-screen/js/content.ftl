@@ -37,25 +37,32 @@ Content.prototype.unformatPastedData = function() {
     this.$content_container.on("paste", function(e) {
         /* cancel paste */
         e.preventDefault();
-
+		
         /* get text representation of clipboard */
         var text = e.originalEvent.clipboardData.getData("text/plain");
         /* insert text manually */
         var $closest_element = $( e.target ).closest("p,blockquote");
         var ptext = _this.convertTextToParagraphs( text );
+        var text_array_length = text.split("\n").length;
         
-        if( $closest_element.length ) {
-		    if( $closest_element.text().length == 0) {
-	        	$closest_element.replaceWith( ptext );
-	        }
-	        else {
-	        	$closest_element.after( ptext );
-	        } 
-	    }
-	    /* if first line */
-	    else {
-	    	_this.$content_container.append( ptext );
-	    }    
+        if( text_array_length > 1 ) {
+            
+	        if( $closest_element.length ) {
+			    if( $closest_element.text().length == 0) {
+		        	$closest_element.replaceWith( ptext );
+		        }
+		        else {
+		        	$closest_element.after( ptext );
+		        } 
+		    }
+		    /* if first line */
+		    else {
+		    	_this.$content_container.append( ptext );
+		    }   
+		}
+		else {
+			document.execCommand("insertHTML", false, text);
+		}     
     });
 };
 
@@ -200,6 +207,14 @@ Content.prototype.checkFirstChild = function() {
 		this.$content_container.children().first().replaceWith( function() {
 	  		return "<p>" + this.outerHTML + "</p>";
 		} );
+	}
+};
+
+Content.prototype.checkLastBr = function() {
+	<#-- test it properly -->
+	var $br = this.$content_container.children().last();
+	if( $br.is("br") ) {
+		$br.remove();
 	}
 };
 

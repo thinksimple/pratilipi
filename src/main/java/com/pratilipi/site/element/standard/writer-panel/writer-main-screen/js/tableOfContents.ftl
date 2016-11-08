@@ -62,7 +62,7 @@ TableOfContents.prototype.attachNewChapterListener = function() {
 	var _this = this;
 	this.$new_chapter_button.on('click', function(e) {
 		e.preventDefault();
-		_this.parent_object.addNewChapter( _this.parent_object.currChapter + 1 );
+		_this.parent_object.addNewChapter( parseInt( _this.parent_object.currChapter ) + 1 );
 	});
 };
 

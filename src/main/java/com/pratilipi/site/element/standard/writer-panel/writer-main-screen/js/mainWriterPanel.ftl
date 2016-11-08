@@ -124,6 +124,7 @@ MainWriterPanel.prototype.initializeGlobalVariables = function() {
 	}	
 	this.lastSavedContent = "";
 	this.writer_back_button_active = false;
+	this.isMozillaBrowser = this.isMozilla();
 };
 
 MainWriterPanel.prototype.initializeData = function() {
@@ -136,7 +137,7 @@ MainWriterPanel.prototype.initializeData = function() {
 	}
 	else {
 		/* make a new chapter call asychrolously and populate the index */
-		this.ajaxAddNewChapter();
+		this.ajaxAddNewChapter( 1 );
 	}
 };
 
@@ -165,7 +166,7 @@ MainWriterPanel.prototype.attachActionButtonListeners = function() {
 	} );
 	
 	this.$preview_button.on('click', function() {
-		_this.saveChapter( true );
+		_this.saveChapter();
 
 	} );
 	
@@ -334,6 +335,9 @@ MainWriterPanel.prototype.saveChapter = function( autosaveFlag ) {
 	} -->
 	this.content_object.convertTextNodesToParagraphs();
 	this.content_object.checkFirstChild();
+	if( isMozilla ) {
+		this.content_object.remove_br();
+	}
 	
 	var ajaxData = { pratilipiId: ${ pratilipiId?c },
 					chapterNo: this.currChapter,
@@ -478,3 +482,7 @@ MainWriterPanel.prototype.preventUserFromLeaving = function() {
 		_this.writer_back_button_active = false;
 	});
 };
+
+MainWriterPanel.prototype.isMozilla = function() {
+	return ( navigator.userAgent.search("Firefox") > -1 ) ;
+}
