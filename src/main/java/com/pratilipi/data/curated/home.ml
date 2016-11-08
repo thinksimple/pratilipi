@@ -1,7 +1,7 @@
 authorow
-fiveminute
-uandme
-two-minute
+octspecial
+specialpoems
+specialclassics
 new
 
 
