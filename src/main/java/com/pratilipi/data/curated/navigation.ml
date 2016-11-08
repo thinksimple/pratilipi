@@ -1,6 +1,7 @@
 പ്രസിദ്ധമായവ 
 /event/katha   കഥാപൂരണം				App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "eventId":4839232641171456 }
 /most-read     നിര്‍ദ്ദേശിക്കപ്പെട്ടവ     App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"most-read" }
+/fiveminute    5 മിനിറ്റ് കഥകള്‍    App#PratilipiList::{ "language":"MALAYതുടര്‍ക്കഥകള്‍ALAM", "state":"PUBLISHED", "listName":"fiveminute" } 
 /new           പുതിയവ                 App#PratilipiList::{ "language":"MALAYതുടര്‍ക്കഥകള്‍ALAM", "state":"PUBLISHED", "listName":"new" } 
 /blog          ബ്ലോഗുകള്‍               App#BlogPostList::{ "language":"MALAYALAM", "blogId":5683739602452480 } 
 /events        മത്സരങ്ങള്‍              App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"events" }
