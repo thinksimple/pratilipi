@@ -1,6 +1,7 @@
 విషయసూచిక
 /recommended      తప్పక చదవాల్సినవి        App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"recommended" }
 /new              కొత్త రచనలు             App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"new" }
+/fivemin          కథ చదివేయండి.. అయిదే నిమిషాల్లో  App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"fivemin" }
 /mostread         పాఠకులకు ప్రత్యేకం         App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"mostread" }
 /event/lb         లేఖారచన పోటీ           App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "eventId":5659096691769344 }
 /event/frday      ఫ్రెండ్ షిప్ డే కంటెస్ట్      App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "eventId":6004824194678784 }
@@ -15,8 +16,6 @@
 /social           సామాజికం              App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"social" }     
 /ministories      మినీకథలు               App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"ministories" }
 /women            మహిళ                  App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"women" }
-/spiritual        ఆధ్యాత్మికం             App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"spiritual" }
-
 
 గ్రంథాలయం
 /articles         వ్యాసాలు               App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"articles" }
