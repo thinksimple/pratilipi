@@ -177,7 +177,7 @@
 					this.push( 'pratilipiList', pratilipiList[i] );
 				this.set( 'cursor', pratilipiListObject.cursor != null ? pratilipiListObject.cursor : null );
 				this.set( 'numberFound', pratilipiListObject.numberFound != null ? pratilipiListObject.numberFound : 0 );
-				this.set( 'showMore', pratilipiList.length == this.resultCount );
+				this.set( 'showMore', pratilipiList.length == this.resultCount && this.pratilipiList.length < this.numberFound );
 			},
 			
 			ready: function() {
