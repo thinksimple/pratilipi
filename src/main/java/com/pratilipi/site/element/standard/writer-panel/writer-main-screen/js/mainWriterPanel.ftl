@@ -336,7 +336,7 @@ MainWriterPanel.prototype.saveChapter = function( autosaveFlag ) {
 	this.content_object.convertTextNodesToParagraphs();
 	this.content_object.checkFirstChild();
 	if( this.isMozillaBrowser ) {
-		this.content_object.remove_br();
+		this.content_object.checkLastBr();
 	}
 	
 	var ajaxData = { pratilipiId: ${ pratilipiId?c },
