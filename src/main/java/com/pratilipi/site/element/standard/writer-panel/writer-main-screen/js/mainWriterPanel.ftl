@@ -485,4 +485,4 @@ MainWriterPanel.prototype.preventUserFromLeaving = function() {
 
 MainWriterPanel.prototype.isMozilla = function() {
 	return ( navigator.userAgent.search("Firefox") > -1 ) ;
-}
+};
