@@ -117,7 +117,7 @@
 																<table style="width: 100%; padding: 0; border-spacing: 0;">
 																	<tr>
 																		<td align="center">
-																			<p style="text-align:center; margin: 4px; font-size: 13px;">1. സജന്യമായി  സൈനപ്പ് ചെയ്യൂ </p>
+																			<p style="text-align:center; margin: 4px; font-size: 13px;">1. സൗജന്യമായി സൈനപ്പ് ചെയ്യൂ</p>
 																		</td>
 																	</tr>
 																</table>
@@ -174,7 +174,7 @@
 																		<td width="25%" align="center">
 																			<a href="http://malayalam.pratilipi.com/author/6736222670028800" style="color: inherit; text-decoration: none;">
 																				<img style="border-radius: 50%;" src="http://0.ptlp.co/author/image?authorId=6736222670028800&version=1464336666000&width=140" width="70" height="70" />
-																				<div>ഹരീഷ്കുമാർ അനന്തകൃഷ്ണൻ</div>
+																				<div>ഹരീഷ് കുമാര്‍ അനന്തകൃഷ്ണൻ</div>
 																			</a>
 																		</td>
 																	</tr>
@@ -212,7 +212,7 @@
 																		<td width="25%" align="center">
 																			<a href="http://malayalam.pratilipi.com/author/6521925981437952" style="color: inherit; text-decoration: none;">
 																				<img style="border-radius: 50%;" src="http://0.ptlp.co/author/image?authorId=6521925981437952&version=1460380397000&width=140" width="70" height="70" />
-																				<div>രൂപേഷ് ആർ മുചുകുന്ന്‍</div>
+																				<div>രൂപേഷ് ആർ മുചുകുന്ന്</div>
 																			</a>
 																		</td>
 																	</tr>
@@ -224,7 +224,7 @@
 																		<td width="25%" align="center">
 																			<a href="http://malayalam.pratilipi.com/author/5125526217818112" style="color: inherit; text-decoration: none;">
 																				<img style="border-radius: 50%;" src="http://0.ptlp.co/author/image?authorId=5125526217818112&version=1438861929000&width=140" width="70" height="70" />
-																				<div>ജെയലക്ഷ്മി അയ്യപ്പൻ</div>
+																				<div>ജയലക്ഷ്മി അയ്യപ്പന്‍</div>
 																			</a>
 																		</td>
 																			<td width="25%" align="center">
@@ -253,7 +253,7 @@
 								<table style="width: 100%; padding: 0px; border-spacing: 0; margin: 0 auto;">
 									<tr>
 										<td align="center" width="auto" height="40" style="-webkit-border-radius: 5px; -moz-border-radius: 5px;border-radius: 5px; display: block;">
-										<a href="http://malayalam.pratilipi.com" target="_blank" style="font-size: 18px; text-decoration: none; line-height: 40px; width: 200px; display: inline-block; background-color: #D0021B; border-radius: 2px;">
+										<a href="http://malayalam.pratilipi.com" target="_blank" style="font-size: 18px; text-decoration: none; line-height: 40px; width: 100%; display: inline-block; background-color: #D0021B; border-radius: 2px;">
 											<span style="color: #ffffff; padding-left: 15px; padding-right: 15px;">
 												തുടങ്ങൂ ...
 											</span>

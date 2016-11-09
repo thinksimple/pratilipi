@@ -24,8 +24,8 @@
 														<tr>
 															<td>
 																<br/>
-																<h3 style="margin: 0; font-size: 18px;">શું તમારે પણ કોઈ વાત કહેવી છે ? </h3>
-																<p style="margin: 8px 0 16px 0; font-size: 15px; text-align: justify; line-height: 20px;">પ્રતિલિપિ એ ભારતનું સૌ પ્રથમ સેલ્ફ-પબ્લિશિંગ પ્લેટફોર્મ છે, જે દરેક લેખક અને વાચકને  પોતાની માતૃભાષા સાથે જોડી રાખે છે.અમારી પાસે હજારો વાચકો છે, જે તમારી વાર્તાઓ-રચનાઓની રાહ જોઈ રહ્યા છે. પ્રતિલિપિ પર તમે તમારા પોતાના ચાહક બનાવી અને તમારા વાચકો સાથે જોડાયેલા રહી શકો છો.</p>
+																<h3 style="margin: 0; font-size: 18px;">શું તમારી પાસે પણ કહેવા માટે વાર્તા કે અનુભવો છે?</h3>
+																<p style="margin: 8px 0 16px 0; font-size: 15px; text-align: justify; line-height: 20px;">પ્રતિલિપિ એ ભારતનું સૌ પ્રથમ સેલ્ફ-પબ્લિશિંગ પ્લેટફોર્મ છે, જ્યાં લેખકો એમની માતૃભાષામાં વિચારોની આપ-લે લાખો વાચકો સાથે કરી રહ્યા છે. વાંચકો કાગડોળે નવા અનુભવો અને વિચારોની રાહ જુએ છે અને પસંદગીના લેખકોને ફોલો કરે છે. એક લેખક વાચકો સાથે સીધો વાર્તાલાપ કરી શકે છે અને અભિપ્રાયોની આપ-લે પણ કરી શકે છે.</p>
 															</td>
 														</tr>
 													</table>
@@ -151,7 +151,7 @@
 															<td>
 																<br/>
 																<br/>
-																<p style="margin: 0; font-size: 16px; margin-top: 16px; font-weight: 700;">સૌથી મોટા લેખક ગ્રુપમાં જોડાઓ </p>
+																<p style="margin: 0; font-size: 16px; margin-top: 16px; font-weight: 700;">અનુભવી લેખકોના આ સમૂહમાં તમે પણ જોડાઈ શકો છો.</p>
 																<br/>
 															</td>
 														</tr>
@@ -253,7 +253,7 @@
 								<table style="width: 100%; padding: 0px; border-spacing: 0; margin: 0 auto;">
 									<tr>
 										<td align="center" width="auto" height="40" style="-webkit-border-radius: 5px; -moz-border-radius: 5px;border-radius: 5px; display: block;">
-										<a href="http://gujarati.pratilipi.com" target="_blank" style="font-size: 18px; text-decoration: none; line-height: 40px; width: 200px; display: inline-block; background-color: #D0021B; border-radius: 2px;">
+										<a href="http://gujarati.pratilipi.com" target="_blank" style="font-size: 18px; text-decoration: none; line-height: 40px; width: 100%; display: inline-block; background-color: #D0021B; border-radius: 2px;">
 											<span style="color: #ffffff; padding-left: 15px; padding-right: 15px;">
 												શરુ કરો 
 											</span>

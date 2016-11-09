@@ -151,7 +151,7 @@
 															<td>
 																<br/>
 																<br/>
-																<p style="margin: 0; font-size: 16px; margin-top: 16px; font-weight: 700;">सबे  बड़े लेखक  समूह  से  जुड़ें</p>
+																<p style="margin: 0; font-size: 16px; margin-top: 16px; font-weight: 700;">सबसे बड़े लेखक  समूह  से  जुड़ें</p>
 																<br/>
 															</td>
 														</tr>
@@ -253,7 +253,7 @@
 								<table style="width: 100%; padding: 0px; border-spacing: 0; margin: 0 auto;">
 									<tr>
 										<td align="center" width="auto" height="40" style="-webkit-border-radius: 5px; -moz-border-radius: 5px;border-radius: 5px; display: block;">
-										<a href="http://hindi.pratilipi.com" target="_blank" style="font-size: 18px; text-decoration: none; line-height: 40px; width: 200px; display: inline-block; background-color: #D0021B; border-radius: 2px;">
+										<a href="http://hindi.pratilipi.com" target="_blank" style="font-size: 18px; text-decoration: none; line-height: 40px; width: 100%; display: inline-block; background-color: #D0021B; border-radius: 2px;">
 											<span style="color: #ffffff; padding-left: 15px; padding-right: 15px;">
 												शुरू  करें
 											</span>
