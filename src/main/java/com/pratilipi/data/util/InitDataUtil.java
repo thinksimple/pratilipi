@@ -95,6 +95,7 @@ public class InitDataUtil {
 		
 		
 		initBannerDocs = new InitBannerDoc[] {
+				docAccessor.newInitBannerDoc( "pratilipi-bengali-carousel-34.jpg", null, "/event/nohi-daanob-nohi-mahamaanob" ),
 				docAccessor.newInitBannerDoc( "pratilipi-bengali-carousel-30.jpg", null, "/diwali-ki-chhutiya" ),
 				docAccessor.newInitBannerDoc( "pratilipi-bengali-carousel-31.jpg", null, "/rahashyogalpo" ),
 				docAccessor.newInitBannerDoc( "pratilipi-bengali-carousel-32.jpg", null, "/premkahini" ),
@@ -107,7 +108,6 @@ public class InitDataUtil {
 		
 		initBannerDocs = new InitBannerDoc[] {
 				docAccessor.newInitBannerDoc( "pratilipi-telugu-carousel-18.jpg", null, "/life" ),
-				docAccessor.newInitBannerDoc( "pratilipi-telugu-carousel-17.jpg", null, "/spiritual" ),
 				docAccessor.newInitBannerDoc( "pratilipi-telugu-carousel-10.jpg", null, "/women" ),
 				docAccessor.newInitBannerDoc( "pratilipi-telugu-carousel-14.jpg", null, "/children" ),
 		};
