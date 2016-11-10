@@ -2,7 +2,6 @@
 /readers-top-choice         वाचकांची सर्वात जास्त आवड   App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"readers-top-choice" }
 /newly-published-content    नवीन प्रकाशित साहित्य      App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"newly-published-content" }
 /sane-guruji-kathamala      साने गुरुजी कथामाला               App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"sane-guruji-kathamala" }
-/event/marathi-katha-utsav-2016   मराठी कथा उत्सव-२०१६     App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "eventId":5180012207538176 }
 /events                     ऑनलाइन स्पर्धा                       App#EventList::{ "language":"MARATHI" }
 /blog                       संपादकीय                                App#BlogPostList::{ "language":"MARATHI", "blogId":5683739602452480 }
 /author-interviews          साहित्यकारांची मुलाखत            App#BlogPostList::{ "language":"MARATHI", "blogId":5197509039226880 }
