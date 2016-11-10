@@ -141,6 +141,26 @@ Content.prototype.isSelectionInsideElement = function( tagName ) {
     return false;    
 };
 
+Content.prototype.getClosestElementToSelection = function( tagName ) {
+    var sel, containerNode;
+    tagName = tagName.toUpperCase(); 
+    if (window.getSelection) {
+        sel = window.getSelection();
+        if (sel.rangeCount > 0) {
+            containerNode = sel.getRangeAt(0).commonAncestorContainer;
+        }
+    } else if ( (sel = document.selection) && sel.type != "Control" ) {
+        containerNode = sel.createRange().parentElement();
+    }
+    while (containerNode) {
+        if ( ( containerNode.nodeType == "1" || containerNode.nodeType == 1 ) && containerNode.tagName == tagName) {
+            return containerNode;
+        }
+        containerNode = containerNode.parentNode;
+    }
+    return false;    
+};
+
 Content.prototype.itemIsLinked = function(){
     if(window.getSelection().toString() != ""){
         var selection = window.getSelection().getRangeAt(0);
