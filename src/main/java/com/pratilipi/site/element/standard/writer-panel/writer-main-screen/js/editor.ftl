@@ -179,15 +179,15 @@ Editor.prototype.unhighlightBlockquoteOption = function() {
 };
 
 Editor.prototype.toggleBlockquote = function() {
-   <#-- if( this.content_object.isSelectionInsideElement( "p" ) ) {
+    if( this.content_object.isSelectionInsideElement( "p" ) ) {
 
         document.execCommand("formatBlock", false, "blockquote");
     }
     else {
         document.execCommand("formatBlock", false, "p");
-    } -->
+    } 
     
-    if( this.content_object.isSelectionInsideElement( "blockquote" ) ) {
+    <#-- if( this.content_object.isSelectionInsideElement( "blockquote" ) ) {
 		var $blockquote = $( this.content_object.getClosestElementToSelection("blockquote") );
 		var ptext;
 		var $block_p = $blockquote.find("p");
@@ -211,7 +211,7 @@ Editor.prototype.toggleBlockquote = function() {
     		document.execCommand("formatBlock", false, "blockquote");
     	}
 
-    }
+    } -->
 };
 
 Editor.prototype.addImageListener = function() {
