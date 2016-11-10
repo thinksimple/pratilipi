@@ -3,9 +3,9 @@
 /newly-published-content    नवीन प्रकाशित साहित्य      App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"newly-published-content" }
 /sane-guruji-kathamala      साने गुरुजी कथामाला               App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"sane-guruji-kathamala" }
 /event/marathi-katha-utsav-2016   मराठी कथा उत्सव-२०१६     App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "eventId":5180012207538176 }
-/events                     ऑनलाइन स्पर्धा                       App#EventList::{ "language":"HINDI" }
-/blog                       संपादकीय                                App#BlogPostList::{ "language":"HINDI", "blogId":5683739602452480 }
-/author-interviews          साहित्यकारांची मुलाखत            App#BlogPostList::{ "language":"HINDI", "blogId":5197509039226880 }
+/events                     ऑनलाइन स्पर्धा                       App#EventList::{ "language":"MARATHI" }
+/blog                       संपादकीय                                App#BlogPostList::{ "language":"MARATHI", "blogId":5683739602452480 }
+/author-interviews          साहित्यकारांची मुलाखत            App#BlogPostList::{ "language":"MARATHI", "blogId":5197509039226880 }
 
 श्रेणी 
 /lovestories       प्रेम कथा                 App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"lovestories" }
