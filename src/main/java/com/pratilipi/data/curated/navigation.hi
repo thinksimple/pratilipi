@@ -5,6 +5,7 @@
 /classic                      क्लासिक                               App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"classic" }
 /search?q=magazines           पत्रिकाएं                                App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "searchQuery":"magazines" }
 /blog                         संपादकीय                            App#BlogPostList::{ "language":"HINDI", "blogId":5683739602452480 }
+/event/tasveere-bolti-hai     तस्वीरें बोलतीं हैं        App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "eventId":6475006012817408 }     
 /events                       ऑनलाइन  स्पर्धाएं                App#EventList::{ "language":"HINDI" }
 /author-interviews            लेखकों के साक्षात्कार            App#BlogPostList::{ "language":"HINDI", "blogId":5197509039226880 }
 
