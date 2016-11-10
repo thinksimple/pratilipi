@@ -61,7 +61,6 @@
 </div>
 <script>
 	$( document ).ready(function() {
-	  /* Handler for .ready() called. */
 	  	function generateLanguageOptions() {
 			var $select = $("#select-language");
 			var language_map = ${ languageMap };
