@@ -621,6 +621,9 @@ public class PratilipiSite extends HttpServlet {
 	
 	private List<String> createFbOpenGraphTags( Long pratilipiId ) throws UnexpectedServerException {
 
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Page page = dataAccessor.getPage( PageType.PRATILIPI, pratilipiId );
+
 		PratilipiV2Api.GetRequest pratilipiRequest = new PratilipiV2Api.GetRequest();
 		pratilipiRequest.setPratilipiId( pratilipiId );
 		PratilipiV2Api.Response pratilipi = ApiRegistry
@@ -632,7 +635,7 @@ public class PratilipiSite extends HttpServlet {
 		String ogType = "books.book";
 		String ogAuthor = "http://" + Website.ALL_LANGUAGE.getHostName() + ( pratilipi.getAuthor() == null ? "/team-pratilipi" : pratilipi.getAuthor().getPageUrl() );
 		String ogBooksIsbn = pratilipi.getId().toString();
-		String ogUrl = "http://" + Website.ALL_LANGUAGE.getHostName() + "/pratilipi/" + pratilipi.getId(); // Warning: Changing it to anything else will cause loss of like-share count.
+		String ogUrl = "http://" + Website.ALL_LANGUAGE.getHostName() + page.getUri(); // Warning: Changing it to anything else will cause loss of like-share count.
 		String ogTitle = createPratilipiPageTitle( pratilipi );
 		String ogImage = pratilipi.getCoverImageUrl();
 		String ogDescription = "";
