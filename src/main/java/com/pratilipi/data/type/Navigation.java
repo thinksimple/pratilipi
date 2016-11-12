@@ -14,12 +14,14 @@ public interface Navigation extends Serializable {
 		private String url;
 		private String apiName;
 		private Object apiRequest;
+		private String imageName;
 		
-		public Link( String name, String url, String apiName, String apiRequest ) {
+		public Link( String name, String url, String apiName, String apiRequest, String imageName ) {
 			this.name = name;
 			this.url = url;
 			this.apiName = apiName;
 			this.apiRequest = apiRequest;
+			this.imageName = imageName;
 		}
 		
 		public String getName() {
@@ -40,6 +42,10 @@ public interface Navigation extends Serializable {
 		
 		public void setApiRequest( JsonObject apiRequest ) {
 			this.apiRequest = apiRequest;
+		}
+		
+		public String getImageName() {
+			return imageName;
 		}
 		
 	}
