@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.google.gson.JsonObject;
+import com.pratilipi.common.util.SystemProperty;
 
 public interface Navigation extends Serializable {
 
@@ -14,14 +15,15 @@ public interface Navigation extends Serializable {
 		private String url;
 		private String apiName;
 		private Object apiRequest;
-		private String imageName;
+		private String imageUrl;
 		
 		public Link( String name, String url, String apiName, String apiRequest, String imageName ) {
 			this.name = name;
 			this.url = url;
 			this.apiName = apiName;
 			this.apiRequest = apiRequest;
-			this.imageName = imageName;
+			// TODO: Move images to static.pratilipi.com asap
+			this.imageUrl = SystemProperty.CDN.replace( '*', '0' ) + "/resource-all/android-category-banners/" + imageName;
 		}
 		
 		public String getName() {
@@ -36,6 +38,10 @@ public interface Navigation extends Serializable {
 			return apiName;
 		}
 		
+		public void setApiName( String apiName ) {
+			this.apiName = apiName;
+		}
+		
 		public Object getApiRequest() {
 			return apiRequest;
 		}
@@ -44,8 +50,8 @@ public interface Navigation extends Serializable {
 			this.apiRequest = apiRequest;
 		}
 		
-		public String getImageName() {
-			return imageName;
+		public String getImageUrl() {
+			return imageUrl;
 		}
 		
 	}

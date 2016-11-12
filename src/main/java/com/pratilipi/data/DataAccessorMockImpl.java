@@ -771,18 +771,24 @@ public class DataAccessorMockImpl implements DataAccessor {
 			
 			} else if( navigation != null && ! line.isEmpty() ) {
 				String url = null;
+				String title = null;
+				String imageName = null;
 				String apiName = null;
 				String apiRequest = null;
-				if( line.indexOf( "App#" ) != -1 ) {
-					apiName = line.substring( line.indexOf( "App#" ) + 4, line.indexOf( "::" ) ) + "Api";
+
+				if( line.contains( "App#" ) ) {
+					String appInfo = line.substring( line.indexOf( "App#" ) ).trim();
+					imageName = appInfo.substring( "App#imageName::".length(), appInfo.lastIndexOf( "App#" ) ).trim();
+					apiName = appInfo.substring( appInfo.lastIndexOf( "App#" ) + 4, appInfo.lastIndexOf( "::" ) ) + "Api";
 					apiRequest = line.substring( line.indexOf( '{' ), line.indexOf( '}' ) + 1 );
 					line = line.substring( 0, line.indexOf( "App#" ) ).trim();
 				}
 				if( line.indexOf( ' ' ) != -1 ) {
 					url = line.substring( 0, line.indexOf( ' ' ) );
-					line = line.substring( line.indexOf( ' ' ) + 1 ).trim();
+					title = line.substring( line.indexOf( ' ' ) + 1 ).trim();
 				}
-				navigation.addLink( new Navigation.Link( line, url, apiName, apiRequest ) );
+
+				navigation.addLink( new Navigation.Link( title, url, apiName, apiRequest, imageName ) );
 			}
 			
 		}
