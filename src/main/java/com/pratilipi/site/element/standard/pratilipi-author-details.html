@@ -101,15 +101,18 @@
 			height: 20px;
 			margin-top: -2px;
 		}
-		.edit-profile {
+		.edit-profile, .edit-account-info, .notification-settings {
 			position: absolute;
 			top: 16px;
+		}
+		.edit-profile {
 			right: 64px;
 		}
 		.edit-account-info {
-			position: absolute;
-			top: 16px;
 			right: 108px;
+		}
+		.notification-settings {
+			right: 152px;
 		}
 		paper-fab {
 			width: 36px!important;
@@ -161,6 +164,9 @@
 				<div class="edit-account-info">
 					<paper-fab mini icon="icons:perm-identity" on-click="openAccountSettings"></paper-fab>
 				</div>
+				<#-- <div class="notification-settings">
+					<paper-fab mini icon="social:notifications" on-click="openNotificationSettings"></paper-fab>
+				</div> -->
 			</template>
 			
 			<div class="share-author">
@@ -367,6 +373,10 @@
 		openAccountSettings: function() {
 			document.querySelector( 'pratilipi-edit-account' ).open();
 		},
+		<#--
+		openNotificationSettings: function() {
+			document.querySelector( 'pratilipi-user-notification-settings' ).open();
+		},-->
 
 		_getShareUrl: function( utm_source ) {
 			if( utm_source == null ) return;

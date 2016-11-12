@@ -1,6 +1,7 @@
 <#include "pratilipi-author-details.html">
 <#include "pratilipi-author-tabs.html">
 <#include "pratilipi-author-settings.html">
+<#-- <#include "pratilipi-user-notification-settings.html"> -->
 
 <dom-module id="pratilipi-author-page">
 	<style>
@@ -12,6 +13,7 @@
 	<template>
 		<pratilipi-user user='{{ user }}' user-data="[[ userData ]]"></pratilipi-user>
 		<pratilipi-edit-account show-logout-button user='[[ user ]]'></pratilipi-edit-account>
+		<#-- <pratilipi-user-notification-settings user='{{ user }}'></pratilipi-user-notification-settings> -->
 		<pratilipi-write language-map="[[ languageMap ]]" pratilipi-types='[[ pratilipiTypes ]]'></pratilipi-write>
 		<pratilipi-alert></pratilipi-alert>
 
