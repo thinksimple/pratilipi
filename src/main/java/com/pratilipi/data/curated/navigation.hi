@@ -16,7 +16,7 @@
 /search?q=stories        अन्य कहानियां                App#imageName::shortstories.jpg         App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "searchQuery":"stories" }
 /upanyas                 उपन्यास                     App#imageName::novels.jpg              App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"upanyas" }
 /search?q=poems          पद्य                        App#imageName::poems.jpg               App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "searchQuery":"poems" }
-/gazals                  ग़ज़ल                       App#imageName::gazals.jpg              App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "searchQuery":"gazals" }
+/gazals                  ग़ज़ल                       App#imageName::gazals.jpg              App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"gazals" }
 /search?q=articles       लेख                       App#imageName::articles.jpg             App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "searchQuery":"articles" }
 /hasya-vyangya           हास्य – व्यंग्य                App#imageName::comedy.jpg               App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"hasya-vyangya" }
 /childhood-stories       बाल-साहित्य                 App#imageName::children.jpg             App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"childhood-stories" }
