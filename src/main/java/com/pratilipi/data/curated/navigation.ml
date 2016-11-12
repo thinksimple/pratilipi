@@ -1,5 +1,5 @@
 പ്രസിദ്ധമായവ 
-/event/katha   കഥാപൂരണം				App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "eventId":4839232641171456 }
+/event/tellastory   കഥാപൂരണം				App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "eventId":4557681508483072 }
 /most-read     നിര്‍ദ്ദേശിക്കപ്പെട്ടവ     App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"most-read" }
 /fiveminute    5 മിനിറ്റ് കഥകള്‍    App#PratilipiList::{ "language":"MALAYതുടര്‍ക്കഥകള്‍ALAM", "state":"PUBLISHED", "listName":"fiveminute" } 
 /new           പുതിയവ                 App#PratilipiList::{ "language":"MALAYതുടര്‍ക്കഥകള്‍ALAM", "state":"PUBLISHED", "listName":"new" } 
