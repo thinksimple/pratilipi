@@ -1,30 +1,30 @@
 பிரபலமானவை
-/fiveminstories              ஐந்து நிமிடக்கதைகள்  App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"fiveminstories" } 
-/most-read                   வாசகர் தேர்வு        App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"most-read" }
-/ministories                 குட்டிக்கதைகள்       App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"ministories" } 
-/event/memories              ஞாபகம் வருதே        App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "eventId":5115598167080960 }
-/new                         புதியவை             App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"new" }
-/nationalised-books          நாட்டுடைமை நூல்கள்   App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"nationalised-books" }
-/events                      போட்டிகள்          App#EventList::{ "language":"TAMIL" }
+/fiveminstories              ஐந்து நிமிடக்கதைகள்    App#imageName::5minread.jpg        App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"fiveminstories" } 
+/most-read                   வாசகர் தேர்வு           App#imageName::mostpopular.jpg     App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"most-read" }
+/ministories                 குட்டிக்கதைகள்          App#imageName::shortstories.jpg     App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"ministories" } 
+/event/memories              ஞாபகம் வருதே          App#imageName::event_experiences.jpg      App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "eventId":5115598167080960 }
+/new                         புதியவை                App#imageName::newpublished.jpg    App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"new" }
+/nationalised-books          நாட்டுடைமை நூல்கள்     App#imageName::india.jpg    App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"nationalised-books" }
+/events                      போட்டிகள்              App#imageName::events.jpg      App#EventList::{ "language":"TAMIL" }
 
 பிரிவுகள்
-/romance                     காதல்                App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"romance" }  
-/cinema                      சினிமா               App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"cinema" }         
-/அனுபவம்                  அனுபவம்           App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"experience" }
-/family                      இல்லறம்  / உறவு      App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"family" }
-/education                   கல்வி             App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"education" }
-/spiritual                   ஆன்மீகம்            App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"spiritual" }
-/horror                      மர்மம் / திகில்       App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"horror" }
-/humour                      நகைச்சுவை         App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"humour" }
-/history                     வரலாறு           App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"history" }
-/politics                    அரசியல்          App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"politics" }
-/others                      மற்றவை           App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"others" }
-/blog                        வலைப்பதிவுகள்      App#BlogPostList::{ "language":"TAMIL", "blogId":5683739602452480 }
+/romance                     காதல்              App#imageName::romance.jpg            App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"romance" }  
+/cinema                      சினிமா             App#imageName::movies.jpg             App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"cinema" }         
+/அனுபவம்                  அனுபவம்               App#imageName::experiences.jpg       App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"experience" }
+/family                      இல்லறம்  / உறவு    App#imageName::family.jpg             App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"family" }
+/education                   கல்வி               App#imageName::education.jpg         App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"education" }
+/spiritual                   ஆன்மீகம்            App#imageName::spirituality.jpg      App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"spiritual" }
+/horror                      மர்மம் / திகில்       App#imageName::horror.jpg            App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"horror" }
+/humour                      நகைச்சுவை         App#imageName::comedy.jpg              App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"humour" }
+/history                     வரலாறு             App#imageName::history.jpg            App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"history" }
+/politics                    அரசியல்             App#imageName::politics.jpg          App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"politics" }
+/others                      மற்றவை             App#imageName::event_generic4.jpg     App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"others" }
+/blog                        வலைப்பதிவுகள்       App#imageName::blog.jpg                App#BlogPostList::{ "language":"TAMIL", "blogId":5683739602452480 }
 
 வகைகள்
-/stories                     கதைகள்          App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"stories" }
-/articles                    கட்டுரைகள்        App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"articles" }
-/poems                       கவிதைகள்         App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"poems" }
-/books                       புத்தகங்கள்         App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"books" }
-/magazines                   இதழ்கள்           App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"magazines" }
+/stories                     கதைகள்       App#imageName::event_generic3.jpg    App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"stories" }
+/articles                    கட்டுரைகள்     App#imageName::articles.jpg         App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"articles" }
+/poems                       கவிதைகள்      App#imageName::poems.jpg             App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"poems" }
+/books                       புத்தகங்கள்      App#imageName::novels.jpg           App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"books" }
+/magazines                   இதழ்கள்        App#imageName::magazines.jpg        App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"magazines" }
 
