@@ -111,7 +111,7 @@
 		</paper-card>
 		<iron-ajax
 				id="AjaxPost"
-				url="/api/pratilipi"
+				url="/api/pratilipi?_apiVer=2"
 				method="POST"
 				content-type="application/x-www-form-urlencoded"
 				handle-as="json"
@@ -209,12 +209,12 @@
 			},
 			
 			publishNow: function() {
-				this.$.AjaxPost.body = jQuery.param( { "pratilipiId": this.pratilipi.pratilipiId, "state": "PUBLISHED", "_apiVer": "2" } );
+				this.$.AjaxPost.body = jQuery.param( { "pratilipiId": this.pratilipi.pratilipiId, "state": "PUBLISHED" } );
 				this.$.AjaxPost.generateRequest();
 			},
 			
 			moveToDrafts: function() {
-				this.$.AjaxPost.body = jQuery.param( { "pratilipiId": this.pratilipi.pratilipiId, "state": "DRAFTED", "_apiVer": "2" } );
+				this.$.AjaxPost.body = jQuery.param( { "pratilipiId": this.pratilipi.pratilipiId, "state": "DRAFTED" } );
 				this.$.AjaxPost.generateRequest();
 			},
 			
