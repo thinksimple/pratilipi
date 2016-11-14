@@ -2,7 +2,6 @@
 /fiveminstories              ஐந்து நிமிடக்கதைகள்    App#imageName::5minread.jpg        App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"fiveminstories" } 
 /most-read                   வாசகர் தேர்வு           App#imageName::mostpopular.jpg     App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"most-read" }
 /ministories                 குட்டிக்கதைகள்          App#imageName::shortstories.jpg     App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"ministories" } 
-/event/memories              ஞாபகம் வருதே          App#imageName::event_experiences.jpg      App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "eventId":5115598167080960 }
 /new                         புதியவை                App#imageName::newpublished.jpg    App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"new" }
 /nationalised-books          நாட்டுடைமை நூல்கள்     App#imageName::india.jpg    App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"nationalised-books" }
 /events                      போட்டிகள்              App#imageName::events.jpg      App#EventList::{ "language":"TAMIL" }
