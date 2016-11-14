@@ -16,7 +16,7 @@
 		.pratilipi-card .pratilipi-title-mini {
 			margin-bottom: 12px;
 		}
-		.pratilipi-card img {
+		.pratilipi-card iron-image {
 			position: absolute;
 			z-index: 0;
 			display: block;
@@ -265,7 +265,13 @@
 				<a href="{{ pratilipi.pageUrl }}">
 					<span class="pratilipi-card" style="cursor: pointer;" title="{{ fullTitle }}">
 						<#-- Image -->
-						<img src="{{ pratilipiCoverImage }}">
+						<iron-image class="pratilipi-shadow" 
+										style="background-color: #f5f5f5" 
+										fade preload
+										sizing="contain" 
+										src="{{ pratilipiCoverImage }}" 
+										alt="{{ pratilipi.title }}" 
+										title="{{ pratilipi.title }}"></iron-image>
 						<#-- Icons -->
 						<template is="dom-if" if="{{ showShareAndLibraryOptions }}">
 							<paper-fab mini class="library-icon" icon="icons:book" on-click="openLibraryDialog"></paper-fab>

@@ -201,7 +201,13 @@
 					</div>
 				</template>
 				<template is="dom-if" if="{{ !hasAccessToUpdate }}">
-					<img class="profile-picture" src="{{ imageUrl }}">
+					<iron-image class="profile-picture" 
+								style="background-color: #f5f5f5" 
+								fade preload
+								sizing="contain" 
+								src="{{ imageUrl }}" 
+								alt="{{ author.fullName }}" 
+								title="{{ author.fullNameEn }}"></iron-image>
 				</template>
 				<div class="author-name">{{ name }}</div>
 				<template is="dom-if" if="{{ hasAccessToFollow }}">

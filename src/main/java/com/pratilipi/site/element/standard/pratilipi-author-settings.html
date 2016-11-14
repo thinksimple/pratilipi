@@ -61,7 +61,14 @@
 						<paper-icon-button noink icon="close" data-dismiss="modal"></paper-icon-button>
 					</div>
 
-					<img class="pratilipi-logo" title="${ _strings.pratilipi }" alt="${ _strings.pratilipi }" src="http://0.ptlp.co/resource-${ lang }/logo/pratilipi_logo.png" />
+					<iron-image class="pratilipi-logo" 
+										style="background-color: #f5f5f5" 
+										fade preload
+										sizing="cover" 
+										src="http://0.ptlp.co/resource-${ lang }/logo/pratilipi_logo.png"  
+										alt="${ _strings.pratilipi }"  
+										title="${ _strings.pratilipi }"></iron-image>
+
 					<h6 class="text-center">{{ author.fullName }}</h6>
 
 					<div class="row">
