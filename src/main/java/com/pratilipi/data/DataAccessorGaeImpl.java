@@ -23,6 +23,7 @@ import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.cmd.Query;
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.AuthorState;
+import com.pratilipi.common.type.BatchProcessState;
 import com.pratilipi.common.type.CommentParentType;
 import com.pratilipi.common.type.ContactTeam;
 import com.pratilipi.common.type.I18nGroup;
@@ -1916,6 +1917,14 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	public BatchProcess getBatchProcess( Long batchProcessId ) {
 		return getEntity( BatchProcessEntity.class, batchProcessId );
+	}
+	
+	public List<BatchProcess> getIncompleteBatchProcessList() {
+		List<BatchProcessEntity> batchProcessList = ObjectifyService.ofy().load()
+				.type( BatchProcessEntity.class )
+				.filter( "STATE_COMPLETED !=", BatchProcessState.COMPLETED )
+				.list();
+		return new ArrayList<BatchProcess>( batchProcessList );
 	}
 	
 	public BatchProcess createOrUpdateBatchProcess( BatchProcess batchProcess ) {

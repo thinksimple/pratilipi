@@ -218,6 +218,7 @@ public interface DataAccessor {
 	// BatchProcess Table
 	BatchProcess newBatchProcess();
 	BatchProcess getBatchProcess( Long batchProcessId );
+	List<BatchProcess> getIncompleteBatchProcessList();
 	BatchProcess createOrUpdateBatchProcess( BatchProcess batchProcess );
 	
 }

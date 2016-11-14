@@ -1090,6 +1090,11 @@ public class DataAccessorMockImpl implements DataAccessor {
 		return null;
 	}
 	
+	public List<BatchProcess> getIncompleteBatchProcessList() {
+		// TODO Auto-generated method stub
+		return new ArrayList<BatchProcess>( 0 );
+	}
+	
 	public BatchProcess createOrUpdateBatchProcess( BatchProcess batchProcess ) {
 		// TODO Auto-generated method stub
 		return batchProcess;

@@ -22,10 +22,10 @@ import com.pratilipi.data.type.BatchProcess;
 import com.pratilipi.data.type.BatchProcessDoc;
 import com.pratilipi.data.type.Notification;
 
-public class BatchProcessUtil {
+public class BatchProcessDataUtil {
 	
 	 public static void exec( Long batchProcessId ) throws UnexpectedServerException {
-		 
+		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
 		BatchProcess batchProcess = dataAccessor.getBatchProcess( batchProcessId );
