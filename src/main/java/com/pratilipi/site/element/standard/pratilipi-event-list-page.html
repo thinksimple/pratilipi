@@ -124,7 +124,11 @@
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 					<a href="[[ event.pageUrl ]]">
-						<img style="width: 200px; height: 150px; margin: 5px auto; display: block;" src="[[ eventBannerImageUrl ]]" alt="[[ event.name ]]" class="pratilipi-shadow" />
+						<iron-image class="pratilipi-shadow"
+									style="width: 200px; height: 150px; margin: 5px auto; display: block; background-color: #f5f5f5;" 
+									fade preload sizing="cover" 
+									src="[[ eventBannerImageUrl ]]" 
+									alt="[[ event.name ]]" title="[[ event.name ]]" ></iron-image>
 					</a>
 				</div>
 				<div style="padding-left: 30px; padding-right: 20px;" class="col-xs-12 col-sm-12 col-md-9 col-lg-9">

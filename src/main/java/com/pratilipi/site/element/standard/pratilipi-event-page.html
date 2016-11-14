@@ -67,7 +67,13 @@
 
 						<paper-card class="event-banner">
 							<template is="dom-if" if="{{ !event.hasAccessToUpdate }}">
-								<img style="width: 100%;" src="{{ eventBannerImageUrl }}" alt="{{ event.name }}" />
+								<iron-image class="pratilipi-shadow" 
+										style="background-color: #f5f5f5; width: 100%;" 
+										fade preload
+										sizing="cover" 
+										src="{{ eventBannerImageUrl }}" 
+										alt="{{ event.name }}" 
+										title="{{ event.name }}"></iron-image>
 							</template>
 							
 							<template is="dom-if" if="{{ event.hasAccessToUpdate }}">
