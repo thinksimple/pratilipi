@@ -327,8 +327,7 @@ public class AuthorApi extends GenericApi {
 			} else if( clazz == PratilipiV1Api.class || clazz == PratilipiV2Api.class
 					|| clazz == PratilipiListV1Api.class || clazz == PratilipiListV2Api.class ) {
 
-				if( UxModeFilter.isAndroidApp() )
-					this.authorId = authorData.getId();
+				this.authorId = authorData.getId();
 				this.name = authorData.getName() == null
 						? authorData.getNameEn()
 						: authorData.getName();

@@ -59,3 +59,27 @@ clevertap.account.push({"id": "W88-4ZZ-974Z"});
  s.parentNode.insertBefore(wzrk, s);
 })();
 </script>
+
+<#-- Custom events for cleartap -->
+<#if user.isGuest() == true>
+<script>
+	clevertap.profile.push({
+		"site": {
+			"name": "${ user.getDisplayName() }",
+			"id": "${ user.getId() }",
+			"email": "${ user.getEmail()! }",            
+			"language": "${ language }"
+		}
+	});
+	<#if isContentPage?? && isContentPage==true>
+		clevertap.event.push( "content_landed", {
+			"content_title": "${ pratilipi.getTitle() }",
+			"content_id": "${ pratilipi.getId() }",
+			"author_id": "<#if pratilipi.getAuthor() ??>${ pratilipi.getAuthor().getId()!</#if> }",
+			"author_name": "<#if pratilipi.getAuthor() ??>${ pratilipi.getAuthor().getPageUrl()!</#if> }"
+		});
+	</#if>
+</script>
+</#if>
+
+

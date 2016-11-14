@@ -766,6 +766,10 @@ public class PratilipiSite extends HttpServlet {
 			dataModel.put( "pratilipiJson", gson.toJson( pratilipiResponse ) );
 			dataModel.put( "userpratilipiJson", gson.toJson( userPratilipiResponse ) );
 		}
+
+		// TODO: CleverTap Boolean - Remove after POC
+		dataModel.put( "isContentPage", true );
+
 		return dataModel;
 		
 	}
