@@ -75,8 +75,8 @@ clevertap.account.push({"id": "TEST-Z88-4ZZ-974Z"});
 		clevertap.event.push( "content_landed", {
 			"content_title": "${ pratilipi.getTitle() }",
 			"content_id": "${ pratilipi.getId()?c }",
-			"author_id": "<#if pratilipi.getAuthor() ??>${ pratilipi.getAuthor().getId()?c }</#if>",
-			"author_name": "<#if pratilipi.getAuthor() ??>${ pratilipi.getAuthor().getName() }</#if>"
+			"author_name": "<#if pratilipi.getAuthor() ??>${ pratilipi.getAuthor().getName() }</#if>",
+			"author_id": "<#if pratilipi.getAuthor() ??>${ pratilipi.getAuthor().getId()?c }</#if>"
 		});
 	</#if>
 </script>
