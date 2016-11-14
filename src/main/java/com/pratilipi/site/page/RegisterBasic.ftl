@@ -94,7 +94,6 @@
 
 	<body>
 		<#include "../element/basic/pratilipi-header.ftl">
-		<#include "../element/basic/pratilipi-facebook-login.ftl">
 		<div class="parent-container">
 			<div class="container">
 				
@@ -103,10 +102,20 @@
 		                <h4 style="text-align: center;">${ _strings.user_sign_up_for_pratilipi }</h4>
 		            </div>
 		            
-		            <div class="social-wrap" style="margin-top: 30px;">
-						<button class="facebook" onClick="facebookLogin()">${ _strings.user_sign_in_with_facebook }</button>
+		            <div class="text-center">
+						<button class="fb-button" onClick="facebookLogin()">
+							<span class="icon"></span>
+							<span class="button-text">${ _strings.user_sign_in_with_facebook }</span>
+						</button>
 					</div>
-		            
+					<div class="text-center">
+						<#-- Listener created for the button -->
+						<button id="googleLoginButton" class="google-button">
+							<span class="icon"></span>
+							<span class="button-text">${ _strings.user_sign_in_with_google }</span>
+						</button>
+					</div>
+
 		            <form id="userRegisterForm" class="form-horizontal" action="javascript:void(0);">
 		            	<div class="form-group">
 		                    <label for="inputName" class="col-sm-2 control-label">Name</label>
@@ -148,6 +157,9 @@
 			</div>
 		</div>
 		<#include "../element/basic/pratilipi-footer.ftl">
+		<#-- Style and Scripts for facebook login and google login -->
+		<#include "../element/basic/pratilipi-facebook-login.ftl">
+		<#include "../element/basic/pratilipi-google-login.ftl">
 	</body>
 	
 </html>
