@@ -49,7 +49,7 @@ src="https://www.facebook.com/tr?id=1569748966613739&ev=PageView&noscript=1"
 <#-- Clevertap Script -->
 <script type="text/javascript">
 var clevertap = {event:[], profile:[], account:[], onUserLogin:[], notifications:[]};
-clevertap.account.push({"id": "W88-4ZZ-974Z"});
+clevertap.account.push({"id": "TEST-Z88-4ZZ-974Z"});
 (function () {
  var wzrk = document.createElement('script');
  wzrk.type = 'text/javascript';
@@ -61,12 +61,12 @@ clevertap.account.push({"id": "W88-4ZZ-974Z"});
 </script>
 
 <#-- Custom events for cleartap -->
-<#if user.isGuest() == true>
+<#if user.isGuest() == false>
 <script>
 	clevertap.profile.push({
 		"site": {
 			"name": "${ user.getDisplayName() }",
-			"id": "${ user.getId() }",
+			"id": "${ user.getId()?c }",
 			"email": "${ user.getEmail()! }",            
 			"language": "${ language }"
 		}
@@ -74,9 +74,9 @@ clevertap.account.push({"id": "W88-4ZZ-974Z"});
 	<#if isContentPage?? && isContentPage==true>
 		clevertap.event.push( "content_landed", {
 			"content_title": "${ pratilipi.getTitle() }",
-			"content_id": "${ pratilipi.getId() }",
-			"author_id": "<#if pratilipi.getAuthor() ??>${ pratilipi.getAuthor().getId()! }</#if>",
-			"author_name": "<#if pratilipi.getAuthor() ??>${ pratilipi.getAuthor().getPageUrl()! }</#if>"
+			"content_id": "${ pratilipi.getId()?c }",
+			"author_id": "<#if pratilipi.getAuthor() ??>${ pratilipi.getAuthor().getId()?c }</#if>",
+			"author_name": "<#if pratilipi.getAuthor() ??>${ pratilipi.getAuthor().getName() }</#if>"
 		});
 	</#if>
 </script>
