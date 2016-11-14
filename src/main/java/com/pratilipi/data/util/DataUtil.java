@@ -2,6 +2,7 @@ package com.pratilipi.data.util;
 import java.io.IOException;
 import java.util.List;
 
+import com.google.appengine.api.datastore.QueryResultIterator;
 import com.google.appengine.tools.cloudstorage.GcsService;
 import com.google.appengine.tools.cloudstorage.GcsServiceFactory;
 import com.google.appengine.tools.cloudstorage.RetryParams;
@@ -14,10 +15,12 @@ import com.pratilipi.common.type.UserState;
 import com.pratilipi.data.BlobAccessor;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.DocAccessor;
 import com.pratilipi.data.Memcache;
 import com.pratilipi.data.SearchAccessor;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Page;
+import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.gae.AccessTokenEntity;
 import com.pratilipi.data.type.gae.AuthorEntity;
@@ -26,6 +29,8 @@ import com.pratilipi.data.type.gae.PratilipiEntity;
 import com.pratilipi.data.type.gae.UserAuthorEntity;
 import com.pratilipi.data.type.gae.UserEntity;
 import com.pratilipi.data.type.gae.UserPratilipiEntity;
+import com.pratilipi.taskqueue.Task;
+import com.pratilipi.taskqueue.TaskQueueFactory;
 
 public class DataUtil {
 
@@ -42,6 +47,7 @@ public class DataUtil {
 		
 		ObjectifyService.begin();
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
 		SearchAccessor searchAccessor = DataAccessorFactory.getSearchAccessor();
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
 		Memcache memcache = DataAccessorFactory.getL2CacheAccessor();
@@ -155,6 +161,32 @@ public class DataUtil {
 		installer.uninstall();
 		
 	}
+	
+	
+	
+	private static void _migratePratilipi( Long fromAuthorId, Long toAuthorId ) {
+		
+		QueryResultIterator<PratilipiEntity> iterator = ObjectifyService.ofy().load()
+				.type( PratilipiEntity.class )
+				.filter( "AUTHOR_ID", fromAuthorId )
+				.chunk( 100 )
+				.iterator();
+		
+		while( iterator.hasNext() ) {
+			Pratilipi pratilipi = iterator.next();
+			pratilipi.setAuthorId( toAuthorId );
+			ObjectifyService.ofy().save().entity( pratilipi ).now();
+			Task task = TaskQueueFactory.newTask()
+					.setUrl( "/pratilipi/process" )
+					.addParam( "pratilipiId", pratilipi.getId().toString() )
+					.addParam( "processData", "true" );
+			TaskQueueFactory.getPratilipiTaskQueue().add( task );
+			System.out.println( "Migrating Pratilipi: " + pratilipi.getId() );
+		}
+		
+		
+	}
+	
 	
 	private static void _deleteUser( Long userId ) {
 		
