@@ -10,12 +10,6 @@
 /cinema     ಸಿನಿಮಾ         App#imageName::movies.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"cinema" }
 /society    ಸಮಾಜ          App#imageName::social.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"society" } 
 /inspirational ಸ್ಫೂರ್ತಿದಾಯಕ  App#imageName::inspirational.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"inspirational" } 
-/fiction    ಕಲ್ಪಿತ           App#imageName::fiction.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"fiction" } 
-
-ಪ್ರಕಾರಗಳು 
-/stories      ಕಥೆಗಳು        App#imageName::event_generic3.jpg        App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"stories" } 
+/otherstories   ಇತರೆ ಕಥೆಗಳು App#imageName::fiction.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"otherstories" } 
+/nonfiction ಅಕಲ್ಪಿತ         App#imageName::articles.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"nonfiction" } 
 /poems        ಕವಿತೆಗಳು       App#imageName::poems.jpg                  App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"poems" } 
-/articles     ಲೇಖನಗಳು      App#imageName::articles.jpg           App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"articles" } 
-/books        ಪುಸ್ತಕಗಳು       App#imageName::novels.jpg            App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"books" } 
-
-
