@@ -9,6 +9,7 @@
 /women      ಮಹಿಳೆ          App#imageName::event_women.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"women" }
 /cinema     ಸಿನಿಮಾ         App#imageName::movies.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"cinema" }
 /society    ಸಮಾಜ          App#imageName::social.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"society" } 
+/science   ವಿಜ್ಞಾನ          App#imageName::scifi.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"science" } 
 /inspirational ಸ್ಫೂರ್ತಿದಾಯಕ  App#imageName::inspirational.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"inspirational" } 
 /otherstories   ಇತರೆ ಕಥೆಗಳು App#imageName::fiction.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"otherstories" } 
 /nonfiction ಅಕಲ್ಪಿತ         App#imageName::articles.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"nonfiction" } 
