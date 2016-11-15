@@ -29,8 +29,8 @@
 <#-- Google Login -->
 <script src="https://apis.google.com/js/api:client.js"></script>
 
-<#if lang=="hi" && stage=="prod">
 <#-- Facebook Pixel Code only on hindi pratilipi -->
+<#if lang=="hi" && stage=="prod">
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
 n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
@@ -79,6 +79,13 @@ clevertap.account.push({"id": "TEST-Z88-4ZZ-974Z"});
 			"author_id": "<#if pratilipi.getAuthor() ??>${ pratilipi.getAuthor().getId()?c }</#if>"
 		});
 	</#if>
+	function clevertapShareContentOnFacebook( title, pratilipiId ) {
+		clevertap.event.push( "content_shared", {
+			"content_title": title,
+			"content_id": pratilipiId,
+			"share_app": "Facebook"
+		});
+	}
 </script>
 </#if>
 

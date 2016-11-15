@@ -177,6 +177,7 @@
 			},
 
 			shareOnFacebook: function( utm_location ) {
+				clevertapShareContentOnFacebook( this.pratilipi.title, this.pratilipi.pratilipiId );
 				window.open( "http://www.facebook.com/sharer.php?u=" + this._getShareUrl( utm_location, "facebook" ),
 						"share", "width=1100,height=500,left=70px,top=60px" );
 			},
