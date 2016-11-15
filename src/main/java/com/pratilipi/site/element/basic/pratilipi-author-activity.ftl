@@ -17,8 +17,8 @@
 	
 	function changePratilipiState(bookId, state) {
 		    $.ajax({type: "POST",
-		            url: "/api/pratilipi",
-		            data: { pratilipiId: bookId, state: state, _apiVer: "2" },
+		            url: "/api/pratilipi?_apiVer=2",
+		            data: { pratilipiId: bookId, state: state },
 		            success:function(response){
 		            	var parsed_data = jQuery.parseJSON( response );
 		      			if ( parsed_data.state == state ) {

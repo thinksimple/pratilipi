@@ -45,14 +45,13 @@
 		var form = $("#pratilipi_settings_form");
         $.ajax({
             type:'POST',
-            url: '/api/pratilipi',
+            url: '/api/pratilipi?_apiVer=2',
             data:{ 	pratilipiId: "${pratilipi.getId()?c }",
             		title: form.find("#title").val() ,
             		titleEn: form.find("#titleEn").val(),
             		type: form.find("#type").val(),
             		language: "${ pratilipi.getLanguage() }",
-            		summary: form.find("#summary").val(),
-					_apiVer: "2"
+            		summary: form.find("#summary").val()
 	               },
             success:function(response){
             	

@@ -528,7 +528,7 @@
 			},
 
 			updateSummary: function() {
-				this.$.AjaxPost.body = jQuery.param( { "pratilipiId": this.pratilipi.pratilipiId, "summary": this.summary, "_apiVer": "2" } );
+				this.$.AjaxPost.body = jQuery.param( { "pratilipiId": this.pratilipi.pratilipiId, "summary": this.summary } );
 				this.$.AjaxPost.generateRequest();
 			},
 			
