@@ -45,21 +45,58 @@
 			<groupId>com.googlecode.objectify</groupId>
 			<artifactId>objectify</artifactId>
 			<version>5.1.13</version>
+			<exclusions>
+				<!-- Exclude an old version of guava that is being pulled in -->
+				<exclusion>
+					<groupId>com.google.guava</groupId>
+					<artifactId>guava</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
-		<!-- Google Cloud Storage API -->
-		<dependency>
-			<groupId>com.google.apis</groupId>
-			<artifactId>google-api-services-storage</artifactId>
-			<version>v1-rev89-1.22.0</version>
-		</dependency>
-	
 		<dependency>
 			<groupId>com.google.appengine.tools</groupId>
 			<artifactId>appengine-gcs-client</artifactId>
 			<version>0.6</version>
 		</dependency>
 
+		<!-- Firebase -->
+		<dependency>
+			<groupId>com.google.firebase</groupId>
+			<artifactId>firebase-server-sdk</artifactId>
+			<version>3.0.1</version>
+			<exclusions>
+				<!-- Exclude an old version of guava that is being pulled
+						 in by a transitive dependency of google-api-client -->
+				<exclusion>
+					<groupId>com.google.guava</groupId>
+					<artifactId>guava-jdk5</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+		<!-- Google Cloud Storage API -->
+		<dependency>
+			<groupId>com.google.apis</groupId>
+			<artifactId>google-api-services-storage</artifactId>
+			<version>v1-rev89-1.22.0</version>
+			<exclusions>
+				<!-- Exclude an old version of guava that is being pulled
+						 in by a transitive dependency of google-api-client -->
+				<exclusion>
+					<groupId>com.google.guava</groupId>
+					<artifactId>guava-jdk5</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+	
+		<!-- Google Cloud Pub/Sub -->
+		<dependency>
+			<groupId>com.google.cloud</groupId>
+			<artifactId>google-cloud-pubsub</artifactId>
+			<version>0.4.0</version>
+		</dependency>
+		
 		<!-- Google Analytics API -->
 		<dependency>
 			<groupId>com.google.apis</groupId>
@@ -109,14 +146,8 @@
 			<version>1.10.1</version>
 		</dependency>
 
-		<!-- Firebase -->
-		<dependency>
-			<groupId>com.google.firebase</groupId>
-			<artifactId>firebase-server-sdk</artifactId>
-			<version>3.0.1</version>
-		</dependency>
 
-		<!-- Test Dependencies -->
+	<!-- Test Dependencies -->
 
 		<dependency>
 			<groupId>junit</groupId>
