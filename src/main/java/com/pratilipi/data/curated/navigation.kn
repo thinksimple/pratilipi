@@ -5,12 +5,12 @@
 /events       ಸ್ಪರ್ಧೆಗಳು              App#imageName::events.jpg     App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"events" }
 
 ಪ್ರಭೇದಗಳು 
-/politics   ರಾಜಕೀಯ        App#imageName::politics.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"politics" }
-/gender     ಲಿಂಗ            App#imageName::women.jpg             App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"gender" }
-/society    ಸಮಾಜ          App#imageName::social.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"society" } 
-/satire     ವಿಡಂಬನೆ         App#imageName::satire.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"satire" } 
 /love       ಪ್ರೀತಿ            App#imageName::romance.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"love" }
-/spiritual  ಅನುಭಾವ        App#imageName::spirituality.jpg             App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"spiritual" } 
+/women      ಮಹಿಳೆ          App#imageName::event_women.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"women" }
+/cinema     ಸಿನಿಮಾ         App#imageName::movies.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"cinema" }
+/society    ಸಮಾಜ          App#imageName::social.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"society" } 
+/inspirational ಸ್ಫೂರ್ತಿದಾಯಕ  App#imageName::inspirational.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"inspirational" } 
+/fiction    ಕಲ್ಪಿತ           App#imageName::fiction.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"fiction" } 
 
 ಪ್ರಕಾರಗಳು 
 /stories      ಕಥೆಗಳು        App#imageName::event_generic3.jpg        App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"stories" } 
