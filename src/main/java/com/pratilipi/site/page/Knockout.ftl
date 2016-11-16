@@ -7,7 +7,7 @@
         <meta name="description" content="A platform to discover, read and share your favorite stories, poems and books in a language, device and format of your choice.">
         <title>Knockout Test</title>
         <#-- Google Analytics -->
-		<#include "GoogleAnalytics.ftl">
+		<#include "meta/GoogleAnalytics.ftl">
 		
 		
 <#-- Clevertap Script -->
