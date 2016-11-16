@@ -623,76 +623,96 @@ a:hover {
 	background: url(PratilipiSprite.png) no-repeat 0 0 transparent;
 }
 .pratilipi-logo-icon{
-    background-position: -144px -72px;
-    background-size: 240px 132px;
-    margin: 4px auto;
-    width: 36px;
-    height: 36px;	
+    background-position: -288px -144px;
+    margin: 8px auto;
+    width: 72px;
+    height: 72px;
+    zoom: 0.5;
+    -moz-transform:scale(0.5);
+    -moz-transform-origin: 0 0;	
 }
 .edit-icon{
-    background-position: -144px -24px;
-    background-size: 240px 132px;
-    margin: 10px auto;
-    width: 24px;
-    height: 24px;
+    background-position: -288px -48px;
+    margin: 20px auto;
+    width: 48px;
+    height: 48px;
+    zoom: 0.5;
+    -moz-transform:scale(0.5);
+    -moz-transform-origin: 0 0;
 }
 .account-circle-icon{
-    background-position: -24px -24px;
-    background-size: 240px 132px;
-    margin: 10px auto;
-    width: 24px;
-    height: 24px;
+    background-position: -48px -48px;
+    margin: 20px auto;
+    width: 48px;
+    height: 48px;
+    zoom: 0.5;
+    -moz-transform:scale(0.5);
+    -moz-transform-origin: 0 0;
 }
 .menu-icon{
-    background-position: -24px 0;
-    background-size: 240px 132px;
-    margin: 10px auto;
-    width: 24px;
-    height: 24px;
+    background-position: -48px 0;
+    margin: 20px auto;
+    width: 48px;
+    height: 48px;
+    zoom: 0.5;
+    -moz-transform:scale(0.5);
+    -moz-transform-origin: 0 0;
 }
 .notifications-icon{
-    background-position: -192px -24px;
-    background-size: 240px 132px;
-    margin: 10px auto;
-    width: 24px;
-    height: 24px;
+    background-position: -384px -48px;
+    margin: 20px auto;
+    width: 48px;
+    height: 48px;
+    zoom: 0.5;
+    -moz-transform:scale(0.5);
+    -moz-transform-origin: 0 0;
 }
 .library-books-icon{
-    background-position: 0 -48px;
-    background-size: 240px 132px;
-    margin: 10px auto;
-    width: 24px;
-    height: 24px;
+    background-position: 0 -96px;
+    margin: 20px auto;
+    width: 48px;
+    height: 48px;
+    zoom: 0.5;
+    -moz-transform:scale(0.5);
+    -moz-transform-origin: 0 0;
 }
 .fb-icon{
 	display: inline-block;
-    background-position: -48px -72px;
-    background-size: 240px 132px;
-    width: 24px;
-    height: 24px;
-        margin: 9px;
+    background-position: -96px -144px;
+    width: 48px;
+    height: 48px;
+    zoom: 0.5;
+    -moz-transform:scale(0.5);
+    -moz-transform-origin: 0 0;
+     margin: 18px;
 }
 .twitter-icon{
 	display: inline-block;
-    background-position: -120px -72px;
-    background-size: 240px 132px;
-    width: 24px;
-    height: 24px;
-        margin: 9px;
+    background-position: -240px -144px;
+    width: 48px;
+    height: 48px;
+    zoom: 0.5;
+    -moz-transform:scale(0.5);
+    -moz-transform-origin: 0 0;
+     margin: 18px;
 }
 .gplus-icon{
 	display: inline-block;
-    background-position: -96px -72px;
-    background-size: 240px 132px;
-    width: 24px;
-    height: 24px;
-        margin: 9px;
+    background-position: -192px -144px;
+    width: 48px;
+    height: 48px;
+    zoom: 0.5;
+    -moz-transform:scale(0.5);
+    -moz-transform-origin: 0 0;
+     margin: 18px;
 }
 .linked-in-icon{
 	display: inline-block;
-    background-position: -24px -72px;
-    background-size: 240px 132px;
-    width: 24px;
-        margin: 9px;
-    height: 24px;
+    background-position: -48px -144px;
+    width: 48px;
+    height: 48px;
+    zoom: 0.5;
+    -moz-transform:scale(0.5);
+    -moz-transform-origin: 0 0;
+     margin: 18px;
 }
