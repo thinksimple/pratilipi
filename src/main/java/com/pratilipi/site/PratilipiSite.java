@@ -438,6 +438,10 @@ public class PratilipiSite extends HttpServlet {
 				dataModel.put( "title", "Registration for Android App!" );
 				templateName = "AppRegistration.ftl";
 
+			} else if( uri.equals( "/poc" ) && SystemProperty.STAGE.equals( SystemProperty.STAGE_GAMMA ) ) {
+				dataModel = createDataModelForHomePage( basicMode, filterLanguage );
+				templateName = "Knockout.ftl";
+
 			} else if( uri.matches( "^/[a-z0-9-]+$" ) && ( dataModel = createDataModelForListPage( uri.substring( 1 ), basicMode, displayLanguage, filterLanguage, request ) ) != null ) {
 				templateName = ( basicMode ? "ListBasic.ftl" : "List.ftl" );
 				
