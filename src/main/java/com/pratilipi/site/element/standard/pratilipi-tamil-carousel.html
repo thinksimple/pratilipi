@@ -26,11 +26,15 @@
 					<li data-target="#carousel" data-slide-to="1"></li>
 					<li data-target="#carousel" data-slide-to="2"></li>
 					<li data-target="#carousel" data-slide-to="3"></li>
+					<li data-target="#carousel" data-slide-to="4"></li>
 				</ol>
 				
 				<!-- Items -->
 				<div class="carousel-inner">
 					<div class="item active">
+						<a href="/event/ore-oru-oorla" target="_blank"><img src="{{ image5 }}" /></a>
+					</div>
+					<div class="item">
 						<a on-click="write"><img src="{{ image1 }}" /></a>
 					</div>
 					<div class="item">
@@ -71,7 +75,8 @@
 			image1: { type: Image },
 			image2: { type: Image },
 			image3: { type: Image },
-			image4: { type: Image }
+			image4: { type: Image },
+			image5: { type: Image }
 		},
 		
 		_onIronResize: function() {
@@ -80,14 +85,16 @@
 
 			if( windowsize > 560 ) {
 				this.image1 = "http://0.ptlp.co/resource-ta/home-page-banner/pratilipi-tamil-carousel-16.jpg";
-				this.image2 = "http://0.ptlp.co/resource-ta/home-page-banner/pratilipi-tamil-carousel-17.jpg";
-				this.image3 = "http://0.ptlp.co/resource-ta/home-page-banner/pratilipi-tamil-carousel-18.jpg";
-				this.image4 = "http://0.ptlp.co/resource-ta/home-page-banner/pratilipi-tamil-carousel-13.jpg";
+				this.image2 = "http://1.ptlp.co/resource-ta/home-page-banner/pratilipi-tamil-carousel-17.jpg";
+				this.image3 = "http://2.ptlp.co/resource-ta/home-page-banner/pratilipi-tamil-carousel-18.jpg";
+				this.image4 = "http://3.ptlp.co/resource-ta/home-page-banner/pratilipi-tamil-carousel-13.jpg";
+				this.image5 = "http://4.ptlp.co/resource-ta/home-page-banner/pratilipi-tamil-carousel-19.jpg";
 			} else {
 				this.image1 = "http://0.ptlp.co/resource-ta/home-page-banner/pratilipi-tamil-carousel-16-small.jpg";
-				this.image2 = "http://0.ptlp.co/resource-ta/home-page-banner/pratilipi-tamil-carousel-17-small.jpg";
-				this.image3 = "http://0.ptlp.co/resource-ta/home-page-banner/pratilipi-tamil-carousel-18-small.jpg";
-				this.image4 = "http://0.ptlp.co/resource-ta/home-page-banner/pratilipi-tamil-carousel-13-small.jpg";
+				this.image2 = "http://1.ptlp.co/resource-ta/home-page-banner/pratilipi-tamil-carousel-17-small.jpg";
+				this.image3 = "http://2.ptlp.co/resource-ta/home-page-banner/pratilipi-tamil-carousel-18-small.jpg";
+				this.image4 = "http://3.ptlp.co/resource-ta/home-page-banner/pratilipi-tamil-carousel-13-small.jpg";
+				this.image5 = "http://4.ptlp.co/resource-ta/home-page-banner/pratilipi-tamil-carousel-19-small.jpg";
 			}
 		},
 		

@@ -61,6 +61,7 @@ public class InitDataUtil {
 		
 		
 		initBannerDocs = new InitBannerDoc[] {
+				docAccessor.newInitBannerDoc( "pratilipi-tamil-carousel-19.jpg", null, "/event/ore-oru-oorla" ),
 				docAccessor.newInitBannerDoc( "pratilipi-tamil-carousel-17.jpg", null, "/horror" ),
 				docAccessor.newInitBannerDoc( "pratilipi-tamil-carousel-18.jpg", null, "/education" ),
 				docAccessor.newInitBannerDoc( "pratilipi-tamil-carousel-13.jpg", null, "/fiveminstories" ),
@@ -83,10 +84,10 @@ public class InitDataUtil {
 		
 		
 		initBannerDocs = new InitBannerDoc[] {
+				docAccessor.newInitBannerDoc( "pratilipi-malayalam-carousel-15.jpg", null, "/event/tellastory" ),
 				docAccessor.newInitBannerDoc( "pratilipi-malayalam-carousel-11.jpg", null, "/society" ),
 				docAccessor.newInitBannerDoc( "pratilipi-malayalam-carousel-12.jpg", null, "/mystery" ),
 				docAccessor.newInitBannerDoc( "pratilipi-malayalam-carousel-13.jpg", null, "/lives" ),
-				docAccessor.newInitBannerDoc( "pratilipi-malayalam-carousel-09.jpg", null, "/event/katha" ),
 		};
 			
 		InitDoc mlInitDoc = docAccessor.newInitDoc();
