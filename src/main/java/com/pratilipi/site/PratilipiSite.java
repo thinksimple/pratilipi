@@ -510,6 +510,7 @@ public class PratilipiSite extends HttpServlet {
 		dataModel.put( "user", userResponse );
 		dataModel.put( "userJson", gson.toJson( userResponse ) );
 		dataModel.put( "pratilipiTypesJson", gson.toJson( pratilipiTypes ) );
+		dataModel.put( "navigationList", gson.toJson( navigationList ) );
 		dataModel.put( "stage", SystemProperty.STAGE );
 
 		// Android App Registration
@@ -522,8 +523,6 @@ public class PratilipiSite extends HttpServlet {
 			if( request.getQueryString() != null )
 				requestUrl.append( '?' ).append( request.getQueryString() );
 			dataModel.put( "requestUrl", URLEncoder.encode( requestUrl.toString(), "UTF-8" ) );
-		} else {
-			dataModel.put( "navigationList", gson.toJson( navigationList ) );
 		}
 
 		
