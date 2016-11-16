@@ -19,4 +19,8 @@ then
 
 	# Update prod-pratilipi/api
 	mvn appengine:update -Dapp.id=prod-pratilipi -Dapp.module=api
+	
+	
+	# Cleaning up .git directory
+	git gc
 fi

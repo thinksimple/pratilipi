@@ -21,4 +21,8 @@ then
 
 	# Update prod-pratilipi/worker
 	mvn appengine:update -Dapp.id=prod-pratilipi -Dapp.module=worker
+	
+	
+	# Cleaning up .git directory
+	git gc
 fi

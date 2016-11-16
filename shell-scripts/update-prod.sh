@@ -25,4 +25,8 @@ then
 
 	# Update Routing
 	mvn appengine:update_dispatch -Dapp.id=prod-pratilipi -Dapp.module=default
+	
+	
+	# Cleaning up .git directory
+	git gc
 fi

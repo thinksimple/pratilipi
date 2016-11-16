@@ -19,4 +19,8 @@ then
 	
 	# Update devo-pratilipi/raghu
 	mvn appengine:update -Dapp.id=devo-pratilipi -Dapp.module=raghu
+	
+	
+	# Cleaning up .git directory
+	git gc
 fi

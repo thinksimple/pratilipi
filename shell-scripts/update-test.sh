@@ -26,4 +26,8 @@ then
 	
 	# Update prod-pratilipi/gamma
 	mvn appengine:update -Dapp.id=prod-pratilipi -Dapp.module=gamma-android
+	
+	
+	# Cleaning up .git directory
+	git gc
 fi

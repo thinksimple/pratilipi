@@ -19,4 +19,8 @@ then
 
 	# Update prod-pratilipi/android
 	mvn appengine:update -Dapp.id=prod-pratilipi -Dapp.module=android
+
+	
+	# Cleaning up .git directory
+	git gc
 fi
