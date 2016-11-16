@@ -263,6 +263,7 @@
             });
         });
     </script>
+    <script src="https://www.gstatic.com/firebasejs/3.0.4/firebase.js" async defer></script>
   </body>
 </html>
 
