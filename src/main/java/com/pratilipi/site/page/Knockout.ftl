@@ -6,58 +6,28 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         <meta name="description" content="A platform to discover, read and share your favorite stories, poems and books in a language, device and format of your choice.">
         <title>Knockout Test</title>
+
         <#-- Google Analytics -->
 		<#include "meta/GoogleAnalytics.ftl">
 		
 		
-<#-- Clevertap Script -->
-<script type="text/javascript">
-var clevertap = {event:[], profile:[], account:[], onUserLogin:[], notifications:[]};
-clevertap.account.push({"id": "TEST-Z88-4ZZ-974Z"});
-(function () {
- var wzrk = document.createElement('script');
- wzrk.type = 'text/javascript';
- wzrk.async = true;
- wzrk.src = ('https:' == document.location.protocol ? 'https://d2r1yp2w7bby2u.cloudfront.net' : 'http://static.clevertap.com') + '/js/a.js';
- var s = document.getElementsByTagName('script')[0];
- s.parentNode.insertBefore(wzrk, s);
-})();
-</script>
-
-<#-- Custom events for cleartap -->
-<#if user.isGuest() == false>
-<script>
-	clevertap.profile.push({
-		"site": {
-			"name": "${ user.getDisplayName() }",
-			"id": "${ user.getId()?c }",
-			"email": "${ user.getEmail()! }",            
-			"language": "${ language }"
-		}
-	});
-	<#if isContentPage?? && isContentPage==true>
-		clevertap.event.push( "content_landed", {
-			"content_title": "${ pratilipi.getTitle() }",
-			"content_id": "${ pratilipi.getId()?c }",
-			"author_name": "<#if pratilipi.getAuthor() ??>${ pratilipi.getAuthor().getName() }</#if>",
-			"author_id": "<#if pratilipi.getAuthor() ??>${ pratilipi.getAuthor().getId()?c }</#if>"
-		});
-	</#if>
-	function clevertapShareContentOnFacebook( title, pratilipiId ) {
-		clevertap.event.push( "content_shared", {
-			"content_title": title,
-			"content_id": pratilipiId,
-			"share_app": "Facebook"
-		});
-	}
-</script>
-</#if>
-
-
-
+		<#-- Clevertap Script -->
+		<script type="text/javascript">
+			var clevertap = {event:[], profile:[], account:[], onUserLogin:[], notifications:[]};
+			clevertap.account.push({"id": "TEST-Z88-4ZZ-974Z"});
+			(function () {
+			 var wzrk = document.createElement('script');
+			 wzrk.type = 'text/javascript';
+			 wzrk.async = true;
+			 wzrk.src = ('https:' == document.location.protocol ? 'https://d2r1yp2w7bby2u.cloudfront.net' : 'http://static.clevertap.com') + '/js/a.js';
+			 var s = document.getElementsByTagName('script')[0];
+			 s.parentNode.insertBefore(wzrk, s);
+			})();
+		</script>
 
         <script src="http://0.ptlp.co/resource-all/jquery.knockout.boostrap.js" type="text/javascript"></script>
         <link rel='stylesheet' href='http://1.ptlp.co/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>
+
         <style>
             html, body {
                 padding: 0;
@@ -175,13 +145,18 @@ clevertap.account.push({"id": "TEST-Z88-4ZZ-974Z"});
                 outline: none;
                 text-decoration: none;
             }
+            
+            .carousel {
+                width: 1000px;
+                margin: 12px auto;
+            }
         </style>
     </head>
     <body>
         <div class="header">
             <a href="/">
-				<img class="pratilipi-icon" title="${ _strings.pratilipi }" alt="${ _strings.pratilipi }" src="http://0.ptlp.co/resource-${ lang }/logo/pratilipi_logo.png" />
-			</a>
+                <img class="pratilipi-icon" title="Pratilipi" alt="Pratilipi" src="http://0.ptlp.co/resource-ta/logo/pratilipi_logo.png" />
+            </a>
         </div>
         <div class="container">
             <div data-bind="foreach: { data: navigationList, as: 'navigation' }" class="navigation-bar pull-left hidden-xs hidden-sm">
@@ -192,77 +167,69 @@ clevertap.account.push({"id": "TEST-Z88-4ZZ-974Z"});
                 <br/>
             </div>
             
-            
-            
-            
-            <div id="carousel" class="carousel slide" data-ride="carousel">
-				<ol class="carousel-indicators">
-					<li data-target="#carousel" data-slide-to="0" class="active"></li>
-					<li data-target="#carousel" data-slide-to="1"></li>
-					<li data-target="#carousel" data-slide-to="2"></li>
-					<li data-target="#carousel" data-slide-to="3"></li>
-					<li data-target="#carousel" data-slide-to="4"></li>
-				</ol>
-				
-				<!-- Items -->
-				<div class="carousel-inner">
-					<div class="item active">
-						<a href="/event/ore-oru-oorla" target="_blank"><img src="http://4.ptlp.co/resource-ta/home-page-banner/pratilipi-tamil-carousel-19.jpg" /></a>
-					</div>
-					<div class="item">
-						<a on-click="write"><img src="http://0.ptlp.co/resource-ta/home-page-banner/pratilipi-tamil-carousel-16.jpg" /></a>
-					</div>
-					<div class="item">
-						<a href="/horror" target="_blank"><img src="http://1.ptlp.co/resource-ta/home-page-banner/pratilipi-tamil-carousel-17.jpg" /></a>
-					</div>
-					<div class="item">
-						<a href="/education" target="_blank"><img src="http://2.ptlp.co/resource-ta/home-page-banner/pratilipi-tamil-carousel-18.jpg" /></a>
-					</div>
-					<div class="item">
-						<a href="/fiveminstories" target="_blank"><img src="http://3.ptlp.co/resource-ta/home-page-banner/pratilipi-tamil-carousel-13.jpg" /></a>
-					</div>
-				</div> 
-				<a href="#carousel" class="left carousel-control" data-slide="prev">
-					<span class="glyphicon glyphicon-chevron-left"></span>
-				</a>
-				<a href="#carousel" class="right carousel-control" data-slide="next">
-					<span class="glyphicon glyphicon-chevron-right"></span>
-				</a>
-			</div>
-            
-            
-            
-            
-            
-            
-            <div data-bind="foreach: {data: sectionList, as: 'section'}" class="main-content">                
-                <h3 class="section-title"><a data-bind="text: title, attr: {href:listPageUrl, target:'_blank'}"></a></h3>
-                <div class="row" data-bind="foreach: {data: pratilipiList, as: 'pratilipi'}">
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 pratilipi-card">
-                        <div class="image-holder">
-                            <a data-bind="attr: {href:pageUrl}">
-                                <img width="100" height="150" data-bind="attr: {src: coverImageUrl+'&width=150'}" />
-                            </a>
+
+            <div class="main-content">
+                <div id="carousel" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#carousel" data-slide-to="1"></li>
+                        <li data-target="#carousel" data-slide-to="2"></li>
+                        <li data-target="#carousel" data-slide-to="3"></li>
+                        <li data-target="#carousel" data-slide-to="4"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            <a href="/event/ore-oru-oorla" target="_blank"><img src="http://4.ptlp.co/resource-ta/home-page-banner/pratilipi-tamil-carousel-19.jpg" /></a>
                         </div>
-                        <div class="info-holder">
-                            <h4 class="pratilipi-title"><a data-bind="attr: {href:pageUrl,title:title}, text: title"></a></h4>
-                            <h5 class="author-name"><a data-bind="attr: {href:author.pageUrl,title:author.name,target:'_blank'}, text: author.name"></a></h4>
-                            <div class="meta-info">
-                                <div data-bind="visible: averageRating > 0"><span data-bind="text: averageRating.toFixed(1)"></span>&nbsp;Stars</div>
+                        <div class="item">
+                            <a on-click="write"><img src="http://0.ptlp.co/resource-ta/home-page-banner/pratilipi-tamil-carousel-16.jpg" /></a>
+                        </div>
+                        <div class="item">
+                            <a href="/horror" target="_blank"><img src="http://1.ptlp.co/resource-ta/home-page-banner/pratilipi-tamil-carousel-17.jpg" /></a>
+                        </div>
+                        <div class="item">
+                            <a href="/education" target="_blank"><img src="http://2.ptlp.co/resource-ta/home-page-banner/pratilipi-tamil-carousel-18.jpg" /></a>
+                        </div>
+                        <div class="item">
+                            <a href="/fiveminstories" target="_blank"><img src="http://3.ptlp.co/resource-ta/home-page-banner/pratilipi-tamil-carousel-13.jpg" /></a>
+                        </div>
+                    </div> 
+                    <a href="#carousel" class="left carousel-control" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </a>
+                    <a href="#carousel" class="right carousel-control" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </a>
+                </div>
+                <div data-bind="foreach: {data: sectionList, as: 'section'}">                
+                    <h3 class="section-title"><a data-bind="text: title, attr: {href:listPageUrl, target:'_blank'}"></a></h3>
+                    <div class="row" data-bind="foreach: {data: pratilipiList, as: 'pratilipi'}">
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 pratilipi-card">
+                            <div class="image-holder">
+                                <a data-bind="attr: {href:pageUrl}">
+                                    <img width="100" height="150" data-bind="attr: {src: coverImageUrl+'&width=150'}" />
+                                </a>
                             </div>
-                            <a data-bind="attr: {href:readPageUrl}" class="read-button">Read</a>
+                            <div class="info-holder">
+                                <h4 class="pratilipi-title"><a data-bind="attr: {href:pageUrl,title:title}, text: title"></a></h4>
+                                <h5 class="author-name"><a data-bind="attr: {href:author.pageUrl,title:author.name,target:'_blank'}, text: author.name"></a></h4>
+                                <div class="meta-info">
+                                    <div data-bind="visible: averageRating > 0"><span data-bind="text: averageRating.toFixed(1)"></span>&nbsp;Stars</div>
+                                </div>
+                                <a data-bind="attr: {href:readPageUrl}" class="read-button">Read</a>
+                            </div>
                         </div>
                     </div>
+                    <div style="min-height: 20px;">&nbsp;</div>
                 </div>
-                <div style="min-height: 20px;">&nbsp;</div>
-            </div>
+            </div>            
         </div>
         <div class="footer">
             Footer
         </div>
 
 
-        <script type="application/javascript">
+     <script type="application/javascript">
         $(function(){
             var ViewModel = {
                 user: ${ userJson },
