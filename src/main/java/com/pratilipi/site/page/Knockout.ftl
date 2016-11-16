@@ -148,7 +148,7 @@
             }
             
             .carousel {
-                width: 1000px;
+                max-width: 1000px;
                 margin: 12px auto;
             }
         </style>
