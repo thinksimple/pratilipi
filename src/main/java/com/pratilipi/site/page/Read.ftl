@@ -26,7 +26,6 @@
 	</head>
 	
 	<body ondragstart="return false" onselectstart="return false" onContextMenu="return false" onkeydown="if ((arguments[0] || window.event).ctrlKey) return false">
-		<#include "meta/PolymerDependencies.ftl">
 		<pratilipi-reader-page 
 				user-data='${ userJson }'
 				pratilipi='${ pratilipiJson }'

@@ -7,7 +7,6 @@
 	</head>
 
 	<body>
-		<#include "meta/PolymerDependencies.ftl">
 		<link rel='import' href='/elements.${lang}/pratilipi-author-list-page.html?1'>
 		<pratilipi-author-list-page 
 			user-data='${ userJson }'

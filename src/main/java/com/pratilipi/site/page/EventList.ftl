@@ -7,7 +7,6 @@
 	</head>
 
 	<body>
-		<#include "meta/PolymerDependencies.ftl">
 		<pratilipi-event-list-page 
 			user-data='${ userJson }'
 			event-list='${ eventListJson }'

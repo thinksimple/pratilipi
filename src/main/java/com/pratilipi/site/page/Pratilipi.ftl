@@ -7,7 +7,6 @@
 	</head>
 	
 	<body>
-		<#include "meta/PolymerDependencies.ftl">
 		<pratilipi-pratilipi-page 
 				user-data='${ userJson }'
 				pratilipi-id='${ pratilipi.getId()?c }'
