@@ -13,14 +13,12 @@
 <#-- DNS Prefetch -->
 <#list 0..4 as i><link rel="dns-prefetch" href="//${i}.ptlp.co/"></#list>
 
-<#-- Polymer Dependencies -->
-<#if mainPage??>
-<#include "PolymerDependencies.ftl">
-</#if>
-
 <#-- External dependencies -->
 <script src='http://0.ptlp.co/resource-all/jquery.bootstrap.polymer.firebase.jsapi.compressed.js'></script>
 <link rel='stylesheet' href='http://1.ptlp.co/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>
+
+<#-- Polymer Dependencies -->
+<#if mainPage??><#include "PolymerDependencies.ftl"></#if>
 
 <#-- Google Analytics -->
 <#include "GoogleAnalytics.ftl">
