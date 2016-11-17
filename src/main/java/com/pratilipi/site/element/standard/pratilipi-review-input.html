@@ -140,7 +140,9 @@
 			},
 			
 			attached: function() {
-				this.pratilipiCoverImageUrl = this.pratilipi.coverImageUrl + "&" + "width=175";
+				this.pratilipiCoverImageUrl = this.pratilipi.coverImageUrl 
+											+ ( this.pratilipi.coverImageUrl.indexOf( "?" ) == -1 ? "?" :  "&" )
+											+ "width=175";
 			},
 			
 			process: function( userpratilipi ) {
