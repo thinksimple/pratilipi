@@ -2,38 +2,33 @@
 	<div class="row" style="text-align: center; margin: 0 auto;">
 		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
 			<a href="/">
-				<img class="pratilipi-icon" title="${ _strings.pratilipi }" alt="${ _strings.pratilipi }" src="http://0.ptlp.co/resource-${ lang }/logo/pratilipi_logo.png" />
+			<div class="sprites-icon">
+			</div>
 			</a>
 		</div>
-		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" >
 			<a style="display: block;" href="/navigation">
-				<img style="width: 24px; height: 24px; margin: 10px auto;" src="http://0.ptlp.co/resource-all/icon/svg/menu-grey.svg" />
+				<div class="sprites-icon menu-icon"></div>
 			</a>
 		</div>
 		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
 			<a style="display: block;" onclick="showPopup()" >
-				<img style="width: 24px; height: 24px; margin: 10px auto;" src="http://0.ptlp.co/resource-all/icon/svg/pencil-header-grey.svg" />
+				<div class="sprites-icon edit-icon"></div>
 			</a>
 		</div>
 		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
 			<a style="display: block;" <#if user.isGuest() == true>href="/login?ret=/library"<#else>href="/library"</#if>>
-				<img style="	width: 24px; height: 24px; margin: 10px auto;" src="http://0.ptlp.co/resource-all/icon/svg/book-grey.svg" />
+				<div class="sprites-icon library-books-icon"></div>
 			</a>
 		</div>
 		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" style="position: relative;">
 			<a style="display: block;" <#if user.isGuest() == true>href="/login?ret=/notifications"<#else>href="/notifications?ret=${requestUrl}"</#if>>
-				<img style="width: 24px; height: 24px; margin: 10px auto;" src="http://0.ptlp.co/resource-all/icon/svg/bell-grey.svg" />
-				<#--
-				<#if ( ( user.isGuest() == false ) && ( newNotificationCount > 0 ) ) >	
-					<span class="badge" style="position: absolute;right: 0px;top: 4%;background-color: #d0021b;padding:4px 7px 3px 7px;">${ newNotificationCount }</span>
-				</#if>
-				-->
+				<div class="sprites-icon notifications-icon"></div>
 			</a>
 		</div>				
 		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
 			<a style="display: block;" <#if user.isGuest() == true>href="/login?ret=${ requestUrl }"<#else>href="${ user.getProfilePageUrl() }"</#if>>
-				<img style="width: 24px; height: 24px; margin: 10px auto;" 
-					<#if user.isGuest() == true>src="http://0.ptlp.co/resource-all/icon/svg/user-header-grey.svg"<#else>src="${ user.getProfileImageUrl() }"</#if> />
+				<div class="sprites-icon account-circle-icon"></div>
 			</a>
 		</div>
 	</div>

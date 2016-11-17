@@ -620,7 +620,7 @@ a:hover {
 	background-color: #e4e4e4;
 }
 .sprites-icon {
-	background: url(PratilipiSprite.png) no-repeat 0 0 transparent;
+	background: url(sprites-small.png) no-repeat 0 0 transparent;
 }
 .pratilipi-logo-icon{
     background-position: -288px -144px;
@@ -632,49 +632,34 @@ a:hover {
     -moz-transform-origin: 0 0;	
 }
 .edit-icon{
-    background-position: -288px -48px;
-    margin: 20px auto;
-    width: 48px;
-    height: 48px;
-    zoom: 0.5;
-    -moz-transform:scale(0.5);
-    -moz-transform-origin: 0 0;
+    background-position: -72px 0;
+    margin: 10px auto;
+    width: 24px;
+    height: 24px;
 }
 .account-circle-icon{
-    background-position: -48px -48px;
-    margin: 20px auto;
-    width: 48px;
-    height: 48px;
-    zoom: 0.5;
-    -moz-transform:scale(0.5);
-    -moz-transform-origin: 0 0;
+    background-position: -48px 0px;
+    margin: 10px auto;
+    width: 24px;
+    height: 24px;
 }
 .menu-icon{
-    background-position: -48px 0;
-    margin: 20px auto;
-    width: 48px;
-    height: 48px;
-    zoom: 0.5;
-    -moz-transform:scale(0.5);
-    -moz-transform-origin: 0 0;
+    background-position: -24px 0;
+    margin: 10px auto;
+    width: 24px;
+    height: 24px;
 }
 .notifications-icon{
-    background-position: -384px -48px;
-    margin: 20px auto;
-    width: 48px;
-    height: 48px;
-    zoom: 0.5;
-    -moz-transform:scale(0.5);
-    -moz-transform-origin: 0 0;
+    background-position: -96px 0;
+    margin: 10px auto;
+    width: 24px;
+    height: 24px;
 }
 .library-books-icon{
-    background-position: 0 -96px;
-    margin: 20px auto;
-    width: 48px;
-    height: 48px;
-    zoom: 0.5;
-    -moz-transform:scale(0.5);
-    -moz-transform-origin: 0 0;
+    background-position: 0 0;
+    margin: 10px auto;
+    width: 24px;
+    height: 24px;
 }
 .fb-icon{
 	display: inline-block;
