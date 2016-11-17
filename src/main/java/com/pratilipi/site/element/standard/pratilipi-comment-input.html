@@ -98,9 +98,14 @@
 			attached: function() {
 				if( this.user.isGuest )
 					return;
-				this.userProfileImageUrl = 	this.user.profileImageUrl.indexOf( "?" ) == -1 ?
-						this.user.profileImageUrl + "?" + "width=36" :
-						this.user.profileImageUrl + "&" + "width=36" ;
+				if( this.userProfileImageUrl ) {
+					this.userProfileImageUrl = 	this.user.profileImageUrl.indexOf( "?" ) == -1 ?
+							this.user.profileImageUrl + "?" + "width=36" :
+							this.user.profileImageUrl + "&" + "width=36" ;
+				} else {
+					this.userProfileImageUrl = "http://0.ptlp.co/author/image?width=36";
+				}
+
 			},
 			
 			onCancel: function() {

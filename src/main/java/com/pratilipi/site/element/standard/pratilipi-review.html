@@ -200,10 +200,11 @@
 				this.set( 'reviewText', this.review.review );
 
 				if( this.review.userImageUrl ) {
-					if( this.review.userImageUrl.indexOf( '?' ) == -1 )
-						this.reviewUserImageUrl = this.review.userImageUrl + "?" + "width=64";
-					else
-						this.reviewUserImageUrl = this.review.userImageUrl + "&" + "width=64";
+					this.reviewUserImageUrl = this.review.userImageUrl 
+												+ ( this.review.userImageUrl.indexOf( '?' ) == -1 ? "?" : "&" )
+												+ "width=64";
+				} else {
+					this.reviewUserImageUrl = "http://0.ptlp.co/author/image?width=64";
 				}
 				
 				if( this.review.reviewDateMillis )

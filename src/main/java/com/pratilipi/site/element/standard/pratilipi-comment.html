@@ -190,9 +190,15 @@
 			_commentObserver: function() {
 				this.lastUpdatedDate = convertDate( this.comment.lastUpdatedMillis != null ? 
 											this.comment.lastUpdatedMillis : this.comment.creationDateMillis );
-				this.userProfileImageUrl = 	this.comment.user.profileImageUrl.indexOf( "?" ) == -1 ?
-											this.comment.user.profileImageUrl + "?" + "width=36" :
-											this.comment.user.profileImageUrl + "&" + "width=36" ;
+				
+				if( this.userProfileImageUrl ) {
+					this.userProfileImageUrl = 	this.comment.user.profileImageUrl.indexOf( "?" ) == -1 ?
+							this.comment.user.profileImageUrl + "?" + "width=36" :
+							this.comment.user.profileImageUrl + "&" + "width=36" ;
+				} else {
+					this.userProfileImageUrl = "http://0.ptlp.co/author/image?width=36";
+				}
+				
 				
 				this.hasAccessToUpdate = this.comment.hasAccessToUpdate == null ? false : this.comment.hasAccessToUpdate;
 				this.content = this.comment.content;
