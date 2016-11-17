@@ -119,9 +119,14 @@
 			<div id="pratilipi-row">
 				<div id="pratilipi-col-left" style="padding: 20px 0px 10px 10px;">
 					<template is="dom-if" if="{{ ! hasAccessToUpdate }}">
-						<div style="width: 150px; height: 225px; margin: 0 auto;" class="pratilipi-shadow">
-							<img class="pratilipi-shadow" src="{{ pratilipiCoverImageUrl }}" alt="{{ title }}" title="{{ title }}"/>
-						</div>
+						<iron-image class="pratilipi-shadow"
+									width="150" height="225" 
+									style="background-color: #f5f5f5; margin: 0 auto;" 
+									fade preload
+									sizing="cover" 
+									src="{{ pratilipiCoverImageUrl }}" 
+									alt="{{ title }}" 
+									title="{{ title }}"></iron-image>
 					</template>
 					<template is="dom-if" if="{{ hasAccessToUpdate }}">
 						<div style="position: absolute; top: -1000px;">
@@ -133,7 +138,14 @@
 						<div class="pratilipi-file-upload">
 							<div style="width: 150px; height: 225px;" class="pratilipi-shadow">
 								<template is="dom-if" if="{{ !imageUploaded }}">
-									<img src="{{ pratilipiCoverImageUrl }}" alt="{{ title }}" title="{{ title }}"/>
+									<iron-image class="pratilipi-shadow"
+										width="150" height="225" 
+										style="background-color: #f5f5f5; margin: 0 auto;" 
+										fade preload
+										sizing="cover" 
+										src="{{ pratilipiCoverImageUrl }}" 
+										alt="{{ title }}" 
+										title="{{ title }}"></iron-image>
 								</template>
 								<template is="dom-if" if="{{ imageUploaded }}">
 									<paper-spinner class="pratilipi-spinner" active></paper-spinner>
