@@ -12,7 +12,7 @@
 			pratilipi-list='${ pratilipiListJson! }'
 			cursor='${ pratilipiListCursor! }'
 			pratilipi-types='${ pratilipiTypesJson }'
-			navigation-list='${ navigationList }'
+			navigation-list='${ navigationListJson }'
 			language-map='${ languageMap }'></pratilipi-library-page>
 
 		<#include "meta/Foot.ftl">

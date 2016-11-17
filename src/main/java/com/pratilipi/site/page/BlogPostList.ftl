@@ -15,7 +15,7 @@
 			filter='${ blogPostFilterJson }'
 			cursor='${ blogPostListCursor }'
 			pratilipi-types='${ pratilipiTypesJson }'
-			navigation-list='${ navigationList }'
+			navigation-list='${ navigationListJson }'
 			language-map='${ languageMap }'></pratilipi-blog-list-page>
 
 		<#include "meta/Foot.ftl">

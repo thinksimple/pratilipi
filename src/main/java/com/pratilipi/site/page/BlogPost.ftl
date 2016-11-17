@@ -11,7 +11,7 @@
 			user-data='${ userJson }'
 			blogpost='${ blogPostJson }'
 			pratilipi-types='${ pratilipiTypesJson }'
-			navigation-list='${ navigationList }'
+			navigation-list='${ navigationListJson }'
 			language-map='${ languageMap }'></pratilipi-blog-page>
 
 		<#include "meta/Foot.ftl">

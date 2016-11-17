@@ -13,7 +13,7 @@
 				pratilipi-data='${ pratilipiJson }'
 				userpratilipi-data='${ userpratilipiJson! }'
 				pratilipi-types='${ pratilipiTypesJson }'
-				navigation-list='${ navigationList }'
+				navigation-list='${ navigationListJson }'
 				language-map='${ languageMap }'
 				stage="${ stage }"></pratilipi-pratilipi-page>
 

@@ -236,7 +236,7 @@
             var ViewModel = {
                 user: ${ userJson },
                 pratilipiTypes: ${ pratilipiTypesJson },
-                navigationList: ${ navigationList },
+                navigationList: ${ navigationListJson },
                 languageMap: ${ languageMap },
                 sectionList: ko.observableArray([]),
                 pushToSectionList: function(sectionList){for(var i=0;i<sectionList.length;i++)this.sectionList.push(sectionList[i]);}

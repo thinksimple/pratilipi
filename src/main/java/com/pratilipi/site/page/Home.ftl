@@ -10,7 +10,7 @@
 		<pratilipi-home-page 
 			user-data='${ userJson }'
 			pratilipi-types='${ pratilipiTypesJson }'
-			navigation-list='${ navigationList }'
+			navigation-list='${ navigationListJson }'
 			language-map='${ languageMap }'></pratilipi-home-page>
 			
 		<#include "meta/Foot.ftl">

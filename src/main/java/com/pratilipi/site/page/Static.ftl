@@ -20,10 +20,10 @@
 						<div class="container">
 							<pratilipi-navigation
 								class='pull-left hidden-xs hidden-sm'
-								navigation-list='${ navigationList }'
+								navigation-list='${ navigationListJson }'
 								></pratilipi-navigation>
 							<#-- Navigation & Search bar for extra-small & small screens. -->
-							<pratilipi-navigation-drawer with-backdrop navigation-list='${ navigationList }'></pratilipi-navigation-drawer>
+							<pratilipi-navigation-drawer with-backdrop navigation-list='${ navigationListJson }'></pratilipi-navigation-drawer>
 							<div class='secondary-500' style='padding:20px; overflow:hidden'>
 								<h3>${ title }</h3>
 								<div style="text-align: justify;">${ content }</div>

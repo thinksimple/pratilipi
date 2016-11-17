@@ -12,7 +12,7 @@
 			event-list='${ eventListJson }'
 			has-access-to-add=${ hasAccessToAdd?c }
 			pratilipi-types='${ pratilipiTypesJson }'
-			navigation-list='${ navigationList }'
+			navigation-list='${ navigationListJson }'
 			language-map='${ languageMap }'></pratilipi-event-list-page>
 
 		<#include "meta/Foot.ftl">

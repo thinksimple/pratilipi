@@ -21,10 +21,10 @@
 						<div class="container">
 							<pratilipi-navigation
 								class='pull-left hidden-xs hidden-sm'
-								navigation-list='${ navigationList }'
+								navigation-list='${ navigationListJson }'
 								></pratilipi-navigation>
 							<#-- Navigation & Search bar for extra-small & small screens. -->
-							<pratilipi-navigation-drawer with-backdrop navigation-list='${ navigationList }'></pratilipi-navigation-drawer>
+							<pratilipi-navigation-drawer with-backdrop navigation-list='${ navigationListJson }'></pratilipi-navigation-drawer>
 							<div style="overflow:hidden; padding: 0 2px;">
 								<paper-card style="padding-bottom: 100px; margin-bottom: 10px;">
 									<div class="media" style="padding: 20px;">

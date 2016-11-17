@@ -12,7 +12,7 @@
 			author='${ authorJson! }'
 			followers-object='${ followersObjectJson! }'
 			pratilipi-types='${ pratilipiTypesJson }'
-			navigation-list='${ navigationList }'
+			navigation-list='${ navigationListJson }'
 			language-map='${ languageMap }'></pratilipi-followers-list-page>
 
 		<#include "meta/Foot.ftl">

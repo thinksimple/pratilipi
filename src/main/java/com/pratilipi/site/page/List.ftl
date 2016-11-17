@@ -14,7 +14,7 @@
 			filter='${ pratilipiListFilterJson! }'
 			cursor='${ pratilipiListCursor! }'
 			pratilipi-types='${ pratilipiTypesJson }'
-			navigation-list='${ navigationList }'
+			navigation-list='${ navigationListJson }'
 			language-map='${ languageMap }'></pratilipi-list-page>
 
 		<#include "meta/Foot.ftl">

@@ -30,8 +30,8 @@ import com.pratilipi.api.impl.blogpost.BlogPostApi;
 import com.pratilipi.api.impl.blogpost.BlogPostListApi;
 import com.pratilipi.api.impl.event.EventApi;
 import com.pratilipi.api.impl.event.EventListApi;
-import com.pratilipi.api.impl.init.InitV2Api;
 import com.pratilipi.api.impl.init.InitV1Api.Response.Section;
+import com.pratilipi.api.impl.init.InitV2Api;
 import com.pratilipi.api.impl.notification.NotificationListApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentIndexApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentV1Api;
@@ -510,7 +510,7 @@ public class PratilipiSite extends HttpServlet {
 		dataModel.put( "user", userResponse );
 		dataModel.put( "userJson", gson.toJson( userResponse ) );
 		dataModel.put( "pratilipiTypesJson", gson.toJson( pratilipiTypes ) );
-		dataModel.put( "navigationList", gson.toJson( navigationList ) );
+		dataModel.put( "navigationListJson", gson.toJson( navigationList ) );
 		dataModel.put( "stage", SystemProperty.STAGE );
 
 		// Android App Registration

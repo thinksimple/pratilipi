@@ -11,7 +11,7 @@
 			user-data='${ userJson }'
 			event='${ eventJson }'
 			pratilipi-types='${ pratilipiTypesJson }'
-			navigation-list='${ navigationList }'
+			navigation-list='${ navigationListJson }'
 			language-map='${ languageMap }'></pratilipi-event-page>
 
 		<#include "meta/Foot.ftl">

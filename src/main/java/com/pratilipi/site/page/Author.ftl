@@ -12,7 +12,7 @@
 			author='${ authorJson }'
 			user-author='${ userAuthorJson }'
 			pratilipi-types='${ pratilipiTypesJson }'
-			navigation-list='${ navigationList }'
+			navigation-list='${ navigationListJson }'
 			language-map='${ languageMap }'></pratilipi-author-page>
 
 		<#include "meta/Foot.ftl">
