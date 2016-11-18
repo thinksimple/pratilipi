@@ -4,7 +4,8 @@
 /fiveminute    5 മിനിറ്റ് കഥകള്‍         App#imageName::5minread.jpg        App#PratilipiList::{ "language":"MALAYതുടര്‍ക്കഥകള്‍ALAM", "state":"PUBLISHED", "listName":"fiveminute" } 
 /new           പുതിയവ                App#imageName::newpublished.jpg       App#PratilipiList::{ "language":"MALAYതുടര്‍ക്കഥകള്‍ALAM", "state":"PUBLISHED", "listName":"new" } 
 /blog          ബ്ലോഗുകള്‍              App#imageName::blog.jpg              App#BlogPostList::{ "language":"MALAYALAM", "blogId":5683739602452480 } 
-/events        മത്സരങ്ങള്‍              App#imageName::events.jpg           App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"events" }
+/events        മത്സരങ്ങള്‍              App#imageName::festival.jpg           App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"events" }
+/two-minute    കുഞ്ഞിക്കഥകള്‍        App#imageName::events.jpg           App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"two-minute " }
 /classics      ക്ലാസ്സിക്സ്                 App#imageName::classic.jpg        App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"classics" }
 
 വിഭാഗങ്ങൾ 
