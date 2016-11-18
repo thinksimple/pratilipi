@@ -80,6 +80,7 @@
 			
 			properties: {
 				user: { type: Object },
+				userProfileImageUrl: { type: String, value: "http://0.ptlp.co/author/image?width=36" },
 				
 				<#-- Adding new comment -->
 				addComment: { type: Boolean, value: false },
@@ -98,12 +99,10 @@
 			attached: function() {
 				if( this.user.isGuest )
 					return;
-				if( this.userProfileImageUrl ) {
-					this.userProfileImageUrl = 	this.user.profileImageUrl.indexOf( "?" ) == -1 ?
-							this.user.profileImageUrl + "?" + "width=36" :
-							this.user.profileImageUrl + "&" + "width=36" ;
-				} else {
-					this.userProfileImageUrl = "http://0.ptlp.co/author/image?width=36";
+				if( this.user.profileImageUrl ) {
+					this.set( 'userProfileImageUrl', this.user.profileImageUrl 
+							+ ( this.user.profileImageUrl.indexOf( "?" ) == -1 ? "?" : "&" )
+							+ "width=36" );
 				}
 
 			},

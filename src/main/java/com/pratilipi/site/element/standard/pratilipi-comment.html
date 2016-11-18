@@ -175,6 +175,7 @@
 			properties: {
 				user: { type: Object },
 				comment: { type: Object, observer: "_commentObserver" },
+				userProfileImageUrl: { type: String, value: "http://0.ptlp.co/author/image?width=36" },
 
 				editComment: { type: Boolean, value: false },
 				deleteComment: { type: Boolean, value: false },
@@ -191,12 +192,10 @@
 				this.lastUpdatedDate = convertDate( this.comment.lastUpdatedMillis != null ? 
 											this.comment.lastUpdatedMillis : this.comment.creationDateMillis );
 				
-				if( this.userProfileImageUrl ) {
-					this.userProfileImageUrl = 	this.comment.user.profileImageUrl.indexOf( "?" ) == -1 ?
-							this.comment.user.profileImageUrl + "?" + "width=36" :
-							this.comment.user.profileImageUrl + "&" + "width=36" ;
-				} else {
-					this.userProfileImageUrl = "http://0.ptlp.co/author/image?width=36";
+				if( this.comment && this.comment.user && this.comment.user.profileImageUrl ) {
+					this.set( 'userProfileImageUrl', this.comment.user.profileImageUrl 
+							+ ( this.comment.user.profileImageUrl.indexOf( "?" ) == -1 ? "?" : "&" ) 
+							+ "width=36" )
 				}
 				
 				
