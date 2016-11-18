@@ -624,7 +624,7 @@ a:hover {
 }
 .pratilipi-logo-icon{
     background-position: -52px -178px;
-    margin: 8px auto;
+    margin: 5px auto;
     width: 40px;
     height: 40px;
 }
@@ -660,41 +660,35 @@ a:hover {
 }
 .fb-icon{
 	display: inline-block;
-    background-position: -96px -144px;
-    width: 48px;
-    height: 48px;
-    zoom: 0.5;
-    -moz-transform:scale(0.5);
-    -moz-transform-origin: 0 0;
-     margin: 18px;
+    background-position: 0 -120px;
+    width: 24px;
+    height: 24px;
+    margin: 9px;
 }
 .twitter-icon{
 	display: inline-block;
-    background-position: -240px -144px;
-    width: 48px;
-    height: 48px;
-    zoom: 0.5;
-    -moz-transform:scale(0.5);
-    -moz-transform-origin: 0 0;
-     margin: 18px;
+    background-position: -24px -120px;
+    width: 24px;
+    height: 24px;
+    margin: 9px;
 }
 .gplus-icon{
 	display: inline-block;
-    background-position: -192px -144px;
-    width: 48px;
-    height: 48px;
-    zoom: 0.5;
-    -moz-transform:scale(0.5);
-    -moz-transform-origin: 0 0;
-     margin: 18px;
+    background-position: -72px -120px;
+    width: 24px;
+    height: 24px;
+    margin: 9px;
 }
 .linked-in-icon{
 	display: inline-block;
-    background-position: -48px -144px;
-    width: 48px;
-    height: 48px;
-    zoom: 0.5;
-    -moz-transform:scale(0.5);
-    -moz-transform-origin: 0 0;
-     margin: 18px;
+    background-position: -48px -120px;
+    width: 24px;
+    height: 24px;
+    margin: 9px;
+}
+.search-icon {
+	display: inline-block;
+    background-position: -120px -24px;
+    width: 24px;
+    height: 24px;
 }
