@@ -41,7 +41,7 @@
 <#include "Font.ftl">
 
 <#-- Custom Stylesheet -->
-<link type="text/css" rel="stylesheet" href="/resources/style-basic.css?3">
+<link type="text/css" rel="stylesheet" href="/resources/style-basic.css?4">
 
 <#-- Basic functions -->
 <#include "Scripts.ftl">

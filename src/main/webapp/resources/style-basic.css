@@ -620,7 +620,7 @@ a:hover {
 	background-color: #e4e4e4;
 }
 .sprites-icon {
-	background: url(SpritesMini.png) no-repeat 0 0 transparent;
+	background: url(icons.svg) no-repeat 0 0 transparent;
 }
 .pratilipi-logo-icon{
     background-position: -52px -178px;
@@ -629,16 +629,18 @@ a:hover {
     height: 40px;
 }
 .edit-icon{
-    background-position: -24px -24px;
+    background-position: 0 0;
     margin: 10px auto;
     width: 24px;
     height: 24px;
+    background-size: cover;
 }
 .account-circle-icon{
     background-position: -96px -24px;
     margin: 10px auto;
     width: 24px;
     height: 24px;
+    background-size: cover;
 }
 .menu-icon{
     background-position: 0 -24px ;
