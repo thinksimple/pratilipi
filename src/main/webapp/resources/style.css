@@ -550,23 +550,6 @@ a.pratilipi-new-blue-button:hover {
 	font-weight: 600;
 }
 
-
-/* Specific to footer */
-.footer-icon {
-	width: 32px;
-}
-
-.footer-div {
-	padding: 10px 10px 10px 20px;
-	color: #333;
-	font-weight: 700;
-}
-
-.footer-icon-holder {
-	white-space: nowrap; 
-	display: inline-block;
-}
-
 /* Scroll to Top button */
 .scroll-top-button {
 	position: fixed; 
@@ -712,4 +695,31 @@ body.sepia-mode #reader-alert-box {
   background-color: #d0021b !important;
   border-color: #d0021b !important;
   font-weight: 800;
+}
+
+/*Icons*/
+.icon {
+	background-image: url(http://0.ptlp.co/resource-all/icon/sprite/social-svg-sprites.svg);
+	background-size: cover;
+	display: inline-block;
+	width: 32px;
+	height: 32px;
+}
+.icon-facebook {
+	background-position-y: 0px;
+}
+.icon-google-plus {
+	background-position-y: -32px;
+}
+.icon-linkedin {
+	background-position-y: -64px;
+}
+.icon-quora {
+	background-position-y: -96px;
+}
+.icon-twitter {
+	background-position-y: -128px;			
+}
+.icon-whatsapp {
+	background-position-y: -160px;
 }
