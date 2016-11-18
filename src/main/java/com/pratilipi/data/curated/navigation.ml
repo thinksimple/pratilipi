@@ -7,7 +7,6 @@
 /events        മത്സരങ്ങള്‍              App#imageName::events.jpg           App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"events" }
 /classics      ക്ലാസ്സിക്സ്                 App#imageName::classic.jpg        App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"classics" }
 
-
 വിഭാഗങ്ങൾ 
 /series        തുടര്‍ക്കഥകള്‍           App#imageName::series.jpg         App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"series" }
 /lives         ജീവിതങ്ങള്‍              App#imageName::life.jpg           App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"lives" }
@@ -19,14 +18,9 @@
 /society       സമൂഹം                   App#imageName::social.jpg          App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"society" }
 /non-fiction   നോണ്‍ ഫിക്ഷന്‍           App#imageName::shortstories.jpg     App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"non-fiction" }
 /letters       കത്തുകള്‍                App#imageName::letters.jpg            App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"letters" }
-
-
-
-സാഹിത്യ രൂപങ്ങൾ 
 /stories       കഥകൾ           App#imageName::event_generic3.jpg      App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"stories" } 
-/articles      ലേഖനങ്ങൾ        App#imageName::articles.jpg            App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"articles" }
 /poems         കവിതകൾ         App#imageName::poems.jpg             App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"poems" }
-/books         പുസ്തകങ്ങൾ        App#imageName::novels.jpg            App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"books" }
+
 
 
 
