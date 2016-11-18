@@ -21,6 +21,10 @@
 			};
 		}
 		
+		.share-menu paper-item {
+			padding: 0 8px;
+		}
+
 		paper-item {
 			cursor: pointer;
 			font-family: inherit;
@@ -104,7 +108,7 @@
 		<paper-card>
 			<paper-menu-button vertical-offset=38 class="pull-right" horizontal-align="right" vertical-align="top">
 				<iron-icon icon="social:share" class="dropdown-trigger"></iron-icon>
-				<paper-menu class="dropdown-content">
+				<paper-menu class="dropdown-content share-menu">
 					<paper-item on-click="sharePratilipiOnFacebook"><span class="icon icon-facebook"></span></paper-item>
 					<paper-item on-click="sharePratilipiOnTwitter"><span class="icon icon-twitter"></span></paper-item>
 					<paper-item on-click="sharePratilipiOnGplus"><span class="icon icon-google-plus"></span></paper-item>

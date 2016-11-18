@@ -41,13 +41,19 @@
 			color: inherit;
 		}
 
-		.alert .social-icons img {
-			width: 21px;
-			height: 21px;
-			margin-left: 12px;
-			cursor: pointer;
+		.alert .social-icons {
+			display: flex;
+			width: 100%;
+			justify-content: center;
 		}
 
+		.alert .social-icons .icons-holder {
+			white-space: nowrap;
+			display: inline-block;
+			align-self: center;
+			margin-left: 12px;
+		}
+		
 		.hvr-bounce-in {
 			vertical-align: middle;
 			-webkit-transform: translateZ(0);
@@ -93,7 +99,7 @@
 					</div>
 					<div id="social-icons" class="social-icons text-center" style="margin: 0 auto;">
 						<h6 style="margin: 15px 0px; display: inline-block;">${ _strings.reader_enjoyed_reading_part2 } : </h6>
-						<div style="white-space: nowrap; display: inline-block;">
+						<div class="icons-holder">
 							<a on-click="shareOnFacebook"><span class="icon icon-facebook"></span></a>
 							<a on-click="shareOnTwitter"><span class="icon icon-twitter"></span></a>
 							<a on-click="shareOnGplus"><span class="icon icon-google-plus"></span></a>

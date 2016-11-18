@@ -129,19 +129,21 @@
 			height: 15px;
 			margin-top: -2px;
 		}
-		.share-popup a.share-menu-item {
-			color: inherit;
+		.share-popup .share-menu-item {
 			margin:32px 16px;
 			display: block;
 			text-align: left;
 		}
-		.share-popup a.share-menu-item img {
-			margin-right: 12px;
-			width: 20px;
-			height: 20px;
+		.share-popup .share-menu-item a {
+			color: inherit;
 		}
-		.share-popup a.share-menu-item span {
+		.share-popup .share-menu-item span.icon {
+			float: left;
+		}
+		.share-popup .share-menu-item span.text {
 			font-size: 15px;
+			margin-left: 12px;
+			line-height: 32px;
 		}
 		.library-popup .library-item-menu {
 			padding: 30px 4px;
@@ -353,18 +355,22 @@
 				<div class="modal-content">
 					<div class="modal-body">
 						<paper-icon-button class="pull-right" icon="icons:close" data-dismiss="modal"></paper-icon-button>
-						<div class="text-center">
-							<a class="share-menu-item" on-click="shareOnFacebook">
+						<div class="share-menu-item">
+							<a on-click="shareOnFacebook">
 								<span class="icon icon-facebook"></span>
-								<span>${ _strings.share_on_facebook }</span>
+								<span class="text">${ _strings.share_on_facebook }</span>
 							</a>
-							<a class="share-menu-item" on-click="shareOnTwitter">
+						</div>
+						<div class="share-menu-item">
+							<a on-click="shareOnTwitter">
 								<span class="icon icon-twitter"></span>
-								<span>${ _strings.share_on_twitter }</span>
+								<span class="text">${ _strings.share_on_twitter }</span>
 							</a>
-							<a class="share-menu-item" on-click="shareOnGplus">
+						</div>
+						<div class="share-menu-item">
+							<a on-click="shareOnGplus">
 								<span class="icon icon-google-plus"></span>
-								<span>${ _strings.share_on_gplus }</span>
+								<span class="text">${ _strings.share_on_gplus }</span>
 							</a>
 						</div>
 					</div>
