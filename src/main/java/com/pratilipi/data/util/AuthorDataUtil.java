@@ -91,8 +91,9 @@ public class AuthorDataUtil {
 	public static String createAuthorProfileImageUrl( Author author, Integer width ) {
 		String url = "/author/image";
 		if( author.getProfileImage() == null ) {
+			url = url + "?version=2";
 			if( width != null )
-				url = url + "?width=" + width;
+				url = url + "&width=" + width;
 			if( SystemProperty.CDN != null )
 				url = SystemProperty.CDN.replace( "*", "0" ) + url;
 		} else {
