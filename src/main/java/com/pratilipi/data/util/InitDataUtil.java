@@ -119,10 +119,10 @@ public class InitDataUtil {
 		
 		
 		initBannerDocs = new InitBannerDoc[] {
+				docAccessor.newInitBannerDoc( "pratilipi-kannada-carousel-09.jpg", null, "/cinema" ),
+				docAccessor.newInitBannerDoc( "pratilipi-kannada-carousel-10.jpg", null, "/life" ),
+				docAccessor.newInitBannerDoc( "pratilipi-kannada-carousel-11.jpg", null, "/women" ),
 				docAccessor.newInitBannerDoc( "pratilipi-kannada-carousel-08.jpg", null, "/event/kr" ),
-				docAccessor.newInitBannerDoc( "pratilipi-kannada-carousel-01.jpg", null, "/love" ),
-				docAccessor.newInitBannerDoc( "pratilipi-kannada-carousel-02.jpg", null, "/society" ),
-				docAccessor.newInitBannerDoc( "pratilipi-kannada-carousel-03.jpg", null, "/spiritual" ),
 		};
 			
 		InitDoc knInitDoc = docAccessor.newInitDoc();
