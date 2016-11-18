@@ -425,7 +425,7 @@
 				this.set( 'title', ( pratilipi.title != null && pratilipi.title.trim() != "" ) ? pratilipi.title : pratilipi.titleEn );
 				this.set( 'averageRating', pratilipi.averageRating != null ? pratilipi.averageRating : 0 );
 				this.set( 'ratingCount', pratilipi.ratingCount != null ? pratilipi.ratingCount : 0 );
-				this.set( 'readCount', pratilipi.readCount != null ? pratilipi.readCount : 0 );
+				this.set( 'readCount', pratilipi.readCount != null ? commaSeparatedNumber( pratilipi.readCount ) : 0 );
 				this.set( 'pratilipiCoverImageUrl', pratilipi.coverImageUrl + ( pratilipi.coverImageUrl.indexOf( '?' ) == -1 ? "?" : "&" ) + "width=150" );
 				this.set( 'zeroRating', false );
 				this.set( 'listingDate', convertDate( pratilipi.listingDateMillis ) );

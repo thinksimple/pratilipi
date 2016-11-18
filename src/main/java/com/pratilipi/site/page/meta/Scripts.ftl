@@ -74,4 +74,14 @@
 		if( retObj[""] != null ) delete retObj[""];
 		return retObj;
 	}
+	function abbrNum( n, d ) {
+		if( n < 1000 ) return n;
+		d = d != null ? d : 2;
+		x = ( '' + n ).length, p = Math.pow, d = p( 10,d );
+		x -= x % 3;
+		return Math.round( n * d / p ( 10, x ) ) / d + " kMGTPE" [ x / 3 ]; 
+	}
+	function commaSeparatedNumber(x) {
+	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
 </script>
