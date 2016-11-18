@@ -620,43 +620,40 @@ a:hover {
 	background-color: #e4e4e4;
 }
 .sprites-icon {
-	background: url(sprites-small.png) no-repeat 0 0 transparent;
+	background: url(SpritesMini.png) no-repeat 0 0 transparent;
 }
 .pratilipi-logo-icon{
-    background-position: -288px -144px;
+    background-position: -52px -178px;
     margin: 8px auto;
-    width: 72px;
-    height: 72px;
-    zoom: 0.5;
-    -moz-transform:scale(0.5);
-    -moz-transform-origin: 0 0;	
+    width: 40px;
+    height: 40px;
 }
 .edit-icon{
-    background-position: -72px 0;
+    background-position: -24px -24px;
     margin: 10px auto;
     width: 24px;
     height: 24px;
 }
 .account-circle-icon{
-    background-position: -48px 0px;
+    background-position: -96px -24px;
     margin: 10px auto;
     width: 24px;
     height: 24px;
 }
 .menu-icon{
-    background-position: -24px 0;
+    background-position: 0 -24px ;
     margin: 10px auto;
     width: 24px;
     height: 24px;
 }
 .notifications-icon{
-    background-position: -96px 0;
+    background-position: -72px -24px;
     margin: 10px auto;
     width: 24px;
     height: 24px;
 }
 .library-books-icon{
-    background-position: 0 0;
+    background-position: -48px -24px;
     margin: 10px auto;
     width: 24px;
     height: 24px;

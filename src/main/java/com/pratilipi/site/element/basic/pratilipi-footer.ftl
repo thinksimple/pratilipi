@@ -8,11 +8,11 @@
 		${ _strings.footer_follow_us_on_social_media }
 	</div>
 	
-	<div style="white-space: nowrap; display: block;">
-		<a href="${ _strings.facebook_page }" target="_blank"><img class="img-circle" src="http://0.ptlp.co/resource-all/icon/footer/facebook.png" /></a>&nbsp;
-		<a href="${ _strings.twitter_page }" target="_blank"><img class="img-circle" src="http://0.ptlp.co/resource-all/icon/footer/twitter.png" /></a>&nbsp;
-		<a href="${ _strings.googleplus_page }" target="_blank"><img class="img-circle" src="http://0.ptlp.co/resource-all/icon/footer/google_plus.png" /></a>&nbsp;
-		<a href="${ _strings.linkedin_page }" target="_blank"><img class="img-circle" src="http://0.ptlp.co/resource-all/icon/footer/linkedin.png" /></a>
+	<div style="white-space: nowrap; display: inline-block;">
+		<a href="${ _strings.facebook_page }" target="_blank"><div class="sprites-icon fb-icon"></div></a>&nbsp;
+		<a href="${ _strings.twitter_page }" target="_blank"><div class="sprites-icon twitter-icon"></div></a>&nbsp;
+		<a href="${ _strings.googleplus_page }" target="_blank"><div class="sprites-icon gplus-icon"></div></a>&nbsp;
+		<a href="${ _strings.linkedin_page }" target="_blank"><div class="sprites-icon linked-in-icon"></div></a>
 	</div>
 	<br />
 	<a class="link" href="/about/pratilipi">${ _strings.footer_about_us }</a><br />
@@ -23,3 +23,4 @@
 		<span style="color: #333;">&copy;&nbsp;2015-2016 Nasadiya Tech. Pvt. Ltd.</span>
 	</div>
 </div>
+	
