@@ -32,6 +32,9 @@ public class NotificationProcessApi extends GenericApi {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
+		if( true )
+			return new GenericResponse();
+		
 		// Fetching AppProperty
 		AppProperty appProperty = dataAccessor.getAppProperty( AppProperty.API_NOTIFICATION_PROCESS );
 		if( appProperty == null )

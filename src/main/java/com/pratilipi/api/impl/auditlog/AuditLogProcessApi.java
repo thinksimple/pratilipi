@@ -107,13 +107,13 @@ public class AuditLogProcessApi extends GenericApi {
 					notification.addDataId( userId, auditLog.getId() );
 					if( notification.getState() == NotificationState.READ )
 						notification.setState( NotificationState.UNREAD );
-					notification.setFcmPending( true );
-					notification.setLastUpdated( new Date() );
 				} else {
 					notification.removeDataId( userId, auditLog.getId() );
 					// Do NOT update lastUpdated date.
 				}
 				
+				notification.setFcmPending( true );
+				notification.setLastUpdated( new Date() );
 				notification = dataAccessor.createOrUpdateNotification( notification );
 				
 			} // End of if( auditLog.getAccessType() == AccessType.USER_AUTHOR_FOLLOWING )
