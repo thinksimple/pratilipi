@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -14,6 +16,8 @@ import com.pratilipi.common.type.NotificationState;
 import com.pratilipi.common.type.NotificationType;
 import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.RequestParameter;
+import com.pratilipi.common.util.Async;
+import com.pratilipi.common.util.FirebaseApi;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
@@ -25,6 +29,10 @@ import com.pratilipi.data.type.Notification;
 import com.pratilipi.filter.AccessTokenFilter;
 
 public class NotificationDataUtil {
+	
+	private static final Logger logger =
+			Logger.getLogger( NotificationDataUtil.class.getName() );
+	
 	
 	private static final Map<String, I18n> i18ns;
 	
@@ -188,6 +196,76 @@ public class NotificationDataUtil {
 
 		notification.setState( state );
 		notification = dataAccessor.createOrUpdateNotification( notification );
+		
+	}
+	
+	
+	public static void blahblab( final Long userId, List<Notification> notifList ) throws UnexpectedServerException {
+		
+		List<NotificationData> notifDataList = createNotificationDataList( notifList, null, true );
+		
+		final List<Long> notifIdListToAdd = new LinkedList<>();
+		final List<Long> notifIdListToRemove = new LinkedList<>();
+		for( NotificationData notifData : notifDataList ) {
+			if( notifData.getMessage() != null && notifData.getState() == NotificationState.UNREAD )
+				notifIdListToAdd.add( notifData.getId() );
+			else
+				notifIdListToRemove.add( notifData.getId() );
+		}
+		
+		Async async = new Async() {
+			
+			@Override
+			public void exec() {
+				
+				for( Long notifId : notifIdListToAdd )
+					logger.log( Level.INFO, "Sending FMC for " + notifId );
+				for( Long notifId : notifIdListToRemove )
+					logger.log( Level.INFO, "Removing FMC for " + notifId );
+				
+/*				DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+				
+				List<String> fcmTokenList = dataAccessor.getFcmTokenList( userId );
+				if( fcmTokenList.size() == 0 )
+					return;
+				
+				
+				try {
+				
+					List<Notification> notificationList = dataAccessor.getNotificationList( notifIdListToAdd );
+					List<NotificationData> notificationDataList = createNotificationDataList( notificationList, null, true );
+					
+					for( int i = 0; i < notifIdListToAdd.size(); i++ ) {
+						Notification notification = notificationList.get( i );
+						NotificationData notificationData = notificationDataList.get( i );
+						String fcmResponse = FirebaseApi.sendCloudMessage(
+								fcmTokenList,
+								notificationData.getMessage(),
+								notification.getId().toString(),
+								notification.getType().getAndroidHandler(),
+								notification.getSourceId().toString() );
+						
+						notification.setFcmPending( false );
+						if( notification.getFcmResponse() == null )
+							notification.setFcmResponse( fcmResponse );
+						else
+							notification.setFcmResponse( notification.getFcmResponse() + "\n" + fcmResponse );
+					}
+					notificationList = dataAccessor.createOrUpdateNotificationList( notificationList );
+					
+				} catch( UnexpectedServerException ex ) {
+					// TODO
+				}
+*/				
+			}
+			
+		};
+		
+		FirebaseApi.updateUserNotificationData(
+				userId,
+				notifIdListToAdd,
+				notifIdListToRemove,
+				async );
 		
 	}
 	
