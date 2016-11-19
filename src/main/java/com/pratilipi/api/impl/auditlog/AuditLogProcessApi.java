@@ -26,8 +26,6 @@ import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Notification;
-import com.pratilipi.pubsub.PubSubFactory;
-import com.pratilipi.pubsub.payload.NotificationPayload;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/auditlog/process" )
@@ -87,12 +85,6 @@ public class AuditLogProcessApi extends GenericApi {
 				}
 				notificationList = dataAccessor.createOrUpdateNotificationList( notificationList );
 				
-				// PubSub
-				NotificationPayload payload = new NotificationPayload();
-				for( Notification notification : notificationList )
-					payload.addNotificationId( notification.getId() );
-				PubSubFactory.getFirebaseTopic().publish( payload );
-				
 			} else if( auditLog.getAccessType() == AccessType.USER_AUTHOR_FOLLOWING ) {
 				
 				Long userId = entityData.get( "USER_ID" ).getAsLong(); // Follower
@@ -121,8 +113,6 @@ public class AuditLogProcessApi extends GenericApi {
 				}
 				
 				notification = dataAccessor.createOrUpdateNotification( notification );
-				// PubSub
-				PubSubFactory.getFirebaseTopic().publish( new NotificationPayload( notification.getId() ) );
 				
 			} // End of if( auditLog.getAccessType() == AccessType.USER_AUTHOR_FOLLOWING )
 			
