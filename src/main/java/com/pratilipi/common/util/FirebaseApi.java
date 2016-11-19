@@ -1,7 +1,6 @@
 package com.pratilipi.common.util;
 
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -21,7 +20,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -62,6 +60,12 @@ public class FirebaseApi {
 		hasBeenInitialized = true;
 
 		logger.log( Level.INFO, "Firebase has been initialised successfully!" );
+	}
+
+	
+	public static String getCustomTokenForUser( Long userId ) {
+		initialiseFirebase();
+		return FirebaseAuth.getInstance().createCustomToken( userId.toString() );
 	}
 	
 	private static String getFcmServerKey() {
@@ -104,23 +108,29 @@ public class FirebaseApi {
 
 	}
 	
-	public static String getCustomTokenForUser( Long userId ) {
-		initialiseFirebase();
-		return FirebaseAuth.getInstance().createCustomToken( userId.toString() );
-	}
+	
+	public static class NotificationDB {
+		
+		private List<Long> notificationIdList;
+		private Integer newNotificationCount;
 
-	public static void resetUserNotificationData( Long userId ) {
-
-		initialiseFirebase();
-
-		DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().
-											child( DATABASE_NOTIFICATION_TABLE ).
-											child( userId.toString() );
-
-		Map<String, Object> notificationJson = new HashMap<String, Object>();
-		notificationJson.put( "newNotificationCount", 0 );
-		notificationJson.put( "notificationIdList", new ArrayList<Long>() );
-		databaseReference.setValue( notificationJson );
+		
+		private NotificationDB() {}
+		
+		private NotificationDB( List<Long> notificationIdList ) {
+			this.notificationIdList = notificationIdList;
+			this.newNotificationCount = notificationIdList.size();
+		}
+		
+		
+		public List<Long> getNotificationIdList() {
+			return notificationIdList;
+		}
+		
+		public Integer getNewNotificationCount() {
+			return newNotificationCount;
+		}
+		
 	}
 	
 	public static void updateUserNotificationData(
@@ -147,11 +157,9 @@ public class FirebaseApi {
 				// Current list of notificationIds with Firebase
 				List<Long> notifIdList = new LinkedList<>();
 				if( mutableData.getValue() != null ) {
-					JsonArray jArray = mutableData
-							.getValue( JsonElement.class ).getAsJsonObject()
-							.get( "notificationIdList" ).getAsJsonArray();
-					for( int i = 0; i < jArray.size(); i++ )
-						notifIdList.add( jArray.get(i).getAsLong() );
+					NotificationDB notifDB = mutableData.getValue( NotificationDB.class );
+					if( notifDB.getNewNotificationCount() > 0 )
+						notifIdList = notifDB.getNotificationIdList();
 				}
 
 				// Add/Remove notificationIds
@@ -160,10 +168,7 @@ public class FirebaseApi {
 				notifIdList.addAll( notifIdListToAdd );
 				
 				// Updating Firebase
-				Map<String, Object> notifJson = new HashMap<String, Object>();
-				notifJson.put( "notificationIdList", notifIdList );
-				notifJson.put( "newNotificationCount", notifIdList.size() );
-				mutableData.setValue( notifJson );
+				mutableData.setValue( new NotificationDB( notifIdList ) );
 				return Transaction.success( mutableData );
 
 			}
