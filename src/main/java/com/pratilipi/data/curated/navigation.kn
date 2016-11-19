@@ -1,5 +1,5 @@
 ಪ್ರಖ್ಯಾತ ಬರಹಗಳು 
-/event/kr   ಕನ್ನಡ-ಕನ್ನಡಿಗ-ಕರ್ನಾಟಕ     App#imageName::event_generic6.jpg       App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"6530871927504896" }
+/event/kr   ಕನ್ನಡ-ಕನ್ನಡಿಗ-ಕರ್ನಾಟಕ     App#imageName::event_generic6.jpg       App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "eventId":6530871927504896 }
 /most-read   ಹೆಚ್ಚು ಓದಲ್ಪಟ್ಟ           App#imageName::mostpopular.jpg      App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"most-read" }
 /new         ಹೊಸ  ಬರಹಗಳು         App#imageName::newpublished.jpg     App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"new" } 
 /events       ಸ್ಪರ್ಧೆಗಳು              App#imageName::events.jpg     App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"events" }
