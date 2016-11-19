@@ -43,6 +43,11 @@ public interface Notification extends GenericOfyType {
 	
 	void setState( NotificationState state );
 
+	
+	Boolean isFcmPending();
+	
+	void setFcmPending( boolean fcmPending );
+
 	String getFcmResponse();
 	
 	void setFcmResponse( String fcmResponse );

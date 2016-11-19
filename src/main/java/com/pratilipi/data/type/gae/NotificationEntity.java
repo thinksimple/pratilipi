@@ -9,6 +9,7 @@ import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.condition.IfTrue;
 import com.pratilipi.common.type.NotificationState;
 import com.pratilipi.common.type.NotificationType;
 import com.pratilipi.data.type.Notification;
@@ -38,6 +39,10 @@ public class NotificationEntity implements Notification {
 	
 	@Index
 	private NotificationState STATE;
+
+	
+	@Index( IfTrue.class )
+	private Boolean FCM_PENDING;
 	
 	private String FCM_RESPONSE;
 	
@@ -179,6 +184,16 @@ public class NotificationEntity implements Notification {
 	@Override
 	public void setState( NotificationState state ) {
 		this.STATE = state;
+	}
+
+	@Override
+	public Boolean isFcmPending() {
+		return FCM_PENDING == null ? false : FCM_PENDING;
+	}
+	
+	@Override
+	public void setFcmPending( boolean fcmPending ) {
+		this.FCM_PENDING = fcmPending;
 	}
 	
 	@Override

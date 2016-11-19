@@ -80,6 +80,7 @@ public class AuditLogProcessApi extends GenericApi {
 							NotificationType.PRATILIPI_ADD,
 							pratilipiId );
 					notification.addAuditLogId( auditLog.getId() );
+					notification.setFcmPending( true );
 					notification.setLastUpdated( new Date() );
 					notificationList.add( notification );
 				}
@@ -106,6 +107,7 @@ public class AuditLogProcessApi extends GenericApi {
 					notification.addDataId( userId, auditLog.getId() );
 					if( notification.getState() == NotificationState.READ )
 						notification.setState( NotificationState.UNREAD );
+					notification.setFcmPending( true );
 					notification.setLastUpdated( new Date() );
 				} else {
 					notification.removeDataId( userId, auditLog.getId() );
