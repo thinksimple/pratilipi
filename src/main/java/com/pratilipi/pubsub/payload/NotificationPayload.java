@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.pratilipi.pubsub.Payload;
 
-public class NotificationPayload implements Payload {
+public class NotificationPayload extends Payload {
 
 	private List<Long> notificationIdList;
 
@@ -27,6 +27,10 @@ public class NotificationPayload implements Payload {
 	
 	public void addNotificationId( Long notificationId ) {
 		this.notificationIdList.add( notificationId );
+	}
+	
+	public List<Long> getNotificationIdList() {
+		return notificationIdList;
 	}
 
 }
