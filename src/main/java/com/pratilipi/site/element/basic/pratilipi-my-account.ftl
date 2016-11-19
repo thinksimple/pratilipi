@@ -42,7 +42,7 @@
 <div class="pratilipi-shadow secondary-500 box align-text-center">	
 	<div class="pull-left">
 		<a style="cursor: pointer;" onclick="goBack()">
-			<img style="width: 20px;height: 20px;" src="http://0.ptlp.co/resource-all/icon/svg/arrow-left.svg">
+			<div class="sprites-icon black-arrow-left-icon"></div>
 	  	</a>
 	</div> 
 	<div class="center-heading">

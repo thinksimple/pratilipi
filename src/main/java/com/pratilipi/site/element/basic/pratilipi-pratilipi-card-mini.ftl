@@ -13,16 +13,16 @@
 			<a href="${ pratilipi.getPageUrl() }"><h4 class="media-heading clip-content-1-line bigger-line-height pratilipi-card-heading pratilipi-without-margin">${ pratilipi.getTitle()!pratilipi.getTitleEn() } &nbsp; </h4></a>
 		    <div>
 			    <#if ( pratilipi.getReadCount() > 0 ) >
-			    	<span style="color: #696969;">${ pratilipi.getReadCount() } <img src="http://0.ptlp.co/resource-all/icon/svg/book2-grey.svg" style="width:13px;height:13px;margin-bottom: 2px;"></span>
+			    	<span style="color: #696969;">${ pratilipi.getReadCount() } <div class="sprites-icon read-count-icon"></div></span>
 			    </#if>
 			    <#if ( pratilipi.getAverageRating() >= 1 ) >
-			    	<span style="color: #696969;" id="book-rating-${ pratilipi.getId()?c }"> <img src="http://0.ptlp.co/resource-all/icon/svg/star-full-dark-grey.svg" style="width:13px;height:12px;margin-bottom: 3px;"></span>
+			    	<span style="color: #696969;" id="book-rating-${ pratilipi.getId()?c }"> <div class="sprites-icon star-icon"></div></span>
 			    </#if>			    
 		    </div>
 		 </div>
 		 <div class="col-xs-1 pratilipi-no-padding" >
 		 	<a onclick="gotoShare( '${ pratilipi.getPageUrl() }', 'profile', 'card' )" >
-		 		<img src="http://0.ptlp.co/resource-all/icon/svg/share2.svg"></img> 
+		 		<div class="sprites-icon share-small-icon"></div> 
 		 	</a> 
 		 </div> 
 	    <div class="align-to-bottom">

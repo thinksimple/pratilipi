@@ -27,16 +27,16 @@
 		</a>
 		<div class="media-body pratilipi-padding-10">
 		    <#if isGuest == "true" >
-		    	<a class="pratilipi-red-button pull-right" href="/login?ret=${ retUrl }"><img class="width-16" src="http://0.ptlp.co/resource-all/icon/svg/user-plus-red.svg"></img></a>
+		    	<a class="pratilipi-red-button pull-right" href="/login?ret=${ retUrl }"><div class="sprites-icon user-follow-icon"></div></a>
 		    <#else>
 		    	<#if can_follow == "true">
 			    	<#if following == true >
 					    <button class="pratilipi-red-button pull-right" style="background: #d0021b;" onclick="FollowAuthorPostRequest(${ authorId?c }, false)">
-							<img class="width-16" src="http://0.ptlp.co/resource-all/icon/svg/user-check-white-red.svg"></img>
+							<div class="sprites-icon user-unfollow-icon"></div>
 						</button>
 					<#else>
 						<button class="pratilipi-red-button pull-right" onclick="FollowAuthorPostRequest(${ authorId?c }, true)">
-							<img class="width-16" src="http://0.ptlp.co/resource-all/icon/svg/user-plus-red.svg"></img>
+							<div class="sprites-icon user-follow-icon"></div>
 						</button>			
 					</#if>		    		
 		    	</#if>

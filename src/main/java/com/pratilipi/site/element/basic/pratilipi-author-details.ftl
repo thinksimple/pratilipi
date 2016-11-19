@@ -37,18 +37,18 @@
 	<#if author.hasAccessToUpdate()==true >
 		<div class="my-account pull-right">
 		    <a href="?action=account&ret=${ author.getPageUrl() }" class="icon">
-		    	<span class="glyph-white-background badge badge-circle"><img src="http://0.ptlp.co/resource-all/icon/svg/user.svg"></span>
+		    	<div class="sprites-icon user-circle-icon"></div>
 			</a>			
 		</div>		
 		<div class="edit-profile pull-right">
 		    <a href="?action=edit_profile&ret=${ author.getPageUrl() }" class="icon">
-		    	<span class="glyph-white-background badge badge-circle"><img src="http://0.ptlp.co/resource-all/icon/svg/cog.svg"></span>
+		    	<div class="sprites-icon settings-circle-icon"></div>
 			</a>			
 		</div>
 	</#if>			
 		<div class="share-author pull-right" <#if ( user.isGuest()==true ) >style="right:10px;"</#if> >
 			<a onclick="gotoShare( '${ author.getPageUrl() }', 'profile', 'menu' )" class="icon">
-				<span class="glyph-white-background badge badge-circle"><img src="http://0.ptlp.co/resource-all/icon/svg/share2.svg"></span>
+				<div class="sprites-icon share-circle-icon"></div>
 			</a>
 		</div>
 		<div class="clearfix"></div>
@@ -58,7 +58,7 @@
 			<img style="margin: 0px;" class="img-responsive img-thumbnail img-circle profile-picture" src="${ author.getImageUrl(140) }">
 			<#if author.hasAccessToUpdate()==true >
 				<div class="pratilipi-file-upload" >
-					<img style="width:25px;height:25px;margin-bottom: 7px;" src="http://0.ptlp.co/resource-all/icon/svg/camera-white.svg">
+					<div class="sprites-icon camera-icon"></div>
 				</div>
 			</#if>	
 		</div>
@@ -70,12 +70,12 @@
 			<#if ( ( !author.getUser().getId()?? ) || ( user.getId() != author.getUser().getId() ) ) >
 				<#if userAuthor.isFollowing() == true>
 					<button class="pratilipi-red-button" onclick="FollowUnfollowPostRequest(false)">
-						<img class="width-16" src="http://0.ptlp.co/resource-all/icon/svg/user-check-red.svg"></img>
+						<div class="sprites-icon user-unfollow-icon"></div>
 						${ _strings.author_unfollow } | ${ author.getFollowCount()?c }
 					</button>		
 				<#else>
 					<button class="pratilipi-red-button" onclick="FollowUnfollowPostRequest(true)">
-						<img class="width-16" src="http://0.ptlp.co/resource-all/icon/svg/user-plus-red.svg"></img>
+						<div class="sprites-icon user-follow-icon"></div>
 						${ _strings.author_follow } | ${ author.getFollowCount()?c }
 					</button>
 				</#if>
@@ -84,8 +84,8 @@
 			</#if>
 		<#else>
 			<a class="pratilipi-red-button" href="/login?ret=${ author.getPageUrl() }">
-						<img class="width-16" src="http://0.ptlp.co/resource-all/icon/svg/user-plus-red.svg"></img>
-						${ _strings.author_follow } | ${ author.getFollowCount()?c }
+				<div class="sprites-icon user-follow-icon"></div>
+				${ _strings.author_follow } | ${ author.getFollowCount()?c }
 			</a>					
 		</#if>
 	</div>

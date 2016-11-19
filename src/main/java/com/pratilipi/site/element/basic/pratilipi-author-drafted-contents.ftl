@@ -9,9 +9,7 @@
 			<a href="${ draftsUrl }"><p class="works-number"> ${ author.getContentDrafted() } ${ _strings.author_drafts }</p></a>
 		</div>
 		<#if ( author.getContentDrafted() > 3 )>		
-			<div class="pull-right">
-				<a class="pull-right pratilipi-red pratilipi-view-more-link" href="${ draftsUrl }"> <img style="height:22px;" src="http://0.ptlp.co/resource-all/icon/svg/chevron-right-red.svg"></img> </a>
-			</div>
+			<a class="pull-right pratilipi-red pratilipi-view-more-link" href="${ draftsUrl }"> <div class="sprites-icon arrow-right-red-icon"></div> </a>
 		</#if>	                   
 		<div class="clearfix"></div>
 		<hr class="pratilipi-margin-top-2">	

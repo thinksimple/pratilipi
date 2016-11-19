@@ -8,9 +8,7 @@
 			<a href="${ followingUrl }"><p class="works-number">${ followingList.getNumberFound() } ${ _strings.author_follow_members }</p></a>
 		</div>
 		<#if ( followingList.getNumberFound() > 3 )>
-			<div class="pull-right">
-				<a class="pull-right pratilipi-red pratilipi-view-more-link" href="${ followingUrl }"><img style="height:22px;" src="http://0.ptlp.co/resource-all/icon/svg/chevron-right-red.svg"></img></a>
-			</div>
+			<a class="pull-right pratilipi-red pratilipi-view-more-link" href="${ followingUrl }"><div class="sprites-icon arrow-right-red-icon"></div></a>
 		</#if>
 		<div class="clearfix"></div>
 		<hr class="pratilipi-margin-top-2">	

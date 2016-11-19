@@ -82,7 +82,7 @@
 <div class="secondary-500 pratilipi-shadow box text-center">
 	<h2 class="pratilipi-red" style="position: relative;">${ pratilipi.title!pratilipi.titleEn }
 		<#if pratilipi.hasAccessToUpdate()==true >
-			<a href="?action=edit_content"><img src="http://0.ptlp.co/resource-all/icon/svg/cog.svg" style="position: absolute;right: 20px;width: 20px;height: 25px;top: 15px;"></a>
+			<a href="?action=edit_content" style="position: absolute;right: 20px;top: 15px;"><div class="sprites-icon settings-icon"></div></a>
 		</#if>
 	</h2>
 	
@@ -92,9 +92,9 @@
 	
 	<div style="width: 150px; height: 225px; margin: 15px auto; position: relative;" class="pratilipi-shadow">
 		<img src="${ pratilipi.getCoverImageUrl( 150 ) }" alt="${ pratilipi.title!pratilipi.titleEn }" title="${ pratilipi.titleEn!pratilipi.title }" />
-		<#if pratilipi.hasAccessToUpdate()==true >
+		<#if pratilipi.hasAccessToUpdate()==false >
 			<div class="pratilipi-file-upload" style="margin-bottom: -2px;">
-				<img style="width:25px;height:25px;margin-bottom: 7px;position: absolute;left: 15px;bottom: -4px;" src="http://0.ptlp.co/resource-all/icon/svg/camera-white.svg">
+				<div class="sprites-icon book-camera-icon"></div>
 			</div>
 		</#if>
 	</div>

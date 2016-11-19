@@ -11,10 +11,8 @@
 			</h5></a>
 			<a href="${ publishedUrl }"><p class="works-number"> ${author.getContentPublished()} ${ _strings.author_count_works }</p></a>
 		</div>
-		<#if ( author.getContentPublished() > 3 )>
-			<div class="pull-right">	
-				<a class="pull-right pratilipi-red pratilipi-view-more-link" href="${ publishedUrl }"><img style="height:22px;" src="http://0.ptlp.co/resource-all/icon/svg/chevron-right-red.svg"></img></a>
-			</div>
+		<#if ( author.getContentPublished() > 3 )>	
+			<a class="pull-right pratilipi-red pratilipi-view-more-link" href="${ publishedUrl }"><div class="sprites-icon arrow-right-red-icon"></div></a>
 		</#if>	
 		<div class="clearfix"></div>
 		<hr class="pratilipi-margin-top-2">	
