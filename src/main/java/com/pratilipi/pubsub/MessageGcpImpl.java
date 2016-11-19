@@ -4,8 +4,6 @@ import java.util.Date;
 
 import com.google.cloud.pubsub.ReceivedMessage;
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 
 public class MessageGcpImpl implements Message {
 	
@@ -18,10 +16,8 @@ public class MessageGcpImpl implements Message {
 	
 	
 	@Override
-	public JsonObject getPayload() {
-		return new Gson()
-				.fromJson( message.payloadAsString(), JsonElement.class )
-				.getAsJsonObject();
+	public <T extends Payload> T getPayload( Class<T> clazz ) {
+		return new Gson().fromJson( message.payloadAsString(), clazz );
 	}
 
 	@Override

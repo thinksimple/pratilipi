@@ -3,14 +3,13 @@ package com.pratilipi.pubsub;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class PubSubFactory {
 
 	private static final Map<String, Topic> topicMap = new HashMap<>();
 	private static final Map<String, Subscription> subscriptionMap = new HashMap<>();
 	
-	private static final String FIREBASE_TOPIC			= "user-offline";
-	private static final String FIREBASE_SUBSCRIPTION	= "user";
+	private static final String FIREBASE_TOPIC			= "notification";
+	private static final String FIREBASE_SUBSCRIPTION	= "notification-firebase";
 	
 	
 	public static Topic getFirebaseTopic() {
