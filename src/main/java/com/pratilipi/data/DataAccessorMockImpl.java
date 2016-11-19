@@ -1012,6 +1012,18 @@ public class DataAccessorMockImpl implements DataAccessor {
 				return notification;
 		return null;
 	}
+	
+	@Override
+	public List<Notification> getNotificationList( List<Long> notificationIdList ) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public List<Notification> getNotificationListWithFcmPending( Integer resultCount ) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
 	public DataListCursorTuple<Notification> getNotificationList( Long userId, NotificationType type, Long sourceId, String cursor, Integer resultCount ) {

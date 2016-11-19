@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
@@ -27,11 +29,21 @@ import com.pratilipi.data.util.NotificationDataUtil;
 @Bind( uri = "/notification/process" )
 public class NotificationProcessApi extends GenericApi {
 
+	private static final Logger logger =
+			Logger.getLogger( NotificationProcessApi.class.getName() );
+	
+	
 	@Get
 	public GenericResponse get( GenericRequest request ) throws UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-
+		
+		List<Notification> notifList = dataAccessor.getNotificationListWithFcmPending( 1000 );
+		for( int i = 0; i < notifList.size(); i++ ) {
+			if( notifList.get( i ).getUserId().equals( 5629499534213120L ) )
+				logger.log( Level.INFO, i + "" + notifList.get( i ) );
+		}
+		
 		if( true )
 			return new GenericResponse();
 		

@@ -1778,6 +1778,22 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	@Override
+	public List<Notification> getNotificationList( List<Long> notificationIdList ) {
+		return getEntityList( NotificationEntity.class, notificationIdList );
+	}
+	
+	@Override
+	public List<Notification> getNotificationListWithFcmPending( Integer resultCount ) {
+		List<NotificationEntity> notificationList = ObjectifyService.ofy().load()
+				.type( NotificationEntity.class )
+				.filter( "FCM_PENDING", true )
+				.order( "LAST_UPDATED" )
+				.limit( resultCount )
+				.list();
+		return new ArrayList<Notification>( notificationList );
+	}
+	
+	@Override
 	public DataListCursorTuple<Notification> getNotificationList( Long userId, NotificationType type, Long sourceId, String cursorStr, Integer resultCount ) {
 		return getNotificationList( userId, type, sourceId.toString(), cursorStr, resultCount );
 	}
