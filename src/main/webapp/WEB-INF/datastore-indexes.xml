@@ -130,7 +130,7 @@
 	
 	<datastore-index kind="NOTIFICATION" ancestor="false" source="manual">
 		<property name="FCM_PENDING" direction="asc"/>
-		<property name="LAST_UPDATED" direction="desc"/>
+		<property name="LAST_UPDATED" direction="asc"/>
 	</datastore-index>
 	
 </datastore-indexes>
