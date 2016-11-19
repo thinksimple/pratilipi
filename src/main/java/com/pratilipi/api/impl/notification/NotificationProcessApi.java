@@ -1,10 +1,10 @@
 package com.pratilipi.api.impl.notification;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,13 +14,8 @@ import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
-import com.pratilipi.common.type.NotificationState;
-import com.pratilipi.common.util.FirebaseApi;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
-import com.pratilipi.data.DataListCursorTuple;
-import com.pratilipi.data.client.NotificationData;
-import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.Notification;
 import com.pratilipi.data.util.NotificationDataUtil;
 
@@ -39,43 +34,32 @@ public class NotificationProcessApi extends GenericApi {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
 		List<Notification> notifList = dataAccessor.getNotificationListWithFcmPending( 1000 );
-		for( int i = 0; i < notifList.size(); i++ ) {
-			if( notifList.get( i ).getUserId().equals( 5629499534213120L ) )
-				logger.log( Level.INFO, i + "" + notifList.get( i ) );
+
+		logger.log( Level.INFO, "Total pending notifs = " + notifList.size() ); // TODO: remove
+
+		Map<Long, List<Notification>> userIdNotifListMap = new HashMap<>();
+		for( Notification notif : notifList ) {
+			List<Notification> userNotifList = userIdNotifListMap.get( notif.getUserId() );
+			if( userNotifList == null ) {
+				userNotifList = new LinkedList<>();
+				userIdNotifListMap.put( notif.getUserId(), userNotifList );
+			}
+			userNotifList.add( notif );
+		}
+
+		for( Entry<Long, List<Notification>> entry : userIdNotifListMap.entrySet() ) {
+			if( entry.getKey().equals( 5629499534213120L ) ) { // TODO: remove
+				for( Notification n : entry.getValue() ) // TODO: remove
+					logger.log( Level.INFO, ">> " + n.getKey() ); // TODO: remove
+				NotificationDataUtil.blahblab( entry.getKey(), entry.getValue() );
+			}
 		}
 		
 		if( true )
 			return new GenericResponse();
 		
-		// Fetching AppProperty
-		AppProperty appProperty = dataAccessor.getAppProperty( AppProperty.API_NOTIFICATION_PROCESS );
-		if( appProperty == null )
-			appProperty = dataAccessor.newAppProperty( AppProperty.API_NOTIFICATION_PROCESS );
-
 		
-		DataListCursorTuple<Notification> notificationListCursorTuple = dataAccessor.getNotificationListOrderByLastUpdated( (String) appProperty.getValue(), 1000 );
-		List<Notification> notificationList = notificationListCursorTuple.getDataList();
-		List<NotificationData> notificationDataList = NotificationDataUtil.createNotificationDataList( notificationList, null, true );
-
-		
-		// Writing to Firebase Database
-		Map<Long, List<Long>> userIdNotifIdListMap = new HashMap<Long, List<Long>>();
-		for( NotificationData notificationData : notificationDataList ) {
-
-			if( notificationData.getMessage() == null )
-				continue;
-			if( notificationData.getState() != NotificationState.UNREAD )
-				continue;
-
-			List<Long> notificationIdList = userIdNotifIdListMap.get( notificationData.getUserId() );
-			if( notificationIdList == null ) {
-				notificationIdList = new LinkedList<>();
-				userIdNotifIdListMap.put( notificationData.getUserId(), notificationIdList );
-			}
-
-			notificationIdList.add( notificationData.getId() );
-
-		}
+/*
 		FirebaseApi.updateUserNotificationData( userIdNotifIdListMap );
 
 
@@ -112,12 +96,7 @@ public class NotificationProcessApi extends GenericApi {
 		}
 		dataAccessor.createOrUpdateNotificationList( notificationListToPersist );
 
-		
-		// Updating AppProperty
-		if( notificationList.size() > 0 ) {
-			appProperty.setValue( notificationListCursorTuple.getCursor() );
-			dataAccessor.createOrUpdateAppProperty( appProperty );
-		}
+		*/
 		
 		
 		return new GenericResponse();

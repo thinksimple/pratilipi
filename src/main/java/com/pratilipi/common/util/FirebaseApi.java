@@ -3,6 +3,7 @@ package com.pratilipi.common.util;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -121,77 +122,70 @@ public class FirebaseApi {
 		notificationJson.put( "notificationIdList", new ArrayList<Long>() );
 		databaseReference.setValue( notificationJson );
 	}
+	
+	public static void updateUserNotificationData(
+			Long userId,
+			final List<Long> notifIdListToAdd,
+			final List<Long> notifIdListToRemove,
+			final Async async ) {
 
-	public static void updateUserNotificationData( Map<Long, List<Long>> userIdNotificationIdMap ) {
-
+		
 		initialiseFirebase();
 
-		for( Map.Entry<Long, List<Long>> entry : userIdNotificationIdMap.entrySet() ) {
 
-			Long userId = entry.getKey();
-			final List<Long> notifIdList = entry.getValue();
-
-			DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().
-					child( DATABASE_NOTIFICATION_TABLE ).
-					child( userId.toString() );
+		DatabaseReference databaseReference = FirebaseDatabase.getInstance()
+				.getReference()
+				.child( DATABASE_NOTIFICATION_TABLE )
+				.child( userId.toString() );
 
 
-			databaseReference.runTransaction( new Transaction.Handler() {
+		databaseReference.runTransaction( new Transaction.Handler() {
 
-				@Override
-				public Transaction.Result doTransaction( MutableData mutableData ) {
+			@Override
+			public Transaction.Result doTransaction( MutableData mutableData ) {
 
-					Boolean isChanged = false;
-					Integer newNotificationCount = 0;
-					List<Long> notificationIdList = new ArrayList<Long>();
-
-					if( mutableData.getValue() != null ) {
-
-						JsonObject jsn = new Gson().fromJson( mutableData.getValue().toString(), JsonElement.class ).getAsJsonObject();
-						newNotificationCount = jsn.get( "newNotificationCount" ).getAsInt();
-
-						if( newNotificationCount > 0 ) {
-							JsonArray jArray = jsn.get( "notificationIdList" ).getAsJsonArray();
-							for( int i=0; i < jArray.size(); i++ )
-								notificationIdList.add( Long.parseLong( jArray.get(i).getAsString() ) );
-						}
-
-					}
-
-					for( Long notifId : notifIdList ) {
-						if( ! notificationIdList.contains( notifId ) ) {
-							notificationIdList.add( notifId );
-							newNotificationCount ++;
-							isChanged = true;
-						}
-					}
-
-					if( isChanged ) {
-						Map<String, Object> notificationJson = new HashMap<String, Object>();
-						notificationJson.put( "newNotificationCount", newNotificationCount );
-						notificationJson.put( "notificationIdList", notificationIdList );
-						mutableData.setValue( notificationJson );
-						return Transaction.success( mutableData );
-					} else {
-						return Transaction.abort();
-					}
-
+				// Current list of notificationIds with Firebase
+				List<Long> notifIdList = new LinkedList<>();
+				if( mutableData.getValue() != null ) {
+					JsonArray jArray = mutableData
+							.getValue( JsonElement.class ).getAsJsonObject()
+							.get( "notificationIdList" ).getAsJsonArray();
+					for( int i = 0; i < jArray.size(); i++ )
+						notifIdList.add( jArray.get(i).getAsLong() );
 				}
 
-				@Override
-				public void onComplete( DatabaseError databaseError, boolean committed, DataSnapshot dataSnapshot ) {
-					// committed: true => Transaction success; databaseError: null => if transaction is aborted.
-					if( committed || databaseError == null ) {
-						logger.log( Level.INFO, "Transaction completed successfully : " + dataSnapshot.toString() );
-					} else {
-						logger.log( Level.SEVERE, "Transaction failed. Error code : " + databaseError.getCode() );
-					}
-						
+				// Add/Remove notificationIds
+				notifIdList.removeAll( notifIdListToAdd ); // Remove ids first to avoid duplicates
+				notifIdList.removeAll( notifIdListToRemove );
+				notifIdList.addAll( notifIdListToAdd );
+				
+				// Updating Firebase
+				Map<String, Object> notifJson = new HashMap<String, Object>();
+				notifJson.put( "notificationIdList", notifIdList );
+				notifJson.put( "newNotificationCount", notifIdList.size() );
+				mutableData.setValue( notifJson );
+				return Transaction.success( mutableData );
+
+			}
+
+			@Override
+			public void onComplete( DatabaseError databaseError, boolean committed, DataSnapshot dataSnapshot ) {
+				
+				if( committed ) { // Transaction successful
+					
+					async.exec();
+				
+//				} else if( databaseError == null ) { // Transaction aborted
+				
+				} else { // Transaction failed
+					
+					logger.log( Level.SEVERE, "Transaction failed with error code : " + databaseError.getCode() );
+					
 				}
+				
+			}
 
-			} );
-
-		}
+		} );
 		
 	}
 
