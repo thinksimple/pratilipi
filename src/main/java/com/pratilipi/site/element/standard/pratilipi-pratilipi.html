@@ -138,14 +138,12 @@
 						<div class="pratilipi-file-upload">
 							<div style="width: 150px; height: 225px;" class="pratilipi-shadow">
 								<template is="dom-if" if="{{ !imageUploaded }}">
-									<iron-image class="pratilipi-shadow"
+									<img class="pratilipi-shadow"
 										width="150" height="225" 
 										style="background-color: #f5f5f5; margin: 0 auto;" 
-										fade preload
-										sizing="cover" 
 										src="{{ pratilipiCoverImageUrl }}" 
 										alt="{{ title }}" 
-										title="{{ title }}"></iron-image>
+										title="{{ title }}" />
 								</template>
 								<template is="dom-if" if="{{ imageUploaded }}">
 									<paper-spinner class="pratilipi-spinner" active></paper-spinner>
