@@ -888,11 +888,13 @@ a:hover {
 	background-position: -72px -48px;
 	margin: 0px auto 20px auto;
 	vertical-align: middle;
+	display: block !important;
 }
 .search-block-icon {
     background-position: -120px -24px;
 	margin: 0px auto 20px auto;
 	vertical-align: middle;	
+	display: block !important;
 }
 .reader-navigation-icon {
 	width: 24px;
