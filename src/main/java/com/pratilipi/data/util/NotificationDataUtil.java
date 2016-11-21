@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.pratilipi.common.exception.InsufficientAccessException;
@@ -51,6 +50,7 @@ public class NotificationDataUtil {
 	public static boolean hasAccessToUpdateData( Notification notification ) {
 		return notification.getUserId().equals( AccessTokenFilter.getAccessToken().getUserId() );
 	}
+	
 	
 	private static String createNotificationMessage( PratilipiData pratilipiData, Language language, boolean plainText ) { // NotificationType == PRATILIPI_ADD
 		String pratilipiTitle = pratilipiData.getTitle() == null
@@ -200,7 +200,7 @@ public class NotificationDataUtil {
 	}
 	
 	
-	public static void dispatchNotification( final Long userId, List<Notification> notifList ) throws UnexpectedServerException {
+	public static void updateFirebaseDb( final Long userId, List<Notification> notifList, Async async ) throws UnexpectedServerException {
 		
 		List<NotificationData> notifDataList = createNotificationDataList( notifList, null, true );
 		
@@ -213,65 +213,53 @@ public class NotificationDataUtil {
 				notifIdListToRemove.add( notifData.getId() );
 		}
 		
-		Async async = new Async() {
-			
-			@Override
-			public void doSome() {
-				
-				for( Long notifId : notifIdListToAdd )
-					logger.log( Level.INFO, "Sending FMC for " + notifId );
-				for( Long notifId : notifIdListToRemove )
-					logger.log( Level.INFO, "Removing FMC for " + notifId );
-				
-				DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-				
-				List<String> fcmTokenList = dataAccessor.getFcmTokenList( userId );
-				if( fcmTokenList.size() == 0 )
-					return;
-				
-				
-				try {
-				
-					List<Notification> notificationList = dataAccessor.getNotificationList( notifIdListToAdd );
-					List<NotificationData> notificationDataList = createNotificationDataList( notificationList, null, true );
-					
-					for( int i = 0; i < notifIdListToAdd.size(); i++ ) {
-						Notification notification = notificationList.get( i );
-						NotificationData notificationData = notificationDataList.get( i );
-						String fcmResponse = FirebaseApi.sendCloudMessage(
-								fcmTokenList,
-								notificationData.getMessage(),
-								notification.getId().toString(),
-								notification.getType().getAndroidHandler(),
-								notification.getSourceId().toString() );
-						
-						notification.setFcmPending( false );
-						if( notification.getFcmResponse() == null )
-							notification.setFcmResponse( fcmResponse );
-						else
-							notification.setFcmResponse( notification.getFcmResponse() + "\n" + fcmResponse );
-					}
-//					notificationList = dataAccessor.createOrUpdateNotificationList( notificationList );
-					
-				} catch( UnexpectedServerException ex ) {
-					// TODO
-				}
-
-			}
-			
-		};
-		
-		logger.log( Level.INFO, "User Id: " + userId );
-		for( Long l : notifIdListToAdd )
-			logger.log( Level.INFO, "NotifIds to add: " + l );
-		for( Long l : notifIdListToRemove )
-			logger.log( Level.INFO, "NotifIds to remove: " + l );
-		
 		FirebaseApi.updateUserNotificationData(
 				userId,
 				notifIdListToAdd,
 				notifIdListToRemove,
 				async );
+		
+	}
+
+	public static void sendFcm( Long notifId ) throws UnexpectedServerException {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Notification notif = dataAccessor.getNotification( notifId );
+		
+		if( ! notif.isFcmPending() )
+			return;
+		
+		if( notif.getState() == NotificationState.UNREAD ) {
+			
+			List<Notification> notifList = new ArrayList<>( 1 );
+			notifList.add( notif );
+			
+			NotificationData notifData = createNotificationDataList( notifList, null, true ).get( 0 ); // TODO: Implement createNotificationData
+			if( notifData.getMessage() != null ) { // TODO: Cancel previously sent FCM if notifData.getMessage() == null
+				
+				List<String> fcmTokenList = dataAccessor.getFcmTokenList( notif.getUserId() );
+				if( fcmTokenList.size() != 0 ) {
+					
+					String fcmResponse = FirebaseApi.sendCloudMessage(
+							fcmTokenList,
+							notifData.getMessage(),
+							notif.getId().toString(),
+							notif.getType().getAndroidHandler(),
+							notif.getSourceId().toString() );
+						
+					if( notif.getFcmResponse() == null )
+						notif.setFcmResponse( fcmResponse );
+					else
+						notif.setFcmResponse( notif.getFcmResponse() + "\n" + fcmResponse );
+					
+				}
+				
+			}
+			
+		}
+		
+		notif.setFcmPending( false );
+		notif = dataAccessor.createOrUpdateNotification( notif );
 		
 	}
 	
