@@ -23,7 +23,7 @@ public interface Navigation extends Serializable {
 			this.apiName = apiName;
 			this.apiRequest = apiRequest;
 			// TODO: Move images to static.pratilipi.com asap
-			this.imageUrl = SystemProperty.CDN.replace( '*', '0' ) + "/resource-all/android-category-banners/" + imageName;
+			this.imageUrl = ( SystemProperty.CDN != null ? SystemProperty.CDN.replace( '*', '0' ) : "" ) + "/resource-all/android-category-banners/" + imageName;
 		}
 		
 		public String getName() {

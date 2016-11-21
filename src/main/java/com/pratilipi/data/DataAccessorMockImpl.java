@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -415,9 +416,12 @@ public class DataAccessorMockImpl implements DataAccessor {
 			PratilipiFilter pratilipiFilter, String cursorStr, Integer offset, Integer resultCount ) {
 		
 		List<Long> pratilipiIdList = new ArrayList<Long>();
-		for( Pratilipi pratilipi : PratilipiMock.PRATILIPI_TABLE )
-			if( pratilipi.getLanguage() == pratilipiFilter.getLanguage() )
+		for( Pratilipi pratilipi : PratilipiMock.PRATILIPI_TABLE ) {
+			if( pratilipi.getLanguage() == pratilipiFilter.getLanguage() ) {
 				pratilipiIdList.add( pratilipi.getId() );
+				pratilipiIdList.add( pratilipi.getId() );
+			}
+		}
 		return new DataListCursorTuple<>( pratilipiIdList, null );
 
 	}
@@ -730,7 +734,24 @@ public class DataAccessorMockImpl implements DataAccessor {
 	// curated/home.<lang>
 	
 	@Override
-	public List<String> getHomeSectionList( Language language ) { return null; }
+	public List<String> getHomeSectionList( Language language ) { 
+		List<String> sectionList = new LinkedList<>();
+
+		try {
+			String fileName = CURATED_DATA_FOLDER + "/home." + language.getCode();
+			InputStream inputStream = DataAccessor.class.getResource( fileName ).openStream();
+			for( String listName : IOUtils.readLines( inputStream, "UTF-8" ) ) {
+				listName = listName.trim();
+				if( ! listName.isEmpty() )
+					sectionList.add( listName );
+			}
+			inputStream.close();
+		} catch( NullPointerException | IOException e ) {
+			logger.log( Level.SEVERE, "Exception while reading from home." + language.getNameEn(), e );
+		}
+		
+		return sectionList; 
+	}
 	
 	
 	// NAVIGATION Table
