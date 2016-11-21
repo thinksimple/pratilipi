@@ -658,11 +658,20 @@ a:hover {
 .fb-icon{
     background-position: 0 -120px;
 }
+.fb-black-icon {
+    background-position: 0 -96px;	
+}
 .twitter-icon{
     background-position: -24px -120px;
 }
+.twitter-black-icon{
+    background-position: -24px -96px;
+}
 .gplus-icon{
     background-position: -72px -120px;
+}
+.gplus-black-icon{
+    background-position: -72px -96px;
 }
 .linked-in-icon{
     background-position: -48px -120px;

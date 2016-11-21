@@ -65,20 +65,20 @@
 				<div class="text-center div-center">
 					<a <#if user.isGuest() == true>href="/login?ret=${ pratilipi.getPageUrl() }?review=write%26ret=/${ pageUrl }?id=${ pratilipi.getId()?c }%26pageNo=${ pageNo }"<#else>href="${ pratilipi.getPageUrl() }?review=write&ret=/${ pageUrl }?id=${ pratilipi.getId()?c }%26pageNo=${ pageNo }"</#if> >
 						<h6 style="margin: 15px 0px; display: inline-block;">${ _strings.reader_enjoyed_review_book }</h6>
-						<div class="sprites-icon size-24-icon edit-icon">
+						<div class="sprites-icon size-24-icon edit-icon"></div>
 					</a>
 				</div>
 				<div class="text-center div-center">
 					<h6 style="margin: 15px;display: inline-block;">${ _strings.reader_enjoyed_reading_part2 } : </h6>
-					<div style="white-space: nowrap; display: inline-block;">
+					<div style="white-space: nowrap; display: inline-block;"></div>
 						<a style="cursor: pointer;" onCLick="shareOnFacebook( 'container' )">
-							<div class="sprites-icon reader-footer-icon fb-icon">
+							<div class="sprites-icon reader-footer-icon fb-black-icon"></div>
 						</a>
 						<a style="cursor: pointer;" onCLick="shareOnTwitter( 'container' )">
-							<div class="sprites-icon reader-footer-icon twitter-icon">
+							<div class="sprites-icon reader-footer-icon twitter-black-icon"></div>
 						</a>
 						<a style="cursor: pointer;" onCLick="shareOnGplus( 'container' )">
-							<div class="sprites-icon reader-footer-icon gplus-icon">
+							<div class="sprites-icon reader-footer-icon gplus-black-icon"></div>
 						</a>
 					</div>
 				</div>

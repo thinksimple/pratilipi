@@ -23,15 +23,15 @@
 			<td align="right">
 				<#-- Write Review -->
 				<a <#if user.isGuest() == true>href="/login?ret=${ pratilipi.getPageUrl() }?review=write%26ret=/${ pageUrl }?id=${ pratilipi.getId()?c }%26pageNo=${ pageNo }"<#else>href="${ pratilipi.getPageUrl() }?review=write&ret=/${ pageUrl }?id=${ pratilipi.getId()?c }%26pageNo=${ pageNo }"</#if> >
-					<div class="sprites-icon reader-sprite-icon edit-icon">
+					<div class="sprites-icon reader-sprite-icon edit-icon"></div>
 				</a>
 				<#-- Share buttons -->
 				<a onClick="gotoShare()" style="cursor: pointer;">
-					<div class="sprites-icon reader-sprite-icon share-icon">
+					<div class="sprites-icon reader-sprite-icon share-icon"></div>
 				</a>
 				<#-- Menu button -->
 				<a onClick="gotoSetting()" style="cursor: pointer;">
-					<div class="sprites-icon reader-sprite-icon settings-icon">
+					<div class="sprites-icon reader-sprite-icon settings-icon"></div>
 				</a>
 			</td>
 		</tr>
