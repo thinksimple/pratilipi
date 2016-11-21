@@ -15,7 +15,7 @@
 <div class="div-center text-center" style="padding: 15px;">
 	<#if pageNo gt 1>
 		<a onClick="loadPrevious()" style="display: inline-block; cursor: pointer;">
-			<div class="sprites-icon reader-navigation-icon list-icon"></div>
+			<div class="sprites-icon reader-navigation-icon chevron-left-icon"></div>
 		</a>
 	</#if>
 	<div style="border: 1px solid #000; width: 98px; line-height: 1.4; display: inline-block; text-align: left;">
@@ -23,7 +23,7 @@
 	</div>
 	<#if pageNo lt pageCount>
 		<a onClick="loadNext()" style="display: inline-block; cursor: pointer;">
-			<div class="sprites-icon reader-navigation-icon list-icon"></div>
+			<div class="sprites-icon reader-navigation-icon chevron-right-icon"></div>
 		</a>
 	</#if>
 </div>
