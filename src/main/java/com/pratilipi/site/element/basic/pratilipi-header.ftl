@@ -8,28 +8,28 @@
 		</div>
 		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" >
 			<a style="display: block;" href="/navigation">
-				<div class="sprites-icon menu-icon"></div>
+				<div class="sprites-icon header-sprite-icon menu-icon"></div>
 			</a>
 		</div>
 		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
 			<a style="display: block;" onclick="showPopup()" >
-				<div class="sprites-icon edit-icon"></div>
+				<div class="sprites-icon header-sprite-icon edit-icon"></div>
 			</a>
 		</div>
 		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
 			<a style="display: block;" <#if user.isGuest() == true>href="/login?ret=/library"<#else>href="/library"</#if>>
-				<div class="sprites-icon library-books-icon"></div>
+				<div class="sprites-icon header-sprite-icon library-books-icon"></div>
 			</a>
 		</div>
 		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" style="position: relative;">
 			<a style="display: block;" <#if user.isGuest() == true>href="/login?ret=/notifications"<#else>href="/notifications?ret=${requestUrl}"</#if>>
-				<div class="sprites-icon notifications-icon"></div>
+				<div class="sprites-icon header-sprite-icon notifications-icon"></div>
 			</a>
 		</div>				
 		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
 			<a style="display: block;" <#if user.isGuest() == true>href="/login?ret=${ requestUrl }"<#else>href="${ user.getProfilePageUrl() }"</#if>>
 				<#if user.isGuest() == true>
-					<div class="sprites-icon account-circle-icon"></div>
+					<div class="sprites-icon header-sprite-icon account-circle-icon"></div>
 				<#else>
 					<img style="width: 24px; height: 24px; margin: 10px auto;" src="${ user.getProfileImageUrl() }" />
 				</#if>

@@ -629,63 +629,43 @@ a:hover {
     width: 40px;
     height: 40px;
 }
-.edit-icon{
-    background-position: -24px -24px;
+.header-sprite-icon {
     margin: 10px auto;
     width: 24px;
-    height: 24px;
+    height: 24px;	
+}
+.edit-icon{
+    background-position: -24px -24px;
 }
 .account-circle-icon{
     background-position: -96px -24px;
-    margin: 10px auto;
-    width: 24px;
-    height: 24px;
 }
 .menu-icon{
     background-position: 0 -24px ;
-    margin: 10px auto;
-    width: 24px;
-    height: 24px;
 }
 .notifications-icon{
     background-position: -72px -24px;
-    margin: 10px auto;
-    width: 24px;
-    height: 24px;
 }
 .library-books-icon{
     background-position: -48px -24px;
-    margin: 10px auto;
+}
+.footer-sprite-icon {
+	display: inline-block;
+    margin: 9px;
     width: 24px;
-    height: 24px;
+    height: 24px;	
 }
 .fb-icon{
-	display: inline-block;
     background-position: 0 -120px;
-    width: 24px;
-    height: 24px;
-    margin: 9px;
 }
 .twitter-icon{
-	display: inline-block;
     background-position: -24px -120px;
-    width: 24px;
-    height: 24px;
-    margin: 9px;
 }
 .gplus-icon{
-	display: inline-block;
     background-position: -72px -120px;
-    width: 24px;
-    height: 24px;
-    margin: 9px;
 }
 .linked-in-icon{
-	display: inline-block;
     background-position: -48px -120px;
-    width: 24px;
-    height: 24px;
-    margin: 9px;
 }
 .search-icon {
 	display: inline-block;
@@ -835,4 +815,30 @@ a:hover {
 	background-position: -72px 0;
 	width: 24px;
     height: 24px;
+}
+.reader-sprite-icon {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    margin-top: 14px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.list-icon {
+	background-position: -24px -48px;
+}  
+.share-icon {
+	background-position: -48px 0;
+}
+.reader-footer-icon {
+	width: 24px;
+    height: 24px;
+    display: inline-block;
+    margin-left: 10px;
+}
+.size-24-icon {
+	width: 24px;
+    height: 24px;
+    display: inline-block;
+    vertical-align: middle;	
 }

@@ -9,10 +9,10 @@
 	</div>
 	
 	<div style="white-space: nowrap; display: block;">
-		<a href="${ _strings.facebook_page }" target="_blank"><div class="sprites-icon fb-icon"></div></a>&nbsp;
-		<a href="${ _strings.twitter_page }" target="_blank"><div class="sprites-icon twitter-icon"></div></a>&nbsp;
-		<a href="${ _strings.googleplus_page }" target="_blank"><div class="sprites-icon gplus-icon"></div></a>&nbsp;
-		<a href="${ _strings.linkedin_page }" target="_blank"><div class="sprites-icon linked-in-icon"></div></a>
+		<a href="${ _strings.facebook_page }" target="_blank"><div class="sprites-icon footer-sprite-icon fb-icon"></div></a>&nbsp;
+		<a href="${ _strings.twitter_page }" target="_blank"><div class="sprites-icon footer-sprite-icon twitter-icon"></div></a>&nbsp;
+		<a href="${ _strings.googleplus_page }" target="_blank"><div class="sprites-icon footer-sprite-icon gplus-icon"></div></a>&nbsp;
+		<a href="${ _strings.linkedin_page }" target="_blank"><div class="sprites-icon footer-sprite-icon linked-in-icon"></div></a>
 	</div>
 	<br />
 	<a class="link" href="/about/pratilipi">${ _strings.footer_about_us }</a><br />

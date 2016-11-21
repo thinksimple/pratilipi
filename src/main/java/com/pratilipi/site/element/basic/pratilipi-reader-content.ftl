@@ -65,20 +65,20 @@
 				<div class="text-center div-center">
 					<a <#if user.isGuest() == true>href="/login?ret=${ pratilipi.getPageUrl() }?review=write%26ret=/${ pageUrl }?id=${ pratilipi.getId()?c }%26pageNo=${ pageNo }"<#else>href="${ pratilipi.getPageUrl() }?review=write&ret=/${ pageUrl }?id=${ pratilipi.getId()?c }%26pageNo=${ pageNo }"</#if> >
 						<h6 style="margin: 15px 0px; display: inline-block;">${ _strings.reader_enjoyed_review_book }</h6>
-						<img style="margin-left: 0px;" src="http://0.ptlp.co/resource-all/icon/svg/pencil.svg">
+						<div class="sprites-icon size-24-icon edit-icon">
 					</a>
 				</div>
 				<div class="text-center div-center">
 					<h6 style="margin: 15px;display: inline-block;">${ _strings.reader_enjoyed_reading_part2 } : </h6>
 					<div style="white-space: nowrap; display: inline-block;">
 						<a style="cursor: pointer;" onCLick="shareOnFacebook( 'container' )">
-							<img class="reader-icon-alert" src="http://0.ptlp.co/resource-all/icon/svg/facebook2.svg">
+							<div class="sprites-icon reader-footer-icon fb-icon">
 						</a>
 						<a style="cursor: pointer;" onCLick="shareOnTwitter( 'container' )">
-							<img class="reader-icon-alert" src="http://0.ptlp.co/resource-all/icon/svg/twitter.svg">
+							<div class="sprites-icon reader-footer-icon twitter-icon">
 						</a>
 						<a style="cursor: pointer;" onCLick="shareOnGplus( 'container' )">
-							<img class="reader-icon-alert" src="http://0.ptlp.co/resource-all/icon/svg/google-plus2.svg">
+							<div class="sprites-icon reader-footer-icon gplus-icon">
 						</a>
 					</div>
 				</div>
