@@ -5,7 +5,7 @@
 
 <#-- Page Title & Favicon -->
 <title>${ title }</title>
-<link rel="shortcut icon" type="image/png" href="/favicon.png">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 
 <#-- Third-Party Library and Facebook OG Tags-->
 <#list resourceList as resource>${ resource }</#list>

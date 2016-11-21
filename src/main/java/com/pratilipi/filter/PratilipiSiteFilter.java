@@ -54,10 +54,9 @@ public class PratilipiSiteFilter implements Filter {
 	private final Pattern oldPratilipiReaderUrlRegEx = Pattern.compile( "/read/(book|poem|story|article|pratilipi)/.*" );
 	
 	{
-		redirections.put( "/favicon.ico", "/favicon.png" );
 		redirections.put( "/theme.pratilipi/logo.png", "/logo.png" );
-//		redirections.put( "/apple-touch-icon.png", "/theme.pratilipi/favicon.png" );
-//		redirections.put( "/apple-touch-icon-precomposed.png", "/theme.pratilipi/favicon.png" );
+		redirections.put( "/apple-touch-icon.png", "/favicon.ico" );
+//		redirections.put( "/apple-touch-icon-precomposed.png", "/theme.pratilipi/favicon.ico" );
 
 //		redirections.put( "/robots.txt", "/service.robots" );
 
