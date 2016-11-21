@@ -32,7 +32,7 @@
 						<#if pratilipiList ??>
 							<div class="secondary-500 box pratilipi-shadow" style="padding: 12px 10px; margin-top: 12px;">
 								<#if ( numberFound > 10 ) >
-									<a href="?action=list_contents" class="pull-right"><img style="height:22px;" src="http://0.ptlp.co/resource-all/icon/svg/chevron-right-red.svg"></img></a>
+									<a href="?action=list_contents" class="pull-right"><div class="sprites-icon arrow-right-red-icon"></div></a>
 								</#if>
 								<div class="align-text-center">
 									<h2 class="pratilipi-red">${ _strings.event_entries }</h2>

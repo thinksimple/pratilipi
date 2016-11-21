@@ -30,22 +30,22 @@
 		</script>
 		<div class="secondary-500 pratilipi-shadow" style="display: block; padding: 5px; height: 64px;">
 			<a style="cursor: pointer; position: absolute; right: 16px; top: 20px;" onClick="history.back();return false;">
-				<img style="width: 20px;height: 20px;" src="http://0.ptlp.co/resource-all/icon/svg/cross.svg"/>
+				<div class="sprites-icon black-cross-icon"></div>
 			</a>
 		</div>		
-		<div class="parent-container">
+		<div class="parent-container" style="padding-top: 0px;">
 			<div class="container">
 				<div class="secondary-500 pratilipi-shadow box">
 					<a class="menu-item" style="cursor: pointer;" onclick="shareOnFacebook()" >
-						<img class="reader-icon" src="http://0.ptlp.co/resource-all/icon/svg/facebook2.svg"/>
+						<div class="sprites-icon reader-setting-icon fb-black-icon"></div>
 						<span>${ _strings.share_on_facebook }</span>
 					</a>
 					<a class="menu-item" style="cursor: pointer;" onclick="shareOnTwitter()" >
-						<img class="reader-icon" src="http://0.ptlp.co/resource-all/icon/svg/twitter.svg"/>
+						<div class="sprites-icon reader-setting-icon twitter-black-icon"></div>
 						<span>${ _strings.share_on_twitter }</span>
 					</a>
 					<a class="menu-item" style="cursor: pointer;" onclick="shareOnGplus()">
-						<img class="reader-icon" src="http://0.ptlp.co/resource-all/icon/svg/google-plus2.svg"/>
+						<div class="sprites-icon reader-setting-icon gplus-black-icon"></div>
 						<span>${ _strings.share_on_gplus }</span>
 					</a>
 				</div>	

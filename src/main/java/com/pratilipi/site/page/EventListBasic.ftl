@@ -37,7 +37,7 @@
 						<div class="secondary-500 pratilipi-shadow box" style="padding: 12px 16px;">
 							<div class="title-holder">
 								<a class="pratilipi-red event-title" href="${ event.pageUrl }">${ event.name }</a>
-								<a class="view-more" href="${ event.pageUrl }"><img style="height:22px;" src="http://0.ptlp.co/resource-all/icon/svg/chevron-right-red.svg"></img></a>
+								<a class="view-more" href="${ event.pageUrl }"><div class="sprites-icon arrow-right-red-icon"></div></a>
 							</div>
 							<div class="text-muted description-summary">${ event.getDescription()! }</div>
 						</div>

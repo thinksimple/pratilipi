@@ -12,15 +12,14 @@
 			<div class="container">
 				<div class="pratilipi-shadow secondary-500 box">
 					<#if user.isGuest()>
-						<div style="padding: 50px 10px;" class="secondary-500 pratilipi-shadow box">
-							<img style="width: 48px; height: 48px; margin: 0px auto 20px auto; display: block;" 
-									src="https://storage.googleapis.com/devo-pratilipi.appspot.com/icomoon_24_icons/SVG/info.svg" alt="${ _strings.author_no_contents_published }" />
+						<div style="padding: 25px 10px;" class="secondary-500 pratilipi-shadow box">
+							<div class="sprites-icon size-24-icon info-icon"></div>
 							<div class="text-center"><a class="login-link" href="/login?ret=/notification">${ _strings.user_login_to_view_notifications }</a></div>
 						</div>							
 					<#else>
 						<div class="pull-left">
 							<a style="cursor: pointer;">
-								<img style="width: 20px;height: 20px;" onclick="goBack()" src="http://0.ptlp.co/resource-all/icon/svg/arrow-left.svg">
+								<div class="sprites-icon black-arrow-left-icon"></div>
 						  	</a>	
 						</div>
 						<div class="center-heading">
@@ -40,8 +39,7 @@
 							</div>
 						<#else>
 							<div style="padding: 50px 10px;" class="secondary-500 pratilipi-shadow box">
-								<img style="width: 48px; height: 48px; margin: 0px auto 20px auto; display: block;" 
-										src="https://storage.googleapis.com/devo-pratilipi.appspot.com/icomoon_24_icons/SVG/info.svg" alt="${ _strings.author_no_contents_published }" />
+								<div class="sprites-icon size-24-icon info-icon"></div>
 								<div class="text-center">${ _strings.notifications_no_notifications }</div>
 							</div>							
 						</#if>

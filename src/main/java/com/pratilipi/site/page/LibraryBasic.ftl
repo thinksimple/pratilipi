@@ -14,9 +14,8 @@
 					<h2 class="pratilipi-red">${ _strings.my_library }</h2>
 				</div>
 				<#if user.isGuest() >
-					<div style="padding: 50px 10px;" class="secondary-500 pratilipi-shadow box">
-						<img style="width: 48px; height: 48px; margin: 0px auto 20px auto; display: block;" 
-								src="https://storage.googleapis.com/devo-pratilipi.appspot.com/icomoon_24_icons/SVG/info.svg" alt="${ _strings.author_no_contents_published }" />
+					<div style="padding: 25px 10px;" class="secondary-500 pratilipi-shadow box">
+						<div class="sprites-icon size-24-icon info-icon"></div>
 						<div class="text-center"><a class="login-link" href="/login?ret=/library">${ _strings.user_login_to_view_library }</a></div>
 					</div>				
 				<#else>
@@ -25,9 +24,8 @@
 							<#include "../element/basic/pratilipi-pratilipi-card.ftl">
 						</#list>
 					<#else>
-						<div style="padding: 50px 10px;" class="secondary-500 pratilipi-shadow box">
-							<img style="width: 48px; height: 48px; margin: 0px auto 20px auto; display: block;" 
-									src="http://0.ptlp.co/resource-all/icon/svg/info.svg" alt="${ _strings.author_no_contents_published }" />
+						<div style="padding: 25px 10px;" class="secondary-500 pratilipi-shadow box">
+							<div class="sprites-icon size-24-icon info-icon"></div>
 							<div class="text-center">${ _strings.empty_library }</div>
 						</div>
 					</#if>
