@@ -162,7 +162,7 @@
 		<#else>
 			<div class="secondary-500 pratilipi-shadow" style="display: block; padding: 5px; height: 64px;">
 				<a style="cursor: pointer; position: absolute; right: 16px; top: 20px;" onClick="history.back();return false;">
-					<img style="width: 20px;height: 20px;" src="http://0.ptlp.co/resource-all/icon/svg/cross.svg"/>
+					<div class="sprites-icon black-cross-icon"></div>
 				</a>
 			</div>
 		</#if>

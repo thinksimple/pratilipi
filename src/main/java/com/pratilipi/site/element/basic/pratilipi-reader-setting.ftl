@@ -21,20 +21,20 @@
 	<#-- Increase and Decrease size buttons -->
 	<#if contentType == "PRATILIPI">
 		<a class="menu-item" style="cursor: pointer;" onCLick="increaseFontSize()">
-			<img src="http://0.ptlp.co/resource-all/icon/svg/zoom-in.svg"/>
+			<div class="sprites-icon reader-setting-icon zoomin-icon"></div>
 			<span>${ _strings.increase_font_size }</span>
 		</a>
 		<a class="menu-item" style="cursor: pointer;" onCLick="decreaseFontSize()">
-			<img src="http://0.ptlp.co/resource-all/icon/svg/zoom-out.svg"/>
+			<div class="sprites-icon reader-setting-icon zoomout-icon"></div>
 			<span>${ _strings.decrease_font_size }</span>
 		</a>
 	<#elseif contentType == "IMAGE">
 		<a class="menu-item" style="cursor: pointer;" onCLick="increaseImageSize()">
-			<img src="http://0.ptlp.co/resource-all/icon/svg/zoom-in.svg"/>
+			<div class="sprites-icon reader-setting-icon zoomin-icon"></div>
 			<span>${ _strings.increase_image_size }</span>
 		</a>
 		<a class="menu-item" style="cursor: pointer;" onCLick="decreaseImageSize()">
-			<img src="http://0.ptlp.co/resource-all/icon/svg/zoom-out.svg"/>
+			<div class="sprites-icon reader-setting-icon zoomout-icon"></div>
 			<span>${ _strings.decrease_image_size }</span>
 		</a>
 	</#if>
@@ -44,32 +44,32 @@
 	<#-- Library Section -->
 	<#if user.isGuest() == true>
 		<a class="menu-item" href="/login?ret=/${ pageUrl }?id=${ pratilipi.getId()?c }%26addToLib=true%26pageNo=${ pageNo }">
-			<img src="http://0.ptlp.co/resource-all/icon/svg/folder-plus.svg"/>
+			<div class="sprites-icon reader-setting-icon library-plus-icon"></div>
 			<span>${ _strings.add_to_library }</span>
 		</a>
 	<#else>
 		<#if userpratilipi?? && userpratilipi.isAddedtoLib()??>
 			<#if userpratilipi.isAddedtoLib() == true>
 				<a class="menu-item" style="cursor: pointer;" onCLick="removeFromLibrary()">
-					<img src="http://0.ptlp.co/resource-all/icon/svg/folder-minus.svg"/>
+					<div class="sprites-icon reader-setting-icon library-minus-icon"></div>
 					<span>${ _strings.remove_from_library }</span>
 				</a>							
 			<#else>
 				<a class="menu-item" style="cursor: pointer;" onClick="addToLibrary()">
-					<img src="http://0.ptlp.co/resource-all/icon/svg/folder-plus.svg"/>
+					<div class="sprites-icon reader-setting-icon library-plus-icon"></div>
 					<span>${ _strings.add_to_library }</span>
 				</a>
 			</#if>
 		<#else>
 			<a class="menu-item" style="cursor: pointer;" onClick="addToLibrary()">
-				<img src="http://0.ptlp.co/resource-all/icon/svg/folder-plus.svg"/>
+				<div class="sprites-icon reader-setting-icon library-plus-icon"></div>
 				<span>${ _strings.add_to_library }</span>
 			</a>
 		</#if>
 	</#if>
 	
 	<a class="menu-item" <#if user.isGuest() == true>href="/login?ret=/library"<#else>href="/library"</#if>>
-		<img src="http://0.ptlp.co/resource-all/icon/svg/books.svg"/>
+		<div class="sprites-icon reader-setting-icon my-library-icon"></div>
 		<span>${ _strings.my_library }</span>
 	</a>
 	
@@ -77,15 +77,15 @@
 	
 	<#-- Redirects -->
 	<a class="menu-item" href="${ pratilipi.getPageUrl() }">
-		<img src="http://0.ptlp.co/resource-all/icon/svg/book.svg"/>
+		<div class="sprites-icon reader-setting-icon description-icon"></div>
 		<span>${ _strings.reader_goto_content_page }</span>
 	</a>				
 	<a class="menu-item" href="${ pratilipi.getAuthor().getPageUrl() }">
-		<img src="http://0.ptlp.co/resource-all/icon/svg/user.svg"/>
+		<div class="sprites-icon reader-setting-icon user-icon"></div>
 		<span>${ _strings.reader_goto_author_profile }</span>
 	</a>
 	<a class="menu-item" href="/">
-		<img src="http://0.ptlp.co/resource-all/icon/svg/home3.svg"/>
+		<div class="sprites-icon reader-setting-icon homepage-icon"></div>
 		<span>${ _strings.reader_goto_home_page }</span>
 	</a>
 </div>

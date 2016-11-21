@@ -832,6 +832,7 @@ a:hover {
     margin-top: 14px;
     margin-left: 10px;
     margin-right: 10px;
+    vertical-align: middle;
 }
 .list-icon {
 	background-position: -24px -48px;
@@ -844,10 +845,42 @@ a:hover {
     height: 24px;
     display: inline-block;
     margin-left: 10px;
+    vertical-align: middle;
 }
 .size-24-icon {
 	width: 24px;
     height: 24px;
     display: inline-block;
     vertical-align: middle;	
+}
+.reader-setting-icon {
+	width: 24px;
+    height: 24px;
+    display: inline-block;
+    margin-right: 12px;
+    vertical-align: middle;
+}
+.zoomin-icon {
+	background-position: -48px -72px;	
+}
+.zoomout-icon {
+	background-position: -24px -72px;	
+}
+.library-plus-icon {
+	background-position: 0 0;	
+}
+.library-minus-icon {
+	background-position: -120px 0;	
+}
+.my-library-icon {
+	background-position: 0 -72px;	
+}
+.description-icon {
+	background-position: -24px 0;	
+}
+.user-icon {
+	background-position: -120px -48px;	
+}
+.homepage-icon {
+	background-position: -72px -72px;	
 }
