@@ -51,53 +51,9 @@ public class NotificationProcessApi extends GenericApi {
 			if( entry.getKey().equals( 5629499534213120L ) ) { // TODO: remove
 				for( Notification n : entry.getValue() ) // TODO: remove
 					logger.log( Level.INFO, ">> " + n.getKey() ); // TODO: remove
-				NotificationDataUtil.blahblab( entry.getKey(), entry.getValue() );
+				NotificationDataUtil.dispatchNotification( entry.getKey(), entry.getValue() );
 			}
 		}
-		
-		if( true )
-			return new GenericResponse();
-		
-		
-/*
-		FirebaseApi.updateUserNotificationData( userIdNotifIdListMap );
-
-
-		// FCM Cloud Messaging
-		List<Notification> notificationListToPersist = new ArrayList<>( notificationList.size() );
-		for( int i = 0; i < notificationList.size(); i++ ) {
-			
-			Notification notification = notificationList.get( i );
-			NotificationData notificationData = notificationDataList.get( i );
-			
-			if( notificationData.getMessage() == null )
-				continue;
-			if( notification.getState() != NotificationState.UNREAD )
-				continue;
-
-
-			List<String> fcmTokenList = dataAccessor.getFcmTokenList( notification.getUserId() );
-			if( fcmTokenList.size() == 0 )
-				continue;
-			
-			String fcmResponse = FirebaseApi.sendCloudMessage(
-					fcmTokenList,
-					notificationData.getMessage(),
-					notification.getId().toString(),
-					notification.getType().getAndroidHandler(),
-					notification.getSourceId().toString() );
-			
-			if( notification.getFcmResponse() == null )
-				notification.setFcmResponse( fcmResponse );
-			else
-				notification.setFcmResponse( notification.getFcmResponse() + "\n" + fcmResponse );
-			notificationListToPersist.add( notification );
-			
-		}
-		dataAccessor.createOrUpdateNotificationList( notificationListToPersist );
-
-		*/
-		
 		
 		return new GenericResponse();
 		

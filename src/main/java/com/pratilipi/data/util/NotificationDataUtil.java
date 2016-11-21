@@ -200,7 +200,7 @@ public class NotificationDataUtil {
 	}
 	
 	
-	public static void blahblab( final Long userId, List<Notification> notifList ) throws UnexpectedServerException {
+	public static void dispatchNotification( final Long userId, List<Notification> notifList ) throws UnexpectedServerException {
 		
 		List<NotificationData> notifDataList = createNotificationDataList( notifList, null, true );
 		
@@ -216,14 +216,14 @@ public class NotificationDataUtil {
 		Async async = new Async() {
 			
 			@Override
-			public void exec() {
+			public void doSome() {
 				
 				for( Long notifId : notifIdListToAdd )
 					logger.log( Level.INFO, "Sending FMC for " + notifId );
 				for( Long notifId : notifIdListToRemove )
 					logger.log( Level.INFO, "Removing FMC for " + notifId );
 				
-/*				DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+				DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 				
 				List<String> fcmTokenList = dataAccessor.getFcmTokenList( userId );
 				if( fcmTokenList.size() == 0 )
@@ -251,15 +251,21 @@ public class NotificationDataUtil {
 						else
 							notification.setFcmResponse( notification.getFcmResponse() + "\n" + fcmResponse );
 					}
-					notificationList = dataAccessor.createOrUpdateNotificationList( notificationList );
+//					notificationList = dataAccessor.createOrUpdateNotificationList( notificationList );
 					
 				} catch( UnexpectedServerException ex ) {
 					// TODO
 				}
-*/				
+
 			}
 			
 		};
+		
+		logger.log( Level.INFO, "User Id: " + userId );
+		for( Long l : notifIdListToAdd )
+			logger.log( Level.INFO, "NotifIds to add: " + l );
+		for( Long l : notifIdListToRemove )
+			logger.log( Level.INFO, "NotifIds to remove: " + l );
 		
 		FirebaseApi.updateUserNotificationData(
 				userId,
