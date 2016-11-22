@@ -48,6 +48,9 @@ public class NotificationEntity implements Notification {
 	
 	
 	@Index
+	private String CREATED_BY;
+	
+	@Index
 	private Date CREATION_DATE;
 	
 	@Index
@@ -207,6 +210,16 @@ public class NotificationEntity implements Notification {
 	}
 	
 	
+	@Override
+	public String getCreatedBy() {
+		return CREATED_BY;
+	}
+	
+	@Override
+	public void setCreatedBy( String createdBy ) {
+		this.CREATED_BY = createdBy;
+	}
+
 	@Override
 	public Date getCreationDate() {
 		return CREATION_DATE;

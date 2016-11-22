@@ -20,6 +20,7 @@ public class BatchProcessEntity implements BatchProcess {
 	@Index
 	private BatchProcessType TYPE;
 	private String INIT_DOC;
+	private String EXEC_DOC;
 
 	@Index
 	private BatchProcessState STATE_IN_PROGRESS;
@@ -78,6 +79,16 @@ public class BatchProcessEntity implements BatchProcess {
 	@Override
 	public void setInitDoc( String intDoc ) {
 		this.INIT_DOC = intDoc;
+	}
+	
+	@Override
+	public String getExecDoc() {
+		return EXEC_DOC;
+	}
+
+	@Override
+	public void setExecDoc( String execDoc ) {
+		this.EXEC_DOC = execDoc;
 	}
 
 	

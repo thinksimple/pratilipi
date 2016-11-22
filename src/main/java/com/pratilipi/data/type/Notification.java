@@ -53,6 +53,10 @@ public interface Notification extends GenericOfyType {
 	void setFcmResponse( String fcmResponse );
 	
 	
+	String getCreatedBy();
+
+	void setCreatedBy( String createdBy );
+	
 	Date getCreationDate();
 	
 	void setCreationDate( Date creationDate );
