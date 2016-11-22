@@ -35,16 +35,17 @@ fi
 
 echo "Initialising ...."
 git init
+git remote add origin git@github.com:Pratilipi/pratilipi.git
 git remote set-url origin git@github.com:Pratilipi/pratilipi.git
 
 echo "Fetching ...."
 git fetch
 
-branch=$(date +%d-%b-Release)
+branch=$(date +%d-%b-%H-%M-Release)
 
 echo "Deleting existing branch ...."
 git branch -d $branch
-git push origin --delete origin/$branch
+git push origin -d $branch
 
 echo "Creating New branch -> $branch ...."
 git checkout -b $branch origin/master
@@ -53,9 +54,10 @@ git push origin $branch
 
 update_module () {
     echo "Syncing $1 from $2 ...."
+    git tag -d $1
     git branch -d $1
-    git push origin --delete origin/$1
-    git checkout -b $1 origin/$2
+    git push origin -d $1
+    git checkout -b $1 $2
     git push origin $1
 }
 
