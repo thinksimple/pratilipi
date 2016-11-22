@@ -2,6 +2,7 @@ package com.pratilipi.service;
 
 import com.pratilipi.api.ApiRegistry;
 import com.pratilipi.api.GenericService;
+import com.pratilipi.api.batchprocess.BatchProcessApi;
 import com.pratilipi.api.impl.accesstoken.AccessTokenCleanupApi;
 import com.pratilipi.api.impl.auditlog.AuditLogProcessApi;
 import com.pratilipi.api.impl.author.AuthorBackupApi;
@@ -46,6 +47,8 @@ public class WorkerService extends GenericService {
 		
 		ApiRegistry.register( NotificationProcessApi.class );
 
+		ApiRegistry.register( BatchProcessApi.class );
+		
 	}
 	
 }
