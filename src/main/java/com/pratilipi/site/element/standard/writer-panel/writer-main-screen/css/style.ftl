@@ -565,3 +565,53 @@ blockquote {
 #chapter-content p {
     margin: 0 0 7px;
 }
+.sprites-icon {
+	background-image: url(resources/icons-writer.svg);
+    background-size: 24px 216px;
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+}
+.sprites-icon-size-16 {
+	background-image: url(resources/icons-writer.svg);
+    background-size: 16px 144px;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+}
+.sprites-icon-size-36 {
+	background-image: url(resources/icons-writer.svg);
+    background-size: 36px 324px;
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    vertical-align: middle;
+}
+.left-arrow-icon {
+	background-position:0 0;
+}
+.edit-icon {
+    margin-right: 10px;
+    background-position:0 -24px;
+}
+.list-icon {
+	background-position: 0 -120px;
+}
+.angle-down-icon {
+	background-position: 0 -72px;
+}
+.chevron-left-icon-36 {	
+	background-position: 0 108px;
+}
+
+.chevron-right-icon-36 {
+	background-position: 0 72px;
+}
+.camera-sprite-icon {
+	background-position: 0 24px;
+}
+.red-circle-icon-16 {
+	background-position: 0 -64px;
+}

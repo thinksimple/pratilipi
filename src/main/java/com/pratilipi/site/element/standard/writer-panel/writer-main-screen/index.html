@@ -3,18 +3,18 @@
 		<div class="header-wrapper">
 			<div id="header1" style="background: white; padding-bottom: 10px;">
 				<a style="cursor: pointer; margin-top: 10px; margin-right: 10px;" class="pull-left" href="${ pratilipi.getPageUrl() }" data-behaviour="back_button" >
-					<img class="dimension-20" src="http://0.ptlp.co/resource-all/icon/svg/arrow-left2.svg">
+					<div class="sprites-icon left-arrow-icon"></div>
 				</a>
 				<div class="dropdown" id="toc_container" style="display: inline;">
 					<div class="dropdown-toggle" id="table_of_contents_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="display: inline;">
 						<button class="btn btn-default white-space-normal" id="toc_button" style="">
-							<img class="pull-left" style="width: 28px; height: 20px;" src="http://0.ptlp.co/resource-all/icon/svg/list2.svg">
+							<div class="pull-left sprites-icon list-icon"></div>
 							<h4 class="small-screen-hidden" id="book_name_toc" style="margin-top: 10px; margin-bottom: 5px; display: inline;">${ pratilipi.getTitle() }</h4>
-							<img class="small-screen-hidden pull-right" style="width: 28px; height: 20px;" src="http://0.ptlp.co/resource-all/icon/svg/angle-down.svg" alt="${ pratilipi.getTitle() }">
+							<div class="small-screen-hidden pull-right sprites-icon angle-down-icon"></div>
 						</button>
 					</div> 
 					<ul class="dropdown-menu" aria-labelledby="table_of_contents_dropdown" style="min-width: 230px; margin-top: 13px; border-radius: 0 0 4px 4px;height: auto;overflow-x: hidden;max-height: calc(100vh - 106px);max-height: -o-calc(100vh - 106px);max-height: -webkit-calc(100vh - 106px);max-height: -moz-calc(100vh - 106px);">
-						<li style="cursor: pointer;" data-behaviour="edit-title" class="text-center"><strong class="pratilipi-red">${ _strings.writer_edit_title_placeholder }</strong><img class="dimension-20 pull-right" style="margin-right: 10px" src="http://0.ptlp.co/resource-all/icon/svg/pencil-d0021b.svg"></li>
+						<li style="cursor: pointer;" data-behaviour="edit-title" class="text-center"><strong class="pratilipi-red">${ _strings.writer_edit_title_placeholder }</strong><div class="sprites-icon edit-icon pull-right"></div></li>
 						<li role="separator" class="divider"></li>
 						<li class="text-center"><strong>${ _strings.writer_table_of_contents }</strong></li>
 						<li role="separator" class="divider"></li>
@@ -84,9 +84,9 @@
 	<div id="pagination" style="padding-top: 0.25%; position: fixed; bottom: 0; right: 0; left: 0; background: whitesmoke;">		 	
 		<div class="col-lg-4 col-lg-offset-4 col-xs-6 col-xs-offset-3 text-center">
 			<form class="inline">
-				<a class="show-cursor" data-behaviour="previous-page"><img src="http://0.ptlp.co/resource-all/icon/svg/chevron-left.svg"></a>
+				<a class="show-cursor" data-behaviour="previous-page"><div class="sprites-icon-size-36 chevron-left-icon-36"></div></a>
 				<p data-behaviour="page-info" style="display: inline; font-size: 20px; padding: 10px;"><input class="horizontal-form-input" data-behaviour="curr_page" type="text" value="" style="width: 25px;">/1</p>
-				<a class="show-cursor" data-behaviour="next-page"><img src="http://0.ptlp.co/resource-all/icon/svg/chevron-right.svg"></a>
+				<a class="show-cursor" data-behaviour="next-page"><div class="sprites-icon-size-36 chevron-right-icon-36"></div></a>
 				<div class="clearfix"></div>
 			</form>	
 		</div>
@@ -96,7 +96,7 @@
 				<span class="sr-only">80% Complete (danger)</span>
 			</div>
 		</div>
-		<img src='http://0.ptlp.co/resource-all/icon/svg/circle-red.svg' data-behaviour="progress-ball" style="left: 0; top: -15%; width: 15px; height: 15px; position: absolute;">
+		<div class="sprites-icon-size-16 red-circle-icon-16" data-behaviour="progress-ball" style="left: 0; top: -15%; position: absolute;"></div>
 	</div>
 
 	<#-- Modal for title change -->
@@ -168,7 +168,7 @@
 							<a class="show-cursor">
 								<div class="pull-left image-container" >
 									<img class="cover-image" src="http://0.ptlp.co/resource-all/icon/png/default-cover-image.png" alt="${ pratilipi.getTitle() }">
-									<img src="http://0.ptlp.co/resource-all/icon/svg/camera2.svg" class="camera-icon">						
+									<div class="camera-icon sprites-icon camera-sprite-icon"></div>						
 								</div>
 							</a>
 							<div class="clearfix"></div>
