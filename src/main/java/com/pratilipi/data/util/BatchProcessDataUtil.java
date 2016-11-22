@@ -145,7 +145,7 @@ public class BatchProcessDataUtil {
 		int count = 0; // 'count' will remain 0 if everything went fine in previous run
 		for( Entry<Long, Long> entry : processedUserIdList.entrySet() ) {
 			
-			if( entry.getValue() != null ) {
+			if( entry.getValue() != 0L ) {
 				userIdList.remove( entry.getKey() );
 				continue;
 			}
@@ -167,7 +167,7 @@ public class BatchProcessDataUtil {
 
 		
 		for( Long userId : userIdList ) {
-			processedUserIdList.put( userId, null );
+			processedUserIdList.put( userId, 0L ); // Can't put null (instead of 0) here because Gson ignores keys with null values
 			if( ++count == 100 ) // Limiting to 100 users per run
 				break;
 		}
@@ -182,7 +182,7 @@ public class BatchProcessDataUtil {
 			
 			for( Entry<Long, Long> entry : processedUserIdList.entrySet() ) {
 				
-				if( entry.getValue() != null )
+				if( entry.getValue() != 0L )
 					continue;
 				
 				Notification notification = dataAccessor.newNotification(
