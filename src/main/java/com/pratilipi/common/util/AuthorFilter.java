@@ -2,11 +2,14 @@ package com.pratilipi.common.util;
 
 import java.util.Date;
 
+import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.Language;
 
 public class AuthorFilter {
 	
 	private Language language;
+
+	private AuthorState state;
 	
 	private Date minLastUpdated;
 	private Boolean minLastUpdatedInclusive;
@@ -20,6 +23,14 @@ public class AuthorFilter {
 
 	public void setLanguage( Language language ) {
 		this.language = language;
+	}
+
+	public AuthorState getState() {
+		return state;
+	}
+
+	public void setState( AuthorState state ) {
+		this.state = state;
 	}
 
 	public Date getMinLastUpdated() {

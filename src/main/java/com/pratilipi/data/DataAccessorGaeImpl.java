@@ -931,6 +931,9 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		if( authorFilter.getLanguage() != null )
 			query = query.filter( "LANGUAGE", authorFilter.getLanguage() );
 
+		if( authorFilter.getState() != null )
+			query = query.filter( "STATE", authorFilter.getState() );
+
 		if( authorFilter.getMinLastUpdated() != null ) {
 			query = query.filter(
 					authorFilter.isMinLastUpdatedInclusive() ? "LAST_UPDATED >=" : "LAST_UPDATED >",
