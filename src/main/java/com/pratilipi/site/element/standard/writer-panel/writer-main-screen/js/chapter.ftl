@@ -17,11 +17,10 @@ Chapter.prototype.getListDomElement = function () {
         "class": "white-space-normal",
     }).text(this.name);
 
-    var $delete = $("<img>", {
-        "class": "pull-right",
-        "data-behaviour": "delete-chapter",
-         src: "http://0.ptlp.co/resource-all/icon/svg/trash.svg"
-    }).data("relatedObject", this).css({width: "20px", height: "20px"});
+    var $delete = $("<div>", {
+        "class": "pull-right sprites-icon delete-icon",
+        "data-behaviour": "delete-chapter"
+    }).data("relatedObject", this);
     
     /*$delete.on("click", function(e) {
     	e.stopPropagation();

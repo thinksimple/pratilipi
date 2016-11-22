@@ -599,6 +599,9 @@ blockquote {
 .list-icon {
 	background-position: 0 -120px;
 }
+.delete-icon {
+	background-position: 0 -48px;
+}
 .angle-down-icon {
 	background-position: 0 -72px;
 }
@@ -615,3 +618,4 @@ blockquote {
 .red-circle-icon-16 {
 	background-position: 0 -64px;
 }
+

@@ -77,7 +77,7 @@ TableOfContents.prototype.setCurrentChapterActive = function() {
 
 TableOfContents.prototype.delegateDeleteChapterListeners = function() {
 	var _this = this;
-	this.$dropdown_menu_list.on("click", "img[data-behaviour=delete-chapter]", function(e) {
+	this.$dropdown_menu_list.on("click", "div[data-behaviour=delete-chapter]", function(e) {
 		e.stopPropagation();
 		var chapter_object = $(this).data("relatedObject");
 		var chapterNum = chapter_object.chapterNo;
