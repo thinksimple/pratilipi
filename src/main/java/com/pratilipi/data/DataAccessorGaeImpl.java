@@ -132,6 +132,8 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		
 		ObjectifyService.register( I18nEntity.class );
 		
+		ObjectifyService.register( BatchProcessEntity.class );
+		
 	}
 	
 	
@@ -1750,12 +1752,20 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	@Override
 	public Notification newNotification( Long userId, NotificationType type, Long sourceId ) {
+		return newNotification( userId, type, sourceId.toString(), null );
+	}
+
+	@Override
+	public Notification newNotification( Long userId, NotificationType type, String sourceId, String createdBy ) {
 		Notification notification = new NotificationEntity();
 		notification.setUserId( userId );
 		notification.setType( type );
 		notification.setSourceId( sourceId );
 		notification.setState( NotificationState.UNREAD );
+		notification.setFcmPending( true );
+		notification.setCreatedBy( createdBy );
 		notification.setCreationDate( new Date() );
+		notification.setLastUpdated( new Date() );
 		return notification;
 	}
 
@@ -1772,6 +1782,20 @@ public class DataAccessorGaeImpl implements DataAccessor {
 				.filter( "USER_ID", userId )
 				.filter( "TYPE", type )
 				.filter( "SOURCE_ID", sourceId.toString() )
+				.order( "-LAST_UPDATED" )
+				.first().now();
+	
+	}
+	
+	@Override
+	public Notification getNotification( Long userId, NotificationType type, String sourceId, String createdBy ) {
+
+		return ObjectifyService.ofy().load()
+				.type( NotificationEntity.class )
+				.filter( "USER_ID", userId )
+				.filter( "TYPE", type )
+				.filter( "SOURCE_ID", sourceId )
+				.filter( "CREATED_BY", createdBy )
 				.order( "-LAST_UPDATED" )
 				.first().now();
 	

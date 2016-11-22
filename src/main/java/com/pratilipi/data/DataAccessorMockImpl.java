@@ -9,7 +9,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -734,24 +733,7 @@ public class DataAccessorMockImpl implements DataAccessor {
 	// curated/home.<lang>
 	
 	@Override
-	public List<String> getHomeSectionList( Language language ) { 
-		List<String> sectionList = new LinkedList<>();
-
-		try {
-			String fileName = CURATED_DATA_FOLDER + "/home." + language.getCode();
-			InputStream inputStream = DataAccessor.class.getResource( fileName ).openStream();
-			for( String listName : IOUtils.readLines( inputStream, "UTF-8" ) ) {
-				listName = listName.trim();
-				if( ! listName.isEmpty() )
-					sectionList.add( listName );
-			}
-			inputStream.close();
-		} catch( NullPointerException | IOException e ) {
-			logger.log( Level.SEVERE, "Exception while reading from home." + language.getNameEn(), e );
-		}
-		
-		return sectionList; 
-	}
+	public List<String> getHomeSectionList( Language language ) { return null; }
 	
 	
 	// NAVIGATION Table
@@ -1019,6 +1001,12 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 
 	@Override
+	public Notification newNotification( Long userId, NotificationType type, String sourceId, String createdBy ) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
 	public Notification getNotification( Long notificationId ) {
 		for( Notification notification : NotificationMock.NOTIFICATION_TABLE )
 			if( notification.getId() == notificationId )
@@ -1031,6 +1019,12 @@ public class DataAccessorMockImpl implements DataAccessor {
 		for( Notification notification : NotificationMock.NOTIFICATION_TABLE )
 			if( notification.getUserId() == userId && notification.getType() == type && notification.getSourceIdLong() == sourceId )
 				return notification;
+		return null;
+	}
+	
+	@Override
+	public Notification getNotification( Long userId, NotificationType type, String sourceId, String createdBy ) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 	

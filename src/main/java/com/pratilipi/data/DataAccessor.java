@@ -199,8 +199,10 @@ public interface DataAccessor {
 	// NOTIFICATION Table
 	Notification newNotification();
 	Notification newNotification( Long userId, NotificationType type, Long sourceId );
+	Notification newNotification( Long userId, NotificationType type, String sourceId, String createdBy );
 	Notification getNotification( Long notificationId );
 	Notification getNotification( Long userId, NotificationType type, Long sourceId );
+	Notification getNotification( Long userId, NotificationType type, String sourceId, String createdBy );
 	List<Notification> getNotificationList( List<Long> notificationIdList );
 	List<Notification> getNotificationListWithFcmPending( Integer resultCount );
 	DataListCursorTuple<Notification> getNotificationList( Long userId, NotificationType type, Long sourceId, String cursor, Integer resultCount  );
