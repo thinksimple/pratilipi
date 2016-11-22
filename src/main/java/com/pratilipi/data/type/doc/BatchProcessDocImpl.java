@@ -20,6 +20,8 @@ public class BatchProcessDocImpl implements BatchProcessDoc {
 
 	@Override
 	public void setData( String name, JsonElement data ) {
+		if( this.data == null )
+			this.data = new JsonObject();
 		this.data.add( name, data );
 		this.lastUpdated = new Date();
 	}

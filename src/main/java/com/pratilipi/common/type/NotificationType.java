@@ -3,6 +3,9 @@ package com.pratilipi.common.type;
 public enum NotificationType {
 	
 	GENERIC( "NOTIFICATION_GENERIC" ),
+	
+	PRATILIPI( "NOTIFICATION_BOOK" ),
+	
 	PRATILIPI_ADD( "NOTIFICATION_BOOK" ),
 	AUTHOR_FOLLOW( "NOTIFICATION_FOLLOWERS" ),
 	;

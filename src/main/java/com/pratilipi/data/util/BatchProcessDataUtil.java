@@ -1,5 +1,7 @@
 package com.pratilipi.data.util;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +24,7 @@ import com.pratilipi.data.type.BatchProcess;
 import com.pratilipi.data.type.BatchProcessDoc;
 import com.pratilipi.data.type.Notification;
 
+
 public class BatchProcessDataUtil {
 	
 	 public static void exec( Long batchProcessId ) throws UnexpectedServerException {
@@ -37,6 +40,7 @@ public class BatchProcessDataUtil {
 			throw new UnexpectedServerException();
 		
 		batchProcess.setStateInProgress( currState );
+		batchProcess.setLastUpdated( new Date() );
 		batchProcess = dataAccessor.createOrUpdateBatchProcess( batchProcess );
 
 		System.out.println( "Process Id: " + batchProcess.getId() );
@@ -53,6 +57,7 @@ public class BatchProcessDataUtil {
 			batchProcess.setStateCompleted( currState );
 		
 		batchProcess.setStateInProgress( null );
+		batchProcess.setLastUpdated( new Date() );
 		batchProcess = dataAccessor.createOrUpdateBatchProcess( batchProcess ); // Saving Entity
 
 	}
@@ -116,6 +121,7 @@ public class BatchProcessDataUtil {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
 
+		
 		BatchProcessDoc processDoc = docAccessor.getBatchProcessDoc( batchProcess.getId() );
 		
 		List<Long> userIdList = processDoc.getData(
@@ -124,7 +130,16 @@ public class BatchProcessDataUtil {
 
 		Map<Long,Long> processedUserIdList = processDoc.getData(
 				BatchProcessState.CREATE_NOTIFICATIONS_FOR_USER_IDS.getOutputName(),
-				new TypeToken<List<Long>>(){}.getType() );
+				new TypeToken<Map<Long,Long>>(){}.getType() );
+		
+		if( processedUserIdList == null )
+			processedUserIdList = new HashMap<>();
+		
+		
+		JsonObject execDoc = new Gson().fromJson( batchProcess.getExecDoc(), JsonElement.class ).getAsJsonObject();
+		NotificationType type = NotificationType.valueOf( execDoc.get( "type" ).getAsString() );
+		String sourceId = execDoc.get( "sourceId" ).getAsString();
+		String createdBy = "BATCH_PROCESS::" + batchProcess.getId();
 		
 		
 		int count = 0; // 'count' will remain 0 if everything went fine in previous run
@@ -137,8 +152,9 @@ public class BatchProcessDataUtil {
 			
 			Notification notification = dataAccessor.getNotification(
 					entry.getKey(),
-					NotificationType.GENERIC,
-					batchProcess.getId() );
+					type,
+					sourceId,
+					createdBy );
 			
 			if( notification == null ) {
 				count++;
@@ -148,17 +164,22 @@ public class BatchProcessDataUtil {
 			}
 			
 		}
+
 		
 		for( Long userId : userIdList ) {
 			processedUserIdList.put( userId, null );
-			if( ++count == 100 ) // Limiting to 100 users per iteration
+			if( ++count == 100 ) // Limiting to 100 users per run
 				break;
 		}
 
+		
 		if( count != 0 ) {
+			
 			processDoc.setData(
 					BatchProcessState.CREATE_NOTIFICATIONS_FOR_USER_IDS.getOutputName(),
 					processedUserIdList );
+			docAccessor.save( batchProcess.getId(), processDoc ); // Saving Doc
+			
 			for( Entry<Long, Long> entry : processedUserIdList.entrySet() ) {
 				
 				if( entry.getValue() != null )
@@ -166,18 +187,21 @@ public class BatchProcessDataUtil {
 				
 				Notification notification = dataAccessor.newNotification(
 						entry.getKey(),
-						NotificationType.GENERIC,
-						batchProcess.getId() );
-				
+						type,
+						sourceId,
+						createdBy );
 				notification = dataAccessor.createOrUpdateNotification( notification );
+				
 				entry.setValue( notification.getId() );
 				
 			}
+			
 		}
 		
 		
 		if( count < 100 )
 			batchProcess.setStateCompleted( BatchProcessState.CREATE_NOTIFICATIONS_FOR_USER_IDS );
+
 		
 		processDoc.setData(
 				BatchProcessState.CREATE_NOTIFICATIONS_FOR_USER_IDS.getOutputName(),
