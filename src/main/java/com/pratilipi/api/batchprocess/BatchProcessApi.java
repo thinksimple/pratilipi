@@ -1,6 +1,5 @@
 package com.pratilipi.api.batchprocess;
 
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import com.pratilipi.api.GenericApi;
@@ -20,7 +19,7 @@ import com.pratilipi.data.util.BatchProcessDataUtil;
 public class BatchProcessApi extends GenericApi {
 	
 	@Get
-	public GenericResponse get( GenericRequest request ) throws UnsupportedEncodingException, UnexpectedServerException {
+	public GenericResponse get( GenericRequest request ) throws UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		

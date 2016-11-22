@@ -75,7 +75,7 @@ public class FirebaseApi {
 	}
 
 
-	public static String sendCloudMessage( List<String> fcmTokenList, String message, String tag, String androidHandler, String sourceId )
+	public static String sendCloudMessage( List<String> fcmTokenList, String message, String tag, String androidHandler, String sourceId, String sourceImageUrl )
 			throws UnexpectedServerException {
 
 		Map<String, String> headersMap = new HashMap<>();
@@ -90,6 +90,7 @@ public class FirebaseApi {
 		
 		JsonObject dataJson = new JsonObject();
 		dataJson.addProperty( "sourceId", sourceId );
+		dataJson.addProperty( "sourceImageUrl", sourceImageUrl );
 		
 		JsonObject bodyJson = new JsonObject();
 		bodyJson.add( "registration_ids", new Gson().toJsonTree( fcmTokenList ) );

@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.I18nGroup;
@@ -23,6 +26,7 @@ import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.client.NotificationData;
 import com.pratilipi.data.client.PratilipiData;
 import com.pratilipi.data.client.UserData;
+import com.pratilipi.data.type.BatchProcess;
 import com.pratilipi.data.type.I18n;
 import com.pratilipi.data.type.Notification;
 import com.pratilipi.filter.AccessTokenFilter;
@@ -51,7 +55,7 @@ public class NotificationDataUtil {
 		return notification.getUserId().equals( AccessTokenFilter.getAccessToken().getUserId() );
 	}
 	
-	
+
 	private static String createNotificationMessage( PratilipiData pratilipiData, Language language, boolean plainText ) { // NotificationType == PRATILIPI_ADD
 		String pratilipiTitle = pratilipiData.getTitle() == null
 				? pratilipiData.getTitleEn()
@@ -99,7 +103,9 @@ public class NotificationDataUtil {
 		List<Long> pratilipiIdList = new LinkedList<>();
 		for( Notification notification : notificationList ) {
 			userIdList.add( notification.getUserId() );
-			if( notification.getType() == NotificationType.PRATILIPI_ADD ) {
+			if( notification.getType() == NotificationType.PRATILIPI ) {
+				pratilipiIdList.add( notification.getSourceIdLong() );
+			} else if( notification.getType() == NotificationType.PRATILIPI_ADD ) {
 				pratilipiIdList.add( notification.getSourceIdLong() );
 			} else if( notification.getType() == NotificationType.AUTHOR_FOLLOW ) {
 				if( notification.getDataIds().size() <= 3 )
@@ -129,7 +135,21 @@ public class NotificationDataUtil {
 			if( notificationLanguage == null )
 				notificationLanguage = Language.ENGLISH;
 			
-			if( notification.getType() == NotificationType.PRATILIPI_ADD ) {
+			if( notification.getType() == NotificationType.PRATILIPI ) {
+				
+				String createdBy = notification.getCreatedBy();
+				if( createdBy.startsWith( "BATCH_PROCESS::" ) ) {
+					Long batchProcessId = Long.parseLong( createdBy.substring( 15 ) );
+					BatchProcess batchProcess = DataAccessorFactory.getDataAccessor().getBatchProcess( batchProcessId );
+					JsonObject execDoc = new Gson().fromJson( batchProcess.getExecDoc(), JsonElement.class ).getAsJsonObject();
+					notificationData.setMessage( execDoc.get( "message" ).getAsString() );
+				}
+				
+				PratilipiData pratilipiData = pratilipis.get( notification.getSourceIdLong() );
+				notificationData.setSourceUrl( pratilipiData.getPageUrl() + "?" + RequestParameter.NOTIFICATION_ID.getName() + "=" + notification.getId() );
+				notificationData.setSourceImageUrl( pratilipiData.getCoverImageUrl() );
+				
+			} else if( notification.getType() == NotificationType.PRATILIPI_ADD ) {
 
 				PratilipiData pratilipiData = pratilipis.get( notification.getSourceIdLong() );
 				if( pratilipiData.getState() ==  PratilipiState.PUBLISHED ) {
@@ -237,15 +257,16 @@ public class NotificationDataUtil {
 			NotificationData notifData = createNotificationDataList( notifList, null, true ).get( 0 ); // TODO: Implement createNotificationData
 			if( notifData.getMessage() != null ) { // TODO: Cancel previously sent FCM if notifData.getMessage() == null
 				
-				List<String> fcmTokenList = dataAccessor.getFcmTokenList( notif.getUserId() );
+				List<String> fcmTokenList = dataAccessor.getFcmTokenList( notifData.getUserId() );
 				if( fcmTokenList.size() != 0 ) {
 					
 					String fcmResponse = FirebaseApi.sendCloudMessage(
 							fcmTokenList,
 							notifData.getMessage(),
-							notif.getId().toString(),
-							notif.getType().getAndroidHandler(),
-							notif.getSourceId().toString() );
+							notifData.getId().toString(),
+							notifData.getNotificationType().getAndroidHandler(),
+							notifData.getSourceId(),
+							notifData.getSourceImageUrl() );
 						
 					if( notif.getFcmResponse() == null )
 						notif.setFcmResponse( fcmResponse );
