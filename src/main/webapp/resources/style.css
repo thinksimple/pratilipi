@@ -706,20 +706,20 @@ body.sepia-mode #reader-alert-box {
 	height: 32px;
 }
 .icon-facebook {
-	background-position-y: 0px;
+	background-position: 0 0px;
 }
 .icon-google-plus {
-	background-position-y: -32px;
+	background-position: 0 -32px;
 }
 .icon-linkedin {
-	background-position-y: -64px;
+	background-position: 0 -64px;
 }
 .icon-quora {
-	background-position-y: -96px;
+	background-position: 0 -96px;
 }
 .icon-twitter {
-	background-position-y: -128px;			
+	background-position: 0 -128px;			
 }
 .icon-whatsapp {
-	background-position-y: -160px;
+	background-position: 0 -160px;
 }
