@@ -27,12 +27,12 @@ import com.pratilipi.data.type.Notification;
 
 public class BatchProcessDataUtil {
 	
-	 public static void exec( Long batchProcessId ) throws UnexpectedServerException {
+	public static void exec( Long batchProcessId ) throws UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
 		BatchProcess batchProcess = dataAccessor.getBatchProcess( batchProcessId );
-		if( batchProcess.getStateInProgress() != null )
+		if( batchProcess.getStateInProgress() != null && ! batchProcess.getStateInProgress().isTimedOut( batchProcess.getLastUpdated() ) )
 			return;
 		
 		BatchProcessState currState = batchProcess.getType().getNextState( batchProcess.getStateCompleted() );
