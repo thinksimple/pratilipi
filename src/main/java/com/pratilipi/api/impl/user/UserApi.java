@@ -211,7 +211,7 @@ public class UserApi extends GenericApi {
 			return profilePageUrl;
 		}
 		
-		public String getProfileImageUrl() {
+		public String getUserImageUrl() {
 			return profileImageUrl;
 		}
 		
