@@ -251,8 +251,6 @@
                     'language': "${ language }"
                 },
                 success: function( response ) {
-                	console.log( response );
-                	console.log( typeof(response) );
                 	var res = jQuery.parseJSON( response );
 					ViewModel.pushToSectionList(res["sections"]);
                 },
@@ -348,7 +346,7 @@
 			            console.log( response );
 			            console.log( typeof(response) );
 		        }
-		    });
+		    }).submit();
         }
     </script>
     
