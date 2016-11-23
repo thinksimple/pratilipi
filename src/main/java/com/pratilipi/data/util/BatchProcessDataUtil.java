@@ -2,10 +2,11 @@ package com.pratilipi.data.util;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -92,7 +93,7 @@ public class BatchProcessDataUtil {
 		AuthorFilter authorFilter = processDoc.getData(
 				BatchProcessState.GET_USER_IDS_BY_AUTHOR_FILTER.getInputName(),
 				AuthorFilter.class );
-		List<Long> userIdList = new LinkedList<>();
+		Set<Long> userIdSet = new HashSet<>();
 		
 		List<Author> tempAuthorList = null;
 		String cursor = null;
@@ -102,13 +103,13 @@ public class BatchProcessDataUtil {
 			tempAuthorList = authorListCusorTuple.getDataList();
 			for( Author author : tempAuthorList )
 				if( author.getUserId() != null )
-					userIdList.add( author.getUserId() );
+					userIdSet.add( author.getUserId() );
 			cursor = authorListCusorTuple.getCursor();
 		} while( tempAuthorList.size() >= resultCount );
 		
 		processDoc.setData(
 				BatchProcessState.GET_USER_IDS_BY_AUTHOR_FILTER.getOutputName(),
-				userIdList );
+				userIdSet );
 		docAccessor.save( batchProcess.getId(), processDoc ); // Saving Doc
 
 		batchProcess.setStateCompleted( BatchProcessState.GET_USER_IDS_BY_AUTHOR_FILTER );
@@ -124,16 +125,16 @@ public class BatchProcessDataUtil {
 		
 		BatchProcessDoc processDoc = docAccessor.getBatchProcessDoc( batchProcess.getId() );
 		
-		List<Long> userIdList = processDoc.getData(
+		Set<Long> userIdSet = processDoc.getData(
 				BatchProcessState.CREATE_NOTIFICATIONS_FOR_USER_IDS.getInputName(),
-				new TypeToken<List<Long>>(){}.getType() );
+				new TypeToken<Set<Long>>(){}.getType() );
 
-		Map<Long,Long> processedUserIdList = processDoc.getData(
+		Map<Long,Long> userIdNotifIdMap = processDoc.getData(
 				BatchProcessState.CREATE_NOTIFICATIONS_FOR_USER_IDS.getOutputName(),
 				new TypeToken<Map<Long,Long>>(){}.getType() );
 		
-		if( processedUserIdList == null )
-			processedUserIdList = new HashMap<>();
+		if( userIdNotifIdMap == null )
+			userIdNotifIdMap = new HashMap<>();
 		
 		
 		JsonObject execDoc = new Gson().fromJson( batchProcess.getExecDoc(), JsonElement.class ).getAsJsonObject();
@@ -143,10 +144,10 @@ public class BatchProcessDataUtil {
 		
 		
 		int count = 0; // 'count' will remain 0 if everything went fine in previous run
-		for( Entry<Long, Long> entry : processedUserIdList.entrySet() ) {
+		for( Entry<Long, Long> entry : userIdNotifIdMap.entrySet() ) {
 			
 			if( entry.getValue() != 0L ) {
-				userIdList.remove( entry.getKey() );
+				userIdSet.remove( entry.getKey() );
 				continue;
 			}
 			
@@ -156,18 +157,17 @@ public class BatchProcessDataUtil {
 					sourceId,
 					createdBy );
 			
-			if( notification == null ) {
+			if( notification == null )
 				count++;
-			} else {
+			else
 				entry.setValue( notification.getId() );
-				userIdList.remove( entry.getKey() );
-			}
+			userIdSet.remove( entry.getKey() );
 			
 		}
 
 		
-		for( Long userId : userIdList ) {
-			processedUserIdList.put( userId, 0L ); // Can't put null (instead of 0) here because Gson ignores keys with null values
+		for( Long userId : userIdSet ) {
+			userIdNotifIdMap.put( userId, 0L ); // Can't put null (instead of 0) here because Gson ignores keys with null values
 			if( ++count == 100 ) // Limiting to 100 users per run
 				break;
 		}
@@ -177,10 +177,10 @@ public class BatchProcessDataUtil {
 			
 			processDoc.setData(
 					BatchProcessState.CREATE_NOTIFICATIONS_FOR_USER_IDS.getOutputName(),
-					processedUserIdList );
+					userIdNotifIdMap );
 			docAccessor.save( batchProcess.getId(), processDoc ); // Saving Doc
 			
-			for( Entry<Long, Long> entry : processedUserIdList.entrySet() ) {
+			for( Entry<Long, Long> entry : userIdNotifIdMap.entrySet() ) {
 				
 				if( entry.getValue() != 0L )
 					continue;
@@ -205,7 +205,7 @@ public class BatchProcessDataUtil {
 		
 		processDoc.setData(
 				BatchProcessState.CREATE_NOTIFICATIONS_FOR_USER_IDS.getOutputName(),
-				processedUserIdList );
+				userIdNotifIdMap );
 		docAccessor.save( batchProcess.getId(), processDoc ); // Saving Doc
 
 	}

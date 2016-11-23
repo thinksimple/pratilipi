@@ -70,6 +70,7 @@ public class NotificationProcessApi extends GenericApi {
 								.setUrl( "/notification/process" )
 								.addParam( "notificationId", notif.getId().toString() );
 						TaskQueueFactory.getNotificationTaskQueue().add( task );
+						logger.log( Level.INFO, "Task created for notification id " + notif.getId() );
 					}
 				}
 				
