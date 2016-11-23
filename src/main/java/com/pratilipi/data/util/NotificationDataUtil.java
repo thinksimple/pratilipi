@@ -129,7 +129,7 @@ public class NotificationDataUtil {
 			NotificationData notificationData = new NotificationData( notification.getId() );
 			notificationData.setUserId( notification.getUserId() );
 			
-			Language notificationLanguage = language == null && users.get( notification.getUserId() ).getAuthor() != null
+			Language notificationLanguage = language == null
 					? users.get( notification.getUserId() ).getAuthor().getLanguage()
 					: language;
 			if( notificationLanguage == null )
@@ -147,7 +147,7 @@ public class NotificationDataUtil {
 				
 				PratilipiData pratilipiData = pratilipis.get( notification.getSourceIdLong() );
 				notificationData.setSourceUrl( pratilipiData.getPageUrl() + "?" + RequestParameter.NOTIFICATION_ID.getName() + "=" + notification.getId() );
-				notificationData.setSourceImageUrl( pratilipiData.getCoverImageUrl() );
+				notificationData.setDisplayImageUrl( pratilipiData.getCoverImageUrl() );
 				
 			} else if( notification.getType() == NotificationType.PRATILIPI_ADD ) {
 
