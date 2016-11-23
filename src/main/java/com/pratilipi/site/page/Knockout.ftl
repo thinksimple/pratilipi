@@ -358,7 +358,7 @@
     <form id="my_form" action="/api/pratilipi/content/image?pratilipiId=4853358213988352" target="form_target" method="post" enctype="multipart/form-data" style="width:0px;height:0;overflow:hidden">
         <input name="image" type="file" onchange="test(); this.value=''">
     </form>
-    <#include "meta/Foot.ftl">
+    <#include "meta/Font.ftl">
      <style>
         #myeditablediv  img {
             display: block;
