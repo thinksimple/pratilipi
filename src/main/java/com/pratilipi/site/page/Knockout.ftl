@@ -325,37 +325,59 @@
     image_description: false,
     image_dimensions: false,
     file_browser_callback: function(field_name, url, type, win) {
-            console.log( "Something is happening" );
-            if(type=='image') $('#my_form input').click();
-    }
-
+		if(type=='image') $('#file_name').click(); $('#field_name').val(field_name);
+	}
   });
   </script>
-  <script src="http://malsup.github.com/jquery.form.js"></script>
+
   <script>
         function log() {
             console.log(tinyMCE.get('myeditablediv').getContent());
         }
-        
-        function test() {
-        	$('#my_form')
-		    	.ajaxForm({
-			        url : '/api/pratilipi/content/image?pratilipiId=4853358213988352',
-			        dataType : 'json',
-			        success : function (response) {
-			            console.log( response );
-			            console.log( typeof(response) );
-		        }
-		    }).submit();
-        }
     </script>
-    
+
     <div id="myeditablediv"></div>
     <button style="margin-top: 50px;" onClick="log()">log</button>
-    <iframe id="form_target" name="form_target" style="display:none"></iframe>
-    <form id="my_form" action="/api/pratilipi/content/image?pratilipiId=4853358213988352" target="form_target" method="post" enctype="multipart/form-data" style="width:0px;height:0;overflow:hidden">
-        <input name="image" type="file" onchange="test(); this.value=''">
-    </form>
+
+    <form enctype="multipart/form-data" id="form_file" style="width:0px; height:0px; overflow:hidden">
+		<input id="file_name" name="file" type="file" />
+	</form>
+		<input type="hidden" id="field_name" value="" />
+    
+    
+    <script>
+    	$('#file_name').change(function(){
+			var field_name = $('#field_name').val()
+			document.getElementById(field_name).value='';
+			var file = this.files[0];
+			var name = file.name;
+			var size = file.size;
+			var type = file.type;
+			var field_name = $('#field_name').val()
+			var type = type.substring(0, 5);
+			if(type=='image') { 
+			
+			    var formData = new FormData($('#form_file')[0]);
+			
+			    $.ajax({
+			        url: "/api/pratilipi/content/image?pratilipiId=4853358213988352",
+			        type: "POST",
+			        data: formData,
+			        success: function (response) {
+			        	var res = jQuery.parseJSON( response );
+			            document.getElementById(field_name).value = "/api/pratilipi/content/image?pratilipiId=4853358213988352&name=" + res.name;        
+			        },
+			        cache: false,
+			        contentType: false,
+			        processData: false
+			    });
+			
+			} else {
+			    alert('Le fichier doit etre une image') 
+			}
+		});
+    </script>
+    
     <#include "meta/Font.ftl">
      <style>
         #myeditablediv  img {
