@@ -1,6 +1,6 @@
 <#-- Style CSS -->
 <#include "Font.ftl">
-<link type="text/css" rel="stylesheet" href="/resources/style.css?1811">
+<link type="text/css" rel="stylesheet" href="/resources/style.css?2311">
 
 <#-- Scroll Handler -->
 <#if mainPage??>
