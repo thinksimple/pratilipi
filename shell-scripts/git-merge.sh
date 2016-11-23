@@ -41,6 +41,8 @@ git remote set-url origin git@github.com:Pratilipi/pratilipi.git
 echo "Fetching ...."
 git fetch
 
+# Setting Environment Variable
+export TZ='Asia/Kolkata'
 branch=$(date +%d-%b-%H-%M-Release)
 
 echo "Creating New branch -> $branch ...."
@@ -73,3 +75,9 @@ fi
 if $android; then
 	update_module release-android $branch
 fi
+
+# Unsetting Environment Variable
+unset TZ
+
+# Cleaning up .git directory
+git gc
