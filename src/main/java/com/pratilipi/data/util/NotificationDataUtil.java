@@ -129,7 +129,7 @@ public class NotificationDataUtil {
 			NotificationData notificationData = new NotificationData( notification.getId() );
 			notificationData.setUserId( notification.getUserId() );
 			
-			Language notificationLanguage = language == null
+			Language notificationLanguage = language == null && users.get( notification.getUserId() ).getAuthor() != null
 					? users.get( notification.getUserId() ).getAuthor().getLanguage()
 					: language;
 			if( notificationLanguage == null )
@@ -260,18 +260,32 @@ public class NotificationDataUtil {
 				List<String> fcmTokenList = dataAccessor.getFcmTokenList( notifData.getUserId() );
 				if( fcmTokenList.size() != 0 ) {
 					
+					// TODO: Remove this as soon as users have migrated to newer verion of app
 					String fcmResponse = FirebaseApi.sendCloudMessage(
 							fcmTokenList,
 							notifData.getMessage(),
 							notifData.getId().toString(),
 							notifData.getNotificationType().getAndroidHandler(),
 							notifData.getSourceId(),
-							notifData.getSourceImageUrl() );
+							notifData.getSourceImageUrl(),
+							notifData.getDisplayImageUrl() );
 						
 					if( notif.getFcmResponse() == null )
 						notif.setFcmResponse( fcmResponse );
 					else
 						notif.setFcmResponse( notif.getFcmResponse() + "\n" + fcmResponse );
+					
+					
+					fcmResponse = FirebaseApi.sendCloudMessage2(
+							fcmTokenList,
+							notifData.getMessage(),
+							notifData.getId().toString(),
+							notifData.getNotificationType().getAndroidHandler(),
+							notifData.getSourceId(),
+							notifData.getSourceImageUrl(),
+							notifData.getDisplayImageUrl() );
+					
+					notif.setFcmResponse( notif.getFcmResponse() + "\n" + fcmResponse );
 					
 				}
 				

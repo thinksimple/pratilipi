@@ -75,7 +75,9 @@ public class FirebaseApi {
 	}
 
 
-	public static String sendCloudMessage( List<String> fcmTokenList, String message, String tag, String androidHandler, String sourceId, String sourceImageUrl )
+	@Deprecated
+	public static String sendCloudMessage( List<String> fcmTokenList, String message, String tag,
+			String androidHandler, String sourceId, String sourceImageUrl, String displayImageUrl )
 			throws UnexpectedServerException {
 
 		Map<String, String> headersMap = new HashMap<>();
@@ -91,6 +93,7 @@ public class FirebaseApi {
 		JsonObject dataJson = new JsonObject();
 		dataJson.addProperty( "sourceId", sourceId );
 		dataJson.addProperty( "sourceImageUrl", sourceImageUrl );
+		dataJson.addProperty( "displayImageUrl", displayImageUrl );
 		
 		JsonObject bodyJson = new JsonObject();
 		bodyJson.add( "registration_ids", new Gson().toJsonTree( fcmTokenList ) );
@@ -108,7 +111,38 @@ public class FirebaseApi {
 		return responsePayload;
 
 	}
-	
+
+	public static String sendCloudMessage2( List<String> fcmTokenList, String message, String tag,
+			String androidHandler, String sourceId, String sourceImageUrl, String displayImageUrl )
+			throws UnexpectedServerException {
+
+		Map<String, String> headersMap = new HashMap<>();
+		headersMap.put( "Authorization", "key=" + getFcmServerKey() );
+
+		JsonObject dataJson = new JsonObject();
+		dataJson.addProperty( "body", message );
+		dataJson.addProperty( "tag", tag );
+		dataJson.addProperty( "click_action", androidHandler );
+		dataJson.addProperty( "sourceId", sourceId );
+		dataJson.addProperty( "sourceImageUrl", sourceImageUrl );
+		dataJson.addProperty( "displayImageUrl", displayImageUrl );
+		
+		JsonObject bodyJson = new JsonObject();
+		bodyJson.add( "registration_ids", new Gson().toJsonTree( fcmTokenList ) );
+		bodyJson.add( "data", dataJson );
+
+		String responsePayload = HttpUtil.doPost( CLOUD_MESSAGING_API_URL, headersMap, bodyJson );
+
+		// Firebase might return with one or more error responses.
+		for( JsonElement resultJson : new Gson().fromJson( responsePayload, JsonElement.class ).getAsJsonObject().get( "results" ).getAsJsonArray() )
+			if( resultJson.getAsJsonObject().get( "error" ) != null )
+				logger.log( Level.SEVERE, "Firebase responded with error: " + resultJson.getAsJsonObject().get( "error" ).getAsString() );
+
+		
+		return responsePayload;
+
+	}
+
 	
 	public static class NotificationDB {
 		
