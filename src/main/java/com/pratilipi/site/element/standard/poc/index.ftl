@@ -230,9 +230,6 @@
                   var parsed_data = jQuery.parseJSON( data );
                   var image_name = parsed_data.name;
                   var image_url = "/api/pratilipi/content/image?pratilipiId=5179861627830272&name=" + image_name;
-                  if( isMobile() ) {
-                    image_url += "&width=240";
-                  }
                   $("#my_form input").val("");
                   $(field_name).val( image_url );
               },
