@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <style type="text/css" media="screen">
     body {
       font-family: Helvetica, 'Noto Sans', sans-serif;
@@ -77,34 +79,40 @@
       </script>
       <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/rangy/1.3.0/rangy-core.min.js"></script> -->
       <script><#include "suggester.ftl"></script>
-      <script><#include "app.ftl"></script>    
+      <script><#include "app.ftl"></script>   
   <script>
   tinymce.init({
     // initialise and auto focus
     selector: '#content-placeholder',
     auto_focus: 'content-placeholder',
     inline: true,
-      
+    block_formats: 'Paragraph=p;',  
     //plugins needed and setting up toolbar
-    plugins : ['autolink lists link image imagetools charmap print preview anchor',
+    plugins : ['autolink lists link image charmap print preview anchor',
     'searchreplace visualblocks code fullscreen',
-    'insertdatetime media table contextmenu paste code'],
+    'insertdatetime media table paste code'],
     menubar: false,
     statusbar: false,
-    toolbar: 'bold italic underline | alignleft aligncenter alignright | blockquote link image | bullist numlist',
+    toolbar: 'bold italic underline | alignleft aligncenter alignright | blockquote link image | bullist numlist visualblocks',
     height: 300,
     images_upload_url: "/kuchbhi.php",
     images_upload_base_path: '/some/basepath',  
     
     // pasting from other sources
     paste_data_images: false,
-    paste_remove_styles: false,
-    paste_remove_styles_if_webkit: false,
-    paste_strip_class_attributes: true,
-    paste_text_sticky: true,
-    paste_text_sticky_default: true,
-    paste_as_text: false,
-    paste_auto_cleanup_on_paste : true,
+     // paste_merge_formats: true, 
+    // paste_remove_styles: false,
+    // paste_remove_styles_if_webkit: false,
+    // paste_strip_class_attributes: true,
+    // paste_text_sticky: true,
+    // paste_text_sticky_default: true,
+    paste_as_text: false  ,
+    // paste_auto_cleanup_on_paste : true,
+    // paste_enable_default_filters: false,
+    // paste_filter_drop: false,
+    // paste_word_valid_elements: "i,em,u",
+    // paste_webkit_styles: "color font-size",
+    // paste_retain_style_proper  ties: "color font-size",
     
     // spell check and other options
     browser_spellcheck: false,
@@ -186,9 +194,9 @@
 
 
     // enforcing rules to editor
-    valid_elements : 'p[style],img[src],blockquote,b,i,u,a[href|target=_blank],br,b/strong,i/em,ol,ul,li',
-    extended_valid_elements: 'img[src],p[style],blockquote,ul,ol',
-    valid_children : '+body[p|img|blockquote|ol|ul],p[b|i|u|a|br],+blockquote[b|i|u|a|br]',
+    valid_elements : 'p[style],img[src|width|height],blockquote,b,i,u,a[href|target=_blank],br,b/strong,i/em,ol,ul,li',
+    extended_valid_elements: 'img[src|width|height],p[style],blockquote,ul,ol,li',
+    valid_children : '+body[p|img|blockquote|ol|ul],p[b|i|u|a|br],+blockquote[b|i|u|a|br],ol[li],ul[li],li[b|i|u|a|br]',
     valid_styles: {'p': 'text-align'},
 
     // image
@@ -222,12 +230,14 @@
                   var parsed_data = jQuery.parseJSON( data );
                   var image_name = parsed_data.name;
                   var image_url = "/api/pratilipi/content/image?pratilipiId=5179861627830272&name=" + image_name;
+                  if( isMobile() ) {
+                    image_url += "&width=240";
+                  }
                   $("#my_form input").val("");
                   $(field_name).val( image_url );
               },
               error: function(data){
-                  $("#my_form input").val("");
-                  // $(field_name).val( "dsbhfdsi" );                  
+                  $("#my_form input").val("");              
               }
           });          
         }
