@@ -85,7 +85,7 @@ public class NotificationProcessApi extends GenericApi {
 	}
 
 	@Post
-	public GenericResponse get( PostRequest request ) throws UnexpectedServerException {
+	public GenericResponse post( PostRequest request ) throws UnexpectedServerException {
 		
 		NotificationDataUtil.sendFcm( request.notificationId );
 		
