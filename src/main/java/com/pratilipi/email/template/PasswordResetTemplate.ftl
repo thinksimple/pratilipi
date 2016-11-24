@@ -37,16 +37,3 @@
 		</td>
 	</tr>
 </table>
-
-<center>
-	<small>
-		<br/>
-		<br/>
-			If you face any problems, please reach out to us at 
-			<a href="mailto:${ language }@pratilipi.com" style="color: #4a4a4a; text-decoration: underline;" target="_blank">
-				${ language }@pratilipi.com
-			</a>
-		<br/>
-		<br/>
-	</small>
-</center>
