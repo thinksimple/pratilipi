@@ -23,7 +23,7 @@
 														<img src="http://public.pratilipi.com/email/pratilipi-logo-400x400.png" style="max-width: 100px; display: block; margin: 0 auto;" />
 														<div>
 															<h2 style="margin: 0.75em 0 0.75em 0; color: #FF0000;">Welcome to Pratilipi !</h2>
-															<p style="margin: 0; font-size: 16px;">Hi ${ name }, Welcome to a world of stories !</p>
+															<p style="margin: 0; font-size: 16px;">Hi ${ user_display_name }, Welcome to a world of stories !</p>
 														</div>
 													</center>
 												</td>

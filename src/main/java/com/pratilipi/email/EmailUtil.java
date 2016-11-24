@@ -43,7 +43,7 @@ public class EmailUtil {
 	public static void sendMail( String name, String email, String templateName,
 			Language language, Map<String, String> dataModel ) throws UnexpectedServerException {
 		
-		dataModel.put( "name" , name );
+		dataModel.put( "user_display_name" , name );
 		
 		String senderName = null;
 		Pattern senderNamePattern = Pattern.compile( "<#-- SENDER_NAME:(.+?)-->" );
