@@ -71,7 +71,7 @@ public class EmailUtil {
 					senderEmail = m.group(1).trim();
 				else if( subject == null && (m = subjectPattern.matcher( line )).find() )
 					subject = m.group(1).trim();
-				else if( senderName != null && senderEmail != null & subject != null )
+				else if( senderName != null && senderEmail != null && subject != null )
 					break;
 			}
 			
