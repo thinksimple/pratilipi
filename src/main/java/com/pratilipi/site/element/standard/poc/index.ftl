@@ -99,7 +99,7 @@
     images_upload_base_path: '/some/basepath',  
     
     // pasting from other sources
-    paste_data_images: false,
+    paste_data_images: true,
      // paste_merge_formats: true, 
     // paste_remove_styles: false,
     // paste_remove_styles_if_webkit: false,
@@ -148,6 +148,32 @@
 
         });         
    },
+  images_upload_handler: function (blobInfo, success, failure) {
+    console.log("coding karni kab seekhoge");
+    // console.log(failure);
+    var fd = new FormData();
+    fd.append('data', blobInfo);
+    $.ajax({
+        type:'POST',
+        url: '/api/pratilipi/content/image?pratilipiId=5179861627830272&pageNo=1',
+        data:fd,
+        cache:true,
+        contentType: false,
+        processData: false,
+        success:function(data){
+            var parsed_data = jQuery.parseJSON( data );
+            var image_name = parsed_data.name;
+            var image_url = "/api/pratilipi/content/image?pratilipiId=5179861627830272&name=" + image_name;
+            success(image_url);  
+        },
+        error: function(data){
+          failure('HTTP Error: ' + data.status);
+          return;
+            // $("#my_form input").val("");              
+        }
+    });    
+
+  },   
   // images_upload_handler: function (blobInfo, success, failure) {
   //   console.log("coding karni kab seekhoge");
   //   var xhr, formData;
