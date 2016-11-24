@@ -147,7 +147,7 @@ public class NotificationDataUtil {
 				
 				PratilipiData pratilipiData = pratilipis.get( notification.getSourceIdLong() );
 				notificationData.setSourceUrl( pratilipiData.getPageUrl() + "?" + RequestParameter.NOTIFICATION_ID.getName() + "=" + notification.getId() );
-				notificationData.setDisplayImageUrl( pratilipiData.getCoverImageUrl() );
+				notificationData.setSourceImageUrl( pratilipiData.getCoverImageUrl() );
 				
 			} else if( notification.getType() == NotificationType.PRATILIPI_ADD ) {
 
