@@ -276,7 +276,7 @@ public class NotificationDataUtil {
 						notif.setFcmResponse( notif.getFcmResponse() + "\n" + fcmResponse );
 					
 					
-					fcmResponse = FirebaseApi.sendCloudMessage2(
+/*					fcmResponse = FirebaseApi.sendCloudMessage2(
 							fcmTokenList,
 							notifData.getMessage(),
 							notifData.getId().toString(),
@@ -285,7 +285,7 @@ public class NotificationDataUtil {
 							notifData.getSourceImageUrl(),
 							notifData.getDisplayImageUrl() );
 					
-					notif.setFcmResponse( notif.getFcmResponse() + "\n" + fcmResponse );
+					notif.setFcmResponse( notif.getFcmResponse() + "\n" + fcmResponse );*/
 					
 				}
 				
