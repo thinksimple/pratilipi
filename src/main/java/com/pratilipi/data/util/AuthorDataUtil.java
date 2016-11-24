@@ -32,6 +32,7 @@ import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.SearchAccessor;
 import com.pratilipi.data.client.AuthorData;
+import com.pratilipi.data.client.PratilipiData;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AuditLog;
@@ -40,6 +41,7 @@ import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.User;
+import com.pratilipi.email.EmailUtil;
 import com.pratilipi.filter.AccessTokenFilter;
 
 public class AuthorDataUtil {
@@ -730,4 +732,38 @@ public class AuthorDataUtil {
 		
 	}
 	
+	public static void sendContentPublishedMail( Long pratilipiId ) 
+			throws UnexpectedServerException {
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+
+		if( pratilipi.getAuthorId() == null )
+			return;
+
+		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
+		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author );
+		User user = dataAccessor.getUser( author.getUserId() );
+
+		if( user.getEmail() == null )
+			return;
+
+
+		Map<String, String> dataModel = new HashMap<String, String>();
+		dataModel.put( "pratilipi_title", pratilipiData.getTitle() != null ? 
+					pratilipiData.getTitle() : pratilipiData.getTitleEn() );
+		dataModel.put( "pratilipi_cover_image_url", PratilipiDataUtil.createPratilipiCoverUrl( pratilipi, 150 ) );
+		dataModel.put( "pratilipi_listing_date", Long.toString( pratilipiData.getListingDate().getTime() ) );
+		dataModel.put( "pratilipi_summary", pratilipiData.getSummary() );
+		dataModel.put( "pratilipi_page_url", pratilipiData.getPageUrl() );
+		dataModel.put( "author_name", pratilipiData.getAuthor().getName() != null ? 
+					pratilipiData.getAuthor().getName() : pratilipiData.getAuthor().getNameEn() );
+		dataModel.put( "author_page_url", pratilipiData.getAuthor().getPageUrl() );
+
+
+		EmailUtil.sendMail( UserDataUtil.createUserData( user ).getDisplayName(), 
+				user.getEmail(), "", pratilipi.getLanguage(), dataModel );
+
+	}
+
 }
