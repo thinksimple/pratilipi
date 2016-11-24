@@ -2,7 +2,11 @@
 	<tr>
 		<td>
 			<hr style="border: 1px solid #eeeeee;">
-			<p style="margin: 15px 0 10px 0;">Your story <b>${ pratilipi_title }</b> has been published.</p>
+			<#if notification_to_author ??>
+				<p style="margin: 15px 0 10px 0;">Your story <b>${ pratilipi_title }</b> has been published.</p>
+			<#elseif notification_to_follower ??>
+				<p style="margin: 15px 0 10px 0;">${ author_name } has published a new story <b>${ pratilipi_title }</b>.</p>
+			</#if>
 		</td>
 	</tr>
 </table>
@@ -56,6 +60,22 @@
 					</td>
 				</tr>
 			</table>
+		</td>
+	</tr>
+</table>
+<table align="center" cellspacing="0" cellpadding="0" table-layout="fixed" style="margin: 0 auto; width:100%;"> 
+	<tr>
+		<td style="line-height: 10px" height="10">
+			&nbsp;
+		</td>
+	</tr>
+	<tr>
+		<td align="center" height="40" bgcolor="#D0021B" style="-webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; color: #ffffff; display: block; width: 90%; margin: auto;">   
+			<a href="${ pratilipi_page_url }" target="_blank" style="font-size: 18px; text-decoration: none; line-height: 40px; width: 100%; display: inline-block;">
+				<span style="color: #ffffff; padding-left: 15px; padding-right: 15px;">
+					View on Pratilipi
+				</span>
+			</a>
 		</td>
 	</tr>
 </table>
