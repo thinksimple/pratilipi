@@ -87,7 +87,7 @@ public class FirebaseApi {
 		notificationJson.addProperty( "body", message );
 		notificationJson.addProperty( "tag", tag );
 		notificationJson.addProperty( "sound", "default" );
-		notificationJson.addProperty( "splash", "ic_pratilipi_notification_icon" );
+		notificationJson.addProperty( "icon", "ic_pratilipi_notification_icon" );
 		notificationJson.addProperty( "click_action", androidHandler );
 		
 		JsonObject dataJson = new JsonObject();
