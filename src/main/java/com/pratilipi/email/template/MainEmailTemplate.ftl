@@ -10,20 +10,20 @@
 							<table style="width: 100%; max-width: 768px; margin: auto;">
 								<tr>
 									<td style="padding: 20px; border: 1px solid #c3c3c3; background-color: #ffffff; width=100%;">
-                                        <table style="margin: 0 auto 12px auto;">
-                                            <tr>
-                                                <td>
-                                                    <img src="http://public.pratilipi.com/pratilipi-logo/png/Logo-2C-RGB-80px.png" />
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        <table>
-                                            <tr>
-                                                <td>
-                                                    <#-- Here goes the content -->
-                                                </td>
-                                            </tr>
-                                        </table>
+										<table style="margin: 0 auto;">
+											<tr>
+												<td>
+													<img src="http://public.pratilipi.com/pratilipi-logo/png/Logo-2C-RGB-80px.png" />
+												</td>
+											</tr>
+										</table>
+										<table style="width: 100%;">
+											<tr>
+												<td style="width: 100%;">
+													<#-- Here goes the content -->
+												</td>
+											</tr>
+										</table>
 									</td>
 								</tr>
 							</table>
