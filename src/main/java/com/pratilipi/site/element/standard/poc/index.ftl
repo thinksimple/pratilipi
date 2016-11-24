@@ -150,9 +150,10 @@
    },
   images_upload_handler: function (blobInfo, success, failure) {
     console.log("coding karni kab seekhoge");
+    console.log(blobInfo.blob());
     // console.log(failure);
     var fd = new FormData();
-    fd.append('data', blobInfo);
+    fd.append('data', blobInfo.blob());
     $.ajax({
         type:'POST',
         url: '/api/pratilipi/content/image?pratilipiId=5179861627830272&pageNo=1',
