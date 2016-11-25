@@ -41,6 +41,8 @@
       background: lightgrey;
     }
   </style>
+    <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">  
   <script src='https://cdn.tinymce.com/4/tinymce.min.js'></script>
 
 </head>
@@ -67,19 +69,24 @@
         }
      </style>
       <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+
       <script>
         if(screen.width > 480) {
             $.getScript( "https://cdnjs.cloudflare.com/ajax/libs/rangy/1.3.0/rangy-core.min.js", function( data, textStatus, jqxhr ) {
               // console.log( "Load was performed." );
               $.getScript("https://cdnjs.cloudflare.com/ajax/libs/rangy/1.3.0/rangy-selectionsaverestore.min.js", function( data, textStatus, jqxhr ) {
                 // console.log( "Load was performed 2  ." );
+                $.getScript("resources/js/tinymce-writer/suggester.js", function( data, textStatus, jqxhr ) {
+                  console.log( "Load was performed 3  ." );
+                  $.getScript("resources/js/tinymce-writer/app.js", function( data, textStatus, jqxhr ) {
+                    console.log( "Load was performed 4  ." );
+                  });                  
+                });                
               });                  
             });
         }
       </script>
       <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/rangy/1.3.0/rangy-core.min.js"></script> -->
-      <script><#include "suggester.ftl"></script>
-      <script><#include "app.ftl"></script>   
   <script>
   tinymce.init({
     // initialise and auto focus
@@ -95,7 +102,7 @@
     statusbar: false,
     toolbar: 'bold italic underline | alignleft aligncenter alignright | blockquote link image | bullist numlist visualblocks',
     height: 300,
-    images_upload_url: "/kuchbhi.php",
+    images_upload_url: '/api/pratilipi/content/image?pratilipiId=5179861627830272',
     images_upload_base_path: '/some/basepath',  
     
     // pasting from other sources
@@ -106,12 +113,21 @@
     // paste_strip_class_attributes: true,
     // paste_text_sticky: true,
     // paste_text_sticky_default: true,
-    paste_as_text: false  ,
-    // paste_auto_cleanup_on_paste : true,
-    // paste_enable_default_filters: false,
-    // paste_filter_drop: false,
+    paste_as_text: false,
+    paste_auto_cleanup_on_paste : true,
+    // paste_enable_default_filters: true,
+    // paste_filter_drop: true,
     // paste_word_valid_elements: "i,em,u",
-    // paste_webkit_styles: "color font-size",
+    paste_webkit_styles: "none",
+    paste_remove_styles_if_webkit: false,
+    paste_text_linebreaktype: "p",
+    // paste_postprocess: function(plugin, args) {
+    //   console.log(args.node);
+    //   $(args.node).find("div").replaceWith(function() {
+    //     return '<p>' + $(this.html() + '</p>';
+    //   });
+    //   console.log($(args.node.html()));
+    // },
     // paste_retain_style_proper  ties: "color font-size",
     
     // spell check and other options
@@ -153,7 +169,7 @@
     console.log(blobInfo.blob());
     // console.log(failure);
     var fd = new FormData();
-    fd.append('data', blobInfo.blob());
+    fd.append('data', blobInfo.blob()); 
     $.ajax({
         type:'POST',
         url: '/api/pratilipi/content/image?pratilipiId=5179861627830272&pageNo=1',
@@ -175,31 +191,6 @@
     });    
 
   },   
-  // images_upload_handler: function (blobInfo, success, failure) {
-  //   console.log("coding karni kab seekhoge");
-  //   var xhr, formData;
-  //   xhr = new XMLHttpRequest();
-  //   xhr.withCredentials = false;
-  //   xhr.open('POST', 'postAcceptor.php');
-  //   xhr.onload = function() {
-  //     var json;
-
-  //     if (xhr.status != 200) {
-  //       failure('HTTP Error: ' + xhr.status);
-  //       return;
-  //     }
-  //     json = JSON.parse(xhr.responseText);
-
-  //     if (!json || typeof json.location != 'string') {
-  //       failure('Invalid JSON: ' + xhr.responseText);
-  //       return;
-  //     }
-  //     success(json.location);
-  //   };
-  //   formData = new FormData();
-  //   formData.append('file', blobInfo.blob(), fileName(blobInfo));
-  //   xhr.send(formData);
-  // },   
   file_browser_callback: function(field_name, url, type, win) {
       if(type=='image') {
        $('#field_name').val(field_name);
@@ -224,7 +215,26 @@
     valid_elements : 'p[style],img[src|width|height],blockquote,b,i,u,a[href|target=_blank],br,b/strong,i/em,ol,ul,li',
     extended_valid_elements: 'img[src|width|height],p[style],blockquote,ul,ol,li',
     valid_children : '+body[p|img|blockquote|ol|ul],p[b|i|u|a|br],+blockquote[b|i|u|a|br],ol[li],ul[li],li[b|i|u|a|br]',
+    paste_postprocess: function(plugin, args){
+      console.log(args.node);
+      $(args.node).find("div").replaceWith(function() {
+        if( $(this).text().length ) {
+          return "<p>" + $(this).html() + '</p>';
+        } else {
+          return "";
+        }
+      });
+      $(args.node).find("h1,h2,h3,h4,h5,h6").replaceWith(function() {
+        if( $(this).text().length ) {
+          return "<b>" + $(this).html() + '</b>';
+        } else {
+          return "";
+        }
+      });      
+    },
+    invalid_elements : "div",
     valid_styles: {'p': 'text-align'},
+
 
     // image
     image_description: false,
@@ -240,6 +250,7 @@
           var field_name = "#" + $('#field_name').val();
           var fd = new FormData();
           var blob = $("#my_form input").get(0).files[0];
+          console.log(blob);
           fd.append('data', blob);
           // fd.append('pratilipiId', 5179861627830272 );  
           // fd.append('pageNo', cur_page );  
@@ -257,6 +268,9 @@
                   var parsed_data = jQuery.parseJSON( data );
                   var image_name = parsed_data.name;
                   var image_url = "/api/pratilipi/content/image?pratilipiId=5179861627830272&name=" + image_name;
+                  // if( isMobile() ) {
+                  //   image_url += "&width=240";
+                  // }
                   $("#my_form input").val("");
                   $(field_name).val( image_url );
               },
@@ -265,6 +279,7 @@
               }
           });          
         }
+    var  url= '/api/pratilipi/content/image?pratilipiId=5179861627830272&pageNo=1';
 
     </script>       
 </body>
