@@ -45,8 +45,7 @@ public class AuthorEmailApi extends GenericApi {
 		if( request.sendContentPublishedMail )
 			AuthorDataUtil.sendContentPublishedMail( request.pratilipiId );
 		
-		// Mark it done
-
+		// TODO: Mark it true in Notification Table
 
 		return new GenericResponse();
 

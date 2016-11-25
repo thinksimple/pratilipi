@@ -21,6 +21,7 @@
 											<tr>
 												<td style="width: 100%;">
 													<#-- Here goes the content -->
+													<#include "${ template_name }.ftl">
 													<center>
 														<small>
 															<br/>

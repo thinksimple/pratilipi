@@ -754,15 +754,18 @@ public class AuthorDataUtil {
 					pratilipiData.getTitle() : pratilipiData.getTitleEn() );
 		dataModel.put( "pratilipi_cover_image_url", PratilipiDataUtil.createPratilipiCoverUrl( pratilipi, 150 ) );
 		dataModel.put( "pratilipi_listing_date", Long.toString( pratilipiData.getListingDate().getTime() ) );
-		dataModel.put( "pratilipi_summary", pratilipiData.getSummary() );
-		dataModel.put( "pratilipi_page_url", pratilipiData.getPageUrl() );
+		dataModel.put( "pratilipi_summary", HtmlUtil.truncateText( pratilipiData.getSummary(), 250 ) );
+		dataModel.put( "pratilipi_page_url", "http://" + pratilipiData.getLanguage().getHostName() + pratilipiData.getPageUrl() );
 		dataModel.put( "author_name", pratilipiData.getAuthor().getName() != null ? 
 					pratilipiData.getAuthor().getName() : pratilipiData.getAuthor().getNameEn() );
-		dataModel.put( "author_page_url", pratilipiData.getAuthor().getPageUrl() );
+		dataModel.put( "author_page_url", "http://" + author.getLanguage().getHostName() + pratilipiData.getAuthor().getPageUrl() );
 
 
-		EmailUtil.sendMail( UserDataUtil.createUserData( user ).getDisplayName(), 
-				user.getEmail(), "", pratilipi.getLanguage(), dataModel );
+		EmailUtil.sendPratilipiMail( user.getEmail(),
+									UserDataUtil.createUserData( user, author ).getDisplayName(),
+									"PratilipiPublishedNotificationTemplate", 
+									pratilipi.getLanguage(), 
+									dataModel );
 
 	}
 
