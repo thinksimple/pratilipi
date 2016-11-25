@@ -1,3 +1,8 @@
+<#-- SENDER_NAME: Team Pratilipi -->
+<#-- SENDER_EMAIL: contact@pratilipi.com -->
+<#-- SUBJECT: Notification from Pratilipi.com -->
+
+
 <table align="left" table-layout="fixed;" style="width: 100%; height: 100%;">
 	<tr>
 		<td>
