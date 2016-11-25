@@ -85,29 +85,27 @@
 	
 	<template>
 		<paper-card id="reviewcard">
-			<template is="dom-if" if="{{ hasAccessToUpdate }}">
-				<div class="dropdown">
-					<paper-icon-button style="color: #333;" class="dropdown-trigger pull-right" icon="icons:more-horiz" noink type="button" data-toggle="dropdown"></paper-icon-button>
-					<ul style="margin-top: 0; margin-right: -12px;" class="dropdown-menu pull-right">
-						<li>
-							<a style="padding: 0; margin: 0;" on-click="showReviewInput">
-								<paper-item>
-									<paper-icon-item><iron-icon style="margin-right: 4px; width: 22px;" icon="editor:mode-edit"></iron-icon></paper-icon-item>
-									<paper-item-body>${ _strings.review_edit_review }</paper-item-body>
-								</paper-item>
-							</a>
-						</li>
-						<li>
-							<a style="padding: 0; margin: 0;" on-click="openDeleteReview">
-								<paper-item>
-									<paper-icon-item><iron-icon style="margin-right: 4px; width: 22px;" icon="icons:delete"></iron-icon></paper-icon-item>
-									<paper-item-body>${ _strings.review_delete_review }</paper-item-body>
-								</paper-item>
-							</a>
-						</li>
-					</ul>
-				</div>
-			</template>
+			<div hidden$="{{ !hasAccessToUpdate }}" class="dropdown">
+				<paper-icon-button style="color: #333;" class="dropdown-trigger pull-right" icon="icons:more-horiz" noink type="button" data-toggle="dropdown"></paper-icon-button>
+				<ul style="margin-top: 0; margin-right: -12px;" class="dropdown-menu pull-right">
+					<li>
+						<a style="padding: 0; margin: 0;" on-click="showReviewInput">
+							<paper-item>
+								<paper-icon-item><iron-icon style="margin-right: 4px; width: 22px;" icon="editor:mode-edit"></iron-icon></paper-icon-item>
+								<paper-item-body>${ _strings.review_edit_review }</paper-item-body>
+							</paper-item>
+						</a>
+					</li>
+					<li>
+						<a style="padding: 0; margin: 0;" on-click="openDeleteReview">
+							<paper-item>
+								<paper-icon-item><iron-icon style="margin-right: 4px; width: 22px;" icon="icons:delete"></iron-icon></paper-icon-item>
+								<paper-item-body>${ _strings.review_delete_review }</paper-item-body>
+							</paper-item>
+						</a>
+					</li>
+				</ul>
+			</div>
 			<div>
    				<a href="{{ review.userProfilePageUrl }}">
    					<img class="img-circle user-dp pratilipi-shadow" src="{{ reviewUserImageUrl }}" alt="{{ user.userName }}" title="{{ user.userName }}"/>

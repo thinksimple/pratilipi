@@ -65,36 +65,32 @@
 	
 	<template>
 		<div class="comment">
-			<template is="dom-if" if="{{ hasAccessToUpdate }}">
-				<div class="dropdown">
-					<paper-icon-button style="color: #333;" class="dropdown-trigger pull-right" icon="icons:more-horiz" noink type="button" data-toggle="dropdown"></paper-icon-button>
-					<ul style="margin-right: -20px; margin-top: -4px;" class="dropdown-menu pull-right">
-						<li>
-							<a style="padding: 0; margin: 0;" on-click="openCommentEdit">
-								<paper-item>
-									<paper-icon-item><iron-icon style="margin-right: 8px; width: 20px; height: 20px;" icon="icons:create"></iron-icon></paper-icon-item>
-									<paper-item-body>${ _strings.comment_edit_comment }</paper-item-body>
-								</paper-item>
-							</a>
-						</li>
-						<li>
-							<a style="padding: 0; margin: 0;" on-click="_confirmDeleteComment">
-								<paper-item>
-									<paper-icon-item><iron-icon style="margin-right: 8px; width: 20px; height: 20px;" icon="icons:delete"></iron-icon></paper-icon-item>
-									<paper-item-body>${ _strings.comment_delete_comment }</paper-item-body>
-								</paper-item>
-							</a>
-						</li>
-					</ul>
-				</div>
-			</template>
-			
-			<template is="dom-if" if="{{ showRestoreComment }}">
-				<button class="pratilipi-grey-button pull-right" on-click="_restoreComment" class="pull-right">
-					<iron-icon style="width: 16px; height: 16px; margin-top: -4px;" icon="icons:restore"></iron-icon>
-					${ _strings.comment_restore_comment }
-				</button>
-			</template>
+			<div hidden$="{{ !hasAccessToUpdate }}" class="dropdown">
+				<paper-icon-button style="color: #333;" class="dropdown-trigger pull-right" icon="icons:more-horiz" noink type="button" data-toggle="dropdown"></paper-icon-button>
+				<ul style="margin-right: -20px; margin-top: -4px;" class="dropdown-menu pull-right">
+					<li>
+						<a style="padding: 0; margin: 0;" on-click="openCommentEdit">
+							<paper-item>
+								<paper-icon-item><iron-icon style="margin-right: 8px; width: 20px; height: 20px;" icon="icons:create"></iron-icon></paper-icon-item>
+								<paper-item-body>${ _strings.comment_edit_comment }</paper-item-body>
+							</paper-item>
+						</a>
+					</li>
+					<li>
+						<a style="padding: 0; margin: 0;" on-click="_confirmDeleteComment">
+							<paper-item>
+								<paper-icon-item><iron-icon style="margin-right: 8px; width: 20px; height: 20px;" icon="icons:delete"></iron-icon></paper-icon-item>
+								<paper-item-body>${ _strings.comment_delete_comment }</paper-item-body>
+							</paper-item>
+						</a>
+					</li>
+				</ul>
+			</div>
+
+			<button hidden$="{{ !showRestoreComment }}" class="pratilipi-grey-button pull-right" on-click="_restoreComment" class="pull-right">
+				<iron-icon style="width: 16px; height: 16px; margin-top: -4px;" icon="icons:restore"></iron-icon>
+				${ _strings.comment_restore_comment }
+			</button>
 			
 			<div class="user-details">
 				<a href="{{ comment.user.profilePageUrl }}">
