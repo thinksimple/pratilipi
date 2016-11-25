@@ -71,7 +71,7 @@ public class NotificationListApi extends GenericApi {
 				AccessTokenFilter.getAccessToken().getUserId(),
 				request.language != null ? request.language : UxModeFilter.getDisplayLanguage(),
 				request.cursor,
-				request.resultCount );
+				request.resultCount == null ? request.resultCount : 20 );
 
 		return new Response(
 				notificationListCursorTuple.getDataList(),

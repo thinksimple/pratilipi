@@ -203,7 +203,7 @@ public class NotificationDataUtil {
 			Notification notif = notifListIterator.next();
 			if( notif.getType().isValid( notif ) )
 				notifList.add( notif );
-			if( notifList.size() == resultCount )
+			if( resultCount != null && notifList.size() == resultCount )
 				break;
 		}
 		
