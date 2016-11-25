@@ -38,6 +38,9 @@ public class UserAuthorEmailApi extends GenericApi {
 		if( request.sendContentPublishedMail && request.pratilipiId == null )
 			errorMessages.addProperty( "pratilipiId", GenericRequest.ERR_PRATILIPI_ID_REQUIRED );
 
+		if( request.sendContentPublishedMail && request.userId == null )
+			errorMessages.addProperty( "userId", GenericRequest.ERR_USER_ID_REQUIRED );
+
 		if( errorMessages.entrySet().size() > 0 )
 			throw new InvalidArgumentException( errorMessages );
 
