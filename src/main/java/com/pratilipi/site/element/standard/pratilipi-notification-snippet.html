@@ -27,7 +27,7 @@
 		<a class="notification-message list-group-item" style="border-radius: 0px;" href="{{ sourceUrl }}">
 			<span class="vertical-align">
 				<span style="margin-right: 12px;">
-					<img class="img-circle pratilipi-shadow pull-left" src="{{ displayImageUrl }}" />
+					<img style="width: 48px; height: 48px;" class="img-circle pratilipi-shadow pull-left" src="{{ displayImageUrl }}" />
 				</span>
 				<span>
 					<span style="white-space: normal;" class="notification-message-snippet"></span>
@@ -55,7 +55,9 @@
 				this.set( 'notificationId', this.notification.notificationId );
 				this.set( 'message', this.notification.message );
 				this.set( 'sourceUrl', this.notification.sourceUrl );
-				this.set( 'displayImageUrl', this.notification.displayImageUrl + ( this.notification.displayImageUrl.indexOf( "?" ) == -1 ? "?" : "&" ) + "width=48" );
+				this.set( 'displayImageUrl', this.notification.displayImageUrl != null ?
+						this.notification.displayImageUrl + ( this.notification.displayImageUrl.indexOf( "?" ) == -1 ? "?" : "&" ) + "width=48"
+						: "http://0.ptlp.co/resource-${ lang }/logo/pratilipi_logo.png" );
 				this.set( 'time', convertDate( this.notification.lastUpdatedMillis ) );
 
 				jQuery( this.querySelector( '.notification-message-snippet' ) ).html( this.message );
