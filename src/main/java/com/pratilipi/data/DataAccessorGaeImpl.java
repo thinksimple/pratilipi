@@ -1821,12 +1821,12 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	@Override
-	public DataListCursorTuple<Notification> getNotificationList( Long userId, NotificationType type, Long sourceId, String cursorStr, Integer resultCount ) {
-		return getNotificationList( userId, type, sourceId.toString(), cursorStr, resultCount );
+	public DataListIterator<Notification> getNotificationListIterator( Long userId, NotificationType type, Long sourceId, String cursorStr, Integer resultCount ) {
+		return getNotificationListIterator( userId, type, sourceId.toString(), cursorStr, resultCount );
 	}
 	
 	@Override
-	public DataListCursorTuple<Notification> getNotificationList( Long userId, NotificationType type, String sourceId, String cursorStr, Integer resultCount ) {
+	public DataListIterator<Notification> getNotificationListIterator( Long userId, NotificationType type, String sourceId, String cursorStr, Integer resultCount ) {
 	
 		Query<NotificationEntity> query = ObjectifyService.ofy().load().type( NotificationEntity.class );
 		
@@ -1847,61 +1847,8 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		if( resultCount != null && resultCount > 0 )
 			query = query.limit( resultCount );
 		
-		
-		QueryResultIterator<NotificationEntity> iterator = query.iterator();
 
-		
-		// Notification List
-		ArrayList<Notification> notificationList = resultCount == null
-				? new ArrayList<Notification>()
-				: new ArrayList<Notification>( resultCount );
-		
-		while( iterator.hasNext() )
-			notificationList.add( iterator.next() );
-		
-		
-		// Cursor
-		Cursor cursor = iterator.getCursor();
-
-		
-		return new DataListCursorTuple<Notification>(
-				notificationList,
-				cursor == null ? null : cursor.toWebSafeString() );
-		
-	}
-	
-	@Override
-	public DataListCursorTuple<Notification> getNotificationListOrderByLastUpdated( String cursorStr, Integer resultCount  ) {
-		
-		Query<NotificationEntity> query = ObjectifyService.ofy().load()
-				.type( NotificationEntity.class )
-				.order( "LAST_UPDATED" );
-		
-		if( cursorStr != null )
-			query = query.startAt( Cursor.fromWebSafeString( cursorStr ) );
-		
-		if( resultCount != null )
-			query = query.limit( resultCount );
-		
-		QueryResultIterator<NotificationEntity> iterator = query.iterator();
-
-		
-		// Notification List
-		ArrayList<Notification> notificationList = resultCount == null
-				? new ArrayList<Notification>()
-				: new ArrayList<Notification>( resultCount );
-		
-		while( iterator.hasNext() )
-			notificationList.add( iterator.next() );
-		
-		
-		// Cursor
-		Cursor cursor = iterator.getCursor();
-
-		
-		return new DataListCursorTuple<Notification>(
-				notificationList,
-				cursor == null ? null : cursor.toWebSafeString() );
+		return new DataListIterator<Notification>( query.iterator() );
 		
 	}
 	

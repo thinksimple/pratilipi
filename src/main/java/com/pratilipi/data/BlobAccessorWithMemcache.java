@@ -36,6 +36,7 @@ public class BlobAccessorWithMemcache implements BlobAccessor {
 	
 	
 	private BlobEntry memcacheGet( String fileName ) {
+		
 		BlobEntry blobEntry = memcache.get( PREFIX + fileName );
 
 		if( blobEntry == null )

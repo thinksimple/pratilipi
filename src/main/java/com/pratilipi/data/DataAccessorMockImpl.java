@@ -1059,19 +1059,15 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 
 	@Override
-	public DataListCursorTuple<Notification> getNotificationList( Long userId, NotificationType type, Long sourceId, String cursor, Integer resultCount ) {
-		List<Notification> notificationList = new ArrayList<Notification>();
-		for( Notification notification : NotificationMock.NOTIFICATION_TABLE )
-			notificationList.add( notification );
-		return new DataListCursorTuple<Notification>( notificationList, cursor );
+	public DataListIterator<Notification> getNotificationListIterator( Long userId, NotificationType type, Long sourceId, String cursor, Integer resultCount ) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	public DataListCursorTuple<Notification> getNotificationList( Long userId, NotificationType type, String sourceId, String cursor, Integer resultCount ) {
-		List<Notification> notificationList = new ArrayList<Notification>();
-		for( Notification notification : NotificationMock.NOTIFICATION_TABLE )
-			notificationList.add( notification );
-		return new DataListCursorTuple<Notification>( notificationList, "cursor" );
+	public DataListIterator<Notification> getNotificationListIterator( Long userId, NotificationType type, String sourceId, String cursor, Integer resultCount ) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -1115,12 +1111,6 @@ public class DataAccessorMockImpl implements DataAccessor {
 	public I18n createOrUpdateI18n( I18n i18n ) {
 		// TODO Auto-generated method stub
 		return i18n;
-	}
-
-	@Override
-	public DataListCursorTuple<Notification> getNotificationListOrderByLastUpdated( String cursor, Integer resultCount  ) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	

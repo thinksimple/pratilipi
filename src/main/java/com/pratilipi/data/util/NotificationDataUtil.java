@@ -23,6 +23,7 @@ import com.pratilipi.common.util.FirebaseApi;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
+import com.pratilipi.data.DataListIterator;
 import com.pratilipi.data.client.NotificationData;
 import com.pratilipi.data.client.PratilipiData;
 import com.pratilipi.data.client.UserData;
@@ -191,14 +192,26 @@ public class NotificationDataUtil {
 		
 		
 		// Fetching Notification Entities
-		DataListCursorTuple<Notification> notificationListCursorTuple =
-				dataAccessor.getNotificationList( userId, null, (String) null, cursor, resultCount );
+		DataListIterator<Notification> notifListIterator =
+				dataAccessor.getNotificationListIterator( userId, null, (String) null, cursor, null );
+		
+		List<Notification> notifList = resultCount == null
+				? new ArrayList<Notification>()
+				: new ArrayList<Notification>( resultCount );
+				
+		while( notifListIterator.hasNext() ) {
+			Notification notif = notifListIterator.next();
+			if( notif.getType().isValid( notif ) )
+				notifList.add( notif );
+			if( notifList.size() == resultCount )
+				break;
+		}
 		
 		
 		// Return
 		return new DataListCursorTuple<>(
-				createNotificationDataList( notificationListCursorTuple.getDataList(), language, false ),
-				notificationListCursorTuple.getCursor() );
+				createNotificationDataList( notifList, language, false ),
+				notifListIterator.getCursor() );
 		
 	}
 	
@@ -260,7 +273,7 @@ public class NotificationDataUtil {
 				List<String> fcmTokenList = dataAccessor.getFcmTokenList( notifData.getUserId() );
 				if( fcmTokenList.size() != 0 ) {
 					
-					// TODO: Remove this as soon as users have migrated to newer verion of app
+					// TODO: Remove this as soon as users have migrated to newer version of app
 					String fcmResponse = FirebaseApi.sendCloudMessage(
 							fcmTokenList,
 							notifData.getMessage(),

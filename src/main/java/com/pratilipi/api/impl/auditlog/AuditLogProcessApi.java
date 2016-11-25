@@ -69,7 +69,7 @@ public class AuditLogProcessApi extends GenericApi {
 				
 				List<Long> followerUserIdList = dataAccessor.getUserAuthorFollowList( null, authorId, null, null, null ).getDataList();
 				
-				List<Notification> existingNotificationList = dataAccessor.getNotificationList( null, NotificationType.PRATILIPI_ADD, pratilipiId, null, null ).getDataList();
+				List<Notification> existingNotificationList = dataAccessor.getNotificationListIterator( null, NotificationType.PRATILIPI_ADD, pratilipiId, null, null ).list();
 				for( Notification notification : existingNotificationList )
 					followerUserIdList.remove( notification.getUserId() );
 
