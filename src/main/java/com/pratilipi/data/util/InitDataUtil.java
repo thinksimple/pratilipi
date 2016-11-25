@@ -49,7 +49,7 @@ public class InitDataUtil {
 		
 		
 		initBannerDocs = new InitBannerDoc[] {
-				docAccessor.newInitBannerDoc( "pratilipi-gujarati-carousel-36.jpg", null, "/november-hits" ),
+				docAccessor.newInitBannerDoc( "pratilipi-gujarati-carousel-41.jpg", null, "/november-hits" ),
 				docAccessor.newInitBannerDoc( "pratilipi-gujarati-carousel-37.jpg", null, "/rahasyamay-ane-romanchak" ),
 				docAccessor.newInitBannerDoc( "pratilipi-gujarati-carousel-38.jpg", null, "/romance" ),
 				docAccessor.newInitBannerDoc( "pratilipi-gujarati-carousel-39.jpg", null, "/five-minutes-story" ),
