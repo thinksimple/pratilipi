@@ -113,11 +113,11 @@
   	<!-- Notification Data real-time processing. -->
 	
 	<queue>
-		<name>notification</name>
+		<name>fe-notification</name>
 		<target>worker-fe</target>
-		<rate>100/s</rate>
+		<rate>500/s</rate>
 		<bucket-size>10</bucket-size>
-		<max-concurrent-requests>10</max-concurrent-requests>
+		<max-concurrent-requests>100</max-concurrent-requests>
 		<retry-parameters>
 			<task-age-limit>90d</task-age-limit>
 			<min-backoff-seconds>5</min-backoff-seconds>
