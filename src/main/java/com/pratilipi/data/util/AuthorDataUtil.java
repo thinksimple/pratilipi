@@ -768,7 +768,7 @@ public class AuthorDataUtil {
 
 		EmailUtil.sendPratilipiMail( user.getEmail(),
 									UserDataUtil.createUserData( user, author ).getDisplayName(),
-									"PratilipiPublishedNotificationTemplate", 
+									"PratilipiPublishedAuthorTemplate", 
 									pratilipi.getLanguage(), 
 									dataModel );
 
