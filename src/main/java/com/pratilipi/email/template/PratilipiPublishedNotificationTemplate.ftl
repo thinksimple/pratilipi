@@ -52,13 +52,15 @@
 						&nbsp;
 					</td>
 				</tr>
-				<tr>
-					<td colspan="3">
-						<span style="font-size: 14px; line-height: 19px; color: #646464;">
-							${ pratilipi_summary }
-						</span>
-					</td>
-				</tr>
+				<#if pratilipi_summary??>
+					<tr>
+						<td colspan="3">
+							<span style="font-size: 14px; line-height: 19px; color: #646464;">
+								${ pratilipi_summary }
+							</span>
+						</td>
+					</tr>
+				</#if>
 			</table>
 		</td>
 	</tr>
