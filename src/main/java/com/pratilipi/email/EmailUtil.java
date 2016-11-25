@@ -114,7 +114,7 @@ public class EmailUtil {
 		
 		dataModel.put( "template_name", templateName );
 		dataModel.put( "language", language.toString() );
-		String body = FreeMarkerUtil.processTemplate( dataModel, filePath + "MainEmailTemplate.ftl" );
+		String body = FreeMarkerUtil.processTemplate( dataModel, filePath + templateName + ".ftl" );
 
 		try {
 			File file = new File( EmailUtil.class.getResource( "template/" + templateName + ".ftl" ).toURI() );
