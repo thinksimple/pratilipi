@@ -1,10 +1,13 @@
 package com.pratilipi.data.util;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -748,12 +751,14 @@ public class AuthorDataUtil {
 		if( user.getEmail() == null )
 			return;
 
+		DateFormat dateFormat = new SimpleDateFormat( "dd MMM yyyy" );
+		dateFormat.setTimeZone( TimeZone.getTimeZone( "IST" ) );
 
 		Map<String, String> dataModel = new HashMap<String, String>();
 		dataModel.put( "pratilipi_title", pratilipiData.getTitle() != null ? 
 					pratilipiData.getTitle() : pratilipiData.getTitleEn() );
 		dataModel.put( "pratilipi_cover_image_url", PratilipiDataUtil.createPratilipiCoverUrl( pratilipi, 150 ) );
-		dataModel.put( "pratilipi_listing_date", Long.toString( pratilipiData.getListingDate().getTime() ) );
+		dataModel.put( "pratilipi_listing_date", dateFormat.format( pratilipiData.getListingDate() ) );
 		dataModel.put( "pratilipi_summary", HtmlUtil.truncateText( pratilipiData.getSummary(), 250 ) );
 		dataModel.put( "pratilipi_page_url", "http://" + pratilipiData.getLanguage().getHostName() + pratilipiData.getPageUrl() );
 		dataModel.put( "author_name", pratilipiData.getAuthor().getName() != null ? 
