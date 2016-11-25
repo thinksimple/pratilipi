@@ -1,26 +1,35 @@
 package com.pratilipi.data.util;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 import java.util.logging.Logger;
 
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
+import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AccessType;
+import com.pratilipi.common.util.HtmlUtil;
 import com.pratilipi.common.util.UserAccessUtil;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.client.AuthorData;
+import com.pratilipi.data.client.PratilipiData;
 import com.pratilipi.data.client.UserAuthorData;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
+import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.UserAuthor;
+import com.pratilipi.email.EmailUtil;
 import com.pratilipi.filter.AccessTokenFilter;
 
 public class UserAuthorDataUtil {
@@ -251,4 +260,43 @@ public class UserAuthorDataUtil {
 		
 	}
 	
+	public static void sendContentPublishedMail( Long userId, Long pratilipiId ) 
+			throws UnexpectedServerException {
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+
+		if( pratilipi.getAuthorId() == null )
+			return;
+
+		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
+		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author );
+		User user = dataAccessor.getUser( userId );
+
+		if( user.getEmail() == null )
+			return;
+
+		DateFormat dateFormat = new SimpleDateFormat( "dd MMM yyyy" );
+		dateFormat.setTimeZone( TimeZone.getTimeZone( "IST" ) );
+
+		Map<String, String> dataModel = new HashMap<String, String>();
+		dataModel.put( "pratilipi_title", pratilipiData.getTitle() != null ? 
+					pratilipiData.getTitle() : pratilipiData.getTitleEn() );
+		dataModel.put( "pratilipi_cover_image_url", PratilipiDataUtil.createPratilipiCoverUrl( pratilipi, 150 ) );
+		dataModel.put( "pratilipi_listing_date", dateFormat.format( pratilipiData.getListingDate() ) );
+		dataModel.put( "pratilipi_summary", HtmlUtil.truncateText( pratilipiData.getSummary(), 250 ) );
+		dataModel.put( "pratilipi_page_url", "http://" + pratilipiData.getLanguage().getHostName() + pratilipiData.getPageUrl() );
+		dataModel.put( "author_name", pratilipiData.getAuthor().getName() != null ? 
+					pratilipiData.getAuthor().getName() : pratilipiData.getAuthor().getNameEn() );
+		dataModel.put( "author_page_url", "http://" + author.getLanguage().getHostName() + pratilipiData.getAuthor().getPageUrl() );
+
+
+		EmailUtil.sendPratilipiMail( user.getEmail(),
+									UserDataUtil.createUserData( user ).getDisplayName(),
+									"PratilipiPublishedFollowerTemplate", 
+									pratilipi.getLanguage(), 
+									dataModel );
+
+	}
+
 }

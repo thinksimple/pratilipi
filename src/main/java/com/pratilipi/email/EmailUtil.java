@@ -111,8 +111,7 @@ public class EmailUtil {
 		Pattern senderEmailPattern = Pattern.compile( "<#-- SENDER_EMAIL:(.+?)-->" );
 		String subject = null;
 		Pattern subjectPattern = Pattern.compile( "<#-- SUBJECT:(.+?)-->" );
-		
-		dataModel.put( "template_name", templateName );
+
 		dataModel.put( "language", language.toString() );
 		String body = FreeMarkerUtil.processTemplate( dataModel, filePath + templateName + ".ftl" );
 
