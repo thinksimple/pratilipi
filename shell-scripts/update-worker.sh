@@ -23,6 +23,12 @@ then
 	mvn appengine:update -Dapp.id=prod-pratilipi -Dapp.module=worker
 	
 	
+	cp src/main/webapp/WEB-INF/worker-fe-appengine-web.xml	src/main/webapp/WEB-INF/appengine-web.xml
+	
+	# Update prod-pratilipi/worker-fe
+	mvn appengine:update -Dapp.id=prod-pratilipi -Dapp.module=worker-fe
+	
+	
 	# Cleaning up .git directory
 	git gc
 fi

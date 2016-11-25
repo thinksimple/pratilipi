@@ -114,7 +114,7 @@
 	
 	<queue>
 		<name>notification</name>
-		<target>worker</target>
+		<target>worker-fe</target>
 		<rate>100/s</rate>
 		<bucket-size>10</bucket-size>
 		<max-concurrent-requests>10</max-concurrent-requests>
