@@ -33,6 +33,8 @@ public class BatchProcessDataUtil {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
 		BatchProcess batchProcess = dataAccessor.getBatchProcess( batchProcessId );
+		if( batchProcess.getStartAt().after( new Date() ) )
+			return;
 		if( batchProcess.getStateInProgress() != null && ! batchProcess.getStateInProgress().isTimedOut( batchProcess.getLastUpdated() ) )
 			return;
 		

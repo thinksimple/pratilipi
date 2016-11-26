@@ -21,6 +21,10 @@ public interface BatchProcess extends GenericOfyType {
 	
 	void setExecDoc( String execDoc );
 	
+	Date getStartAt();
+	
+	void setStartAt( Date startAt );
+	
 	
 	BatchProcessState getStateInProgress();
 	

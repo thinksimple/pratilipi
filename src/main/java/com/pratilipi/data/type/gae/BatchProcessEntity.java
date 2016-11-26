@@ -21,6 +21,7 @@ public class BatchProcessEntity implements BatchProcess {
 	private BatchProcessType TYPE;
 	private String INIT_DOC;
 	private String EXEC_DOC;
+	private Date START_AT;
 
 	@Index
 	private BatchProcessState STATE_IN_PROGRESS;
@@ -89,6 +90,16 @@ public class BatchProcessEntity implements BatchProcess {
 	@Override
 	public void setExecDoc( String execDoc ) {
 		this.EXEC_DOC = execDoc;
+	}
+	
+	@Override
+	public Date getStartAt() {
+		return START_AT == null ? CREATION_DATE : START_AT;
+	}
+	
+	@Override
+	public void setStartAt( Date startAt ) {
+		this.START_AT = startAt;
 	}
 
 	
