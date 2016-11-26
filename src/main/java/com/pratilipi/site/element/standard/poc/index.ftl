@@ -12,7 +12,7 @@
       border: whitesmoke 1px solid;
       padding: 10px;
       font-size: 20px;
-      height: 400px;
+      min-height: 400px;
     }
 
     .word-suggester {
@@ -40,10 +40,16 @@
     .highlight-suggestion {
       background: lightgrey;
     }
+    blockquote {
+      padding: 10px 20px;
+      margin: 0 0 20px;
+      font-size: 17.5px;
+      border-left: 5px solid #eee;
+    }    
   </style>
     <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">  
-  <script src='https://cdn.tinymce.com/4/tinymce.min.js'></script>
+<!--   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->  
+  <script src='https://cdn.tinymce.com/4.4/tinymce.min.js'></script>
 
 </head>
 
@@ -75,24 +81,28 @@
             $.getScript( "https://cdnjs.cloudflare.com/ajax/libs/rangy/1.3.0/rangy-core.min.js", function( data, textStatus, jqxhr ) {
               // console.log( "Load was performed." );
               $.getScript("https://cdnjs.cloudflare.com/ajax/libs/rangy/1.3.0/rangy-selectionsaverestore.min.js", function( data, textStatus, jqxhr ) {
-                // console.log( "Load was performed 2  ." );
-                $.getScript("resources/js/tinymce-writer/suggester.js", function( data, textStatus, jqxhr ) {
-                  console.log( "Load was performed 3  ." );
-                  $.getScript("resources/js/tinymce-writer/app.js", function( data, textStatus, jqxhr ) {
-                    console.log( "Load was performed 4  ." );
-                  });                  
-                });                
+                 console.log( "Load was performed 2  ." );
+                 $.getScript("resources/js/tinymce-writer/suggester.js", function( data, textStatus, jqxhr ) {
+                   console.log( "Load was performed 3  ." );
+                   $.getScript("resources/js/tinymce-writer/app.js", function( data, textStatus, jqxhr ) {
+                     console.log( "Load was performed 4  ." );
+                   });                  
+                 });                
               });                  
             });
         }
       </script>
       <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/rangy/1.3.0/rangy-core.min.js"></script> -->
+  
   <script>
   tinymce.init({
     // initialise and auto focus
     selector: '#content-placeholder',
     auto_focus: 'content-placeholder',
     inline: true,
+    min_height: 400,
+    max_height: 500,
+    keep_styles: false,
     block_formats: 'Paragraph=p;',  
     //plugins needed and setting up toolbar
     plugins : ['autolink lists link image charmap print preview anchor',
@@ -100,10 +110,15 @@
     'insertdatetime media table paste code'],
     menubar: false,
     statusbar: false,
-    toolbar: 'bold italic underline | alignleft aligncenter alignright | blockquote link image | bullist numlist visualblocks',
+    toolbar: 'bold italic underline | alignleft aligncenter alignright | blockquote link image | bullist numlist visualblocks code',
     height: 300,
-    images_upload_url: '/api/pratilipi/content/image?pratilipiId=5179861627830272',
-    images_upload_base_path: '/some/basepath',  
+    language: 'hi_IN',
+    language_url : 'https://storage.googleapis.com/devo-pratilipi.appspot.com/hi_IN.js',
+    // images_upload_url: '/api/pratilipi/content/image?pratilipiId=5179861627830272',
+    // images_upload_base_path: '/some/basepath', 
+    link_context_toolbar: true,
+    default_link_target:"_blank", 
+    allow_unsafe_link_target: false,
     
     // pasting from other sources
     paste_data_images: true,
@@ -121,13 +136,7 @@
     paste_webkit_styles: "none",
     paste_remove_styles_if_webkit: false,
     paste_text_linebreaktype: "p",
-    // paste_postprocess: function(plugin, args) {
-    //   console.log(args.node);
-    //   $(args.node).find("div").replaceWith(function() {
-    //     return '<p>' + $(this.html() + '</p>';
-    //   });
-    //   console.log($(args.node.html()));
-    // },
+
     // paste_retain_style_proper  ties: "color font-size",
     
     // spell check and other options
@@ -136,7 +145,7 @@
     allow_html_in_named_anchor: false,
     
     // p on clicking Enter key
-    forced_root_block : 'p',
+    forced_root_block : false,
     force_br_newlines : false,
     force_p_newlines : true,
     remove_trailing_brs: true,
@@ -146,13 +155,14 @@
         bold: {inline : 'b', exact : true},
         italic: {inline : 'i', exact : true},
         underline : {inline : 'u', exact : true},
-        blockquote: {block: 'blockquote', exact: true},
-        img: { block:'img', exact: true },
+        blockquote: {block: 'blockquote'},
+        img: { block:'img' },
         // alignleft: { selector: 'p', classes: 'left' },
         // alignright: { selector: 'p', classes: 'right' },
         // aligncenter: { selector: 'p', classes: 'center' }
     },
     setup : function(ed) {
+      if( screen.width > 480 ) {
         ed.on("keydown", function(e){
             var keycode = e.keycode || e.which;
             var translation = new Translation( keycode );
@@ -161,60 +171,69 @@
               sendKeyToSuggester(e.which);
               e.preventDefault(); 
             }
+        });
+      }           
+    },
+    images_upload_handler: function (blobInfo, success, failure) {
+      console.log("coding karni kab seekhoge");
+      console.log(blobInfo.blob());
+      // console.log(failure);
+      var fd = new FormData();
+      fd.append('data', blobInfo.blob()); 
+      $.ajax({
+          type:'POST',
+          url: '/api/pratilipi/content/image?pratilipiId=5179861627830272&pageNo=1',
+          data:fd,
+          cache:true,
+          contentType: false,
+          processData: false,
+          success:function(data){
+              var parsed_data = jQuery.parseJSON( data );
+              var image_name = parsed_data.name;
+              var image_url = "/api/pratilipi/content/image?pratilipiId=5179861627830272&name=" + image_name;
+              success(image_url);  
+          },
+          error: function(data){
+            failure('HTTP Error: ' + data.status);
+            return;
+              // $("#my_form input").val("");              
+          }
+      });    
 
-        });         
-   },
-  images_upload_handler: function (blobInfo, success, failure) {
-    console.log("coding karni kab seekhoge");
-    console.log(blobInfo.blob());
-    // console.log(failure);
-    var fd = new FormData();
-    fd.append('data', blobInfo.blob()); 
-    $.ajax({
-        type:'POST',
-        url: '/api/pratilipi/content/image?pratilipiId=5179861627830272&pageNo=1',
-        data:fd,
-        cache:true,
-        contentType: false,
-        processData: false,
-        success:function(data){
-            var parsed_data = jQuery.parseJSON( data );
-            var image_name = parsed_data.name;
-            var image_url = "/api/pratilipi/content/image?pratilipiId=5179861627830272&name=" + image_name;
-            success(image_url);  
-        },
-        error: function(data){
-          failure('HTTP Error: ' + data.status);
-          return;
-            // $("#my_form input").val("");              
+    },   
+    file_browser_callback: function(field_name, url, type, win) {
+        if(type=='image') {
+         $('#field_name').val(field_name);
+         $("#my_form input").click(); 
         }
-    });    
 
-  },   
-  file_browser_callback: function(field_name, url, type, win) {
-      if(type=='image') {
-       $('#field_name').val(field_name);
-       $("#my_form input").click(); 
-      }
+        
+      // win.document.getElementById(field_name).value = 'http://hindi.gamma.pratilipi.com/api/pratilipi/content/image?pratilipiId=5179861627830272&name=1479906571795';
 
-      
-    // win.document.getElementById(field_name).value = 'http://hindi.gamma.pratilipi.com/api/pratilipi/content/image?pratilipiId=5179861627830272&name=1479906571795';
+          // tinyMCE.activeEditor.uploadImages(function(success) {
+        //   console.log("coding sahi mein nahi aati");
+        //   console.log(success);
+        //   $.post('ajax/post.php', tinymce.activeEditor.getContent()).done(function() {
+        //     console.log("Uploaded images and posted content as an ajax request.");
+        //   });
+        // });    
+    },
 
-        // tinyMCE.activeEditor.uploadImages(function(success) {
-      //   console.log("coding sahi mein nahi aati");
-      //   console.log(success);
-      //   $.post('ajax/post.php', tinymce.activeEditor.getContent()).done(function() {
-      //     console.log("Uploaded images and posted content as an ajax request.");
-      //   });
-      // });    
-  },
-
-
+    // init_instance_callback: function (editor) {
+    //   editor.on('NodeChange', function (e) {
+    //     console.log(e.element.tagName);
+    //     if(e.element.tagName == 'IMG' && $(e.element).parent().is("p")) {
+    //         $(e.element).unwrap();
+    //       console.log("success");
+    //     }
+    //   });
+    // },
 
     // enforcing rules to editor
     valid_elements : 'p[style],img[src|width|height],blockquote,b,i,u,a[href|target=_blank],br,b/strong,i/em,ol,ul,li',
-    extended_valid_elements: 'img[src|width|height],p[style],blockquote,ul,ol,li',
-    valid_children : '+body[p|img|blockquote|ol|ul],p[b|i|u|a|br],+blockquote[b|i|u|a|br],ol[li],ul[li],li[b|i|u|a|br]',
+    extended_valid_elements: 'img[src|width|height],p[style],blockquote,ul,ol,li,a[href|target=_blank]',
+    valid_children : 'body[p|img|blockquote|ol|ul],-body[#text],p[b|i|u|a[href]|br],-p[img],blockquote[b|i|u|a[href]|br],ol[li],ul[li],li[b|i|u|a|br]',
+
     paste_postprocess: function(plugin, args){
       console.log(args.node);
       $(args.node).find("div").replaceWith(function() {
@@ -244,7 +263,9 @@
   </script>
     <script>
         function log() {
-            console.log(tinyMCE.get('content-placeholder').getContent());
+            var content = tinyMCE.get('content-placeholder').getContent();
+            console.log(content);
+            // tinyMCE.get('content-placeholder').setContent(content);
         }
         function uploadOnServer() {
           var field_name = "#" + $('#field_name').val();
@@ -279,7 +300,6 @@
               }
           });          
         }
-    var  url= '/api/pratilipi/content/image?pratilipiId=5179861627830272&pageNo=1';
 
     </script>       
 </body>
