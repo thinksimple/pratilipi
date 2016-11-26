@@ -52,10 +52,8 @@ git push origin $branch
 
 update_module () {
 	echo "Syncing $1 from $2 ...."
-	git push --delete origin refs/tags/$1
-	git tag --delete $1
-	git push origin --delete --force $1
 	git branch --delete --force $1
+	git push origin --delete --force $1
 	git checkout -b $1 $2
 	git push origin $1
 }
