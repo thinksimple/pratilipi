@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -25,9 +27,14 @@ import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.BatchProcess;
 import com.pratilipi.data.type.BatchProcessDoc;
 import com.pratilipi.data.type.Notification;
+import com.pratilipi.site.PratilipiSite;
 
 
 public class BatchProcessDataUtil {
+	
+	private static final Logger logger =
+			Logger.getLogger( BatchProcessDataUtil.class.getName() );
+	
 	
 	public static boolean exec( Long batchProcessId ) throws UnexpectedServerException {
 		
@@ -193,19 +200,18 @@ public class BatchProcessDataUtil {
 					userIdNotifIdMap );
 			docAccessor.save( batchProcess.getId(), processDoc ); // Saving Doc
 
-			
-			for( Long userId : userIdList ) {
-				
-				Notification notification = dataAccessor.newNotification(
+
+			List<Notification> notifList = new ArrayList<>( userIdList.size() );
+			for( Long userId : userIdList )
+				notifList.add( dataAccessor.newNotification(
 						userId,
 						type,
 						sourceId,
-						createdBy );
-				notification = dataAccessor.createOrUpdateNotification( notification );
-				
-				userIdNotifIdMap.put( userId, notification.getId() );
-				
-			}
+						createdBy ));
+			
+			notifList = dataAccessor.createOrUpdateNotificationList( notifList );
+			for( Notification notif : notifList )
+				userIdNotifIdMap.put( notif.getUserId(), notif.getId() );
 			
 		}
 
@@ -238,6 +244,8 @@ public class BatchProcessDataUtil {
 		
 		if( userIdNotifIdMap.size() == notifCount )
 			batchProcess.setStateCompleted( BatchProcessState.VALIDATE_NOTIFICATION_COUNT );
+		else
+			logger.log( Level.INFO, "Validation failed !" );
 		
 	}
 	
