@@ -5,7 +5,7 @@
     <meta property="og:site_name" content="Pratilipi">
 	<meta property="og:title" content="${ _strings.android_pratilipi_app }" />
 	<meta property="og:description" content="${ _strings.android_whatsapp_share_description }" />
-	<meta property="og:image" itemprop="image" content="http://0.ptlp.co/resource-hi/logo/pratilipi_logo.png">
+	<meta property="og:image" itemprop="image" content="http://public.pratilipi.com/pratilipi-logo/png/Logo-2C-RGB-80px.png">
 	<meta property="og:type" content="website" />
     <style>
     .small-spinner {
@@ -202,7 +202,7 @@
     </div>    
     <div class="container">
         <a style="cursor: pointer;margin-top:10px;" href="/" class="pull-left">
-            <img style="width: 50px;height: 50px;" src="http://0.ptlp.co/resource-hi/logo/pratilipi_logo.png">
+            <img style="width: 50px;height: 50px;" src="http://public.pratilipi.com/pratilipi-logo/png/Logo-2C-RGB-80px.png" />
         </a>
         
         <center>
