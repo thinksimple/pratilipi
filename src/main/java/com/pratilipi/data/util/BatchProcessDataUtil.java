@@ -54,6 +54,8 @@ public class BatchProcessDataUtil {
 			_execStateGetUserIdsByAuthorFilter( batchProcess );
 		else if( currState == BatchProcessState.CREATE_NOTIFICATIONS_FOR_USER_IDS )
 			_execStateCreateNotificationsForUserIds( batchProcess );
+		else if( currState == BatchProcessState.VALIDATE_NOTIFICATION_COUNT )
+			_execStateValidateNotificationCount( batchProcess );
 		else if( currState == BatchProcessState.COMPLETED )
 			batchProcess.setStateCompleted( currState );
 		
@@ -199,7 +201,7 @@ public class BatchProcessDataUtil {
 		}
 		
 		
-		if( count < 100 )
+		if( userIdSet.size() == userIdNotifIdMap.size() )
 			batchProcess.setStateCompleted( BatchProcessState.CREATE_NOTIFICATIONS_FOR_USER_IDS );
 
 		
@@ -208,6 +210,28 @@ public class BatchProcessDataUtil {
 				userIdNotifIdMap );
 		docAccessor.save( batchProcess.getId(), processDoc ); // Saving Doc
 
+	}
+	
+	private static void _execStateValidateNotificationCount( BatchProcess batchProcess )
+			throws UnexpectedServerException {
+	
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
+
+		
+		BatchProcessDoc processDoc = docAccessor.getBatchProcessDoc( batchProcess.getId() );
+		String createdBy = "BATCH_PROCESS::" + batchProcess.getId();
+		
+		Map<Long,Long> userIdNotifIdMap = processDoc.getData(
+				BatchProcessState.VALIDATE_NOTIFICATION_COUNT.getInputName(),
+				new TypeToken<Map<Long,Long>>(){}.getType() );
+		
+		int notifCount = dataAccessor.getNotificationCout( createdBy );
+		
+		
+		if( userIdNotifIdMap.size() == notifCount )
+			batchProcess.setStateCompleted( BatchProcessState.VALIDATE_NOTIFICATION_COUNT );
+		
 	}
 	
 }

@@ -1047,6 +1047,12 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 	
 	@Override
+	public int getNotificationCout( String createdBy ) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	@Override
 	public List<Notification> getNotificationList( List<Long> notificationIdList ) {
 		// TODO Auto-generated method stub
 		return null;

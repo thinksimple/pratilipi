@@ -203,6 +203,7 @@ public interface DataAccessor {
 	Notification getNotification( Long notificationId );
 	Notification getNotification( Long userId, NotificationType type, Long sourceId );
 	Notification getNotification( Long userId, NotificationType type, String sourceId, String createdBy );
+	int getNotificationCout( String createdBy );
 	List<Notification> getNotificationList( List<Long> notificationIdList );
 	List<Notification> getNotificationListWithFcmPending( Integer resultCount );
 	DataListIterator<Notification> getNotificationListIterator( Long userId, NotificationType type, Long sourceId, String cursor, Integer resultCount  );

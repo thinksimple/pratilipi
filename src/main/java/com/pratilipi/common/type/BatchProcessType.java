@@ -6,6 +6,7 @@ public enum BatchProcessType {
 			BatchProcessState.INIT,
 			BatchProcessState.GET_USER_IDS_BY_AUTHOR_FILTER,
 			BatchProcessState.CREATE_NOTIFICATIONS_FOR_USER_IDS,
+			BatchProcessState.VALIDATE_NOTIFICATION_COUNT,
 			BatchProcessState.COMPLETED ),
 	;
 	

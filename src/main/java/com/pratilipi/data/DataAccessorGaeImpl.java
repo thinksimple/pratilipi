@@ -1805,6 +1805,16 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	@Override
+	public int getNotificationCout( String createdBy ) {
+		return ObjectifyService.ofy().load()
+				.type( NotificationEntity.class )
+				.filter( "CREATED_BY", createdBy )
+				.keys()
+				.list()
+				.size();
+	}
+	
+	@Override
 	public List<Notification> getNotificationList( List<Long> notificationIdList ) {
 		return getEntityList( NotificationEntity.class, notificationIdList );
 	}
