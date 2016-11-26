@@ -67,7 +67,7 @@
 				this.set( 'sourceImageUrlPresent', this.notification.sourceImageUrl != null ? true : false );
 				this.set( 'sourceImageUrl', this.notification.sourceImageUrl != null ?
 						this.notification.sourceImageUrl + ( this.notification.sourceImageUrl.indexOf( "?" ) == -1 ? "?" : "&" ) + "width=32"
-						: null;
+						: null);
 
 				jQuery( this.querySelector( '.notification-message-snippet' ) ).html( this.message );
 				jQuery( this.querySelector( '.notification-message' ) ).addClass( this.notification.state == "UNREAD" ? 
