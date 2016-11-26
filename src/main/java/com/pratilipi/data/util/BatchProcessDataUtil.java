@@ -1,5 +1,6 @@
 package com.pratilipi.data.util;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -139,9 +140,6 @@ public class BatchProcessDataUtil {
 				BatchProcessState.CREATE_NOTIFICATIONS_FOR_USER_IDS.getOutputName(),
 				new TypeToken<Map<Long,Long>>(){}.getType() );
 		
-		if( userIdNotifIdMap == null )
-			userIdNotifIdMap = new HashMap<>();
-		
 		
 		JsonObject execDoc = new Gson().fromJson( batchProcess.getExecDoc(), JsonElement.class ).getAsJsonObject();
 		NotificationType type = NotificationType.valueOf( execDoc.get( "type" ).getAsString() );
@@ -149,70 +147,75 @@ public class BatchProcessDataUtil {
 		String createdBy = "BATCH_PROCESS::" + batchProcess.getId();
 		
 		
-		int count = 0; // 'count' will remain 0 if everything went fine in previous run
-		for( Entry<Long, Long> entry : userIdNotifIdMap.entrySet() ) {
+		if( userIdNotifIdMap == null ) { // First attempt on this state
 			
-			if( entry.getValue() != 0L ) {
-				userIdSet.remove( entry.getKey() );
-				continue;
+			userIdNotifIdMap = new HashMap<>();
+			
+		} else { // Recovering from previous (failed) attempt
+			
+			for( Entry<Long, Long> entry : userIdNotifIdMap.entrySet() ) {
+				
+				if( entry.getValue() != 0L ) {
+					userIdSet.remove( entry.getKey() );
+					continue;
+				}
+				
+				Notification notification = dataAccessor.getNotification(
+						entry.getKey(),
+						type,
+						sourceId,
+						createdBy );
+				
+				if( notification != null ) {
+					entry.setValue( notification.getId() );
+					userIdSet.remove( entry.getKey() );
+				}
+				
 			}
 			
-			Notification notification = dataAccessor.getNotification(
-					entry.getKey(),
-					type,
-					sourceId,
-					createdBy );
-			
-			if( notification == null )
-				count++;
-			else
-				entry.setValue( notification.getId() );
-			userIdSet.remove( entry.getKey() );
-			
 		}
 
-		
-		for( Long userId : userIdSet ) {
-			userIdNotifIdMap.put( userId, 0L ); // Can't put null (instead of 0) here because Gson ignores keys with null values
-			if( ++count == 100 ) // Limiting to 100 users per run
-				break;
-		}
+
+		while( ! userIdSet.isEmpty() ) {
+			
+			List<Long> userIdList = new ArrayList<>( 100 );
+			for( Long userId : userIdSet ) {
+				userIdNotifIdMap.put( userId, 0L ); // Can't put null (instead of 0) here because Gson ignores keys with null values
+				userIdList.add( userId );
+				if( userIdList.size() == 100 ) // Limiting to 100 users per run
+					break;
+			}
+			userIdSet.removeAll( userIdList );
 
 		
-		if( count != 0 ) {
-			
 			processDoc.setData(
 					BatchProcessState.CREATE_NOTIFICATIONS_FOR_USER_IDS.getOutputName(),
 					userIdNotifIdMap );
 			docAccessor.save( batchProcess.getId(), processDoc ); // Saving Doc
+
 			
-			for( Entry<Long, Long> entry : userIdNotifIdMap.entrySet() ) {
-				
-				if( entry.getValue() != 0L )
-					continue;
+			for( Long userId : userIdList ) {
 				
 				Notification notification = dataAccessor.newNotification(
-						entry.getKey(),
+						userId,
 						type,
 						sourceId,
 						createdBy );
 				notification = dataAccessor.createOrUpdateNotification( notification );
 				
-				entry.setValue( notification.getId() );
+				userIdNotifIdMap.put( userId, notification.getId() );
 				
 			}
 			
 		}
-		
-		
-		if( userIdSet.size() == userIdNotifIdMap.size() )
-			batchProcess.setStateCompleted( BatchProcessState.CREATE_NOTIFICATIONS_FOR_USER_IDS );
 
 		
 		processDoc.setData(
 				BatchProcessState.CREATE_NOTIFICATIONS_FOR_USER_IDS.getOutputName(),
 				userIdNotifIdMap );
 		docAccessor.save( batchProcess.getId(), processDoc ); // Saving Doc
+		
+		batchProcess.setStateCompleted( BatchProcessState.CREATE_NOTIFICATIONS_FOR_USER_IDS );
 
 	}
 	
