@@ -87,5 +87,7 @@ $contentPlaceholder.on("click", function(event) {
 });
 
 window.onload = function() {
-	rangy.init();
+	if(screen.width > 480) {
+		rangy.init();
+	}	
 };

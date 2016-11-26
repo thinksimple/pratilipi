@@ -4,6 +4,98 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <style type="text/css" media="screen">
+    @media only screen and (max-device-width: 549px)  {
+
+      #mce-modal-block {
+      }
+
+      .mce-window {
+        width: auto !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        background: none !important;
+      }
+
+      .mce-window-head {
+        background: #fff !important;
+      }
+
+      .mce-window-body {
+        background: #fff !important;
+      }
+
+      .mce-foot {
+      }
+
+      .mce-foot > .mce-container-body {
+        padding: 10px !important;
+      }
+
+      .mce-foot button {
+      }
+
+      .mce-panel {
+        max-width: 100% !important;
+      }
+
+      .mce-container {
+        max-width: 100% !important;
+        height: auto !important;
+      }
+
+      .mce-container-body {
+        max-width: 100% !important;
+        height: auto !important;
+      }
+
+      .mce-form {
+        padding: 10px !important;
+      }
+
+      .mce-tabs {
+        max-width: 100% !important;
+      }
+
+      .mce-tabs .mce-tab, .mce-tabs .mce-tab.mce-active {
+      }
+
+      .mce-formitem {
+        margin: 10px 0 !important;
+      }
+
+      .mce-btn > button {
+      }
+
+      .mce-abs-layout-item {
+        position: static !important;
+        width: auto !important;
+      }
+
+      .mce-abs-layout-item.mce-label {
+        display: block !important;
+      }
+
+      .mce-abs-layout-item.mce-textbox {
+        -webkit-box-sizing: border-box !important;
+        -moz-box-sizing: border-box !important;
+        box-sizing: border-box !important;
+        display: block !important;
+        width: 100% !important;
+      }
+
+      .mce-abs-layout-item.mce-combobox {
+        display: flex !important;
+      }
+
+      .mce-abs-layout-item.mce-combobox > .mce-textbox {
+        -ms-flex: 1 1 auto;
+        -webkit-flex: 1 1 auto;
+        flex: 1 1 auto;
+        height: 29px !important;
+      }
+    }
     body {
       font-family: Helvetica, 'Noto Sans', sans-serif;
     }
@@ -81,19 +173,18 @@
             $.getScript( "https://cdnjs.cloudflare.com/ajax/libs/rangy/1.3.0/rangy-core.min.js", function( data, textStatus, jqxhr ) {
               // console.log( "Load was performed." );
               $.getScript("https://cdnjs.cloudflare.com/ajax/libs/rangy/1.3.0/rangy-selectionsaverestore.min.js", function( data, textStatus, jqxhr ) {
-                 console.log( "Load was performed 2  ." );
-                 $.getScript("resources/js/tinymce-writer/suggester.js", function( data, textStatus, jqxhr ) {
-                   console.log( "Load was performed 3  ." );
-                   $.getScript("resources/js/tinymce-writer/app.js", function( data, textStatus, jqxhr ) {
-                     console.log( "Load was performed 4  ." );
-                   });                  
-                 });                
+                // console.log( "Load was performed 2  ." );
+                $.getScript("resources/js/tinymce-writer/suggester.js", function( data, textStatus, jqxhr ) {
+                  console.log( "Load was performed 3  ." );
+                  $.getScript("resources/js/tinymce-writer/app.js", function( data, textStatus, jqxhr ) {
+                   console.log( "Load was performed 4  ." );
+                 });                  
+               });                
               });                  
             });
         }
       </script>
-      <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/rangy/1.3.0/rangy-core.min.js"></script> -->
-  
+      <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/rangy/1.3.0/rangy-core.min.js"></script> -->   
   <script>
   tinymce.init({
     // initialise and auto focus
@@ -105,12 +196,12 @@
     keep_styles: false,
     block_formats: 'Paragraph=p;',  
     //plugins needed and setting up toolbar
-    plugins : ['autolink lists link image charmap print preview anchor',
+    plugins : ['autoresize autolink lists link image charmap print preview anchor',
     'searchreplace visualblocks code fullscreen',
     'insertdatetime media table paste code'],
     menubar: false,
     statusbar: false,
-    toolbar: 'bold italic underline | alignleft aligncenter alignright | blockquote link image | bullist numlist visualblocks code',
+    toolbar: 'bold italic underline | alignleft aligncenter alignright | blockquote link image | bullist numlist  visualblocks code',
     height: 300,
     language: 'hi_IN',
     language_url : 'https://storage.googleapis.com/devo-pratilipi.appspot.com/hi_IN.js',
@@ -119,6 +210,8 @@
     link_context_toolbar: true,
     default_link_target:"_blank", 
     allow_unsafe_link_target: false,
+    target_list: false,
+    link_title: false,
     
     // pasting from other sources
     paste_data_images: true,
