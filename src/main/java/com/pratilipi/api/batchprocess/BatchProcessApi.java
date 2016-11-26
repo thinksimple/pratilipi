@@ -25,7 +25,8 @@ public class BatchProcessApi extends GenericApi {
 		
 		List<BatchProcess> batchProcessList = dataAccessor.getIncompleteBatchProcessList();
 		for( BatchProcess batchProcess : batchProcessList )
-			BatchProcessDataUtil.exec( batchProcess.getId() );
+			if( BatchProcessDataUtil.exec( batchProcess.getId() ) )
+				break;
 
 		return new GenericResponse();
 		
