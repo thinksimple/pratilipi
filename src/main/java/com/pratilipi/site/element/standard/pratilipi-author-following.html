@@ -10,6 +10,7 @@
 				empty-list="{{ emptyList }}"
 				empty-list-message="${ _strings.author_no_following }"
 				show-modal-button="{{ showModalButton }}"
+				is-loading="[[ isLoading ]]"
 				is-finished="{{ isFinished }}"></pratilipi-follow-author-grid>
 		</template>
 
@@ -38,6 +39,7 @@
 				cursor: { type: String },
 				numberFound: { type: Number },
 				resultCount: { type: Number, value: 20 },
+				isLoading: { type: Boolean, value: false },
 				isFinished: { type: Boolean, value: false },
 				emptyList: { type: Boolean, value: true },
 				noDisplay: { type: Boolean, value: false }
@@ -95,6 +97,7 @@
 			},
 
 			loadMore: function() {
+				this.set( 'isLoading', true );
 				this.$.UserAuthorFollowListApi.params.userId = this.userId;
 				if( this.cursor != null )
 					this.$.UserAuthorFollowListApi.params.cursor = this.cursor;
@@ -105,11 +108,12 @@
 			},
 
 			_userAuthorFollowListApiResponse: function( response ) {
+				this.set( 'isLoading', false );
 				this._pushToFollowList( this.processAuthorListObject( response.detail.response ) );
 			},
 
 			_userAuthorFollowListApiError: function( response ) {
-				
+				this.set( 'isLoading', false );
 			}
 
 		});

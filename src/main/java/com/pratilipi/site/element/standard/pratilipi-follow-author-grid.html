@@ -75,6 +75,14 @@
 			max-height: 160px;
 			overflow: hidden;
 		}
+		paper-spinner.pratilipi-spinner {
+			display: block;
+			margin: 64px auto;
+			--paper-spinner-layer-1-color: #D0021B;
+			--paper-spinner-layer-2-color: #107FE5;
+			--paper-spinner-layer-3-color: #D0021B;
+			--paper-spinner-layer-4-color: #107FE5;
+		}
 	</style>
 
 	<template>
@@ -91,31 +99,36 @@
 				</template>
 			</div>
 			<hr/>
-			<template is="dom-if" if="{{ !emptyList }}">
-				<div class="row follow-grid">
-					<template is="dom-repeat" items="{{ followList }}">
-						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-							<pratilipi-follow-author follow-object="{{ item }}"></pratilipi-follow-author>
-						</div>
+			<div hidden$="[[ !isLoading ]]">
+				<paper-spinner class="pratilipi-spinner" active></paper-spinner>
+			</div>
+			<div hidden$="[[ isLoading ]]">
+				<template is="dom-if" if="{{ !emptyList }}">
+					<div class="row follow-grid">
+						<template is="dom-repeat" items="{{ followList }}">
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+								<pratilipi-follow-author follow-object="{{ item }}"></pratilipi-follow-author>
+							</div>
+						</template>
+					</div>
+					<#--
+					<template is="dom-if" if="{{ showModalButton }}">
+						<div class="more-button" on-click="openModal">${ _strings.show_more }...</div>
 					</template>
-				</div>
-				<#--
-				<template is="dom-if" if="{{ showModalButton }}">
-					<div class="more-button" on-click="openModal">${ _strings.show_more }...</div>
+					-->
+					<pratilipi-follow-author-popup
+						follow-list="{{ followList }}"
+						number-found="{{ numberFound }}"
+						title="{{ title }}"
+						is-finished="{{ isFinished }}"></pratilipi-follow-author-popup>
 				</template>
-				-->
-				<pratilipi-follow-author-popup
-					follow-list="{{ followList }}"
-					number-found="{{ numberFound }}"
-					title="{{ title }}"
-					is-finished="{{ isFinished }}"></pratilipi-follow-author-popup>
-			</template>
-			<template is="dom-if" if="{{ emptyList }}">
-				<div class="empty-list-message">
-					<iron-icon icon="icons:info-outline"></iron-icon>
-					{{ emptyListMessage }}
-				</div>
-			</template>
+				<template is="dom-if" if="{{ emptyList }}">
+					<div class="empty-list-message">
+						<iron-icon icon="icons:info-outline"></iron-icon>
+						{{ emptyListMessage }}
+					</div>
+				</template>
+			</div>
 		</div>
 	</template>
 
@@ -132,6 +145,7 @@
 				emptyList: { type: Boolean },
 				emptyListMessage: { type: String },
 				showModalButton: { type: Boolean },
+				isLoading: { type: Boolean },
 				isFinished: { type: Boolean }
 			},
 
