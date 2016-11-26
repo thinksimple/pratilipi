@@ -34,7 +34,7 @@
 					<br/>
 					<span style="float: left;"><iron-icon icon="social:person" style="height: 18px;width: 18px;"></iron-icon>&nbsp;<span class="text-muted">{{ time }}</span></span>
 				</span>
-				<template is="dom-if" if="{{ sourceImageUrlPresent }}">	
+				<template is="dom-if" if="{{ hasSourceImage }}">	
 					<span style="margin-left: auto;">
 						<img class="pull-right" src="{{ sourceImageUrl }}" />
 					</span>				
@@ -64,10 +64,10 @@
 						this.notification.displayImageUrl + ( this.notification.displayImageUrl.indexOf( "?" ) == -1 ? "?" : "&" ) + "width=48"
 						: "http://public.pratilipi.com/pratilipi-logo/png/Logo-2C-RGB-80px.png" );
 				this.set( 'time', convertDate( this.notification.lastUpdatedMillis ) );
-				this.set( 'sourceImageUrlPresent', this.notification.sourceImageUrl != null ? true : false );
+				this.set( 'hasSourceImage', this.notification.sourceImageUrl != null );
 				this.set( 'sourceImageUrl', this.notification.sourceImageUrl != null ?
 						this.notification.sourceImageUrl + ( this.notification.sourceImageUrl.indexOf( "?" ) == -1 ? "?" : "&" ) + "width=32"
-						: null);	
+						: null );
 
 				jQuery( this.querySelector( '.notification-message-snippet' ) ).html( this.message );
 				jQuery( this.querySelector( '.notification-message' ) ).addClass( this.notification.state == "UNREAD" ? 
