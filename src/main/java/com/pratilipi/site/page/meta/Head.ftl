@@ -64,8 +64,8 @@ clevertap.account.push({"id": "TEST-Z88-4ZZ-974Z"});
 </script>
 
 <#-- Custom events for cleartap -->
-<#if user.isGuest() == false>
 <script>
+	<#if user.isGuest() == false>
 	clevertap.profile.push({
 		"site": {
 			"name": "${ user.getDisplayName() }",
@@ -89,5 +89,9 @@ clevertap.account.push({"id": "TEST-Z88-4ZZ-974Z"});
 			"share_app": "Facebook"
 		});
 	}
+	<#else>
+		function clevertapShareContentOnFacebook( title, pratilipiId ) {
+			/* Do Nothing */
+		}
+	</#if>
 </script>
-</#if>
