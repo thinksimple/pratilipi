@@ -27,7 +27,6 @@ import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.BatchProcess;
 import com.pratilipi.data.type.BatchProcessDoc;
 import com.pratilipi.data.type.Notification;
-import com.pratilipi.site.PratilipiSite;
 
 
 public class BatchProcessDataUtil {

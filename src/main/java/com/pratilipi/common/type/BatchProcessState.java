@@ -9,9 +9,9 @@ public enum BatchProcessState {
 	
 	GET_USER_IDS_BY_AUTHOR_FILTER		( "authorFilter",		"userIds",			TimeUnit.MINUTES.toMillis( 15 ) ),
 	
-	CREATE_NOTIFICATIONS_FOR_USER_IDS	( "userIds",			"notificationIds",	TimeUnit.MINUTES.toMillis( 15 ) ),
+	CREATE_NOTIFICATIONS_FOR_USER_IDS	( "userIds",			"notificationIds",	TimeUnit.MINUTES.toMillis( 60 ) ),
 	
-	VALIDATE_NOTIFICATION_COUNT			( "notificationIds",	"null",	TimeUnit.MINUTES.toMillis( 15 ) ),
+	VALIDATE_NOTIFICATION_COUNT			( "notificationIds",	"null",				TimeUnit.MINUTES.toMillis( 15 ) ),
 	
 	COMPLETED							( null,					null,				TimeUnit.MINUTES.toMillis( 1 ) );
 	
