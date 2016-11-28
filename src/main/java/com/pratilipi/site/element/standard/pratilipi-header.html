@@ -303,7 +303,7 @@
 							<template is="dom-if" if="{{ !isGuest }}">
 								<template is="dom-if" if="{{ isBigWindow }}">
 									<iron-icon icon="social:notifications" class="dropdown-toggle" id="notification-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" on-click="_hideNotificationCount"></iron-icon>
-									<div style="min-width: 400px;" class="dropdown-menu dropdown-menu-right list-group notification-dropdown-menu"  aria-labelledby="notification-dropdown">
+									<div style="min-width: 400px;height: auto;overflow-x: hidden;max-height: 70vh;" class="dropdown-menu dropdown-menu-right list-group notification-dropdown-menu"  aria-labelledby="notification-dropdown">
 										<template is="dom-if" if="{{ loadingNotifications }}">
 											<paper-spinner class="pratilipi-spinner" active></paper-spinner>
 										</template>
