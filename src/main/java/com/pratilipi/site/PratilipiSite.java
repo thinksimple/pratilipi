@@ -991,10 +991,10 @@ public class PratilipiSite extends HttpServlet {
 	public Map<String, Object> createDataModelForBatchProcessListPage() 
 			throws UnexpectedServerException {
 
-		BatchProcessListApi.Response batchProcessList = ApiRegistry.getApi( BatchProcessListApi.class ).get( new GenericRequest() );
+		BatchProcessListApi.Response batchProcessListResponse = ApiRegistry.getApi( BatchProcessListApi.class ).get( new GenericRequest() );
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", "Notifications - Admin Access" );
-		dataModel.put( "batchProcessListJson", new Gson().toJson( batchProcessList ) );
+		dataModel.put( "batchProcessListJson", new Gson().toJson( batchProcessListResponse.getBatchProcessList() ) );
 		return dataModel;
 
 	}

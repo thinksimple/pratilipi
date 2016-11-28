@@ -27,6 +27,12 @@ public class BatchProcessListApi extends GenericApi {
 		public Response( List<BatchProcess> batchProcessList ) {
 			this.batchProcessList = batchProcessList;
 		}
+
+
+		public List<BatchProcess> getBatchProcessList() {
+			return batchProcessList;
+		}
+
 	}
 
 	@Get
