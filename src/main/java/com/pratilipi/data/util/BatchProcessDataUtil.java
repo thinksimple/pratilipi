@@ -15,8 +15,11 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.BatchProcessState;
+import com.pratilipi.common.type.BatchProcessType;
+import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.NotificationType;
 import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.data.DataAccessor;
@@ -27,12 +30,51 @@ import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.BatchProcess;
 import com.pratilipi.data.type.BatchProcessDoc;
 import com.pratilipi.data.type.Notification;
+import com.pratilipi.data.type.Page;
 
 
 public class BatchProcessDataUtil {
 	
 	private static final Logger logger =
 			Logger.getLogger( BatchProcessDataUtil.class.getName() );
+
+
+	public static void createBatchProcess( Language language, String message, String sourceUri, BatchProcessType type, BatchProcessState state ) 
+			throws InvalidArgumentException {
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+
+		Page page = dataAccessor.getPage( sourceUri );
+
+		if( page == null ) {
+			JsonObject errorMessages = new JsonObject();
+			errorMessages.addProperty( "uri", "Invalid uri !" );
+			throw new InvalidArgumentException( errorMessages );
+		}
+
+		Gson gson = new Gson();
+
+		Map<String, Object> authorFilter = new HashMap<String, Object>();
+		authorFilter.put( "language", language );
+		authorFilter.put( "state", state );
+
+		Map<String, Object> initDoc = new HashMap<String, Object>();
+		initDoc.put( "authorFilter", authorFilter );
+
+		Map<String, Object> execDoc = new HashMap<String, Object>();
+		execDoc.put( "message", message );
+		execDoc.put( "sourceId", page.getPrimaryContentId() );
+		execDoc.put( "type", page.getType() );
+
+		BatchProcess batchProcess = dataAccessor.newBatchProcess();
+		batchProcess.setCreationDate( new Date() );
+		batchProcess.setExecDoc( gson.toJson( execDoc ) );
+		batchProcess.setInitDoc( gson.toJson( initDoc ) );
+		batchProcess.setType( type );
+		
+		logger.log( Level.INFO, "Converted Data : " + new Gson().toJson( batchProcess ) );
+
+	}
 	
 	
 	public static boolean exec( Long batchProcessId ) throws UnexpectedServerException {
