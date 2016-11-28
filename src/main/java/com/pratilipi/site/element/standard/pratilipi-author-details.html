@@ -152,6 +152,11 @@
 			font-size: 20px;
 			font-weight: 500;
 		}
+		.upload-cover {
+			position: absolute;
+			right: 12px;
+			bottom: 12px;
+		}
 	</style>
 	<template>
 		<paper-card class="cover-image pratilipi-shadow" style="background-image: url('{{ coverImageUrl }}');">
@@ -231,7 +236,15 @@
 					</div>
 				</template>
 			</div>
-			
+			<div hidden$="{{ !hasAccessToUpdate }}" class="upload-cover">
+				<div style="position: absolute; top: -1001px;">
+					<form id="uploadAuthorCover" method="post" enctype="multipart/form-data" action="/api/author/cover?authorId={{ author.authorId }}" target="upload_cover">
+						<input id="uploadAuthorCoverInput" type="file" on-change="uploadCover" accept="image/*">
+					</form>
+					<iframe id="upload_cover" name="upload_cover" style="display: none;" on-load="_onchangeCoveriframe"></iframe>
+				</div>
+				<paper-fab mini icon="image:photo-camera" on-click="_chooseCoverFile"></paper-fab>
+			</div>
 		</paper-card>
 		<div class="secondary-500 meta-data pratilipi-shadow">
 			<div class="row">
@@ -270,7 +283,8 @@
 			userAuthor: { type: Object, observer: "_userAuthorObserver" },
 			
 			followCount: { type: Object, observer: "_followCountObserver" },
-			imageUploaded: { type: Boolean, value: false }
+			imageUploaded: { type: Boolean, value: false },
+			coverUploaded: { type: Boolean, value: false }
 		},
 		
 		attached: function() {
@@ -422,6 +436,29 @@
 			if( ! ( fileName.match( ".*\.jpg" ) || fileName.match( ".*\.png" ) ) ) return; // Only jpg and png
 			document.getElementById( "uploadAuthorImage" ).submit();
 			this.imageUploaded = true;
+		},
+
+		_chooseCoverFile: function() {
+			document.getElementById( "uploadAuthorCoverInput" ).click();
+		},
+
+		_onchangeCoveriframe: function( response ) {
+			if( this.coverUploaded ) {
+				this.async( function() { this.coverUploaded = false; }, 500 );
+				this.domHost.getAuthor();
+			}
+		},
+
+		uploadCover: function( event ) {
+			if( this.coverUploaded ) return;
+			var FileList = event.target.files;
+			if( FileList.length != 1 ) return; // No file or more than 1 file is selected.
+			var file = FileList[0];
+			if( file == null ) return;
+			var fileName = file.name.toLowerCase();
+			if( ! ( fileName.match( ".*\.jpg" ) || fileName.match( ".*\.png" ) ) ) return; // Only jpg and png
+			document.getElementById( "uploadAuthorCover" ).submit();
+			this.coverUploaded = true;
 		}
 
 	});
