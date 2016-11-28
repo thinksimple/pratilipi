@@ -3,6 +3,7 @@ package com.pratilipi.service;
 import com.pratilipi.api.ApiRegistry;
 import com.pratilipi.api.GenericBatchApi;
 import com.pratilipi.api.GenericService;
+import com.pratilipi.api.batchprocess.BatchProcessListApi;
 import com.pratilipi.api.impl.author.AuthorApi;
 import com.pratilipi.api.impl.author.AuthorCoverApi;
 import com.pratilipi.api.impl.author.AuthorCoverRemoveApi;
@@ -121,6 +122,8 @@ public class ApiService extends GenericService {
 
 		ApiRegistry.register( NotificationApi.class );
 		ApiRegistry.register( NotificationListApi.class );			// *.pratilipi.com
+		
+		ApiRegistry.register( BatchProcessListApi.class );			// *.pratilipi.com
 		
 	}
 	

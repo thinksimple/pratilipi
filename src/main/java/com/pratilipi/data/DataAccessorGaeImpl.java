@@ -1919,6 +1919,13 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return getEntity( BatchProcessEntity.class, batchProcessId );
 	}
 	
+	public List<BatchProcess> getAllBatchProcessList() {
+		List<BatchProcessEntity> batchProcessList = ObjectifyService.ofy().load()
+				.type( BatchProcessEntity.class )
+				.list();
+		return new ArrayList<BatchProcess>( batchProcessList );
+	}
+	
 	public List<BatchProcess> getIncompleteBatchProcessList() {
 		List<BatchProcessEntity> batchProcessList = ObjectifyService.ofy().load()
 				.type( BatchProcessEntity.class )
