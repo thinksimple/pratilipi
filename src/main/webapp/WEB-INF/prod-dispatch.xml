@@ -31,7 +31,7 @@
 		<url>*.gamma.pratilipi.com/*</url>
 		<module>gamma</module>
 	</dispatch>
-
+	
 
 	<dispatch>
 		<url>api.pratilipi.com/*</url>
@@ -40,6 +40,11 @@
 
 	<dispatch>
 		<url>android.pratilipi.com/*</url>
+		<module>android</module>
+	</dispatch>
+
+	<dispatch> <!-- TODO: Remove this ASAP -->
+		<url>gamma-android.pratilipi.com/*</url>
 		<module>android</module>
 	</dispatch>
 

@@ -14,6 +14,7 @@ then
 	mvn install
 	ant
 	
+	
 	cp src/main/webapp/WEB-INF/android-web.xml				src/main/webapp/WEB-INF/web.xml
 	cp src/main/webapp/WEB-INF/android-appengine-web.xml	src/main/webapp/WEB-INF/appengine-web.xml
 
