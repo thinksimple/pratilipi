@@ -43,33 +43,13 @@
 
 		<#-- panel -->
 		<div class="panel panel-default" style="margin-bottom: 5px; margin-top: 12px;">
-			<div class="panel-body" style="text-align: center; padding: 0 0 0 5px;">
-				<form style="	width: 95%;margin-left: auto;margin-right: auto;">
-					<div class="editor-wrapper">
+			<div class="panel-body" style="width: 95%;margin-left: auto;margin-right: auto;text-align: center; padding: 0 0 0 5px;">
 						<div class="form-group">
-							<input class="col-sm-6 form-control horizontal-form-input" autocomplete="off" id="subtitle" style="height: 46px; font-size: 25px; border-bottom: 1px solid #ddd;" placeholder="${ _strings.writer_add_content_title }">
+							<input class="form-control horizontal-form-input" autocomplete="off" id="subtitle" style="height: 46px; font-size: 25px; border-bottom: 1px solid #ddd;" placeholder="${ _strings.writer_add_content_title }">
 							<#-- editing panel -->
-							<div id="editor">
-								<div style="background-color: #ddd; padding: 7px;">
-									<a class="execCommand show-cursor" data-toggle="tooltip" data-placement="bottom" title="${ _strings.writer_editor_bold }" 		id="bold">		<img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/bold.svg'>		</a>
-									<a class="execCommand show-cursor" data-toggle="tooltip" data-placement="bottom" title="${ _strings.writer_editor_italics }" 	id="italic">	<img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/italic.svg'>		</a>
-									<a class="execCommand show-cursor" data-toggle="tooltip" data-placement="bottom" title="${ _strings.writer_editor_underline }" 	id="underline">	<img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/underline.svg'>	</a>
-									|
-									<a class="execCommand alignment show-cursor" data-toggle="tooltip" data-placement="bottom" title="${ _strings.writer_editor_align_left }" 	id="justifyLeft">	<img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/paragraph-left.svg'>		</a>
-									<a class="execCommand alignment show-cursor" data-toggle="tooltip" data-placement="bottom" title="${ _strings.writer_editor_align_center }" id="justifyCenter">	<img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/paragraph-center.svg'>	</a>
-									<a class="execCommand alignment show-cursor" data-toggle="tooltip" data-placement="bottom" title="${ _strings.writer_editor_align_right }" 	id="justifyRight">	<img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/paragraph-right.svg'>	</a>
-									|
-									<a class="show-cursor" id="blockquote" 	data-toggle="tooltip" data-placement="bottom" title="${ _strings.writer_editor_quote }">	<img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/quotes-left.svg'>	</a>
-									<a class="show-cursor" id="link" 		data-toggle="tooltip" data-placement="bottom" title="${ _strings.writer_editor_link }">		<img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/link-505050.svg'>	</a>
-									<a class="show-cursor" id="insertImage" data-toggle="tooltip" data-placement="bottom" title="${ _strings.writer_editor_image }">	<img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/camera2.svg'>		</a>
-	
-									<a class="show-cursor" id="removeImage" style="display: none;"><img class="editor-action" src='http://0.ptlp.co/resource-all/icon/svg/trash-d0021b.svg'></a>
-								</div>
-							</div>
+
 						</div>
-					</div>
 					<div id="content-placeholder"></div>
-				</form>
 				<div class="clearfix"></div>
 			</div>
 		</div>
