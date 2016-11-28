@@ -2,29 +2,12 @@
 
 <dom-module id="pratilipi-notification-popup">
 
-	<style>
-		.view-more-button {
-			display: block;
-			text-align: center;
-			color: #d0021b;
-			padding-top: 10px;
-			padding-bottom: 10px;
-			font-size: 17px;
-			font-weight: 700;
-			border-left: 1px solid #d3d3d3;
-			border-right: 1px solid #d3d3d3;
-    		letter-spacing: 0px;
-			font-size: 15px;
-		}
-	</style>
-
 	<template>
 		<template is="dom-repeat" items="{{ popupNotificationList }}" as="notification">
 			<template is="dom-if" if="{{ notification.message }}">
 				<pratilipi-notification-snippet notification="{{ notification }}"></pratilipi-notification-snippet>
 			</template>
 		</template>
-		<a href="/notifications" class="view-more-button">${ _strings.view_more }...</a>
 	</template>
 
 	<script>

@@ -233,6 +233,19 @@
 			--paper-spinner-layer-3-color: #D0021B;
 			--paper-spinner-layer-4-color: #107FE5;
 		}
+		.view-more-button {
+			display: block;
+			text-align: center;
+			color: #d0021b;
+			padding-top: 10px;
+			padding-bottom: 10px;
+			font-size: 17px;
+			font-weight: 700;
+			border-left: 1px solid #d3d3d3;
+			border-right: 1px solid #d3d3d3;
+    		letter-spacing: 0px;
+			font-size: 15px;
+		}
 		/* Bootstrap overrides */
 		.dropdown-menu-right {
 			right: -20px;
@@ -308,6 +321,7 @@
 											<paper-spinner class="pratilipi-spinner" active></paper-spinner>
 										</template>
 										<pratilipi-notification-popup popup-notification-list="[[ popupNotificationList ]]"></pratilipi-notification-popup>
+										<a href="/notifications" class="view-more-button">${ _strings.view_more }...</a>
 									</div>
 								</template>
 								<template is="dom-if" if="{{ !isBigWindow }}">
@@ -369,7 +383,7 @@
 		<iron-ajax
 				id="NotificationListApi"
 				url="/api/notification/list"
-				params='{"resultCount": 4}'
+				params='{"resultCount": 9}'
 				method="GET"
 				content-type="application/json"
 				handle-as="json"
