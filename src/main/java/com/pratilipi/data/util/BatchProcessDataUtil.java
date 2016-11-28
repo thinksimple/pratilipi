@@ -17,6 +17,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.BatchProcessState;
 import com.pratilipi.common.type.BatchProcessType;
 import com.pratilipi.common.type.Language;
@@ -56,7 +57,7 @@ public class BatchProcessDataUtil {
 
 		Map<String, Object> authorFilter = new HashMap<String, Object>();
 		authorFilter.put( "language", language );
-		authorFilter.put( "state", state );
+		authorFilter.put( "state", AuthorState.ACTIVE );
 
 		Map<String, Object> initDoc = new HashMap<String, Object>();
 		initDoc.put( "authorFilter", authorFilter );
@@ -68,6 +69,7 @@ public class BatchProcessDataUtil {
 
 		BatchProcess batchProcess = dataAccessor.newBatchProcess();
 		batchProcess.setCreationDate( new Date() );
+		batchProcess.setStateCompleted( state );
 		batchProcess.setExecDoc( gson.toJson( execDoc ) );
 		batchProcess.setInitDoc( gson.toJson( initDoc ) );
 		batchProcess.setType( type );
