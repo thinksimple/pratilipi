@@ -24,6 +24,7 @@ import org.apache.commons.io.LineIterator;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.pratilipi.api.ApiRegistry;
+import com.pratilipi.api.batchprocess.BatchProcessListApi;
 import com.pratilipi.api.impl.author.AuthorApi;
 import com.pratilipi.api.impl.author.AuthorListApi;
 import com.pratilipi.api.impl.blogpost.BlogPostApi;
@@ -43,6 +44,7 @@ import com.pratilipi.api.impl.userauthor.UserAuthorFollowApi;
 import com.pratilipi.api.impl.userauthor.UserAuthorFollowListApi;
 import com.pratilipi.api.impl.userpratilipi.UserPratilipiApi;
 import com.pratilipi.api.impl.userpratilipi.UserPratilipiReviewListApi;
+import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -388,6 +390,11 @@ public class PratilipiSite extends HttpServlet {
 				dataModel = createDataModelForAuthorsPage( filterLanguage );
 				templateName = "AuthorList.ftl";
 			
+			// Internal link
+			} else if( ! basicMode && uri.equals( "/batch-process" ) ) {
+				dataModel = createDataModelForBatchProcessListPage();
+				templateName = "BatchProcessList.ftl";
+
 			} else if( uri.equals( "/events" ) ) {
 				dataModel = createDataModelForEventsPage( filterLanguage, basicMode );
 				templateName = ( basicMode ? "EventListBasic.ftl" : "EventList.ftl" );
@@ -981,6 +988,17 @@ public class PratilipiSite extends HttpServlet {
 		
 	}
 	
+	public Map<String, Object> createDataModelForBatchProcessListPage() 
+			throws UnexpectedServerException {
+
+		BatchProcessListApi.Response batchProcessList = ApiRegistry.getApi( BatchProcessListApi.class ).get( new GenericRequest() );
+		Map<String, Object> dataModel = new HashMap<String, Object>();
+		dataModel.put( "title", "Notifications - Admin Access" );
+		dataModel.put( "batchProcessListJson", new Gson().toJson( batchProcessList ) );
+		return dataModel;
+
+	}
+
 	public Map<String, Object> createDataModelForEventsPage( Language language, boolean basicMode ) throws InsufficientAccessException {
 
 		EventData eventData = new EventData();

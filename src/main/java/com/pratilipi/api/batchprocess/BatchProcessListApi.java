@@ -30,7 +30,7 @@ public class BatchProcessListApi extends GenericApi {
 	}
 
 	@Get
-	public GenericResponse get( GenericRequest request ) throws UnexpectedServerException {
+	public Response get( GenericRequest request ) throws UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		List<BatchProcess> batchProcessList = dataAccessor.getAllBatchProcessList();
