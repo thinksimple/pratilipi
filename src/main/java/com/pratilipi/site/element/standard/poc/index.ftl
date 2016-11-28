@@ -230,7 +230,7 @@
     paste_remove_styles_if_webkit: false,
     paste_text_linebreaktype: "p",
 
-    // paste_retain_style_proper  ties: "color font-size",
+    // paste_retain_style_properties: "color font-size",
     
     // spell check and other options
     browser_spellcheck: false,
@@ -250,9 +250,7 @@
         underline : {inline : 'u', exact : true},
         blockquote: {block: 'blockquote'},
         img: { block:'img' },
-        // alignleft: { selector: 'p', classes: 'left' },
-        // alignright: { selector: 'p', classes: 'right' },
-        // aligncenter: { selector: 'p', classes: 'center' }
+
     },
     setup : function(ed) {
       if( screen.width > 480 ) {
@@ -270,7 +268,6 @@
     images_upload_handler: function (blobInfo, success, failure) {
       console.log("coding karni kab seekhoge");
       console.log(blobInfo.blob());
-      // console.log(failure);
       var fd = new FormData();
       fd.append('data', blobInfo.blob()); 
       $.ajax({
@@ -298,29 +295,9 @@
         if(type=='image') {
          $('#field_name').val(field_name);
          $("#my_form input").click(); 
-        }
-
-        
-      // win.document.getElementById(field_name).value = 'http://hindi.gamma.pratilipi.com/api/pratilipi/content/image?pratilipiId=5179861627830272&name=1479906571795';
-
-          // tinyMCE.activeEditor.uploadImages(function(success) {
-        //   console.log("coding sahi mein nahi aati");
-        //   console.log(success);
-        //   $.post('ajax/post.php', tinymce.activeEditor.getContent()).done(function() {
-        //     console.log("Uploaded images and posted content as an ajax request.");
-        //   });
-        // });    
+        }  
     },
 
-    // init_instance_callback: function (editor) {
-    //   editor.on('NodeChange', function (e) {
-    //     console.log(e.element.tagName);
-    //     if(e.element.tagName == 'IMG' && $(e.element).parent().is("p")) {
-    //         $(e.element).unwrap();
-    //       console.log("success");
-    //     }
-    //   });
-    // },
 
     // enforcing rules to editor
     valid_elements : 'p[style],img[src|width|height],blockquote,b,i,u,a[href|target=_blank],br,b/strong,i/em,ol,ul,li',
