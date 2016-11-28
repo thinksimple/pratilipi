@@ -152,7 +152,7 @@
         <div class="suggestions">
           <div class="suggestion"></div>
         </div>
-      </div>
+    </div>
     <button style="margin-top: 50px;" onClick="log()">log</button>
     <form id="my_form" action="/upload/" target="form_target" method="post" enctype="multipart/form-data" style="width:0px;height:0;overflow:hidden">
         <input name="image" type="file" onchange="uploadOnServer()">
