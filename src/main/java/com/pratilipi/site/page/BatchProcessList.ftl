@@ -328,11 +328,22 @@
 						});
 					},
 					refreshPage: function() {
-						console.log( "Refresh Page" );
+						$.ajax({
+							type: 'get',
+							url: '/api/batch-process/list',
+							success: function( response ) {
+								var batchProcessList = JSON.parse( response ).batchProcessList;
+								ViewModel.batchProcessList( batchProcessList );
+							},
+							error: function( response ) {
+								console.log( response );
+							}
+						});
 					}
 				};
 
 				ko.applyBindings( ViewModel );
+				setInterval( function () { ViewModel.refreshPage(); }, 30*1000 );
 
 			});
 	</script>
