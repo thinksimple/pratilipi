@@ -45,7 +45,7 @@ MainWriterPanel.prototype.init = function() {
   /* add button listeners */
   this.attachActionButtonListeners();
   /* this.initializeAutosave(); */
-  this.preventUserFromLeaving();    
+  //this.preventUserFromLeaving();    
 };
 
 MainWriterPanel.prototype.addAffixClasses = function() {
@@ -65,7 +65,7 @@ MainWriterPanel.prototype.setWrappersHeight = function() {
 MainWriterPanel.prototype.checkBookLanguage = function() {
   <#if pratilipi.getLanguage() != language >
     window.location = ( "http://${pratilipi.getLanguage()?lower_case}"  + ".pratilipi.com" + window.location.pathname + window.location.search );
-  </#if> 	
+
 };
 
 MainWriterPanel.prototype.initializeGlobalVariables = function() {
@@ -142,7 +142,7 @@ MainWriterPanel.prototype.initializeData = function() {
   var indexJson = ${ indexJson };
   if ( indexJson.index.length ) {
     /* get first chapter and populate it in the writer */
-    this.getChapter( this.currChapter );
+    //this.getChapter( this.currChapter );
     this.table_of_contents_object.populateIndex( indexJson.index );
   }
   else {
