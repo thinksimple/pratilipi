@@ -1,14 +1,8 @@
 package com.pratilipi.api.impl.accesstoken;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.appengine.api.datastore.QueryResultIterator;
-import com.googlecode.objectify.Key;
-import com.googlecode.objectify.ObjectifyService;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -16,8 +10,6 @@ import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
-import com.pratilipi.data.type.AppProperty;
-import com.pratilipi.data.type.gae.AccessTokenEntity;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/accesstoken/cleanup" )
@@ -31,32 +23,13 @@ public class AccessTokenCleanupApi extends GenericApi {
 	public GenericResponse get( GenericRequest request ) {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-
-		String appPropertyId = "Api.TestApi";
-		AppProperty appProperty = dataAccessor.getAppProperty( appPropertyId );
-
-		QueryResultIterator<Key<AccessTokenEntity>> itr = ObjectifyService.ofy().load()
-				.type( AccessTokenEntity.class )
-				.filter( "EXPIRY <", new Date( (Long) appProperty.getValue() ) )
-				.chunk( 1000 )
-				.keys()
-				.iterator();
-
-		List<Key<AccessTokenEntity>> list = new ArrayList<>( 1000 );
-		while( itr.hasNext() ) {
-			if( list.size() == 1000 ) {
-				
-				ObjectifyService.ofy().delete().keys( list ).now();
-				logger.log( Level.INFO, new Date() + ": deleted " + list.size() + " access tokens ..." );
-				list.clear();
-				
-			} else {
-				
-				list.add( itr.next() );
-				
-			}
-		}
 		
+		while( true ) {
+			int count = dataAccessor.deleteExpiredAccessTokenList( 1000 );
+			logger.log( Level.INFO, "Deleted " + count + " AccessToken entities ..." );
+			if( count < 1000 )
+				break;
+		}
 		
 		return new GenericResponse();
 		

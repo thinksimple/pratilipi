@@ -303,10 +303,11 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 	
 	@Override
-	public AuditLog newAuditLog() {
-		return new AuditLogEntity();
+	public int deleteExpiredAccessTokenList( Integer count ) {
+		// TODO: Implementation
+		return 0;
 	}
-	
+
 	
 	// PAGE Table
 	

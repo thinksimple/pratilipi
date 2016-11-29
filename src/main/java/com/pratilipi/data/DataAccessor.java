@@ -67,9 +67,9 @@ public interface DataAccessor {
 	AccessToken getAccessToken( String accessTokenId );
 	List<String> getFcmTokenList( Long userId );
 	AccessToken createOrUpdateAccessToken( AccessToken accessToken );
+	int deleteExpiredAccessTokenList( Integer count );
 
 	// AUDIT_LOG Table
-	AuditLog newAuditLog();
 	AuditLog newAuditLog( AccessToken accessToken, AccessType accessType, Object eventDataOld );
 	DataListCursorTuple<AuditLog> getAuditLogList( Date minCreationDate, String cursor, Integer resultCount );
 

@@ -253,6 +253,10 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		ObjectifyService.ofy().delete().entity( entity ).now();
 	}
 
+	private void deleteEntityList( List<? extends Key<? extends GenericOfyType>> keyList ) {
+		ObjectifyService.ofy().delete().keys( keyList ).now();
+	}
+
 	
 	// APP_PROPERTY Table
 	
@@ -481,13 +485,29 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return createOrUpdateEntity( accessToken );
 	}
 	
+	public int deleteExpiredAccessTokenList( Integer count ) {
+		
+		QueryResultIterator<Key<AccessTokenEntity>> itr = ObjectifyService.ofy().load()
+				.type( AccessTokenEntity.class )
+				.filter( "EXPIRY <", new Date() )
+				.keys()
+				.iterator();
+
+		List<Key<AccessTokenEntity>> list = count == null
+				? new ArrayList<Key<AccessTokenEntity>>()
+				: new ArrayList<Key<AccessTokenEntity>>( count );
+				
+		while( itr.hasNext() && ( count == null || list.size() < count ) )
+			list.add( itr.next() );
+
+		deleteEntityList( list );
+		
+		return list.size();
+		
+	}
+	
 	
 	// AUDIT_LOG Table
-	
-	@Override
-	public AuditLog newAuditLog() {
-		return new AuditLogEntity();
-	}
 	
 	@Override
 	public AuditLog newAuditLog( AccessToken accessToken, AccessType accessType, Object eventDataOld ) {
