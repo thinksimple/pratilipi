@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.common.exception.InsufficientAccessException;
@@ -155,13 +154,10 @@ public class BlogPostDataUtil {
 			throw new InsufficientAccessException();
 		
 
-		Gson gson = new Gson();
-
-		
-		AuditLog auditLog = dataAccessor.newAuditLog();
-		auditLog.setAccessId( AccessTokenFilter.getAccessToken().getId() );
-		auditLog.setAccessType( isNew ? AccessType.BLOG_POST_ADD : AccessType.BLOG_POST_UPDATE );
-		auditLog.setEventDataOld( gson.toJson( blogPost ) );
+		AuditLog auditLog = dataAccessor.newAuditLog(
+				AccessTokenFilter.getAccessToken(),
+				isNew ? AccessType.BLOG_POST_ADD : AccessType.BLOG_POST_UPDATE,
+				blogPost );
 		
 		
 		if( isNew && blogPostData.hasBlogId() ) // Changing blog id is not allowed
@@ -183,9 +179,6 @@ public class BlogPostDataUtil {
 			blogPost.setCreatedBy( AccessTokenFilter.getAccessToken().getUserId() );
 		}
 		blogPost.setLastUpdated( new Date() );
-		
-		
-		auditLog.setEventDataNew( gson.toJson( blogPost ) );
 		
 		
 		blogPost = dataAccessor.createOrUpdateBlogPost( blogPost, auditLog );

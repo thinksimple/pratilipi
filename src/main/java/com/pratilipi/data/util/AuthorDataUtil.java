@@ -306,13 +306,11 @@ public class AuthorDataUtil {
 			author = dataAccessor.newAuthor();
 		
 		
-		Gson gson = new Gson();
-
-		
-		AuditLog auditLog = dataAccessor.newAuditLog();
-		auditLog.setAccessId( AccessTokenFilter.getAccessToken().getId() );
-		auditLog.setAccessType( AccessType.AUTHOR_ADD );
-		auditLog.setEventDataOld( gson.toJson( author ) );
+		AuditLog auditLog = dataAccessor.newAuditLog(
+				AccessTokenFilter.getAccessToken(),
+				AccessType.AUTHOR_ADD,
+				author
+		);
 			
 		author.setUserId( userData.getId() );
 		author.setFirstName( userData.getFirstName() );
@@ -324,8 +322,6 @@ public class AuthorDataUtil {
 		author.setRegistrationDate( userData.getSignUpDate() );
 		author.setLastUpdated( userData.getSignUpDate() );
 		
-		auditLog.setEventDataNew( gson.toJson( author ) );
-
 		author = dataAccessor.createOrUpdateAuthor( author, auditLog );
 		
 		createOrUpdateAuthorPageUrl( author.getId() );
@@ -704,18 +700,12 @@ public class AuthorDataUtil {
 			return;
 
 		
-		Gson gson = new Gson();
-
-		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		AuditLog auditLog = dataAccessor.newAuditLog();
-		auditLog.setAccessId( accessToken.getId() );
-		auditLog.setAccessType( AccessType.AUTHOR_UPDATE );
-		auditLog.setEventDataOld( gson.toJson( author ) );
+		AuditLog auditLog = dataAccessor.newAuditLog(
+				AccessTokenFilter.getAccessToken(),
+				AccessType.AUTHOR_UPDATE,
+				author );
 
 		author.setFollowCount( (long) dataAccessor.getUserAuthorFollowList( null, authorId, null, null, null ).getDataList().size() );
-		
-		auditLog.setEventDataNew( gson.toJson( author ) );
-
 		
 		author = dataAccessor.createOrUpdateAuthor( author, auditLog );
 		

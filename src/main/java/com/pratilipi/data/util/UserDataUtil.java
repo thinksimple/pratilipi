@@ -299,13 +299,10 @@ public class UserDataUtil {
 		}
 
 		
-		Gson gson = new Gson();
-
-		
-		AuditLog auditLog = dataAccessor.newAuditLog();
-		auditLog.setAccessId( AccessTokenFilter.getAccessToken().getId() );
-		auditLog.setAccessType( AccessType.USER_ADD );
-		auditLog.setEventDataOld( gson.toJson( user ) );
+		AuditLog auditLog = dataAccessor.newAuditLog(
+				AccessTokenFilter.getAccessToken(),
+				AccessType.USER_ADD,
+				user );
 		
 		
 		user.setPassword( PasswordUtil.getSaltedHash( password ) );
@@ -313,9 +310,6 @@ public class UserDataUtil {
 		user.setState( UserState.REGISTERED );
 		user.setSignUpDate( new Date() );
 		user.setSignUpSource( signUpSource );
-
-		
-		auditLog.setEventDataNew( gson.toJson( user ) );
 
 		
 		user = dataAccessor.createOrUpdateUser( user, auditLog );
@@ -378,17 +372,17 @@ public class UserDataUtil {
 			if( apiUserData.getEmail() != null )
 				user = dataAccessor.getUserByEmail( apiUserData.getEmail() );
 
-			Gson gson = new Gson();
-
-			AuditLog auditLog = dataAccessor.newAuditLog();
-			auditLog.setAccessId( AccessTokenFilter.getAccessToken().getId() );
+			AuditLog auditLog = dataAccessor.newAuditLog(
+					AccessTokenFilter.getAccessToken(),
+					null,
+					null );
 
 			if( user == null || user.getState() == UserState.DELETED ) {
 
 				user = dataAccessor.newUser();
 
 				auditLog.setAccessType( AccessType.USER_ADD );
-				auditLog.setEventDataOld( gson.toJson( user ) );
+				auditLog.setEventDataOld( user );
 
 				user.setEmail( apiUserData.getEmail() );
 				user.setState( UserState.ACTIVE ); // Counting on Facebook / google for e-mail/user verification
@@ -400,7 +394,7 @@ public class UserDataUtil {
 			} else if( user.getState() == UserState.REFERRAL ) {
 
 				auditLog.setAccessType( AccessType.USER_ADD );
-				auditLog.setEventDataOld( gson.toJson( user ) );
+				auditLog.setEventDataOld( user );
 
 				user.setState( UserState.ACTIVE ); // Counting on Facebook / google for e-mail/user verification
 				user.setSignUpDate( new Date() );
@@ -411,14 +405,14 @@ public class UserDataUtil {
 			} else if( user.getState() == UserState.REGISTERED ) {
 
 				auditLog.setAccessType( AccessType.USER_UPDATE );
-				auditLog.setEventDataOld( gson.toJson( user ) );
+				auditLog.setEventDataOld( user );
 
 				user.setState( UserState.ACTIVE ); // Counting on Facebook / google for e-mail/user verification
 
 			} else { // user.getState() == UserState.ACTIVE || user.getState() == UserState.BLOCKED
 
 				auditLog.setAccessType( AccessType.USER_UPDATE );
-				auditLog.setEventDataOld( gson.toJson( user ) );
+				auditLog.setEventDataOld( user );
 
 			}
 
@@ -428,7 +422,7 @@ public class UserDataUtil {
 			if( apiUserData.getGoogleId() != null )
 				user.setGoogleId( apiUserData.getGoogleId() );
 
-			auditLog.setEventDataNew( gson.toJson( user ) );
+			auditLog.setEventDataNew( user );
 
 			user.setLastUpdated( new Date() );
 			

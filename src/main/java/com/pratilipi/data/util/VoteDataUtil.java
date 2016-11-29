@@ -2,7 +2,6 @@ package com.pratilipi.data.util;
 
 import java.util.Date;
 
-import com.google.gson.Gson;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.ReferenceType;
@@ -66,13 +65,10 @@ public class VoteDataUtil {
 			vote = dataAccessor.newVote();
 
 		
-		Gson gson = new Gson();
-
-		
-		AuditLog auditLog = dataAccessor.newAuditLog();
-		auditLog.setAccessId( AccessTokenFilter.getAccessToken().getId() );
-		auditLog.setAccessType( AccessType.VOTE );
-		auditLog.setEventDataOld( gson.toJson( vote ) );
+		AuditLog auditLog = dataAccessor.newAuditLog(
+				AccessTokenFilter.getAccessToken(),
+				AccessType.VOTE,
+				vote );
 
 		if( isNew ) {
 			vote.setUserId( userId );
@@ -94,8 +90,6 @@ public class VoteDataUtil {
 		}
 
 		vote.setType( type );
-		
-		auditLog.setEventDataNew( gson.toJson( vote ) );
 
 		
 		if ( ! hasAccessToAddOrUpdateData( vote ) )

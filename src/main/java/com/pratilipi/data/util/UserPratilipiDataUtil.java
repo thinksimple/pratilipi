@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.google.gson.Gson;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AccessType;
@@ -214,20 +213,14 @@ public class UserPratilipiDataUtil {
 			throw new InsufficientAccessException();
 
 		
-		Gson gson = new Gson();
-
-		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		AuditLog auditLog = dataAccessor.newAuditLog();
-		auditLog.setAccessId( accessToken.getId() );
-		auditLog.setAccessType( AccessType.USER_PRATILIPI_ADDED_TO_LIB );
-		auditLog.setEventDataOld( gson.toJson( userPratilipi ) );
+		AuditLog auditLog = dataAccessor.newAuditLog(
+				AccessTokenFilter.getAccessToken(),
+				AccessType.USER_PRATILIPI_ADDED_TO_LIB,
+				userPratilipi );
 
 		userPratilipi.setAddedToLib( addedToLibrary );
 		userPratilipi.setAddedToLibDate( new Date() );
 
-		auditLog.setEventDataNew( gson.toJson( userPratilipi ) );
-		
-		
 		userPratilipi = dataAccessor.createOrUpdateUserPratilipi( userPratilipi, auditLog );
 		
 		
@@ -251,13 +244,10 @@ public class UserPratilipiDataUtil {
 			throw new InsufficientAccessException();
 
 		
-		Gson gson = new Gson();
-
-		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		AuditLog auditLog = dataAccessor.newAuditLog();
-		auditLog.setAccessId( accessToken.getId() );
-		auditLog.setAccessType( AccessType.USER_PRATILIPI_ADDED_TO_LIB );
-		auditLog.setEventDataOld( gson.toJson( userPratilipi ) );
+		AuditLog auditLog = dataAccessor.newAuditLog(
+				AccessTokenFilter.getAccessToken(),
+				AccessType.USER_PRATILIPI_ADDED_TO_LIB,
+				userPratilipi );
 		
 		
 		if( rating != null
@@ -287,9 +277,6 @@ public class UserPratilipiDataUtil {
 			userPratilipi.setReviewDate( new Date() );
 		}
 
-		
-		auditLog.setEventDataNew( gson.toJson( userPratilipi ) );
-		
 		
 		userPratilipi = dataAccessor.createOrUpdateUserPratilipi( userPratilipi, auditLog );
 

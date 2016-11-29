@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.common.exception.InsufficientAccessException;
@@ -468,13 +467,11 @@ public class PratilipiDataUtil {
 			throw new InsufficientAccessException();
 		
 
-		Gson gson = new Gson();
-
-		
-		AuditLog auditLog = dataAccessor.newAuditLog();
-		auditLog.setAccessId( AccessTokenFilter.getAccessToken().getId() );
-		auditLog.setAccessType( isNew ? AccessType.PRATILIPI_ADD : AccessType.PRATILIPI_UPDATE );
-		auditLog.setEventDataOld( gson.toJson( pratilipi ) );
+		AuditLog auditLog = dataAccessor.newAuditLog(
+				AccessTokenFilter.getAccessToken(),
+				isNew ? AccessType.PRATILIPI_ADD : AccessType.PRATILIPI_UPDATE,
+				pratilipi
+		);
 
 		
 		if( pratilipiData.hasTitle() )
@@ -509,9 +506,6 @@ public class PratilipiDataUtil {
 			pratilipi.setListingDate( new Date() );
 		pratilipi.setLastUpdated( new Date() );
 
-		
-		auditLog.setEventDataNew( gson.toJson( pratilipi ) );
-		
 		
 		if( isNew ) {
 			pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi, auditLog );
@@ -810,15 +804,12 @@ public class PratilipiDataUtil {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
-		Gson gson = new Gson();
-		
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
 
-		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		AuditLog auditLog = dataAccessor.newAuditLog();
-		auditLog.setAccessId( accessToken.getId() );
-		auditLog.setAccessType( AccessType.PRATILIPI_UPDATE );
-		auditLog.setEventDataOld( gson.toJson( pratilipi ) );
+		AuditLog auditLog = dataAccessor.newAuditLog(
+				AccessTokenFilter.getAccessToken(),
+				AccessType.PRATILIPI_UPDATE,
+				pratilipi );
 		
 		if( readCountOffset != null )
 			pratilipi.setReadCountOffset( readCountOffset );
@@ -829,8 +820,6 @@ public class PratilipiDataUtil {
 		if( fbLikeShareCount != null )
 			pratilipi.setFbLikeShareCount( fbLikeShareCount );
 		
-		auditLog.setEventDataNew( gson.toJson( pratilipi ) );
-
 		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi, auditLog );
 
 	}
@@ -850,20 +839,15 @@ public class PratilipiDataUtil {
 				&& pratilipi.getReviewCount().equals( reviewsDoc.getReviewCount() ) )
 			return;
 		
-		Gson gson = new Gson();
-
-		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		AuditLog auditLog = dataAccessor.newAuditLog();
-		auditLog.setAccessId( accessToken.getId() );
-		auditLog.setAccessType( AccessType.PRATILIPI_UPDATE );
-		auditLog.setEventDataOld( gson.toJson( pratilipi ) );
+		AuditLog auditLog = dataAccessor.newAuditLog(
+				AccessTokenFilter.getAccessToken(),
+				AccessType.PRATILIPI_UPDATE,
+				pratilipi );
 
 		pratilipi.setRatingCount( reviewsDoc.getRatingCount() );
 		pratilipi.setTotalRating( reviewsDoc.getTotalRating() );
 		pratilipi.setReviewCount( reviewsDoc.getReviewCount() );
 		
-		auditLog.setEventDataNew( gson.toJson( pratilipi ) );
-
 		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi, auditLog );
 		
 	}
@@ -979,13 +963,10 @@ public class PratilipiDataUtil {
 			throw new InsufficientAccessException();
 
 		
-		Gson gson = new Gson();
-
-		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		AuditLog auditLog = dataAccessor.newAuditLog();
-		auditLog.setAccessId( accessToken.getId() );
-		auditLog.setAccessType( AccessType.PRATILIPI_UPDATE );
-		auditLog.setEventDataOld( gson.toJson( pratilipi ) );
+		AuditLog auditLog = dataAccessor.newAuditLog(
+				AccessTokenFilter.getAccessToken(),
+				AccessType.PRATILIPI_UPDATE,
+				pratilipi );
 
 		
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
@@ -1034,8 +1015,6 @@ public class PratilipiDataUtil {
 		
 		pratilipi.setLastUpdated( new Date() );
 		
-		auditLog.setEventDataNew( gson.toJson( pratilipi ) );
-
 		pratilipi = dataAccessor.createOrUpdatePratilipi( pratilipi, auditLog );
 		
 		return pratilipi.getPageCount();

@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.common.exception.InsufficientAccessException;
@@ -153,13 +152,10 @@ public class EventDataUtil {
 			throw new InsufficientAccessException();
 		
 
-		Gson gson = new Gson();
-
-		
-		AuditLog auditLog = dataAccessor.newAuditLog();
-		auditLog.setAccessId( AccessTokenFilter.getAccessToken().getId() );
-		auditLog.setAccessType( isNew ? AccessType.EVENT_ADD : AccessType.EVENT_UPDATE );
-		auditLog.setEventDataOld( gson.toJson( event ) );
+		AuditLog auditLog = dataAccessor.newAuditLog(
+					AccessTokenFilter.getAccessToken(),
+					isNew ? AccessType.EVENT_ADD : AccessType.EVENT_UPDATE,
+					event );
 		
 		
 		if( eventData.hasName() )
@@ -187,9 +183,6 @@ public class EventDataUtil {
 		if( isNew )
 			event.setCreationDate( new Date() );
 		event.setLastUpdated( new Date() );
-		
-		
-		auditLog.setEventDataNew( gson.toJson( event ) );
 		
 		
 		if( isNew ) {
@@ -252,17 +245,13 @@ public class EventDataUtil {
 		blobAccessor.createOrUpdateBlob( blobEntry );
 		
 		
-		Gson gson = new Gson();
-
-		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		AuditLog auditLog = dataAccessor.newAuditLog();
-		auditLog.setAccessId( accessToken.getId() );
-		auditLog.setAccessType( AccessType.EVENT_UPDATE );
-		auditLog.setEventDataOld( gson.toJson( event ) );
+		AuditLog auditLog = dataAccessor.newAuditLog(
+				AccessTokenFilter.getAccessToken(),
+				AccessType.EVENT_UPDATE,
+				event );
 
 		event.setLastUpdated( new Date() );
 
-		auditLog.setEventDataNew( gson.toJson( event ) );
 		auditLog.setEventComment( "Uploaded banner image." );
 		
 		event = dataAccessor.createOrUpdateEvent( event, auditLog );
