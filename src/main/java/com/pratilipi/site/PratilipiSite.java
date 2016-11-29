@@ -989,7 +989,7 @@ public class PratilipiSite extends HttpServlet {
 	}
 	
 	public Map<String, Object> createDataModelForBatchProcessListPage() 
-			throws UnexpectedServerException {
+			throws InsufficientAccessException, UnexpectedServerException {
 
 		BatchProcessListApi.Response batchProcessListResponse = ApiRegistry.getApi( BatchProcessListApi.class ).get( new GenericRequest() );
 		Map<String, Object> dataModel = new HashMap<String, Object>();
