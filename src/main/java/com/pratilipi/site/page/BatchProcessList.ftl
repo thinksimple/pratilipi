@@ -322,8 +322,15 @@
 								}, 2000 ); 
 							},
 							error: function( response ) {
+								console.log( response );
 								ViewModel.requestOnFlight( false );
-								ViewModel.progressMessage( "Some Exception occurred at server! Please try again!" );
+								var res = JSON.parse( response.responseText );
+								if( res.uri != null )
+									ViewModel.progressMessage( res.uri );
+								else if( res.message != null )
+									ViewModel.progressMessage( res.message );
+								else
+									ViewModel.progressMessage( "Some Exception occurred at server! Please try again!" );
 							}
 						});
 					},
