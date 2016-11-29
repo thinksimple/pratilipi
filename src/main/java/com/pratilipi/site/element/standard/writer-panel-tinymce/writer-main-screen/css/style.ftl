@@ -714,7 +714,8 @@ body {
   font-family: Helvetica, 'Noto Sans', sans-serif;
 }
 #chapter-content {
-  margin-top: 30px;
+  margin-top: 35px;
+  margin-bottom: 30px;
   border: whitesmoke 1px solid;
   padding: 10px;
   font-size: 20px;

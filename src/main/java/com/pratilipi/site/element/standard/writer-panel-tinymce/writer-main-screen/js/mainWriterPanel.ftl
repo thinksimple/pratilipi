@@ -11,31 +11,30 @@ MainWriterPanel.prototype.init = function() {
 
   this.addAffixClasses();
   this.setWrappersHeight();
-  //this.checkBookLanguage();
+  this.checkBookLanguage();
   this.initializeGlobalVariables();
   this.preventBackspaceDefaultAction();
   this.loadScriptsForDesktopTransliteration();
   
-  var pagination_container = $("#pagination");
+  var pagination_container = $("#pagination"); /* done */
   this.pagination_object = new Pagination( pagination_container, this );
   this.pagination_object.init();
 
-  var toc_container = $( "#toc_container" );
+  var toc_container = $( "#toc_container" ); /* done */
   this.table_of_contents_object = new TableOfContents( toc_container, this.pagination_object, this );
   this.table_of_contents_object.init();
 
-  this.tinymce_object = new Editor();
+  this.tinymce_object = new Editor( this ); /* done */
   this.tinymce_object.init();
 
-  var content_container = $( "#chapter-content" );
-  /* this.content_object = new Content( content_container, this );
-  this.content_object.init(); */
+  this.content_object = new Content( "chapter-content", this );
+  this.content_object.init(); 
   
-  var chapter_name_container = $( "#subtitle" );
+  var chapter_name_container = $( "#subtitle" ); /* done */
   this.chapter_name_object = new ChapterName( chapter_name_container, this );
   this.chapter_name_object.init();
   
-  var publish_modal_container = $("#publishModal");
+  var publish_modal_container = $("#publishModal"); /* done */
   this.publish_modal_object = new PublishModal( publish_modal_container );
   this.publish_modal_object.init();
   
@@ -64,8 +63,8 @@ MainWriterPanel.prototype.setWrappersHeight = function() {
 
 MainWriterPanel.prototype.checkBookLanguage = function() {
   <#if pratilipi.getLanguage() != language >
-    window.location = ( "http://${pratilipi.getLanguage()?lower_case}"  + ".pratilipi.com" + window.location.pathname + window.location.search );
-  </#if>	
+    window.location = ( "http://${pratilipi.getLanguage()?lower_case}"  + ".pratilipi.com" + window.location.pathname + window.location.search ); 
+  </#if>
 };
 
 MainWriterPanel.prototype.initializeGlobalVariables = function() {
@@ -142,7 +141,7 @@ MainWriterPanel.prototype.initializeData = function() {
   var indexJson = ${ indexJson };
   if ( indexJson.index.length ) {
     /* get first chapter and populate it in the writer */
-    //this.getChapter( this.currChapter );
+    this.getChapter( this.currChapter );
     this.table_of_contents_object.populateIndex( indexJson.index );
   }
   else {
@@ -218,7 +217,7 @@ MainWriterPanel.prototype.preventUserFromLeaving = function() {
 };
 
 /* ajax calls functions */
-
+/* done */
 MainWriterPanel.prototype.getChapter = function( chapterNum ) {
   var _this = this;
   var $spinner = $("<div>").addClass("spinner");
@@ -236,7 +235,6 @@ MainWriterPanel.prototype.getChapter = function( chapterNum ) {
       var parsed_data = jQuery.parseJSON( response );
       _this.populateContent( parsed_data );
       _this.pagination_object.setProgressPage();
-      _this.editor_object.resetExecCommandIcons();
       _this.lastSavedContent = parsed_data.content;
       setCookie( "writer_current_page_${ pratilipiId?c }", _this.currChapter, 15, "/pratilipi-write");
     },

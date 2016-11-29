@@ -1,8 +1,10 @@
-var Editor = function () {
+var Editor = function ( parent_object ) {
   this.$image_input = $("#image_input");
+  this.parent_object = parent_object;
 };
 
 Editor.prototype.init = function() {
+  var _this = this;
   this.attachImageInputListener();
 
   tinymce.init({
@@ -85,13 +87,16 @@ Editor.prototype.init = function() {
       }           
     },
     images_upload_handler: function (blobInfo, success, failure) {
-      console.log("coding karni kab seekhoge");
-      console.log(blobInfo.blob());
+      // console.log("coding karni kab seekhoge");
+      // console.log(blobInfo.blob());
       var fd = new FormData();
-      fd.append('data', blobInfo.blob()); 
+      var cur_page = this.parent_object.currChapter;
+      fd.append('data', blobInfo.blob());
+      fd.append('pratilipiId', ${ pratilipiId?c } );  
+      fd.append('pageNo', cur_page );        
       $.ajax({
         type:'POST',
-        url: '/api/pratilipi/content/image?pratilipiId=5179861627830272&pageNo=1',
+        url: '/api/pratilipi/content/image',
         data:fd,
         cache:true,
         contentType: false,
@@ -99,7 +104,7 @@ Editor.prototype.init = function() {
         success:function(data){
           var parsed_data = jQuery.parseJSON( data );
           var image_name = parsed_data.name;
-          var image_url = "/api/pratilipi/content/image?pratilipiId=5179861627830272&name=" + image_name;
+          var image_url = "/api/pratilipi/content/image?pratilipiId=${ pratilipiId?c }&name=" + image_name;
           success(image_url);  
         },
         error: function(data){
@@ -112,8 +117,8 @@ Editor.prototype.init = function() {
 
     file_browser_callback: function(field_name, url, type, win) {
       if(type=='image') {
-       $('#field_name').val(field_name);
-       $("#image_input").click(); 
+        $('#field_name').val(field_name);
+        _this.$image_input.click(); 
       }  
     },
 
@@ -157,19 +162,22 @@ Editor.prototype.attachImageInputListener = function() {
 };
 
 Editor.prototype.uploadOnServer = function() {
+
+  var _this = this;
   var field_name = "#" + $('#field_name').val();
   var fd = new FormData();
-  var blob = $("#image_input").get(0).files[0];
+  var cur_page = this.parent_object.currChapter;
+  var blob = this.$image_input.get(0).files[0];
   console.log(blob);
   fd.append('data', blob);
-  // fd.append('pratilipiId', 5179861627830272 );  
-  // fd.append('pageNo', cur_page );  
-  console.log(fd.get('data'));
-  console.log(blob);    
+  fd.append('pratilipiId', ${ pratilipiId?c } );  
+  fd.append('pageNo', cur_page );  
+  // console.log(fd.get('data'));
+  // console.log(blob);    
 
   $.ajax({
     type:'POST',
-    url: '/api/pratilipi/content/image?pratilipiId=5179861627830272&pageNo=1',
+    url: '/api/pratilipi/content/image',
     data:fd,
     cache:true,
     contentType: false,
@@ -177,15 +185,15 @@ Editor.prototype.uploadOnServer = function() {
     success:function(data){
       var parsed_data = jQuery.parseJSON( data );
       var image_name = parsed_data.name;
-      var image_url = "/api/pratilipi/content/image?pratilipiId=5179861627830272&name=" + image_name;
+      var image_url = "/api/pratilipi/content/image?pratilipiId=${ pratilipiId?c }&name=" + image_name;
       // if( isMobile() ) {
       //   image_url += "&width=240";
       // }
-      $("#image_input").val("");
+      _this.$image_input.val("");
       $(field_name).val( image_url );
     },
     error: function(data){
-      $("#image_input").val("");              
+      _this.$image_input.val("");              
     }
   }); 
 };
