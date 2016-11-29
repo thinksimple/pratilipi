@@ -199,6 +199,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 					map.get( key ).setKey( key );
 			}
 			
+			if( entity.getKey().getName() == null )
+				auditLog.setPrimaryContentId( entity.getKey().getName() );
+			else
+				auditLog.setPrimaryContentId( entity.getKey().getId() );
+			
 			auditLog.setEventDataNew( entity );
 			auditLog.setCreationDate( new Date() );
 			
@@ -206,6 +211,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 			auditLog.setKey( key );
 			
 		} else {
+			
+			if( entity.getKey().getName() == null )
+				auditLog.setPrimaryContentId( entity.getKey().getName() );
+			else
+				auditLog.setPrimaryContentId( entity.getKey().getId() );
 			
 			auditLog.setEventDataNew( entity );
 			auditLog.setCreationDate( new Date() );

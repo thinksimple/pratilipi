@@ -55,6 +55,9 @@ public class AuditLogEntity implements AuditLog {
 	@Index
 	private AccessType ACCESS_TYPE;
 
+	@Index
+	private String PRIMARY_CONTENT_ID;
+	
 	private String EVENT_DATA_OLD;
 	private String EVENT_DATA_NEW;
 	private String EVENT_COMMENT;
@@ -106,6 +109,21 @@ public class AuditLogEntity implements AuditLog {
 	@Override
 	public void setAccessType( AccessType accessType ) {
 		this.ACCESS_TYPE = accessType;
+	}
+
+	@Override
+	public String getPrimaryContentId() {
+		return PRIMARY_CONTENT_ID;
+	}
+
+	@Override
+	public void setPrimaryContentId( String pageContentId ) {
+		this.PRIMARY_CONTENT_ID = pageContentId;
+	}
+
+	@Override
+	public void setPrimaryContentId( Long pageContentId ) {
+		this.PRIMARY_CONTENT_ID = pageContentId.toString();
 	}
 
 	@Override

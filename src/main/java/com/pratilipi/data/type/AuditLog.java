@@ -17,6 +17,12 @@ public interface AuditLog extends GenericOfyType, Serializable { // TODO: remove
 	
 	void setAccessType( AccessType accessType );
 
+	String getPrimaryContentId();
+
+	void setPrimaryContentId( String pageContentId );
+	
+	void setPrimaryContentId( Long pageContentId );
+
 	String getEventDataOld();
 	
 	void setEventDataOld( Object eventDataOld );
