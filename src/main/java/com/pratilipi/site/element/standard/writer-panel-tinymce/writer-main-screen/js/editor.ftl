@@ -96,7 +96,7 @@ Editor.prototype.init = function() {
       fd.append('pageNo', cur_page );        
       $.ajax({
         type:'POST',
-        url: '/api/pratilipi/content/image',
+        url: '/api/pratilipi/content/image?pratilipiId=${ pratilipiId?c }&pageNo=' + cur_page,
         data:fd,
         cache:true,
         contentType: false,
@@ -177,7 +177,7 @@ Editor.prototype.uploadOnServer = function() {
 
   $.ajax({
     type:'POST',
-    url: '/api/pratilipi/content/image',
+    url: '/api/pratilipi/content/image?pratilipiId=${ pratilipiId?c }&pageNo=' + cur_page,
     data:fd,
     cache:true,
     contentType: false,
