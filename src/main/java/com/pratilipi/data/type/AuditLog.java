@@ -9,6 +9,10 @@ public interface AuditLog extends GenericOfyType, Serializable { // TODO: remove
 	
 	Long getId();
 
+	Long getUserId();
+
+	void setUserId( Long userId );
+	
 	String getAccessId();
 
 	void setAccessId( String accessId );

@@ -50,6 +50,9 @@ public class AuditLogEntity implements AuditLog {
 	private Long AUDIT_LOG_ID;
 	
 	@Index
+	private Long USER_ID;
+	
+	@Index
 	private String ACCESS_ID;
 	
 	@Index
@@ -91,6 +94,16 @@ public class AuditLogEntity implements AuditLog {
 		this.AUDIT_LOG_ID = key.getId();
 	}
 
+	@Override
+	public Long getUserId() {
+		return USER_ID;
+	}
+
+	@Override
+	public void setUserId( Long userId ) {
+		this.USER_ID = userId;
+	}
+	
 	@Override
 	public String getAccessId() {
 		return ACCESS_ID;
