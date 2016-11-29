@@ -136,7 +136,7 @@ MainWriterPanel.prototype.hideProgressBarOnMobileFocus = function() {
   }
 };
 
-MainWriterPanel.prototype.initializeData = function() {
+MainWriterPanel.prototype.initializeData = function() { /* done */
   /* if indexJson is not null, book exists, get first chapter and populate the index too. */
   var indexJson = ${ indexJson };
   if ( indexJson.index.length ) {
@@ -248,6 +248,7 @@ MainWriterPanel.prototype.getChapter = function( chapterNum ) {
   }); 
 };
 
+/* done */
 MainWriterPanel.prototype.ajaxAddNewChapter = function( chapterNum ) {
   var _this = this;
   var $spinner = $("<div>").addClass("spinner");
@@ -318,18 +319,18 @@ MainWriterPanel.prototype.removeChapter = function( chapterNum ) {
 MainWriterPanel.prototype.saveChapter = function( autosaveFlag ) {
   var _this = this;
   
-  if( !autosaveFlag ) {
-    this.content_object.removeSpanTags();
-  }
+  // if( !autosaveFlag ) {
+  //   this.content_object.removeSpanTags();
+  // }
     
   <#-- if( this.content_object.hasEmptyText() ) {
     this.content_object.wrapInParagraph();
   } -->
   this.content_object.convertTextNodesToParagraphs();
-  this.content_object.checkFirstChild();
-  if( this.isMozillaBrowser ) {
-    this.content_object.checkLastBr();
-  }
+  // this.content_object.checkFirstChild();
+  // if( this.isMozillaBrowser ) {
+  //   this.content_object.checkLastBr();
+  // }
   
   var ajaxData = { 
     pratilipiId: ${ pratilipiId?c },
@@ -342,7 +343,7 @@ MainWriterPanel.prototype.saveChapter = function( autosaveFlag ) {
     positionClass: 'toast-top-center',
     "timeOut": "1100"
   };         
-  if( !autosaveFlag || ( !( autosaveFlag.originalEvent instanceof Event ) && _this.content_object.hasNoSpanTags() ) ) {        
+  if( !autosaveFlag || ( !( autosaveFlag.originalEvent instanceof Event ) ) ) {        
     $.ajax({
       type: "POST",
       url: " /api/pratilipi/content",
@@ -411,7 +412,8 @@ MainWriterPanel.prototype.populateContent = function( parsed_data ) {
   this.chapter_name_object.change_name( parsed_data.chapterTitle );
 };
 
-MainWriterPanel.prototype.addNewChapter = function( chapterNum ) {
+
+MainWriterPanel.prototype.addNewChapter = function( chapterNum ) { /* done */
   var _this = this;
   if( this.hasUnsavedChanges() ) {
     var a = this.confirmLeavingWithoutSaving();
