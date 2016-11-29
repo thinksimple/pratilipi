@@ -612,7 +612,7 @@ public class PratilipiDataUtil {
 		
 		
 		AuditLog auditLog = dataAccessor.newAuditLog(
-				AccessTokenFilter.getAccessToken().getId(),
+				AccessTokenFilter.getAccessToken(),
 				AccessType.PRATILIPI_UPDATE,
 				pratilipi );
 
@@ -647,7 +647,7 @@ public class PratilipiDataUtil {
 
 			
 			AuditLog auditLog = dataAccessor.newAuditLog(
-					AccessTokenFilter.getAccessToken().getId(),
+					AccessTokenFilter.getAccessToken(),
 					AccessType.PRATILIPI_UPDATE,
 					pratilipi );
 			

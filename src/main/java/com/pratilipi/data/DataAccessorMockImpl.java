@@ -298,8 +298,8 @@ public class DataAccessorMockImpl implements DataAccessor {
 	// AUDIT_LOG Table
 
 	@Override
-	public AuditLog newAuditLog( String accessId, AccessType accessType, Object eventDataOld ) {
-		return new AuditLogEntity( accessId, accessType, eventDataOld );
+	public AuditLog newAuditLog( AccessToken accessToken, AccessType accessType, Object eventDataOld ) {
+		return new AuditLogEntity( accessToken.getUserId(), accessToken.getId(), accessType, eventDataOld );
 	}
 	
 	@Override

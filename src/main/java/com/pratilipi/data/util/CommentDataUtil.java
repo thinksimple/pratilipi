@@ -188,7 +188,7 @@ public class CommentDataUtil {
 
 		
 		AuditLog auditLog = dataAccessor.newAuditLog(
-				AccessTokenFilter.getAccessToken().getId(),
+				AccessTokenFilter.getAccessToken(),
 				isNew ? AccessType.COMMENT_ADD : AccessType.COMMENT_UPDATE,
 				comment );
 

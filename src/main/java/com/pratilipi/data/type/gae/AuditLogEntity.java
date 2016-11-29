@@ -71,7 +71,8 @@ public class AuditLogEntity implements AuditLog {
 
 	public AuditLogEntity() {}
 	
-	public AuditLogEntity( String accessId, AccessType accessType, Object eventDataOld ) {
+	public AuditLogEntity( Long userId, String accessId, AccessType accessType, Object eventDataOld ) {
+		this.USER_ID = userId;
 		this.ACCESS_ID = accessId;
 		this.ACCESS_TYPE = accessType;
 		this.EVENT_DATA_OLD = gson.toJson( eventDataOld );

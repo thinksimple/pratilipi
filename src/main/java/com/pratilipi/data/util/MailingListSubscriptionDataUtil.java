@@ -61,7 +61,7 @@ public class MailingListSubscriptionDataUtil {
 			mailingListSubscription = dataAccessor.newMailingListSubscription();
 		
 		AuditLog auditLog = dataAccessor.newAuditLog(
-				AccessTokenFilter.getAccessToken().getId(),
+				AccessTokenFilter.getAccessToken(),
 				AccessType.MAILING_LIST_SUBSCRIPTION_ADD,
 				mailingListSubscription );
 		

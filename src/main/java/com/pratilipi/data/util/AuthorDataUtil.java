@@ -351,7 +351,7 @@ public class AuthorDataUtil {
 		
 		
 		AuditLog auditLog = dataAccessor.newAuditLog(
-				AccessTokenFilter.getAccessToken().getId(),
+				AccessTokenFilter.getAccessToken(),
 				isNew ? AccessType.AUTHOR_ADD : AccessType.AUTHOR_UPDATE,
 				author
 		);
@@ -447,7 +447,12 @@ public class AuthorDataUtil {
 	}
 	
 	public static String saveAuthorImage( Long authorId, BlobEntry blobEntry )
-			throws InsufficientAccessException, UnexpectedServerException {
+			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
+
+		
+		if( blobEntry.getData() == null || blobEntry.getData().length == 0 )
+			throw new InvalidArgumentException( "Image data is missing." );
+			
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Author author = dataAccessor.getAuthor( authorId );
@@ -464,7 +469,7 @@ public class AuthorDataUtil {
 		
 		
 		AuditLog auditLog = dataAccessor.newAuditLog(
-				AccessTokenFilter.getAccessToken().getId(),
+				AccessTokenFilter.getAccessToken(),
 				AccessType.AUTHOR_UPDATE,
 				author );
 
@@ -514,7 +519,7 @@ public class AuthorDataUtil {
 		
 
 		AuditLog auditLog = dataAccessor.newAuditLog(
-				AccessTokenFilter.getAccessToken().getId(),
+				AccessTokenFilter.getAccessToken(),
 				AccessType.AUTHOR_UPDATE,
 				author );
 
@@ -542,7 +547,7 @@ public class AuthorDataUtil {
 
 
 		AuditLog auditLog = dataAccessor.newAuditLog(
-				AccessTokenFilter.getAccessToken().getId(),
+				AccessTokenFilter.getAccessToken(),
 				AccessType.AUTHOR_UPDATE,
 				author
 		);

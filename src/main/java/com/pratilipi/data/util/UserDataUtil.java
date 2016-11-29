@@ -218,7 +218,7 @@ public class UserDataUtil {
 
 		
 		AuditLog auditLog = dataAccessor.newAuditLog(
-				AccessTokenFilter.getAccessToken().getId(),
+				AccessTokenFilter.getAccessToken(),
 				isNew ? AccessType.USER_ADD : AccessType.USER_UPDATE,
 				user
 				);
@@ -709,7 +709,7 @@ public class UserDataUtil {
 
 		
 		AuditLog auditLog = dataAccessor.newAuditLog(
-				AccessTokenFilter.getAccessToken().getId(),
+				AccessTokenFilter.getAccessToken(),
 				AccessType.USER_UPDATE,
 				user );
 

@@ -752,7 +752,7 @@ public class PratilipiDocUtil {
 			docAccessor.save( pratilipiId, pmDoc );
 			// Update counts in Pratilipi Entity
 			AuditLog auditLog = dataAccessor.newAuditLog(
-					AccessTokenFilter.getAccessToken().getId(),
+					AccessTokenFilter.getAccessToken(),
 					AccessType.PRATILIPI_UPDATE,
 					pratilipi );
 			pratilipi.setWordCount( wordCount );

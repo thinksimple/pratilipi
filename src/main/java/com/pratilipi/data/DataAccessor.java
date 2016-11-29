@@ -70,7 +70,7 @@ public interface DataAccessor {
 
 	// AUDIT_LOG Table
 	AuditLog newAuditLog();
-	AuditLog newAuditLog( String accessId, AccessType accessType, Object eventDataOld );
+	AuditLog newAuditLog( AccessToken accessToken, AccessType accessType, Object eventDataOld );
 	DataListCursorTuple<AuditLog> getAuditLogList( Date minCreationDate, String cursor, Integer resultCount );
 
 	
