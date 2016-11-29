@@ -200,9 +200,9 @@ public class DataAccessorGaeImpl implements DataAccessor {
 			}
 			
 			if( entity.getKey().getName() == null )
-				auditLog.setPrimaryContentId( entity.getKey().getName() );
-			else
 				auditLog.setPrimaryContentId( entity.getKey().getId() );
+			else
+				auditLog.setPrimaryContentId( entity.getKey().getName() );
 			
 			auditLog.setEventDataNew( entity );
 			auditLog.setCreationDate( new Date() );
@@ -213,9 +213,9 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		} else {
 			
 			if( entity.getKey().getName() == null )
-				auditLog.setPrimaryContentId( entity.getKey().getName() );
-			else
 				auditLog.setPrimaryContentId( entity.getKey().getId() );
+			else
+				auditLog.setPrimaryContentId( entity.getKey().getName() );
 			
 			auditLog.setEventDataNew( entity );
 			auditLog.setCreationDate( new Date() );
