@@ -252,11 +252,87 @@ public class TestApi extends GenericApi {
 			
 			} else if( auditLog.getAccessType() == AccessType.AUTHOR_ADD || auditLog.getAccessType() == AccessType.AUTHOR_UPDATE ) {
 				
-				if( jsonObject.get( "id" ) != null )
+				if( jsonObject.get( "id" ) == null && jsonObject.get( "AUTHOR_ID" ) == null ) {
+					ObjectifyService.ofy().delete().entity( auditLog );
+					System.out.println( "\nDeleting " + auditLog.getId() + " ..." );
+					continue;
+				} else if( jsonObject.get( "id" ) != null )
 					auditLog.setPrimaryContentId( jsonObject.get( "id" ).getAsLong() );
 				else
 					auditLog.setPrimaryContentId( jsonObject.get( "AUTHOR_ID" ).getAsLong() );
 				
+			} else if( auditLog.getAccessType() == AccessType.USER_PRATILIPI_ADDED_TO_LIB ) {
+
+				if( jsonObject.get( "USER_PRATILIPI_ID" ) == null ) {
+					ObjectifyService.ofy().delete().entity( auditLog );
+					System.out.println( "\nDeleting " + auditLog.getId() + " ..." );
+					continue;
+				} else
+					auditLog.setPrimaryContentId( jsonObject.get( "USER_PRATILIPI_ID" ).getAsString() );
+				
+			} else if( auditLog.getAccessType() == AccessType.COMMENT_ADD || auditLog.getAccessType() == AccessType.COMMENT_UPDATE ) {
+
+				if( jsonObject.get( "COMMENT_ID" ) == null ) {
+					ObjectifyService.ofy().delete().entity( auditLog );
+					System.out.println( "\nDeleting " + auditLog.getId() + " ..." );
+					continue;
+				} else
+					auditLog.setPrimaryContentId( jsonObject.get( "COMMENT_ID" ).getAsString() );
+				
+			} else if( auditLog.getAccessType() == AccessType.VOTE ) {
+
+				if( jsonObject.get( "VOTE_ID" ) == null ) {
+					ObjectifyService.ofy().delete().entity( auditLog );
+					System.out.println( "\nDeleting " + auditLog.getId() + " ..." );
+					continue;
+				} else
+					auditLog.setPrimaryContentId( jsonObject.get( "VOTE_ID" ).getAsString() );
+
+			} else if( auditLog.getAccessType() == AccessType.MAILING_LIST_SUBSCRIPTION_ADD ) {
+
+				if( jsonObject.get( "MAILING_LIST_SUBSCRIPTION_ID" ) == null ) {
+					ObjectifyService.ofy().delete().entity( auditLog );
+					System.out.println( "\nDeleting " + auditLog.getId() + " ..." );
+					continue;
+				} else
+					auditLog.setPrimaryContentId( jsonObject.get( "MAILING_LIST_SUBSCRIPTION_ID" ).getAsString() );
+
+			} else if( auditLog.getAccessType() == AccessType.EVENT_ADD || auditLog.getAccessType() == AccessType.EVENT_UPDATE ) {
+
+				if( jsonObject.get( "EVENT_ID" ) == null ) {
+					ObjectifyService.ofy().delete().entity( auditLog );
+					System.out.println( "\nDeleting " + auditLog.getId() + " ..." );
+					continue;
+				} else
+					auditLog.setPrimaryContentId( jsonObject.get( "EVENT_ID" ).getAsString() );
+
+			} else if( auditLog.getAccessType() == AccessType.BLOG_POST_ADD || auditLog.getAccessType() == AccessType.BLOG_POST_UPDATE ) {
+
+				if( jsonObject.get( "BLOG_POST_ID" ) == null ) {
+					ObjectifyService.ofy().delete().entity( auditLog );
+					System.out.println( "\nDeleting " + auditLog.getId() + " ..." );
+					continue;
+				} else
+					auditLog.setPrimaryContentId( jsonObject.get( "BLOG_POST_ID" ).getAsString() );
+
+			} else if( auditLog.getAccessType() == AccessType.USER_ADD || auditLog.getAccessType() == AccessType.USER_UPDATE ) {
+
+				if( jsonObject.get( "USER_ID" ) == null ) {
+					ObjectifyService.ofy().delete().entity( auditLog );
+					System.out.println( "\nDeleting " + auditLog.getId() + " ..." );
+					continue;
+				} else
+					auditLog.setPrimaryContentId( jsonObject.get( "USER_ID" ).getAsString() );
+
+			} else if( auditLog.getAccessType() == AccessType.USER_AUTHOR_FOLLOWING ) {
+
+				if( jsonObject.get( "USER_AUTHOR_ID" ) == null ) {
+					ObjectifyService.ofy().delete().entity( auditLog );
+					System.out.println( "\nDeleting " + auditLog.getId() + " ..." );
+					continue;
+				} else
+					auditLog.setPrimaryContentId( jsonObject.get( "USER_AUTHOR_ID" ).getAsString() );
+
 			} else {
 				
 				System.out.println( "\n" + auditLog.getAccessType() );
