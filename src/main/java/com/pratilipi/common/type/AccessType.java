@@ -38,6 +38,9 @@ public enum AccessType {
 	VOTE( "Vote" ),
 	
 	MAILING_LIST_SUBSCRIPTION_ADD( "Add Mailing List Subscription" ),
+
+	BATCH_PROCESS_LIST		( "List BatchProcess" ),
+	BATCH_PROCESS_ADD		( "Add BatchProcess" )
 	;
 
 	

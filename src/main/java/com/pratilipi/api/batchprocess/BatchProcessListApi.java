@@ -7,10 +7,12 @@ import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
+import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.type.BatchProcess;
+import com.pratilipi.data.util.BatchProcessDataUtil;
 
 
 @SuppressWarnings( "serial" )
@@ -36,8 +38,11 @@ public class BatchProcessListApi extends GenericApi {
 	}
 
 	@Get
-	public Response get( GenericRequest request ) throws UnexpectedServerException {
+	public Response get( GenericRequest request ) 
+			throws InsufficientAccessException, UnexpectedServerException {
 
+		if( BatchProcessDataUtil.hasAccessToListBatchProcess() )
+			throw new InsufficientAccessException();
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		List<BatchProcess> batchProcessList = dataAccessor.getAllBatchProcessList();
 		return new Response( batchProcessList );

@@ -15,20 +15,26 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.BatchProcessState;
 import com.pratilipi.common.type.BatchProcessType;
+import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.NotificationType;
 import com.pratilipi.common.util.AuthorFilter;
+import com.pratilipi.common.util.UserAccessUtil;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.DocAccessor;
+import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.BatchProcess;
 import com.pratilipi.data.type.BatchProcessDoc;
 import com.pratilipi.data.type.Notification;
+import com.pratilipi.filter.AccessTokenFilter;
 
 
 public class BatchProcessDataUtil {
@@ -37,8 +43,22 @@ public class BatchProcessDataUtil {
 			Logger.getLogger( BatchProcessDataUtil.class.getName() );
 
 
-	public static void createBatchProcess( String initDoc, String execDoc, BatchProcessType type, BatchProcessState state ) 
-			throws InvalidArgumentException {
+	public static boolean hasAccessToCreateBatchProcess( Language language ) {
+		AccessToken accessToken = AccessTokenFilter.getAccessToken();
+		return UserAccessUtil.hasUserAccess( accessToken.getUserId(), language, AccessType.BATCH_PROCESS_ADD );
+	}
+
+	public static boolean hasAccessToListBatchProcess() {
+		AccessToken accessToken = AccessTokenFilter.getAccessToken();
+		return UserAccessUtil.hasUserAccess( accessToken.getUserId(), null, AccessType.BATCH_PROCESS_LIST );
+	}
+
+
+	public static void createBatchProcess( String initDoc, String execDoc, BatchProcessType type, BatchProcessState state, Language language ) 
+			throws InsufficientAccessException, InvalidArgumentException {
+
+		if( ! hasAccessToCreateBatchProcess( language ) )
+			throw new InsufficientAccessException();
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 

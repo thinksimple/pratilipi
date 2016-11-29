@@ -12,6 +12,7 @@ import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
+import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AuthorState;
@@ -59,7 +60,7 @@ public class BatchProcessApi extends GenericApi {
 
 	@Post
 	public GenericResponse get( PostRequest request ) 
-			throws InvalidArgumentException {
+			throws InsufficientAccessException, InvalidArgumentException  {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
@@ -88,7 +89,8 @@ public class BatchProcessApi extends GenericApi {
 		BatchProcessDataUtil.createBatchProcess( gson.toJson( initDoc ),
 											gson.toJson( execDoc ),
 											request.type, 
-											request.state );
+											request.state,
+											request.language );
 
 		return new GenericResponse();
 
