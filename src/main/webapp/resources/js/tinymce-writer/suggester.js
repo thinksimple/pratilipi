@@ -1,4 +1,4 @@
-var Suggester = function(selectorOrElem, onResolve) {
+var Suggester = function(selectorOrElem, onResolve, content_holder) {
   if(selectorOrElem) {
     this.elem = $(selectorOrElem);
     this.setMode( false );
@@ -8,6 +8,12 @@ var Suggester = function(selectorOrElem, onResolve) {
 
   if(typeof onResolve == 'function') {
     this.resolveCallback = onResolve;
+  } else {
+    throw 'Coding karni nahi aati.'
+  }
+  
+  if( content_holder ) {
+    this.content_holder = content_holder;
   } else {
     throw 'Coding karni nahi aati.'
   }
@@ -172,8 +178,8 @@ var suggesterMethods = {
   setSuggesterPosition: function() {
     var self = this;
     this.elem.css({
-      top: self.curSpan.offsetTop + self.curSpan.offsetHeight,
-      left: self.curSpan.offsetLeft
+      top: self.curSpan.offsetTop + self.curSpan.offsetHeight + self.content_holder.get(0).offsetTop,
+      left: self.curSpan.offsetLeft + self.content_holder.get(0).offsetLeft,
     });
   },
 

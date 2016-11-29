@@ -1,4 +1,4 @@
-var $contentPlaceholder = $('#content-placeholder');
+var $contentPlaceholder = $('#chapter-content');
 
 function getFirstRange() {
     var sel = rangy.getSelection();
@@ -32,7 +32,7 @@ function insertNodeAtRange() {
     }
 }
 
-var suggester = new Suggester('.word-suggester', onSuggestionPicked);
+var suggester = new Suggester('.word-suggester', onSuggestionPicked, $contentPlaceholder);
 suggester.init();
 
 var suppressKeypress = function(e) {
