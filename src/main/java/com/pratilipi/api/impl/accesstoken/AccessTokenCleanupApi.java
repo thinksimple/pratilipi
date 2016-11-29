@@ -1,12 +1,14 @@
 package com.pratilipi.api.impl.accesstoken;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.api.datastore.QueryResultIterator;
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
-import com.googlecode.objectify.cmd.Query;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -14,11 +16,8 @@ import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
-import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AppProperty;
-import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.gae.AccessTokenEntity;
-import com.pratilipi.data.type.gae.AuditLogEntity;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/accesstoken/cleanup" )
@@ -33,39 +32,30 @@ public class AccessTokenCleanupApi extends GenericApi {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
-		// Fetching AppProperty
-		AppProperty appProperty = dataAccessor.getAppProperty( AppProperty.API_ACCESSTOKEN_CLEANUP );
-		if( appProperty == null )
-			appProperty = dataAccessor.newAppProperty( AppProperty.API_ACCESSTOKEN_CLEANUP );
-		
-		
-		Query<AccessTokenEntity> query = ObjectifyService.ofy().load()
-				.type( AccessTokenEntity.class )
-				.order( "EXPIRY" )
-				.limit( 1000 );
+		String appPropertyId = "Api.TestApi";
+		AppProperty appProperty = dataAccessor.getAppProperty( appPropertyId );
 
-		if( appProperty.getValue() != null )
-			query.startAt( Cursor.fromWebSafeString( (String) appProperty.getValue() ) );
-		
-		QueryResultIterator<AccessTokenEntity> iterator = query.iterator();
-		while( iterator.hasNext() ) {
-			AccessToken accessToken = iterator.next();
-			if( ! accessToken.isExpired() )
-				continue;
-			AuditLog auditLog = ObjectifyService.ofy().load()
-					.type( AuditLogEntity.class )
-					.filter( "ACCESS_ID", accessToken.getId() )
-					.first().now();
-			if( auditLog != null )
-				continue;
-			logger.log( Level.INFO, "Deleting " + accessToken.getId() );
-			ObjectifyService.ofy().delete().entity( accessToken );
+		QueryResultIterator<Key<AccessTokenEntity>> itr = ObjectifyService.ofy().load()
+				.type( AccessTokenEntity.class )
+				.filter( "EXPIRY <", new Date( (Long) appProperty.getValue() ) )
+				.chunk( 1000 )
+				.keys()
+				.iterator();
+
+		List<Key<AccessTokenEntity>> list = new ArrayList<>( 1000 );
+		while( itr.hasNext() ) {
+			if( list.size() == 1000 ) {
+				
+				ObjectifyService.ofy().delete().keys( list ).now();
+				logger.log( Level.INFO, new Date() + ": deleted " + list.size() + " access tokens ..." );
+				list.clear();
+				
+			} else {
+				
+				list.add( itr.next() );
+				
+			}
 		}
-		
-		
-		// Updating AppProperty
-		appProperty.setValue( iterator.getCursor().toWebSafeString() );
-		dataAccessor.createOrUpdateAppProperty( appProperty );
 		
 		
 		return new GenericResponse();

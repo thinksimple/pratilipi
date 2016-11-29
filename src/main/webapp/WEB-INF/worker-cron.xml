@@ -1,6 +1,12 @@
 <cronentries>
 
 	<cron>
+		<url>/accesstoken/cleanup?cron</url>
+		<target>worker</target>
+		<schedule>every 1 minutes</schedule>
+		<timezone>Asia/Calcutta</timezone>
+	</cron>
+	<cron>
 		<url>/test?cron</url>
 		<target>worker</target>
 		<schedule>every 1 minutes</schedule>
