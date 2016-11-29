@@ -11,7 +11,7 @@ MainWriterPanel.prototype.init = function() {
 
   this.addAffixClasses();
   this.setWrappersHeight();
-  this.checkBookLanguage();
+  //this.checkBookLanguage();
   this.initializeGlobalVariables();
   this.preventBackspaceDefaultAction();
   this.loadScriptsForDesktopTransliteration();
