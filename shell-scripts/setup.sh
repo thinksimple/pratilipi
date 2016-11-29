@@ -57,8 +57,3 @@ sudo git clone -b release-worker https://github.com/Pratilipi/pratilipi.git
 sudo mkdir -p ~/test
 cd ~/test
 sudo git clone -b master https://github.com/Pratilipi/pratilipi.git
-
-# Cloning git repository for devo-pratilipi/raghu
-sudo mkdir -p ~/test-raghu
-cd ~/test-raghu
-sudo git clone -b raghu https://github.com/Pratilipi/pratilipi.git
