@@ -90,7 +90,7 @@ Editor.prototype.init = function() {
       // console.log("coding karni kab seekhoge");
       // console.log(blobInfo.blob());
       var fd = new FormData();
-      var cur_page = this.parent_object.currChapter;
+      var cur_page = _this.parent_object.currChapter;
       fd.append('data', blobInfo.blob());
       fd.append('pratilipiId', ${ pratilipiId?c } );  
       fd.append('pageNo', cur_page );        
