@@ -343,8 +343,18 @@
 				};
 
 				ko.applyBindings( ViewModel );
-				setInterval( function () { ViewModel.refreshPage(); }, 30*1000 );
 
+				function intervalTrigger() {
+					return window.setInterval( function() {
+						ViewModel.refreshPage();
+					}, 30*1000 );
+				};
+				var id = intervalTrigger();
+				$([window, document]).blur( function(){
+					window.clearInterval( id );
+				}).focus(function(){
+					id = intervalTrigger();
+				});
 			});
 	</script>
 
