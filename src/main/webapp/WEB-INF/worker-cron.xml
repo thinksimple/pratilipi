@@ -1,6 +1,14 @@
 <cronentries>
 
 	<cron>
+		<url>/test?cron</url>
+		<target>worker</target>
+		<schedule>every 1 minutes</schedule>
+		<timezone>Asia/Calcutta</timezone>
+	</cron>
+	
+	
+	<cron>
 		<url>/auditlog/process?cron</url>
 		<target>worker</target>
 		<schedule>every 1 minutes</schedule>

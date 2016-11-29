@@ -1,8 +1,15 @@
 package com.pratilipi.api.impl.test;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.logging.Logger;
 
+import com.google.appengine.api.datastore.QueryResultIterator;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.googlecode.objectify.ObjectifyService;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -11,7 +18,13 @@ import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.Language;
+import com.pratilipi.data.DataAccessor;
+import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.type.AppProperty;
+import com.pratilipi.data.type.AuditLog;
+import com.pratilipi.data.type.gae.AuditLogEntity;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/test" )
@@ -46,7 +59,7 @@ public class TestApi extends GenericApi {
 	
 	
 	@Get
-	public GenericResponse get( GetRequest request ) throws InsufficientAccessException, InvalidArgumentException, UnexpectedServerException, IOException {
+	public GenericResponse get( GetRequest request ) throws InsufficientAccessException, InvalidArgumentException, UnexpectedServerException, IOException, ParseException {
 		
 /*		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( 5830554839678976L );
@@ -184,6 +197,92 @@ public class TestApi extends GenericApi {
 					.addParam( "processContent", "true" ) );
 		TaskQueueFactory.getPratilipiOfflineTaskQueue().addAll( taskList );*/
 
+		
+
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+
+		// Fetching AppProperty
+		String appPropertyId = "Api.TestApi";
+		AppProperty appProperty = dataAccessor.getAppProperty( appPropertyId );
+		if( appProperty == null ) {
+			appProperty = dataAccessor.newAppProperty( appPropertyId );
+			appProperty.setValue( 1453534631495L );
+		}
+
+		
+		
+		QueryResultIterator<AuditLogEntity> itr = ObjectifyService.ofy().load()
+				.type( AuditLogEntity.class )
+				.filter( "CREATION_DATE >=", new Date( (Long) appProperty.getValue() ) )
+				.order( "CREATION_DATE" )
+				.chunk( 100 )
+				.iterator();
+		
+		Gson gson = new Gson();
+		
+		int count = 0;
+		while( itr.hasNext() ) {
+			
+			count++;
+			
+			AuditLog auditLog = itr.next();
+			JsonObject jsonObject = gson.fromJson( auditLog.getEventDataNew(), JsonElement.class ).getAsJsonObject();
+		
+			if( auditLog.getUserId() != null
+					&& auditLog.getPrimaryContentId() != null
+					&& auditLog.getEventDataOld() != null )
+				continue;
+		
+			
+			if( auditLog.getUserId() == null )
+				auditLog.setUserId( dataAccessor.getAccessToken( auditLog.getAccessId() ).getUserId() );
+			
+		
+			if( auditLog.getAccessType() == AccessType.PRATILIPI_ADD || auditLog.getAccessType() == AccessType.PRATILIPI_UPDATE ) {
+			
+				if( jsonObject.get( "id" ) == null && jsonObject.get( "PRATILIPI_ID" ) == null ) {
+					ObjectifyService.ofy().delete().entity( auditLog );
+					System.out.println( "\nDeleting " + auditLog.getId() + " ..." );
+					continue;
+				} else if( jsonObject.get( "id" ) != null )
+					auditLog.setPrimaryContentId( jsonObject.get( "id" ).getAsLong() );
+				else
+					auditLog.setPrimaryContentId( jsonObject.get( "PRATILIPI_ID" ).getAsLong() );
+			
+			} else if( auditLog.getAccessType() == AccessType.AUTHOR_ADD || auditLog.getAccessType() == AccessType.AUTHOR_UPDATE ) {
+				
+				if( jsonObject.get( "id" ) != null )
+					auditLog.setPrimaryContentId( jsonObject.get( "id" ).getAsLong() );
+				else
+					auditLog.setPrimaryContentId( jsonObject.get( "AUTHOR_ID" ).getAsLong() );
+				
+			} else {
+				
+				System.out.println( "\n" + auditLog.getAccessType() );
+				System.out.println( auditLog.getCreationDate().getTime() );
+				break;
+		
+			}
+			
+			
+			if( auditLog.getEventDataOld() == null )
+				auditLog.setEventDataOld( "{}" );
+		
+			
+			ObjectifyService.ofy().save().entity( auditLog );
+			
+			
+			System.out.print( "." );
+			if( count % 100 == 0 ) {
+				appProperty.setValue( auditLog.getCreationDate().getTime() );
+				dataAccessor.createOrUpdateAppProperty( appProperty );
+				System.out.print( "\n" + auditLog.getCreationDate().getTime() + " : " + count + " " );
+			}
+		
+		}
+
+		
 		return new GenericResponse();
 		
 	}
