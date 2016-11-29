@@ -1,5 +1,9 @@
 package com.pratilipi.data.util;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.google.appengine.api.datastore.QueryResultIterator;
@@ -8,10 +12,17 @@ import com.google.appengine.tools.cloudstorage.GcsServiceFactory;
 import com.google.appengine.tools.cloudstorage.RetryParams;
 import com.google.appengine.tools.remoteapi.RemoteApiInstaller;
 import com.google.appengine.tools.remoteapi.RemoteApiOptions;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AuthorState;
+import com.pratilipi.common.type.BatchProcessType;
+import com.pratilipi.common.type.Language;
+import com.pratilipi.common.type.NotificationType;
 import com.pratilipi.common.type.UserState;
+import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.data.BlobAccessor;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
@@ -19,10 +30,12 @@ import com.pratilipi.data.DocAccessor;
 import com.pratilipi.data.Memcache;
 import com.pratilipi.data.SearchAccessor;
 import com.pratilipi.data.type.Author;
+import com.pratilipi.data.type.BatchProcess;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.gae.AccessTokenEntity;
+import com.pratilipi.data.type.gae.AuditLogEntity;
 import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.PageEntity;
 import com.pratilipi.data.type.gae.PratilipiEntity;
@@ -34,7 +47,7 @@ import com.pratilipi.taskqueue.TaskQueueFactory;
 
 public class DataUtil {
 
-	public static void main( String ... args ) throws IOException, UnexpectedServerException, InterruptedException {
+	public static void main( String ... args ) throws IOException, UnexpectedServerException, InterruptedException, ParseException {
 		
 		RemoteApiOptions options = new RemoteApiOptions()
 				.server( "m.gamma.pratilipi.com", 80 )
@@ -155,13 +168,169 @@ public class DataUtil {
 		System.out.println( "\nDone !" );*/
 		
 		
-		// END
+/*		Long bpId = 5106528659963904L;
 		
+		BatchProcessDoc processDoc = docAccessor.getBatchProcessDoc( bpId );
+		
+		Set<Long> userIdSet = processDoc.getData(
+				BatchProcessState.CREATE_NOTIFICATIONS_FOR_USER_IDS.getInputName(),
+				new TypeToken<Set<Long>>(){}.getType() );
+		System.out.println( userIdSet.size() );
+		
+		Map<Long,Long> userIdNotifIdMap = processDoc.getData(
+				BatchProcessState.CREATE_NOTIFICATIONS_FOR_USER_IDS.getOutputName(),
+				new TypeToken<Map<Long,Long>>(){}.getType() );
+		System.out.println( userIdNotifIdMap.size() );
+
+		System.out.println(
+				ObjectifyService.ofy().load()
+						.type( NotificationEntity.class )
+						.filter( "CREATED_BY", "BATCH_PROCESS::" + bpId )
+						.keys()
+						.list()
+						.size()
+				);
+*/		
+		
+		
+/*		System.out.println(
+				ObjectifyService.ofy().load()
+						.type( NotificationEntity.class )
+						.filter( "FCM_PENDING", true )
+						.keys()
+						.list()
+						.size()
+				);
+*/
+		
+/*		String[] messages = {
+				"நீ ..எந்நாளும் என் நிச்சயிக்கப்பட்ட நண்பன்..யார் என்ன பேசுனா நமக்கென்ன ..' - புனிதமான நட்பின் கதையை படியுங்கள் - 'கவி'",
+				"காலை வணக்கம் வினு. 07.06.2098ம் நாளான இன்று தங்களின் ஐம்பதாவது பிறந்தநாள் என்பதை நினைவூட்டுகிறேன்...' - படியுங்கள் அறிவியல் புனைகதை - 'பிறந்தநாள் பரிசு'",
+				"வசதி ஒத்து வராதுங்கறாங்க. உங்க வீட்ல தோட்டம் காடு இருக்கற எடமா பாக்கறாங்க - ஒரு பெண்ணின் காதல் கதையை படியுங்கள் - 'ஒரு பாம்பும் சில தட்டான்களும்'",
+				"நெற்றியில் முத்தமிட்டு நானும் சித்த கண்ணயர்கிறேன்' - காமம் கடந்த காதல் கதையை படியுங்கள் - 'ஒரு பாஸ்கல் அழுத்தம்'",
+		};
+		
+		String[] sourceUrls = {
+				"/karthick/kavi",
+				"/benny/pirandha-naal-parisu",
+				"/shanmugam-k-shan/oru-paambum-sila-thattangalum",
+				"/balagurunathan-murugesan/oru-pascal-azhutham",
+		};
+				
+			
+		String[] schedules = {
+				"27-NOV-2016 09",
+				"27-NOV-2016 11",
+				"27-NOV-2016 13",
+				"27-NOV-2016 15",
+		};
+		
+
+		for( int i = 0; i < 4; i++ ) {
+			Long bpId = _sendBulkFcm(
+					Language.TAMIL,
+					messages[i],
+					DataAccessorFactory.getDataAccessor().getPage( sourceUrls[i]).getPrimaryContentId(),
+					schedules[i] );
+			System.out.println( bpId );
+		}*/
+		
+		
+/*		User user = dataAccessor.getUserByEmail( "abhishek@pratilipi.com" );
+		List<NotificationEntity> notifList = ObjectifyService.ofy().load()
+				.type( NotificationEntity.class )
+				.filter( "USER_ID", user.getId() )
+				.order( "-LAST_UPDATED" )
+				.list();
+		for( Notification notif : notifList ) {
+			if( notif.getCreatedBy() == null )
+				continue;
+			System.out.println( notif.getId() );
+			notif.setFcmPending( true );
+			dataAccessor.createOrUpdateNotification( notif );
+		}*/
+		
+		
+		/*QueryResultIterator<Key<AuditLogEntity>> itr = ObjectifyService.ofy().load()
+				.type( AuditLogEntity.class )
+				.filter( "CREATION_DATE", null )
+				.chunk( 1000 )
+				.keys()
+				.iterator();
+		
+		List<Key<AuditLogEntity>> list = new ArrayList<>( 1000 );
+		while( itr.hasNext() ) {
+			if( list.size() == 1000 ) {
+				
+				final List<Key<AuditLogEntity>> alist = list;
+				list = new ArrayList<>( 1000 );
+				new Thread() {
+					public void run() {
+						RemoteApiOptions options = new RemoteApiOptions()
+								.server( "m.gamma.pratilipi.com", 80 )
+								.useServiceAccountCredential(
+										"prod-pratilipi@appspot.gserviceaccount.com",
+										"PrivateKey.p12" )
+							    .remoteApiPath( "/remote_api" );
+						RemoteApiInstaller installer = new RemoteApiInstaller();
+						try {
+							installer.install( options );
+							ObjectifyService.begin();
+							ObjectifyService.ofy().delete().keys( alist ).now();
+							System.out.println( new Date() + ": deleted " + alist.size() + " audit logs ..." );
+							installer.uninstall();
+						} catch( Exception e ) {
+							System.out.println( e.getClass().getName() );
+//							e.printStackTrace();
+						}
+				   }
+				}.start();
+				
+			} else {
+				
+				list.add( itr.next() );
+				
+			}
+		}*/
+		
+		
+		System.out.println( "Done !" );
 		
 		installer.uninstall();
 		
 	}
 	
+	
+	private static Long _sendBulkFcm( Language language, String message, Long pratilipiId, String schedule ) throws ParseException {
+		
+		AuthorFilter authorFilter = new AuthorFilter();
+		authorFilter.setLanguage( language );
+		authorFilter.setState( AuthorState.ACTIVE );
+		
+		JsonObject initDoc = new JsonObject();
+		initDoc.add( "authorFilter", new Gson().toJsonTree( authorFilter ) );
+ 		
+		JsonObject execDoc = new JsonObject();
+		execDoc.addProperty( "message", message );
+		execDoc.addProperty( "sourceId", pratilipiId.toString() );
+		execDoc.addProperty( "type", NotificationType.PRATILIPI.toString() );
+
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		
+		BatchProcess batchProcess = dataAccessor.newBatchProcess();
+		batchProcess.setType( BatchProcessType.ANDROID_NOTIFACTION_BY_AUTHOR_FILTER );
+		batchProcess.setCreationDate( new Date() );
+		batchProcess.setInitDoc( initDoc.toString() );
+		batchProcess.setExecDoc( execDoc.toString() );
+		batchProcess.setStartAt( new SimpleDateFormat("dd-MMM-yyyy HH").parse( schedule ) );
+		batchProcess.setStateInProgress( null );
+		batchProcess.setStateCompleted( null );
+		batchProcess = dataAccessor.createOrUpdateBatchProcess( batchProcess );
+
+		return batchProcess.getId();
+		
+	}
 	
 	
 	private static void _migratePratilipi( Long fromAuthorId, Long toAuthorId ) {
