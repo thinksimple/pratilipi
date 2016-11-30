@@ -79,7 +79,7 @@ public class AuditLogProcessApi extends GenericApi {
 				// 1. Adding Email Entities
 
 				// 1.1 To the Author's followers
-				List<Long> followerUserIdEmailList = followerUserIdList;
+				List<Long> followerUserIdEmailList = new ArrayList<Long>( followerUserIdList );
 				List<Email> existingEmailList = dataAccessor.getEmailList( null, 
 																			EmailType.PRATILIPI_PUBLISHED_FOLLOWER_EMAIL, 
 																			pratilipiId, 
@@ -122,7 +122,7 @@ public class AuditLogProcessApi extends GenericApi {
 
 
 				// 2. Adding Notification Entities
-				List<Long> followerUserIdNotificationList = followerUserIdList;
+				List<Long> followerUserIdNotificationList = new ArrayList<Long>( followerUserIdList );
 
 				List<Notification> existingNotificationList = dataAccessor.getNotificationListIterator( null, NotificationType.PRATILIPI_ADD, pratilipiId, null, null ).list();
 				for( Notification notification : existingNotificationList )
