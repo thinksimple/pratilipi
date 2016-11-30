@@ -755,5 +755,9 @@ blockquote {
 }  
 .mce-edit-focus {
     outline: none !important;
-}      
+}   
+#chapter-content img {
+    display: block;
+    margin: 8px auto;
+}   
 

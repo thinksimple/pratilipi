@@ -14,7 +14,6 @@ Editor.prototype.init = function() {
     inline: true,
     min_height: 400,
     max_height: 500,
-    keep_styles: false,
     block_formats: 'Paragraph=p;',  
     //plugins needed and setting up toolbar
     plugins : ['autoresize autolink lists link image charmap print preview anchor',
@@ -144,7 +143,7 @@ Editor.prototype.init = function() {
     // enforcing rules to editor
     valid_elements : 'p[style],img[src|width|height],blockquote,b,i,u,a[href|target=_blank],br,b/strong,i/em,ol,ul,li',
     extended_valid_elements: 'img[src|width|height],p[style],blockquote,ul,ol,li,a[href|target=_blank]',
-    valid_children : 'body[p|img|blockquote|ol|ul],-body[#text],p[b|i|u|a[href]|br],-p[img],blockquote[b|i|u|a[href]|br],ol[li],ul[li],li[b|i|u|a|br]',
+    valid_children : 'body[p|img|blockquote|ol|ul],-body[#text],p[b|i|u|a[href]|br],-p[img],blockquote[b|i|u|a[href]|br],-blockquote[blockquote],ol[li],ul[li],li[b|i|u|a|br]',
 
     invalid_elements : "div",
     valid_styles: {'p': 'text-align'},

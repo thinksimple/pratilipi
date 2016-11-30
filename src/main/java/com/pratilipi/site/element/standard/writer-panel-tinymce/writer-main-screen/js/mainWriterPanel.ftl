@@ -237,7 +237,7 @@ MainWriterPanel.prototype.getChapter = function( chapterNum ) {
       _this.populateContent( parsed_data );
       _this.pagination_object.setProgressPage();
       _this.lastSavedContent = parsed_data.content;
-      setCookie( "writer_current_page_${ pratilipiId?c }", _this.currChapter, 15, "/pratilipi-write");
+      setCookie( "writer_current_page_${ pratilipiId?c }", _this.currChapter, 15, "/pratilipi-writer");
     },
     fail:function(response){
       var message = jQuery.parseJSON( response.responseText );
@@ -268,7 +268,7 @@ MainWriterPanel.prototype.ajaxAddNewChapter = function( chapterNum ) {
       _this.currChapter++;
       _this.resetContent();
       _this.lastSavedContent = "";
-      setCookie( "writer_current_page_${ pratilipiId?c }", _this.currChapter, 15, "/pratilipi-write");      
+      setCookie( "writer_current_page_${ pratilipiId?c }", _this.currChapter, 15, "/pratilipi-writer");      
     },
     fail:function(response){
       var message = jQuery.parseJSON( response.responseText );
