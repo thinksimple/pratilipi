@@ -43,8 +43,8 @@ MainWriterPanel.prototype.init = function() {
   
   /* add button listeners */
   this.attachActionButtonListeners();
-  /* this.initializeAutosave(); */
-  //this.preventUserFromLeaving();    
+  this.initializeAutosave(); 
+  this.preventUserFromLeaving();    
 };
 
 MainWriterPanel.prototype.addAffixClasses = function() {
@@ -280,6 +280,7 @@ MainWriterPanel.prototype.ajaxAddNewChapter = function( chapterNum ) {
   }); 
 };
 
+/* done */
 MainWriterPanel.prototype.removeChapter = function( chapterNum ) {
   var _this = this;
   /* first and only chapter, dont remove, just reset content and save. */
@@ -317,21 +318,11 @@ MainWriterPanel.prototype.removeChapter = function( chapterNum ) {
   }
 };
 
+/* done */
 MainWriterPanel.prototype.saveChapter = function( autosaveFlag ) {
   var _this = this;
-  
-  // if( !autosaveFlag ) {
-  //   this.content_object.removeSpanTags();
-  // }
     
-  <#-- if( this.content_object.hasEmptyText() ) {
-    this.content_object.wrapInParagraph();
-  } -->
   this.content_object.convertTextNodesToParagraphs();
-  // this.content_object.checkFirstChild();
-  // if( this.isMozillaBrowser ) {
-  //   this.content_object.checkLastBr();
-  // }
   
   var ajaxData = { 
     pratilipiId: ${ pratilipiId?c },
@@ -379,18 +370,18 @@ MainWriterPanel.prototype.saveChapter = function( autosaveFlag ) {
 
 
 /* content related functions */
-MainWriterPanel.prototype.resetContent = function() {
+MainWriterPanel.prototype.resetContent = function() { /* done */
   this.table_of_contents_object.populateIndex( this.index );
   this.content_object.reset();
   this.chapter_name_object.reset();
 };
 
-MainWriterPanel.prototype.changeName = function( name ) {
+MainWriterPanel.prototype.changeName = function( name ) { /* done */
   this.publish_modal_object.setBookName( name );
   this.table_of_contents_object.changeName( name );
 };
 
-MainWriterPanel.prototype.setCurrentPage = function( chapterNum ) {
+MainWriterPanel.prototype.setCurrentPage = function( chapterNum ) { /* done */
   var _this = this;
   if( this.hasUnsavedChanges() ) {
     var a = this.confirmLeavingWithoutSaving();
@@ -409,12 +400,12 @@ MainWriterPanel.prototype.setCurrentPage = function( chapterNum ) {
   }
 };
 
-MainWriterPanel.prototype.ajaxSetCurrentPage = function( chapterNum ) {
+MainWriterPanel.prototype.ajaxSetCurrentPage = function( chapterNum ) { /* done */
   this.currChapter = chapterNum;
   this.getChapter( chapterNum );
 };
 
-MainWriterPanel.prototype.populateContent = function( parsed_data ) {
+MainWriterPanel.prototype.populateContent = function( parsed_data ) { /* done */
   this.content_object.populateContent( parsed_data.content );
   this.chapter_name_object.change_name( parsed_data.chapterTitle );
 };
@@ -439,7 +430,7 @@ MainWriterPanel.prototype.addNewChapter = function( chapterNum ) { /* done */
 };
 
 /* Helper functions */
-MainWriterPanel.prototype.confirmLeavingWithoutSaving = function() {
+MainWriterPanel.prototype.confirmLeavingWithoutSaving = function() { /* done */
   var dfd = jQuery.Deferred();
   var $confirm = $('#saveChangesModal');
   $confirm.modal('show');
@@ -456,7 +447,7 @@ MainWriterPanel.prototype.confirmLeavingWithoutSaving = function() {
   return dfd.promise(); 
 };
 
-MainWriterPanel.prototype.hasUnsavedChanges = function() {
+MainWriterPanel.prototype.hasUnsavedChanges = function() { /* done */
   return ( this.lastSavedContent != this.content_object.getContent() );
 };
 

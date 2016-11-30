@@ -44,22 +44,3 @@ Content.prototype.convertTextNodesToParagraphs = function() {
     return "<p>" + $(this).text() + "</p>";
   });
 };
-
-Content.prototype.checkFirstChild = function() {
-  <#-- test it properly -->
-  if( !( this.$content_container.children().first().is("p,blockquote,img") ) ) {
-    this.$content_container.children().first().replaceWith( function() {
-      return "<p>" + this.outerHTML + "</p>";
-    } );
-  }
-};
-
-
-Content.prototype.hasEmptyText = function() {
-  return ( this.$content_container.children().length == 0 || !( this.$content_container.children().first().is("p,blockquote,img") ) );
-};
-
-Content.prototype.wrapInParagraph = function() {
-  <#-- this.$content_container.wrapInner("<p>"); -->
-  document.execCommand('formatBlock', false, 'p');
-};
