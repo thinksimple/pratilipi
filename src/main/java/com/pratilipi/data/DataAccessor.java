@@ -29,6 +29,7 @@ import com.pratilipi.data.type.Comment;
 import com.pratilipi.data.type.Conversation;
 import com.pratilipi.data.type.ConversationMessage;
 import com.pratilipi.data.type.ConversationUser;
+import com.pratilipi.data.type.Email;
 import com.pratilipi.data.type.Event;
 import com.pratilipi.data.type.I18n;
 import com.pratilipi.data.type.MailingListSubscription;
@@ -225,5 +226,12 @@ public interface DataAccessor {
 	List<BatchProcess> getAllBatchProcessList();
 	List<BatchProcess> getIncompleteBatchProcessList();
 	BatchProcess createOrUpdateBatchProcess( BatchProcess batchProcess );
+	
+	
+	// Email Table
+	Email newEmail();
+	Email getEmail( Long emailId );
+	List<Email> getEmailList();
+	Email createOrUpdateEmail( Email email );
 	
 }

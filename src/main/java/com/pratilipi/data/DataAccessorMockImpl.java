@@ -57,6 +57,7 @@ import com.pratilipi.data.type.Comment;
 import com.pratilipi.data.type.Conversation;
 import com.pratilipi.data.type.ConversationMessage;
 import com.pratilipi.data.type.ConversationUser;
+import com.pratilipi.data.type.Email;
 import com.pratilipi.data.type.Event;
 import com.pratilipi.data.type.I18n;
 import com.pratilipi.data.type.MailingListSubscription;
@@ -1145,6 +1146,34 @@ public class DataAccessorMockImpl implements DataAccessor {
 	public BatchProcess createOrUpdateBatchProcess( BatchProcess batchProcess ) {
 		// TODO Auto-generated method stub
 		return batchProcess;
+	}
+
+
+	@Override
+	public Email newEmail() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Email getEmail(Long emailId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public List<Email> getEmailList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Email createOrUpdateEmail(Email email) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

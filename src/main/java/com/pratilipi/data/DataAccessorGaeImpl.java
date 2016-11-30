@@ -51,6 +51,7 @@ import com.pratilipi.data.type.Comment;
 import com.pratilipi.data.type.Conversation;
 import com.pratilipi.data.type.ConversationMessage;
 import com.pratilipi.data.type.ConversationUser;
+import com.pratilipi.data.type.Email;
 import com.pratilipi.data.type.Event;
 import com.pratilipi.data.type.GenericOfyType;
 import com.pratilipi.data.type.I18n;
@@ -75,6 +76,7 @@ import com.pratilipi.data.type.gae.CommentEntity;
 import com.pratilipi.data.type.gae.ConversationEntity;
 import com.pratilipi.data.type.gae.ConversationMessageEntity;
 import com.pratilipi.data.type.gae.ConversationUserEntity;
+import com.pratilipi.data.type.gae.EmailEntity;
 import com.pratilipi.data.type.gae.EventEntity;
 import com.pratilipi.data.type.gae.I18nEntity;
 import com.pratilipi.data.type.gae.MailingListSubscriptionEntity;
@@ -1967,5 +1969,35 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	public BatchProcess createOrUpdateBatchProcess( BatchProcess batchProcess ) {
 		return createOrUpdateEntity( batchProcess );
 	}
-	
+
+
+	// Email Table
+
+	@Override
+	public Email newEmail() {
+		return new EmailEntity();
+	}
+
+
+	@Override
+	public Email getEmail( Long emailId ) {
+		return getEntity( EmailEntity.class, emailId );
+	}
+
+
+	@Override
+	public List<Email> getEmailList() {
+		List<EmailEntity> emailList = ObjectifyService.ofy().load()
+				.type( EmailEntity.class )
+				.list();
+		return new ArrayList<Email>( emailList );
+	}
+
+
+	@Override
+	public Email createOrUpdateEmail( Email email ) {
+		return createOrUpdateEntity( email );
+	}
+
+
 }
