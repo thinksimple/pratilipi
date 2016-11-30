@@ -1,13 +1,13 @@
 <queue-entries>
 
-	<!-- User Data real-time & offline processing. -->
+	<!-- USER Table -->
 	
 	<queue>
 		<name>user</name>
-		<target>worker</target>
-		<rate>100/s</rate>
+		<target>worker-fe</target>
+		<rate>500/s</rate>
 		<bucket-size>10</bucket-size>
-		<max-concurrent-requests>10</max-concurrent-requests>
+		<max-concurrent-requests>100</max-concurrent-requests>
 		<retry-parameters>
 			<task-age-limit>90d</task-age-limit>
 			<min-backoff-seconds>5</min-backoff-seconds>
@@ -31,14 +31,15 @@
 	</queue>
 	
 
-	<!-- Pratilipi Data/Content real-time & offline processing. -->
+
+	<!-- PRATILIPI Table -->
 
 	<queue>
 		<name>pratilipi</name>
-		<target>worker</target>
-		<rate>100/s</rate>
+		<target>worker-fe</target>
+		<rate>500/s</rate>
 		<bucket-size>10</bucket-size>
-		<max-concurrent-requests>10</max-concurrent-requests>
+		<max-concurrent-requests>100</max-concurrent-requests>
 		<retry-parameters>
 			<task-age-limit>90d</task-age-limit>
 			<min-backoff-seconds>5</min-backoff-seconds>
@@ -62,14 +63,15 @@
 	</queue>
 
 
-	<!-- Author Data real-time processing. -->
+
+	<!-- AUTHOR Table -->
 	
 	<queue>
 		<name>author</name>
-		<target>worker</target>
-		<rate>100/s</rate>
+		<target>worker-fe</target>
+		<rate>500/s</rate>
 		<bucket-size>10</bucket-size>
-		<max-concurrent-requests>10</max-concurrent-requests>
+		<max-concurrent-requests>100</max-concurrent-requests>
 		<retry-parameters>
 			<task-age-limit>90d</task-age-limit>
 			<min-backoff-seconds>5</min-backoff-seconds>
@@ -92,15 +94,16 @@
 		</retry-parameters>
 	</queue>
   
+
   
-  	<!-- UserAuthor Data real-time processing. -->
+  	<!-- USER_AUTHOR Table -->
 	
 	<queue>
 		<name>user-author</name>
-		<target>worker</target>
-		<rate>100/s</rate>
+		<target>worker-fe</target>
+		<rate>500/s</rate>
 		<bucket-size>10</bucket-size>
-		<max-concurrent-requests>10</max-concurrent-requests>
+		<max-concurrent-requests>100</max-concurrent-requests>
 		<retry-parameters>
 			<task-age-limit>90d</task-age-limit>
 			<min-backoff-seconds>5</min-backoff-seconds>
@@ -110,7 +113,8 @@
 	</queue>
 
 
-  	<!-- Notification Data real-time processing. -->
+
+  	<!-- NOTIFICATION Table -->
 	
 	<queue>
 		<name>fe-notification</name>
