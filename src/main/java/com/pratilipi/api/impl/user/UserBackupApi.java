@@ -96,7 +96,7 @@ public class UserBackupApi extends GenericApi {
 						.append( LINE_SEPARATOR );
 			count++;
 			if( count % batchSize == 0 )
-				try { Thread.sleep( batchSize / 10 ); } catch( InterruptedException e ) {} // Datastore operation will time out without this
+				try { Thread.sleep( batchSize / 5 ); } catch( InterruptedException e ) {} // Datastore operation will time out without this
 		}
 
 		
