@@ -14,6 +14,8 @@ import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.type.AccessType;
+import com.pratilipi.common.type.EmailState;
+import com.pratilipi.common.type.EmailType;
 import com.pratilipi.common.type.NotificationState;
 import com.pratilipi.common.type.NotificationType;
 import com.pratilipi.common.type.PratilipiState;
@@ -25,7 +27,10 @@ import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
+import com.pratilipi.data.type.Email;
 import com.pratilipi.data.type.Notification;
+import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.type.User;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/auditlog/process" )
@@ -66,15 +71,65 @@ public class AuditLogProcessApi extends GenericApi {
 				
 				Long pratilipiId = entityData.get( "PRATILIPI_ID" ).getAsLong();
 				Long authorId = entityData.get( "AUTHOR_ID" ).getAsLong();
-				
-				List<Long> followerUserIdList = dataAccessor.getUserAuthorFollowList( null, authorId, null, null, null ).getDataList();
-				
+				Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+				Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
+
+				final List<Long> followerUserIdList = dataAccessor.getUserAuthorFollowList( null, authorId, null, null, null ).getDataList();
+
+				// 1. Adding Email Entities
+
+				// 1.1 To the Author's followers
+				List<Long> followerUserIdEmailList = followerUserIdList;
+				List<Email> existingEmailList = dataAccessor.getEmailList( null, 
+																			EmailType.PRATILIPI_PUBLISHED_FOLLOWER_EMAIL, 
+																			pratilipiId, 
+																			null, 
+																			null );
+
+				for( Email email : existingEmailList )
+					followerUserIdEmailList.remove( email.getUserId() );
+
+				List<Email> emailList = new ArrayList<>( followerUserIdEmailList.size() );
+				for( Long followerUserId : followerUserIdEmailList ) {
+					Email email = dataAccessor.newEmail();
+					email.setUserId( followerUserId );
+					email.setPrimaryContentId( pratilipiId );
+					email.setType( EmailType.PRATILIPI_PUBLISHED_FOLLOWER_EMAIL );
+					email.setState( EmailState.PENDING );
+					email.setLanguage( pratilipi.getLanguage() );
+					email.setCreationDate( new Date() );
+					emailList.add( email );
+				}
+
+				// 1.2 To the Author
+				if( author.getUserId() != null ) {
+					User user = dataAccessor.getUser( author.getUserId() );
+					if( dataAccessor.getEmailList( user.getId(), 
+									EmailType.PRATILIPI_PUBLISHED_AUTHOR_EMAIL, 
+									pratilipiId, null, null ).size() == 0 ) {
+						Email email = dataAccessor.newEmail();
+						email.setUserId( user.getId() );
+						email.setPrimaryContentId( pratilipiId );
+						email.setType( EmailType.PRATILIPI_PUBLISHED_AUTHOR_EMAIL );
+						email.setState( EmailState.PENDING );
+						email.setLanguage( pratilipi.getLanguage() );
+						email.setCreationDate( new Date() );
+						emailList.add( email );
+					}
+				}
+
+				emailList = dataAccessor.createOrUpdateEmailList( emailList );
+
+
+				// 2. Adding Notification Entities
+				List<Long> followerUserIdNotificationList = followerUserIdList;
+
 				List<Notification> existingNotificationList = dataAccessor.getNotificationListIterator( null, NotificationType.PRATILIPI_ADD, pratilipiId, null, null ).list();
 				for( Notification notification : existingNotificationList )
-					followerUserIdList.remove( notification.getUserId() );
+					followerUserIdNotificationList.remove( notification.getUserId() );
 
-				List<Notification> notificationList = new ArrayList<>( followerUserIdList.size() );
-				for( Long followerUserId : followerUserIdList ) {
+				List<Notification> notificationList = new ArrayList<>( followerUserIdNotificationList.size() );
+				for( Long followerUserId : followerUserIdNotificationList ) {
 					Notification notification = dataAccessor.newNotification(
 							followerUserId,
 							NotificationType.PRATILIPI_ADD,
@@ -85,7 +140,7 @@ public class AuditLogProcessApi extends GenericApi {
 					notificationList.add( notification );
 				}
 				notificationList = dataAccessor.createOrUpdateNotificationList( notificationList );
-				
+
 			} else if( auditLog.getAccessType() == AccessType.USER_AUTHOR_FOLLOWING ) {
 				
 				Long userId = entityData.get( "USER_ID" ).getAsLong(); // Follower

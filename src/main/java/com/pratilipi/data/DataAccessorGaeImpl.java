@@ -26,6 +26,8 @@ import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.BatchProcessState;
 import com.pratilipi.common.type.CommentParentType;
 import com.pratilipi.common.type.ContactTeam;
+import com.pratilipi.common.type.EmailState;
+import com.pratilipi.common.type.EmailType;
 import com.pratilipi.common.type.I18nGroup;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.MailingList;
@@ -1988,17 +1990,43 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 
 	@Override
-	public List<Email> getEmailList() {
+	public List<Email> getAllEmailList() {
 		List<EmailEntity> emailList = ObjectifyService.ofy().load()
 				.type( EmailEntity.class )
 				.list();
 		return new ArrayList<Email>( emailList );
+	}
+	
+	@Override
+	public List<Email> getEmailList( Long userId, EmailType type, Long primaryContentId, EmailState state, Integer resultCount ) {
+
+		Query<EmailEntity> query = ObjectifyService.ofy().load().type( EmailEntity.class );
+
+		if( userId != null )
+			query = query.filter( "USER_ID", userId );
+		if( type != null )
+			query = query.filter( "TYPE", type );
+		if( primaryContentId != null )
+			query = query.filter( "PRIMARY_CONTENT_ID", primaryContentId );
+		if( state != null )
+			query = query.filter( "STATE", state );
+
+		if( resultCount != null && resultCount > 0 )
+			query = query.limit( resultCount );
+
+		return new ArrayList<Email>( query.list() );
+
 	}
 
 
 	@Override
 	public Email createOrUpdateEmail( Email email ) {
 		return createOrUpdateEntity( email );
+	}
+
+	@Override
+	public List<Email> createOrUpdateEmailList( List<Email> emailList ) {
+		return createOrUpdateEntityList( emailList );
 	}
 
 

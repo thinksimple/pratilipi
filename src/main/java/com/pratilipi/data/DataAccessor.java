@@ -7,6 +7,8 @@ import java.util.Map;
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.CommentParentType;
 import com.pratilipi.common.type.ContactTeam;
+import com.pratilipi.common.type.EmailState;
+import com.pratilipi.common.type.EmailType;
 import com.pratilipi.common.type.I18nGroup;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.MailingList;
@@ -41,6 +43,7 @@ import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.UserAuthor;
 import com.pratilipi.data.type.UserPratilipi;
 import com.pratilipi.data.type.Vote;
+import com.pratilipi.data.type.gae.EmailEntity;
 
 public interface DataAccessor {
 
@@ -231,7 +234,9 @@ public interface DataAccessor {
 	// Email Table
 	Email newEmail();
 	Email getEmail( Long emailId );
-	List<Email> getEmailList();
+	List<Email> getAllEmailList();
+	List<Email> getEmailList( Long userId, EmailType type, Long primaryContentId, EmailState state, Integer resultCount );
 	Email createOrUpdateEmail( Email email );
+	List<Email> createOrUpdateEmailList( List<Email> emailList );
 	
 }

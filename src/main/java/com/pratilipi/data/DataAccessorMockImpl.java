@@ -24,6 +24,8 @@ import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.BlogPostState;
 import com.pratilipi.common.type.CommentParentType;
 import com.pratilipi.common.type.ContactTeam;
+import com.pratilipi.common.type.EmailState;
+import com.pratilipi.common.type.EmailType;
 import com.pratilipi.common.type.I18nGroup;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.MailingList;
@@ -1164,14 +1166,29 @@ public class DataAccessorMockImpl implements DataAccessor {
 
 
 	@Override
-	public List<Email> getEmailList() {
+	public Email createOrUpdateEmail(Email email) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 
 	@Override
-	public Email createOrUpdateEmail(Email email) {
+	public List<Email> getAllEmailList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public List<Email> getEmailList(Long userId, EmailType type,
+			Long primaryContentId, EmailState state, Integer resultCount) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public List<Email> createOrUpdateEmailList(List<Email> emailList) {
 		// TODO Auto-generated method stub
 		return null;
 	}
