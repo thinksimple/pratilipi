@@ -1,5 +1,7 @@
 <cronentries>
 
+	<!-- TODO: Remove following crons -->
+	
 	<cron>
 		<url>/cleanup?cron</url>
 		<target>worker</target>
@@ -8,51 +10,10 @@
 	</cron>
 	
 	
-	<cron>
-		<url>/accesstoken/cleanup?cron</url>
-		<target>worker</target>
-		<schedule>every 1 hours</schedule>
-		<timezone>Asia/Calcutta</timezone>
-	</cron>
 	
-	
-	<cron>
-		<url>/auditlog/process?cron</url>
-		<target>worker</target>
-		<schedule>every 1 minutes</schedule>
-		<timezone>Asia/Calcutta</timezone>
-	</cron>
-	
-	
-	<cron>
-		<url>/pratilipi/process?cron</url>
-		<target>worker</target>
-		<schedule>every 5 minutes</schedule>
-		<timezone>Asia/Calcutta</timezone>
-	</cron>
-
-	<cron>
-		<url>/pratilipi/backup?generateCsv=true&amp;cron</url>
-		<target>worker</target>
-		<schedule>every 30 minutes from 8:00 to 20:00</schedule>
-		<timezone>Asia/Calcutta</timezone>
-	</cron>
 
 
-	<cron>
-		<url>/author/process?cron</url>
-		<target>worker</target>
-		<schedule>every 5 minutes</schedule>
-		<timezone>Asia/Calcutta</timezone>
-	</cron>
-	
-	<cron>
-		<url>/author/backup?generateCsv=true&amp;cron</url>
-		<target>worker</target>
-		<schedule>every 1 hours from 8:00 to 20:00</schedule>
-		<timezone>Asia/Calcutta</timezone>
-	</cron>
-	
+	<!-- USER Table -->
 	
 	<cron>
 		<url>/user/process?cron</url>
@@ -69,6 +30,67 @@
 	</cron>
 	
 	
+
+	<!-- ACCESS_TOKEN Table -->
+	
+	<cron>
+		<url>/accesstoken/cleanup?cron</url>
+		<target>worker</target>
+		<schedule>every 1 hours</schedule>
+		<timezone>Asia/Calcutta</timezone>
+	</cron>
+
+
+
+	<!-- AUDIT_LOG Table -->
+	
+	<cron>
+		<url>/auditlog/process?cron</url>
+		<target>worker</target>
+		<schedule>every 1 minutes</schedule>
+		<timezone>Asia/Calcutta</timezone>
+	</cron>
+	
+
+	
+	<!-- PRATILIPI Table -->
+	
+	<cron>
+		<url>/pratilipi/process?cron</url>
+		<target>worker</target>
+		<schedule>every 5 minutes</schedule>
+		<timezone>Asia/Calcutta</timezone>
+	</cron>
+
+	<cron>
+		<url>/pratilipi/backup?generateCsv=true&amp;cron</url>
+		<target>worker</target>
+		<schedule>every 30 minutes from 8:00 to 20:00</schedule>
+		<timezone>Asia/Calcutta</timezone>
+	</cron>
+
+
+
+	<!-- AUTHOR Table -->
+
+	<cron>
+		<url>/author/process?cron</url>
+		<target>worker</target>
+		<schedule>every 5 minutes</schedule>
+		<timezone>Asia/Calcutta</timezone>
+	</cron>
+	
+	<cron>
+		<url>/author/backup?generateCsv=true&amp;cron</url>
+		<target>worker</target>
+		<schedule>every 1 hours from 8:00 to 20:00</schedule>
+		<timezone>Asia/Calcutta</timezone>
+	</cron>
+	
+
+
+	<!-- NOTIFICATION Table -->
+	
 	<cron>
 		<url>/notification/process?cron</url>
 		<target>worker</target>
@@ -76,6 +98,9 @@
 		<timezone>Asia/Calcutta</timezone>
 	</cron>
 	
+
+
+	<!-- BATCH_PROCESS Table -->
 	
 	<cron>
 		<url>/batch-process?cron</url>

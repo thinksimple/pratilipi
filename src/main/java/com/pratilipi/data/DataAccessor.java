@@ -220,7 +220,7 @@ public interface DataAccessor {
 	I18n createOrUpdateI18n( I18n i18n );
 	
 	
-	// BatchProcess Table
+	// BATCH_PROCESS Table
 	BatchProcess newBatchProcess();
 	BatchProcess getBatchProcess( Long batchProcessId );
 	List<BatchProcess> getAllBatchProcessList();
