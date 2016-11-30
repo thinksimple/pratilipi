@@ -36,16 +36,17 @@ public class AccessTokenCleanupApi extends GenericApi {
 				.keys()
 				.iterator();
 
-		List<Key<AccessTokenEntity>> list = new ArrayList<>( batchSize );
+		List<Key<AccessTokenEntity>> keyList = new ArrayList<>( batchSize );
 		while( true ) {
-			if( ! itr.hasNext() || list.size() == batchSize ) {
-				logger.log( Level.INFO, "Deleting " + list.size() + " AccessToken entities ..." );
-				ObjectifyService.ofy().delete().keys( list );
+			if( ! itr.hasNext() || keyList.size() == batchSize ) {
+				logger.log( Level.INFO, "Deleting " + keyList.size() + " AccessToken entities ..." );
+				ObjectifyService.ofy().delete().keys( keyList );
 				if( ! itr.hasNext() )
 					break;
-				list.clear();
+				keyList.clear();
+				try { Thread.sleep( batchSize / 10 ); } catch( InterruptedException e ) {} // Datastore operation will time out without this
 			} else {
-				list.add( itr.next() );
+				keyList.add( itr.next() );
 			}
 		}
 		

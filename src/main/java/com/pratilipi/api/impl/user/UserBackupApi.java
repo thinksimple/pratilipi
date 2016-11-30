@@ -4,26 +4,27 @@ import java.nio.charset.Charset;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.google.appengine.api.datastore.QueryResultIterator;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.googlecode.objectify.ObjectifyService;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
-import com.pratilipi.common.util.GsonIstDateAdapter;
+import com.pratilipi.common.util.GsonLongDateAdapter;
 import com.pratilipi.data.BlobAccessor;
-import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
-import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.User;
+import com.pratilipi.data.type.gae.UserEntity;
+
 
 @SuppressWarnings("serial")
 @Bind( uri = "/user/backup" )
@@ -46,57 +47,66 @@ public class UserBackupApi extends GenericApi {
 		}
 		
 	}
+
 	
 	@Get
 	public GenericResponse get( GetRequest request ) throws UnexpectedServerException {
 		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessorBackup();
+		
 		
 		Date backupDate = new Date();
 
-		DateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd" );
+		
+		DateFormat yearFormat = new SimpleDateFormat( "yyyy" );
+		DateFormat dayFormat = new SimpleDateFormat( "dd" );
+		DateFormat hourFormat = new SimpleDateFormat( "HH" );
 		DateFormat csvDateFormat = new SimpleDateFormat( "yyyy-MM-dd HH:mm" );
-		DateFormat dateTimeFormat = new SimpleDateFormat( "yyyy-MM-dd-HH:mm-z" );
-		dateFormat.setTimeZone( TimeZone.getTimeZone( "Asia/Kolkata" ) );
+		yearFormat.setTimeZone( TimeZone.getTimeZone( "Asia/Kolkata" ) );
+		dayFormat.setTimeZone( TimeZone.getTimeZone( "Asia/Kolkata" ) );
+		hourFormat.setTimeZone( TimeZone.getTimeZone( "Asia/Kolkata" ) );
 		csvDateFormat.setTimeZone( TimeZone.getTimeZone( "Asia/Kolkata" ) );
-		dateTimeFormat.setTimeZone( TimeZone.getTimeZone( "Asia/Kolkata" ) );
 
+		
 		StringBuilder backup = new StringBuilder();
 		StringBuilder csv = new StringBuilder( CSV_HEADER + LINE_SEPARATOR );
+
+		
+		Gson gson = new GsonBuilder()
+				.registerTypeAdapter( Date.class, new GsonLongDateAdapter() )
+				.create();
+
 		
 		int count = 0;
-		String cursor = null;
-		Gson gson = new GsonBuilder().registerTypeAdapter( Date.class, new GsonIstDateAdapter() ).create();
+		int batchSize = 1000;
+
+		QueryResultIterator<UserEntity> itr = ObjectifyService.ofy().load()
+				.type( UserEntity.class )
+				.chunk( batchSize )
+				.iterator();
 		
-		while( true ) {
-			DataListCursorTuple<User> userListCursorTupe = dataAccessor.getUserList( cursor, 1000 );
-			List<User> userList = userListCursorTupe.getDataList();
-
-			for( User user : userList ) {
-				backup.append( gson.toJson( user ) + LINE_SEPARATOR );
-				
-				if( request.generateCsv() )
-					csv.append( "'" + user.getId().toString() )
-							.append( CSV_SEPARATOR ).append( user.getFacebookId() == null ? "" : "'" + user.getFacebookId() )
-							.append( CSV_SEPARATOR ).append( user.getEmail()	  == null ? "" : user.getEmail() )
-							.append( CSV_SEPARATOR ).append( csvDateFormat.format( user.getSignUpDate() ) )
-							.append( LINE_SEPARATOR );
-				
-			}
-			
-			count = count + userList.size();
-
-			if( userList.size() < 1000 )
-				break;
-			else
-				cursor = userListCursorTupe.getCursor();
+		while( itr.hasNext() ) {
+			User user = itr.next();
+			backup.append( gson.toJson( user ) + LINE_SEPARATOR );
+			if( request.generateCsv() )
+				csv.append( "'" + user.getId().toString() )
+						.append( CSV_SEPARATOR ).append( user.getFacebookId() == null ? "" : "'" + user.getFacebookId() )
+						.append( CSV_SEPARATOR ).append( user.getEmail()	  == null ? "" : user.getEmail() )
+						.append( CSV_SEPARATOR ).append( csvDateFormat.format( user.getSignUpDate() ) )
+						.append( LINE_SEPARATOR );
+			count++;
+			if( count % batchSize == 0 )
+				try { Thread.sleep( batchSize / 10 ); } catch( InterruptedException e ) {} // Datastore operation will time out without this
 		}
-		
 
+		
+		String year = yearFormat.format( backupDate );
+		String day = dayFormat.format( backupDate );
+		String hour = hourFormat.format( backupDate );
+		
 		String fileName = "datastore.user/"
-				+ dateFormat.format( backupDate ) + "/"
-				+ "user-" + dateTimeFormat.format( backupDate );
+				+ year + "-mm-" + day + "/"
+				+ "user-" + year + "-mm-" + day + "-" + hour + ":xx-IST";
 
 		BlobEntry userBackupEntry = blobAccessor.newBlob(
 				fileName,

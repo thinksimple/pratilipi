@@ -36,7 +36,7 @@
 	<cron>
 		<url>/accesstoken/cleanup?cron</url>
 		<target>worker</target>
-		<schedule>every 1 hours</schedule>
+		<schedule>every 1 hours from 21:00 to 7:00</schedule>
 		<timezone>Asia/Calcutta</timezone>
 	</cron>
 
@@ -105,7 +105,7 @@
 	<cron>
 		<url>/batch-process?cron</url>
 		<target>worker</target>
-		<schedule>every 1 minutes</schedule>
+		<schedule>every 5 minutes</schedule>
 		<timezone>Asia/Calcutta</timezone>
 	</cron>
 	
