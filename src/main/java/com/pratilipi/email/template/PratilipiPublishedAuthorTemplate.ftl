@@ -1,6 +1,6 @@
-<#-- SENDER_NAME: Team Pratilipi -->
-<#-- SENDER_EMAIL: contact@pratilipi.com -->
-<#-- SUBJECT: Notification from Pratilipi.com -->
+<!-- SENDER_NAME: Team Pratilipi -->
+<!-- SENDER_EMAIL: contact@pratilipi.com -->
+<!-- SUBJECT: Congratulations! Your story is published. -->
 
 <!DOCTYPE html>
 <html>

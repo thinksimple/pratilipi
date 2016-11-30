@@ -107,11 +107,11 @@ public class EmailUtil {
 			Language language, Map<String, String> dataModel ) throws UnexpectedServerException {
 
 		String senderName = null;
-		Pattern senderNamePattern = Pattern.compile( "<#-- SENDER_NAME:(.+?)-->" );
+		Pattern senderNamePattern = Pattern.compile( "<!-- SENDER_NAME:(.+?)-->" );
 		String senderEmail = null;
-		Pattern senderEmailPattern = Pattern.compile( "<#-- SENDER_EMAIL:(.+?)-->" );
+		Pattern senderEmailPattern = Pattern.compile( "<!-- SENDER_EMAIL:(.+?)-->" );
 		String subject = null;
-		Pattern subjectPattern = Pattern.compile( "<#-- SUBJECT:(.+?)-->" );
+		Pattern subjectPattern = Pattern.compile( "<!-- SUBJECT:(.+?)-->" );
 
 		dataModel.put( "language", language.toString() );
 		String body = FreeMarkerUtil.processTemplate( dataModel, filePath + emailType.getTemplateName() );
