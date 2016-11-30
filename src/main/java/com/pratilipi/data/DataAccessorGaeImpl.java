@@ -136,6 +136,8 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		
 		ObjectifyService.register( BatchProcessEntity.class );
 		
+		ObjectifyService.register( EmailEntity.class );
+		
 	}
 	
 	
