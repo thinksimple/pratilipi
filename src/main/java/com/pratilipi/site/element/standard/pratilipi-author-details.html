@@ -236,15 +236,15 @@
 					</div>
 				</template>
 			</div>
-			<#-- <div hidden$="{{ !hasAccessToUpdate }}" class="upload-cover">
-				<div style="position: absolute; top: -1001px;">
+			<div hidden$="{{ !hasAccessToUpdate }}" class="upload-cover">
+				<div style="position: absolute; top: -2001px;">
 					<form id="uploadAuthorCover" method="post" enctype="multipart/form-data" action="/api/author/cover?authorId={{ author.authorId }}" target="upload_cover">
 						<input id="uploadAuthorCoverInput" type="file" on-change="uploadCover" accept="image/*">
 					</form>
 					<iframe id="upload_cover" name="upload_cover" style="display: none;" on-load="_onchangeCoveriframe"></iframe>
 				</div>
 				<paper-fab mini icon="image:photo-camera" on-click="_chooseCoverFile"></paper-fab>
-			</div> -->
+			</div>
 		</paper-card>
 		<div class="secondary-500 meta-data pratilipi-shadow">
 			<div class="row">
@@ -456,6 +456,7 @@
 			var file = FileList[0];
 			if( file == null ) return;
 			var fileName = file.name.toLowerCase();
+			console.log( fileName );
 			if( ! ( fileName.match( ".*\.jpg" ) || fileName.match( ".*\.png" ) ) ) return; // Only jpg and png
 			document.getElementById( "uploadAuthorCover" ).submit();
 			this.coverUploaded = true;
