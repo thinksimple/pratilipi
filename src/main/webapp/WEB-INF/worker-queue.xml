@@ -129,5 +129,23 @@
 			<max-doublings>2</max-doublings>
 		</retry-parameters>
 	</queue>
+
+
+
+	<!-- EMAIL Table -->
+
+	<queue>
+		<name>email-offline</name>
+		<target>worker-be</target>
+		<rate>500/s</rate>
+		<bucket-size>10</bucket-size>
+		<max-concurrent-requests>100</max-concurrent-requests>
+		<retry-parameters>
+			<task-age-limit>90d</task-age-limit>
+			<min-backoff-seconds>60</min-backoff-seconds>
+			<max-backoff-seconds>10800</max-backoff-seconds>
+			<max-doublings>2</max-doublings>
+		</retry-parameters>
+	</queue>
   
 </queue-entries>

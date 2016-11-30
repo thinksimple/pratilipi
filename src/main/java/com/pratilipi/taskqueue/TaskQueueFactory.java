@@ -15,6 +15,7 @@ public class TaskQueueFactory {
 	private static final String QUEUE_AUTHOR_OFFLINE	= "author-offline";
 	private static final String QUEUE_USER_AUTHOR		= "user-author";
 	private static final String QUEUE_NOTIFICATION		= "fe-notification";
+	private static final String QUEUE_EMAIL_OFFLINE		= "email-offline";
 	
 	
 	public static TaskQueue getUserTaskQueue() {
@@ -49,6 +50,9 @@ public class TaskQueueFactory {
 		return getTaskQueue( QUEUE_NOTIFICATION );
 	}
 
+	public static TaskQueue getEmailOfflineTaskQueue() {
+		return getTaskQueue( QUEUE_EMAIL_OFFLINE );
+	}
 	
 	protected static TaskQueue getTaskQueue( String taskQueueName ) {
 		TaskQueue taskQueue = taskQueueMap.get( taskQueueName );
