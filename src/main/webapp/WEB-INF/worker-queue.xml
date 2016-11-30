@@ -18,10 +18,10 @@
 	
 	<queue>
 		<name>user-offline</name>
-		<target>worker</target>
-		<rate>1/s</rate>
+		<target>worker-be</target>
+		<rate>500/s</rate>
 		<bucket-size>10</bucket-size>
-		<max-concurrent-requests>10</max-concurrent-requests>
+		<max-concurrent-requests>100</max-concurrent-requests>
 		<retry-parameters>
 			<task-age-limit>90d</task-age-limit>
 			<min-backoff-seconds>60</min-backoff-seconds>
@@ -50,10 +50,10 @@
 
 	<queue>
 		<name>pratilipi-offline</name>
-		<target>worker</target>
-		<rate>10/s</rate>
+		<target>worker-be</target>
+		<rate>500/s</rate>
 		<bucket-size>10</bucket-size>
-		<max-concurrent-requests>10</max-concurrent-requests>
+		<max-concurrent-requests>100</max-concurrent-requests>
 		<retry-parameters>
 			<task-age-limit>90d</task-age-limit>
 			<min-backoff-seconds>60</min-backoff-seconds>
@@ -82,10 +82,10 @@
 
 	<queue>
 		<name>author-offline</name>
-		<target>worker</target>
-		<rate>10/s</rate>
+		<target>worker-be</target>
+		<rate>500/s</rate>
 		<bucket-size>10</bucket-size>
-		<max-concurrent-requests>10</max-concurrent-requests>
+		<max-concurrent-requests>100</max-concurrent-requests>
 		<retry-parameters>
 			<task-age-limit>90d</task-age-limit>
 			<min-backoff-seconds>60</min-backoff-seconds>
