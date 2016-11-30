@@ -6,7 +6,6 @@ import com.pratilipi.api.batchprocess.BatchProcessApi;
 import com.pratilipi.api.impl.accesstoken.AccessTokenCleanupApi;
 import com.pratilipi.api.impl.auditlog.AuditLogProcessApi;
 import com.pratilipi.api.impl.author.AuthorBackupApi;
-import com.pratilipi.api.impl.author.AuthorEmailApi;
 import com.pratilipi.api.impl.author.AuthorProcessApi;
 import com.pratilipi.api.impl.debug.DebugApi;
 import com.pratilipi.api.impl.notification.NotificationProcessApi;
@@ -20,7 +19,6 @@ import com.pratilipi.api.impl.user.UserBackupApi;
 import com.pratilipi.api.impl.user.UserEmailApi;
 import com.pratilipi.api.impl.user.UserFacebookValidationApi;
 import com.pratilipi.api.impl.user.UserProcessApi;
-import com.pratilipi.api.impl.userauthor.UserAuthorEmailApi;
 
 @SuppressWarnings("serial")
 public class WorkerService extends GenericService {
@@ -32,8 +30,6 @@ public class WorkerService extends GenericService {
 		
 		
 		ApiRegistry.register( DebugApi.class );
-		
-		ApiRegistry.register( UserAuthorEmailApi.class );
 		
 		ApiRegistry.register( UserProcessApi.class );
 		ApiRegistry.register( UserEmailApi.class );
@@ -48,7 +44,6 @@ public class WorkerService extends GenericService {
 		ApiRegistry.register( PratilipiBackupApi.class );
 		ApiRegistry.register( PratilipiIdfApi.class );
 
-		ApiRegistry.register( AuthorEmailApi.class );
 		ApiRegistry.register( AuthorProcessApi.class );
 		ApiRegistry.register( AuthorBackupApi.class );
 		
