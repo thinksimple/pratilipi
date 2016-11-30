@@ -183,14 +183,17 @@
 					</paper-menu>
 				</paper-menu-button>
 			</div>
+			<div style="position: absolute; top: -1000px;">
+				<form id="uploadAuthorImage" method="post" enctype="multipart/form-data" action="/api/author/image?authorId={{ author.authorId }}" target="upload_target">
+					<input id="uploadAuthorImageInput" type="file" on-change="_uploadImage" name="{{ author.authorId }}-image" accept="image/*" />
+				</form>
+				<form id="uploadAuthorCover" method="post" enctype="multipart/form-data" action="/api/author/cover?authorId={{ author.authorId }}" target="upload_target">
+					<input id="uploadAuthorCoverInput" type="file" on-change="_uploadCover" name="{{ author.authorId }}-cover" accept="image/*" />
+				</form>
+				<iframe id="upload_target" name="upload_target" style="display: none;" on-load="_onchangeiframe"></iframe>
+			</div>
 			<div class="author-detail-container">
 				<template is="dom-if" if="{{ hasAccessToUpdate }}">
-					<div style="position: absolute; top: -1000px;">
-						<form id="uploadAuthorImage" method="post" enctype="multipart/form-data" action="/api/author/image?authorId={{ author.authorId }}" target="upload_target">
-							<input id="uploadAuthorImageInput" type="file" on-change="uploadImage" name="{{ author.authorId }}" accept="image/*">
-						</form>
-						<iframe id="upload_target" name="upload_target" style="display: none;" on-load="_onchangeiframe"></iframe>
-					</div>
 					<div class="pratilipi-file-upload">
 						<template is="dom-if" if="{{ !imageUploaded }}">
 							<img src="{{ imageUrl }}" alt="{{ author.fullName }}" title="{{ author.fullNameEn }}"/>
@@ -199,7 +202,7 @@
 							<paper-spinner active></paper-spinner>
 						</template>
 						<iron-icon icon="image:photo-camera"></iron-icon>
-						<div class="pratilipi-file-upload-caption" on-click="_chooseFile">
+						<div class="pratilipi-file-upload-caption" on-click="_chooseImageFile">
 							<iron-icon icon="image:photo-camera"></iron-icon>
 						</div>
 					</div>
@@ -236,15 +239,11 @@
 					</div>
 				</template>
 			</div>
-			<div hidden$="{{ !hasAccessToUpdate }}" class="upload-cover">
-				<div style="position: absolute; top: -2001px;">
-					<form id="uploadAuthorCover" method="post" enctype="multipart/form-data" action="/api/author/cover?authorId={{ author.authorId }}" target="upload_cover">
-						<input id="uploadAuthorCoverInput" type="file" on-change="uploadCover" accept="image/*">
-					</form>
-					<iframe id="upload_cover" name="upload_cover" style="display: none;" on-load="_onchangeCoveriframe"></iframe>
+			<template is="dom-if" if="{{ hasAccessToUpdate }}">
+				<div class="upload-cover">
+					<paper-fab mini icon="image:photo-camera" on-click="_chooseCoverFile"></paper-fab>
 				</div>
-				<paper-fab mini icon="image:photo-camera" on-click="_chooseCoverFile"></paper-fab>
-			</div>
+			</template>
 		</paper-card>
 		<div class="secondary-500 meta-data pratilipi-shadow">
 			<div class="row">
@@ -415,18 +414,15 @@
 					"share", "width=1100,height=500,left=70px,top=60px" );
 		},
 
-		_chooseFile: function() {
-			document.getElementById( "uploadAuthorImageInput" ).click();
+		_chooseImageFile: function() {
+			this.querySelector( "#uploadAuthorImageInput" ).click();
 		},
 		
-		_onchangeiframe: function( response ) {
-			if( this.imageUploaded ) {
-				this.async( function() { this.imageUploaded = false; }, 500 );
-				this.domHost.getAuthor();
-			}
+		_chooseCoverFile: function() {
+			this.querySelector( "#uploadAuthorCoverInput" ).click();
 		},
 
-		uploadImage: function( event ) {
+		_uploadImage: function( event ) {
 			if( this.imageUploaded ) return;
 			var FileList = event.target.files;
 			if( FileList.length != 1 ) return; // No file or more than 1 file is selected.
@@ -434,32 +430,30 @@
 			if( file == null ) return;
 			var fileName = file.name.toLowerCase();
 			if( ! ( fileName.match( ".*\.jpg" ) || fileName.match( ".*\.png" ) ) ) return; // Only jpg and png
-			document.getElementById( "uploadAuthorImage" ).submit();
+			this.querySelector( "#uploadAuthorImage" ).submit();
 			this.imageUploaded = true;
 		},
 
-		_chooseCoverFile: function() {
-			document.getElementById( "uploadAuthorCoverInput" ).click();
-		},
-
-		_onchangeCoveriframe: function( response ) {
-			if( this.coverUploaded ) {
-				this.async( function() { this.coverUploaded = false; }, 500 );
-				this.domHost.getAuthor();
-			}
-		},
-
-		uploadCover: function( event ) {
+		_uploadCover: function( event ) {
 			if( this.coverUploaded ) return;
 			var FileList = event.target.files;
 			if( FileList.length != 1 ) return; // No file or more than 1 file is selected.
 			var file = FileList[0];
 			if( file == null ) return;
 			var fileName = file.name.toLowerCase();
-			console.log( fileName );
 			if( ! ( fileName.match( ".*\.jpg" ) || fileName.match( ".*\.png" ) ) ) return; // Only jpg and png
-			document.getElementById( "uploadAuthorCover" ).submit();
+			this.querySelector( "#uploadAuthorCover" ).submit();
 			this.coverUploaded = true;
+		},
+
+		_onchangeiframe: function( response ) {
+			if( this.imageUploaded ) {
+				this.async( function() { this.imageUploaded = false; }, 500 );
+			}
+			if( this.coverUploaded ) {
+				this.async( function() { this.coverUploaded = false; }, 500 );
+			}
+			this.domHost.getAuthor();
 		}
 
 	});

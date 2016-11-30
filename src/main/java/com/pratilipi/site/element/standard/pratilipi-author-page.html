@@ -96,11 +96,13 @@
 			},
 
 			getAuthor: function() {
+				if( this.author == null ) return;
 				this.$.AuthorGetApi.params.authorId = this.author.authorId;
 				this.$.AuthorGetApi.generateRequest();
 			},
 
 			getUserAuthor: function() {
+				if( this.author == null ) return;
 				this.$.UserAuthorGetApi.params.authorId = this.author.authorId;
 				this.$.UserAuthorGetApi.generateRequest();
 			},
