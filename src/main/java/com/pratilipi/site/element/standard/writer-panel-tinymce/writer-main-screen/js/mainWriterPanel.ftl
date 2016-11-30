@@ -89,6 +89,7 @@ MainWriterPanel.prototype.initializeGlobalVariables = function() {
 
   this.lastSavedContent = "";
   this.writer_back_button_active = false;
+  this.setNewImageFlag( false );
   this.isMozillaBrowser = this.isMozilla();
 };
 
@@ -349,11 +350,17 @@ MainWriterPanel.prototype.saveChapter = function( autosaveFlag ) {
       url: " /api/pratilipi/content",
       data: ajaxData,
       success:function(response){
+        if( _this.newImageAddedFlag ) {
+          _this.content_object.setContent( ajaxData.content );
+          _this.setNewImageFlag( false );
+        }
+
         if( !autosaveFlag ) {
           $("#header1").removeClass("small-spinner");
           _this.$save_button.removeAttr("disabled");
           toastr.success('${ _strings.writer_changes_saved }');
         } 
+
         var title = ajaxData.chapterTitle;
         _this.lastSavedContent = ajaxData.content;
         _this.table_of_contents_object.changeCurrentChapterName( _this.currChapter, title );
@@ -451,6 +458,10 @@ MainWriterPanel.prototype.confirmLeavingWithoutSaving = function() {
 
 MainWriterPanel.prototype.hasUnsavedChanges = function() {
   return ( this.lastSavedContent != this.content_object.getContent() );
+};
+
+MainWriterPanel.prototype.setNewImageFlag = function( value ) {
+  this.newImageAddedFlag = value;
 };
 
 MainWriterPanel.prototype.activateRegularAutosaveCalls = function() {

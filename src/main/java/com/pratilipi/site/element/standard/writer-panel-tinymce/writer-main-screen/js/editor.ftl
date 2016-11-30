@@ -105,6 +105,7 @@ Editor.prototype.init = function() {
           var parsed_data = jQuery.parseJSON( data );
           var image_name = parsed_data.name;
           var image_url = "/api/pratilipi/content/image?pratilipiId=${ pratilipiId?c }&name=" + image_name;
+          _this.parent_object.setNewImageFlag( true );
           success(image_url);  
         },
         error: function(data){
@@ -191,6 +192,7 @@ Editor.prototype.uploadOnServer = function() {
       // }
       _this.$image_input.val("");
       $(field_name).val( image_url );
+      _this.parent_object.setNewImageFlag( true );
     },
     error: function(data){
       _this.$image_input.val("");              

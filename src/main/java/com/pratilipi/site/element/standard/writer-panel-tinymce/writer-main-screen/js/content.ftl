@@ -32,6 +32,9 @@ Content.prototype.getContent = function() {
   return this.tinymce_content_container.getContent().split("\n").join("");
 };
 
+Content.prototype.setContent = function( content ) {
+  this.tinymce_content_container.setContent( content );
+};
 
 Content.prototype.convertTextNodesToParagraphs = function() {
   this.$content_container.get(0).normalize();
