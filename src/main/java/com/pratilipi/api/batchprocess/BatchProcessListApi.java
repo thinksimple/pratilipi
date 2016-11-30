@@ -41,7 +41,7 @@ public class BatchProcessListApi extends GenericApi {
 	public Response get( GenericRequest request ) 
 			throws InsufficientAccessException, UnexpectedServerException {
 
-		if( BatchProcessDataUtil.hasAccessToListBatchProcess() )
+		if( !BatchProcessDataUtil.hasAccessToListBatchProcess() )
 			throw new InsufficientAccessException();
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		List<BatchProcess> batchProcessList = dataAccessor.getAllBatchProcessList();
