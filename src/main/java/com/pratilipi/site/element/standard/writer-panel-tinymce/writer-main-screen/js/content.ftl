@@ -1,7 +1,7 @@
 var Content = function (content_container_id, parent_object) {
   var id_content_container = "#" + content_container_id;
   this.$content_container = $( id_content_container );
-  this.tinymce_content_container = tinyMCE.get( content_container_id );
+  this.tinymce_content_container = tinyMCE.activeEditor;
   this.parent_object = parent_object;
 };
 
@@ -43,4 +43,8 @@ Content.prototype.convertTextNodesToParagraphs = function() {
   }).replaceWith(function() {
     return "<p>" + $(this).text() + "</p>";
   });
+};
+
+Content.prototype.hasEmptyText = function() {
+  return ( this.$content_container.children().length == 0 || !( this.$content_container.children().first().is("p,blockquote,img") ) );
 };
