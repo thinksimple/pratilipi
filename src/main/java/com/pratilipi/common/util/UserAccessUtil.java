@@ -48,6 +48,14 @@ public class UserAccessUtil {
 			this.accessTypes = accessTypes;
 		}
 
+		public boolean hasAccess( AccessType accessType ) {
+			if( this.accessTypes == null )
+				return false;
+			for( AccessType at : accessTypes )
+				if( accessType == at )
+					return true;
+			return false;
+		}
 		
 		public boolean hasAccess( Language language, AccessType accessType ) {
 			if( this.language != null && this.language != language )
@@ -109,6 +117,13 @@ public class UserAccessUtil {
 			default:
 				return new Role[] { Role.MEMBER };
 		}
+	}
+	
+	public static boolean hasUserAccess( Long userId, AccessType access ) {
+		for( Role role : getRoles( userId ) )
+			if( role.hasAccess( access ) )
+				return true;
+		return false;
 	}
 
 	public static boolean hasUserAccess( Long userId, Language language, AccessType access ) {

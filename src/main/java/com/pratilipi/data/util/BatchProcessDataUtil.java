@@ -50,7 +50,7 @@ public class BatchProcessDataUtil {
 
 	public static boolean hasAccessToListBatchProcess() {
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
-		return UserAccessUtil.hasUserAccess( accessToken.getUserId(), null, AccessType.BATCH_PROCESS_LIST );
+		return UserAccessUtil.hasUserAccess( accessToken.getUserId(), AccessType.BATCH_PROCESS_LIST );
 	}
 
 
