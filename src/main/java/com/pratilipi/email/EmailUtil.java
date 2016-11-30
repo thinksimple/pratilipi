@@ -106,46 +106,38 @@ public class EmailUtil {
 	public static void sendMail( String email, String name, EmailType emailType,
 			Language language, Map<String, String> dataModel ) throws UnexpectedServerException {
 
-		String senderName = null;
-		Pattern senderNamePattern = Pattern.compile( "<!-- SENDER_NAME:(.+?)-->" );
-		String senderEmail = null;
-		Pattern senderEmailPattern = Pattern.compile( "<!-- SENDER_EMAIL:(.+?)-->" );
-		String subject = null;
-		Pattern subjectPattern = Pattern.compile( "<!-- SUBJECT:(.+?)-->" );
-
 		dataModel.put( "language", language.toString() );
 		String body = FreeMarkerUtil.processTemplate( dataModel, filePath + emailType.getTemplateName() );
 
-		try {
-			File file = new File( EmailUtil.class.getResource( "template/" + emailType.getTemplateName() ).toURI() );
-			LineIterator it = FileUtils.lineIterator( file, "UTF-8" );
-			Matcher m = null;
-			String line = null;
-			while( it.hasNext() ) {
-				line = it.nextLine().trim();
-				
-				if( line.isEmpty() )
-					continue;
-				else if( senderName == null && (m = senderNamePattern.matcher( line )).find() )
-					senderName = m.group(1).trim();
-				else if( senderEmail == null && (m = senderEmailPattern.matcher( line )).find() )
-					senderEmail = m.group(1).trim();
-				else if( subject == null && (m = subjectPattern.matcher( line )).find() )
-					subject = m.group(1).trim();
-				else if( senderName != null && senderEmail != null && subject != null )
-					break;
-			}
+		Pattern senderNamePattern = Pattern.compile( "<!-- SENDER_NAME:(.+?)-->" );
+		Pattern senderEmailPattern = Pattern.compile( "<!-- SENDER_EMAIL:(.+?)-->" );
+		Pattern subjectPattern = Pattern.compile( "<!-- SUBJECT:(.+?)-->" );
 
+		String senderName = null;
+		String senderEmail = null;
+		String subject = null;
+
+		Matcher m = null;
+
+		if( (m = senderNamePattern.matcher( body ) ).find() ) {
+			senderName = m.group(1).trim();
+		}
+		if( (m = senderEmailPattern.matcher( body ) ).find() ) {
+			senderEmail = m.group(1).trim();
+		}
+		if( (m = subjectPattern.matcher( body ) ).find() ) {
+			subject = m.group(1).trim();
+		}
+
+		try {
 			_sendMail( senderEmail, senderName, email, name, subject, body );
 
-		} catch ( IOException | URISyntaxException e1 ) {
-			logger.log( Level.SEVERE, "Failed to process \"" + emailType.getTemplateName()+ ".", e1 );
-			throw new UnexpectedServerException();
-		} catch ( MessagingException e ) {
+		} catch ( UnsupportedEncodingException | MessagingException e ) {
 			logger.log( Level.SEVERE, "Failed to send mail to " + email + ".", e );
 			throw new UnexpectedServerException();
 		}
 
 	}
+
 
 }
