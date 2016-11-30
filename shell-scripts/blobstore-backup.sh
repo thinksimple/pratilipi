@@ -11,8 +11,8 @@ bucket_backup="gs://backup.pratilipi.com"
 bucket_static="gs://static.pratilipi.com"
 bucket_public="gs://public.pratilipi.com"
 
-backup_folder_static="static.pratilipi.com/yyyy-mm-$(date +%d)/static.pratilipi.com-yyyy-mm-$(date +%d-%H:%M-IST)"
-backup_folder_public="public.pratilipi.com/yyyy-mm-$(date +%d)/public.pratilipi.com-yyyy-mm-$(date +%d-%H:%M-IST)"
+backup_folder_static="static.pratilipi.com/$(date +%Y)-mm-$(date +%d)/static.pratilipi.com-$(date +%Y)-mm-$(date +%d-%H:%M-IST)"
+backup_folder_public="public.pratilipi.com/$(date +%Y)-mm-$(date +%d)/public.pratilipi.com-$(date +%Y)-mm-$(date +%d-%H:%M-IST)"
 
 if [ $hour -ge 8 -a $hour -le 20 -a $minute -eq 0 ]
 then
