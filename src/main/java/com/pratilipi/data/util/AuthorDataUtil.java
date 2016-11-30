@@ -19,6 +19,7 @@ import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.AuthorState;
+import com.pratilipi.common.type.EmailType;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.PratilipiState;
@@ -730,18 +731,15 @@ public class AuthorDataUtil {
 		
 	}
 	
-	public static void sendContentPublishedMail( Long pratilipiId ) 
+	public static void sendContentPublishedMail( Long pratilipiId, Long userId, Language language, EmailType emailType ) 
 			throws UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-
-		if( pratilipi.getAuthorId() == null )
-			return;
-
 		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
 		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author );
-		User user = dataAccessor.getUser( author.getUserId() );
+
+		User user = dataAccessor.getUser( userId );
 
 		if( user.getEmail() == null )
 			return;
@@ -761,11 +759,11 @@ public class AuthorDataUtil {
 		dataModel.put( "author_page_url", "http://" + author.getLanguage().getHostName() + pratilipiData.getAuthor().getPageUrl() );
 
 
-		EmailUtil.sendPratilipiMail( user.getEmail(),
-									UserDataUtil.createUserData( user, author ).getDisplayName(),
-									"PratilipiPublishedAuthorTemplate", 
-									pratilipi.getLanguage(), 
-									dataModel );
+		EmailUtil.sendMail( user.getEmail(),
+							UserDataUtil.createUserData( user ).getDisplayName(),
+							emailType,
+							language, 
+							dataModel );
 
 	}
 

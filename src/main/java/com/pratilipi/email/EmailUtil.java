@@ -23,6 +23,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
 
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.EmailType;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.util.FreeMarkerUtil;
 
@@ -102,7 +103,7 @@ public class EmailUtil {
 		
 	}
 	
-	public static void sendPratilipiMail( String email, String name, String templateName,
+	public static void sendMail( String email, String name, EmailType emailType,
 			Language language, Map<String, String> dataModel ) throws UnexpectedServerException {
 
 		String senderName = null;
@@ -113,10 +114,10 @@ public class EmailUtil {
 		Pattern subjectPattern = Pattern.compile( "<#-- SUBJECT:(.+?)-->" );
 
 		dataModel.put( "language", language.toString() );
-		String body = FreeMarkerUtil.processTemplate( dataModel, filePath + templateName + ".ftl" );
+		String body = FreeMarkerUtil.processTemplate( dataModel, filePath + emailType.getTemplateName() );
 
 		try {
-			File file = new File( EmailUtil.class.getResource( "template/" + templateName + ".ftl" ).toURI() );
+			File file = new File( EmailUtil.class.getResource( "template/" + emailType.getTemplateName() ).toURI() );
 			LineIterator it = FileUtils.lineIterator( file, "UTF-8" );
 			Matcher m = null;
 			String line = null;
@@ -138,7 +139,7 @@ public class EmailUtil {
 			_sendMail( senderEmail, senderName, email, name, subject, body );
 
 		} catch ( IOException | URISyntaxException e1 ) {
-			logger.log( Level.SEVERE, "Failed to process \"" + templateName + "." + language.getCode() + "\" email template.", e1 );
+			logger.log( Level.SEVERE, "Failed to process \"" + emailType.getTemplateName()+ ".", e1 );
 			throw new UnexpectedServerException();
 		} catch ( MessagingException e ) {
 			logger.log( Level.SEVERE, "Failed to send mail to " + email + ".", e );
