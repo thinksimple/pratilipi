@@ -29,11 +29,12 @@ Content.prototype.reset = function() {
 
 Content.prototype.getContent = function() {
   this.convertTextNodesToParagraphs();
-  return this.tinymce_content_container.getContent();
+  return this.tinymce_content_container.getContent().split("\n").join("");
 };
 
 
 Content.prototype.convertTextNodesToParagraphs = function() {
+  this.$content_container.get(0).normalize();
   this.$content_container.contents().filter(function() {
     return this.nodeType == 3;
   }).replaceWith(function() {

@@ -8,7 +8,7 @@ function getFirstRange() {
 var onSuggestionPicked = function(word, eng_word) {
   // console.log(':::::::Resolved with word ' + word + '::::::::')
 	if (window.getSelection) {
-    var text = ( word ? word : eng_word ) + "\u00A0";
+    var text = ( word ? word : eng_word ) + " ";
     sel = rangy.getSelection();
     var range = getFirstRange();
     if (range) {
