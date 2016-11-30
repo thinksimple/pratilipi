@@ -54,7 +54,7 @@ public class BatchProcessDataUtil {
 	}
 
 
-	public static void createBatchProcess( String initDoc, String execDoc, BatchProcessType type, BatchProcessState state, Language language ) 
+	public static void createBatchProcess( String initDoc, String execDoc, BatchProcessType type, Language language ) 
 			throws InsufficientAccessException, InvalidArgumentException {
 
 		if( ! hasAccessToCreateBatchProcess( language ) )
@@ -66,11 +66,10 @@ public class BatchProcessDataUtil {
 		batchProcess.setCreationDate( new Date() );
 		batchProcess.setInitDoc( initDoc );
 		batchProcess.setExecDoc( execDoc );
-		batchProcess.setStateCompleted( state );
 		batchProcess.setType( type );
 
-		logger.log( Level.INFO, "Converted Data : " + new Gson().toJson( batchProcess ) );
-		// dataAccessor.createOrUpdateBatchProcess( batchProcess );
+		logger.log( Level.INFO, "Creating new BatchProcess: " + new Gson().toJson( batchProcess ) );
+		dataAccessor.createOrUpdateBatchProcess( batchProcess );
 
 	}
 	

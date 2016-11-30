@@ -310,8 +310,7 @@
 								'language': this.selectedLanguage(), 
 								'message': this.inputMessage(),
 								'sourceUri': getUriFromUrl( this.inputUrl() ),
-								'type': "ANDROID_NOTIFACTION_BY_AUTHOR_FILTER",
-								'state': "INIT"
+								'type': "ANDROID_NOTIFACTION_BY_AUTHOR_FILTER"
 							},
 							success: function( response ) {
 								ViewModel.progressMessage( "Success!!" );

@@ -16,7 +16,6 @@ import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AuthorState;
-import com.pratilipi.common.type.BatchProcessState;
 import com.pratilipi.common.type.BatchProcessType;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.data.DataAccessor;
@@ -39,8 +38,6 @@ public class BatchProcessApi extends GenericApi {
 		private String sourceUri;
 		
 		private BatchProcessType type;
-
-		private BatchProcessState state;
 
 	}
 	
@@ -89,7 +86,6 @@ public class BatchProcessApi extends GenericApi {
 		BatchProcessDataUtil.createBatchProcess( gson.toJson( initDoc ),
 											gson.toJson( execDoc ),
 											request.type, 
-											request.state,
 											request.language );
 
 		return new GenericResponse();
