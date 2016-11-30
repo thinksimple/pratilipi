@@ -33,6 +33,8 @@ public class EmailApi extends GenericApi {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Email email = dataAccessor.getEmail( request.emailId );
 
+		if( email.getState() == EmailState.SENT )
+			return new GenericResponse();
 
 		if( email.getType() == EmailType.PRATILIPI_PUBLISHED_AUTHOR_EMAIL ) {
 			AuthorDataUtil.sendContentPublishedMail( email.getPrimaryContentId(), 
