@@ -8,7 +8,7 @@
 	<threadsafe>true</threadsafe>
 	<sessions-enabled>false</sessions-enabled>
 
-	<instance-class>F2</instance-class>
+	<instance-class>F1</instance-class>
 	<automatic-scaling>
 		<min-idle-instances>1</min-idle-instances>
 		<max-idle-instances>2</max-idle-instances>
