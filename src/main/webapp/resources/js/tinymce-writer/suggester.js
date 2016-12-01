@@ -26,7 +26,7 @@ var suggesterMethods = {
   init: function() {
     var self = this;
 
-    $contentPlaceholder.on("blur", function() {
+    this.content_holder.on("blur", function() {
       if( self.getMode() ) {
         if (this.savedSelection) {
             rangy.removeMarkers(this.savedSelection);
