@@ -132,6 +132,10 @@ MainWriterPanel.prototype.enableDesktopTransliteration = function() {
   var $summary_object = $("#summary");
   this.summary_transliteration_object = new transliterationApp( $summary_object );
   this.summary_transliteration_object.init();
+
+  var $change_title_object = $("#title-vernacular");
+  this.change_title_object = new transliterationApp( $change_title_object );
+  this.change_title_object.init();
   
 };
 
