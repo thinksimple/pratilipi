@@ -65,12 +65,12 @@ public class EmailApi extends GenericApi {
 			return new GenericResponse();
 
 		if( email.getType() == EmailType.PRATILIPI_PUBLISHED_AUTHOR_EMAIL ) {
-			AuthorDataUtil.sendContentPublishedMail( email.getPrimaryContentId(), 
+			AuthorDataUtil.sendContentPublishedMail( Long.parseLong( email.getPrimaryContentId() ), 
 														email.getUserId(), 
 														email.getType() );
 
 		} else if( email.getType() == EmailType.PRATILIPI_PUBLISHED_FOLLOWER_EMAIL ) {
-			UserAuthorDataUtil.sendContentPublishedMail( email.getPrimaryContentId(),
+			UserAuthorDataUtil.sendContentPublishedMail( Long.parseLong( email.getPrimaryContentId() ),
 															email.getUserId(),
 															email.getType() );
 		}
