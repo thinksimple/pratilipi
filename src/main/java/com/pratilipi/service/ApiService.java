@@ -75,11 +75,13 @@ public class ApiService extends GenericService {
 		ApiRegistry.register( UserVerificationApi.class );			// *.pratilipi.com
 		ApiRegistry.register( UserPasswordUpdateApi.class );		// *.pratilipi.com
 
+		ApiRegistry.register( PageApi.class );							// *.pratilipi.com
+		
 		ApiRegistry.register( PratilipiV1Api.class );					// *.pratilipi.com
 		ApiRegistry.register( PratilipiV2Api.class );					// *.pratilipi.com
 		ApiRegistry.register( PratilipiListV1Api.class );				// *.pratilipi.com
 		ApiRegistry.register( PratilipiListV2Api.class );				// *.pratilipi.com
-		ApiRegistry.register( PratilipiCoverApi.class );			// *.pratilipi.com & AWS CloudFront
+		ApiRegistry.register( PratilipiCoverApi.class );				// *.pratilipi.com & AWS CloudFront
 		ApiRegistry.register( PratilipiContentV1Api.class );			// *.pratilipi.com
 		ApiRegistry.register( PratilipiContentV2Api.class );			// *.pratilipi.com
 		ApiRegistry.register( PratilipiContentIndexApi.class );			// *.pratilipi.com
@@ -125,10 +127,8 @@ public class ApiService extends GenericService {
 		ApiRegistry.register( NotificationApi.class );
 		ApiRegistry.register( NotificationListApi.class );			// *.pratilipi.com
 		
-		ApiRegistry.register( BatchProcessApi.class );			// *.pratilipi.com
+		ApiRegistry.register( BatchProcessApi.class );				// *.pratilipi.com
 		ApiRegistry.register( BatchProcessListApi.class );			// *.pratilipi.com
-
-		ApiRegistry.register( PageApi.class );						// *.pratilipi.com
 
 	}
 	
