@@ -9,7 +9,6 @@ import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 import com.pratilipi.common.type.EmailState;
 import com.pratilipi.common.type.EmailType;
-import com.pratilipi.common.type.Language;
 import com.pratilipi.data.type.Email;
 
 @Cache
@@ -32,8 +31,6 @@ public class EmailEntity implements Email {
 
 	@Index
 	private EmailState STATE;
-
-	private Language LANGUAGE;
 
 
 	@Index
@@ -108,16 +105,6 @@ public class EmailEntity implements Email {
 	@Override
 	public void setState( EmailState state ) {
 		this.STATE = state;
-	}
-
-	@Override
-	public Language getLanguage() {
-		return LANGUAGE;
-	}
-
-	@Override
-	public void setLanguage( Language language ) {
-		this.LANGUAGE = language;
 	}
 
 

@@ -66,13 +66,11 @@ public class EmailApi extends GenericApi {
 		if( email.getType() == EmailType.PRATILIPI_PUBLISHED_AUTHOR_EMAIL ) {
 			AuthorDataUtil.sendContentPublishedMail( email.getPrimaryContentId(), 
 														email.getUserId(), 
-														email.getLanguage(), 
 														email.getType() );
 
 		} else if( email.getType() == EmailType.PRATILIPI_PUBLISHED_FOLLOWER_EMAIL ) {
 			UserAuthorDataUtil.sendContentPublishedMail( email.getPrimaryContentId(),
 															email.getUserId(),
-															email.getLanguage(),
 															email.getType() );
 		}
 		

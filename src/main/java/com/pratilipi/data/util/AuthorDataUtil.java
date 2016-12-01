@@ -731,7 +731,7 @@ public class AuthorDataUtil {
 		
 	}
 	
-	public static void sendContentPublishedMail( Long pratilipiId, Long userId, Language language, EmailType emailType ) 
+	public static void sendContentPublishedMail( Long pratilipiId, Long userId, EmailType emailType ) 
 			throws UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -762,7 +762,7 @@ public class AuthorDataUtil {
 		EmailUtil.sendMail( user.getEmail(),
 							UserDataUtil.createUserData( user ).getDisplayName(),
 							emailType,
-							language, 
+							pratilipi.getLanguage(), 
 							dataModel );
 
 	}

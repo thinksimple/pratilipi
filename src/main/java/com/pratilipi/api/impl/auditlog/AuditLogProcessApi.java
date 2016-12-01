@@ -96,7 +96,6 @@ public class AuditLogProcessApi extends GenericApi {
 					email.setPrimaryContentId( pratilipiId );
 					email.setType( EmailType.PRATILIPI_PUBLISHED_FOLLOWER_EMAIL );
 					email.setState( EmailState.PENDING );
-					email.setLanguage( pratilipi.getLanguage() );
 					email.setCreationDate( new Date() );
 					emailList.add( email );
 				}
@@ -112,7 +111,6 @@ public class AuditLogProcessApi extends GenericApi {
 						email.setPrimaryContentId( pratilipiId );
 						email.setType( EmailType.PRATILIPI_PUBLISHED_AUTHOR_EMAIL );
 						email.setState( EmailState.PENDING );
-						email.setLanguage( pratilipi.getLanguage() );
 						email.setCreationDate( new Date() );
 						emailList.add( email );
 					}

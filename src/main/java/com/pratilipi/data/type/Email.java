@@ -4,7 +4,6 @@ import java.util.Date;
 
 import com.pratilipi.common.type.EmailState;
 import com.pratilipi.common.type.EmailType;
-import com.pratilipi.common.type.Language;
 
 public interface Email extends GenericOfyType {
 
@@ -27,10 +26,6 @@ public interface Email extends GenericOfyType {
 	EmailState getState();
 
 	void setState( EmailState state );
-
-	Language getLanguage();
-
-	void setLanguage( Language language );
 
 
 	Date getCreationDate();
