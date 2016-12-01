@@ -1,6 +1,7 @@
 package com.pratilipi.api.impl.email;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.pratilipi.api.GenericApi;
@@ -76,6 +77,7 @@ public class EmailApi extends GenericApi {
 		
 
 		email.setState( EmailState.SENT );
+		email.setLastUpdated( new Date() );
 		dataAccessor.createOrUpdateEmail( email );
 
 		return new GenericResponse();

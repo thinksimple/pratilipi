@@ -36,6 +36,8 @@ import com.pratilipi.data.type.User;
 @Bind( uri = "/auditlog/process" )
 public class AuditLogProcessApi extends GenericApi {
 
+	private static final String AUDIT_LOG_PREFIX = "AUDIT_LOG::";
+
 	@Get
 	public GenericResponse get( GenericRequest request ) {
 		
@@ -96,6 +98,7 @@ public class AuditLogProcessApi extends GenericApi {
 					email.setPrimaryContentId( pratilipiId );
 					email.setType( EmailType.PRATILIPI_PUBLISHED_FOLLOWER_EMAIL );
 					email.setState( EmailState.PENDING );
+					email.setCreatedBy( AUDIT_LOG_PREFIX + auditLog.getId() );
 					email.setCreationDate( new Date() );
 					emailList.add( email );
 				}
@@ -111,6 +114,7 @@ public class AuditLogProcessApi extends GenericApi {
 						email.setPrimaryContentId( pratilipiId );
 						email.setType( EmailType.PRATILIPI_PUBLISHED_AUTHOR_EMAIL );
 						email.setState( EmailState.PENDING );
+						email.setCreatedBy( AUDIT_LOG_PREFIX + auditLog.getId() );
 						email.setCreationDate( new Date() );
 						emailList.add( email );
 					}
