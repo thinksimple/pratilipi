@@ -34,7 +34,14 @@ public class EmailEntity implements Email {
 
 
 	@Index
+	private String CREATED_BY;
+
+	@Index
 	private Date CREATION_DATE;
+
+	@Index
+	private Date LAST_UPDATED;
+
 
 
 	public EmailEntity() {}
@@ -106,7 +113,17 @@ public class EmailEntity implements Email {
 	public void setState( EmailState state ) {
 		this.STATE = state;
 	}
+	
+	
+	@Override
+	public String getCreatedBy() {
+		return CREATED_BY;
+	}
 
+	@Override
+	public void setCreatedBy( String createdBy ) {
+		this.CREATED_BY = createdBy;
+	}
 
 	@Override
 	public Date getCreationDate() {
@@ -114,10 +131,20 @@ public class EmailEntity implements Email {
 	}
 
 	@Override
-	public void setCreationDate(Date date) {
+	public void setCreationDate( Date date ) {
 		this.CREATION_DATE = date;
 		
 	}
 
+	@Override
+	public Date getLastUpdated() {
+		return LAST_UPDATED;
+	}
+
+	@Override
+	public void setLastUpdated( Date date ) {
+		this.LAST_UPDATED = date;
+		
+	}
 
 }

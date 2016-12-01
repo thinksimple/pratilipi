@@ -28,8 +28,16 @@ public interface Email extends GenericOfyType {
 	void setState( EmailState state );
 
 
+	String getCreatedBy();
+
+	void setCreatedBy( String createdBy );
+
 	Date getCreationDate();
 
 	void setCreationDate( Date date );
+
+	Date getLastUpdated();
+
+	void setLastUpdated( Date date );
 
 }
