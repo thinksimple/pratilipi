@@ -1,5 +1,6 @@
 package com.pratilipi.data;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -93,6 +94,7 @@ public interface DataAccessor {
 	Pratilipi newPratilipi();
 	Pratilipi getPratilipi( Long id );
 	String getPratilipiListTitle( String listName, Language language );
+	Map<Long, Pratilipi> getPratilipis( Collection<Long> idCollection );
 	List<Pratilipi> getPratilipiList( List<Long> idList );
 	DataListCursorTuple<Long> getPratilipiIdList( PratilipiFilter pratilipiFilter, String cursorStr, Integer offset, Integer resultCount );
 	DataListCursorTuple<Pratilipi> getPratilipiList( PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount );
@@ -103,6 +105,7 @@ public interface DataAccessor {
 	Author newAuthor();
 	Author getAuthor( Long id );
 	Author getAuthorByUserId( Long userId );
+	Map<Long, Author> getAuthors( Collection<Long> idCollection );
 	List<Author> getAuthorListByUserIdList( List<Long> userIdList );
 	List<Author> getAuthorList( List<Long> idList );
 	DataListCursorTuple<Long> getAuthorIdList( AuthorFilter authorFilter, String cursor, Integer resultCount );
@@ -145,6 +148,7 @@ public interface DataAccessor {
 	// USER_AUTHOR Table
 	UserAuthor newUserAuthor();
 	UserAuthor getUserAuthor( Long userId, Long authorId );
+	Map<String, UserAuthor> getUserAuthors( Collection<String> userAuthoriIds );
 	List<UserAuthor> getUserAuthorList( Long userId, List<Long> authorIdList );
 	List<UserAuthor> getUserAuthorList( List<Long> userIdList, Long authorId );
 	DataListCursorTuple<Long> getUserAuthorFollowList( Long userId, Long authorId, String cursor, Integer offset, Integer resultCount );
@@ -202,7 +206,6 @@ public interface DataAccessor {
 	
 	
 	// NOTIFICATION Table
-	Notification newNotification();
 	Notification newNotification( Long userId, NotificationType type, Long sourceId );
 	Notification newNotification( Long userId, NotificationType type, String sourceId, String createdBy );
 	Notification getNotification( Long notificationId );
@@ -218,7 +221,10 @@ public interface DataAccessor {
 	
 	
 	// Email Table
-	Email newEmail();
+	Email newEmail( Long userId, EmailType type, Long primaryContentId );
+	Email newEmail( Long userId, EmailType type, String primaryContentId );
+	Email getEmail( Long userId, EmailType type, Long primaryContentId );
+	Email getEmail( Long userId, EmailType type, String primaryContentId );
 	Email getEmail( Long emailId );
 	List<Email> getEmailList( Long userId, EmailType type, Long primaryContentId, EmailState state, Integer resultCount );
 	Email createOrUpdateEmail( Email email );
