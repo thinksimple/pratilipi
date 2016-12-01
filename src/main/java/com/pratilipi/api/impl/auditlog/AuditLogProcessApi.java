@@ -2,12 +2,13 @@ package com.pratilipi.api.impl.auditlog;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -23,20 +24,17 @@ import com.pratilipi.common.util.SystemProperty;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
-import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Email;
 import com.pratilipi.data.type.Notification;
 import com.pratilipi.data.type.Pratilipi;
-import com.pratilipi.data.type.User;
+import com.pratilipi.data.type.UserAuthor;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/auditlog/process" )
 public class AuditLogProcessApi extends GenericApi {
-
-	private static final String AUDIT_LOG_PREFIX = "AUDIT_LOG::";
 
 	@Get
 	public GenericResponse get( GenericRequest request ) {
@@ -54,128 +52,61 @@ public class AuditLogProcessApi extends GenericApi {
 				new Date( 1469989800000L ), // Mon Aug 01 00:00:00 IST 2016
 				(String) appProperty.getValue(),
 				10000 );
-		
-		
-		Gson gson = new Gson();
+
+
+		// Make sets of PrimaryContent ids
+		Set<Long> pratilipiUpdateIds = new HashSet<>();
+		Set<String> userAuthorFollowingIds = new HashSet<>();
 		for( AuditLog auditLog : auditLogDataListCursorTuple.getDataList() ) {
+			if( auditLog.getUserId().equals( SystemProperty.SYSTEM_USER_ID ) )
+				continue;
+			if( auditLog.getAccessType() == AccessType.PRATILIPI_UPDATE )
+				pratilipiUpdateIds.add( auditLog.getPrimaryContentIdLong() );
+			else if( auditLog.getAccessType() == AccessType.USER_AUTHOR_FOLLOWING )
+				userAuthorFollowingIds.add( auditLog.getPrimaryContentId() );
+		}
+
+		// Batch get PratilipiContent entities
+		Map<Long, Pratilipi> pratilipiUpdates = dataAccessor.getPratilipis( pratilipiUpdateIds );
+		Map<String, UserAuthor> userAuthorFollowings = dataAccessor.getUserAuthors( userAuthorFollowingIds );
+
+
+		
+		// auditLog.getAccessType() == AccessType.PRATILIPI_UPDATE
+		
+		for( Pratilipi pratilipi : pratilipiUpdates.values() ) {
+				
+			if( pratilipi.getState() != PratilipiState.PUBLISHED )
+				continue;
+
+			_createPratilipiPublishedEmail( pratilipi );
 			
-			JsonObject entityData = gson.fromJson( auditLog.getEventDataNew(), JsonElement.class ).getAsJsonObject();
+			List<Long> followerUserIdList = dataAccessor.getUserAuthorFollowList(
+					null,
+					pratilipi.getAuthorId(),
+					null,
+					null,
+					null ).getDataList();
 			
-			if( auditLog.getAccessType() == AccessType.PRATILIPI_UPDATE ) {
-				
-				PratilipiState pratilipiState = PratilipiState.valueOf( entityData.get( "STATE" ).getAsString() );
-				if( pratilipiState != PratilipiState.PUBLISHED )
-					continue;
-				
-				AccessToken accessToken = dataAccessor.getAccessToken( auditLog.getAccessId() );
-				if( accessToken.getUserId().equals( SystemProperty.SYSTEM_USER_ID ) )
-					continue;
-				
-				Long pratilipiId = entityData.get( "PRATILIPI_ID" ).getAsLong();
-				Long authorId = entityData.get( "AUTHOR_ID" ).getAsLong();
-				Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-				Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
-
-				final List<Long> followerUserIdList = dataAccessor.getUserAuthorFollowList( null, authorId, null, null, null ).getDataList();
-
-				// 1. Adding Email Entities
-
-				// 1.1 To the Author's followers
-				List<Long> followerUserIdEmailList = new ArrayList<Long>( followerUserIdList );
-				List<Email> existingEmailList = dataAccessor.getEmailList( null, 
-																			EmailType.PRATILIPI_PUBLISHED_FOLLOWER_EMAIL, 
-																			pratilipiId, 
-																			null, 
-																			null );
-
-				for( Email email : existingEmailList )
-					followerUserIdEmailList.remove( email.getUserId() );
-
-				List<Email> emailList = new ArrayList<>( followerUserIdEmailList.size() );
-				for( Long followerUserId : followerUserIdEmailList ) {
-					Email email = dataAccessor.newEmail();
-					email.setUserId( followerUserId );
-					email.setPrimaryContentId( pratilipiId );
-					email.setType( EmailType.PRATILIPI_PUBLISHED_FOLLOWER_EMAIL );
-					email.setState( EmailState.PENDING );
-					email.setCreatedBy( AUDIT_LOG_PREFIX + auditLog.getId() );
-					email.setCreationDate( new Date() );
-					emailList.add( email );
-				}
-
-				// 1.2 To the Author
-				if( author.getUserId() != null ) {
-					User user = dataAccessor.getUser( author.getUserId() );
-					if( dataAccessor.getEmailList( user.getId(), 
-									EmailType.PRATILIPI_PUBLISHED_AUTHOR_EMAIL, 
-									pratilipiId, null, null ).size() == 0 ) {
-						Email email = dataAccessor.newEmail();
-						email.setUserId( user.getId() );
-						email.setPrimaryContentId( pratilipiId );
-						email.setType( EmailType.PRATILIPI_PUBLISHED_AUTHOR_EMAIL );
-						email.setState( EmailState.PENDING );
-						email.setCreatedBy( AUDIT_LOG_PREFIX + auditLog.getId() );
-						email.setCreationDate( new Date() );
-						emailList.add( email );
-					}
-				}
-
-				emailList = dataAccessor.createOrUpdateEmailList( emailList );
-
-
-				// 2. Adding Notification Entities
-				List<Long> followerUserIdNotificationList = new ArrayList<Long>( followerUserIdList );
-
-				List<Notification> existingNotificationList = dataAccessor.getNotificationListIterator( null, NotificationType.PRATILIPI_ADD, pratilipiId, null, null ).list();
-				for( Notification notification : existingNotificationList )
-					followerUserIdNotificationList.remove( notification.getUserId() );
-
-				List<Notification> notificationList = new ArrayList<>( followerUserIdNotificationList.size() );
-				for( Long followerUserId : followerUserIdNotificationList ) {
-					Notification notification = dataAccessor.newNotification(
-							followerUserId,
-							NotificationType.PRATILIPI_ADD,
-							pratilipiId );
-					notification.addAuditLogId( auditLog.getId() );
-					notification.setFcmPending( true );
-					notification.setLastUpdated( new Date() );
-					notificationList.add( notification );
-				}
-				notificationList = dataAccessor.createOrUpdateNotificationList( notificationList );
-
-			} else if( auditLog.getAccessType() == AccessType.USER_AUTHOR_FOLLOWING ) {
-				
-				Long userId = entityData.get( "USER_ID" ).getAsLong(); // Follower
-				Long authorId = entityData.get( "AUTHOR_ID" ).getAsLong(); // Followed
-				boolean following = entityData.get( "FOLLOWING" ).getAsBoolean();
-				Author author = dataAccessor.getAuthor( authorId );
-				if( author.getUserId() == null ) // Followed
-					continue;
-				
-				Notification notification = dataAccessor.getNotification( author.getUserId(), NotificationType.AUTHOR_FOLLOW, authorId );
-				
-				if( notification == null || ( following && ! _isToday( notification.getCreationDate() ) ) )
-					notification = dataAccessor.newNotification(
-							author.getUserId(),
-							NotificationType.AUTHOR_FOLLOW,
-							authorId );
-
-				if( following ) {
-					notification.addDataId( userId, auditLog.getId() );
-					if( notification.getState() == NotificationState.READ )
-						notification.setState( NotificationState.UNREAD );
-				} else {
-					notification.removeDataId( userId, auditLog.getId() );
-					// Do NOT update lastUpdated date.
-				}
-				
-				notification.setFcmPending( true );
-				notification.setLastUpdated( new Date() );
-				notification = dataAccessor.createOrUpdateNotification( notification );
-				
-			} // End of if( auditLog.getAccessType() == AccessType.USER_AUTHOR_FOLLOWING )
+			_createPratilipiPublishedNotifications( pratilipi, followerUserIdList );
 			
-		} // End of for
+			_createPratilipiPublishedEmails( pratilipi, followerUserIdList );
+			
+		}
+		
+
+		
+		// auditLog.getAccessType() == AccessType.USER_AUTHOR_FOLLOWING
+		
+		Set<Long> authorIds = new HashSet<>();
+		for( UserAuthor userAuthor : userAuthorFollowings.values() )
+			authorIds.add( userAuthor.getAuthorId() );
+
+		Map<Long, Author> authors = dataAccessor.getAuthors( authorIds );
+		
+		for( UserAuthor userAuthor : userAuthorFollowings.values() )
+			_createUserAuthorFollowingNotifications( userAuthor, authors.get( userAuthor.getAuthorId() ) );
+
 		
 		
 		// Updating AppProperty.
@@ -183,10 +114,144 @@ public class AuditLogProcessApi extends GenericApi {
 			appProperty.setValue( auditLogDataListCursorTuple.getCursor() );
 			appProperty = dataAccessor.createOrUpdateAppProperty( appProperty );
 		}
+	
 		
 		return new GenericResponse();
 		
 	}
+	
+
+	private void _createPratilipiPublishedNotifications( Pratilipi pratilipi, List<Long> followers ) {
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		
+		followers = new ArrayList<Long>( followers );
+
+		List<Notification> existingNotificationList = dataAccessor.getNotificationListIterator(
+				null,
+				NotificationType.PRATILIPI_ADD,
+				pratilipi.getId(),
+				null,
+				null ).list();
+
+		
+		for( Notification notification : existingNotificationList )
+			followers.remove( notification.getUserId() );
+
+		
+		List<Notification> notificationList = new ArrayList<>( followers.size() );
+		for( Long followerUserId : followers )
+			notificationList.add( dataAccessor.newNotification(
+					followerUserId,
+					NotificationType.PRATILIPI_ADD,
+					pratilipi.getId() ) );
+		
+		notificationList = dataAccessor.createOrUpdateNotificationList( notificationList );
+
+	}
+
+	private void _createUserAuthorFollowingNotifications( UserAuthor userAuthor, Author author ) {
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		
+		if( author.getUserId() == null ) // Followed
+			return;
+			
+		
+		Notification notification = dataAccessor.getNotification(
+				author.getUserId(),
+				NotificationType.AUTHOR_FOLLOW,
+				author.getId() );
+			
+		if( notification == null || ( userAuthor.isFollowing() && ! _isToday( notification.getCreationDate() ) ) )
+			notification = dataAccessor.newNotification(
+					author.getUserId(),
+					NotificationType.AUTHOR_FOLLOW,
+					author.getId() );
+
+		
+		if( userAuthor.isFollowing() && notification.addDataId( userAuthor.getUserId() ) ) {
+			if( notification.getState() == NotificationState.READ )
+				notification.setState( NotificationState.UNREAD );
+			notification.setFcmPending( true );
+		} else if( ! userAuthor.isFollowing() && notification.removeDataId( userAuthor.getUserId() ) ) {
+			// Do nothing
+		} else {
+			return;
+		}
+			
+		notification.setLastUpdated( new Date() );
+		notification = dataAccessor.createOrUpdateNotification( notification );
+
+	}
+	
+	
+	private void _createPratilipiPublishedEmail( Pratilipi pratilipi ) {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+	
+		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
+		if( author.getUserId() == null )
+			return;
+
+		
+		Email email = dataAccessor.getEmail(
+				author.getUserId(),
+				EmailType.PRATILIPI_PUBLISHED_AUTHOR_EMAIL, 
+				pratilipi.getId() );
+
+		if( email == null ) {
+			email = dataAccessor.newEmail(
+					author.getUserId(),
+					EmailType.PRATILIPI_PUBLISHED_AUTHOR_EMAIL,
+					pratilipi.getId() );
+		} else if( email.getState() == EmailState.DEFERRED ) {
+			email.setState( EmailState.PENDING );
+		} else {
+			return; // Do nothing
+		}
+		
+
+		email = dataAccessor.createOrUpdateEmail( email );
+
+	}
+	
+	private void _createPratilipiPublishedEmails( Pratilipi pratilipi, List<Long> followers ) {
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		
+		followers = new ArrayList<Long>( followers );
+		
+		List<Email> existingEmailList = dataAccessor.getEmailList(
+				null,
+				EmailType.PRATILIPI_PUBLISHED_FOLLOWER_EMAIL,
+				pratilipi.getId(),
+				null,
+				null );
+
+		
+		List<Email> emailList = new LinkedList<>();
+
+		for( Email email : existingEmailList ) {
+			followers.remove( email.getUserId() );
+			if( email.getState() == EmailState.DEFERRED ) { // Updating existing email state, if required
+				email.setState( EmailState.PENDING );
+				email.setLastUpdated( new Date() );
+				emailList.add( email );
+			}
+		}
+
+		for( Long follower : followers ) // Creating new emails
+			emailList.add( dataAccessor.newEmail(
+					follower,
+					EmailType.PRATILIPI_PUBLISHED_FOLLOWER_EMAIL,
+					pratilipi.getId() ) );
+
+		
+		emailList = dataAccessor.createOrUpdateEmailList( emailList );
+		
+	}
+
 	
 	private boolean _isToday( Date date ) {
 		Long time = new Date().getTime();

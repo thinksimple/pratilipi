@@ -23,6 +23,8 @@ public interface AuditLog extends GenericOfyType, Serializable { // TODO: remove
 
 	String getPrimaryContentId();
 
+	Long getPrimaryContentIdLong();
+	
 	void setPrimaryContentId( String pageContentId );
 	
 	void setPrimaryContentId( Long pageContentId );
