@@ -132,51 +132,30 @@ public class NotificationEntity implements Notification {
 	}
 
 	@Override
-	public List<Long> getAuditLogIds() {
-		return AUDIT_LOG_IDS == null ? new ArrayList<Long>( 0 ) : AUDIT_LOG_IDS;
-	}
-	
-	@Override
-	public void addDataId( Long dataId, Long auditLogId ) {
+	public boolean addDataId( Long dataId ) {
 		
-		if( this.DATA_IDS == null ) {
+		if( this.DATA_IDS == null )
 			this.DATA_IDS = new ArrayList<>( 1 );
-			this.DATA_IDS.add( dataId );
-		} else if( this.DATA_IDS.contains( dataId ) ) {
-			// Do Nothing !
-		} else {
-			this.DATA_IDS.add( dataId );
-		}
 		
-		addAuditLogId( auditLogId );
+		if( this.DATA_IDS.contains( dataId ) )
+			return false;
 		
-	}
-	
-	@Override
-	public void removeDataId( Long dataId, Long auditLogId ) {
+		this.DATA_IDS.add( dataId );
 		
-		if( this.DATA_IDS == null ) {
-			// Do Nothing !
-		} else if( this.DATA_IDS.contains( dataId ) ) {
-			this.DATA_IDS.remove( dataId );
-		} else {
-			// Do Nothing !
-		}
-		
-		addAuditLogId( auditLogId );
+		return true;
 		
 	}
 	
 	@Override
-	public void addAuditLogId( Long auditLogId ) {
-		if( this.AUDIT_LOG_IDS == null ) {
-			this.AUDIT_LOG_IDS = new ArrayList<>( 1 );
-			this.AUDIT_LOG_IDS.add( auditLogId );
-		} else if( this.AUDIT_LOG_IDS.contains( auditLogId ) ) {
-			// Do Nothing !
-		} else {
-			this.AUDIT_LOG_IDS.add( auditLogId );
-		}
+	public boolean removeDataId( Long dataId ) {
+		
+		if( this.DATA_IDS == null || ! this.DATA_IDS.contains( dataId ) )
+			return false;
+		
+		this.DATA_IDS.remove( dataId );
+		
+		return true;
+		
 	}
 	
 	@Override
