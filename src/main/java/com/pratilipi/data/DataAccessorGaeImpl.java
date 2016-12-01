@@ -160,10 +160,10 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return id == null || id.isEmpty() ? null : ObjectifyService.ofy().load().type( clazz ).id( id ).now();
 	}
 	
-	private <P extends GenericOfyType, Q extends P, R> Map<R, P> getEntities( Class<Q> clazz, Collection<R> idCollection ) {
-		Map<R, Q> entityMap = ObjectifyService.ofy().load().type( clazz ).ids( idCollection );
+	private <P extends GenericOfyType, Q extends P, R> Map<R, P> getEntities( Class<Q> clazz, Collection<R> ids ) {
+		Map<R, Q> entityMap = ObjectifyService.ofy().load().type( clazz ).ids( ids );
 		Map<R, P> returnMap = new HashMap<>( entityMap.size() );
-		for( R id : idCollection )
+		for( R id : ids )
 			returnMap.put( id, entityMap.get( id ) );
 		return returnMap;
 	}
@@ -739,8 +739,8 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	@Override
-	public Map<Long, Pratilipi> getPratilipis( Collection<Long> idCollection ) {
-		return getEntities( PratilipiEntity.class, idCollection );
+	public Map<Long, Pratilipi> getPratilipis( Collection<Long> pratilipiIds ) {
+		return getEntities( PratilipiEntity.class, pratilipiIds );
 	}
 	
 	@Override
@@ -932,8 +932,8 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	@Override
-	public Map<Long, Author> getAuthors( Collection<Long> idCollection ) {
-		return getEntities( AuthorEntity.class, idCollection );	
+	public Map<Long, Author> getAuthors( Collection<Long> authorIds ) {
+		return getEntities( AuthorEntity.class, authorIds );	
 	}
 	
 	@Override
@@ -1313,6 +1313,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return getEntity( UserAuthorEntity.class, userId + "-" + authorId );
 	}
 
+	@Override
+	public Map<String, UserAuthor> getUserAuthors( Collection<String> userAuthoriIds ) {
+		return getEntities( UserAuthorEntity.class, userAuthoriIds );
+	}
+	
 	@Override
 	public List<UserAuthor> getUserAuthorList( Long userId, List<Long> authorIdList ) {
 
@@ -1920,6 +1925,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	// EMAIL Table
 
 	@Override
+	public Email newEmail( Long userId, EmailType type, Long primaryContentId ) {
+		return newEmail( userId, type, primaryContentId.toString() );
+	}
+	
+	@Override
 	public Email newEmail( Long userId, EmailType type, String primaryContentId ) {
 		Email email = new EmailEntity();
 		email.setUserId( userId );
@@ -1934,6 +1944,24 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	@Override
 	public Email getEmail( Long emailId ) {
 		return getEntity( EmailEntity.class, emailId );
+	}
+
+	@Override
+	public Email getEmail( Long userId, EmailType type, Long primaryContentId ) {
+		return getEmail( userId, type, primaryContentId.toString() );
+	}
+	
+	@Override
+	public Email getEmail( Long userId, EmailType type, String primaryContentId ) {
+		
+		return ObjectifyService.ofy().load()
+				.type( EmailEntity.class )
+				.filter( "USER_ID", userId )
+				.filter( "TYPE", type )
+				.filter( "PRIMARY_CONTENT_ID", primaryContentId )
+				.order( "-LAST_UPDATED" )
+				.first().now();
+
 	}
 	
 	@Override

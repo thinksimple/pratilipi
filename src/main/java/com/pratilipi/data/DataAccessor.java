@@ -94,7 +94,7 @@ public interface DataAccessor {
 	Pratilipi newPratilipi();
 	Pratilipi getPratilipi( Long id );
 	String getPratilipiListTitle( String listName, Language language );
-	Map<Long, Pratilipi> getPratilipis( Collection<Long> idCollection );
+	Map<Long, Pratilipi> getPratilipis( Collection<Long> pratilipiIds );
 	List<Pratilipi> getPratilipiList( List<Long> idList );
 	DataListCursorTuple<Long> getPratilipiIdList( PratilipiFilter pratilipiFilter, String cursorStr, Integer offset, Integer resultCount );
 	DataListCursorTuple<Pratilipi> getPratilipiList( PratilipiFilter pratilipiFilter, String cursorStr, Integer resultCount );
@@ -105,7 +105,7 @@ public interface DataAccessor {
 	Author newAuthor();
 	Author getAuthor( Long id );
 	Author getAuthorByUserId( Long userId );
-	Map<Long, Author> getAuthors( Collection<Long> idCollection );
+	Map<Long, Author> getAuthors( Collection<Long> authorIds );
 	List<Author> getAuthorListByUserIdList( List<Long> userIdList );
 	List<Author> getAuthorList( List<Long> idList );
 	DataListCursorTuple<Long> getAuthorIdList( AuthorFilter authorFilter, String cursor, Integer resultCount );
@@ -219,12 +219,12 @@ public interface DataAccessor {
 	Notification createOrUpdateNotification( Notification notification );
 	List<Notification> createOrUpdateNotificationList( List<Notification> notificationList );
 	
-	// Email Table
+	// EMAIL Table
 	Email newEmail( Long userId, EmailType type, Long primaryContentId );
 	Email newEmail( Long userId, EmailType type, String primaryContentId );
+	Email getEmail( Long emailId );
 	Email getEmail( Long userId, EmailType type, Long primaryContentId );
 	Email getEmail( Long userId, EmailType type, String primaryContentId );
-	Email getEmail( Long emailId );
 	List<Email> getEmailList( Long userId, EmailType type, Long primaryContentId, EmailState state, Integer resultCount );
 	Email createOrUpdateEmail( Email email );
 	List<Email> createOrUpdateEmailList( List<Email> emailList );
