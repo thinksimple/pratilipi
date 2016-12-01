@@ -15,6 +15,7 @@ MainWriterPanel.prototype.init = function() {
   this.initializeGlobalVariables();
   this.preventBackspaceDefaultAction();
   this.loadScriptsForDesktopTransliteration();
+  this.enableDesktopTransliteration();
   
   var pagination_container = $("#pagination"); /* done */
   this.pagination_object = new Pagination( pagination_container, this );
@@ -116,6 +117,16 @@ MainWriterPanel.prototype.loadScriptsForDesktopTransliteration = function() {
       });                  
     });
   }  
+};
+
+MainWriterPanel.prototype.enableDesktopTransliteration = function() {
+  var $content_object = $("#chapter-content");
+  this.content_transliteration_oject = new transliterationApp( $content_object );
+  this.content_transliteration_oject.init();
+  
+  var $chapter_name_object = $("#subtitle");
+  this.title_transliteration_oject = new transliterationApp( $chapter_name_object );
+  this.title_transliteration_oject.init();  
 };
 
 MainWriterPanel.prototype.hideProgressBarOnMobileFocus = function() {

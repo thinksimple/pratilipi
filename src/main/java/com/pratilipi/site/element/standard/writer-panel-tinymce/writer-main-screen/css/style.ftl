@@ -729,6 +729,7 @@ body {
   display: inline-block;
   min-width: 100px;
   display: none;
+  background: white;
 }
 
 .word-input {

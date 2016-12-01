@@ -1,93 +1,97 @@
-var $contentPlaceholder = $('#chapter-content');
+var transliterationApp = function( $transliterable_elem ) {
+  this.$transliterable_elem = $transliterable_elem; 
+};
+
+transliterationApp.prototype.init = function() {
+  var _this = this;
+  this.suggester = new Suggester('.word-suggester', _this.onSuggestionPicked, _this.$transliterable_elem );
+  this.suggester.init();
+  this.$transliterable_elem.on('keypress', _this.suppressKeypress);
+  this.$transliterable_elem.on('keydown', _this.suppressKeydown);
+  this.$transliterable_elem.on("click", function(event) {
+    if( this.suggester.getMode() && ( !$(event.target).closest('.word-suggester').length ) ) {
+      this.suggester.clear();
+    }
+  });   
+};
 
 function getFirstRange() {
-    var sel = rangy.getSelection();
-    return sel.rangeCount ? sel.getRangeAt(0) : null;
-}
+  var sel = rangy.getSelection();
+  return sel.rangeCount ? sel.getRangeAt(0) : null;
+};
 
 var onSuggestionPicked = function(word, eng_word) {
   // console.log(':::::::Resolved with word ' + word + '::::::::')
-	if (window.getSelection) {
+  if (window.getSelection) {
     var text = ( word ? word : eng_word ) + "\u00A0";
     sel = rangy.getSelection();
     var range = getFirstRange();
     if (range) {
-	      var text_node = document.createTextNode(text);
-        range.insertNode( text_node );
-        range.setStartAfter( text_node );
-        // sel.collapseToEnd();
-        sel.setSingleRange(range);
+      var text_node = document.createTextNode(text);
+      range.insertNode( text_node );
+      range.setStartAfter( text_node );
+      // sel.collapseToEnd();
+      sel.setSingleRange(range);
     }
-	}
+  }
 };
 
 function insertNodeAtRange() {
-    var range = getFirstRange();
-    if (range) {
-        var el = document.createElement("span");
-        el.className = "curWord";
-        range.insertNode(el);
-        rangy.getSelection().setSingleRange(range);
-        return el;
-    }
-}
-
-var suggester = new Suggester('.word-suggester', onSuggestionPicked, $contentPlaceholder);
-suggester.init();
-
-var suppressKeypress = function(e) {
-  var keycode = e.keycode || e.which;
-  if( shouldPreventKeypress( keycode ) ) {
-    e.preventDefault();
-    sendKeyToSuggester(keycode);
+  var range = getFirstRange();
+  if (range) {
+    var el = document.createElement("span");
+    el.className = "curWord";
+    range.insertNode(el);
+    rangy.getSelection().setSingleRange(range);
+    return el;
   }
 };
 
-var sendKeyToSuggester = function(keycode) {
-      suggester.type(keycode);
+transliterationApp.prototype.suppressKeypress = function(e) {
+  var keycode = e.keycode || e.which;
+  if( this.shouldPreventKeypress( keycode ) ) {
+    e.preventDefault();
+    this.sendKeyToSuggester(keycode);
+  }
 };
 
-var shouldPreventKeypress = function( keycode ) {
-    var translation = new Translation( keycode );
-    return ( isNotBackspaceKey(translation) && !isKeydownActionKey(translation) && ( isNotKeypressActionKey(translation) || suggester.getMode() ) );
+transliterationApp.prototype.sendKeyToSuggester = function(keycode) {
+  this.suggester.type(keycode);
 };
 
-var isNotKeypressActionKey = function( translation ) {
+transliterationApp.prototype.shouldPreventKeypress = function( keycode ) {
+  var translation = new Translation( keycode );
+  return ( this.isNotBackspaceKey(translation) && !this.isKeydownActionKey(translation) && ( this.isNotKeypressActionKey(translation) || this.suggester.getMode() ) );
+};
+
+transliterationApp.prototype.isNotKeypressActionKey = function( translation ) {
   return ( translation.action != 'space' );
 };
 
-var isNotBackspaceKey = function( translation ) {
+transliterationApp.prototype.isNotBackspaceKey = function( translation ) {
   return translation.action != 'backspace';
-}
+};
 
-var suppressKeydown = function(e) {
+transliterationApp.prototype.suppressKeydown = function(e) {
   var keycode = e.keycode || e.which;
-  if( shouldPreventKeydown( keycode ) ) {
+  if( this.shouldPreventKeydown( keycode ) ) {
     e.preventDefault();
-    sendKeyToSuggester(keycode);
+    this.sendKeyToSuggester(keycode);
   }
 };
 
-var shouldPreventKeydown = function( keycode ) {
-    var translation = new Translation( keycode );
-    return ( isKeydownActionKey(translation) && suggester.getMode() );
+transliterationApp.prototype.shouldPreventKeydown = function( keycode ) {
+  var translation = new Translation( keycode );
+  return ( this.isKeydownActionKey(translation) && this.suggester.getMode() );
 };
 
-var isKeydownActionKey = function( translation ) {
-    return ( translation.action == 'up' || translation.action == 'down' || translation.action == 'left' || translation.action == 'right' || translation.action == 'escape');
+transliterationApp.prototype.isKeydownActionKey = function( translation ) {
+  return ( translation.action == 'up' || translation.action == 'down' || translation.action == 'left' || translation.action == 'right' || translation.action == 'escape');
 };
 
-$contentPlaceholder.on('keypress', suppressKeypress);
-$contentPlaceholder.on('keydown', suppressKeydown);
-$contentPlaceholder.on("click", function(event) {
-
-  if( suggester.getMode() && ( !$(event.target).closest('.word-suggester').length ) ) {
-    suggester.clear();
-  }
-});
 
 window.onload = function() {
-	if(screen.width > 480) {
-		rangy.init();
-	}	
+  if(screen.width > 480) {
+    rangy.init();
+  } 
 };
