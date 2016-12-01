@@ -41,6 +41,7 @@ public class BatchProcessApi extends GenericApi {
 
 	}
 	
+	
 	@Get
 	public GenericResponse get( GenericRequest request ) throws UnexpectedServerException {
 
@@ -56,7 +57,7 @@ public class BatchProcessApi extends GenericApi {
 	}
 
 	@Post
-	public GenericResponse get( PostRequest request ) 
+	public GenericResponse post( PostRequest request ) 
 			throws InsufficientAccessException, InvalidArgumentException  {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
