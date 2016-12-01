@@ -6,11 +6,11 @@ transliterationApp.prototype.init = function() {
   var _this = this;
   this.suggester = new Suggester('.word-suggester', _this.onSuggestionPicked, _this.$transliterable_elem );
   this.suggester.init();
-  this.$transliterable_elem.on('keypress', _this.suppressKeypress);
-  this.$transliterable_elem.on('keydown', _this.suppressKeydown);
+  this.$transliterable_elem.on('keypress', _this.suppressKeypress.bind( _this ));
+  this.$transliterable_elem.on('keydown', _this.suppressKeydown.bind( _this ));
   this.$transliterable_elem.on("click", function(event) {
-    if( this.suggester.getMode() && ( !$(event.target).closest('.word-suggester').length ) ) {
-      this.suggester.clear();
+    if( _this.suggester.getMode() && ( !$(event.target).closest('.word-suggester').length ) ) {
+      _this.suggester.clear();
     }
   });   
 };
