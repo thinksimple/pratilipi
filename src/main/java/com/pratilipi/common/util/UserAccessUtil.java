@@ -18,15 +18,14 @@ public class UserAccessUtil {
 			AccessType.PRATILIPI_READ_META, AccessType.PRATILIPI_READ_CONTENT,
 			AccessType.AUTHOR_LIST, AccessType.AUTHOR_ADD, AccessType.AUTHOR_UPDATE,
 			AccessType.EVENT_ADD, AccessType.EVENT_UPDATE,
-			AccessType.BLOG_POST_LIST, AccessType.BLOG_POST_ADD, AccessType.BLOG_POST_UPDATE,
-			AccessType.BATCH_PROCESS_ADD, AccessType.BATCH_PROCESS_LIST };
+			AccessType.BLOG_POST_LIST, AccessType.BLOG_POST_ADD, AccessType.BLOG_POST_UPDATE };
 
 	private enum Role {
 
 		GUEST			( null ),
 		MEMBER			( null,					MEMBER_ACCESS ),
 
-		ADMIN			( null,					AccessType.USER_ADD, AccessType.USER_UPDATE, AccessType.PRATILIPI_LIST ),
+		ADMIN			( null,					AccessType.USER_ADD, AccessType.USER_UPDATE, AccessType.PRATILIPI_LIST, AccessType.BATCH_PROCESS_ADD, AccessType.BATCH_PROCESS_LIST ),
 		ADMIN_BENGALI	( Language.BENGALI,		ADMIN_ACCESS ),
 		ADMIN_GUJARATI	( Language.GUJARATI,	ADMIN_ACCESS ),
 		ADMIN_HINDI		( Language.HINDI,		ADMIN_ACCESS ),
@@ -48,15 +47,6 @@ public class UserAccessUtil {
 			this.accessTypes = accessTypes;
 		}
 
-		public boolean hasAccess( AccessType accessType ) {
-			if( this.accessTypes == null )
-				return false;
-			for( AccessType at : accessTypes )
-				if( accessType == at )
-					return true;
-			return false;
-		}
-		
 		public boolean hasAccess( Language language, AccessType accessType ) {
 			if( this.language != null && this.language != language )
 				return false;
@@ -119,13 +109,6 @@ public class UserAccessUtil {
 		}
 	}
 	
-	public static boolean hasUserAccess( Long userId, AccessType access ) {
-		for( Role role : getRoles( userId ) )
-			if( role.hasAccess( access ) )
-				return true;
-		return false;
-	}
-
 	public static boolean hasUserAccess( Long userId, Language language, AccessType access ) {
 		for( Role role : getRoles( userId ) )
 			if( role.hasAccess( language, access ) )
