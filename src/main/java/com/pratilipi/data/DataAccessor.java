@@ -217,6 +217,14 @@ public interface DataAccessor {
 	List<Notification> createOrUpdateNotificationList( List<Notification> notificationList );
 	
 	
+	// Email Table
+	Email newEmail();
+	Email getEmail( Long emailId );
+	List<Email> getEmailList( Long userId, EmailType type, Long primaryContentId, EmailState state, Integer resultCount );
+	Email createOrUpdateEmail( Email email );
+	List<Email> createOrUpdateEmailList( List<Email> emailList );
+
+	
 	// I18N Table
 	I18n newI18n( String i18nId );
 	List<I18n> getI18nList( I18nGroup i18nGroup );
@@ -230,14 +238,5 @@ public interface DataAccessor {
 	DataListCursorTuple<BatchProcess> getBatchProcessList( BatchProcessType type, BatchProcessState stateCompleted, BatchProcessState stateInProgress, String cursor, Integer resultCount );
 	List<BatchProcess> getIncompleteBatchProcessList();
 	BatchProcess createOrUpdateBatchProcess( BatchProcess batchProcess );
-	
-	
-	// Email Table
-	Email newEmail();
-	Email getEmail( Long emailId );
-	List<Email> getAllEmailList();
-	List<Email> getEmailList( Long userId, EmailType type, Long primaryContentId, EmailState state, Integer resultCount );
-	Email createOrUpdateEmail( Email email );
-	List<Email> createOrUpdateEmailList( List<Email> emailList );
 	
 }

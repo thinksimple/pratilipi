@@ -1175,13 +1175,6 @@ public class DataAccessorMockImpl implements DataAccessor {
 
 
 	@Override
-	public List<Email> getAllEmailList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
 	public List<Email> getEmailList(Long userId, EmailType type,
 			Long primaryContentId, EmailState state, Integer resultCount) {
 		// TODO Auto-generated method stub
