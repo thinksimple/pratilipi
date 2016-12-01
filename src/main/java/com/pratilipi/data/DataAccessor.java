@@ -219,7 +219,6 @@ public interface DataAccessor {
 	Notification createOrUpdateNotification( Notification notification );
 	List<Notification> createOrUpdateNotificationList( List<Notification> notificationList );
 	
-	
 	// Email Table
 	Email newEmail( Long userId, EmailType type, Long primaryContentId );
 	Email newEmail( Long userId, EmailType type, String primaryContentId );

@@ -3,6 +3,7 @@ package com.pratilipi.data;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -159,10 +160,10 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return id == null || id.isEmpty() ? null : ObjectifyService.ofy().load().type( clazz ).id( id ).now();
 	}
 	
-	private <P extends GenericOfyType, Q extends P, R> Map<R, P> getEntities( Class<Q> clazz, List<R> idList ) {
-		Map<R, Q> entityMap = ObjectifyService.ofy().load().type( clazz ).ids( idList );
+	private <P extends GenericOfyType, Q extends P, R> Map<R, P> getEntities( Class<Q> clazz, Collection<R> idCollection ) {
+		Map<R, Q> entityMap = ObjectifyService.ofy().load().type( clazz ).ids( idCollection );
 		Map<R, P> returnMap = new HashMap<>( entityMap.size() );
-		for( R id : idList )
+		for( R id : idCollection )
 			returnMap.put( id, entityMap.get( id ) );
 		return returnMap;
 	}
@@ -738,6 +739,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	@Override
+	public Map<Long, Pratilipi> getPratilipis( Collection<Long> idCollection ) {
+		return getEntities( PratilipiEntity.class, idCollection );
+	}
+	
+	@Override
 	public List<Pratilipi> getPratilipiList( List<Long> idList ) {
 		return getEntityList( PratilipiEntity.class, idList );
 	}
@@ -923,6 +929,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		
 		return author;
 		
+	}
+	
+	@Override
+	public Map<Long, Author> getAuthors( Collection<Long> idCollection ) {
+		return getEntities( AuthorEntity.class, idCollection );	
 	}
 	
 	@Override
@@ -1787,11 +1798,6 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	// NOTIFICATION Table
 	
 	@Override
-	public Notification newNotification() {
-		return new NotificationEntity();
-	}
-	
-	@Override
 	public Notification newNotification( Long userId, NotificationType type, Long sourceId ) {
 		return newNotification( userId, type, sourceId.toString(), null );
 	}
@@ -1914,8 +1920,15 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	// EMAIL Table
 
 	@Override
-	public Email newEmail() {
-		return new EmailEntity();
+	public Email newEmail( Long userId, EmailType type, String primaryContentId ) {
+		Email email = new EmailEntity();
+		email.setUserId( userId );
+		email.setType( type );
+		email.setPrimaryContentId( primaryContentId );
+		email.setState( EmailState.PENDING );
+		email.setCreationDate( new Date() );
+		email.setLastUpdated( new Date() );
+		return email;
 	}
 
 	@Override
