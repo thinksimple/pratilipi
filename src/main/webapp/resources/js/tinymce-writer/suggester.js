@@ -1,4 +1,4 @@
-var Suggester = function(selectorOrElem, onResolve, content_holder) {
+var Suggester = function(selectorOrElem, onResolve, content_holder, isInputElement) {
   if(selectorOrElem) {
     this.elem = $(selectorOrElem);
     this.setMode( false );
@@ -14,6 +14,7 @@ var Suggester = function(selectorOrElem, onResolve, content_holder) {
   
   if( content_holder ) {
     this.content_holder = content_holder;
+    this.isInputTypeElement = isInputElement;
   } else {
     throw 'Coding karni nahi aati.'
   }
@@ -29,7 +30,7 @@ var suggesterMethods = {
     this.content_holder.on("blur", function() {
       if( self.getMode() ) {
         if (this.savedSelection) {
-            rangy.removeMarkers(this.savedSelection);
+          rangy.removeMarkers(this.savedSelection);
         }
         this.savedSelection = rangy.saveSelection();
       }
@@ -51,7 +52,9 @@ var suggesterMethods = {
     if(translation.action == 'typing') {
       if( !this.getMode() ) {
         //add a span tag there and set the relative position of the dropdown
-        this.curSpan = insertNodeAtRange();
+        if( this.isInputTypeElement == false) {
+          this.curSpan = insertNodeAtRange();
+        }
         this.setSuggesterPosition();
         this.showSuggester();
         this.setMode( true );
@@ -175,12 +178,34 @@ var suggesterMethods = {
     return this.mode;
   },
 
+  getCaretPosition: function() {
+
+    var coordinates = {};
+    if( this.isInputTypeElement ) {
+      var caret_coordinates = getCaretCoordinates( this.content_holder.get(0), this.content_holder.get(0).selectionEnd );
+      coordinates["top"] = caret_coordinates.top + this.content_holder.get(0).offsetTop;
+      coordinates["left"] = caret_coordinates.left + this.content_holder.get(0).offsetLeft;
+    }
+    else {
+      coordinates["top"] = this.curSpan.offsetTop + this.curSpan.offsetHeight + this.content_holder.get(0).offsetTop;
+      coordinates["left"] = this.curSpan.offsetLeft + this.content_holder.get(0).offsetLeft;
+    }
+    return coordinates;
+  },
+
   setSuggesterPosition: function() {
+    var coordinates = this.getCaretPosition();
     var self = this;
+
     this.elem.css({
-      top: self.curSpan.offsetTop + self.curSpan.offsetHeight + self.content_holder.get(0).offsetTop,
-      left: self.curSpan.offsetLeft + self.content_holder.get(0).offsetLeft,
+      top: coordinates.top,
+      left: coordinates.left,
     });
+
+    // this.elem.css({
+    //   top: self.curSpan.offsetTop + self.curSpan.offsetHeight + self.content_holder.get(0).offsetTop,
+    //   left: self.curSpan.offsetLeft + self.content_holder.get(0).offsetLeft,
+    // });
   },
 
   showSuggester: function() {
@@ -196,10 +221,10 @@ var suggesterMethods = {
   },
 
   handleWordSelection: function() {
-      var selected_word;
-      var $highlighted_word = this.elem.find(".highlight-suggestion");
-      selected_word = $highlighted_word.length ? $highlighted_word.text() : this.suggestions[0];
-      this.resolve( selected_word );
+    var selected_word;
+    var $highlighted_word = this.elem.find(".highlight-suggestion");
+    selected_word = $highlighted_word.length ? $highlighted_word.text() : this.suggestions[0];
+    this.resolve( selected_word );
   }
     
 };
