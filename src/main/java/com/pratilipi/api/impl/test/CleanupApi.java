@@ -30,10 +30,14 @@ public class CleanupApi extends GenericApi {
 		
 		ListResult result = gcsService.list( bucketName, opt.build() );
 		
+		int count = 0;
 		while( result.hasNext() ) {
 			String fileName = result.next().getName();
 			gcsService.delete( new GcsFilename( bucketName, fileName ) );
 			System.out.println( fileName );
+			count++;
+			if( count == 1000 )
+				break;
 		}
 
 		return new GenericResponse();

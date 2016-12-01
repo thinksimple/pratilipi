@@ -4,14 +4,13 @@ import java.nio.charset.Charset;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.appengine.api.datastore.QueryResultIterator;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.googlecode.objectify.ObjectifyService;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -20,10 +19,11 @@ import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.util.GsonLongDateAdapter;
 import com.pratilipi.data.BlobAccessor;
+import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.User;
-import com.pratilipi.data.type.gae.UserEntity;
 
 
 @SuppressWarnings("serial")
@@ -52,6 +52,7 @@ public class UserBackupApi extends GenericApi {
 	@Get
 	public GenericResponse get( GetRequest request ) throws UnexpectedServerException {
 		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessorBackup();
 		
 		
@@ -77,28 +78,33 @@ public class UserBackupApi extends GenericApi {
 				.create();
 
 		
-		int count = 0;
 		int batchSize = 1000;
-
-		QueryResultIterator<UserEntity> itr = ObjectifyService.ofy().load()
-				.type( UserEntity.class )
-				.chunk( batchSize )
-				.iterator();
+		String cursor = null;
 		
-		while( itr.hasNext() ) {
-			User user = itr.next();
-			backup.append( gson.toJson( user ) + LINE_SEPARATOR );
-			if( request.generateCsv() )
-				csv.append( "'" + user.getId().toString() )
-						.append( CSV_SEPARATOR ).append( user.getFacebookId() == null ? "" : "'" + user.getFacebookId() )
-						.append( CSV_SEPARATOR ).append( user.getEmail()	  == null ? "" : user.getEmail() )
-						.append( CSV_SEPARATOR ).append( csvDateFormat.format( user.getSignUpDate() ) )
-						.append( LINE_SEPARATOR );
-			count++;
-			if( count % batchSize == 0 )
-				try { Thread.sleep( batchSize / 5 ); } catch( InterruptedException e ) {} // Datastore operation will time out without this
-		}
+		int count = 0;
+		while( true ) {
+			
+			DataListCursorTuple<User> userListCursorTupe = dataAccessor.getUserList( cursor, batchSize );
+			List<User> userList = userListCursorTupe.getDataList();
 
+			for( User user : userList ) {
+				backup.append( gson.toJson( user ) + LINE_SEPARATOR );
+				if( request.generateCsv() )
+					csv.append( "'" + user.getId().toString() )
+							.append( CSV_SEPARATOR ).append( user.getFacebookId() == null ? "" : "'" + user.getFacebookId() )
+							.append( CSV_SEPARATOR ).append( user.getEmail()	  == null ? "" : user.getEmail() )
+							.append( CSV_SEPARATOR ).append( csvDateFormat.format( user.getSignUpDate() ) )
+							.append( LINE_SEPARATOR );
+			}
+			
+			count = count + userList.size();
+
+			if( userList.size() < batchSize )
+				break;
+			else
+				cursor = userListCursorTupe.getCursor();
+		}
+		
 		
 		String year = yearFormat.format( backupDate );
 		String day = dayFormat.format( backupDate );
