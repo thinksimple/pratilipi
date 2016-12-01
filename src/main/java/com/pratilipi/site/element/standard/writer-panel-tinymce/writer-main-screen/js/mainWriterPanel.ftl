@@ -122,16 +122,16 @@ MainWriterPanel.prototype.loadScriptsForDesktopTransliteration = function() {
 
 MainWriterPanel.prototype.enableDesktopTransliteration = function() {
   var $content_object = $("#chapter-content");
-  this.content_transliteration_oject = new transliterationApp( $content_object );
-  this.content_transliteration_oject.init();
+  this.content_transliteration_object = new transliterationApp( $content_object );
+  this.content_transliteration_object.init();
   
   var $chapter_name_object = $("#subtitle");
-  this.title_transliteration_oject = new transliterationApp( $chapter_name_object );
-  this.title_transliteration_oject.init();
+  this.title_transliteration_object = new transliterationApp( $chapter_name_object );
+  this.title_transliteration_object.init();
   
   var $summary_object = $("#summary");
-  this.summary_transliteration_oject = new transliterationApp( $summary_object );
-  this.summary_transliteration_oject.init();
+  this.summary_transliteration_object = new transliterationApp( $summary_object );
+  this.summary_transliteration_object.init();
   
 };
 

@@ -77,7 +77,7 @@ Editor.prototype.init = function() {
         ed.on("keydown", function(e){
             var keycode = e.keycode || e.which;
             var translation = new Translation( keycode );
-            if( ( translation.action == 'backspace' || translation.action == 'enter' ) && suggester.getMode()) {
+            if( ( translation.action == 'backspace' || translation.action == 'enter' ) && _this.parent_object.content_transliteration_object.suggester.getMode()) {
               // console.log(   )
               sendKeyToSuggester(e.which);
               e.preventDefault(); 
