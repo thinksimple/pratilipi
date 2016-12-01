@@ -93,7 +93,7 @@ import com.pratilipi.data.type.gae.UserPratilipiEntity;
 import com.pratilipi.data.type.gae.VoteEntity;
 import com.pratilipi.filter.UxModeFilter;
 
-public class DataAccessorGaeImpl<T> implements DataAccessor {
+public class DataAccessorGaeImpl implements DataAccessor {
 
 	private static final Logger logger =
 			Logger.getLogger( DataAccessorGaeImpl.class.getName() );
@@ -179,7 +179,7 @@ public class DataAccessorGaeImpl<T> implements DataAccessor {
 		return entity;
 	}
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "unused" })
 	private <T extends GenericOfyType> T createOrUpdateEntity( T entityA, T entityB ) {
 		Map<Key<T>, T> map = ObjectifyService.ofy().save().entities( entityA, entityB ).now();
 		for( Key<T> key : map.keySet() )
