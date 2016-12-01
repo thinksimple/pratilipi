@@ -346,8 +346,7 @@ public class PratilipiSite extends HttpServlet {
 				dataModel.put( "title", "Reset Password" );
 				templateName = ( basicMode ? "PasswordResetBasic.ftl" : "PasswordReset.ftl" );
 				
-			} else if( uri.equals( "/pratilipi-write" ) || 
-					( uri.equals( "/pratilipi-writer" ) && SystemProperty.STAGE.equals( SystemProperty.STAGE_GAMMA ) ) ) {
+			} else if( uri.equals( "/pratilipi-write" ) ) {
 
 				dataModel = new HashMap<String, Object>();
 				dataModel.put( "title", "Writer Panel" );
@@ -384,7 +383,7 @@ public class PratilipiSite extends HttpServlet {
 				if( action != null )
 					dataModel.put( "action", action );
 
-				templateName = uri.equals( "/pratilipi-write" ) ? "Writer.ftl" : "WriterPOC.ftl";
+				templateName = SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) ? "Writer.ftl" : "WriterPOC.ftl";
 
 			// Internal link
 			} else if( ! basicMode && uri.equals( "/authors" ) ) {
