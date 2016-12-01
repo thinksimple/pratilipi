@@ -48,6 +48,7 @@ import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.BatchProcessType;
 import com.pratilipi.common.type.BlogPostState;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
@@ -991,7 +992,9 @@ public class PratilipiSite extends HttpServlet {
 	public Map<String, Object> createDataModelForBatchProcessListPage() 
 			throws InsufficientAccessException, UnexpectedServerException {
 
-		BatchProcessListApi.Response batchProcessListResponse = ApiRegistry.getApi( BatchProcessListApi.class ).get( new GenericRequest() );
+		BatchProcessListApi.GetRequest request = new BatchProcessListApi.GetRequest();
+		request.setType( BatchProcessType.ANDROID_NOTIFACTION_BY_AUTHOR_FILTER );
+		BatchProcessListApi.Response batchProcessListResponse = ApiRegistry.getApi( BatchProcessListApi.class ).get( request );
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", "Notifications - Admin Access" );
 		dataModel.put( "batchProcessListJson", new Gson().toJson( batchProcessListResponse.getBatchProcessList() ) );
