@@ -1,16 +1,9 @@
 package com.pratilipi.data.type.gae;
 
-import java.lang.reflect.Type;
 import java.util.Date;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
@@ -18,6 +11,7 @@ import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Ignore;
 import com.googlecode.objectify.annotation.Index;
 import com.pratilipi.common.type.AccessType;
+import com.pratilipi.common.util.GsonLongDateAdapter;
 import com.pratilipi.data.type.AuditLog;
 
 @SuppressWarnings("serial")
@@ -26,26 +20,8 @@ import com.pratilipi.data.type.AuditLog;
 public class AuditLogEntity implements AuditLog {
 
 	@Ignore
-	private final Gson gson = new GsonBuilder()
-			.registerTypeAdapter( Date.class, new JsonSerializer<Date>() {
-		
-				@Override
-				public JsonElement serialize( Date date, Type type, JsonSerializationContext context ) {
-					return new JsonPrimitive( date.getTime() );
-				}
-				
-			})
-			.registerTypeAdapter( Date.class, new JsonDeserializer<Date>() {
-				
-				@Override
-				public Date deserialize( JsonElement json, Type type, JsonDeserializationContext context ) {
-					return new Date( json.getAsLong() );
-				}
-				
-			})
-			.create();
-
-	
+	private final Gson gson = new GsonBuilder().registerTypeAdapter( Date.class, new GsonLongDateAdapter() ).create();
+			
 	@Id
 	private Long AUDIT_LOG_ID;
 	
@@ -131,6 +107,11 @@ public class AuditLogEntity implements AuditLog {
 	}
 
 	@Override
+	public Long getPrimaryContentIdLong() {
+		return PRIMARY_CONTENT_ID == null ? null : Long.parseLong( PRIMARY_CONTENT_ID );
+	}
+
+	@Override
 	public void setPrimaryContentId( String pageContentId ) {
 		this.PRIMARY_CONTENT_ID = pageContentId;
 	}
@@ -151,11 +132,6 @@ public class AuditLogEntity implements AuditLog {
 	}
 
 	@Override
-	public void setEventDataOld( String eventDataOld ) {
-		this.EVENT_DATA_OLD = eventDataOld;
-	}
-
-	@Override
 	public String getEventDataNew() {
 		return EVENT_DATA_NEW;
 	}
@@ -163,11 +139,6 @@ public class AuditLogEntity implements AuditLog {
 	@Override
 	public void setEventDataNew( Object eventDataNew ) {
 		setEventDataNew( gson.toJson( eventDataNew ) );
-	}
-
-	@Override
-	public void setEventDataNew( String eventDataNew ) {
-		this.EVENT_DATA_NEW = eventDataNew;
 	}
 
 	@Override
