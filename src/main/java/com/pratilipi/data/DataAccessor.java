@@ -43,7 +43,6 @@ import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.UserAuthor;
 import com.pratilipi.data.type.UserPratilipi;
 import com.pratilipi.data.type.Vote;
-import com.pratilipi.data.type.gae.EmailEntity;
 
 public interface DataAccessor {
 

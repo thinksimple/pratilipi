@@ -138,8 +138,6 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		
 		ObjectifyService.register( BatchProcessEntity.class );
 		
-		ObjectifyService.register( EmailEntity.class );
-		
 	}
 	
 	
@@ -496,11 +494,12 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		QueryResultIterator<Key<AccessTokenEntity>> itr = ObjectifyService.ofy().load()
 				.type( AccessTokenEntity.class )
 				.filter( "EXPIRY <", new Date() )
+				.chunk( count == null || count > 1000 ? 1000 : count )
 				.keys()
 				.iterator();
 
 		List<Key<AccessTokenEntity>> list = count == null
-				? new ArrayList<Key<AccessTokenEntity>>()
+				? new LinkedList<Key<AccessTokenEntity>>()
 				: new ArrayList<Key<AccessTokenEntity>>( count );
 				
 		while( itr.hasNext() && ( count == null || list.size() < count ) )
