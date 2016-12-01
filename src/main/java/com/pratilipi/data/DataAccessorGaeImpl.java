@@ -24,6 +24,7 @@ import com.googlecode.objectify.cmd.Query;
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.BatchProcessState;
+import com.pratilipi.common.type.BatchProcessType;
 import com.pratilipi.common.type.CommentParentType;
 import com.pratilipi.common.type.ContactTeam;
 import com.pratilipi.common.type.EmailState;
@@ -92,7 +93,7 @@ import com.pratilipi.data.type.gae.UserPratilipiEntity;
 import com.pratilipi.data.type.gae.VoteEntity;
 import com.pratilipi.filter.UxModeFilter;
 
-public class DataAccessorGaeImpl implements DataAccessor {
+public class DataAccessorGaeImpl<T> implements DataAccessor {
 
 	private static final Logger logger =
 			Logger.getLogger( DataAccessorGaeImpl.class.getName() );
@@ -1945,22 +1946,46 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 	
 	// BatchProcess Table
-	
+	@Override
 	public BatchProcess newBatchProcess() {
 		return new BatchProcessEntity();
 	}
-	
+
+	@Override
 	public BatchProcess getBatchProcess( Long batchProcessId ) {
 		return getEntity( BatchProcessEntity.class, batchProcessId );
 	}
-	
-	public List<BatchProcess> getAllBatchProcessList() {
-		List<BatchProcessEntity> batchProcessList = ObjectifyService.ofy().load()
-				.type( BatchProcessEntity.class )
-				.list();
-		return new ArrayList<BatchProcess>( batchProcessList );
+
+	@Override
+	public DataListCursorTuple<BatchProcess> getBatchProcessList(
+			BatchProcessType type, BatchProcessState stateCompleted,
+			BatchProcessState stateInProgress, String cursor,
+			Integer resultCount ) {
+
+		Query<BatchProcessEntity> query = ObjectifyService.ofy().load().type( BatchProcessEntity.class );
+
+		if( type != null )
+			query = query.filter( "TYPE", type );
+		if( stateCompleted != null )
+			query = query.filter( "STATE_COMPLETED", stateCompleted );
+		if( stateInProgress != null )
+			query = query.filter( "STATE_IN_PROGRESS", stateInProgress );
+
+		if( cursor != null )
+			query = query.startAt( Cursor.fromWebSafeString( cursor ) );
+		if( resultCount != null && resultCount > 0 )
+			query = query.limit( resultCount );
+
+		List<BatchProcess> dataList = resultCount == null ? new ArrayList<BatchProcess>() : new ArrayList<BatchProcess>( resultCount );
+		QueryResultIterator <BatchProcessEntity> iterator = query.iterator();
+		while( iterator.hasNext() )
+			dataList.add( iterator.next() );
+
+		return new DataListCursorTuple<BatchProcess>( dataList, cursor == null ? null : iterator.getCursor().toWebSafeString() );
+
 	}
-	
+
+	@Override
 	public List<BatchProcess> getIncompleteBatchProcessList() {
 		List<BatchProcessEntity> batchProcessList = ObjectifyService.ofy().load()
 				.type( BatchProcessEntity.class )
@@ -1968,7 +1993,8 @@ public class DataAccessorGaeImpl implements DataAccessor {
 				.list();
 		return new ArrayList<BatchProcess>( batchProcessList );
 	}
-	
+
+	@Override
 	public BatchProcess createOrUpdateBatchProcess( BatchProcess batchProcess ) {
 		return createOrUpdateEntity( batchProcess );
 	}
@@ -2027,6 +2053,5 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	public List<Email> createOrUpdateEmailList( List<Email> emailList ) {
 		return createOrUpdateEntityList( emailList );
 	}
-
 
 }

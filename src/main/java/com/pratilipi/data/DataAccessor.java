@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.pratilipi.common.type.AccessType;
+import com.pratilipi.common.type.BatchProcessState;
+import com.pratilipi.common.type.BatchProcessType;
 import com.pratilipi.common.type.CommentParentType;
 import com.pratilipi.common.type.ContactTeam;
 import com.pratilipi.common.type.EmailState;
@@ -225,7 +227,7 @@ public interface DataAccessor {
 	// BATCH_PROCESS Table
 	BatchProcess newBatchProcess();
 	BatchProcess getBatchProcess( Long batchProcessId );
-	List<BatchProcess> getAllBatchProcessList();
+	DataListCursorTuple<BatchProcess> getBatchProcessList( BatchProcessType type, BatchProcessState stateCompleted, BatchProcessState stateInProgress, String cursor, Integer resultCount );
 	List<BatchProcess> getIncompleteBatchProcessList();
 	BatchProcess createOrUpdateBatchProcess( BatchProcess batchProcess );
 	

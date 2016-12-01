@@ -21,6 +21,8 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
 
 import com.pratilipi.common.type.AccessType;
+import com.pratilipi.common.type.BatchProcessState;
+import com.pratilipi.common.type.BatchProcessType;
 import com.pratilipi.common.type.BlogPostState;
 import com.pratilipi.common.type.CommentParentType;
 import com.pratilipi.common.type.ContactTeam;
@@ -1189,6 +1191,16 @@ public class DataAccessorMockImpl implements DataAccessor {
 
 	@Override
 	public List<Email> createOrUpdateEmailList(List<Email> emailList) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public DataListCursorTuple<BatchProcess> getBatchProcessList(
+			BatchProcessType type, BatchProcessState stateCompleted,
+			BatchProcessState stateInProgress, String cursor,
+			Integer resultCount) {
 		// TODO Auto-generated method stub
 		return null;
 	}
