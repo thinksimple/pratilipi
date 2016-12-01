@@ -15,7 +15,6 @@ MainWriterPanel.prototype.init = function() {
   this.initializeGlobalVariables();
   this.preventBackspaceDefaultAction();
   this.loadScriptsForDesktopTransliteration();
-  this.enableDesktopTransliteration();
   
   var pagination_container = $("#pagination"); /* done */
   this.pagination_object = new Pagination( pagination_container, this );
@@ -103,6 +102,7 @@ MainWriterPanel.prototype.preventBackspaceDefaultAction = function() {
 };
 
 MainWriterPanel.prototype.loadScriptsForDesktopTransliteration = function() {
+  var _this = this; 
   if(screen.width > 480) {
     $.getScript( "https://cdnjs.cloudflare.com/ajax/libs/rangy/1.3.0/rangy-core.min.js", function( data, textStatus, jqxhr ) {
       // console.log( "Load was performed." );
@@ -112,6 +112,7 @@ MainWriterPanel.prototype.loadScriptsForDesktopTransliteration = function() {
           console.log( "Load was performed 3  ." );
           $.getScript("resources/js/tinymce-writer/app.js", function( data, textStatus, jqxhr ) {
             console.log( "Load was performed 4  ." );
+            _this.enableDesktopTransliteration();
           });                  
         });                
       });                  
