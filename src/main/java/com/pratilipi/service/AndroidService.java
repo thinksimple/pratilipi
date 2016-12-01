@@ -24,6 +24,7 @@ import com.pratilipi.api.impl.page.PageApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentImageApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentIndexApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentV1Api;
+import com.pratilipi.api.impl.pratilipi.PratilipiContentV3Api;
 import com.pratilipi.api.impl.pratilipi.PratilipiCoverApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiListV1Api;
 import com.pratilipi.api.impl.pratilipi.PratilipiListV2Api;
@@ -78,6 +79,7 @@ public class AndroidService extends GenericService {
 		ApiRegistry.register( PratilipiListV1Api.class );
 		ApiRegistry.register( PratilipiListV2Api.class );
 		ApiRegistry.register( PratilipiContentV1Api.class );
+		ApiRegistry.register( PratilipiContentV3Api.class );
 		ApiRegistry.register( PratilipiContentIndexApi.class );
 		ApiRegistry.register( PratilipiCoverApi.class );
 		ApiRegistry.register( PratilipiContentImageApi.class );

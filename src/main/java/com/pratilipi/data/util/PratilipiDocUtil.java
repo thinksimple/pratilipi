@@ -89,6 +89,7 @@ public class PratilipiDocUtil {
 		
 	}
 	
+	@Deprecated
 	public static Object getContent( Long pratilipiId, Integer chapterNo, Integer pageNo ) 
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
@@ -122,18 +123,21 @@ public class PratilipiDocUtil {
 
 	}
 	
+	@Deprecated
 	private static PratilipiContentDoc _processContent( Pratilipi pratilipi, PratilipiContentDoc pcDoc ) {
 		for( PratilipiContentDoc.Chapter chapterDoc : pcDoc.getChapterList() )
 			_processContent( pratilipi, chapterDoc );
 		return pcDoc;
 	}
 
+	@Deprecated
 	private static PratilipiContentDoc.Chapter _processContent( Pratilipi pratilipi, PratilipiContentDoc.Chapter chapterDoc ) {
 		for( PratilipiContentDoc.Page pageDoc : chapterDoc.getPageList() )
 			_processContent( pratilipi, pageDoc );
 		return chapterDoc;
 	}
-	
+
+	@Deprecated
 	private static PratilipiContentDoc.Page _processContent( Pratilipi pratilipi, PratilipiContentDoc.Page pageDoc ) {
 		if( UxModeFilter.isAndroidApp() || pratilipi.getContentType() == PratilipiContentType.IMAGE ) {
 			for( PratilipiContentDoc.Pagelet pageletDoc : pageDoc.getPageletList() ) {
@@ -158,6 +162,97 @@ public class PratilipiDocUtil {
 			}
 			pageDoc.setHtml( html );
 			pageDoc.deleteAllPagelets();
+		}
+		return pageDoc;
+	}
+
+	public static Object getContent_v3( Long pratilipiId, Integer chapterNo, Integer pageNo ) 
+			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
+
+		if( ! PratilipiDataUtil.hasAccessToReadPratilipiContent( pratilipi ) )
+			throw new InsufficientAccessException();
+
+		
+		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
+		PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( pratilipiId );
+
+		if( pcDoc == null )
+			return null;
+		else if( chapterNo == null )
+			return _processContent_v3( pratilipi, pcDoc );
+		
+		Chapter chapter = pcDoc.getChapter( chapterNo );
+		
+		if( chapter == null )
+			return null;
+		else if( pageNo == null )
+			return _processContent_v3( pratilipi, chapter );
+		
+		PratilipiContentDoc.Page page = chapter.getPage( pageNo );
+		if( page == null )
+			return null;
+		else
+			return _processContent_v3( pratilipi, chapter.getPage( pageNo ) );
+
+	}
+	
+	private static PratilipiContentDoc _processContent_v3( Pratilipi pratilipi, PratilipiContentDoc pcDoc ) {
+		for( PratilipiContentDoc.Chapter chapterDoc : pcDoc.getChapterList() )
+			_processContent_v3( pratilipi, chapterDoc );
+		return pcDoc;
+	}
+
+	private static PratilipiContentDoc.Chapter _processContent_v3( Pratilipi pratilipi, PratilipiContentDoc.Chapter chapterDoc ) {
+		for( PratilipiContentDoc.Page pageDoc : chapterDoc.getPageList() )
+			_processContent_v3( pratilipi, pageDoc );
+		return chapterDoc;
+	}
+	
+	private static PratilipiContentDoc.Page _processContent_v3( Pratilipi pratilipi, PratilipiContentDoc.Page pageDoc ) {
+		if( UxModeFilter.isAndroidApp() || pratilipi.getContentType() == PratilipiContentType.IMAGE ) {
+			
+			for( PratilipiContentDoc.Pagelet pageletDoc : pageDoc.getPageletList() ) {
+				if( pageletDoc.getType() == PageletType.TEXT || pageletDoc.getType() == PageletType.HTML ) {
+					if( pageletDoc.getAlignment() == AlignmentType.LEFT )
+						pageletDoc.setData( "<p><left>" + pageletDoc.getDataAsString() + "</left></p>" );
+					else if( pageletDoc.getAlignment() == AlignmentType.RIGHT )
+						pageletDoc.setData( "<p><right>" + pageletDoc.getDataAsString() + "</right></p>" );
+					else if( pageletDoc.getAlignment() == AlignmentType.CENTER )
+						pageletDoc.setData( "<p><center>" + pageletDoc.getDataAsString() + "</center></p>" );
+					else
+						pageletDoc.setData( "<p>" + pageletDoc.getDataAsString() + "</p>" );
+				} else if( pageletDoc.getType() == PageletType.BLOCK_QUOTE ) {
+					pageletDoc.setData( "<blockquote>" + pageletDoc.getDataAsString() + "</blockquote>" );
+				} else if( pageletDoc.getType() == PageletType.LIST_ORDERED ) {
+					pageletDoc.setData( "<ol>" + pageletDoc.getDataAsString() + "</ol>" );
+				} else if( pageletDoc.getType() == PageletType.LIST_UNORDERED ) {
+					pageletDoc.setData( "<ul>" + pageletDoc.getDataAsString() + "</ul>" );
+				}
+			}
+				
+		} else {
+			
+			String html = "";
+			for( PratilipiContentDoc.Pagelet pageletDoc : pageDoc.getPageletList() ) {
+				if( ( pageletDoc.getType() == PageletType.TEXT || pageletDoc.getType() == PageletType.HTML ) && pageletDoc.getAlignment() == null )
+					html += "<p>" + pageletDoc.getDataAsString() + "</p>";
+				else if( ( pageletDoc.getType() == PageletType.TEXT || pageletDoc.getType() == PageletType.HTML ) && pageletDoc.getAlignment() != null )
+					html += "<p style=\"text-align:" + pageletDoc.getAlignment() + "\">" + pageletDoc.getDataAsString() + "</p>";
+				else if( pageletDoc.getType() == PageletType.BLOCK_QUOTE )
+					html += "<blockquote>" + pageletDoc.getDataAsString() + "</blockquote>";
+				else if( pageletDoc.getType() == PageletType.IMAGE )
+					html += "<img src=\"/api/pratilipi/content/image?pratilipiId=" + pratilipi.getId() + "&name=" + pageletDoc.getData().get( "name" ).getAsString() + "\"/>";
+				else if( pageletDoc.getType() == PageletType.LIST_ORDERED )
+					html += "<ol>" + pageletDoc.getDataAsString() + "</ol>";
+				else if( pageletDoc.getType() == PageletType.LIST_UNORDERED )
+					html += "<ul>" + pageletDoc.getDataAsString() + "</ul>";
+			}
+			pageDoc.setHtml( html );
+			pageDoc.deleteAllPagelets();
+			
 		}
 		return pageDoc;
 	}
@@ -306,6 +401,14 @@ public class PratilipiDocUtil {
 				} else if( node.nodeName().equals( "blockquote" ) ) {
 					
 					page.addPagelet( PageletType.BLOCK_QUOTE, ( (Element) node ).html() );
+				
+				} else if( node.nodeName().equals( "ol" ) ) {
+					
+					page.addPagelet( PageletType.LIST_ORDERED, ( (Element) node ).html() );
+				
+				} else if( node.nodeName().equals( "ul" ) ) {
+					
+					page.addPagelet( PageletType.LIST_UNORDERED, ( (Element) node ).html() );
 				
 				}
 

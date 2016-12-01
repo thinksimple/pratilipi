@@ -8,7 +8,9 @@ import com.google.gson.JsonObject;
 public interface PratilipiContentDoc {
 
 	enum PageletType {
-		HEAD, @Deprecated HEAD_1, @Deprecated HEAD_2, TEXT, HTML, BLOCK_QUOTE, IMAGE
+		HEAD, @Deprecated HEAD_1, @Deprecated HEAD_2,
+		TEXT, HTML, BLOCK_QUOTE, IMAGE,
+		LIST_ORDERED, LIST_UNORDERED
 	}
 
 	enum AlignmentType {
