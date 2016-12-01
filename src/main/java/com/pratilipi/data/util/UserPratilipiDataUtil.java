@@ -246,7 +246,7 @@ public class UserPratilipiDataUtil {
 		
 		AuditLog auditLog = dataAccessor.newAuditLog(
 				AccessTokenFilter.getAccessToken(),
-				AccessType.USER_PRATILIPI_ADDED_TO_LIB,
+				AccessType.USER_PRATILIPI_REVIEW,
 				userPratilipi );
 		
 		
