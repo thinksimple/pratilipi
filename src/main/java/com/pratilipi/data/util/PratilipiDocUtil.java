@@ -602,7 +602,7 @@ public class PratilipiDocUtil {
 		BlobEntry blobEntry = null;
 		
 		String imageUrl = imageNode.attr( "src" );
-		if( imageUrl.indexOf( "name=" ) == -1 ) {
+		if( imageUrl.indexOf( "pratilipiId=" + pratilipiId ) == -1 || imageUrl.indexOf( "name=" ) == -1 ) {
 			imageName = imageUrl.replaceAll( "[:/.?=&+]+", "_" );
 			String fileName = _createImageFullName( pratilipiId, imageName );
 			blobEntry = blobAccessor.getBlob( fileName );
