@@ -20,7 +20,7 @@ function getFirstRange() {
   return sel.rangeCount ? sel.getRangeAt(0) : null;
 };
 
-var onSuggestionPicked = function(word, eng_word) {
+transliterationApp.prototype.onSuggestionPicked = function(word, eng_word) {
   // console.log(':::::::Resolved with word ' + word + '::::::::')
   if (window.getSelection) {
     var text = ( word ? word : eng_word ) + "\u00A0";
