@@ -18,8 +18,10 @@ public interface Email extends GenericOfyType {
 
 	void setType( EmailType type );
 
-	Long getPrimaryContentId();
+	String getPrimaryContentId();
 
+	void setPrimaryContentId( String primaryContentId );
+	
 	void setPrimaryContentId( Long primaryContentId );
 
 

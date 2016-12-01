@@ -11,6 +11,7 @@ import com.pratilipi.common.type.EmailState;
 import com.pratilipi.common.type.EmailType;
 import com.pratilipi.data.type.Email;
 
+
 @Cache
 @Entity( name = "EMAIL" )
 public class EmailEntity implements Email {
@@ -26,7 +27,7 @@ public class EmailEntity implements Email {
 	private EmailType TYPE;
 
 	@Index
-	private Long PRIMARY_CONTENT_ID;
+	private String PRIMARY_CONTENT_ID;
 
 
 	@Index
@@ -94,13 +95,18 @@ public class EmailEntity implements Email {
 	}
 
 	@Override
-	public Long getPrimaryContentId() {
+	public String getPrimaryContentId() {
 		return PRIMARY_CONTENT_ID;
 	}
 
 	@Override
-	public void setPrimaryContentId( Long primaryContentId ) {
+	public void setPrimaryContentId( String primaryContentId ) {
 		this.PRIMARY_CONTENT_ID = primaryContentId;
+	}
+	
+	@Override
+	public void setPrimaryContentId( Long primaryContentId ) {
+		this.PRIMARY_CONTENT_ID = primaryContentId.toString();
 	}
 
 
