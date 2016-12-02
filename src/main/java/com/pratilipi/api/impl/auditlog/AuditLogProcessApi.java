@@ -207,6 +207,7 @@ public class AuditLogProcessApi extends GenericApi {
 					pratilipi.getId() );
 		} else if( email.getState() == EmailState.DEFERRED ) {
 			email.setState( EmailState.PENDING );
+			email.setLastUpdated( new Date() );
 		} else {
 			return; // Do nothing
 		}
