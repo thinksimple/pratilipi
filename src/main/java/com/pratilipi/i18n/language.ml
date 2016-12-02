@@ -28,8 +28,8 @@ _pratilipi_type_story		= കഥ
 _pratilipi_type_stories		= കഥകള്‍
 _pratilipi_type_article		= ലേഖനം
 _pratilipi_type_articles	= ലേഖനങ്ങള്‍
-_pratilipi_type_magazine	= ആനുകാലികം
-_pratilipi_type_magazines	= ആനുകാലികങ്ങള്‍
+_pratilipi_type_magazine	= മാഗസിന്‍ 
+_pratilipi_type_magazines	= മാഗസിനുകള്‍ 
 
 # Author
 author_about					= രചയിതാവിനെക്കുറിച്ച്
