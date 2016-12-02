@@ -16,9 +16,9 @@ Editor.prototype.init = function() {
     max_height: 500,
     block_formats: 'Paragraph=p;',  
     //plugins needed and setting up toolbar
-    plugins : ['autoresize autolink lists link image charmap print preview anchor',
-    'searchreplace visualblocks code fullscreen',
-    'insertdatetime media table paste code'],
+    plugins : ['autoresize autolink lists link image',
+    'visualblocks code fullscreen',
+    'paste'],
     menubar: false,
     statusbar: false,
     toolbar: 'bold italic underline | alignleft aligncenter alignright | blockquote link image | bullist numlist  visualblocks code',
@@ -143,8 +143,7 @@ Editor.prototype.init = function() {
     // enforcing rules to editor
     valid_elements : 'p[style],img[src|width|height],blockquote,b,i,u,a[href|target=_blank],br,b/strong,i/em,ol,ul,li',
     extended_valid_elements: 'img[src|width|height],p[style],blockquote,ul,ol,li,a[href|target=_blank]',
-    valid_children : 'body[p|img|blockquote|ol|ul],-body[#text],p[b|i|u|a[href]|br],-p[img],blockquote[b|i|u|a[href]|br],-blockquote[blockquote],ol[li],ul[li],li[b|i|u|a|br]',
-
+    valid_children : 'body[p|img|blockquote|ol|ul],-body[br],p[b|i|u|a[href]|br],-p[img],blockquote[b|i|u|a[href]|br],-blockquote[blockquote|img],ol[li],-li[img],ul[li],-ul[ul],-ul[img],li[b|i|u|a[href]|br]',
     invalid_elements : "div",
     valid_styles: {'p': 'text-align'},
 
