@@ -147,4 +147,11 @@
 		<property name="LAST_UPDATED" direction="asc"/>
 	</datastore-index>
 	
+	<datastore-index kind="EMAIL" ancestor="false" source="manual">
+		<property name="USER_ID" direction="asc"/>
+		<property name="TYPE" direction="asc"/>
+		<property name="PRIMARY_CONTENT_ID" direction="asc"/>
+		<property name="LAST_UPDATED" direction="desc"/>
+    </datastore-index>
+
 </datastore-indexes>
