@@ -730,7 +730,8 @@ body {
   min-width: 100px;
   display: none;
   background: white;
-}
+  z-index: 1051;
+  }
 
 .word-input {
   border: none;

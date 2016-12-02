@@ -183,8 +183,8 @@ var suggesterMethods = {
     var coordinates = {};
     if( this.isInputTypeElement ) {
       var caret_coordinates = getCaretCoordinates( this.content_holder.get(0), this.content_holder.get(0).selectionEnd );
-      coordinates["top"] = caret_coordinates.top + this.content_holder.get(0).offsetTop;
-      coordinates["left"] = caret_coordinates.left + this.content_holder.get(0).offsetLeft;
+      coordinates["top"] = caret_coordinates.top + this.content_holder.offset().top;
+      coordinates["left"] = caret_coordinates.left + this.content_holder.offset().left;
     }
     else {
       coordinates["top"] = this.curSpan.offsetTop + this.curSpan.offsetHeight + this.content_holder.get(0).offsetTop;
