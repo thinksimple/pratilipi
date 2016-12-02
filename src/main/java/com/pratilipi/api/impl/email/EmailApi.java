@@ -37,8 +37,8 @@ public class EmailApi extends GenericApi {
 	public GenericResponse get( GenericRequest request ) throws UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		
-		List<Email> emailList = dataAccessor.getEmailList( null, null, null, EmailState.PENDING, null );
+
+		List<Email> emailList = dataAccessor.getEmailList( null, null, (String) null, EmailState.PENDING, null );
 		List<Task> taskList = new ArrayList<>( emailList.size() );
 
 		for( Email email : emailList ) {
