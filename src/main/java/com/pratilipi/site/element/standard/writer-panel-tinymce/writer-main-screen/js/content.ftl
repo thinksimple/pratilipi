@@ -30,11 +30,15 @@ Content.prototype.reset = function() {
 Content.prototype.getContent = function( ) {
   return this.tinymce_content_container.getContent().split("\n").join("");
 };
+
+Content.prototype.getContentWithoutNbsps = function( ) {
+  return this.getContent().replace(/&nbsp;/g, ' ');
+};
+
 <#-- Change content before saving -->
 Content.prototype.getContentBeforeSaving = function() {
-  this.replaceNbsps();
   this.convertTextNodesToParagraphs();
-  return this.getContent();
+  return this.getContentWithoutNbsps();
 };
 
 Content.prototype.setContent = function( content ) {
@@ -51,7 +55,7 @@ Content.prototype.convertTextNodesToParagraphs = function() {
 };
 
 Content.prototype.replaceNbsps = function() {
-	this.setContent( this.tinymce_content_container.getContent().replace(/&nbsp;/g, ' ') );
+	this.setContent( this.getContentWithoutNbsps() );
 };
 
 Content.prototype.hasEmptyText = function() {

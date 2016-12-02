@@ -369,6 +369,7 @@ MainWriterPanel.prototype.saveChapter = function( autosaveFlag ) {
           $("#header1").removeClass("small-spinner");
           _this.$save_button.removeAttr("disabled");
           toastr.success('${ _strings.writer_changes_saved }');
+          _this.content_object.setContent( ajaxData.content );
         } 
 
         var title = ajaxData.chapterTitle;
@@ -467,7 +468,7 @@ MainWriterPanel.prototype.confirmLeavingWithoutSaving = function() { /* done */
 };
 
 MainWriterPanel.prototype.hasUnsavedChanges = function() { /* done */
-  return ( this.lastSavedContent != this.content_object.getContent() );
+  return ( this.lastSavedContent != this.content_object.getContentWithoutNbsps() );
 };
 
 MainWriterPanel.prototype.setNewImageFlag = function( value ) {
