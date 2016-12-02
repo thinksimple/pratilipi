@@ -135,7 +135,7 @@
 	<!-- EMAIL Table -->
 
 	<queue>
-		<name>email-offline</name>
+		<name>be-email</name>
 		<target>worker-be</target>
 		<rate>500/s</rate>
 		<bucket-size>10</bucket-size>
