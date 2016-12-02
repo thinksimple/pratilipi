@@ -128,7 +128,7 @@ public class AuditLogEntity implements AuditLog {
 
 	@Override
 	public void setEventDataOld( Object eventDataOld ) {
-		setEventDataOld( gson.toJson( eventDataOld ) );
+		this.EVENT_DATA_OLD = gson.toJson( eventDataOld );
 	}
 
 	@Override
@@ -138,7 +138,7 @@ public class AuditLogEntity implements AuditLog {
 
 	@Override
 	public void setEventDataNew( Object eventDataNew ) {
-		setEventDataNew( gson.toJson( eventDataNew ) );
+		this.EVENT_DATA_NEW = gson.toJson( eventDataNew );
 	}
 
 	@Override
