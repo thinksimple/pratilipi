@@ -1963,9 +1963,14 @@ public class DataAccessorGaeImpl implements DataAccessor {
 				.first().now();
 
 	}
-	
+
 	@Override
 	public List<Email> getEmailList( Long userId, EmailType type, Long primaryContentId, EmailState state, Integer resultCount ) {
+		return getEmailList( userId, type, primaryContentId.toString(), state, resultCount );
+	}
+	
+	@Override
+	public List<Email> getEmailList( Long userId, EmailType type, String primaryContentId, EmailState state, Integer resultCount ) {
 
 		Query<EmailEntity> query = ObjectifyService.ofy().load().type( EmailEntity.class );
 
