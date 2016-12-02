@@ -7,6 +7,7 @@ import static com.pratilipi.data.mock.PratilipiMock.PRATILIPI_TABLE;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -1013,12 +1014,6 @@ public class DataAccessorMockImpl implements DataAccessor {
 
 
 	@Override
-	public Notification newNotification() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Notification newNotification( Long userId, NotificationType type, Long sourceId ) {
 		// TODO Auto-generated method stub
 		return null;
@@ -1095,6 +1090,61 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 
 
+	// EMAIL Table
+	
+	@Override
+	public Email newEmail(Long userId, EmailType type, Long primaryContentId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Email newEmail(Long userId, EmailType type, String primaryContentId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Email getEmail(Long userId, EmailType type, Long primaryContentId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Email getEmail(Long userId, EmailType type, String primaryContentId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Email getEmail(Long emailId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Email createOrUpdateEmail(Email email) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Email> getEmailList(Long userId, EmailType type,
+			Long primaryContentId, EmailState state, Integer resultCount) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Email> createOrUpdateEmailList(List<Email> emailList) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 	// I18N Table
 	
 	@Override
@@ -1152,43 +1202,6 @@ public class DataAccessorMockImpl implements DataAccessor {
 		return batchProcess;
 	}
 
-
-	@Override
-	public Email newEmail() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public Email getEmail(Long emailId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public Email createOrUpdateEmail(Email email) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public List<Email> getEmailList(Long userId, EmailType type,
-			Long primaryContentId, EmailState state, Integer resultCount) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public List<Email> createOrUpdateEmailList(List<Email> emailList) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
 	@Override
 	public DataListCursorTuple<BatchProcess> getBatchProcessList(
 			BatchProcessType type, BatchProcessState stateCompleted,
@@ -1197,5 +1210,28 @@ public class DataAccessorMockImpl implements DataAccessor {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+	@Override
+	public Map<Long, Pratilipi> getPratilipis(Collection<Long> pratilipiIds) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Map<Long, Author> getAuthors(Collection<Long> authorIds) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Map<String, UserAuthor> getUserAuthors(Collection<String> userAuthoriIds) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 	
 }
