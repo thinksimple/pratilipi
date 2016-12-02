@@ -108,15 +108,5 @@
 		<schedule>every 5 minutes</schedule>
 		<timezone>Asia/Calcutta</timezone>
 	</cron>
-	
-	<!-- EMAIL Table -->
-	
-	<cron>
-		<url>/email?cron</url>
-		<target>worker</target>
-		<schedule>every 5 minutes</schedule>
-		<timezone>Asia/Calcutta</timezone>
-	</cron>
 
-	
 </cronentries>
