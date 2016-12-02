@@ -231,7 +231,7 @@ MainWriterPanel.prototype.initializeAutosave = function() {
 MainWriterPanel.prototype.preventUserFromLeaving = function() {
   var _this = this;
   $(window).bind("beforeunload",function(event) {
-    if( _this.lastSavedContent != _this.content_object.getContent() && !_this.writer_back_button_active ) {
+    if( _this.hasUnsavedChanges() && !_this.writer_back_button_active ) {
         return true;
     }
     _this.writer_back_button_active = false;
@@ -342,14 +342,12 @@ MainWriterPanel.prototype.removeChapter = function( chapterNum ) {
 /* done */
 MainWriterPanel.prototype.saveChapter = function( autosaveFlag ) {
   var _this = this;
-    
-  this.content_object.convertTextNodesToParagraphs();
   
   var ajaxData = { 
     pratilipiId: ${ pratilipiId?c },
     chapterNo: this.currChapter,
     chapterTitle: this.chapter_name_object.getTitle(),
-    content: this.content_object.getContent(),
+    content: this.content_object.getContentBeforeSaving(),
     _apiVer: getUrlParameter( "_apiVer" ) != null ? getUrlParameter( "_apiVer" ) : "1"
   };
   toastr.options = {
@@ -488,7 +486,7 @@ MainWriterPanel.prototype.activateRegularAutosaveCalls = function() {
           break;
           case "focus":
             _this.autosaveIntervalId = setInterval(function () {
-              if( _this.lastSavedContent != _this.content_object.getContent()  ) {
+              if( _this.hasUnsavedChanges()  ) {
                 _this.saveChapter( true );
               }
             }, 60000);

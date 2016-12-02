@@ -26,10 +26,15 @@ Content.prototype.populateContent = function( response ) {
 Content.prototype.reset = function() {
   this.tinymce_content_container.setContent("");
 };
-
-Content.prototype.getContent = function() {
-  this.convertTextNodesToParagraphs();
+<#-- get content without line breaks -->
+Content.prototype.getContent = function( ) {
   return this.tinymce_content_container.getContent().split("\n").join("");
+};
+<#-- Change content before saving -->
+Content.prototype.getContentBeforeSaving = function() {
+  this.replaceNbsps();
+  this.convertTextNodesToParagraphs();
+  return this.getContent();
 };
 
 Content.prototype.setContent = function( content ) {
@@ -43,6 +48,10 @@ Content.prototype.convertTextNodesToParagraphs = function() {
   }).replaceWith(function() {
     return "<p>" + $(this).text() + "</p>";
   });
+};
+
+Content.prototype.replaceNbsps = function() {
+	this.setContent( this.tinymce_content_container.getContent().replace(/&nbsp;/g, ' ') );
 };
 
 Content.prototype.hasEmptyText = function() {
