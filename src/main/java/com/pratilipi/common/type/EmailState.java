@@ -4,6 +4,7 @@ public enum EmailState {
 
 	PENDING,
 	DEFERRED,
+	INVALID_EMAIL,
 	SENT
 
 }
