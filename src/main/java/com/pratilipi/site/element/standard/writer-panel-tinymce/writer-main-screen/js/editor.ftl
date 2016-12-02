@@ -67,7 +67,10 @@ Editor.prototype.init = function() {
       italic: {inline : 'i', exact : true},
       underline : {inline : 'u', exact : true},
       blockquote: {block: 'blockquote'},
-      img: { block:'img' },
+	  img: { block:'img' },
+	  alignleft : {selector : 'p', styles : {textAlign : 'left'} },
+	  aligncenter :{selector : 'p', styles : {textAlign : 'center'} },
+	  alignright : {selector : 'p', styles : {textAlign : 'right'} },        
     },
     setup : function(ed) {
       if( screen.width > 480 ) {
