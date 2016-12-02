@@ -25,8 +25,6 @@ Editor.prototype.init = function() {
     height: 300,
     language: 'hi_IN',
     language_url : 'https://storage.googleapis.com/devo-pratilipi.appspot.com/hi_IN.js',
-    // images_upload_url: '/api/pratilipi/content/image?pratilipiId=5179861627830272',
-    // images_upload_base_path: '/some/basepath', 
     link_context_toolbar: true,
     default_link_target:"_blank", 
     allow_unsafe_link_target: false,
@@ -70,7 +68,6 @@ Editor.prototype.init = function() {
       underline : {inline : 'u', exact : true},
       blockquote: {block: 'blockquote'},
       img: { block:'img' },
-
     },
     setup : function(ed) {
       if( screen.width > 480 ) {

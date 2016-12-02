@@ -71,36 +71,30 @@ PublishModal.prototype.attachCoverImageListeners = function() {
     
   $('#uploadPratilipiImage').on('submit',function(e) {
     e.preventDefault();
-    var file = $(this).find("#uploadPratilipiImageInput").get(0).files[0];
-    ImageTools.resize( file, {
-        width: 480, /* maximum width */
-        height: 480 /* maximum height */
-    },function(blob, didItResize) {
-      /* didItResize will be true if it managed to resize it, otherwise false (and will return the original file as 'blob') */
-      var $img = _this.$image_container.find(".cover-image");
-      $img.attr("src", window.URL.createObjectURL(blob) ).addClass("blur-image");
-      var fd = new FormData();
-      fd.append('data', blob);
-      fd.append('pratilipiId', ${ pratilipiId?c } );  
-      
-      $.ajax({
-        type:'POST',
-        url: '/api/pratilipi/cover?pratilipiId=${ pratilipiId?c }',
-        data:fd,
-        cache:true,
-        contentType: false,
-        processData: false,
-        success:function(data){
-          var image_url = jQuery.parseJSON( data ).coverImageUrl;
-          $img.attr( "src", image_url ).removeClass("blur-image");
-          $("#uploadPratilipiImageInput").val("");
-          _this.lastCoverUrl = image_url;
-        },
-        error: function(data){
-          $img.removeClass("blur-image").attr("src", _this.lastCoverUrl);
-        }
-      });    
-        /* you can also now upload this blob using an XHR. */
+    var blob = $(this).find("#uploadPratilipiImageInput").get(0).files[0];
+    /* didItResize will be true if it managed to resize it, otherwise false (and will return the original file as 'blob') */
+    var $img = _this.$image_container.find(".cover-image");
+    $img.attr("src", window.URL.createObjectURL(blob) ).addClass("blur-image");
+    var fd = new FormData();
+    fd.append('data', blob);
+    fd.append('pratilipiId', ${ pratilipiId?c } );  
+    
+    $.ajax({
+      type:'POST',
+      url: '/api/pratilipi/cover?pratilipiId=${ pratilipiId?c }',
+      data:fd,
+      cache:true,
+      contentType: false,
+      processData: false,
+      success:function(data){
+        var image_url = jQuery.parseJSON( data ).coverImageUrl;
+        $img.attr( "src", image_url ).removeClass("blur-image");
+        $("#uploadPratilipiImageInput").val("");
+        _this.lastCoverUrl = image_url;
+      },
+      error: function(data){
+        $img.removeClass("blur-image").attr("src", _this.lastCoverUrl);
+      }
     });
   });                  
 };

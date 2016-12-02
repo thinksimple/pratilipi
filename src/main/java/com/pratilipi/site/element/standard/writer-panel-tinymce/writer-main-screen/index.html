@@ -2,14 +2,14 @@
   <div class="container" style="height:100%;">
     <div class="header-wrapper">
       <div id="header1" style="background: white; padding-bottom: 10px;">
-        <a style="cursor: pointer; margin-top: 10px; margin-right: 10px;" class="pull-left" href="#" data-behaviour="back_button" >
+        <a style="cursor: pointer; margin-top: 10px; margin-right: 10px;" class="pull-left" href="${ pratilipi.getPageUrl() }" data-behaviour="back_button" >
           <div class="sprites-icon left-arrow-icon"></div>
         </a>
         <div class="dropdown" id="toc_container" style="display: inline;">
           <div class="dropdown-toggle" id="table_of_contents_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="display: inline;">
             <button class="btn btn-default white-space-normal" id="toc_button" style="">
               <div class="pull-left sprites-icon list-icon"></div>
-              <h4 class="small-screen-hidden" id="book_name_toc" style="margin-top: 10px; margin-bottom: 5px; display: inline;">Title</h4>
+              <h4 class="small-screen-hidden" id="book_name_toc" style="margin-top: 10px; margin-bottom: 5px; display: inline;">${ pratilipi.getTitle() }</h4>
               <div class="small-screen-hidden pull-right sprites-icon angle-down-icon"></div>
             </button>
           </div> 
@@ -25,14 +25,14 @@
         <div class="pull-right">
           <button class="pratilipi-red-background-button" style="padding: 6px 12px; margin-right: 0px; border-radius: 4px;" data-toggle="modal" data-target="#publishModal" data-behaviour="publish_button">${ _strings.writer_finish }</button>
           <button class="btn btn-default small-screen-hidden" style="margin: 0 5px 0 10px; font-size: 13px;" data-behaviour="save_button_desktop">${ _strings.writer_save }</button>
-          <a href="#" target="_blank" class="btn btn-default small-screen-hidden" style="margin: 0 0px 0 5px; font-size: 13px;" data-behaviour="preview_button_desktop">${ _strings.writer_preview }</a>
+          <a href="${ pratilipi.getReadPageUrl() }" target="_blank" class="btn btn-default small-screen-hidden" style="margin: 0 0px 0 5px; font-size: 13px;" data-behaviour="preview_button_desktop">${ _strings.writer_preview }</a>
           <img  style="width: 48px; height: 25px; margin-right: -12px;" 
               src="http://0.ptlp.co/resource-all/icon/svg/dots-three-vertical.svg" 
               class="big-screen-hidden mobile_options_container"
               data-container="body" 
               data-toggle="popover"
               data-content="
-                <a href='#' style='font-size: x-large;' target='_blank' class='pratilipi-red' data-behaviour='preview_button_mobile'>${ _strings.writer_preview }</a>
+                <a href='${ pratilipi.getReadPageUrl() }' style='font-size: x-large;' target='_blank' class='pratilipi-red' data-behaviour='preview_button_mobile'>${ _strings.writer_preview }</a>
                 <hr style='margin: 1px 0;'>
                 <a data-behaviour='save_button_mobile' style='font-size: x-large;' class='pratilipi-red'>${ _strings.writer_save }</a>" 
               data-html="true" 
@@ -123,7 +123,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="publishContent" data-behaviour="publish_book_name">Title</h4>
+          <h4 class="modal-title" id="publishContent" data-behaviour="publish_book_name">${ pratilipi.getTitle() }</h4>
         </div>
         <form class="form-horizontal" id="publish_form">
           <div class="modal-body modal-form">
@@ -138,7 +138,7 @@
               <label class="grey-label pull-left" >${ _strings.writer_add_cover }</label>
               <a class="show-cursor">
                 <div class="pull-left image-container" >
-                  <img class="cover-image" src="http://0.ptlp.co/resource-all/icon/png/default-cover-image.png" alt="#">
+                  <img class="cover-image" src="http://0.ptlp.co/resource-all/icon/png/default-cover-image.png" alt="${ pratilipi.getTitle() }">
                   <div class="camera-icon sprites-icon camera-sprite-icon"></div>           
                 </div>
               </a>
@@ -158,31 +158,6 @@
     <form id="uploadPratilipiImage" method="post" enctype="multipart/form-data" action="/api/pratilipi/cover?pratilipiId=${ pratilipiId?c }">
       <input id="uploadPratilipiImageInput" type="file" name="${ pratilipiId?c }" accept="image/*">
     </form>
-  </div>
-
-  <#-- Modal for URL -->  
-  <div class="modal fade" id="urlModal" tabindex="-1" role="dialog" aria-labelledby="pratilipiUrlModal">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="pratilipiUrlModal">${ _strings.writer_editor_link }</h4>
-        </div>
-        <form class="form-horizontal" data-behaviour="url_form">
-          <div class="modal-body">
-            <div class="form-group" style="margin-top: 10px; margin-bottom: 10px;">
-              <div class="col-sm-12">
-                <input class="form-control" id="input_url" placeholder="${ _strings.writer_editor_link }">
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">${ _strings.writer_cancel }</button>
-            <button id="url_ok_button" type="submit" class="pratilipi-red-background-modal-button">${ _strings.writer_okay }</button>
-          </div>
-        </form>
-      </div>
-    </div>
   </div>
 
   <#-- Modal for delete confirmation -->
