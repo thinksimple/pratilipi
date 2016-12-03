@@ -63,9 +63,11 @@ public class AuditLogProcessApi extends GenericApi {
 		Set<Long> pratilipiUpdateIds = new HashSet<>();
 		Set<String> userAuthorFollowingIds = new HashSet<>();
 		for( AuditLog auditLog : auditLogDataListCursorTuple.getDataList() ) {
-			// TODO: Delete following to line as soon as 'legacy' module is removed
-			if( auditLog.getUserId() == null || auditLog.getPrimaryContentId() == null )
+			// TODO: Delete following condition as soon as 'legacy' module is removed
+			if( auditLog.getUserId() == null || auditLog.getPrimaryContentId() == null ) {
 				ObjectifyService.ofy().delete().entity( auditLog ).now();
+				continue;
+			}
 			if( auditLog.getUserId().equals( SystemProperty.SYSTEM_USER_ID ) )
 				continue;
 			if( auditLog.getAccessType() == AccessType.PRATILIPI_UPDATE )
@@ -81,10 +83,8 @@ public class AuditLogProcessApi extends GenericApi {
 		
 		// Make sets of required entities' ids
 		Set<Long> authorIds = new HashSet<>();
-		for( Pratilipi pratilipi : pratilipiUpdates.values() ) {
-			authorIds.add( pratilipi.getAuthorId() );
-			authorIds.addAll( _getAeeAuthorIdList( pratilipi.getLanguage() ) ); // Required for notifying AEEs
-		}
+		for( Pratilipi pratilipi : pratilipiUpdates.values() )
+			authorIds.add( pratilipi.getAuthorId() ); // Req. for PRATILIPI_PUBLISHED_AUTHOR
 		for( UserAuthor userAuthor : userAuthorFollowings.values() )
 			authorIds.add( userAuthor.getAuthorId() );
 		
@@ -110,7 +110,7 @@ public class AuditLogProcessApi extends GenericApi {
 			_createPratilipiPublishedEmails( pratilipi, followerUserIdList );
 			
 			// Sent notification to all AEEs all well
-			followerUserIdList.addAll( _getAeeAuthorIdList( pratilipi.getLanguage() ) );
+			followerUserIdList.addAll( _getAeeUserIdList( pratilipi.getLanguage() ) );
 			
 			_createPratilipiPublishedNotification( pratilipi, authors.get( pratilipi.getAuthorId() ) );
 			_createPratilipiPublishedNotifications( pratilipi, followerUserIdList );
@@ -349,72 +349,72 @@ public class AuditLogProcessApi extends GenericApi {
 		return date.getTime() > time;
 	}
 	
-	private List<Long> _getAeeAuthorIdList( Language language ) {
+	private List<Long> _getAeeUserIdList( Language language ) {
 
-		Long[] authorIds = {};
+		Long[] userIds = {};
 		
 		switch( language ) {
 			case HINDI:
-				authorIds = new Long[] {
-					4826853940396032L, // veena@
-					5695576559583232L, // jitesh@
-					5740985543819264L, // sankar@
-					5757071102312448L, // shally@
-			}; break;
+				userIds = new Long[] {
+						4790800105865216L, // veena@
+						5743817900687360L, // jitesh@
+						5991416564023296L, // sankar@
+						5664902681198592L, // shally@
+				}; break;
 			case GUJARATI:
-				authorIds = new Long[] {
-					5715779974594560L, // nimisha@
-					6468145583751168L, // brinda@
-					5695576559583232L, // jitesh@
-					5740985543819264L, // sankar@
-					5757071102312448L, // shally@
-			}; break;
+				userIds = new Long[] {
+						5644707593977856L, // nimisha@
+						6046961763352576L, // brinda@
+						5743817900687360L, // jitesh@
+						5991416564023296L, // sankar@
+						5664902681198592L, // shally@
+				}; break;
 			case TAMIL:
-				authorIds = new Long[] {
-					5740985543819264L, // sankar@
-					5747218191482880L, // krithiha@
-					5719092866580480L, // dileepan@
-			}; break;
+				userIds = new Long[] {
+						5991416564023296L, // sankar@
+						5674672871964672L, // krithiha@
+						4900071594262528L, // dileepan@
+				}; break;
 			case MARATHI:
-				authorIds = new Long[] {
-					4880483888398336L, // vrushali@
-					5695576559583232L, // jitesh@
-					5740985543819264L, // sankar@
-					5757071102312448L, // shally@
-			}; break;
+				userIds = new Long[] {
+						4900189601005568L, // vrushali@
+						5743817900687360L, // jitesh@
+						5991416564023296L, // sankar@
+						5664902681198592L, // shally@
+				}; break;
 			case MALAYALAM:
-				authorIds = new Long[] {
-					5755723784912896L, // vaisakh@
-					5747218191482880L, // krithiha@
-					5740985543819264L, // sankar@
-			}; break;
+				userIds = new Long[] {
+						5666355716030464L, // vaisakh@
+						5674672871964672L, // krithiha@
+						5991416564023296L, // sankar@
+				}; break;
 			case BENGALI:
-				authorIds = new Long[] {
-					6263963754954752L, // moumita@
-					5695576559583232L, // jitesh@
-					5740985543819264L, // sankar@
-					5757071102312448L, // shally@
-			}; break;
+				userIds = new Long[] {
+						6243664397336576L, // moumita@
+						5743817900687360L, // jitesh@
+						5991416564023296L, // sankar@
+						5664902681198592L, // shally@
+				}; break;
 			case TELUGU:
-				authorIds = new Long[] {
-					5735028278427648L, // johny@
-					5747218191482880L, // krithiha@
-					5740985543819264L, // sankar@
-			}; break;
+				userIds = new Long[] {
+						5187684625547264L, // johny@
+						5674672871964672L, // krithiha@
+						5991416564023296L, // sankar@
+				}; break;
 			case KANNADA:
-				authorIds = new Long[] {
-					5761847154180096L, // aruna@
-					5747218191482880L, // krithiha@
-					5740985543819264L, // sankar@
-			}; break;
-			case ENGLISH:
-				authorIds = new Long[] {
-					5678034745032704L, // prashant@
-			}; break;
+				userIds = new Long[] {
+						5715256422694912L, // aruna@
+						5674672871964672L, // krithiha@
+						5991416564023296L, // sankar@
+				}; break;
+			default:
+				userIds = new Long[] {
+						5705241014042624L, // prashant@
+				}; break;
 			
 		}
 
-		return Arrays.asList( authorIds );
+		return Arrays.asList( userIds );
 		
 	}
 	
