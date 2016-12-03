@@ -71,15 +71,13 @@ public class EmailApi extends GenericApi {
 			return new GenericResponse();
 
 		if( email.getType() == EmailType.PRATILIPI_PUBLISHED_AUTHOR_EMAIL ) {
-			emailState = EmailDataUtil.sendPratilipiPublisedAuthorEmail( Long.parseLong( email.getPrimaryContentId() ), 
-														email.getUserId(), 
-														email.getType() );
+			emailState = EmailDataUtil.sendPratilipiPublisedAuthorEmail( Long.parseLong( email.getPrimaryContentId() ), email.getUserId() );
 
 		} else if( email.getType() == EmailType.PRATILIPI_PUBLISHED_FOLLOWER_EMAIL ) {
-			emailState = EmailDataUtil.sendPratilipiPublishedFollowerEmail( Long.parseLong( email.getPrimaryContentId() ),
-															email.getUserId(),
-															email.getType() );
+			emailState = EmailDataUtil.sendPratilipiPublishedFollowerEmail( Long.parseLong( email.getPrimaryContentId() ), email.getUserId() );
 
+		} else if( email.getType() == EmailType.AUTHOR_FOLLOW_EMAIL ) {
+			emailState = EmailDataUtil.sendAuthorFollowEmail( email.getPrimaryContentId(), email.getUserId() );
 		}
 
 		email.setState( emailState );

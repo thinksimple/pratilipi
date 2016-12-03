@@ -107,6 +107,10 @@ public class EmailUtil {
 			Language language, Map<String, String> dataModel ) throws UnexpectedServerException {
 
 		dataModel.put( "language", language.toString() );
+		dataModel.put( "contact_email", language == Language.ENGLISH
+											? "contact@pratilipi.com"
+											: language.toString().toLowerCase() + "@pratilipi.com" );
+		
 		String body = FreeMarkerUtil.processTemplate( dataModel, filePath + emailType.getTemplateName() );
 
 		Pattern senderNamePattern = Pattern.compile( "<!-- SENDER_NAME:(.+?)-->" );
