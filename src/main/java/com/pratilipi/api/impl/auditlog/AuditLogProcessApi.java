@@ -118,8 +118,10 @@ public class AuditLogProcessApi extends GenericApi {
 		
 
 		
-		for( UserAuthor userAuthor : userAuthorFollowings.values() )
+		for( UserAuthor userAuthor : userAuthorFollowings.values() ) {
 			_createUserAuthorFollowingNotifications( userAuthor, authors.get( userAuthor.getAuthorId() ) );
+			_createUserAuthorFollowingEmails( userAuthor, authors.get( userAuthor.getAuthorId() ) );
+		}
 
 		
 		
@@ -226,6 +228,37 @@ public class AuditLogProcessApi extends GenericApi {
 	}
 	
 	
+	private void _createUserAuthorFollowingEmails( UserAuthor userAuthor, Author author ) {
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+
+		if( author.getUserId() == null )
+			return;
+
+		
+		Email email = dataAccessor.getEmail(
+				author.getUserId(),
+				EmailType.AUTHOR_FOLLOW_EMAIL, 
+				userAuthor.getId() );
+
+		if( email == null ) {
+			email = dataAccessor.newEmail(
+					author.getUserId(),
+					EmailType.AUTHOR_FOLLOW_EMAIL, 
+					userAuthor.getId() );
+		} else if( email.getState() == EmailState.DEFERRED ) {
+			email.setState( EmailState.PENDING );
+			email.setLastUpdated( new Date() );
+		} else {
+			return; // Do nothing
+		}
+
+
+		email = dataAccessor.createOrUpdateEmail( email );
+
+	}
+
+
 	private void _createPratilipiPublishedEmail( Pratilipi pratilipi, Author author ) {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
