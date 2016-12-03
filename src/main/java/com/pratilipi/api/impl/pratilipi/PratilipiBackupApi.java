@@ -1,30 +1,42 @@
 package com.pratilipi.api.impl.pratilipi;
 
-import java.nio.charset.Charset;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.google.appengine.api.datastore.Cursor;
+import com.google.appengine.api.datastore.QueryResultIterator;
+import com.google.appengine.tools.cloudstorage.GcsFilename;
+import com.google.appengine.tools.cloudstorage.GcsService;
+import com.google.appengine.tools.cloudstorage.GcsServiceFactory;
+import com.google.appengine.tools.cloudstorage.ListOptions;
+import com.google.appengine.tools.cloudstorage.ListResult;
+import com.google.appengine.tools.cloudstorage.RetryParams;
+import com.googlecode.objectify.Key;
+import com.googlecode.objectify.ObjectifyService;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
+import com.pratilipi.api.annotation.Post;
+import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
-import com.pratilipi.common.util.GsonIstDateAdapter;
-import com.pratilipi.common.util.PratilipiFilter;
-import com.pratilipi.data.BlobAccessor;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
-import com.pratilipi.data.DataListCursorTuple;
-import com.pratilipi.data.type.BlobEntry;
+import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.type.gae.PratilipiEntity;
+import com.pratilipi.taskqueue.Task;
+import com.pratilipi.taskqueue.TaskQueueFactory;
+
 
 @SuppressWarnings("serial")
 @Bind( uri = "/pratilipi/backup" )
@@ -47,11 +59,55 @@ public class PratilipiBackupApi extends GenericApi {
 
 	}
 	
+	public static class PostRequest extends GenericRequest {
+		
+		@Validate( required = true, minLong = 1L )
+		private Long pratilipiId;
+		
+	}
+	
 	
 	@Get
 	public GenericResponse get( GetRequest request ) throws UnexpectedServerException {
-		
+
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		
+		
+		// Fetching Cursor from AppProperty
+		AppProperty appProperty = dataAccessor.getAppProperty( AppProperty.API_PRATILIPI_BACKUP );
+		if( appProperty == null )
+			appProperty = dataAccessor.newAppProperty( AppProperty.API_PRATILIPI_BACKUP );
+		Cursor cursor = appProperty.getValue() == null
+				? null
+				: Cursor.fromWebSafeString( (String) appProperty.getValue() );
+		
+		
+		QueryResultIterator<Key<PratilipiEntity>> itr = ObjectifyService.ofy().load()
+				.type( PratilipiEntity.class )
+				.filter( "LAST_UPDATED >=", new Date( 1480530600000L ) ) // Thu Dec 01 00:00:00 IST 2016
+				.order( "LAST_UPDATED" )
+				.startAt( cursor )
+				.keys()
+				.iterator();
+
+		int batchSize = 1000;
+		List<Task> taskList = new ArrayList<>( batchSize );
+		while( itr.hasNext() ) {
+			TaskQueueFactory.getPratilipiTaskQueue().add( TaskQueueFactory.newTask()
+					.setUrl( "/pratilipi/backup" )
+					.addParam( "pratilipiId", itr.next().getId() + "" ) );
+			if( taskList.size() == batchSize || ! itr.hasNext() ) {
+				TaskQueueFactory.getPratilipiTaskQueue().addAll( taskList );
+				taskList.clear();
+			}
+		}
+		
+		
+		// Updating Cursor to AppProperty
+		appProperty.setValue( itr.getCursor().toWebSafeString() );
+		
+		
+/*		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessorBackup();
 		
 		Date backupDate = new Date();
@@ -129,9 +185,47 @@ public class PratilipiBackupApi extends GenericApi {
 		
 
 		logger.log( Level.INFO, "Backed up " + count + " Pratilipi Entities." );
-
+*/
 		return new GenericResponse();
 		
+	}
+	
+	@Post
+	public GenericResponse post( PostRequest request ) throws UnexpectedServerException {
+		
+		Pratilipi pratilipi = DataAccessorFactory.getDataAccessor().getPratilipi( request.pratilipiId );
+
+		Date dateTime = new Date( pratilipi.getLastUpdated().getTime() + TimeUnit.HOURS.toMillis( 1L ) - 1 );
+		DateFormat dateTimeFormat = new SimpleDateFormat( "yyyy-MM-dd-HH'.00'-z" );
+		dateTimeFormat.setTimeZone( TimeZone.getTimeZone( "Asia/Kolkata" ) );
+		
+		
+		GcsService gcsService = GcsServiceFactory.createGcsService( RetryParams.getDefaultInstance() );
+
+		String srcBucket = "static.pratilipi.com";
+		String dstBucket = "coldline.pratilipi.com";
+		
+		String srcPrefix = "pratilipi/" + request.pratilipiId + "/";
+		String dstPrefix = "pratilipi/" + dateTimeFormat.format( dateTime ) + "/" + request.pratilipiId + "/";
+		
+		
+		try {
+			ListResult result = gcsService.list( srcBucket, new ListOptions.Builder().setPrefix( srcPrefix ).build() );
+			while( result.hasNext() ) {
+				String srcName = result.next().getName();
+				String dstName = dstPrefix + srcName.substring( srcPrefix.length() );
+				gcsService.copy(
+						new GcsFilename( srcBucket, srcName),
+						new GcsFilename( dstBucket, dstName ) );
+			}
+		} catch( IOException e ) {
+			logger.log( Level.SEVERE, "", e );
+			throw new UnexpectedServerException();
+		}
+
+		
+		return new GenericResponse();
+	
 	}
 	
 }
