@@ -22,6 +22,7 @@ import com.google.gson.Gson;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.cmd.Query;
+import com.googlecode.objectify.cmd.QueryKeys;
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.BatchProcessState;
@@ -1964,6 +1965,18 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 	}
 
+	@Override
+	public DataIdListIterator<Email> getEmailIdIteratorWithStatePending() {
+	
+		QueryKeys<EmailEntity> query = ObjectifyService.ofy().load()
+				.type( EmailEntity.class )
+				.filter( "STATE", EmailState.PENDING )
+				.keys();
+		
+		return new DataIdListIterator<Email>( query.iterator() );
+		
+	}
+	
 	@Override
 	public List<Email> getEmailList( Long userId, EmailType type, Long primaryContentId, EmailState state, Integer resultCount ) {
 		return getEmailList( userId, type, primaryContentId.toString(), state, resultCount );

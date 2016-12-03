@@ -12,21 +12,19 @@ import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
-import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.EmailState;
 import com.pratilipi.common.type.EmailType;
-import com.pratilipi.common.util.UserAccessUtil;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.DataIdListIterator;
 import com.pratilipi.data.type.Email;
-import com.pratilipi.data.type.User;
 import com.pratilipi.data.util.EmailDataUtil;
 import com.pratilipi.taskqueue.Task;
 import com.pratilipi.taskqueue.TaskQueueFactory;
 
 @SuppressWarnings("serial")
-@Bind( uri = "/email" )
-public class EmailApi extends GenericApi {
+@Bind( uri = "/email/process" )
+public class EmailProcessApi extends GenericApi {
 	
 	public static class PostRequest extends GenericRequest {
 
@@ -35,30 +33,33 @@ public class EmailApi extends GenericApi {
 
 	}
 
+
 	@Get
 	public GenericResponse get( GenericRequest request ) throws UnexpectedServerException {
 
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DataIdListIterator<Email> itr = DataAccessorFactory.getDataAccessor()
+				.getEmailIdIteratorWithStatePending();
 
-		List<Email> emailList = dataAccessor.getEmailList( null, null, (String) null, EmailState.PENDING, null );
-		List<Task> taskList = new ArrayList<>( emailList.size() );
-
-		for( Email email : emailList ) {
-			User user = dataAccessor.getUser( email.getUserId() );
-			if( UserAccessUtil.hasUserAccess( user.getId(), null, AccessType.USER_ADD ) ) {
-				Task task = TaskQueueFactory.newTask()
-						.setUrl( "/email" )
-						.addParam( "emailId", email.getId().toString() );
-				taskList.add( task );
+		List<Task> taskList = new ArrayList<>( 1000 );
+		while( itr.hasNext() ) {
+			
+			Task task = TaskQueueFactory.newTask()
+					.setUrl( "/email" )
+					.addParam( "emailId", itr.next().toString() );
+			taskList.add( task );
+			
+			if( taskList.size() == 1000 || ! itr.hasNext() ) {
+				TaskQueueFactory.getEmailOfflineTaskQueue().addAll( taskList );
+				taskList.clear();
 			}
+			
 		}
-
-		TaskQueueFactory.getEmailOfflineTaskQueue().addAll( taskList );
 
 		return new GenericResponse();
 		
 	}
 
+	
 	@Post
 	public GenericResponse post( PostRequest request )
 			throws UnexpectedServerException {
