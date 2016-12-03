@@ -1,5 +1,5 @@
 <!-- SENDER_NAME: Team Pratilipi -->
-<!-- SENDER_EMAIL: contact@pratilipi.com -->
+<!-- SENDER_EMAIL: ${ contact_email } -->
 <!-- SUBJECT: ${ author_name } has a story to tell! -->
 
 <!DOCTYPE html>
@@ -108,8 +108,8 @@
 											<br/>
 											<br/>
 												If you face any problems, please reach out to us at 
-												<a href="mailto:${ language?lower_case }@pratilipi.com" style="color: #4a4a4a; text-decoration: underline;" target="_blank">
-													${ language?lower_case }@pratilipi.com
+												<a href="mailto:${ contact_email }" style="color: #4a4a4a; text-decoration: underline;" target="_blank">
+													${ contact_email }
 												</a>
 											<br/>
 											<br/>
