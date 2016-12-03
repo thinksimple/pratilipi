@@ -23,6 +23,7 @@ import com.pratilipi.common.type.NotificationState;
 import com.pratilipi.common.type.NotificationType;
 import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.util.SystemProperty;
+import com.pratilipi.common.util.UserAccessUtil;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
@@ -235,6 +236,10 @@ public class AuditLogProcessApi extends GenericApi {
 		if( author.getUserId() == null )
 			return;
 
+		// TODO: Remove it asap
+		if( ! UserAccessUtil.hasUserAccess( author.getUserId(), null, AccessType.USER_ADD ) )
+			return;
+
 		
 		Email email = dataAccessor.getEmail(
 				author.getUserId(),
@@ -283,12 +288,15 @@ public class AuditLogProcessApi extends GenericApi {
 			}
 		}
 
-		for( Long follower : followers ) // Creating new emails
-			emailList.add( dataAccessor.newEmail(
+		// Creating new emails
+		for( Long follower : followers ) {
+			// TODO: Remove check asap
+			if( UserAccessUtil.hasUserAccess( follower, null, AccessType.USER_ADD ) )
+				emailList.add( dataAccessor.newEmail(
 					follower,
 					EmailType.PRATILIPI_PUBLISHED_FOLLOWER_EMAIL,
 					pratilipi.getId() ) );
-
+		}
 		
 		emailList = dataAccessor.createOrUpdateEmailList( emailList );
 		
@@ -299,6 +307,10 @@ public class AuditLogProcessApi extends GenericApi {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
 		if( author.getUserId() == null ) // Followed
+			return;
+		
+		// TODO: Remove it asap
+		if( ! UserAccessUtil.hasUserAccess( author.getUserId(), null, AccessType.USER_ADD ) )
 			return;
 
 		Email email = dataAccessor.getEmail(
