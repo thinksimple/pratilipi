@@ -223,7 +223,7 @@ var suggesterMethods = {
   handleWordSelection: function() {
     var selected_word;
     var $highlighted_word = this.elem.find(".highlight-suggestion");
-    selected_word = $highlighted_word.length ? $highlighted_word.text() : this.suggestions[0];
+    selected_word = $highlighted_word.length ? $highlighted_word.text() : this.text;
     this.resolve( selected_word );
   }
     
