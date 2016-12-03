@@ -1,18 +1,5 @@
 <cronentries>
 
-	<!-- TODO: Remove following crons -->
-	
-	<cron>
-		<url>/cleanup?cron</url>
-		<target>worker</target>
-		<schedule>every 1 minutes</schedule>
-		<timezone>Asia/Calcutta</timezone>
-	</cron>
-	
-	
-	
-
-
 	<!-- USER Table -->
 	
 	<cron>
