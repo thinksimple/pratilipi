@@ -14,7 +14,6 @@ import com.pratilipi.api.impl.pratilipi.PratilipiBackupApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiIdfApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiProcessApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiStatsApi;
-import com.pratilipi.api.impl.test.CleanupApi;
 import com.pratilipi.api.impl.test.TestApi;
 import com.pratilipi.api.impl.user.UserBackupApi;
 import com.pratilipi.api.impl.user.UserEmailApi;
@@ -27,7 +26,6 @@ public class WorkerService extends GenericService {
 	static {
 
 		ApiRegistry.register( TestApi.class );
-		ApiRegistry.register( CleanupApi.class );
 		
 		
 		ApiRegistry.register( DebugApi.class );

@@ -23,7 +23,7 @@ public enum NotificationType {
 	},
 
 	
-	PRATILIPI_PUBLISHED_AUTHOR( "NOTIFICATION_BOOK" ) {
+	PRATILIPI_PUBLISHED_AUTHOR( "NOTIFICATION_BOOK" ) { // Notification sent to the Author when a Pratilipi is published
 		@Override
 		public boolean isValid( Notification notif ) {
 			return DataAccessorFactory.getDataAccessor()
@@ -32,7 +32,7 @@ public enum NotificationType {
 		}
 	},
 
-	PRATILIPI_PUBLISHED_FOLLOWER( "NOTIFICATION_BOOK" ) {
+	PRATILIPI_PUBLISHED_FOLLOWER( "NOTIFICATION_BOOK" ) { // Notification sent to Author's followers when a Pratilipi is published
 		@Override
 		public boolean isValid( Notification notif ) {
 			return DataAccessorFactory.getDataAccessor()
