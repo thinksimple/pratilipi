@@ -44,7 +44,7 @@ public class EmailProcessApi extends GenericApi {
 		while( itr.hasNext() ) {
 			
 			Task task = TaskQueueFactory.newTask()
-					.setUrl( "/email" )
+					.setUrl( "/email/process" )
 					.addParam( "emailId", itr.next().toString() );
 			taskList.add( task );
 			

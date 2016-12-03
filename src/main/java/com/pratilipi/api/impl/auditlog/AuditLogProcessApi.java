@@ -236,7 +236,7 @@ public class AuditLogProcessApi extends GenericApi {
 		if( author.getUserId() == null )
 			return;
 
-		// TODO: Remove it asap
+		// TODO: Remove it ASAP
 		if( ! UserAccessUtil.hasUserAccess( author.getUserId(), null, AccessType.USER_ADD ) )
 			return;
 
@@ -290,7 +290,7 @@ public class AuditLogProcessApi extends GenericApi {
 
 		// Creating new emails
 		for( Long follower : followers ) {
-			// TODO: Remove check asap
+			// TODO: Remove check ASAP
 			if( UserAccessUtil.hasUserAccess( follower, null, AccessType.USER_ADD ) )
 				emailList.add( dataAccessor.newEmail(
 					follower,
@@ -313,6 +313,7 @@ public class AuditLogProcessApi extends GenericApi {
 		if( ! UserAccessUtil.hasUserAccess( author.getUserId(), null, AccessType.USER_ADD ) )
 			return;
 
+		
 		Email email = dataAccessor.getEmail(
 				author.getUserId(),
 				EmailType.AUTHOR_FOLLOW_EMAIL, 
