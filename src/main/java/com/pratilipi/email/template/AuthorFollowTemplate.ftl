@@ -1,6 +1,6 @@
 <!-- SENDER_NAME: Team Pratilipi -->
 <!-- SENDER_EMAIL: ${ contact_email } -->
-<!-- SUBJECT: Congratulations! Your story is published. -->
+<!-- SUBJECT: Meet your new follower: ${ follower_name } -->
 <!DOCTYPE html>
 <html>
 	<body style="padding: 0; margin: 0;">
