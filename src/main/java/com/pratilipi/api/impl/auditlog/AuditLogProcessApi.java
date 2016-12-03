@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import com.googlecode.objectify.ObjectifyService;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -62,6 +63,9 @@ public class AuditLogProcessApi extends GenericApi {
 		Set<Long> pratilipiUpdateIds = new HashSet<>();
 		Set<String> userAuthorFollowingIds = new HashSet<>();
 		for( AuditLog auditLog : auditLogDataListCursorTuple.getDataList() ) {
+			// TODO: Delete following to line as soon as 'legacy' module is removed
+			if( auditLog.getUserId() == null || auditLog.getPrimaryContentId() == null )
+				ObjectifyService.ofy().delete().entity( auditLog ).now();
 			if( auditLog.getUserId().equals( SystemProperty.SYSTEM_USER_ID ) )
 				continue;
 			if( auditLog.getAccessType() == AccessType.PRATILIPI_UPDATE )
