@@ -38,6 +38,7 @@ Content.prototype.getContentWithoutNbsps = function( ) {
 <#-- Change content before saving -->
 Content.prototype.getContentBeforeSaving = function() {
   this.convertTextNodesToParagraphs();
+  this.removeBrs();
   return this.getContentWithoutNbsps();
 };
 
@@ -52,6 +53,10 @@ Content.prototype.convertTextNodesToParagraphs = function() {
   }).replaceWith(function() {
     return "<p>" + $(this).text() + "</p>";
   });
+};
+
+Content.prototype.removeBrs = function() {
+  this.$content_container.children("br").remove();
 };
 
 Content.prototype.replaceNbsps = function() {
