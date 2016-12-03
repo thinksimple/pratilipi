@@ -106,7 +106,7 @@ public class NotificationDataUtil {
 			userIdList.add( notification.getUserId() );
 			if( notification.getType() == NotificationType.PRATILIPI ) {
 				pratilipiIdList.add( notification.getSourceIdLong() );
-			} else if( notification.getType() == NotificationType.PRATILIPI_ADD ) {
+			} else if( notification.getType() == NotificationType.PRATILIPI_PUBLISHED_FOLLOWER ) {
 				pratilipiIdList.add( notification.getSourceIdLong() );
 			} else if( notification.getType() == NotificationType.AUTHOR_FOLLOW ) {
 				if( notification.getDataIds().size() <= 3 )
@@ -150,7 +150,7 @@ public class NotificationDataUtil {
 				notificationData.setSourceUrl( pratilipiData.getPageUrl() + "?" + RequestParameter.NOTIFICATION_ID.getName() + "=" + notification.getId() );
 				notificationData.setSourceImageUrl( pratilipiData.getCoverImageUrl() );
 				
-			} else if( notification.getType() == NotificationType.PRATILIPI_ADD ) {
+			} else if( notification.getType() == NotificationType.PRATILIPI_PUBLISHED_FOLLOWER ) {
 
 				PratilipiData pratilipiData = pratilipis.get( notification.getSourceIdLong() );
 				if( pratilipiData.getState() ==  PratilipiState.PUBLISHED ) {

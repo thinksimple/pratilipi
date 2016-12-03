@@ -385,7 +385,7 @@ public class PratilipiDocUtil {
 						AlignmentType alignment = null;
 						if( node.hasAttr( "style" ) && ! node.attr( "style" ).trim().isEmpty() )
 							for( String style : node.attr( "style" ).split( ";" ) )
-								if( style.substring( 0, style.indexOf( ":" ) ).trim().equals( "text-align" ) )
+								if( ! style.trim().isEmpty() && style.substring( 0, style.indexOf( ":" ) ).trim().equals( "text-align" ) )
 									alignment = AlignmentType.valueOf( style.substring( style.indexOf( ":" ) + 1 ).trim().toUpperCase() );
 						
 						page.addPagelet( PageletType.HTML, ( (Element) node ).html(), alignment );

@@ -23,7 +23,7 @@ public enum NotificationType {
 	},
 
 	
-	PRATILIPI_ADD( "NOTIFICATION_BOOK" ) {
+	PRATILIPI_PUBLISHED_AUTHOR( "NOTIFICATION_BOOK" ) {
 		@Override
 		public boolean isValid( Notification notif ) {
 			return DataAccessorFactory.getDataAccessor()
@@ -31,6 +31,16 @@ public enum NotificationType {
 					.getState() == PratilipiState.PUBLISHED;
 		}
 	},
+
+	PRATILIPI_PUBLISHED_FOLLOWER( "NOTIFICATION_BOOK" ) {
+		@Override
+		public boolean isValid( Notification notif ) {
+			return DataAccessorFactory.getDataAccessor()
+					.getPratilipi( notif.getSourceIdLong() )
+					.getState() == PratilipiState.PUBLISHED;
+		}
+	},
+
 	
 	AUTHOR_FOLLOW( "NOTIFICATION_FOLLOWERS" ) {
 		@Override

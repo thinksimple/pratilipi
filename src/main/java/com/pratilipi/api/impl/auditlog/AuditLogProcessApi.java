@@ -1,6 +1,7 @@
 package com.pratilipi.api.impl.auditlog;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -17,6 +18,7 @@ import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.EmailState;
 import com.pratilipi.common.type.EmailType;
+import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.NotificationState;
 import com.pratilipi.common.type.NotificationType;
 import com.pratilipi.common.type.PratilipiState;
@@ -31,6 +33,7 @@ import com.pratilipi.data.type.Email;
 import com.pratilipi.data.type.Notification;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.UserAuthor;
+
 
 @SuppressWarnings("serial")
 @Bind( uri = "/auditlog/process" )
@@ -70,17 +73,27 @@ public class AuditLogProcessApi extends GenericApi {
 		Map<Long, Pratilipi> pratilipiUpdates = dataAccessor.getPratilipis( pratilipiUpdateIds );
 		Map<String, UserAuthor> userAuthorFollowings = dataAccessor.getUserAuthors( userAuthorFollowingIds );
 
+		
+		// Make sets of required entities' ids
+		Set<Long> authorIds = new HashSet<>();
+		for( Pratilipi pratilipi : pratilipiUpdates.values() ) {
+			authorIds.add( pratilipi.getAuthorId() );
+			authorIds.addAll( _getAeeUserIdList( pratilipi.getLanguage() ) ); // Required for notifying AEEs
+		}
+		for( UserAuthor userAuthor : userAuthorFollowings.values() )
+			authorIds.add( userAuthor.getAuthorId() );
+		
+		// Batch get required entites
+		Map<Long, Author> authors = dataAccessor.getAuthors( authorIds );
 
 		
-		// auditLog.getAccessType() == AccessType.PRATILIPI_UPDATE
 		
+		// auditLog.getAccessType() == AccessType.PRATILIPI_UPDATE
 		for( Pratilipi pratilipi : pratilipiUpdates.values() ) {
 				
 			if( pratilipi.getState() != PratilipiState.PUBLISHED )
 				continue;
 
-			_createPratilipiPublishedEmail( pratilipi );
-			
 			List<Long> followerUserIdList = dataAccessor.getUserAuthorFollowList(
 					null,
 					pratilipi.getAuthorId(),
@@ -88,9 +101,14 @@ public class AuditLogProcessApi extends GenericApi {
 					null,
 					null ).getDataList();
 			
-			_createPratilipiPublishedNotifications( pratilipi, followerUserIdList );
-			
+			_createPratilipiPublishedEmail( pratilipi, authors.get( pratilipi.getAuthorId() ) );
 			_createPratilipiPublishedEmails( pratilipi, followerUserIdList );
+			
+			// Sent notification to all AEEs all well
+			followerUserIdList.addAll( _getAeeUserIdList( pratilipi.getLanguage() ) );
+			
+			_createPratilipiPublishedNotification( pratilipi, authors.get( pratilipi.getAuthorId() ) );
+			_createPratilipiPublishedNotifications( pratilipi, followerUserIdList );
 			
 		}
 		
@@ -98,11 +116,7 @@ public class AuditLogProcessApi extends GenericApi {
 		
 		// auditLog.getAccessType() == AccessType.USER_AUTHOR_FOLLOWING
 		
-		Set<Long> authorIds = new HashSet<>();
-		for( UserAuthor userAuthor : userAuthorFollowings.values() )
-			authorIds.add( userAuthor.getAuthorId() );
 
-		Map<Long, Author> authors = dataAccessor.getAuthors( authorIds );
 		
 		for( UserAuthor userAuthor : userAuthorFollowings.values() )
 			_createUserAuthorFollowingNotifications( userAuthor, authors.get( userAuthor.getAuthorId() ) );
@@ -121,6 +135,32 @@ public class AuditLogProcessApi extends GenericApi {
 	}
 	
 
+	private void _createPratilipiPublishedNotification( Pratilipi pratilipi, Author author ) {
+
+		if( author.getUserId() == null )
+			return;
+		
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+
+		Notification notification = dataAccessor.getNotification(
+				author.getUserId(),
+				NotificationType.PRATILIPI_PUBLISHED_AUTHOR,
+				pratilipi.getId() );
+		
+		if( notification != null )
+			return;
+
+		
+		notification = dataAccessor.newNotification(
+				author.getUserId(),
+				NotificationType.PRATILIPI_PUBLISHED_AUTHOR,
+				pratilipi.getId() );
+
+		notification = dataAccessor.createOrUpdateNotification( notification );
+
+	}
+	
 	private void _createPratilipiPublishedNotifications( Pratilipi pratilipi, List<Long> followers ) {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -129,7 +169,7 @@ public class AuditLogProcessApi extends GenericApi {
 
 		List<Notification> existingNotificationList = dataAccessor.getNotificationListIterator(
 				null,
-				NotificationType.PRATILIPI_ADD,
+				NotificationType.PRATILIPI_PUBLISHED_FOLLOWER,
 				pratilipi.getId(),
 				null,
 				null ).list();
@@ -143,7 +183,7 @@ public class AuditLogProcessApi extends GenericApi {
 		for( Long followerUserId : followers )
 			notificationList.add( dataAccessor.newNotification(
 					followerUserId,
-					NotificationType.PRATILIPI_ADD,
+					NotificationType.PRATILIPI_PUBLISHED_FOLLOWER,
 					pratilipi.getId() ) );
 		
 		notificationList = dataAccessor.createOrUpdateNotificationList( notificationList );
@@ -186,11 +226,10 @@ public class AuditLogProcessApi extends GenericApi {
 	}
 	
 	
-	private void _createPratilipiPublishedEmail( Pratilipi pratilipi ) {
+	private void _createPratilipiPublishedEmail( Pratilipi pratilipi, Author author ) {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 	
-		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
 		if( author.getUserId() == null )
 			return;
 
@@ -259,6 +298,75 @@ public class AuditLogProcessApi extends GenericApi {
 		time = time - time % TimeUnit.DAYS.toMillis( 1 ); // 00:00 AM GMT
 		time = time - TimeUnit.MINUTES.toMillis( 330 ); // 00:00 AM IST
 		return date.getTime() > time;
+	}
+	
+	private List<Long> _getAeeUserIdList( Language language ) {
+
+		Long[] userIds = {};
+		
+		switch( language ) {
+			case HINDI:
+				userIds = new Long[] {
+						4790800105865216L, // veena@
+						5743817900687360L, // jitesh@
+						5991416564023296L, // sankar@
+						5664902681198592L, // shally@
+				}; break;
+			case GUJARATI:
+				userIds = new Long[] {
+						5644707593977856L, // nimisha@
+						6046961763352576L, // brinda@
+						5743817900687360L, // jitesh@
+						5991416564023296L, // sankar@
+						5664902681198592L, // shally@
+				}; break;
+			case TAMIL:
+				userIds = new Long[] {
+						5991416564023296L, // sankar@
+						5674672871964672L, // krithiha@
+						4900071594262528L, // dileepan@
+				}; break;
+			case MARATHI:
+				userIds = new Long[] {
+						4900189601005568L, // vrushali@
+						5743817900687360L, // jitesh@
+						5991416564023296L, // sankar@
+						5664902681198592L, // shally@
+				}; break;
+			case MALAYALAM:
+				userIds = new Long[] {
+						5666355716030464L, // vaisakh@
+						5674672871964672L, // krithiha@
+						5991416564023296L, // sankar@
+				}; break;
+			case BENGALI:
+				userIds = new Long[] {
+						6243664397336576L, // moumita@
+						5743817900687360L, // jitesh@
+						5991416564023296L, // sankar@
+						5664902681198592L, // shally@
+				}; break;
+			case TELUGU:
+				userIds = new Long[] {
+						5187684625547264L, // johny@
+						5674672871964672L, // krithiha@
+						5991416564023296L, // sankar@
+				}; break;
+			case KANNADA:
+				userIds = new Long[] {
+						5715256422694912L, // aruna@
+						5674672871964672L, // krithiha@
+						5991416564023296L, // sankar@
+				}; break;
+			default:
+				userIds = new Long[] {
+						5705241014042624L, // prashant@
+				}; break;
+			
+		}
+
+		return Arrays.asList( userIds );
+		
 	}
 	
 }
