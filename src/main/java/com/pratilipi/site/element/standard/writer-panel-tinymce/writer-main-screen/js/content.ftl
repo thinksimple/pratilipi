@@ -24,7 +24,7 @@ Content.prototype.populateContent = function( response ) {
 }; 
 
 Content.prototype.reset = function() {
-  this.tinymce_content_container.setContent("");
+  this.tinymce_content_container.setContent("<p></p>");
 };
 <#-- get content without line breaks -->
 Content.prototype.getContent = function( ) {
