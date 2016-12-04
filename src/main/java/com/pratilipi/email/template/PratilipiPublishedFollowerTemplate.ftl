@@ -1,5 +1,5 @@
 <!-- SENDER_NAME: Team Pratilipi -->
-<!-- SENDER_EMAIL: ${ contact_email } -->
+<!-- SENDER_EMAIL: contact@pratilipi.com -->
 <!-- SUBJECT: ${ author_name } has a story to tell! -->
 
 <!DOCTYPE html>
