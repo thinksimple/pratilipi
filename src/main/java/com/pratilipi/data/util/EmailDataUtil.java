@@ -112,7 +112,7 @@ public class EmailDataUtil {
 		if( user.getEmail() == null )
 			return EmailState.INVALID_EMAIL;
 
-		Author followed = dataAccessor.getAuthor( Long.parseLong( userAuthorId.substring( '-' ) + 1 ) );
+		Author followed = dataAccessor.getAuthor( Long.parseLong( userAuthorId.substring( userAuthorId.indexOf( '-' ) + 1 ) ) );
 		Author follower = dataAccessor.getAuthorByUserId( Long.parseLong( userAuthorId.substring( 0 , userAuthorId.indexOf( '-' ) ) ) );
 		AuthorData followerAuthorData = AuthorDataUtil.createAuthorData( follower );
 
