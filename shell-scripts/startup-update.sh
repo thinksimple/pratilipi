@@ -18,6 +18,6 @@ do
 	cd ~/test/pratilipi
 	sudo bash ~/test/pratilipi/shell-scripts/update-test.sh       2>&1 | grep -v "^\[INFO\]" | grep -v "Fetching origin" | logger -t cont_dep_script
 	
-	sleep 30
+	sleep 60
 
 done
