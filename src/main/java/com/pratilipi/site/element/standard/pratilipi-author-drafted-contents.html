@@ -7,9 +7,6 @@
 		.secondary-500 {
 			padding: 12px 8px;
 		}
-		.works-number {
-			font-size: 14px;
-		}
 		h6 {
 			font-weight: 700;
 		}
@@ -103,7 +100,6 @@
 			<h6 class="text-center pratilipi-red">
 				${ _strings.author_drafts }
 			</h6>
-			<div class="works-number text-center">{{ numberFound }} ${ _strings.author_count_works }</div>
 			<hr/>
 			<div class="row text-center">
 				<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
@@ -149,7 +145,6 @@
 
 				pratilipiList: { type: Array, value: function() { return []; } },
 				cursor: { type: String, value: null },
-				numberFound: { type: Number, value: null, observer: "_numberFoundObserver" },
 				showMore: { type: Boolean, value: false }
 			},
 
@@ -158,10 +153,6 @@
 					document.querySelector( 'pratilipi-alert' ).alert( "${ _strings.write_on_desktop_only }", false, 10 * 6000 );
 				else
 					document.querySelector( 'pratilipi-write' ).createNewPratilipi( this.author.authorId );
-			},
-
-			_numberFoundObserver: function() {
-				jQuery( this.querySelector( '.works-number' ) ).css( 'display', this.numberFound > 0 ? 'block' : 'none' );
 			},
 
 			removeFromPratilipiList: function( pratilipiId ) {
@@ -175,7 +166,6 @@
 				
 				if( index != -1 ) {
 					this.splice( 'pratilipiList', index, 1 );
-					this.set( 'numberFound', this.numberFound - 1 );
 				}
 			},
 
@@ -193,7 +183,6 @@
 
 			addToPratilipiList: function( pratilipi ) {
 				this.unshift( 'pratilipiList', pratilipi );
-				this.set( 'numberFound', this.numberFound + 1 );
 			},
 
 			processPratilipiListObject: function( pratilipiListObject ) {
@@ -201,7 +190,6 @@
 				for( var i = 0; i < pratilipiList.length; i++ )
 					this.push( 'pratilipiList', pratilipiList[i] );
 				this.set( 'cursor', pratilipiListObject.cursor );
-				this.set( 'numberFound', pratilipiListObject.numberFound != null ? pratilipiListObject.numberFound : 0 );
 				this.set( 'showMore', pratilipiList.length == 20 );
 			},
 
