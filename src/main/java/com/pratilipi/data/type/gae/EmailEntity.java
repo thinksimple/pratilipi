@@ -100,6 +100,11 @@ public class EmailEntity implements Email {
 	}
 
 	@Override
+	public Long getPrimaryContentIdLong() {
+		return PRIMARY_CONTENT_ID == null ? null : Long.parseLong( PRIMARY_CONTENT_ID );
+	}
+
+	@Override
 	public void setPrimaryContentId( String primaryContentId ) {
 		this.PRIMARY_CONTENT_ID = primaryContentId;
 	}
