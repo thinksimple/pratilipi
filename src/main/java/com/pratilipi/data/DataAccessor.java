@@ -148,6 +148,7 @@ public interface DataAccessor {
 	
 	// USER_AUTHOR Table
 	UserAuthor newUserAuthor();
+	UserAuthor getUserAuthor( String userAuthorId );
 	UserAuthor getUserAuthor( Long userId, Long authorId );
 	Map<String, UserAuthor> getUserAuthors( Collection<String> userAuthoriIds );
 	List<UserAuthor> getUserAuthorList( Long userId, List<Long> authorIdList );

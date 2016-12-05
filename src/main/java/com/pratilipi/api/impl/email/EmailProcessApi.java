@@ -1,7 +1,6 @@
 package com.pratilipi.api.impl.email;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import com.pratilipi.api.GenericApi;
@@ -12,9 +11,6 @@ import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
-import com.pratilipi.common.type.EmailState;
-import com.pratilipi.common.type.EmailType;
-import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataIdListIterator;
 import com.pratilipi.data.type.Email;
@@ -64,27 +60,9 @@ public class EmailProcessApi extends GenericApi {
 	public GenericResponse post( PostRequest request )
 			throws UnexpectedServerException {
 
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Email email = dataAccessor.getEmail( request.emailId );
-		EmailState emailState = null;
 
-		if( email.getState() == EmailState.SENT )
-			return new GenericResponse();
-
-		if( email.getType() == EmailType.PRATILIPI_PUBLISHED_AUTHOR_EMAIL ) {
-			emailState = EmailDataUtil.sendPratilipiPublisedAuthorEmail( Long.parseLong( email.getPrimaryContentId() ), email.getUserId() );
-
-		} else if( email.getType() == EmailType.PRATILIPI_PUBLISHED_FOLLOWER_EMAIL ) {
-			emailState = EmailDataUtil.sendPratilipiPublishedFollowerEmail( Long.parseLong( email.getPrimaryContentId() ), email.getUserId() );
-
-		} else if( email.getType() == EmailType.AUTHOR_FOLLOW_EMAIL ) {
-			emailState = EmailDataUtil.sendAuthorFollowEmail( email.getPrimaryContentId(), email.getUserId() );
-		}
-
-		email.setState( emailState );
-		email.setLastUpdated( new Date() );
-		dataAccessor.createOrUpdateEmail( email );
-
+		EmailDataUtil.sendEmail( request.emailId );
+		
 		return new GenericResponse();
 
 	}		
