@@ -31,7 +31,7 @@
 				<#if user.isGuest() == true>
 					<div class="sprites-icon header-sprite-icon account-circle-icon"></div>
 				<#else>
-					<img style="width: 24px; height: 24px; margin: 10px auto;" src="${ user.getUserImageUrl( 24 ) }" />
+					<img style="width: 24px; height: 24px; margin: 10px auto;" src="${ user.getProfileImageUrl( 24 ) }" />
 				</#if>
 				
 			</a>

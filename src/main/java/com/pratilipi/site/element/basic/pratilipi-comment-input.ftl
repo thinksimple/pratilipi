@@ -67,7 +67,7 @@
 <div class="secondary-500 pratilipi-shadow box comment-input">
 	<div class="row" style="height: 100%;">
 		<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1" style="margin-bottom: 8px;">
-			<img class="img-circle" style="margin: 0 auto;" src="${ user.getUserImageUrl( 64 ) }" alt="${ user.getDisplayName() }" title="${ user.getDisplayName() }"/>
+			<img class="img-circle" style="margin: 0 auto;" src="${ user.getProfileImageUrl( 64 ) }" alt="${ user.getDisplayName() }" title="${ user.getDisplayName() }"/>
 			<span class="hidden-sm hidden-md hidden-lg">${ user.getDisplayName() }</span>
 		</div>
 		<div class="col-xs-12 col-sm-11 col-md-11 col-lg-11" style="height: 100%;">
