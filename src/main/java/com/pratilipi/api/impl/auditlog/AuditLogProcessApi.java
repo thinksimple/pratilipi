@@ -64,6 +64,7 @@ public class AuditLogProcessApi extends GenericApi {
 		Set<Long> pratilipiUpdateIds = new HashSet<>();
 		Set<String> userAuthorFollowingIds = new HashSet<>();
 		Set<String> userPratilipiReviewIds = new HashSet<>();
+		Set<Long> userPratilipiPratilipiIds = new HashSet<>();
 		for( AuditLog auditLog : auditLogDataListCursorTuple.getDataList() ) {
 			// TODO: Delete following condition as soon as 'legacy' module is removed
 			if( auditLog.getUserId() == null || auditLog.getPrimaryContentId() == null ) {
@@ -76,20 +77,26 @@ public class AuditLogProcessApi extends GenericApi {
 				pratilipiUpdateIds.add( auditLog.getPrimaryContentIdLong() );
 			else if( auditLog.getAccessType() == AccessType.USER_AUTHOR_FOLLOWING )
 				userAuthorFollowingIds.add( auditLog.getPrimaryContentId() );
-			else if( auditLog.getAccessType()  == AccessType.USER_PRATILIPI_REVIEW )
-				userPratilipiReviewIds.add( auditLog.getPrimaryContentId() );
+			else if( auditLog.getAccessType()  == AccessType.USER_PRATILIPI_REVIEW ) {
+				String userPratilipiId = auditLog.getPrimaryContentId();
+				userPratilipiPratilipiIds.add( Long.parseLong( userPratilipiId.substring( userPratilipiId.indexOf( '-' ) + 1 ) ) );
+				userPratilipiReviewIds.add( userPratilipiId );
+			}
+
 		}
 
 		// Batch get PratilipiContent entities
-		Map<Long, Pratilipi> pratilipiUpdates = dataAccessor.getPratilipis( pratilipiUpdateIds );
+		Set<Long> allPratilipiIds = new HashSet<>( pratilipiUpdateIds );
+		allPratilipiIds.addAll( userPratilipiPratilipiIds );
+		Map<Long, Pratilipi> pratilipis = dataAccessor.getPratilipis( allPratilipiIds );
 		Map<String, UserAuthor> userAuthorFollowings = dataAccessor.getUserAuthors( userAuthorFollowingIds );
 		Map<String, UserPratilipi> userPratilipiReviews = dataAccessor.getUserPratilipis( userPratilipiReviewIds );
 
 		
 		// Make sets of required entities' ids
 		Set<Long> authorIds = new HashSet<>();
-		for( Pratilipi pratilipi : pratilipiUpdates.values() )
-			authorIds.add( pratilipi.getAuthorId() ); // Req. for PRATILIPI_PUBLISHED_AUTHOR
+		for( Pratilipi pratilipi : pratilipis.values() )
+			authorIds.add( pratilipi.getAuthorId() );
 		for( UserAuthor userAuthor : userAuthorFollowings.values() )
 			authorIds.add( userAuthor.getAuthorId() );
 		
@@ -99,7 +106,9 @@ public class AuditLogProcessApi extends GenericApi {
 		
 		
 		// auditLog.getAccessType() == AccessType.PRATILIPI_UPDATE
-		for( Pratilipi pratilipi : pratilipiUpdates.values() ) {
+		for( Long pratilipiId : pratilipiUpdateIds ) {
+
+			Pratilipi pratilipi = pratilipis.get( pratilipiId );
 				
 			if( pratilipi.getState() != PratilipiState.PUBLISHED )
 				continue;
@@ -133,7 +142,8 @@ public class AuditLogProcessApi extends GenericApi {
 		
 		// auditLog.getAccessType() == AccessType.USER_PRATILIPI_REVIEW
 		for( UserPratilipi userPratilipi : userPratilipiReviews.values() ) {
-			// TODO: Implementation
+			Long pratilipiId = userPratilipi.getPratilipiId();
+			_createUserPratilipiReviewEmails( userPratilipi, authors.get( pratilipis.get( pratilipiId ).getAuthorId() ) );
 		}
 
 
@@ -336,6 +346,37 @@ public class AuditLogProcessApi extends GenericApi {
 					author.getUserId(),
 					EmailType.AUTHOR_FOLLOW_EMAIL, 
 					userAuthor.getId() );
+		} else if( email.getState() == EmailState.DEFERRED ) {
+			email.setState( EmailState.PENDING );
+			email.setLastUpdated( new Date() );
+		} else {
+			return; // Do nothing
+		}
+
+
+		email = dataAccessor.createOrUpdateEmail( email );
+
+	}
+
+
+	private void _createUserPratilipiReviewEmails( UserPratilipi userPratilipi, Author author ) {
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+
+		// TODO: Remove it asap
+		if( ! UserAccessUtil.hasUserAccess( author.getUserId(), null, AccessType.USER_ADD ) )
+			return;
+
+		Email email = dataAccessor.getEmail(
+				author.getUserId(),
+				EmailType.USER_PRATILIPI_REVIEW_EMAIL, 
+				userPratilipi.getId() );
+
+		if( email == null ) {
+			email = dataAccessor.newEmail(
+					author.getUserId(),
+					EmailType.USER_PRATILIPI_REVIEW_EMAIL, 
+					userPratilipi.getId() );
 		} else if( email.getState() == EmailState.DEFERRED ) {
 			email.setState( EmailState.PENDING );
 			email.setLastUpdated( new Date() );
