@@ -62,9 +62,8 @@ public class AuditLogProcessApi extends GenericApi {
 
 		// Make sets of PrimaryContent ids
 		Set<Long> pratilipiUpdateIds = new HashSet<>();
-		Set<String> userAuthorFollowingIds = new HashSet<>();
 		Set<String> userPratilipiReviewIds = new HashSet<>();
-		Set<Long> userPratilipiPratilipiIds = new HashSet<>();
+		Set<String> userAuthorFollowingIds = new HashSet<>();
 		for( AuditLog auditLog : auditLogDataListCursorTuple.getDataList() ) {
 			// TODO: Delete following condition as soon as 'legacy' module is removed
 			if( auditLog.getUserId() == null || auditLog.getPrimaryContentId() == null ) {
@@ -75,32 +74,33 @@ public class AuditLogProcessApi extends GenericApi {
 				continue;
 			if( auditLog.getAccessType() == AccessType.PRATILIPI_UPDATE )
 				pratilipiUpdateIds.add( auditLog.getPrimaryContentIdLong() );
+			else if( auditLog.getAccessType()  == AccessType.USER_PRATILIPI_REVIEW )
+				userPratilipiReviewIds.add( auditLog.getPrimaryContentId() );
 			else if( auditLog.getAccessType() == AccessType.USER_AUTHOR_FOLLOWING )
 				userAuthorFollowingIds.add( auditLog.getPrimaryContentId() );
-			else if( auditLog.getAccessType()  == AccessType.USER_PRATILIPI_REVIEW ) {
-				String userPratilipiId = auditLog.getPrimaryContentId();
-				userPratilipiPratilipiIds.add( Long.parseLong( userPratilipiId.substring( userPratilipiId.indexOf( '-' ) + 1 ) ) );
-				userPratilipiReviewIds.add( userPratilipiId );
-			}
-
 		}
 
-		// Batch get PratilipiContent entities
-		Set<Long> allPratilipiIds = new HashSet<>( pratilipiUpdateIds );
-		allPratilipiIds.addAll( userPratilipiPratilipiIds );
-		Map<Long, Pratilipi> pratilipis = dataAccessor.getPratilipis( allPratilipiIds );
-		Map<String, UserAuthor> userAuthorFollowings = dataAccessor.getUserAuthors( userAuthorFollowingIds );
+		// Batch get PrimaryContent entities
 		Map<String, UserPratilipi> userPratilipiReviews = dataAccessor.getUserPratilipis( userPratilipiReviewIds );
-
+		Map<String, UserAuthor> userAuthorFollowings = dataAccessor.getUserAuthors( userAuthorFollowingIds );
 		
-		// Make sets of required entities' ids
+
+		// Batch get Pratilipi entities
+		Set<Long> pratilipiIds = new HashSet<>( pratilipiUpdateIds );
+		for( UserPratilipi userPratilipi : userPratilipiReviews.values() )
+			pratilipiIds.add( userPratilipi.getPratilipiId() );
+		Map<Long, Pratilipi> pratilipis = dataAccessor.getPratilipis( pratilipiIds );
+		
+		// Batch get Author entities
 		Set<Long> authorIds = new HashSet<>();
+//		for( Long pratilipiId : pratilipiUpdateIds )
+//			authorIds.add( pratilipis.get( pratilipiId ).getAuthorId() );
+//		for( UserPratilipi userPratilipi : userPratilipiReviews.values() )
+//			authorIds.add( pratilipis.get( userPratilipi.getPratilipiId() ).getAuthorId() );
 		for( Pratilipi pratilipi : pratilipis.values() )
 			authorIds.add( pratilipi.getAuthorId() );
 		for( UserAuthor userAuthor : userAuthorFollowings.values() )
 			authorIds.add( userAuthor.getAuthorId() );
-		
-		// Batch get required entites
 		Map<Long, Author> authors = dataAccessor.getAuthors( authorIds );
 
 		
@@ -109,7 +109,6 @@ public class AuditLogProcessApi extends GenericApi {
 		for( Long pratilipiId : pratilipiUpdateIds ) {
 
 			Pratilipi pratilipi = pratilipis.get( pratilipiId );
-				
 			if( pratilipi.getState() != PratilipiState.PUBLISHED )
 				continue;
 
@@ -131,22 +130,22 @@ public class AuditLogProcessApi extends GenericApi {
 			
 		}
 		
-
 		
+		// auditLog.getAccessType() == AccessType.USER_PRATILIPI_REVIEW
+		for( UserPratilipi userPratilipi : userPratilipiReviews.values() ) {
+			Long pratilipiId = userPratilipi.getPratilipiId();
+			_createUserPratilipiReviewEmail( userPratilipi, authors.get( pratilipis.get( pratilipiId ).getAuthorId() ) );
+		}
+
+
 		// auditLog.getAccessType() == AccessType.USER_AUTHOR_FOLLOWING
 		for( UserAuthor userAuthor : userAuthorFollowings.values() ) {
 			_createUserAuthorFollowingNotifications( userAuthor, authors.get( userAuthor.getAuthorId() ) );
 			_createUserAuthorFollowingEmails( userAuthor, authors.get( userAuthor.getAuthorId() ) );
 		}
+
 		
 		
-		// auditLog.getAccessType() == AccessType.USER_PRATILIPI_REVIEW
-		for( UserPratilipi userPratilipi : userPratilipiReviews.values() ) {
-			Long pratilipiId = userPratilipi.getPratilipiId();
-			_createUserPratilipiReviewEmails( userPratilipi, authors.get( pratilipis.get( pratilipiId ).getAuthorId() ) );
-		}
-
-
 		// Updating AppProperty.
 		if( auditLogDataListCursorTuple.getDataList().size() > 0 ) {
 			appProperty.setValue( auditLogDataListCursorTuple.getCursor() );
@@ -323,6 +322,41 @@ public class AuditLogProcessApi extends GenericApi {
 		
 	}
 
+	private void _createUserPratilipiReviewEmail( UserPratilipi userPratilipi, Author author ) {
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+
+		if( author.getUserId() == null )
+			return;
+		
+		// TODO: Remove it ASAP
+		if( ! UserAccessUtil.hasUserAccess( author.getUserId(), null, AccessType.USER_ADD ) )
+			return;
+
+		
+		Email email = dataAccessor.getEmail(
+				author.getUserId(),
+				EmailType.USER_PRATILIPI_REVIEW, 
+				userPratilipi.getId() );
+
+		
+		if( email == null ) {
+			email = dataAccessor.newEmail(
+					author.getUserId(),
+					EmailType.USER_PRATILIPI_REVIEW, 
+					userPratilipi.getId() );
+		} else if( email.getState() == EmailState.DEFERRED ) {
+			email.setState( EmailState.PENDING );
+			email.setLastUpdated( new Date() );
+		} else {
+			return; // Do nothing
+		}
+
+
+		email = dataAccessor.createOrUpdateEmail( email );
+
+	}
+	
 	private void _createUserAuthorFollowingEmails( UserAuthor userAuthor, Author author ) {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -330,7 +364,7 @@ public class AuditLogProcessApi extends GenericApi {
 		if( author.getUserId() == null ) // Followed
 			return;
 		
-		// TODO: Remove it asap
+		// TODO: Remove it ASAP
 		if( ! UserAccessUtil.hasUserAccess( author.getUserId(), null, AccessType.USER_ADD ) )
 			return;
 
@@ -346,37 +380,6 @@ public class AuditLogProcessApi extends GenericApi {
 					author.getUserId(),
 					EmailType.AUTHOR_FOLLOW, 
 					userAuthor.getId() );
-		} else if( email.getState() == EmailState.DEFERRED ) {
-			email.setState( EmailState.PENDING );
-			email.setLastUpdated( new Date() );
-		} else {
-			return; // Do nothing
-		}
-
-
-		email = dataAccessor.createOrUpdateEmail( email );
-
-	}
-
-
-	private void _createUserPratilipiReviewEmails( UserPratilipi userPratilipi, Author author ) {
-
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-
-		// TODO: Remove it asap
-		if( ! UserAccessUtil.hasUserAccess( author.getUserId(), null, AccessType.USER_ADD ) )
-			return;
-
-		Email email = dataAccessor.getEmail(
-				author.getUserId(),
-				EmailType.USER_PRATILIPI_REVIEW, 
-				userPratilipi.getId() );
-
-		if( email == null ) {
-			email = dataAccessor.newEmail(
-					author.getUserId(),
-					EmailType.USER_PRATILIPI_REVIEW, 
-					userPratilipi.getId() );
 		} else if( email.getState() == EmailState.DEFERRED ) {
 			email.setState( EmailState.PENDING );
 			email.setLastUpdated( new Date() );
