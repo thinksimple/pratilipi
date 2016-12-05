@@ -105,6 +105,7 @@ public class PratilipiBackupApi extends GenericApi {
 		
 		// Updating Cursor to AppProperty
 		appProperty.setValue( itr.getCursor().toWebSafeString() );
+		dataAccessor.createOrUpdateAppProperty( appProperty );
 		
 		
 /*		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -203,10 +204,10 @@ public class PratilipiBackupApi extends GenericApi {
 		GcsService gcsService = GcsServiceFactory.createGcsService( RetryParams.getDefaultInstance() );
 
 		String srcBucket = "static.pratilipi.com";
-		String dstBucket = "coldline.pratilipi.com";
+		String dstBucket = "backup.pratilipi.com";
 		
 		String srcPrefix = "pratilipi/" + request.pratilipiId + "/";
-		String dstPrefix = "pratilipi/" + dateTimeFormat.format( dateTime ) + "/" + request.pratilipiId + "/";
+		String dstPrefix = srcBucket + "/pratilipi-" + dateTimeFormat.format( dateTime ) + "/" + request.pratilipiId + "/";
 		
 		
 		try {
