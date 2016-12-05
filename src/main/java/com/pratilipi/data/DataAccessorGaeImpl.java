@@ -1294,6 +1294,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 
 	@Override
+	public Map<String, UserPratilipi> getUserPratilipis( Collection<String> userPratilipiIds ) {
+		return getEntities( UserPratilipiEntity.class, userPratilipiIds );
+	}
+
+	@Override
 	public UserPratilipi createOrUpdateUserPratilipi( UserPratilipi userPratilipi, AuditLog auditLog ) {
 		( (UserPratilipiEntity) userPratilipi ).setId( userPratilipi.getUserId() + "-" + userPratilipi.getPratilipiId() );
 		return createOrUpdateEntity( userPratilipi, auditLog );

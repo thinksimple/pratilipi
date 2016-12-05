@@ -690,6 +690,14 @@ public class DataAccessorMockImpl implements DataAccessor {
 		return null;
 	}
 
+
+	@Override
+	public Map<String, UserPratilipi> getUserPratilipis(
+			Collection<String> userPratilipiIds) {
+		// TODO: Implementation
+		return null;
+	}
+
 	@Override
 	public UserPratilipi createOrUpdateUserPratilipi( UserPratilipi userPratilipi, AuditLog auditLog ) {
 		for( int i = 0; i < UserPratilipiMock.USER_PRATILIPI_TABLE.size(); i++ ) {
