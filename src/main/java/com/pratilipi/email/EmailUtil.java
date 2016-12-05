@@ -38,12 +38,14 @@ public class EmailUtil {
 			EmailUtil.class.getName().substring( 0, EmailUtil.class.getName().lastIndexOf(".") ).replace( ".", "/" ) + "/template/";
 
 
+	@Deprecated
 	public static void sendMail( String name, String email, String templateName,
 			Language language ) throws UnexpectedServerException {
 		
 		sendMail( name, email, templateName, language, new HashMap<String, String>() );
 	}
 	
+	@Deprecated
 	public static void sendMail( String name, String email, String templateName,
 			Language language, Map<String, String> dataModel ) throws UnexpectedServerException {
 		
@@ -88,8 +90,7 @@ public class EmailUtil {
 	}
 	
 	public static void sendMail(
-			String recipientName, String recipientEmail, EmailType emailType,
-			Language emailLanguage, Map<String, String> dataModel )
+			String recipientName, String recipientEmail, EmailType emailType, Map<String, String> dataModel )
 			throws UnexpectedServerException {
 
 		String body = FreeMarkerUtil.processTemplate( dataModel, filePath + emailType.getTemplateName() );

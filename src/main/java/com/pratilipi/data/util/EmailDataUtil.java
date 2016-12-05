@@ -11,7 +11,6 @@ import java.util.logging.Logger;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.EmailState;
 import com.pratilipi.common.type.EmailType;
-import com.pratilipi.common.type.Language;
 import com.pratilipi.common.util.HtmlUtil;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
@@ -90,7 +89,6 @@ public class EmailDataUtil {
 				userData.getDisplayName(),
 				user.getEmail(),
 				type,
-				pratilipi.getLanguage(), 
 				dataModel );
 
 		return EmailState.SENT;
@@ -123,7 +121,7 @@ public class EmailDataUtil {
 				UserDataUtil.createUserData( followed ).getDisplayName(), 
 				followed.getEmail(), 
 				EmailType.AUTHOR_FOLLOW_EMAIL, 
-				followedAuthor.getLanguage() != null ? followedAuthor.getLanguage() : Language.ENGLISH,
+//				followedAuthor.getLanguage() != null ? followedAuthor.getLanguage() : Language.ENGLISH,
 				dataModel );
 		
 		return EmailState.SENT;
