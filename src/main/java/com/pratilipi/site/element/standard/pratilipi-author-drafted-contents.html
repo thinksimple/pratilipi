@@ -202,7 +202,7 @@
 					this.push( 'pratilipiList', pratilipiList[i] );
 				this.set( 'cursor', pratilipiListObject.cursor );
 				this.set( 'numberFound', pratilipiListObject.numberFound != null ? pratilipiListObject.numberFound : 0 );
-				this.set( 'showMore', pratilipiList.length == 20 && this.pratilipiList.length < this.numberFound );
+				this.set( 'showMore', pratilipiList.length == 20 );
 			},
 
 			ready: function() {
