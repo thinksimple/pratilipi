@@ -1,6 +1,6 @@
 <!-- SENDER_NAME: Team Pratilipi -->
 <!-- SENDER_EMAIL: contact@pratilipi.com -->
-<#-- SUBJECT: Meet your new follower: { user_pratilipi_name } -->
+<!-- SUBJECT: New review on your story ${ pratilipi_title } -->
 <!DOCTYPE html>
 <html>
 	<body style="padding: 0; margin: 0;">
@@ -24,14 +24,10 @@
 								<table style="width: 100%;">
 									<tr>
 										<td width="100%">
-											
-											
-											
-											
 											<table align="left" table-layout="fixed;" style="width: 100%; height: 100%;">
 												<tr>
 													<td>
-														<p style="margin: 15px 0 10px 0; color: #000; font-size: 16px;">{ user_pratilipi_name } has given a review on your story <b>{ pratilipi_title }</b>.</p>
+														<p style="margin: 15px 0 10px 0; color: #000; font-size: 16px;">${ user_pratilipi_name } has given a review on your story <b>${ pratilipi_title }</b>.</p>
 													</td>
 												</tr>
 											</table>
@@ -41,7 +37,7 @@
 														<table align="left" style="border-collapse: collapse;" cellspacing="0" cellpadding="0">
 															<tr>
 																<td>
-																	<a href="{ user_pratilipi_page_url }" target="_blank">
+																	<a href="${ user_pratilipi_page_url }" target="_blank">
 																		<img src="http://3.ptlp.co/author/image?authorId=5129075102318592&version=1451457916000&width=150" style="border:0; width: 60px; height: 60px; border-radius: 50%;" />
 																	</a>
 																</td>
@@ -52,42 +48,39 @@
 																	<table style="border-collapse: collapse;">
 																		<tr>
 																			<td>
-																				<a href="{ user_pratilipi_page_url }" style="color: #000; text-decoration: none; font-size: 14px; line-height: 19px; font-weight: bold;" target="_blank">
-																					{ user_pratilipi_name }
+																				<a href="${ user_pratilipi_page_url }" style="color: #000; text-decoration: none; font-size: 14px; line-height: 19px; font-weight: bold;" target="_blank">
+																					${ user_pratilipi_name }
 																				</a>
 																			</td>
 																		</tr>
 																		<#if user_pratilipi_rating??>
 																			<tr>
 																				<td>
-																					<span style="font-size: 14px; line-height: 19px; color: #c7c7c7;">{ user_pratilipi_rating }</span>
+																					<span style="font-size: 14px; line-height: 19px; color: #c7c7c7;">${ user_pratilipi_rating }</span>
 																				</td>
 																			</tr>
 																		</#if>
 																		<tr>
 																			<td>
-																				<span style="font-size: 14px; line-height: 19px; color: #c7c7c7;">{ user_pratilipi_creation_date }</span>
+																				<span style="font-size: 14px; line-height: 19px; color: #c7c7c7;">${ user_pratilipi_creation_date }</span>
 																			</td>
 																		</tr>
 																	</table>
 																</td>
 															</tr>
 														</table>
-														<table style="width: 100%; padding: 12px 0;">
-															<tr>
-																<td>
-																	{ user_pratilipi_review }
-																</td>
-															</tr>
-														</table>
+														<#if user_pratilipi_review ??>
+															<table style="width: 100%; padding: 12px 0;">
+																<tr>
+																	<td>
+																		${ user_pratilipi_review }
+																	</td>
+																</tr>
+															</table>
+														</#if>
 													</td>
 												</tr>
 											</table>
-											
-											
-											
-											
-											
 											<table align="center" cellspacing="0" cellpadding="0" table-layout="fixed" style="margin: 0 auto; width:100%;"> 
 												<tr>
 													<td height="10">
@@ -96,9 +89,9 @@
 												</tr>
 												<tr>
 													<td align="center" height="40" bgcolor="#D0021B" style="-webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; color: #ffffff; display: block; width: 100%; margin: auto;">
-														<a href="{ user_pratilipi_page_url }" target="_blank" style="font-size: 18px; text-decoration: none; line-height: 40px; width: 100%; display: inline-block;">
+														<a href="${ pratilipi_page_url }" target="_blank" style="font-size: 18px; text-decoration: none; line-height: 40px; width: 100%; display: inline-block;">
 															<span style="color: #ffffff; padding-left: 15px; padding-right: 15px;">
-																View { user_pratilipi_name } on Pratilipi
+																View on Pratilipi
 															</span>
 														</a>
 													</td>
@@ -109,8 +102,8 @@
 													<br/>
 													<br/>
 														If you face any problems, please reach out to us at 
-														<a href="mailto:{ contact_email }" style="color: #4a4a4a; text-decoration: underline;" target="_blank">
-															{ contact_email }
+														<a href="mailto:${ contact_email }" style="color: #4a4a4a; text-decoration: underline;" target="_blank">
+															${ contact_email }
 														</a>
 													<br/>
 													<br/>
