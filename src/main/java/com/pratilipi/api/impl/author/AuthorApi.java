@@ -13,6 +13,7 @@ import com.pratilipi.api.impl.pratilipi.PratilipiV2Api;
 import com.pratilipi.api.impl.user.UserApi;
 import com.pratilipi.api.impl.user.UserLoginApi;
 import com.pratilipi.api.impl.userauthor.UserAuthorFollowListApi;
+import com.pratilipi.api.impl.userpratilipi.UserPratilipiReviewListApi;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
@@ -28,7 +29,6 @@ import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.UserAuthor;
 import com.pratilipi.data.util.AuthorDataUtil;
 import com.pratilipi.filter.AccessTokenFilter;
-import com.pratilipi.filter.UxModeFilter;
 import com.pratilipi.taskqueue.Task;
 import com.pratilipi.taskqueue.TaskQueueFactory;
 
@@ -333,6 +333,10 @@ public class AuthorApi extends GenericApi {
 						: authorData.getName();
 				this.pageUrl = authorData.getPageUrl();
 			
+			} else if( clazz == UserPratilipiReviewListApi.class ) {
+				
+				this.authorId = authorData.getId();
+				
 			} else if( clazz == UserAuthorFollowListApi.class ) {
 				
 				if( authorData.getUser() == null ) {

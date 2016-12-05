@@ -14,6 +14,7 @@ import com.pratilipi.api.impl.blogpost.BlogPostListApi;
 import com.pratilipi.api.impl.comment.CommentApi;
 import com.pratilipi.api.impl.userauthor.UserAuthorFollowListApi;
 import com.pratilipi.api.impl.userpratilipi.UserPratilipiApi;
+import com.pratilipi.api.impl.userpratilipi.UserPratilipiReviewListApi;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
@@ -154,6 +155,15 @@ public class UserApi extends GenericApi {
 				this.profilePageUrl = userData.getProfilePageUrl();
 				this.profileImageUrl = userData.getProfileImageUrl();
 				
+			} else if( clazz == UserPratilipiReviewListApi.class ) {
+				
+				this.userId = userData.getId();
+				if( UxModeFilter.isAndroidApp() )
+					this.author = new AuthorApi.Response( userData.getAuthor(), clazz );
+				this.displayName = userData.getDisplayName();
+				this.profilePageUrl = userData.getProfilePageUrl();
+				this.profileImageUrl = userData.getProfileImageUrl();
+				
 			} else if( clazz == UserAuthorFollowListApi.class ) {
 
 				if( userData.getAuthor() == null ) {
@@ -211,11 +221,11 @@ public class UserApi extends GenericApi {
 			return profilePageUrl;
 		}
 		
-		public String getUserImageUrl() {
+		public String getProfileImageUrl() {
 			return profileImageUrl;
 		}
 		
-		public String getUserImageUrl( int width ) {
+		public String getProfileImageUrl( int width ) {
 			return profileImageUrl.indexOf( '?' ) == -1
 					? profileImageUrl + "?width=" + width
 					: profileImageUrl + "&width=" + width;

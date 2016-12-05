@@ -107,7 +107,7 @@ public class UserPratilipiApi extends GenericApi {
 				userImageUrl = userPratilipiData.getUserImageUrl();
 				userProfilePageUrl = userPratilipiData.getUserProfilePageUrl();
 	
-				user = new UserApi.Response( userPratilipiData.getUser(), UserPratilipiApi.class );
+				user = new UserApi.Response( userPratilipiData.getUser(), clazz );
 				
 				rating = userPratilipiData.getRating();
 				review = userPratilipiData.getReview();
