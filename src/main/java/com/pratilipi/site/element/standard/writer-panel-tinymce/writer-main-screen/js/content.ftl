@@ -56,7 +56,7 @@ Content.prototype.convertTextNodesToParagraphs = function() {
 };
 
 Content.prototype.removeBrs = function() {
-  this.$content_container.children("br").remove();
+  this.$content_container.children("br:not([data-mce-bogus])").remove();
 };
 
 Content.prototype.replaceNbsps = function() {

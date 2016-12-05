@@ -39,7 +39,7 @@ MainWriterPanel.prototype.init = function() {
   this.publish_modal_object.init();
   
   this.hideProgressBarOnMobileFocus();
-  this.initializeData();
+  //this.initializeData();
   
   /* add button listeners */
   this.attachActionButtonListeners();

@@ -73,6 +73,10 @@ Editor.prototype.init = function() {
 	  alignright : {selector : 'p', styles : {textAlign : 'right'} },        
     },
     setup : function(ed) {
+	  ed.on('init', function (e) {
+	    console.log('Editor was initialized.');
+	    _this.parent_object.initializeData();
+	  });
       if( screen.width > 480 ) {
         ed.on("keydown", function(e){
             var keycode = e.keycode || e.which;
