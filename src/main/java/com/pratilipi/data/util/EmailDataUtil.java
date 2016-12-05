@@ -168,7 +168,7 @@ public class EmailDataUtil {
 												? reviewerUserData.getAuthor().getName() 
 												: reviewerUserData.getAuthor().getNameEn() );
 		dataModel.put( "user_pratilipi_page_url", domain + reviewerUserData.getProfilePageUrl() );
-		dataModel.put( "user_pratilipi_image_url", reviewerUserData.getProfileImageUrl() );
+		dataModel.put( "user_pratilipi_image_url", reviewerUserData.getAuthor().getImageUrl( 100 ) );
 		dataModel.put( "user_pratilipi_creation_date", _getDateFormat( userPratilipiData.getReviewDate() ) );
 
 		if( userPratilipiData.getRating() != null )
