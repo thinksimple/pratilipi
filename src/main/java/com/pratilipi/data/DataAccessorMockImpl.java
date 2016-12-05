@@ -722,6 +722,12 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 	
 	@Override
+	public UserAuthor getUserAuthor( String userAuthorId ) {
+		// TODO: Implementation
+		return null;
+	}
+	
+	@Override
 	public UserAuthor getUserAuthor( Long userId, Long pratilipiId ) {
 		// TODO: Implementation
 		return null;

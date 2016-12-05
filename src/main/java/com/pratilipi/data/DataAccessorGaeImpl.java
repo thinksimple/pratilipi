@@ -1313,6 +1313,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	@Override
+	public UserAuthor getUserAuthor( String userAuthorId ) {
+		return getEntity( UserAuthorEntity.class, userAuthorId );
+	}
+	
+	@Override
 	public UserAuthor getUserAuthor( Long userId, Long authorId ) {
 		if( userId == null || userId.equals( 0L ) || authorId == null || authorId.equals( 0L ) )
 			return null;
