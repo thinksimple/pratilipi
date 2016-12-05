@@ -38,19 +38,6 @@ public class EmailUtil {
 			EmailUtil.class.getName().substring( 0, EmailUtil.class.getName().lastIndexOf(".") ).replace( ".", "/" ) + "/template/";
 
 
-	private static void _sendMail( String senderEmail, String senderName, 
-			String recipientEmail, String recipientName, String subject, String body ) throws UnsupportedEncodingException, MessagingException {
-		Message msg = new MimeMessage( session );
-		msg.setFrom( new InternetAddress( senderEmail, senderName ) );
-		msg.addRecipient( Message.RecipientType.TO, new InternetAddress( recipientEmail, recipientName ) );
-		msg.addRecipient( Message.RecipientType.BCC, new InternetAddress( "mail-archive@pratilipi.com", "Mail Archive" ) );
-		msg.setSubject( subject );
-		msg.setContent( body, "text/html" );
-		Transport.send( msg );
-		logger.log( Level.INFO, "Successfully sent mail to " + recipientEmail + "." );
-	}
-	
-	
 	public static void sendMail( String name, String email, String templateName,
 			Language language ) throws UnexpectedServerException {
 		
@@ -91,57 +78,61 @@ public class EmailUtil {
 					break;
 			}
 
-			_sendMail( senderEmail, senderName, email, name, subject, body );
+			_sendMail( senderName, senderEmail, name, email, subject, body );
 
 		} catch ( IOException | URISyntaxException e1 ) {
 			logger.log( Level.SEVERE, "Failed to process \"" + templateName + "." + language.getCode() + "\" email template.", e1 );
-			throw new UnexpectedServerException();
-		} catch ( MessagingException e ) {
-			logger.log( Level.SEVERE, "Failed to send mail to " + email + ".", e );
 			throw new UnexpectedServerException();
 		}
 		
 	}
 	
-	public static void sendMail( String email, String name, EmailType emailType,
-			Language language, Map<String, String> dataModel ) throws UnexpectedServerException {
+	public static void sendMail(
+			String recipientName, String recipientEmail, EmailType emailType,
+			Language emailLanguage, Map<String, String> dataModel )
+			throws UnexpectedServerException {
 
-		dataModel.put( "language", language.toString() );
-		dataModel.put( "contact_email", language == Language.ENGLISH
-											? "contact@pratilipi.com"
-											: language.toString().toLowerCase() + "@pratilipi.com" );
-		
 		String body = FreeMarkerUtil.processTemplate( dataModel, filePath + emailType.getTemplateName() );
 
-		Pattern senderNamePattern = Pattern.compile( "<!-- SENDER_NAME:(.+?)-->" );
-		Pattern senderEmailPattern = Pattern.compile( "<!-- SENDER_EMAIL:(.+?)-->" );
-		Pattern subjectPattern = Pattern.compile( "<!-- SUBJECT:(.+?)-->" );
+		Pattern senderNamePattern = Pattern.compile( "<!-- SENDER_NAME:(.+?) -->" );
+		Pattern senderEmailPattern = Pattern.compile( "<!-- SENDER_EMAIL:(.+?) -->" );
+		Pattern subjectPattern = Pattern.compile( "<!-- SUBJECT:(.+?) -->" );
 
 		String senderName = null;
 		String senderEmail = null;
 		String subject = null;
 
 		Matcher m = null;
+		if( ( m = senderNamePattern.matcher( body ) ).find() )
+			senderName = m.group( 1 ).trim();
+		if( ( m = senderEmailPattern.matcher( body ) ).find() )
+			senderEmail = m.group( 1 ).trim();
+		if( ( m = subjectPattern.matcher( body ) ).find() )
+			subject = m.group( 1 ).trim();
 
-		if( (m = senderNamePattern.matcher( body ) ).find() ) {
-			senderName = m.group(1).trim();
-		}
-		if( (m = senderEmailPattern.matcher( body ) ).find() ) {
-			senderEmail = m.group(1).trim();
-		}
-		if( (m = subjectPattern.matcher( body ) ).find() ) {
-			subject = m.group(1).trim();
-		}
-
-		try {
-			_sendMail( senderEmail, senderName, email, name, subject, body );
-
-		} catch ( UnsupportedEncodingException | MessagingException e ) {
-			logger.log( Level.SEVERE, "Failed to send mail to " + email + ".", e );
-			throw new UnexpectedServerException();
-		}
+		_sendMail( senderName, senderEmail, recipientName, recipientEmail, subject, body );
 
 	}
 
+	private static void _sendMail(
+			String senderName, String senderEmail, 
+			String recipientName, String recipientEmail,
+			String subject, String body ) throws UnexpectedServerException {
+		
+		try {
+			Message msg = new MimeMessage( session );
+			msg.setFrom( new InternetAddress( senderEmail, senderName ) );
+			msg.addRecipient( Message.RecipientType.TO, new InternetAddress( recipientEmail, recipientName ) );
+			msg.addRecipient( Message.RecipientType.BCC, new InternetAddress( "mail-archive@pratilipi.com", "Mail Archive" ) );
+			msg.setSubject( subject );
+			msg.setContent( body, "text/html" );
+			Transport.send( msg );
+			logger.log( Level.INFO, "Successfully sent mail to " + recipientEmail + "." );
+		} catch ( UnsupportedEncodingException | MessagingException e ) {
+			logger.log( Level.SEVERE, "Failed to send mail to " + recipientEmail + ".", e );
+			throw new UnexpectedServerException();
+		}
+		
+	}
 
 }

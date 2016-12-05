@@ -30,6 +30,7 @@ public class EmailDataUtil {
 	@SuppressWarnings("unused")
 	private static final Logger logger =
 			Logger.getLogger( EmailDataUtil.class.getName() );
+
 	
 	public static void sendEmail( Long emailId ) throws UnexpectedServerException {
 
@@ -86,8 +87,8 @@ public class EmailDataUtil {
 		dataModel.put( "author_page_url", domain + authorData.getPageUrl() );
 
 		EmailUtil.sendMail(
-				user.getEmail(),
 				userData.getDisplayName(),
+				user.getEmail(),
 				type,
 				pratilipi.getLanguage(), 
 				dataModel );
@@ -119,8 +120,8 @@ public class EmailDataUtil {
 			dataModel.put( "follower_followers_count", followerAuthorData.getFollowCount().toString() );
 
 		EmailUtil.sendMail(
-				followed.getEmail(), 
 				UserDataUtil.createUserData( followed ).getDisplayName(), 
+				followed.getEmail(), 
 				EmailType.AUTHOR_FOLLOW_EMAIL, 
 				followedAuthor.getLanguage() != null ? followedAuthor.getLanguage() : Language.ENGLISH,
 				dataModel );
