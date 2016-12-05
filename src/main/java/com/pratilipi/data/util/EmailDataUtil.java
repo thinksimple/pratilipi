@@ -43,11 +43,11 @@ public class EmailDataUtil {
 		EmailState emailState = null;
 		if( dataAccessor.getUser( email.getUserId() ).getEmail() == null )
 			emailState = EmailState.INVALID_EMAIL;
-		else if( email.getType() == EmailType.PRATILIPI_PUBLISHED_AUTHOR_EMAIL )
+		else if( email.getType() == EmailType.PRATILIPI_PUBLISHED_AUTHOR )
 			emailState = sendPratilipiPublisedEmail( email.getUserId(), email.getPrimaryContentIdLong(), email.getType() );
-		else if( email.getType() == EmailType.PRATILIPI_PUBLISHED_FOLLOWER_EMAIL )
+		else if( email.getType() == EmailType.PRATILIPI_PUBLISHED_FOLLOWER )
 			emailState = sendPratilipiPublisedEmail( email.getUserId(), email.getPrimaryContentIdLong(), email.getType() );
-		else if( email.getType() == EmailType.AUTHOR_FOLLOW_EMAIL )
+		else if( email.getType() == EmailType.AUTHOR_FOLLOW )
 			emailState = sendAuthorFollowEmail( email.getUserId(), email.getPrimaryContentId() );
 
 		
@@ -120,7 +120,7 @@ public class EmailDataUtil {
 		EmailUtil.sendMail(
 				UserDataUtil.createUserData( followed ).getDisplayName(), 
 				followed.getEmail(), 
-				EmailType.AUTHOR_FOLLOW_EMAIL, 
+				EmailType.AUTHOR_FOLLOW, 
 //				followedAuthor.getLanguage() != null ? followedAuthor.getLanguage() : Language.ENGLISH,
 				dataModel );
 		

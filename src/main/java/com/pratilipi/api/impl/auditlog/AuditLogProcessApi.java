@@ -264,13 +264,13 @@ public class AuditLogProcessApi extends GenericApi {
 		
 		Email email = dataAccessor.getEmail(
 				author.getUserId(),
-				EmailType.PRATILIPI_PUBLISHED_AUTHOR_EMAIL, 
+				EmailType.PRATILIPI_PUBLISHED_AUTHOR, 
 				pratilipi.getId() );
 
 		if( email == null ) {
 			email = dataAccessor.newEmail(
 					author.getUserId(),
-					EmailType.PRATILIPI_PUBLISHED_AUTHOR_EMAIL,
+					EmailType.PRATILIPI_PUBLISHED_AUTHOR,
 					pratilipi.getId() );
 		} else if( email.getState() == EmailState.DEFERRED ) {
 			email.setState( EmailState.PENDING );
@@ -292,7 +292,7 @@ public class AuditLogProcessApi extends GenericApi {
 		
 		List<Email> existingEmailList = dataAccessor.getEmailList(
 				null,
-				EmailType.PRATILIPI_PUBLISHED_FOLLOWER_EMAIL,
+				EmailType.PRATILIPI_PUBLISHED_FOLLOWER,
 				pratilipi.getId(),
 				null,
 				null );
@@ -315,7 +315,7 @@ public class AuditLogProcessApi extends GenericApi {
 			if( UserAccessUtil.hasUserAccess( follower, null, AccessType.USER_ADD ) )
 				emailList.add( dataAccessor.newEmail(
 					follower,
-					EmailType.PRATILIPI_PUBLISHED_FOLLOWER_EMAIL,
+					EmailType.PRATILIPI_PUBLISHED_FOLLOWER,
 					pratilipi.getId() ) );
 		}
 		
@@ -337,14 +337,14 @@ public class AuditLogProcessApi extends GenericApi {
 		
 		Email email = dataAccessor.getEmail(
 				author.getUserId(),
-				EmailType.AUTHOR_FOLLOW_EMAIL, 
+				EmailType.AUTHOR_FOLLOW, 
 				userAuthor.getId() );
 
 		
 		if( email == null ) {
 			email = dataAccessor.newEmail(
 					author.getUserId(),
-					EmailType.AUTHOR_FOLLOW_EMAIL, 
+					EmailType.AUTHOR_FOLLOW, 
 					userAuthor.getId() );
 		} else if( email.getState() == EmailState.DEFERRED ) {
 			email.setState( EmailState.PENDING );
@@ -369,13 +369,13 @@ public class AuditLogProcessApi extends GenericApi {
 
 		Email email = dataAccessor.getEmail(
 				author.getUserId(),
-				EmailType.USER_PRATILIPI_REVIEW_EMAIL, 
+				EmailType.USER_PRATILIPI_REVIEW, 
 				userPratilipi.getId() );
 
 		if( email == null ) {
 			email = dataAccessor.newEmail(
 					author.getUserId(),
-					EmailType.USER_PRATILIPI_REVIEW_EMAIL, 
+					EmailType.USER_PRATILIPI_REVIEW, 
 					userPratilipi.getId() );
 		} else if( email.getState() == EmailState.DEFERRED ) {
 			email.setState( EmailState.PENDING );
