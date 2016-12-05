@@ -35,6 +35,7 @@ import com.pratilipi.data.type.Email;
 import com.pratilipi.data.type.Notification;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.UserAuthor;
+import com.pratilipi.data.type.UserPratilipi;
 
 
 @SuppressWarnings("serial")
@@ -62,6 +63,7 @@ public class AuditLogProcessApi extends GenericApi {
 		// Make sets of PrimaryContent ids
 		Set<Long> pratilipiUpdateIds = new HashSet<>();
 		Set<String> userAuthorFollowingIds = new HashSet<>();
+		Set<String> userPratilipiReviewIds = new HashSet<>();
 		for( AuditLog auditLog : auditLogDataListCursorTuple.getDataList() ) {
 			// TODO: Delete following condition as soon as 'legacy' module is removed
 			if( auditLog.getUserId() == null || auditLog.getPrimaryContentId() == null ) {
@@ -74,11 +76,14 @@ public class AuditLogProcessApi extends GenericApi {
 				pratilipiUpdateIds.add( auditLog.getPrimaryContentIdLong() );
 			else if( auditLog.getAccessType() == AccessType.USER_AUTHOR_FOLLOWING )
 				userAuthorFollowingIds.add( auditLog.getPrimaryContentId() );
+			else if( auditLog.getAccessType()  == AccessType.USER_PRATILIPI_REVIEW )
+				userPratilipiReviewIds.add( auditLog.getPrimaryContentId() );
 		}
 
 		// Batch get PratilipiContent entities
 		Map<Long, Pratilipi> pratilipiUpdates = dataAccessor.getPratilipis( pratilipiUpdateIds );
 		Map<String, UserAuthor> userAuthorFollowings = dataAccessor.getUserAuthors( userAuthorFollowingIds );
+		Map<String, UserPratilipi> userPratilipiReviews = dataAccessor.getUserPratilipis( userPratilipiReviewIds );
 
 		
 		// Make sets of required entities' ids
@@ -120,16 +125,18 @@ public class AuditLogProcessApi extends GenericApi {
 
 		
 		// auditLog.getAccessType() == AccessType.USER_AUTHOR_FOLLOWING
-		
-
-		
 		for( UserAuthor userAuthor : userAuthorFollowings.values() ) {
 			_createUserAuthorFollowingNotifications( userAuthor, authors.get( userAuthor.getAuthorId() ) );
 			_createUserAuthorFollowingEmails( userAuthor, authors.get( userAuthor.getAuthorId() ) );
 		}
+		
+		
+		// auditLog.getAccessType() == AccessType.USER_PRATILIPI_REVIEW
+		for( UserPratilipi userPratilipi : userPratilipiReviews.values() ) {
+			// TODO: Implementation
+		}
 
-		
-		
+
 		// Updating AppProperty.
 		if( auditLogDataListCursorTuple.getDataList().size() > 0 ) {
 			appProperty.setValue( auditLogDataListCursorTuple.getCursor() );
