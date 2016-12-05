@@ -5,7 +5,7 @@
 /classic                      क्लासिक               App#imageName::classic.jpg            App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"classic" }
 /search?q=magazines           पत्रिकाएं                App#imageName::magazines.jpg           App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "searchQuery":"magazines" }
 /blog                         संपादकीय              App#imageName::blog.jpg                App#BlogPostList::{ "language":"HINDI", "blogId":5683739602452480 }
-/event/tasveere-bolti-hai     तस्वीरें बोलतीं हैं         App#imageName::event_generic6.jpg        App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "eventId":6475006012817408 }     
+/event/kash-aisa-hota        काश! ऐसा होता...        App#imageName::event_generic6.jpg        App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "eventId":5630734770372608 }     
 /events                       ऑनलाइन  स्पर्धाएं        App#imageName::events.jpg                App#EventList::{ "language":"HINDI" }
 /author-interviews            लेखकों के साक्षात्कार      App#imageName::authorinterviews.jpg      App#BlogPostList::{ "language":"HINDI", "blogId":5197509039226880 }
 
