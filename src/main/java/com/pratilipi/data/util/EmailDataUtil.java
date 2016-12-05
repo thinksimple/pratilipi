@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.EmailState;
 import com.pratilipi.common.type.EmailType;
+import com.pratilipi.common.type.Language;
 import com.pratilipi.common.util.HtmlUtil;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
@@ -29,6 +30,23 @@ public class EmailDataUtil {
 	@SuppressWarnings("unused")
 	private static final Logger logger =
 			Logger.getLogger( EmailDataUtil.class.getName() );
+
+
+	private static void _sendMail( 
+			String recipientName, String recipientEmail, EmailType emailType, Language language, Map<String, String> dataModel ) 
+			throws UnexpectedServerException {
+
+		dataModel.put( "language", language.toString() );
+		dataModel.put( "contact_email", language == null || language == Language.ENGLISH ? 
+								"contact@pratilipi.com" : language.toString().toLowerCase() + "@pratilipi.com" );
+
+		EmailUtil.sendMail(
+				recipientName,
+				recipientEmail,
+				emailType,
+				dataModel );
+
+	}
 
 	
 	public static void sendEmail( Long emailId ) throws UnexpectedServerException {
@@ -85,11 +103,7 @@ public class EmailDataUtil {
 		dataModel.put( "author_name", authorData.getName() != null ? authorData.getName() : authorData.getNameEn() );
 		dataModel.put( "author_page_url", domain + authorData.getPageUrl() );
 
-		EmailUtil.sendMail(
-				userData.getDisplayName(),
-				user.getEmail(),
-				type,
-				dataModel );
+		_sendMail( userData.getDisplayName(), user.getEmail(), type, pratilipiData.getLanguage(), dataModel );
 
 		return EmailState.SENT;
 
@@ -117,13 +131,8 @@ public class EmailDataUtil {
 		if( followerAuthorData.getFollowCount() > 0 )
 			dataModel.put( "follower_followers_count", followerAuthorData.getFollowCount().toString() );
 
-		EmailUtil.sendMail(
-				UserDataUtil.createUserData( followed ).getDisplayName(), 
-				followed.getEmail(), 
-				EmailType.AUTHOR_FOLLOW, 
-//				followedAuthor.getLanguage() != null ? followedAuthor.getLanguage() : Language.ENGLISH,
-				dataModel );
-		
+		_sendMail( UserDataUtil.createUserData( followed ).getDisplayName(), followed.getEmail(), EmailType.AUTHOR_FOLLOW, followedAuthor.getLanguage() != null ? followedAuthor.getLanguage() : Language.ENGLISH, dataModel );
+
 		return EmailState.SENT;
 
 	}
