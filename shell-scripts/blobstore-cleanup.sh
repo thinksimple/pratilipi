@@ -1,6 +1,3 @@
-gsutil -m rm -r gs://backup.pratilipi.com/static.pratilipi.com/2015-11-19
-gsutil -m rm -r gs://backup.pratilipi.com/static.pratilipi.com/2016-mm-01
-gsutil -m rm -r gs://backup.pratilipi.com/static.pratilipi.com/2016-mm-02
 gsutil -m rm -r gs://backup.pratilipi.com/static.pratilipi.com/2016-mm-03
 gsutil -m rm -r gs://backup.pratilipi.com/static.pratilipi.com/2016-mm-04
 gsutil -m rm -r gs://backup.pratilipi.com/static.pratilipi.com/2016-mm-30

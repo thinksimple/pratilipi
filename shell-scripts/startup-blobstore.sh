@@ -12,6 +12,6 @@ do
 	cd ~
 	sudo bash ~/test/pratilipi/shell-scripts/blobstore-cleanup.sh   2>&1 | logger -t blobstore_script
 	
-	sleep 60
+	sleep 360
 
 done
