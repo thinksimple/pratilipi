@@ -241,6 +241,10 @@ public class PratilipiDataUtil {
 	}
 	
 
+	public static PratilipiData createPratilipiData( Pratilipi pratilipi ) throws UnexpectedServerException {
+		return createPratilipiData( pratilipi, null, DataAccessorFactory.getDataAccessor().getAuthor( pratilipi.getAuthorId() ), false );
+	}
+
 	public static PratilipiData createPratilipiData( Pratilipi pratilipi, Author author ) throws UnexpectedServerException {
 		return createPratilipiData( pratilipi, null, author, false );
 	}

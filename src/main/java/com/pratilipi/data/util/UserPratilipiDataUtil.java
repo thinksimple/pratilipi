@@ -63,7 +63,7 @@ public class UserPratilipiDataUtil {
 
 	}
 
-	private static UserPratilipiData createUserPratilipiData( UserPratilipi userPratilipi )
+	public static UserPratilipiData createUserPratilipiData( UserPratilipi userPratilipi )
 			throws UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();

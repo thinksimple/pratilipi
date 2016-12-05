@@ -18,6 +18,7 @@ import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.client.PratilipiData;
 import com.pratilipi.data.client.UserData;
+import com.pratilipi.data.client.UserPratilipiData;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Email;
 import com.pratilipi.data.type.Pratilipi;
@@ -31,6 +32,15 @@ public class EmailDataUtil {
 	private static final Logger logger =
 			Logger.getLogger( EmailDataUtil.class.getName() );
 
+
+	private static String _getDateFormat( Date date ) {
+
+		DateFormat dateFormat = new SimpleDateFormat( "dd MMM yyyy" );
+		dateFormat.setTimeZone( TimeZone.getTimeZone( "IST" ) );
+
+		return dateFormat.format( date );
+
+	}
 
 	private static void _sendMail( 
 			String recipientName, String recipientEmail, EmailType emailType, Language language, Map<String, String> dataModel ) 
@@ -67,6 +77,8 @@ public class EmailDataUtil {
 			emailState = sendPratilipiPublisedEmail( email.getUserId(), email.getPrimaryContentIdLong(), email.getType() );
 		else if( email.getType() == EmailType.AUTHOR_FOLLOW )
 			emailState = sendAuthorFollowEmail( email.getUserId(), email.getPrimaryContentId() );
+		else if( email.getType() == EmailType.USER_PRATILIPI_REVIEW )
+			emailState = sendUserPratilipiReviewEmail( email.getUserId(), email.getPrimaryContentId() );
 
 		
 		email.setState( emailState );
@@ -89,15 +101,12 @@ public class EmailDataUtil {
 		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author );
 		AuthorData authorData = pratilipiData.getAuthor();
 		
-		DateFormat dateFormat = new SimpleDateFormat( "dd MMM yyyy" );
-		dateFormat.setTimeZone( TimeZone.getTimeZone( "IST" ) );
-
 		String domain = "http://" + pratilipiData.getLanguage().getHostName();
 		
 		Map<String, String> dataModel = new HashMap<String, String>();
 		dataModel.put( "pratilipi_title", pratilipiData.getTitle() != null ? pratilipiData.getTitle() : pratilipiData.getTitleEn() );
 		dataModel.put( "pratilipi_cover_image_url", pratilipiData.getCoverImageUrl( 150 ) );
-		dataModel.put( "pratilipi_listing_date", dateFormat.format( pratilipiData.getListingDate() ) );
+		dataModel.put( "pratilipi_listing_date", _getDateFormat( pratilipiData.getListingDate() ) );
 		dataModel.put( "pratilipi_summary", HtmlUtil.truncateText( pratilipiData.getSummary(), 250 ) );
 		dataModel.put( "pratilipi_page_url", domain + pratilipiData.getPageUrl() );
 		dataModel.put( "author_name", authorData.getName() != null ? authorData.getName() : authorData.getNameEn() );
@@ -132,6 +141,52 @@ public class EmailDataUtil {
 			dataModel.put( "follower_followers_count", followerAuthorData.getFollowCount().toString() );
 
 		_sendMail( UserDataUtil.createUserData( followed ).getDisplayName(), followed.getEmail(), EmailType.AUTHOR_FOLLOW, followedAuthor.getLanguage() != null ? followedAuthor.getLanguage() : Language.ENGLISH, dataModel );
+
+		return EmailState.SENT;
+
+	}
+
+	private static EmailState sendUserPratilipiReviewEmail( Long userId, String userPratilipiId )
+			throws UnexpectedServerException {
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+
+		UserPratilipiData userPratilipiData = UserPratilipiDataUtil.createUserPratilipiData( dataAccessor.getUserPratilipi( userPratilipiId ) );
+		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( dataAccessor.getPratilipi( userPratilipiData.getPratilipiId() ) );
+
+		UserData reviewerUserData = UserDataUtil.createUserData( dataAccessor.getUser( userPratilipiData.getUserId() ) );
+		UserData authorUserData = UserDataUtil.createUserData( dataAccessor.getUser( userId ) );
+
+		String domain = "http://" + pratilipiData.getLanguage().getHostName();
+
+		Map<String, String> dataModel = new HashMap<String, String>();
+
+		dataModel.put( "pratilipi_title", pratilipiData.getTitle() != null ? pratilipiData.getTitle() : pratilipiData.getTitleEn() );
+		dataModel.put( "pratilipi_page_url", domain + pratilipiData.getPageUrl() );
+		
+		dataModel.put( "user_pratilipi_name", reviewerUserData.getAuthor().getName() != null 
+												? reviewerUserData.getAuthor().getName() 
+												: reviewerUserData.getAuthor().getNameEn() );
+		dataModel.put( "user_pratilipi_page_url", domain + reviewerUserData.getProfilePageUrl() );
+		dataModel.put( "user_pratilipi_image_url", reviewerUserData.getProfileImageUrl() );
+		dataModel.put( "user_pratilipi_creation_date", _getDateFormat( userPratilipiData.getReviewDate() ) );
+
+		if( userPratilipiData.getRating() != null )
+			dataModel.put( "user_pratilipi_rating", userPratilipiData.getRating().toString() );
+		
+		if( userPratilipiData.getReview() != null )
+			dataModel.put( "user_pratilipi_review", HtmlUtil.truncateText( userPratilipiData.getReview(), 250 ) );
+		
+		if( userPratilipiData.getCommentCount() != null )
+			dataModel.put( "user_pratilipi_comment_count", userPratilipiData.getCommentCount().toString() );
+
+
+		_sendMail( authorUserData.getDisplayName(), 
+					authorUserData.getEmail(), 
+					EmailType.USER_PRATILIPI_REVIEW, 
+					pratilipiData.getLanguage() != null ? pratilipiData.getLanguage() : Language.ENGLISH, 
+					dataModel );
+
 
 		return EmailState.SENT;
 
