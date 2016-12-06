@@ -1,14 +1,9 @@
-gsutil -m rm -r gs://backup.pratilipi.com/static.pratilipi.com/2016-mm-03
-gsutil -m rm -r gs://backup.pratilipi.com/static.pratilipi.com/2016-mm-04
-gsutil -m rm -r gs://backup.pratilipi.com/static.pratilipi.com/2016-mm-30
-
-gsutil -m rm -r gs://backup.pratilipi.com/public.pratilipi.com
-
-gsutil -m mv -r gs://static.pratilipi.com/author-image gs://backup.pratilipi.com/static.pratilipi.com-author-image
+gsutil -m mv -r gs://static.pratilipi.com/pratilipi-keywords gs://backup.pratilipi.com/static.pratilipi.com-pratilipi-keywords
 
 gsutil -m rm -r gs://backup.pratilipi.com/static.pratilipi.com/yyyy-mm-01
 gsutil -m rm -r gs://backup.pratilipi.com/static.pratilipi.com/yyyy-mm-02
 gsutil -m rm -r gs://backup.pratilipi.com/static.pratilipi.com/yyyy-mm-03
 gsutil -m rm -r gs://backup.pratilipi.com/static.pratilipi.com/yyyy-mm-04
+gsutil -m rm -r gs://backup.pratilipi.com/static.pratilipi.com/yyyy-mm-05
 
 gsutil -m rm -r gs://backup.pratilipi.com/static.pratilipi.com/yyyy-mm-$(date +%d)
