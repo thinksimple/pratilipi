@@ -68,7 +68,7 @@ var suggesterMethods = {
       this.goUp();
     } else if( translation.action == 'down') {
       this.goDown();
-    } else if( translation.action == 'escape' ) {
+    } else if( translation.action == 'escape'|| translation.action == 'tab' ) {
       this.clear();
     }
   },
@@ -250,6 +250,8 @@ var Translation = function(keycode) {
     this.action = 'right';
   } else if(keycode == '27') {
     this.action = 'escape';
+  } else if(keycode == 9) {
+    this.action = 'tab';
   }
 
   else if(keycode > 32 && keycode < 127) {

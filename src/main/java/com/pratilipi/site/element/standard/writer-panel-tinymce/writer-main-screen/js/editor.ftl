@@ -21,7 +21,7 @@ Editor.prototype.init = function() {
     'paste'],
     menubar: false,
     statusbar: false,
-    toolbar: 'bold italic underline | alignleft aligncenter alignright | blockquote link image | bullist numlist  visualblocks code',
+    toolbar: 'bold italic underline | alignleft aligncenter alignright | blockquote link imageCustom | bullist numlist  visualblocks code',
     height: 300,
     language: 'hi_IN',
     language_url : 'https://storage.googleapis.com/devo-pratilipi.appspot.com/hi_IN.js',
@@ -87,7 +87,24 @@ Editor.prototype.init = function() {
               e.preventDefault(); 
             }
         });
-      }           
+      }
+      ed.addButton('imageCustom', {
+        icon: 'image',
+        tooltip: "Insert/edit image",
+        cmd: "mceImage",
+        onpostrender: monitorNodeChange
+      }); 
+      function lowercasedElemName(elem) {
+        return elem.nodeName.toLowerCase();
+      }
+      function monitorNodeChange() {
+        var btn = this;
+        ed.on('NodeChange', function(e) {
+          var parents = e.parents.map(lowercasedElemName);
+          // console.log(parents.includes("blockquote"));
+          btn.disabled(parents.includes("blockquote") || parents.includes("li"));
+        });
+      }                 
     },
     images_upload_handler: function (blobInfo, success, failure) {
       // console.log("coding karni kab seekhoge");

@@ -232,7 +232,7 @@ transliterationApp.prototype.shouldPreventKeydown = function( keycode ) {
 
 transliterationApp.prototype.isKeydownActionKey = function( translation ) {
   if( this.isTransliterationInputType() ) {
-    return ( translation.action == 'up' || translation.action == 'down' || translation.action == 'left' || translation.action == 'right' || translation.action == 'escape' || translation.action == 'backspace');
+    return ( translation.action == 'up' || translation.action == 'down' || translation.action == 'left' || translation.action == 'right' || translation.action == 'escape' || translation.action == 'tab' || translation.action == 'backspace');
   } else {
     return ( translation.action == 'up' || translation.action == 'down' || translation.action == 'left' || translation.action == 'right' || translation.action == 'escape' );
   }
