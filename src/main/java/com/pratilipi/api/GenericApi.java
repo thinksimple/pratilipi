@@ -159,7 +159,7 @@ public abstract class GenericApi extends HttpServlet {
 				if( value.isEmpty() || value.equals( "null" ) || value.equals( "undefined" ) ) {
 					requestParamsStr.append( "\"" + param + "\":" + null + "," );
 				} else {
-					requestParamsStr.append( "\"" + param + "\":\"" + value.replaceAll( "\"", "\\\\\"" ) + "\"," );
+					requestParamsStr.append( "\"" + param + "\":\"" + value.replace( "\\", "\\\\" ).replace( "\"", "\\\"" ) + "\"," );
 				}
 			}
 		}
