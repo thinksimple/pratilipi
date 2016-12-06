@@ -18,6 +18,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeUtility;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
@@ -123,7 +124,7 @@ public class EmailUtil {
 		try {
 			MimeMessage msg = new MimeMessage( session );
 			msg.setFrom( new InternetAddress( senderEmail, senderName ) );
-			msg.addRecipient( Message.RecipientType.TO, new InternetAddress( recipientEmail, recipientName ) );
+			msg.addRecipient( Message.RecipientType.TO, new InternetAddress( recipientEmail, MimeUtility.encodeText( recipientName, "UTF-8", "Q" ) ) );
 			msg.addRecipient( Message.RecipientType.BCC, new InternetAddress( "mail-archive@pratilipi.com", "Mail Archive" ) );
 			msg.setSubject( subject, "UTF-8" );
 			msg.setContent( body, "text/html" );
