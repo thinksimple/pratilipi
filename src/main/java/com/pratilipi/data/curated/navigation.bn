@@ -2,7 +2,7 @@
 /pathoker-pratham-pchondo   পাঠকের প্রথম পছন্দ                App#imageName::mostpopular.jpg        App#PratilipiList::{ "language":"BENGALI", "state":"PUBLISHED", "listName":"pathoker-pratham-pchondo" }
 /natun-prakashito-rachona   নতুন প্রকাশিত রচনা                App#imageName::newpublished.jpg       App#PratilipiList::{ "language":"BENGALI", "state":"PUBLISHED", "listName":"natun-prakashito-rachona" }
 /classic-lekhak             ক্লাসিক লেখক                     App#imageName::mostliked.jpg           App#PratilipiList::{ "language":"BENGALI", "state":"PUBLISHED", "listName":"classic-lekhak" }
-/event/nohi-daanob-nohi-mahamaanob   নহি দানব নহি মহামানব    App#imageName::event_fiction.jpg       App#PratilipiList::{ "language":"BENGALI", "state":"PUBLISHED", "eventId":5593263756017664 }
+/event/shakher-velai-sukher-basha   শখের ভেলায় সুখের বাসা    App#imageName::event_fiction.jpg       App#PratilipiList::{ "language":"BENGALI", "state":"PUBLISHED", "eventId":6081163895504896 }
 /blog                       সম্পাদকীয়                       App#imageName::blog.jpg                  App#BlogPostList::{ "language":"BENGALI", "blogId":5683739602452480 }
 /events                     অনলাইন প্রতিযোগিতায়              App#imageName::events.jpg               App#EventList::{ "language":"BENGALI" }
 /author-interviews          লেখকের সাক্ষাৎকার                 App#imageName::authorinterviews.jpg     App#BlogPostList::{ "language":"BENGALI", "blogId":5197509039226880 }
