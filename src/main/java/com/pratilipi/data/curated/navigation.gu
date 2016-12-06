@@ -2,7 +2,7 @@
 /vachakoni-top-pasand     વાચકોની ટોપ પસંદ            App#imageName::mostpopular.jpg         App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"vachakoni-top-pasand" } 
 /meghanino-vartavaibhav   મેઘાણીનો વાર્તાવૈભવ            App#imageName::event_generic2.jpg        App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"meghanino-vartavaibhav" }
 /navi-prakashit-rachnao   નવી પ્રકાશિત રચનાઓ          App#imageName::newpublished.jpg       App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"navi-prakashit-rachnao" }
-/event/likhitang-laganio  લિખિતંગ: લાગણીઓ!          App#imageName::event_generic6.jpg        App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "eventId":4930209154334720 }
+/event/kalam-aek-kalpvruksh  'કલમ' - એક કલ્પવૃક્ષ         App#imageName::event_generic6.jpg        App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "eventId":5285077077458944 }
 /events                   ઓનલાઈન સ્પર્ધાઓ            App#imageName::events.jpg         App#EventList::{ "language":"GUJARATI" }
 /gujarati-samayiko        ગુજરાતી સામયિકો             App#imageName::magazines.jpg         App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"gujarati-samayiko" }
 /blog                     બ્લોગ                      App#imageName::blog.jpg         App#BlogPostList::{ "language":"GUJARATI", "blogId":5683739602452480 }
