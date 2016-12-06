@@ -37,6 +37,7 @@ import com.pratilipi.api.impl.notification.NotificationListApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentIndexApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentV1Api;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentV2Api;
+import com.pratilipi.api.impl.pratilipi.PratilipiContentV3Api;
 import com.pratilipi.api.impl.pratilipi.PratilipiListV2Api;
 import com.pratilipi.api.impl.pratilipi.PratilipiV2Api;
 import com.pratilipi.api.impl.user.UserApi;
@@ -44,7 +45,6 @@ import com.pratilipi.api.impl.userauthor.UserAuthorFollowApi;
 import com.pratilipi.api.impl.userauthor.UserAuthorFollowListApi;
 import com.pratilipi.api.impl.userpratilipi.UserPratilipiApi;
 import com.pratilipi.api.impl.userpratilipi.UserPratilipiReviewListApi;
-import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -80,6 +80,7 @@ import com.pratilipi.data.type.PratilipiContentDoc.Chapter;
 import com.pratilipi.data.util.BlogPostDataUtil;
 import com.pratilipi.data.util.EventDataUtil;
 import com.pratilipi.data.util.PratilipiDataUtil;
+import com.pratilipi.data.util.PratilipiDocUtil;
 import com.pratilipi.data.util.UserDataUtil;
 import com.pratilipi.data.util.UserPratilipiDataUtil;
 import com.pratilipi.filter.AccessTokenFilter;
@@ -266,18 +267,18 @@ public class PratilipiSite extends HttpServlet {
 					pageNo = Integer.parseInt( request.getParameter( RequestParameter.READER_PAGE_NUMBER.getName() ) );
 				else if( AccessTokenFilter.getCookieValue( pageNoPattern, request ) != null )
 					pageNo = Integer.parseInt( AccessTokenFilter.getCookieValue( pageNoPattern, request ) );
-
-				if( pageNo == null || pageNo < 1 )
+				else
 					pageNo = 1;
 
-				String version = SystemProperty.STAGE.equals( "gamma" ) ? "2" : "1";
-				if( request.getParameter( RequestParameter.API_VERSION.getName() ) != null )
-					version = request.getParameter( RequestParameter.API_VERSION.getName() );
+				dataModel = createDataModelForReadPage( pratilipiId, 
+														pageNo, 
+														request.getParameter( RequestParameter.API_VERSION.getName() ), 
+														basicMode );
 
-				dataModel = createDataModelForReadPage( pratilipiId, pageNo, version, basicMode );
 				dataModel.put( "fontSize", fontSize != null ? Integer.parseInt( fontSize ) : 14 );
 				dataModel.put( "imageSize", imageSize != null ? Integer.parseInt( imageSize ) : 636 );
 				dataModel.put( "action", action );
+
 				templateName = ( basicMode ? "ReadBasic.ftl" : "Read.ftl" );
 
 			} else if( uri.equals( "/search" ) ) {
@@ -1129,24 +1130,44 @@ public class PratilipiSite extends HttpServlet {
 
 	}
 	
-	public Map<String, Object> createDataModelForReadPage( Long pratilipiId, Integer pageNo, String version, boolean basicMode )
+	public Map<String, Object> createDataModelForReadPage( Long pratilipiId, Integer chapterNo, String version, boolean basicMode )
 			throws InvalidArgumentException, UnexpectedServerException, InsufficientAccessException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( pratilipiId );
-		Author author = dataAccessor.getAuthor( pratilipi.getAuthorId() );
-		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author, false );
+		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi );
+		PratilipiV2Api.Response pratilipiResponse = new PratilipiV2Api.Response( pratilipiData );
+		UserPratilipiApi.GetRequest userPratilipiRequest = new UserPratilipiApi.GetRequest();
+		userPratilipiRequest.setPratilipiId( pratilipiId );
+		UserPratilipiApi.Response userPratilipiResponse = ApiRegistry
+														.getApi( UserPratilipiApi.class )
+														.getUserPratilipi( userPratilipiRequest );
 
 		String indexJson = null;
 		Integer pageCount = null;
 		Object content = null;
-		boolean oldContent = version.equals( "1" ) && pratilipi.isOldContent(); 
+
+		// In case, version is not specified in URL
+		if( version == null ) {
+
+			if( SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD )
+				&& pratilipi.isOldContent() 
+				&& pratilipi.getContentType() == PratilipiContentType.PRATILIPI ) {
+				version = "1";
+
+			} else {
+				version = "3";
+
+			}
+
+		}
 
 		// Index and pageCount for all contents
-		if( oldContent ) {
+		if( version.equals( "1" ) ) {
 			indexJson = pratilipi.getIndex();
 			pageCount = pratilipi.getPageCount() > 0 ? pratilipi.getPageCount() : 1;
-		} else {
+
+		} else if( version.equals( "2" ) || version.equals( "3" ) ) { // Json format
 			PratilipiContentIndexApi.GetRequest indexReq = new PratilipiContentIndexApi.GetRequest();
 			indexReq.setPratilipiId( pratilipiId );
 			PratilipiContentIndexApi.Response indexRes = ApiRegistry
@@ -1154,35 +1175,50 @@ public class PratilipiSite extends HttpServlet {
 														.getIndex( indexReq );
 			indexJson = indexRes.getIndex().toString();
 			pageCount = indexRes.getIndex().size() > 0 ? indexRes.getIndex().size() : 1;
+
 		}
 
 
 		if( pratilipi.getContentType() == PratilipiContentType.PRATILIPI ) {
 
-			if( pageNo > pageCount ) pageNo = pageCount;
+			if( chapterNo < 1 ) chapterNo = 1;
+			if( chapterNo > pageCount ) chapterNo = pageCount;
 
-			if( oldContent ) {
+			if( version.equals( "1" ) ) {
 				PratilipiContentV1Api.GetRequest req = new PratilipiContentV1Api.GetRequest();
 				req.setPratilipiId( pratilipiId );
-				req.setChapterNo( pageNo );
+				req.setChapterNo( chapterNo );
 				PratilipiContentV1Api.GetResponse res = (PratilipiContentV1Api.GetResponse) ApiRegistry
 																		.getApi( PratilipiContentV1Api.class )
 																		.get( req );
 				content = res.getContent();
 
-			} else {
+			} else if( version.equals( "2" ) ) {
 				PratilipiContentV2Api.GetRequest req = new PratilipiContentV2Api.GetRequest();
 				req.setPratilipiId( pratilipiId );
-				req.setChapterNo( pageNo );
+				req.setChapterNo( chapterNo );
 				PratilipiContentV2Api.GetResponse res = (PratilipiContentV2Api.GetResponse) ApiRegistry
 																		.getApi( PratilipiContentV2Api.class )
 																		.get( req );
 				content = res.getContent();
 				if( res.getChapterTitle() != null )
 					content = "<h1>" + res.getChapterTitle() + "</h1>" + content;
+
+			} else if( version.equals( "3" ) ) {
+				PratilipiContentV3Api.GetRequest req = new PratilipiContentV3Api.GetRequest();
+				req.setPratilipiId( pratilipiId );
+				req.setChapterNo( chapterNo );
+				PratilipiContentV3Api.GetResponse res = (PratilipiContentV3Api.GetResponse) ApiRegistry
+																		.getApi( PratilipiContentV3Api.class )
+																		.get( req );
+				content = res.getContent();
+				if( res.getChapterTitle() != null )
+					content = "<h1>" + res.getChapterTitle() + "</h1>" + content;
+
 			}
 
 		} else if( pratilipi.getContentType() == PratilipiContentType.IMAGE ) {
+
 			PratilipiContentV2Api.GetRequest req = new PratilipiContentV2Api.GetRequest();
 			req.setPratilipiId( pratilipiId );
 			PratilipiContentV2Api.GetResponse res = (PratilipiContentV2Api.GetResponse) ApiRegistry
@@ -1196,40 +1232,33 @@ public class PratilipiSite extends HttpServlet {
 			for( Chapter chapter : pcDoc.getChapterList() )
 				pageCount += chapter.getPageCount();
 
-			if( pageNo > pageCount ) pageNo = pageCount;
+			if( chapterNo < 1 ) chapterNo = 1;
+			if( chapterNo > pageCount ) chapterNo = pageCount;
 
 			if( basicMode ) {
 				JsonObject jsonObject = null;
 				int c = 0;
 				for( int i = 1; i <= pcDoc.getChapterCount(); i++ ) {
 					for( int j = 1; j <= pcDoc.getChapter( i ).getPageCount(); j++ ) {
-						if( ++c == pageNo ) {
+						if( ++c == chapterNo ) {
 							jsonObject = pcDoc.getChapter( i ).getPage( j ).getPageletList().get( 0 ).getData();
 							break;
 						}
 					}
 				}
 
-				String imageName = jsonObject.get( "name" ).getAsString();
-				content = "<img src=\"/api/pratilipi/content/image?pratilipiId=" + pratilipi.getId() + "&name=" + imageName + "\" />";
+				content = PratilipiDocUtil.getImageTag( pratilipiId, jsonObject );
 
 			} else {
 				content = new Gson().toJson( res.getContent() );
 			}
 
 		}
-		
-		Gson gson = new Gson();
-		PratilipiV2Api.Response pratilipiResponse = new PratilipiV2Api.Response( pratilipiData );
-		UserPratilipiApi.GetRequest userPratilipiRequest = new UserPratilipiApi.GetRequest();
-		userPratilipiRequest.setPratilipiId( pratilipiId );
-		UserPratilipiApi.Response userPratilipiResponse = ApiRegistry
-														.getApi( UserPratilipiApi.class )
-														.getUserPratilipi( userPratilipiRequest );
 
+		Gson gson = new Gson();
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", createReadPageTitle( pratilipiData, 1, 1 ) );
-		dataModel.put( "pageNo", pageNo );
+		dataModel.put( "pageNo", chapterNo );
 		dataModel.put( "pageCount", pageCount );
 		dataModel.put( "content", content );
 		dataModel.put( "version", version );
@@ -1244,8 +1273,9 @@ public class PratilipiSite extends HttpServlet {
 			dataModel.put( "userpratilipiJson", gson.toJson( userPratilipiResponse ) );
 			dataModel.put( "indexJson", gson.toJson( indexJson ) );
 		}
+
 		return dataModel;
-		
+
 	}
 
 	
