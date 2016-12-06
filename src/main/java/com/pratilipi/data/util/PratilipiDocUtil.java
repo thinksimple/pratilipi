@@ -71,6 +71,14 @@ public class PratilipiDocUtil {
 	private static final String nonKeywordsPattern = "&nbsp;|&lt;|&gt;|&amp;|&cent;|&pound;|&yen;|&euro;|&copy;|&reg;|<[^>]*>|[!-/:-@\\[-`{-~]|।";
 
 
+	private static String _getImageTag( Long pratilipiId, JsonObject jsonObject ) {
+		double widthSet = jsonObject.has( "ratio" ) 
+				? jsonObject.get( "ratio" ).getAsDouble() * jsonObject.get( "width" ).getAsDouble()
+				: jsonObject.get( "width" ).getAsDouble();
+		return "<img src=\"/api/pratilipi/content/image?pratilipiId=" + pratilipiId + "&name=" + jsonObject.get( "name" ).getAsString() + "&width=" + (int)widthSet +"\"/>";
+	}
+
+
 	private static AlignmentType _getAlignmentType( Node node ) {
 		if( node.hasAttr( "style" ) && ! node.attr( "style" ).trim().isEmpty() ) {
 			for( String style : node.attr( "style" ).split( ";" ) ) {
@@ -263,7 +271,7 @@ public class PratilipiDocUtil {
 				else if( pageletDoc.getType() == PageletType.BLOCK_QUOTE )
 					html += "<blockquote>" + pageletDoc.getDataAsString() + "</blockquote>";
 				else if( pageletDoc.getType() == PageletType.IMAGE )
-					html += "<img src=\"/api/pratilipi/content/image?pratilipiId=" + pratilipi.getId() + "&name=" + pageletDoc.getData().get( "name" ).getAsString() + "\"/>";
+					html += _getImageTag( pratilipi.getId(), pageletDoc.getData() );
 				else if( pageletDoc.getType() == PageletType.LIST_ORDERED )
 					html += "<ol>" + pageletDoc.getDataAsString() + "</ol>";
 				else if( pageletDoc.getType() == PageletType.LIST_UNORDERED )
