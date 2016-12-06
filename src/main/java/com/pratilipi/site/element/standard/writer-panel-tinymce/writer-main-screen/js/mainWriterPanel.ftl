@@ -250,7 +250,7 @@ MainWriterPanel.prototype.getChapter = function( chapterNum ) {
     data: {
       pratilipiId: ${ pratilipiId?c },
       chapterNo: chapterNum,
-      _apiVer: getUrlParameter( "_apiVer" ) != null ? getUrlParameter( "_apiVer" ) : "1"
+      _apiVer: getUrlParameter( "_apiVer" ) != null ? getUrlParameter( "_apiVer" ) : "3"
     },
     success:function(response){
       
@@ -348,7 +348,7 @@ MainWriterPanel.prototype.saveChapter = function( autosaveFlag ) {
     chapterNo: this.currChapter,
     chapterTitle: this.chapter_name_object.getTitle(),
     content: this.content_object.getContentBeforeSaving(),
-    _apiVer: getUrlParameter( "_apiVer" ) != null ? getUrlParameter( "_apiVer" ) : "1"
+    _apiVer: getUrlParameter( "_apiVer" ) != null ? getUrlParameter( "_apiVer" ) : "3"
   };
   toastr.options = {
     positionClass: 'toast-top-center',

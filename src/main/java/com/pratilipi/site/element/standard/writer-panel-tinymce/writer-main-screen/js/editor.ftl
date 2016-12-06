@@ -21,7 +21,7 @@ Editor.prototype.init = function() {
     'paste'],
     menubar: false,
     statusbar: false,
-    toolbar: 'bold italic underline | alignleft aligncenter alignright | blockquote link imageCustom | bullist numlist  visualblocks code',
+    toolbar: 'bold italic underline | alignleft aligncenter alignright | CustomBlockquote link imageCustom | Ulist Olist  visualblocks code',
     height: 300,
     language: 'hi_IN',
     language_url : 'https://storage.googleapis.com/devo-pratilipi.appspot.com/hi_IN.js',
@@ -93,7 +93,25 @@ Editor.prototype.init = function() {
         tooltip: "Insert/edit image",
         cmd: "mceImage",
         onpostrender: monitorNodeChange
+      });
+      ed.addButton('Ulist', {
+        icon: 'mce-ico mce-i-bullist',
+        tooltip: "Insert/edit image",
+        cmd: "InsertUnorderedList",
+        onpostrender: monitorListChange
       }); 
+      ed.addButton('Olist', {
+        icon: 'mce-ico mce-i-numlist',
+        tooltip: "Insert/edit image",
+        cmd: "InsertOrderedList",
+        onpostrender: monitorListChange
+      });      
+      ed.addButton('CustomBlockquote', {
+        icon: 'mce-ico mce-i-blockquote',
+        tooltip: "Insert/edit image",
+        cmd: "mceBlockQuote",
+        onpostrender: monitorBlockquoteChange
+      });        
       function lowercasedElemName(elem) {
         return elem.nodeName.toLowerCase();
       }
@@ -103,6 +121,20 @@ Editor.prototype.init = function() {
           var parents = e.parents.map(lowercasedElemName);
           // console.log(parents.includes("blockquote"));
           btn.disabled(parents.includes("blockquote") || parents.includes("li"));
+        });
+      }
+      function monitorListChange() {
+        var btn = this;
+        ed.on('NodeChange', function(e) {
+          var parents = e.parents.map(lowercasedElemName);
+          btn.disabled(parents.includes("blockquote"));
+        });
+      }
+      function monitorBlockquoteChange() {
+        var btn = this;
+        ed.on('NodeChange', function(e) {
+          var parents = e.parents.map(lowercasedElemName);
+          btn.disabled(parents.includes("li"));
         });
       }                 
     },
