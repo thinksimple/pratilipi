@@ -23,6 +23,7 @@ import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.NotificationState;
 import com.pratilipi.common.type.NotificationType;
 import com.pratilipi.common.type.PratilipiState;
+import com.pratilipi.common.type.UserReviewState;
 import com.pratilipi.common.util.SystemProperty;
 import com.pratilipi.common.util.UserAccessUtil;
 import com.pratilipi.data.DataAccessor;
@@ -133,15 +134,25 @@ public class AuditLogProcessApi extends GenericApi {
 		
 		// auditLog.getAccessType() == AccessType.USER_PRATILIPI_REVIEW
 		for( UserPratilipi userPratilipi : userPratilipiReviews.values() ) {
+
+			if( userPratilipi.getReviewState() != UserReviewState.PUBLISHED )
+				continue;
+
 			Long pratilipiId = userPratilipi.getPratilipiId();
 			_createUserPratilipiReviewEmail( userPratilipi, authors.get( pratilipis.get( pratilipiId ).getAuthorId() ) );
+
 		}
 
 
 		// auditLog.getAccessType() == AccessType.USER_AUTHOR_FOLLOWING
 		for( UserAuthor userAuthor : userAuthorFollowings.values() ) {
+
+			if( ! userAuthor.isFollowing() )
+				continue;
+
 			_createUserAuthorFollowingNotifications( userAuthor, authors.get( userAuthor.getAuthorId() ) );
 			_createUserAuthorFollowingEmails( userAuthor, authors.get( userAuthor.getAuthorId() ) );
+
 		}
 
 		
