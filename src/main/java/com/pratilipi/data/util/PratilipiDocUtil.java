@@ -512,7 +512,8 @@ public class PratilipiDocUtil {
 				} else if( childNode.nodeName().equals( "b" )
 						|| childNode.nodeName().equals( "i" )
 						|| childNode.nodeName().equals( "u" )
-						|| childNode.nodeName().equals( "a" ) ) {
+						|| childNode.nodeName().equals( "a" )
+						|| childNode.nodeName().equals( "br" ) ) {
 					Node badNode = _validateContent( childNode );
 					if( badNode != null )
 						return badNode;
