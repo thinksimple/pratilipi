@@ -58,7 +58,7 @@ public class DataStoreCleanupUtil {
 
 		if( ! preview && user.getState() != UserState.DELETED && user.getState() != UserState.BLOCKED ) {
 			user.setState( UserState.DELETED );
-			ObjectifyService.ofy().save().entity( user ); // Save
+			ObjectifyService.ofy().save().entity( user ).now(); // Save
 		}
 
 		
@@ -75,7 +75,7 @@ public class DataStoreCleanupUtil {
 		if( ! preview ) {
 			for( AccessToken accessToken : accessTokenList ) {
 				accessToken.setExpiry( new Date() );
-				ObjectifyService.ofy().save().entity( accessToken ); // Save
+				ObjectifyService.ofy().save().entity( accessToken ).now(); // Save
 			}
 		}
 		
@@ -91,7 +91,7 @@ public class DataStoreCleanupUtil {
 
 		int reviewCount = 0;
 		for( UserPratilipi userPratilipi : userPratilipiList )
-			if( userPratilipi.getReviewState() != UserReviewState.DELETED && userPratilipi.getReviewState() != UserReviewState.BLOCKED );
+			if( userPratilipi.getReviewState() != UserReviewState.DELETED && userPratilipi.getReviewState() != UserReviewState.BLOCKED )
 				reviewCount++;
 		
 		System.out.println( "Review ## " + reviewCount );
@@ -100,7 +100,7 @@ public class DataStoreCleanupUtil {
 			for( UserPratilipi userPratilipi : userPratilipiList ) {
 				if( userPratilipi.getReviewState() != UserReviewState.DELETED && userPratilipi.getReviewState() != UserReviewState.BLOCKED ) {
 					userPratilipi.setReviewState( UserReviewState.DELETED );
-					ObjectifyService.ofy().save().entity( userPratilipi ); // Save
+					ObjectifyService.ofy().save().entity( userPratilipi ).now(); // Save
 				}
 			}
 		}
@@ -126,7 +126,7 @@ public class DataStoreCleanupUtil {
 			for( UserAuthor userAuthor : userAuthorList ) {
 				if( userAuthor.isFollowing() ) {
 					userAuthor.setFollowing( false );
-					ObjectifyService.ofy().save().entity( userAuthor ); // Save
+					ObjectifyService.ofy().save().entity( userAuthor ).now(); // Save
 				}
 			}
 		}
@@ -152,7 +152,7 @@ public class DataStoreCleanupUtil {
 			for( Comment comment : commentList ) {
 				if( comment.getState() == CommentState.ACTIVE ) {
 					comment.setState( CommentState.DELETED );
-					ObjectifyService.ofy().save().entity( comment ); // Save
+					ObjectifyService.ofy().save().entity( comment ).now(); // Save
 				}
 			}
 		}
@@ -172,11 +172,11 @@ public class DataStoreCleanupUtil {
 			if( vote.getType() != VoteType.NONE )
 				voteCount++;
 		
-		System.out.println( "Vote count: " + voteCount );
+		System.out.println( "Vote ## " + voteCount );
 
 		if( ! preview )
 			for( Vote vote : voteList )
-				ObjectifyService.ofy().delete().entity( vote ); // Delete
+				ObjectifyService.ofy().delete().entity( vote ).now(); // Delete
 		
 		
 		// AUTHOR Table
@@ -186,6 +186,7 @@ public class DataStoreCleanupUtil {
 				.filter( "USER_ID", user.getId() )
 				.list();
 		
+		System.out.println();
 		System.out.println( "AuthorEntity # " + authorList.size() );
 		
 		if( authorList.size() == 0 )
@@ -204,7 +205,7 @@ public class DataStoreCleanupUtil {
 		
 		if( ! preview && author.getState() != AuthorState.DELETED && author.getState() != AuthorState.BLOCKED ) {
 			author.setState( AuthorState.DELETED );
-			ObjectifyService.ofy().save().entity( author ); // Save
+			ObjectifyService.ofy().save().entity( author ).now(); // Save
 		}
 		
 		
@@ -228,7 +229,7 @@ public class DataStoreCleanupUtil {
 			for( UserAuthor userAuthor : userAuthorList ) {
 				if( userAuthor.isFollowing() ) {
 					userAuthor.setFollowing( false );
-					ObjectifyService.ofy().save().entity( userAuthor ); // Save
+					ObjectifyService.ofy().save().entity( userAuthor ).now(); // Save
 				}
 			}
 		}
@@ -242,11 +243,11 @@ public class DataStoreCleanupUtil {
 				.filter( "PRIMARY_CONTENT_ID", author.getId() )
 				.list();
 		
-		System.out.println( "PageEntity # " + pageList );
+		System.out.println( "PageEntity # " + pageList.size() );
 
 		if( ! preview ) {
 			for( Page page : pageList )
-				ObjectifyService.ofy().delete().entity( page ); // Delete
+				ObjectifyService.ofy().delete().entity( page ).now(); // Delete
 		}
 
 		
@@ -257,7 +258,11 @@ public class DataStoreCleanupUtil {
 				.filter( "AUTHOR_ID", author.getId() )
 				.list();
 		
-		System.out.println( "PratilipiEntity # " + pageList );
+		System.out.println();
+		System.out.println( "PratilipiEntity # " + pratilipiList.size() );
+		
+		if( pratilipiList.size() == 0 )
+			return;
 		
 		for( Pratilipi pratilipi : pratilipiList )
 			delete( pratilipi, preview );
@@ -266,9 +271,13 @@ public class DataStoreCleanupUtil {
 	
 	public static void delete( Pratilipi pratilipi, boolean preview ) {
 		
+		System.out.println();
+		System.out.println( "Pratilipi id: " + pratilipi.getId() + ", state: " + pratilipi.getState() );
+		
+		
 		if( ! preview && pratilipi.getState() != PratilipiState.DELETED && pratilipi.getState() != PratilipiState.BLOCKED ) {
 			pratilipi.setState( PratilipiState.DELETED );
-			ObjectifyService.ofy().save().entity( pratilipi ); // Save
+			ObjectifyService.ofy().save().entity( pratilipi ).now(); // Save
 		}
 		
 		
@@ -280,11 +289,11 @@ public class DataStoreCleanupUtil {
 				.filter( "PRIMARY_CONTENT_ID", pratilipi.getId() )
 				.list();
 		
-		System.out.println( "PageEntity # " + pageList );
+		System.out.println( "PageEntity # " + pageList.size() );
 
 		if( ! preview )
 			for( Page page : pageList )
-				ObjectifyService.ofy().delete().entity( page ); // Delete
+				ObjectifyService.ofy().delete().entity( page ).now(); // Delete
 		
 	}
 
