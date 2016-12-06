@@ -38,7 +38,7 @@
 															<tr>
 																<td>
 																	<a href="${ user_pratilipi_page_url }" target="_blank">
-																		<img src="http://3.ptlp.co/author/image?authorId=5129075102318592&version=1451457916000&width=150" style="border:0; width: 60px; height: 60px; border-radius: 50%;" />
+																		<img src="${ user_pratilipi_image_url }" style="border:0; width: 60px; height: 60px; border-radius: 50%;" />
 																	</a>
 																</td>
 																<td width="10">
