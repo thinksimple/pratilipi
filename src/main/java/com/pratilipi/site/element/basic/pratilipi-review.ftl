@@ -12,7 +12,7 @@
 	<div class="secondary-500 pratilipi-shadow box" style="padding: 10px 20px;">
 		<div style="padding: 12px 4px;">
 			<a href="${ review.getUserProfilePageUrl() }">
-				<img style="margin: 0; margin-top: 8px;" class="img-circle pratilipi-shadow pull-left" src="${ review.getProfileImageUrl( 48 ) }" alt="${ review.getUserName() }" title="${ review.getUserName() }"/>
+				<img style="margin: 0; margin-top: 8px;" class="img-circle pratilipi-shadow pull-left" src="${ review.getUser().getProfileImageUrl( 48 ) }" alt="${ review.getUserName() }" title="${ review.getUserName() }"/>
 			</a>
 			<div style="display: inline-block; margin-left: 16px;">
 				<a style="text-transform: capitalize;" href="${ review.getUserProfilePageUrl() }">${ review.getUserName() }</a>  
