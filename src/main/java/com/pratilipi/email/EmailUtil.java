@@ -121,11 +121,11 @@ public class EmailUtil {
 			String subject, String body ) throws UnexpectedServerException {
 		
 		try {
-			Message msg = new MimeMessage( session );
+			MimeMessage msg = new MimeMessage( session );
 			msg.setFrom( new InternetAddress( senderEmail, senderName ) );
 			msg.addRecipient( Message.RecipientType.TO, new InternetAddress( recipientEmail, recipientName ) );
 			msg.addRecipient( Message.RecipientType.BCC, new InternetAddress( "mail-archive@pratilipi.com", "Mail Archive" ) );
-			msg.setSubject( subject );
+			msg.setSubject( subject, "UTF-8" );
 			msg.setContent( body, "text/html" );
 			Transport.send( msg );
 			logger.log( Level.INFO, "Successfully sent mail to " + recipientEmail + "." );
