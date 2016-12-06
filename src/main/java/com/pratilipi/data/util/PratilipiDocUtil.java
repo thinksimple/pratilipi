@@ -70,6 +70,25 @@ public class PratilipiDocUtil {
 	
 	private static final String nonKeywordsPattern = "&nbsp;|&lt;|&gt;|&amp;|&cent;|&pound;|&yen;|&euro;|&copy;|&reg;|<[^>]*>|[!-/:-@\\[-`{-~]|।";
 
+
+	private static AlignmentType _getAlignmentType( Node node ) {
+		if( node.hasAttr( "style" ) && ! node.attr( "style" ).trim().isEmpty() ) {
+			for( String style : node.attr( "style" ).split( ";" ) ) {
+				if( ! style.trim().isEmpty() && style.substring( 0, style.indexOf( ":" ) ).trim().equals( "text-align" ) ) {
+					String val = style.substring( style.indexOf( ":" ) + 1 ).trim(); 
+					for( AlignmentType aT : AlignmentType.values() ) {
+						if( val.equalsIgnoreCase( aT.name() ) ) {
+							return aT;
+						}
+					}
+				}
+			}
+		}
+
+		return null;
+
+	}
+
 	
 	// Content doc
 	
@@ -382,12 +401,7 @@ public class PratilipiDocUtil {
 						
 					} else {
 						
-						AlignmentType alignment = null;
-						if( node.hasAttr( "style" ) && ! node.attr( "style" ).trim().isEmpty() )
-							for( String style : node.attr( "style" ).split( ";" ) )
-								if( ! style.trim().isEmpty() && style.substring( 0, style.indexOf( ":" ) ).trim().equals( "text-align" ) )
-									alignment = AlignmentType.valueOf( style.substring( style.indexOf( ":" ) + 1 ).trim().toUpperCase() );
-						
+						AlignmentType alignment = _getAlignmentType( node );
 						page.addPagelet( PageletType.HTML, ( (Element) node ).html(), alignment );
 					
 					}
