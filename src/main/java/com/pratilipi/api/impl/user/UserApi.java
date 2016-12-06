@@ -148,14 +148,7 @@ public class UserApi extends GenericApi {
 				this.profilePageUrl = userData.getProfilePageUrl();
 				this.profileImageUrl = userData.getProfileImageUrl();
 				
-			} else if( clazz == UserPratilipiApi.class || clazz == CommentApi.class ) {
-				
-				this.userId = userData.getId();
-				this.displayName = userData.getDisplayName();
-				this.profilePageUrl = userData.getProfilePageUrl();
-				this.profileImageUrl = userData.getProfileImageUrl();
-				
-			} else if( clazz == UserPratilipiReviewListApi.class ) {
+			} else if( clazz == UserPratilipiApi.class || clazz == UserPratilipiReviewListApi.class || clazz == CommentApi.class ) {
 				
 				this.userId = userData.getId();
 				if( UxModeFilter.isAndroidApp() )
