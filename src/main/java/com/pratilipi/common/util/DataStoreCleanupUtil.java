@@ -31,7 +31,7 @@ import com.pratilipi.data.type.gae.VoteEntity;
 
 public class DataStoreCleanupUtil {
 
-	public static void delete( String email, boolean delete ) {
+	public static void delete( String email, boolean preview ) {
 
 		// USER Table
 		
@@ -46,17 +46,17 @@ public class DataStoreCleanupUtil {
 			return;
 
 		for( User user : userList )
-			delete( user, delete );
+			delete( user, preview );
 		
 	}
 	
-	public static void delete( User user, boolean delete ) {
+	public static void delete( User user, boolean preview ) {
 
 		System.out.println();
 		System.out.println( "User id: " + user.getId() + ", state: " + user.getState() );
 
 
-		if( delete && user.getState() != UserState.DELETED && user.getState() != UserState.BLOCKED ) {
+		if( ! preview && user.getState() != UserState.DELETED && user.getState() != UserState.BLOCKED ) {
 			user.setState( UserState.DELETED );
 			ObjectifyService.ofy().save().entity( user ); // Save
 		}
@@ -72,7 +72,7 @@ public class DataStoreCleanupUtil {
 
 		System.out.println( "AccessTokenEntity # " + accessTokenList.size() );
 		
-		if( delete ) {
+		if( ! preview ) {
 			for( AccessToken accessToken : accessTokenList ) {
 				accessToken.setExpiry( new Date() );
 				ObjectifyService.ofy().save().entity( accessToken ); // Save
@@ -96,7 +96,7 @@ public class DataStoreCleanupUtil {
 		
 		System.out.println( "Review ## " + reviewCount );
 
-		if( delete ) {
+		if( ! preview ) {
 			for( UserPratilipi userPratilipi : userPratilipiList ) {
 				if( userPratilipi.getReviewState() != UserReviewState.DELETED && userPratilipi.getReviewState() != UserReviewState.BLOCKED ) {
 					userPratilipi.setReviewState( UserReviewState.DELETED );
@@ -122,7 +122,7 @@ public class DataStoreCleanupUtil {
 		
 		System.out.println( "Follow ## " + followCount );
 
-		if( delete ) {
+		if( ! preview ) {
 			for( UserAuthor userAuthor : userAuthorList ) {
 				if( userAuthor.isFollowing() ) {
 					userAuthor.setFollowing( false );
@@ -148,7 +148,7 @@ public class DataStoreCleanupUtil {
 		
 		System.out.println( "Comment ## " + commentCount );
 
-		if( delete ) {
+		if( ! preview ) {
 			for( Comment comment : commentList ) {
 				if( comment.getState() == CommentState.ACTIVE ) {
 					comment.setState( CommentState.DELETED );
@@ -174,7 +174,7 @@ public class DataStoreCleanupUtil {
 		
 		System.out.println( "Vote count: " + voteCount );
 
-		if( delete )
+		if( ! preview )
 			for( Vote vote : voteList )
 				ObjectifyService.ofy().delete().entity( vote ); // Delete
 		
@@ -192,17 +192,17 @@ public class DataStoreCleanupUtil {
 			return;
 
 		for( Author author : authorList )
-			delete( author, delete );
+			delete( author, preview );
 
 	}
 	
-	private static void delete( Author author, boolean delete ) {
+	private static void delete( Author author, boolean preview ) {
 		
 		System.out.println();
 		System.out.println( "Author id: " + author.getId() + ", state: " + author.getState() );
 		
 		
-		if( delete && author.getState() != AuthorState.DELETED && author.getState() != AuthorState.BLOCKED ) {
+		if( ! preview && author.getState() != AuthorState.DELETED && author.getState() != AuthorState.BLOCKED ) {
 			author.setState( AuthorState.DELETED );
 			ObjectifyService.ofy().save().entity( author ); // Save
 		}
@@ -224,7 +224,7 @@ public class DataStoreCleanupUtil {
 		
 		System.out.println( "Follower ## " + followerCount );
 
-		if( delete ) {
+		if( ! preview ) {
 			for( UserAuthor userAuthor : userAuthorList ) {
 				if( userAuthor.isFollowing() ) {
 					userAuthor.setFollowing( false );
@@ -244,7 +244,7 @@ public class DataStoreCleanupUtil {
 		
 		System.out.println( "PageEntity # " + pageList );
 
-		if( delete ) {
+		if( ! preview ) {
 			for( Page page : pageList )
 				ObjectifyService.ofy().delete().entity( page ); // Delete
 		}
@@ -260,13 +260,13 @@ public class DataStoreCleanupUtil {
 		System.out.println( "PratilipiEntity # " + pageList );
 		
 		for( Pratilipi pratilipi : pratilipiList )
-			delete( pratilipi, delete );
+			delete( pratilipi, preview );
 	
 	}
 	
-	public static void delete( Pratilipi pratilipi, boolean delete ) {
+	public static void delete( Pratilipi pratilipi, boolean preview ) {
 		
-		if( pratilipi.getState() != PratilipiState.DELETED && pratilipi.getState() != PratilipiState.BLOCKED ) {
+		if( ! preview && pratilipi.getState() != PratilipiState.DELETED && pratilipi.getState() != PratilipiState.BLOCKED ) {
 			pratilipi.setState( PratilipiState.DELETED );
 			ObjectifyService.ofy().save().entity( pratilipi ); // Save
 		}
@@ -282,7 +282,7 @@ public class DataStoreCleanupUtil {
 		
 		System.out.println( "PageEntity # " + pageList );
 
-		if( delete )
+		if( ! preview )
 			for( Page page : pageList )
 				ObjectifyService.ofy().delete().entity( page ); // Delete
 		
