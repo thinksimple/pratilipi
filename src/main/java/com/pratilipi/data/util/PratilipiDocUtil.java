@@ -637,14 +637,20 @@ public class PratilipiDocUtil {
 				imageName = imageName.substring( 0, imageName.indexOf( '&' ) );
 			imageName = imageName.replace( "%20", " " );
 		}
-		
+
+		Integer width = ImageUtil.getWidth( blobEntry.getData() );
+		Integer height = ImageUtil.getHeight( blobEntry.getData() );
+		Integer widthSet = imageNode.hasAttr( "width" ) && ! imageNode.attr( "width" ).trim().isEmpty() ?
+							Integer.parseInt( imageNode.attr( "width" ) ) : width; 
+
 		JsonObject imgData = new JsonObject();
 		imgData.addProperty( "name", imageName );
-		imgData.addProperty( "height", ImageUtil.getHeight( blobEntry.getData() ) );
-		imgData.addProperty( "width", ImageUtil.getWidth( blobEntry.getData() ) );
-		
+		imgData.addProperty( "width", width );
+		imgData.addProperty( "height", height );
+		imgData.addProperty( "ratio", (double)widthSet/width );
+
 		return imgData;
-		
+
 	}
 	
 	
