@@ -902,6 +902,11 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 	
 	@Override
+	public Vote getVote( String voteId ) {
+		return null;
+	}
+	
+	@Override
 	public Vote getVote( Long userId, VoteParentType parentType, String parentId ) {
 		return null;
 	}

@@ -183,6 +183,7 @@ public interface DataAccessor {
 	
 	// VOTE Table
 	Vote newVote();
+	Vote getVote( String voteId );
 	Vote getVote( Long userId, VoteParentType parentType, String parentId );
 	List<Vote> getVoteListByReference( ReferenceType referenceType, Long referenceId );
 	List<Vote> getVoteListByReference( ReferenceType referenceType, String referenceId );

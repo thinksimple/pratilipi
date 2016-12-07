@@ -1702,6 +1702,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	@Override
+	public Vote getVote( String voteId ) {
+		return getEntity( VoteEntity.class, voteId );
+	}
+
+	@Override
 	public Vote getVote( Long userId, VoteParentType parentType, String parentId ) {
 		if( userId == null || userId.equals( 0L ) || parentType == null || parentId == null || parentId.isEmpty() )
 			return null;
