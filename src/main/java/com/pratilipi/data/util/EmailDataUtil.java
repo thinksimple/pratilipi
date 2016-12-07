@@ -172,7 +172,7 @@ public class EmailDataUtil {
 		dataModel.put( "user_pratilipi_creation_date", _getDateFormat( userPratilipiData.getReviewDate() ) );
 
 		if( userPratilipiData.getRating() != null )
-			dataModel.put( "user_pratilipi_rating", userPratilipiData.getRating().toString() );
+			dataModel.put( "rating", userPratilipiData.getRating().toString() );
 		
 		if( userPratilipiData.getReview() != null )
 			dataModel.put( "user_pratilipi_review", HtmlUtil.truncateText( userPratilipiData.getReview(), 250 ) );
