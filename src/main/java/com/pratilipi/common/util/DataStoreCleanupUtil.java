@@ -10,6 +10,7 @@ import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.UserReviewState;
 import com.pratilipi.common.type.UserState;
 import com.pratilipi.common.type.VoteType;
+import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.Comment;
@@ -28,6 +29,8 @@ import com.pratilipi.data.type.gae.UserAuthorEntity;
 import com.pratilipi.data.type.gae.UserEntity;
 import com.pratilipi.data.type.gae.UserPratilipiEntity;
 import com.pratilipi.data.type.gae.VoteEntity;
+import com.pratilipi.taskqueue.Task;
+import com.pratilipi.taskqueue.TaskQueueFactory;
 
 public class DataStoreCleanupUtil {
 
@@ -90,17 +93,36 @@ public class DataStoreCleanupUtil {
 		System.out.println( "UserPratilipiEntity # " + userPratilipiList.size() );
 
 		int reviewCount = 0;
-		for( UserPratilipi userPratilipi : userPratilipiList )
+		int ratingCount = 0;
+		for( UserPratilipi userPratilipi : userPratilipiList ) {
 			if( userPratilipi.getReviewState() != UserReviewState.DELETED && userPratilipi.getReviewState() != UserReviewState.BLOCKED )
 				reviewCount++;
+			if( userPratilipi.getRating() != null && userPratilipi.getRating() != 0 )
+				ratingCount++;
+		}
 		
 		System.out.println( "Review ## " + reviewCount );
+		System.out.println( "Rating ## " + ratingCount );
 
 		if( ! preview ) {
 			for( UserPratilipi userPratilipi : userPratilipiList ) {
+				boolean save = false;
 				if( userPratilipi.getReviewState() != UserReviewState.DELETED && userPratilipi.getReviewState() != UserReviewState.BLOCKED ) {
 					userPratilipi.setReviewState( UserReviewState.DELETED );
+					save = true;
+				}
+				if( userPratilipi.getRating() != null && userPratilipi.getRating() != 0 ) {
+					userPratilipi.setRating( null );
+					save = true;
+				}
+				if( save ) {
 					ObjectifyService.ofy().save().entity( userPratilipi ).now(); // Save
+					Task task = TaskQueueFactory.newTask()
+							.setUrl( "/pratilipi/process" )
+							.addParam( "pratilipiId", userPratilipi.getPratilipiId().toString() )
+							.addParam( "updateReviewsDoc", "true" )
+							.addParam( "updateUserPratilipiStats", "true" );
+					TaskQueueFactory.getPratilipiTaskQueue().add( task );
 				}
 			}
 		}
@@ -197,7 +219,7 @@ public class DataStoreCleanupUtil {
 
 	}
 	
-	private static void delete( Author author, boolean preview ) {
+	public static void delete( Author author, boolean preview ) {
 		
 		System.out.println();
 		System.out.println( "Author id: " + author.getId() + ", state: " + author.getState() );
@@ -206,6 +228,7 @@ public class DataStoreCleanupUtil {
 		if( ! preview && author.getState() != AuthorState.DELETED && author.getState() != AuthorState.BLOCKED ) {
 			author.setState( AuthorState.DELETED );
 			ObjectifyService.ofy().save().entity( author ).now(); // Save
+			DataAccessorFactory.getSearchAccessor().deleteAuthorDataIndex( author.getId() ); // Delete search index
 		}
 		
 		
@@ -245,10 +268,9 @@ public class DataStoreCleanupUtil {
 		
 		System.out.println( "PageEntity # " + pageList.size() );
 
-		if( ! preview ) {
+		if( ! preview )
 			for( Page page : pageList )
 				ObjectifyService.ofy().delete().entity( page ).now(); // Delete
-		}
 
 		
 		// PRATILIPI Table
@@ -278,6 +300,7 @@ public class DataStoreCleanupUtil {
 		if( ! preview && pratilipi.getState() != PratilipiState.DELETED && pratilipi.getState() != PratilipiState.BLOCKED ) {
 			pratilipi.setState( PratilipiState.DELETED );
 			ObjectifyService.ofy().save().entity( pratilipi ).now(); // Save
+			DataAccessorFactory.getSearchAccessor().deletePratilipiDataIndex( pratilipi.getId() ); // Delete search index
 		}
 		
 		
