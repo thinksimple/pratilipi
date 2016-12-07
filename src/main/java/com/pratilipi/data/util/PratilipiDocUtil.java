@@ -640,9 +640,9 @@ public class PratilipiDocUtil {
 			}
 		} else {
 			imageName = imageUrl.substring( imageUrl.indexOf( "name=" ) + 5 );
-			blobEntry = blobAccessor.getBlob( _createImageFullName( pratilipiId, imageName ) );
 			if( imageName.indexOf( '&' ) != -1 )
 				imageName = imageName.substring( 0, imageName.indexOf( '&' ) );
+			blobEntry = blobAccessor.getBlob( _createImageFullName( pratilipiId, imageName ) );
 			imageName = imageName.replace( "%20", " " );
 		}
 
