@@ -86,8 +86,10 @@ public class EmailDataUtil {
 			emailState = sendAuthorFollowEmail( email.getUserId(), email.getPrimaryContentId() );
 		else if( email.getType() == EmailType.USER_PRATILIPI_REVIEW )
 			emailState = sendUserPratilipiReviewEmail( email.getUserId(), email.getPrimaryContentId() );
+		else if( email.getType() == EmailType.COMMENT_ON_REVIEW_REVIEWER )
+			emailState = sendCommentAddedEmail( email.getUserId(), email.getPrimaryContentIdLong(), email.getType() );
 		else if( email.getType() == EmailType.COMMENT_ON_REVIEW_AUTHOR )
-			emailState = sendCommentReviewerEmail( email.getUserId(), email.getPrimaryContentIdLong(), email.getType() );
+			emailState = sendCommentAddedEmail( email.getUserId(), email.getPrimaryContentIdLong(), email.getType() );
 
 		
 		email.setState( emailState );
@@ -201,7 +203,7 @@ public class EmailDataUtil {
 
 	}
 	
-	private static EmailState sendCommentReviewerEmail( Long userId, Long commentId, EmailType emailType ) 
+	private static EmailState sendCommentAddedEmail( Long userId, Long commentId, EmailType emailType ) 
 			throws UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -232,7 +234,7 @@ public class EmailDataUtil {
 		dataModel.put( "comment_image_url", comment.getUser().getAuthor().getImageUrl( 50 ) );
 		dataModel.put( "comment_date", _getDateFormat( comment.getCreationDate() ) );
 		dataModel.put( "comment_content", HtmlUtil.truncateText( comment.getContent(), 200 ) );
-		
+
 		_sendMail( user.getDisplayName(), 
 				user.getEmail(), 
 				emailType, 
