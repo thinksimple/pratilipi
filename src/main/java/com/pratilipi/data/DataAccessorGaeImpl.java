@@ -1646,7 +1646,12 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	public Comment getComment( Long commentId ) {
 		return getEntity( CommentEntity.class, commentId );
 	}
-	
+
+	@Override
+	public Map<Long, Comment> getComments( Collection<Long> commentIds ) {
+		return getEntities( CommentEntity.class, commentIds );
+	}
+
 	@Override
 	public List<Comment> getCommentList( CommentParentType parentType, Long parentId ) {
 		return getCommentList( parentType, parentId.toString() );

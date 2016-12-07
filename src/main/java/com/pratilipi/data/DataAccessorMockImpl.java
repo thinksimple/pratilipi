@@ -864,6 +864,11 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 	
 	@Override
+	public Map<Long, Comment> getComments( Collection<Long> commentIds ) {
+		return null;
+	}
+	
+	@Override
 	public List<Comment> getCommentList( CommentParentType parentType, Long parentId ) {
 		return new ArrayList<>( 0 );
 	}

@@ -174,6 +174,7 @@ public interface DataAccessor {
 	// COMMENT Table
 	Comment newComment();
 	Comment getComment( Long commentId );
+	Map<Long, Comment> getComments( Collection<Long> commentIds );
 	List<Comment> getCommentList( CommentParentType parentType, Long parentId );
 	List<Comment> getCommentList( CommentParentType parentType, String parentId );
 	List<Comment> getCommentListByReference( ReferenceType referenceType, Long referenceId );

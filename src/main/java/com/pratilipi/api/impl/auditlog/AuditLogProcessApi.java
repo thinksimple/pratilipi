@@ -17,12 +17,14 @@ import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.type.AccessType;
+import com.pratilipi.common.type.CommentState;
 import com.pratilipi.common.type.EmailState;
 import com.pratilipi.common.type.EmailType;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.NotificationState;
 import com.pratilipi.common.type.NotificationType;
 import com.pratilipi.common.type.PratilipiState;
+import com.pratilipi.common.type.ReferenceType;
 import com.pratilipi.common.type.UserReviewState;
 import com.pratilipi.common.util.SystemProperty;
 import com.pratilipi.common.util.UserAccessUtil;
@@ -32,6 +34,7 @@ import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
+import com.pratilipi.data.type.Comment;
 import com.pratilipi.data.type.Email;
 import com.pratilipi.data.type.Notification;
 import com.pratilipi.data.type.Pratilipi;
@@ -65,6 +68,7 @@ public class AuditLogProcessApi extends GenericApi {
 		Set<Long> pratilipiUpdateIds = new HashSet<>();
 		Set<String> userPratilipiReviewIds = new HashSet<>();
 		Set<String> userAuthorFollowingIds = new HashSet<>();
+		Set<Long> commentAddedIds = new HashSet<>();
 		for( AuditLog auditLog : auditLogDataListCursorTuple.getDataList() ) {
 			// TODO: Delete following condition as soon as 'legacy' module is removed
 			if( auditLog.getUserId() == null || auditLog.getPrimaryContentId() == null ) {
@@ -79,12 +83,14 @@ public class AuditLogProcessApi extends GenericApi {
 				userPratilipiReviewIds.add( auditLog.getPrimaryContentId() );
 			else if( auditLog.getAccessType() == AccessType.USER_AUTHOR_FOLLOWING )
 				userAuthorFollowingIds.add( auditLog.getPrimaryContentId() );
+			else if( auditLog.getAccessType() == AccessType.COMMENT_ADD )
+				commentAddedIds.add( auditLog.getPrimaryContentIdLong() );
 		}
 
 		// Batch get PrimaryContent entities
 		Map<String, UserPratilipi> userPratilipiReviews = dataAccessor.getUserPratilipis( userPratilipiReviewIds );
 		Map<String, UserAuthor> userAuthorFollowings = dataAccessor.getUserAuthors( userAuthorFollowingIds );
-		
+		Map<Long, Comment> commentList = dataAccessor.getComments( commentAddedIds );
 
 		// Batch get Pratilipi entities
 		Set<Long> pratilipiIds = new HashSet<>( pratilipiUpdateIds );
@@ -152,6 +158,21 @@ public class AuditLogProcessApi extends GenericApi {
 
 			_createUserAuthorFollowingNotifications( userAuthor, authors.get( userAuthor.getAuthorId() ) );
 			_createUserAuthorFollowingEmails( userAuthor, authors.get( userAuthor.getAuthorId() ) );
+
+		}
+		
+		
+		// auditLog.getAccessType() == AccessType.COMMENT_ADD
+		for( Comment comment : commentList.values() ) {
+
+			if( comment.getState() != CommentState.ACTIVE )
+				continue;
+
+			if( comment.getReferenceType() != ReferenceType.PRATILIPI )
+				continue;
+
+			_createCommentAddedReviewerNotification( comment );
+//			_createCommentAddedAuthorNotification( comment );
 
 		}
 
@@ -391,6 +412,40 @@ public class AuditLogProcessApi extends GenericApi {
 					author.getUserId(),
 					EmailType.AUTHOR_FOLLOW, 
 					userAuthor.getId() );
+		} else if( email.getState() == EmailState.DEFERRED ) {
+			email.setState( EmailState.PENDING );
+			email.setLastUpdated( new Date() );
+		} else {
+			return; // Do nothing
+		}
+
+
+		email = dataAccessor.createOrUpdateEmail( email );
+
+	}
+	
+	private void _createCommentAddedReviewerNotification( Comment comment ) {
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+
+		UserPratilipi reviewer = dataAccessor.getUserPratilipi( comment.getParentId() );
+
+		// TODO: Remove it ASAP
+		if( ! UserAccessUtil.hasUserAccess( reviewer.getUserId(), null, AccessType.USER_ADD ) )
+			return;
+
+
+		Email email = dataAccessor.getEmail(
+				reviewer.getUserId(),
+				EmailType.COMMENT_ON_REVIEW_REVIEWER, 
+				comment.getId() );
+
+
+		if( email == null ) {
+			email = dataAccessor.newEmail(
+					reviewer.getUserId(),
+					EmailType.COMMENT_ON_REVIEW_REVIEWER, 
+					comment.getId() );
 		} else if( email.getState() == EmailState.DEFERRED ) {
 			email.setState( EmailState.PENDING );
 			email.setLastUpdated( new Date() );
