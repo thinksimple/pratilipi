@@ -111,9 +111,10 @@ public class InitDataUtil {
 		
 		
 		initBannerDocs = new InitBannerDoc[] {
-				docAccessor.newInitBannerDoc( "pratilipi-telugu-carousel-18.jpg", null, "/life" ),
-				docAccessor.newInitBannerDoc( "pratilipi-telugu-carousel-10.jpg", null, "/women" ),
-				docAccessor.newInitBannerDoc( "pratilipi-telugu-carousel-14.jpg", null, "/children" ),
+				docAccessor.newInitBannerDoc( "pratilipi-telugu-carousel-21.jpg", null, "/love" ),
+				docAccessor.newInitBannerDoc( "pratilipi-telugu-carousel-22.jpg", null, "/ministories" ),
+				docAccessor.newInitBannerDoc( "pratilipi-telugu-carousel-23.jpg", null, "/fivemin" ),
+				docAccessor.newInitBannerDoc( "pratilipi-telugu-carousel-18.jpg", null, "/life" )
 		};
 			
 		InitDoc teInitDoc = docAccessor.newInitDoc();
