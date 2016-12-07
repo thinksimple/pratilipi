@@ -452,14 +452,14 @@ public class AuditLogProcessApi extends GenericApi {
 
 		Email email = dataAccessor.getEmail(
 				userPratilipi.getUserId(),
-				EmailType.COMMENT_ON_REVIEW_REVIEWER, 
+				EmailType.COMMENT_REVIEW_REVIEWER, 
 				comment.getId() );
 
 
 		if( email == null ) {
 			email = dataAccessor.newEmail(
 					userPratilipi.getUserId(),
-					EmailType.COMMENT_ON_REVIEW_REVIEWER, 
+					EmailType.COMMENT_REVIEW_REVIEWER, 
 					comment.getId() );
 		} else if( email.getState() == EmailState.DEFERRED ) {
 			email.setState( EmailState.PENDING );
@@ -488,14 +488,14 @@ public class AuditLogProcessApi extends GenericApi {
 
 		Email email = dataAccessor.getEmail(
 				author.getUserId(),
-				EmailType.COMMENT_ON_REVIEW_AUTHOR, 
+				EmailType.COMMENT_REVIEW_AUTHOR, 
 				comment.getId() );
 
 		
 		if( email == null ) {
 			email = dataAccessor.newEmail(
 						author.getUserId(),
-						EmailType.COMMENT_ON_REVIEW_AUTHOR, 
+						EmailType.COMMENT_REVIEW_AUTHOR, 
 						comment.getId() );
 		} else if( email.getState() == EmailState.DEFERRED ) {
 			email.setState( EmailState.PENDING );

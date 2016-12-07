@@ -86,9 +86,9 @@ public class EmailDataUtil {
 			emailState = sendAuthorFollowEmail( email.getUserId(), email.getPrimaryContentId() );
 		else if( email.getType() == EmailType.USER_PRATILIPI_REVIEW )
 			emailState = sendUserPratilipiReviewEmail( email.getUserId(), email.getPrimaryContentId() );
-		else if( email.getType() == EmailType.COMMENT_ON_REVIEW_REVIEWER )
+		else if( email.getType() == EmailType.COMMENT_REVIEW_REVIEWER )
 			emailState = sendCommentAddedEmail( email.getUserId(), email.getPrimaryContentIdLong(), email.getType() );
-		else if( email.getType() == EmailType.COMMENT_ON_REVIEW_AUTHOR )
+		else if( email.getType() == EmailType.COMMENT_REVIEW_AUTHOR )
 			emailState = sendCommentAddedEmail( email.getUserId(), email.getPrimaryContentIdLong(), email.getType() );
 
 		

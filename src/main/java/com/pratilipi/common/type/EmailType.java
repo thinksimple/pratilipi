@@ -9,8 +9,8 @@ public enum EmailType {
 	
 	USER_PRATILIPI_REVIEW			( "UserPratilipiReviewTemplate.ftl" ),			// Email sent to Author when someone reviews his/her content.
 	
-	COMMENT_ON_REVIEW_REVIEWER		( "CommentOnReviewReviewerTemplate.ftl" ),			// Email sent to Reviewer when someone comments on his/her review.
-	COMMENT_ON_REVIEW_AUTHOR		( "CommentOnReviewAuthorTemplate.ftl" ),			// Email sent to Author when someone comments on any review.
+	COMMENT_REVIEW_REVIEWER		( "CommentReviewReviewerTemplate.ftl" ),			// Email sent to Reviewer when someone comments on his/her review.
+	COMMENT_REVIEW_AUTHOR		( "CommentReviewAuthorTemplate.ftl" ),			// Email sent to Author when someone comments on any review.
 	
 	;
 
