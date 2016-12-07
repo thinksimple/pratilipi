@@ -91,7 +91,7 @@ public class EmailUtil {
 	}
 	
 	public static void sendMail(
-			String recipientName, String recipientEmail, EmailType emailType, Map<String, String> dataModel )
+			String recipientName, String recipientEmail, EmailType emailType, Map<String, Object> dataModel )
 			throws UnexpectedServerException {
 
 		String body = FreeMarkerUtil.processTemplate( dataModel, filePath + emailType.getTemplateName() );
