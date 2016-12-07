@@ -1,4 +1,4 @@
-var Suggester = function(selectorOrElem, onResolve, content_holder, isInputElement) {
+var Suggester = function(selectorOrElem, onResolve, content_holder, isInputElement, lang) {
   if(selectorOrElem) {
     this.elem = $(selectorOrElem);
     this.setMode( false );
@@ -18,7 +18,8 @@ var Suggester = function(selectorOrElem, onResolve, content_holder, isInputEleme
   } else {
     throw 'Coding karni nahi aati.'
   }
-
+  this.lang = lang;
+  this.url = "https://www.google.com/inputtools/request?ime=transliteration_en_" + this.lang + "&num=5&cp=0&cs=0&ie=utf-8&oe=utf-8&app=jsapi";
   this.text = '';
   this.savedSelection = null;
 };
@@ -108,7 +109,7 @@ var suggesterMethods = {
   getSuggestions: function() {
     var self = this;
     $.ajax({
-      url: "https://www.google.com/inputtools/request?ime=transliteration_en_hi&num=5&cp=0&cs=0&ie=utf-8&oe=utf-8&app=jsapi",
+      url: self.url,
       data: {
           text: self.text
       },
