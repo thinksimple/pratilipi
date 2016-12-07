@@ -527,6 +527,7 @@ public class AuditLogProcessApi extends GenericApi {
 						4790800105865216L, // veena@
 						5743817900687360L, // jitesh@
 						5991416564023296L, // sankar@
+						5664902681198592L, // shally@
 				}; break;
 			case GUJARATI:
 				userIds = new Long[] {
@@ -534,6 +535,7 @@ public class AuditLogProcessApi extends GenericApi {
 						6046961763352576L, // brinda@
 						5743817900687360L, // jitesh@
 						5991416564023296L, // sankar@
+						5664902681198592L, // shally@
 				}; break;
 			case TAMIL:
 				userIds = new Long[] {
@@ -546,6 +548,7 @@ public class AuditLogProcessApi extends GenericApi {
 						4900189601005568L, // vrushali@
 						5743817900687360L, // jitesh@
 						5991416564023296L, // sankar@
+						5664902681198592L, // shally@
 				}; break;
 			case MALAYALAM:
 				userIds = new Long[] {
@@ -558,6 +561,7 @@ public class AuditLogProcessApi extends GenericApi {
 						6243664397336576L, // moumita@
 						5743817900687360L, // jitesh@
 						5991416564023296L, // sankar@
+						5664902681198592L, // shally@
 				}; break;
 			case TELUGU:
 				userIds = new Long[] {
