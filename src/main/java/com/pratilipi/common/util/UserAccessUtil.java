@@ -99,6 +99,8 @@ public class UserAccessUtil {
 				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_HINDI, Role.ADMIN_TAMIL };
 			case "5694768648552448": // abhishek@
 				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_BENGALI, Role.ADMIN_GUJARATI, Role.ADMIN_HINDI, Role.ADMIN_KANNADA, Role.ADMIN_MALAYALAM, Role.ADMIN_MARATHI, Role.ADMIN_TAMIL, Role.ADMIN_TELUGU };
+			case "5451511011213312": // shreyans@
+				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_BENGALI, Role.ADMIN_GUJARATI, Role.ADMIN_HINDI, Role.ADMIN_KANNADA, Role.ADMIN_MALAYALAM, Role.ADMIN_MARATHI, Role.ADMIN_TAMIL, Role.ADMIN_TELUGU };
 			case "5705241014042624": // prashant@
 				return new Role[] { Role.MEMBER, Role.ADMINISTRATOR };
 			case "6264191547604992" : // ranjeet@
