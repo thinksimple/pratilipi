@@ -185,6 +185,7 @@ public interface DataAccessor {
 	Vote newVote();
 	Vote getVote( String voteId );
 	Vote getVote( Long userId, VoteParentType parentType, String parentId );
+	Map<String, Vote> getVotes( Collection<String> voteIds );
 	List<Vote> getVoteListByReference( ReferenceType referenceType, Long referenceId );
 	List<Vote> getVoteListByReference( ReferenceType referenceType, String referenceId );
 	Vote createOrUpdateVote( Vote vote, AuditLog auditLog );

@@ -26,6 +26,8 @@ import com.pratilipi.common.type.NotificationState;
 import com.pratilipi.common.type.NotificationType;
 import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.UserReviewState;
+import com.pratilipi.common.type.VoteParentType;
+import com.pratilipi.common.type.VoteType;
 import com.pratilipi.common.util.SystemProperty;
 import com.pratilipi.common.util.UserAccessUtil;
 import com.pratilipi.data.DataAccessor;
@@ -40,6 +42,7 @@ import com.pratilipi.data.type.Notification;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.UserAuthor;
 import com.pratilipi.data.type.UserPratilipi;
+import com.pratilipi.data.type.Vote;
 
 
 @SuppressWarnings("serial")
@@ -66,9 +69,10 @@ public class AuditLogProcessApi extends GenericApi {
 
 		// Make sets of PrimaryContent ids
 		Set<Long> pratilipiUpdateIds = new HashSet<>();
-		Set<String> userPratilipiReviewIds = new HashSet<>();
-		Set<String> userAuthorFollowingIds = new HashSet<>();
-		Set<Long> commentAddedIds = new HashSet<>();
+		Set<String> userPratilipiUpdateIds = new HashSet<>();
+		Set<String> userAuthorUpdateIds = new HashSet<>();
+		Set<Long> commentUpdateIds = new HashSet<>();
+		Set<String> voteUpdateIds = new HashSet<>();
 
 		for( AuditLog auditLog : auditLogDataListCursorTuple.getDataList() ) {
 			// TODO: Delete following condition as soon as 'legacy' module is removed
@@ -81,11 +85,13 @@ public class AuditLogProcessApi extends GenericApi {
 			if( auditLog.getAccessType() == AccessType.PRATILIPI_UPDATE )
 				pratilipiUpdateIds.add( auditLog.getPrimaryContentIdLong() );
 			else if( auditLog.getAccessType()  == AccessType.USER_PRATILIPI_REVIEW )
-				userPratilipiReviewIds.add( auditLog.getPrimaryContentId() );
+				userPratilipiUpdateIds.add( auditLog.getPrimaryContentId() );
 			else if( auditLog.getAccessType() == AccessType.USER_AUTHOR_FOLLOWING )
-				userAuthorFollowingIds.add( auditLog.getPrimaryContentId() );
+				userAuthorUpdateIds.add( auditLog.getPrimaryContentId() );
 			else if( auditLog.getAccessType() == AccessType.COMMENT_ADD )
-				commentAddedIds.add( auditLog.getPrimaryContentIdLong() );
+				commentUpdateIds.add( auditLog.getPrimaryContentIdLong() );
+			else if( auditLog.getAccessType() == AccessType.VOTE )
+				voteUpdateIds.add( auditLog.getPrimaryContentId() );
 		}
 
 		
@@ -93,15 +99,19 @@ public class AuditLogProcessApi extends GenericApi {
 
 		// Batch get PrimaryContent entities
 		
-		Map<String, UserAuthor> userAuthorFollowings = dataAccessor.getUserAuthors( userAuthorFollowingIds );
-		Map<Long, Comment> comments = dataAccessor.getComments( commentAddedIds );
+		Map<String, UserAuthor> userAuthors = dataAccessor.getUserAuthors( userAuthorUpdateIds );
+		Map<Long, Comment> comments = dataAccessor.getComments( commentUpdateIds );
+		Map<String, Vote> votes = dataAccessor.getVotes( voteUpdateIds );
 
 
 		// Batch get UserPratilipi entities
-		Set<String> userPratilipiIds = new HashSet<>( userPratilipiReviewIds );
+		Set<String> userPratilipiIds = new HashSet<>( userPratilipiUpdateIds );
 		for( Comment comment : comments.values() )
 			if( comment.getParentType() == CommentParentType.REVIEW )
 				userPratilipiIds.add( comment.getParentId() );
+		for( Vote vote : votes.values() )
+			if( vote.getParentType() == VoteParentType.REVIEW )
+				userPratilipiIds.add( vote.getParentId() );
 		Map<String, UserPratilipi> userPratilipis = dataAccessor.getUserPratilipis( userPratilipiIds );
 
 
@@ -116,10 +126,9 @@ public class AuditLogProcessApi extends GenericApi {
 		Set<Long> authorIds = new HashSet<>();
 		for( Pratilipi pratilipi : pratilipis.values() )
 			authorIds.add( pratilipi.getAuthorId() );
-		for( UserAuthor userAuthor : userAuthorFollowings.values() )
+		for( UserAuthor userAuthor : userAuthors.values() )
 			authorIds.add( userAuthor.getAuthorId() );
 		Map<Long, Author> authors = dataAccessor.getAuthors( authorIds );
-
 
 
 
@@ -127,6 +136,7 @@ public class AuditLogProcessApi extends GenericApi {
 		for( Long pratilipiId : pratilipiUpdateIds ) {
 
 			Pratilipi pratilipi = pratilipis.get( pratilipiId );
+
 			if( pratilipi.getState() != PratilipiState.PUBLISHED )
 				continue;
 
@@ -136,21 +146,21 @@ public class AuditLogProcessApi extends GenericApi {
 					null,
 					null,
 					null ).getDataList();
-			
+
 			_createPratilipiPublishedEmail( pratilipi, authors.get( pratilipi.getAuthorId() ) );
 			_createPratilipiPublishedEmails( pratilipi, followerUserIdList );
-			
-			// Sent notification to all AEEs all well
+
+			// Send notification to all AEEs all well
 			followerUserIdList.addAll( _getAeeUserIdList( pratilipi.getLanguage() ) );
-			
+
 			_createPratilipiPublishedNotification( pratilipi, authors.get( pratilipi.getAuthorId() ) );
 			_createPratilipiPublishedNotifications( pratilipi, followerUserIdList );
-			
+
 		}
-		
-		
+
+
 		// auditLog.getAccessType() == AccessType.USER_PRATILIPI_REVIEW
-		for( String userPratilipiId : userPratilipiReviewIds ) {
+		for( String userPratilipiId : userPratilipiUpdateIds ) {
 
 			UserPratilipi userPratilipi = userPratilipis.get( userPratilipiId );
 
@@ -164,7 +174,9 @@ public class AuditLogProcessApi extends GenericApi {
 
 
 		// auditLog.getAccessType() == AccessType.USER_AUTHOR_FOLLOWING
-		for( UserAuthor userAuthor : userAuthorFollowings.values() ) {
+		for( String userAuthorId : userAuthorUpdateIds ) {
+
+			UserAuthor userAuthor = userAuthors.get( userAuthorId );
 
 			if( ! userAuthor.isFollowing() )
 				continue;
@@ -173,10 +185,12 @@ public class AuditLogProcessApi extends GenericApi {
 			_createUserAuthorFollowingEmails( userAuthor, authors.get( userAuthor.getAuthorId() ) );
 
 		}
-		
-		
+
+
 		// auditLog.getAccessType() == AccessType.COMMENT_ADD
-		for( Comment comment : comments.values() ) {
+		for( Long commentId : commentUpdateIds ) {
+
+			Comment comment = comments.get( commentId );
 
 			if( comment.getState() != CommentState.ACTIVE )
 				continue;
@@ -188,12 +202,36 @@ public class AuditLogProcessApi extends GenericApi {
 			Pratilipi pratilipi = pratilipis.get( comment.getReferenceId() );
 			Author author = authors.get( pratilipi.getAuthorId() );
 
-			_createCommentAddedReviewerNotification( reviewer, comment );
-			_createCommentAddedAuthorNotification( author, comment );
+			_createCommentAddedReviewerEmail( reviewer, comment );
+			_createCommentAddedAuthorEmail( author, comment );
 
 		}
 
-		
+
+		// auditLog.getAccessType() == AccessType.VOTE
+		for( String voteId : voteUpdateIds ) {
+
+			Vote vote = votes.get( voteId );
+
+			if( vote.getType() != VoteType.LIKE )
+				continue;
+
+			if( vote.getParentType() == VoteParentType.REVIEW ) {
+
+				UserPratilipi userPratilipi = userPratilipis.get( vote.getParentId() );
+				
+				// To the reviewer
+				Long userId = userPratilipi.getUserId();
+				_createVoteOnReviewReviewerEmail( userId, vote );
+				
+				// To the author
+				Pratilipi pratilipi = pratilipis.get( userPratilipi.getPratilipiId() );
+				Author author = authors.get( pratilipi.getAuthorId() );
+				_createVoteOnReviewAuthorEmail( author, vote );
+
+			}
+
+		}
 		
 		// Updating AppProperty.
 		if( auditLogDataListCursorTuple.getDataList().size() > 0 ) {
@@ -441,7 +479,7 @@ public class AuditLogProcessApi extends GenericApi {
 
 	}
 	
-	private void _createCommentAddedReviewerNotification( UserPratilipi userPratilipi, Comment comment ) {
+	private void _createCommentAddedReviewerEmail( UserPratilipi userPratilipi, Comment comment ) {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
@@ -474,7 +512,7 @@ public class AuditLogProcessApi extends GenericApi {
 	}
 	
 	
-	private void _createCommentAddedAuthorNotification( Author author, Comment comment ) {
+	private void _createCommentAddedAuthorEmail( Author author, Comment comment ) {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
@@ -497,6 +535,72 @@ public class AuditLogProcessApi extends GenericApi {
 						author.getUserId(),
 						EmailType.COMMENT_REVIEW_AUTHOR, 
 						comment.getId() );
+		} else if( email.getState() == EmailState.DEFERRED ) {
+			email.setState( EmailState.PENDING );
+			email.setLastUpdated( new Date() );
+		} else {
+			return; // Do nothing
+		}
+
+
+		email = dataAccessor.createOrUpdateEmail( email );
+
+	}
+	
+	
+	private void _createVoteOnReviewReviewerEmail( Long userId, Vote vote ) {
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+
+		// TODO: Remove it ASAP
+		if( ! UserAccessUtil.hasUserAccess( userId, null, AccessType.USER_ADD ) )
+			return;
+
+		Email email = dataAccessor.getEmail(
+				userId,
+				EmailType.VOTE_REVIEW_REVIEWER, 
+				vote.getId() );
+
+
+		if( email == null ) {
+			email = dataAccessor.newEmail(
+						userId,
+						EmailType.VOTE_REVIEW_REVIEWER, 
+						vote.getId() );
+		} else if( email.getState() == EmailState.DEFERRED ) {
+			email.setState( EmailState.PENDING );
+			email.setLastUpdated( new Date() );
+		} else {
+			return; // Do nothing
+		}
+
+
+		email = dataAccessor.createOrUpdateEmail( email );
+
+	}
+	
+	private void _createVoteOnReviewAuthorEmail( Author author, Vote vote ) {
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+
+		if( author.getUserId() == null )
+			return;
+
+		// TODO: Remove it ASAP
+		if( ! UserAccessUtil.hasUserAccess( author.getUserId(), null, AccessType.USER_ADD ) )
+			return;
+
+		Email email = dataAccessor.getEmail(
+				author.getUserId(),
+				EmailType.VOTE_REVIEW_AUTHOR, 
+				vote.getId() );
+
+
+		if( email == null ) {
+			email = dataAccessor.newEmail(
+					author.getUserId(),
+					EmailType.VOTE_REVIEW_AUTHOR, 
+					vote.getId() );
 		} else if( email.getState() == EmailState.DEFERRED ) {
 			email.setState( EmailState.PENDING );
 			email.setLastUpdated( new Date() );

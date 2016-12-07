@@ -1714,6 +1714,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	@Override
+	public Map<String, Vote> getVotes( Collection<String> voteIds ) {
+		return getEntities( VoteEntity.class, voteIds );
+	}
+	
+	@Override
 	public List<Vote> getVoteListByReference( ReferenceType referenceType, Long referenceId ) {
 		return getVoteListByReference( referenceType, referenceId.toString() );
 	}

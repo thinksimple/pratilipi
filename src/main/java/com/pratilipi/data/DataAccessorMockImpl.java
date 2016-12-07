@@ -912,6 +912,11 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 	
 	@Override
+	public Map<String, Vote> getVotes( Collection<String> voteIds ) {
+		return null;
+	}
+	
+	@Override
 	public List<Vote> getVoteListByReference( ReferenceType referenceType, Long referenceId ) {
 		return new ArrayList<>( 0 );
 	}
