@@ -1,4 +1,4 @@
-var Suggester = function(selectorOrElem, onResolve, content_holder, isInputElement, lang) {
+var Suggester = function(selectorOrElem, onResolve, content_holder, isInputElement) {
   if(selectorOrElem) {
     this.elem = $(selectorOrElem);
     this.setMode( false );
@@ -18,8 +18,7 @@ var Suggester = function(selectorOrElem, onResolve, content_holder, isInputEleme
   } else {
     throw 'Coding karni nahi aati.'
   }
-  this.lang = lang;
-  this.url = "https://www.google.com/inputtools/request?ime=transliteration_en_" + this.lang + "&num=5&cp=0&cs=0&ie=utf-8&oe=utf-8&app=jsapi";
+
   this.text = '';
   this.savedSelection = null;
 };
@@ -48,12 +47,12 @@ var suggesterMethods = {
     } );
   },
 
-  type: function(keycode) {
-    var translation = new Translation(keycode);
-    if(translation.action == 'typing') {
+  type: function( translation ) {
+    // var translation = new Translation(keycode);
+    if( translation.action == 'typing' ) {
       if( !this.getMode() ) {
         //add a span tag there and set the relative position of the dropdown
-        if( this.isInputTypeElement == false) {
+        if( this.isInputTypeElement == false ) {
           this.curSpan = insertNodeAtRange();
         }
         this.setSuggesterPosition();
@@ -63,13 +62,16 @@ var suggesterMethods = {
       this.setText(this.text + translation.text);
     } else if(translation.action == 'space' || translation.action == 'enter') {
       this.handleWordSelection();
+    } else if(  translation.action == 'special_char' ) {
+      this.text += translation.text;
+      this.handleWordSelection( translation.text );
     } else if(translation.action == 'backspace') {
       this.backspace();
     } else if(translation.action == 'up') {
       this.goUp();
     } else if( translation.action == 'down') {
       this.goDown();
-    } else if( translation.action == 'escape'|| translation.action == 'tab' ) {
+    } else if( translation.action == 'escape' || translation.action == 'tab' ) {
       this.clear();
     }
   },
@@ -109,7 +111,7 @@ var suggesterMethods = {
   getSuggestions: function() {
     var self = this;
     $.ajax({
-      url: self.url,
+      url: "https://www.google.com/inputtools/request?ime=transliteration_en_hi&num=5&cp=0&cs=0&ie=utf-8&oe=utf-8&app=jsapi",
       data: {
           text: self.text
       },
@@ -184,6 +186,7 @@ var suggesterMethods = {
     var coordinates = {};
     if( this.isInputTypeElement ) {
       var caret_coordinates = getCaretCoordinates( this.content_holder.get(0), this.content_holder.get(0).selectionEnd );
+      console.log( caret_coordinates );
       coordinates["top"] = caret_coordinates.top + this.content_holder.offset().top;
       coordinates["left"] = caret_coordinates.left + this.content_holder.offset().left;
     }
@@ -221,10 +224,13 @@ var suggesterMethods = {
     $("span.curWord").remove();
   },
 
-  handleWordSelection: function() {
+  handleWordSelection: function( special_char ) {
     var selected_word;
     var $highlighted_word = this.elem.find(".highlight-suggestion");
     selected_word = $highlighted_word.length ? $highlighted_word.text() : this.text;
+    if( special_char ) {
+      selected_word += special_char;
+    }
     this.resolve( selected_word );
   }
     
@@ -234,29 +240,37 @@ for(var method in suggesterMethods) {
   Suggester.prototype[method] = suggesterMethods[method];
 }
 
-var Translation = function(keycode) {
-  if(keycode == 13) {
+var Translation = function(keycode, isShiftKey) {
+  if( keycode == 13 ) {
     this.action = 'enter'
-  } else if(keycode == 32) {
+  } else if( keycode == 32 ) {
     this.action = 'space';
-  } else if(keycode == 8) {
+  } else if( keycode == 8 ) {
     this.action = 'backspace';
-  } else if(keycode == 38) {
-    this.action = 'up';
-  } else if(keycode == 40) {
-    this.action = 'down';
-  } else if(keycode == 37) {
-    this.action = 'left';
-  } else if(keycode == 39) {
-    this.action = 'right';
-  } else if(keycode == '27') {
-    this.action = 'escape';
-  } else if(keycode == 9) {
+  } else if( keycode == 9 ) {
     this.action = 'tab';
+  } else if( keycode == 38 && !isShiftKey ) {
+    this.action = 'up';
+  } else if( keycode == 40 && !isShiftKey ) {
+    this.action = 'down';
+  } else if( keycode == 37 && !isShiftKey ) {
+    this.action = 'left';
+  } else if( keycode == 39 && !isShiftKey ) {
+    this.action = 'right';
+  } else if( keycode == '27') {
+    this.action = 'escape';
   }
 
   else if(keycode > 32 && keycode < 127) {
-    this.action = 'typing';
+    if( keycode.between(33, 47) || keycode.between(58, 64) || keycode.between(91, 96) || keycode.between(123, 126) ) {
+      this.action = 'special_char';
+    } else {
+      this.action = 'typing';
+    }
     this.text = String.fromCharCode(keycode).toLowerCase();
   }
 };
+
+Number.prototype.between = function (min, max) {
+  return this >= min && this <= max;
+}

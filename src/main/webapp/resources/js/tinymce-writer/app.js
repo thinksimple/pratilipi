@@ -119,16 +119,15 @@ if (typeof module != 'undefined' && typeof module.exports != 'undefined') {
 
 }());
 
-var transliterationApp = function( $transliterable_elem, lang ) {
+var transliterationApp = function( $transliterable_elem ) {
   this.$transliterable_elem = $transliterable_elem; 
-  this.lang = lang;
 };
 
 transliterationApp.prototype.init = function() {
   var _this = this;
   this.setTransliterationElementType();
   this.setSuggestionResolveFunction();
-  this.suggester = new Suggester('.word-suggester', _this.onSuggestionPicked, _this.$transliterable_elem, _this.isTransliterationInputType(), _this.lang );
+  this.suggester = new Suggester('.word-suggester', _this.onSuggestionPicked, _this.$transliterable_elem, _this.isTransliterationInputType() );
   this.suggester.init();
   this.$transliterable_elem.on('keypress', _this.suppressKeypress.bind( _this ));
   this.$transliterable_elem.on('keydown', _this.suppressKeydown.bind( _this ));
@@ -195,23 +194,25 @@ transliterationApp.prototype.isTransliterationInputType = function() {
 
 transliterationApp.prototype.suppressKeypress = function(e) {
   var keycode = e.keycode || e.which;
-  if( this.shouldPreventKeypress( keycode ) ) {
+  var isShiftKey = e.shiftKey;
+  var translation = new Translation( keycode, isShiftKey );
+  if( this.shouldPreventKeypress( translation ) ) {
     e.preventDefault();
-    this.sendKeyToSuggester(keycode);
+    this.sendKeyToSuggester( translation );
   }
 };
 
-transliterationApp.prototype.sendKeyToSuggester = function(keycode) {
-  this.suggester.type(keycode);
+transliterationApp.prototype.sendKeyToSuggester = function( translation ) {
+  this.suggester.type( translation );
 };
 
-transliterationApp.prototype.shouldPreventKeypress = function( keycode ) {
-  var translation = new Translation( keycode );
+transliterationApp.prototype.shouldPreventKeypress = function( translation ) {
+  // var translation = new Translation( keycode );
   return ( this.isNotBackspaceKey(translation) && !this.isKeydownActionKey(translation) && ( this.isNotKeypressActionKey(translation) || this.suggester.getMode() ) );
 };
 
 transliterationApp.prototype.isNotKeypressActionKey = function( translation ) {
-  return ( translation.action != 'space' );
+  return ( translation.action != 'space' && translation.action != 'special_char' );
 };
 
 transliterationApp.prototype.isNotBackspaceKey = function( translation ) {
@@ -220,14 +221,16 @@ transliterationApp.prototype.isNotBackspaceKey = function( translation ) {
 
 transliterationApp.prototype.suppressKeydown = function(e) {
   var keycode = e.keycode || e.which;
-  if( this.shouldPreventKeydown( keycode ) ) {
+  var isShiftKey = e.shiftKey;
+  var translation = new Translation( keycode, isShiftKey );
+  if( this.shouldPreventKeydown( translation ) ) {
     e.preventDefault();
-    this.sendKeyToSuggester(keycode);
+    this.sendKeyToSuggester( translation );
   }
 };
 
-transliterationApp.prototype.shouldPreventKeydown = function( keycode ) {
-  var translation = new Translation( keycode );
+transliterationApp.prototype.shouldPreventKeydown = function( translation ) {
+  // var translation = new Translation( keycode );
   return ( this.isKeydownActionKey(translation) && this.suggester.getMode() );
 };
 

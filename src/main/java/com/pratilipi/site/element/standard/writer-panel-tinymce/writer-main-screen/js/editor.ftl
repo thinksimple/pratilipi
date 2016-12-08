@@ -83,7 +83,7 @@ Editor.prototype.init = function() {
             var translation = new Translation( keycode );
             if( ( translation.action == 'backspace' || translation.action == 'enter' ) && _this.parent_object.content_transliteration_object.suggester.getMode()) {
               // console.log(   )
-              _this.parent_object.content_transliteration_object.sendKeyToSuggester(e.which);
+              _this.parent_object.content_transliteration_object.sendKeyToSuggester( translation );
               e.preventDefault(); 
             }
         });
