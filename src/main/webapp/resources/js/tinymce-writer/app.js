@@ -119,15 +119,16 @@ if (typeof module != 'undefined' && typeof module.exports != 'undefined') {
 
 }());
 
-var transliterationApp = function( $transliterable_elem ) {
+var transliterationApp = function( $transliterable_elem, lang ) {
   this.$transliterable_elem = $transliterable_elem; 
+  this.lang = lang;
 };
 
 transliterationApp.prototype.init = function() {
   var _this = this;
   this.setTransliterationElementType();
   this.setSuggestionResolveFunction();
-  this.suggester = new Suggester('.word-suggester', _this.onSuggestionPicked, _this.$transliterable_elem, _this.isTransliterationInputType() );
+  this.suggester = new Suggester('.word-suggester', _this.onSuggestionPicked, _this.$transliterable_elem, _this.isTransliterationInputType(), _this.lang );
   this.suggester.init();
   this.$transliterable_elem.on('keypress', _this.suppressKeypress.bind( _this ));
   this.$transliterable_elem.on('keydown', _this.suppressKeydown.bind( _this ));
