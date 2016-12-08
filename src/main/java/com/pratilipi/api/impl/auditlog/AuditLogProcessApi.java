@@ -97,11 +97,16 @@ public class AuditLogProcessApi extends GenericApi {
 		
 
 
-		// Batch get PrimaryContent entities
-		
-		Map<String, UserAuthor> userAuthors = dataAccessor.getUserAuthors( userAuthorUpdateIds );
-		Map<Long, Comment> comments = dataAccessor.getComments( commentUpdateIds );
+		// Batch get Vote entities
 		Map<String, Vote> votes = dataAccessor.getVotes( voteUpdateIds );
+
+
+		// Batch get Comment and entities
+		Set<Long> commentIds = new HashSet<>( commentUpdateIds );
+		for( Vote vote : votes.values() )
+			if( vote.getParentType() == VoteParentType.COMMENT )
+				commentIds.add( vote.getParentIdLong() );
+		Map<Long, Comment> comments = dataAccessor.getComments( commentIds );
 
 
 		// Batch get UserPratilipi entities
@@ -112,6 +117,9 @@ public class AuditLogProcessApi extends GenericApi {
 		for( Vote vote : votes.values() )
 			if( vote.getParentType() == VoteParentType.REVIEW )
 				userPratilipiIds.add( vote.getParentId() );
+				
+
+		// Getting all UserPratilipi entities
 		Map<String, UserPratilipi> userPratilipis = dataAccessor.getUserPratilipis( userPratilipiIds );
 
 
@@ -121,6 +129,9 @@ public class AuditLogProcessApi extends GenericApi {
 			pratilipiIds.add( userPratilipi.getPratilipiId() );
 		Map<Long, Pratilipi> pratilipis = dataAccessor.getPratilipis( pratilipiIds );
 
+
+		// Batch get UserAuthor entities
+		Map<String, UserAuthor> userAuthors = dataAccessor.getUserAuthors( userAuthorUpdateIds );
 
 		// Batch get Author entities
 		Set<Long> authorIds = new HashSet<>();
@@ -221,13 +232,17 @@ public class AuditLogProcessApi extends GenericApi {
 				UserPratilipi userPratilipi = userPratilipis.get( vote.getParentId() );
 				
 				// To the reviewer
-				Long userId = userPratilipi.getUserId();
-				_createVoteOnReviewReviewerEmail( userId, vote );
+				_createVoteOnReviewReviewerEmail( userPratilipi, vote );
 				
 				// To the author
 				Pratilipi pratilipi = pratilipis.get( userPratilipi.getPratilipiId() );
 				Author author = authors.get( pratilipi.getAuthorId() );
 				_createVoteOnReviewAuthorEmail( author, vote );
+
+			} else if( vote.getParentType() == VoteParentType.COMMENT ) {
+
+				// To the commentor
+				_createVoteOnCommentCommentorEmail( comments.get( vote.getParentId() ), vote );
 
 			}
 
@@ -548,23 +563,23 @@ public class AuditLogProcessApi extends GenericApi {
 	}
 	
 	
-	private void _createVoteOnReviewReviewerEmail( Long userId, Vote vote ) {
+	private void _createVoteOnReviewReviewerEmail( UserPratilipi userPratilipi, Vote vote ) {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
 		// TODO: Remove it ASAP
-		if( ! UserAccessUtil.hasUserAccess( userId, null, AccessType.USER_ADD ) )
+		if( ! UserAccessUtil.hasUserAccess( userPratilipi.getUserId(), null, AccessType.USER_ADD ) )
 			return;
 
 		Email email = dataAccessor.getEmail(
-				userId,
+				userPratilipi.getUserId(),
 				EmailType.VOTE_REVIEW_REVIEWER, 
 				vote.getId() );
 
 
 		if( email == null ) {
 			email = dataAccessor.newEmail(
-						userId,
+					userPratilipi.getUserId(),
 						EmailType.VOTE_REVIEW_REVIEWER, 
 						vote.getId() );
 		} else if( email.getState() == EmailState.DEFERRED ) {
@@ -573,7 +588,6 @@ public class AuditLogProcessApi extends GenericApi {
 		} else {
 			return; // Do nothing
 		}
-
 
 		email = dataAccessor.createOrUpdateEmail( email );
 
@@ -613,6 +627,36 @@ public class AuditLogProcessApi extends GenericApi {
 
 	}
 
+	private void _createVoteOnCommentCommentorEmail( Comment comment, Vote vote ) {
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+
+		// TODO: Remove it ASAP
+		if( ! UserAccessUtil.hasUserAccess( comment.getUserId(), null, AccessType.USER_ADD ) )
+			return;
+
+		Email email = dataAccessor.getEmail(
+				comment.getUserId(),
+				EmailType.VOTE_COMMENT_COMMENTOR, 
+				vote.getId() );
+
+
+		if( email == null ) {
+			email = dataAccessor.newEmail(
+					comment.getUserId(),
+					EmailType.VOTE_COMMENT_COMMENTOR, 
+					vote.getId() );
+		} else if( email.getState() == EmailState.DEFERRED ) {
+			email.setState( EmailState.PENDING );
+			email.setLastUpdated( new Date() );
+		} else {
+			return; // Do nothing
+		}
+
+
+		email = dataAccessor.createOrUpdateEmail( email );
+
+	}
 	
 	private boolean _isToday( Date date ) {
 		Long time = new Date().getTime();
