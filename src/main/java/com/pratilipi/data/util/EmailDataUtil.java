@@ -71,20 +71,27 @@ public class EmailDataUtil {
 
 		Map<String, Object> dataModel = null;
 
-		if( email.getType() == EmailType.PRATILIPI_PUBLISHED_AUTHOR )
+		if( email.getType() == EmailType.PRATILIPI_PUBLISHED_AUTHOR 
+				|| email.getType() == EmailType.PRATILIPI_PUBLISHED_FOLLOWER )
 			dataModel = createDataModelForPratilipiPublishedEmail( email.getPrimaryContentIdLong() );
-		else if( email.getType() == EmailType.PRATILIPI_PUBLISHED_FOLLOWER )
-			dataModel = createDataModelForPratilipiPublishedEmail( email.getPrimaryContentIdLong() );
+
 		else if( email.getType() == EmailType.AUTHOR_FOLLOW )
 			dataModel = createDataModelForAuthorFollowEmail( email.getPrimaryContentId() );
+
 		else if( email.getType() == EmailType.USER_PRATILIPI_REVIEW )
 			dataModel = createDataModelForUserPratilipiReviewEmail( email.getPrimaryContentId() );
-		else if( email.getType() == EmailType.COMMENT_REVIEW_REVIEWER )
+
+		else if( email.getType() == EmailType.COMMENT_REVIEW_REVIEWER 
+					|| email.getType() == EmailType.COMMENT_REVIEW_AUTHOR )
 			dataModel = createDataModelForCommentReviewEmail( email.getPrimaryContentIdLong() );
-		else if( email.getType() == EmailType.COMMENT_REVIEW_AUTHOR )
-			dataModel = createDataModelForCommentReviewEmail( email.getPrimaryContentIdLong() );
-		else if( email.getType() == EmailType.VOTE_REVIEW_REVIEWER )
+
+		else if( email.getType() == EmailType.VOTE_REVIEW_REVIEWER 
+					|| email.getType() == EmailType.VOTE_REVIEW_AUTHOR )
 			dataModel = createDataModelForVoteReviewEmail( email.getPrimaryContentId() );
+
+		else if( email.getType() == EmailType.VOTE_COMMENT_COMMENTOR )
+			dataModel = createDataModelForVoteCommentEmail( email.getPrimaryContentId() );
+
 
 		// Defaulting to user's language
 		if( ! dataModel.containsKey( "language" ) ) {
@@ -248,6 +255,10 @@ public class EmailDataUtil {
 
 		return dataModel;
 
+	}
+	
+	private static Map<String, Object> createDataModelForVoteCommentEmail( String commentId ) {
+		return null;
 	}
 
 }
