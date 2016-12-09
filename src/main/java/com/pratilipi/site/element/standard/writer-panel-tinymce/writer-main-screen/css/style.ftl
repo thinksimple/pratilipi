@@ -483,11 +483,13 @@ blockquote {
     font-size: 14px;
 }  
 #toast-container>.toast-success {
-	background-image: none !important;
+	background-image: none !important;	
 } 
 #toast-container.toast-top-center>div {
     margin-left: auto;
     margin-right: auto;
+    max-width: 650px;
+    width: auto;
 }	
 .toast {
 	margin-top: 4px !important;
@@ -731,12 +733,13 @@ body {
   display: none;
   background: white;
   z-index: 1051;
+  font-size: 16px;
   }
 
 .word-input {
   border: none;
   display: inline-block;
-  border-right: 2px aqua solid;
+  border-right: 2px grey solid;
 }
 
 .suggestions {

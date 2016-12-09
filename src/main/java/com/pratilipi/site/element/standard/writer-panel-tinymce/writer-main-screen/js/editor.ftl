@@ -21,7 +21,7 @@ Editor.prototype.init = function() {
     'paste'],
     menubar: false,
     statusbar: false,
-    toolbar: 'bold italic underline | alignleft aligncenter alignright | CustomBlockquote link imageCustom | Ulist Olist  visualblocks code',
+    toolbar: 'bold italic underline | CustomLeftAlign CustomCenterAlign CustomRightAlign | CustomBlockquote link imageCustom | Ulist Olist',
     height: 300,
     //language: 'hi_IN',
     //language_url : 'https://storage.googleapis.com/devo-pratilipi.appspot.com/hi_IN.js',
@@ -73,10 +73,11 @@ Editor.prototype.init = function() {
       alignright : {selector : 'p', styles : {textAlign : 'right'} },        
     },
     setup : function(ed) {
-    ed.on('init', function (e) {
-      console.log('Editor was initialized.');
-      _this.parent_object.initializeData();
-    });
+      ed.on('init', function (e) {
+        console.log('Editor was initialized.');
+        _this.parent_object.initializeData();
+      });
+      
       if( screen.width > 480 ) {
         ed.on("keydown", function(e){
             var keycode = e.keycode || e.which;
@@ -203,6 +204,9 @@ Editor.prototype.init = function() {
 
     paste_postprocess: function(plugin, args){
       console.log(args.node);
+      $(args.node).find("a:has(img)").replaceWith( function() {
+        return $(this).find("img");
+      } );      
       $(args.node).find("div").replaceWith(function() {
         if( $(this).text().length ) {
           return "<p>" + $(this).html() + '</p>';
@@ -212,11 +216,15 @@ Editor.prototype.init = function() {
       });
       $(args.node).find("h1,h2,h3,h4,h5,h6").replaceWith(function() {
         if( $(this).text().length ) {
-          return "<b>" + $(this).html() + '</b>';
+          if( $(this).closest("p,blockquote,li").length ) {
+            return "<b>" + $(this).html() + '</b>';
+          } else {
+            return "<p><b>" + $(this).html() + "</b></p>";
+          }
         } else {
           return "";
         }
-      });      
+      });       
     },    
 
     // enforcing rules to editor
