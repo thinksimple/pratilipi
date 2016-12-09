@@ -249,10 +249,13 @@ public class EmailDataUtil {
 												: userPratilipi.getUser().getAuthor().getNameEn() );
 		dataModel.put( "user_pratilipi_creation_date", _getDateFormat( userPratilipi.getReviewDate() ) );
 		dataModel.put( "user_pratilipi_review", HtmlUtil.toPlainText( userPratilipi.getReview() ) );
-		dataModel.put( "rating", userPratilipi.getRating() );
+
+		if( userPratilipi.getRating() != null )
+			dataModel.put( "rating", userPratilipi.getRating() );
+
 		dataModel.put( "vote_name", voter.getAuthor().getName() != null
-									? voter.getAuthor().getName()
-									: voter.getAuthor().getNameEn() );
+				? voter.getAuthor().getName()
+				: voter.getAuthor().getNameEn() );
 
 		return dataModel;
 
