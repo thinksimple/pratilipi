@@ -67,16 +67,16 @@ Editor.prototype.init = function() {
       italic: {inline : 'i', exact : true},
       underline : {inline : 'u', exact : true},
       blockquote: {block: 'blockquote'},
-	  img: { block:'img' },
-	  alignleft : {selector : 'p', styles : {textAlign : 'left'} },
-	  aligncenter :{selector : 'p', styles : {textAlign : 'center'} },
-	  alignright : {selector : 'p', styles : {textAlign : 'right'} },        
+      img: { block:'img' },
+      alignleft : {selector : 'p', styles : {textAlign : 'left'} },
+      aligncenter :{selector : 'p', styles : {textAlign : 'center'} },
+      alignright : {selector : 'p', styles : {textAlign : 'right'} },        
     },
     setup : function(ed) {
-	  ed.on('init', function (e) {
-	    console.log('Editor was initialized.');
-	    _this.parent_object.initializeData();
-	  });
+    ed.on('init', function (e) {
+      console.log('Editor was initialized.');
+      _this.parent_object.initializeData();
+    });
       if( screen.width > 480 ) {
         ed.on("keydown", function(e){
             var keycode = e.keycode || e.which;
@@ -92,30 +92,49 @@ Editor.prototype.init = function() {
         icon: 'image',
         tooltip: "Insert/edit image",
         cmd: "mceImage",
-        onpostrender: monitorNodeChange
+        onpostrender: monitorImageChange
       });
       ed.addButton('Ulist', {
         icon: 'mce-ico mce-i-bullist',
-        tooltip: "Insert/edit image",
+        tooltip: "Bullet list",
         cmd: "InsertUnorderedList",
         onpostrender: monitorListChange
       }); 
       ed.addButton('Olist', {
         icon: 'mce-ico mce-i-numlist',
-        tooltip: "Insert/edit image",
+        tooltip: "Numbered list",
         cmd: "InsertOrderedList",
         onpostrender: monitorListChange
       });      
       ed.addButton('CustomBlockquote', {
         icon: 'mce-ico mce-i-blockquote',
-        tooltip: "Insert/edit image",
+        tooltip: "Blockquote",
         cmd: "mceBlockQuote",
         onpostrender: monitorBlockquoteChange
-      });        
+      });
+      ed.addButton('CustomLeftAlign', {
+        icon: 'mce-ico mce-i-alignleft',
+        tooltip: "Align left",
+        cmd: "JustifyLeft",
+        onpostrender: monitorAlignmentChange
+      }); 
+      ed.addButton('CustomCenterAlign', {
+        icon: 'mce-ico mce-i-aligncenter',
+        tooltip: "Align center",
+        cmd: "JustifyCenter",
+        onpostrender: monitorAlignmentChange
+      });      
+      ed.addButton('CustomRightAlign', {
+        icon: 'mce-ico mce-i-alignright',
+        tooltip: "Align right",
+        cmd: "JustifyRight",
+        onpostrender: monitorAlignmentChange
+      });
+
       function lowercasedElemName(elem) {
         return elem.nodeName.toLowerCase();
       }
-      function monitorNodeChange() {
+      function monitorImageChange() {
         var btn = this;
         ed.on('NodeChange', function(e) {
           var parents = e.parents.map(lowercasedElemName);
@@ -136,7 +155,14 @@ Editor.prototype.init = function() {
           var parents = e.parents.map(lowercasedElemName);
           btn.disabled(parents.includes("li"));
         });
-      }                 
+      }
+      function monitorAlignmentChange() {
+        var btn = this;
+        ed.on('NodeChange', function(e) {
+          var parents = e.parents.map(lowercasedElemName);
+          btn.disabled( parents.includes("li") || parents.includes("blockquote") || parents.includes("img") );
+        });
+      }                       
     },
     images_upload_handler: function (blobInfo, success, failure) {
       // console.log("coding karni kab seekhoge");
@@ -250,4 +276,3 @@ Editor.prototype.uploadOnServer = function() {
     }
   }); 
 };
-
