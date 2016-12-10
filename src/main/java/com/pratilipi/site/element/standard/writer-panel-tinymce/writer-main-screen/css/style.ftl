@@ -770,4 +770,5 @@ blockquote {
 }   
 div.mce-tinymce-inline {
   display: block !important;
+  z-index: 999;
 }
