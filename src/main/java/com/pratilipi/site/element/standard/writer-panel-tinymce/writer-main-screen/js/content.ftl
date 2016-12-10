@@ -22,7 +22,7 @@ Content.prototype.init = function() {
 Content.prototype.attachImageRemovalListener = function() {
 	$("body").on("click", ".image-delete-popover", function() {
 		$(".remove-image").remove();
-		$('#chapter-content img').popover('hide');
+		$(".popover").hide()
 	});
 };
 
@@ -38,7 +38,7 @@ Content.prototype.delegateRemoveImageListeners = function() {
 Content.prototype.dismissPopoversOnClickingOutside = function() {
   $(document).on('click', function (e) {
     if (!$(e.target).is("#chapter-content img") && $(e.target).parents('.popover.in').length === 0) { 
-       $('#chapter-content img').popover('hide');
+      $(".popover").hide()
     }
   });
 };
