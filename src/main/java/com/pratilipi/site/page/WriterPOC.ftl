@@ -11,4 +11,5 @@
 	  
 </head>
 	<#include "../element/standard/writer-panel-tinymce/writer-main-screen/index.html">
+	<#include "meta/Font.ftl">
 </html>
