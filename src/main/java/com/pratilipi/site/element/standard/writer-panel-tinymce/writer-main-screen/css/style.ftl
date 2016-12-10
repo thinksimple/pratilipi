@@ -764,7 +764,8 @@ blockquote {
 #chapter-content img {
     display: block;
     margin: 8px auto;
-    max-width: 640px;
+    max-width: 100%;
+    height: auto;	
 }   
 div.mce-tinymce-inline {
   display: block !important;

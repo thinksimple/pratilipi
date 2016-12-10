@@ -9,7 +9,7 @@ var Content = function (content_container_id, parent_object) {
     html: true,
     trigger: "focus",
     selector: '[rel="popover"]',
-    content: '<div class="sprites-icon delete-icon image-deleter"></div>'
+    content: '<div class="sprites-icon delete-icon image-delete-popover"></div>'
   };
 };
 
@@ -20,14 +20,15 @@ Content.prototype.init = function() {
 
 
 Content.prototype.attachImageRemovalListener = function() {
-	$("body").on("click", ".image-deleter", function() {
-		$("remove-image").remove();
+	$("body").on("click", ".image-delete-popover", function() {
+		$(".remove-image").remove();
 	});
 };
 
 Content.prototype.delegateRemoveImageListeners = function() {
   var _this = this;
   this.$content_container.on("click", "img", function() {
+  	$(".remove-image").removeClass("remove-image");
   	$( this ).addClass("remove-image");
   	$( this ).popover( _this.popoverSettings ).popover('show');
   });
