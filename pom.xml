@@ -258,7 +258,6 @@
 					<version>${app.version}</version>
 					<set_default>${app.setDefault}</set_default>
 					<gcloud_directory>/usr/lib/google-cloud-sdk</gcloud_directory>
-					<staging_directory>${project.build.directory}/${project.build.finalName}</staging_directory>
 				</configuration>
 			</plugin>
 			
