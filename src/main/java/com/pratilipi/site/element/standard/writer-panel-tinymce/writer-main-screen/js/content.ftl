@@ -3,11 +3,35 @@ var Content = function (content_container_id, parent_object) {
   this.$content_container = $( id_content_container );
   this.tinymce_content_container = tinyMCE.activeEditor;
   this.parent_object = parent_object;
+  this.popoverSettings = {
+    placement: 'top',
+    container: 'body',
+    html: true,
+    trigger: "focus",
+    selector: '[rel="popover"]',
+    content: '<div class="sprites-icon delete-icon image-deleter"></div>'
+  };
 };
 
 Content.prototype.init = function() {
+  //this.delegateRemoveImageListeners();
+  //this.attachImageRemovalListener();
 };
 
+
+Content.prototype.attachImageRemovalListener = function() {
+	$("body").on("click", ".image-deleter", function() {
+		$("remove-image").remove();
+	});
+};
+
+Content.prototype.delegateRemoveImageListeners = function() {
+  var _this = this;
+  this.$content_container.on("click", "img", function() {
+  	$( this ).addClass("remove-image");
+  	$( this ).popover( _this.popoverSettings ).popover('show');
+  });
+};
 
 Content.prototype.populateContent = function( response ) {
   if( response == undefined ) {
