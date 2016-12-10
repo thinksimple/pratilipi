@@ -456,12 +456,6 @@ blockquote {
 .opaque-image{
 	opacity: 1;
 }
-
-.remove-image {
-    border-radius: 50%;
-    padding: 7px 7px;    
-    background: white;
-  }
   
   .title-change-input {
   	width: 90%;
@@ -770,5 +764,5 @@ blockquote {
 }   
 div.mce-tinymce-inline {
   display: block !important;
-  z-index: 999;
+  z-index: 999 !important;
 }

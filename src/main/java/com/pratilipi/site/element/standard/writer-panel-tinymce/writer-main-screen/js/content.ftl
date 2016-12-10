@@ -14,14 +14,15 @@ var Content = function (content_container_id, parent_object) {
 };
 
 Content.prototype.init = function() {
-  /* this.delegateRemoveImageListeners();
-     this.attachImageRemovalListener(); */
+   this.delegateRemoveImageListeners();
+   this.attachImageRemovalListener(); 
+   this.dismissPopoversOnClickingOutside();
 };
-
 
 Content.prototype.attachImageRemovalListener = function() {
 	$("body").on("click", ".image-delete-popover", function() {
 		$(".remove-image").remove();
+		$('#chapter-content img').popover('hide');
 	});
 };
 
@@ -31,6 +32,14 @@ Content.prototype.delegateRemoveImageListeners = function() {
   	$(".remove-image").removeClass("remove-image");
   	$( this ).addClass("remove-image");
   	$( this ).popover( _this.popoverSettings ).popover('show');
+  });
+};
+
+Content.prototype.dismissPopoverOnClickingOutside = function() {
+  $(document).on('click', function (e) {
+    if (!$(e.target).is("#chapter-content img") && $(e.target).parents('.popover.in').length === 0) { 
+       $('#chapter-content img').popover('hide');
+    }
   });
 };
 
