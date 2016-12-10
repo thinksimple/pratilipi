@@ -35,7 +35,7 @@ Content.prototype.delegateRemoveImageListeners = function() {
   });
 };
 
-Content.prototype.dismissPopoverOnClickingOutside = function() {
+Content.prototype.dismissPopoversOnClickingOutside = function() {
   $(document).on('click', function (e) {
     if (!$(e.target).is("#chapter-content img") && $(e.target).parents('.popover.in').length === 0) { 
        $('#chapter-content img').popover('hide');
