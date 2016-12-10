@@ -136,7 +136,7 @@ Editor.prototype.init = function() {
         var btn = this;
         ed.on('NodeChange', function(e) {
           var parents = e.parents.map(lowercasedElemName);
-          btn.disabled(parents.includes("blockquote") || parents.includes("li"));
+          btn.disabled(parents.includes("blockquote") || parents.includes("li") || parents.includes("u") || parents.includes("i") || parents.includes("b") || parents.includes("a"));
         });
       }
       function monitorListChange() {
@@ -224,7 +224,7 @@ Editor.prototype.init = function() {
     <#-- enforcing rules to editor -->
     valid_elements : 'p[style],img[src|width|height],blockquote,b,i,u,a[href|target=_blank],br,b/strong,i/em,ol,ul,li',
     extended_valid_elements: 'img[src|width|height],p[style],blockquote,ul,ol,li,a[href|target=_blank]',
-    valid_children : 'body[p|img|blockquote|ol|ul],-body[br],p[b|i|u|a[href]|br],-p[img],blockquote[b|i|u|a[href]|br],-blockquote[blockquote|img],ol[li],ul[li],-ul[ul|ol|img],li[b|i|u|a[href]|br],-li[img|blockquote]', 
+    valid_children : 'body[p|img|blockquote|ol|ul],-body[br],p[b|i|u|a[href]|br],-p[img],blockquote[b|i|u|a[href]|br],-blockquote[blockquote|img|p],ol[li],ul[li],-ul[ul|ol|img],li[b|i|u|a[href]|br],-li[img|blockquote|p]', 
     invalid_elements : "div",
     valid_styles: {'p': 'text-align'},
 
