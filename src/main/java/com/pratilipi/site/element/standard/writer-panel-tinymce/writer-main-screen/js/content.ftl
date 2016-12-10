@@ -40,11 +40,11 @@ Content.prototype.populateContent = function( response ) {
   }
   else {
     this.tinymce_content_container.setContent( response );
-    // if( isMobile() ) {
-    //   $all_images.attr( "src", function( ) {
-    //     return $(this).attr("src") + "&width=240";
-    //   });
-    // }
+    /* if( isMobile() ) {
+       $all_images.attr( "src", function( ) {
+         return $(this).attr("src") + "&width=240";
+       });
+     } */
   }
 }; 
 

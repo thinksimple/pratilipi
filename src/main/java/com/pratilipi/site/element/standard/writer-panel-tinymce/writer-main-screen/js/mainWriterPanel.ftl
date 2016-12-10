@@ -39,7 +39,7 @@ MainWriterPanel.prototype.init = function() {
   this.publish_modal_object.init();
   
   this.hideProgressBarOnMobileFocus();
-  //this.initializeData();
+  <#-- this.initializeData(); -->
   
   /* add button listeners */
   this.attachActionButtonListeners();
@@ -105,13 +105,9 @@ MainWriterPanel.prototype.loadScriptsForDesktopTransliteration = function() {
   var _this = this; 
   if(screen.width > 480) {
     $.getScript( "https://cdnjs.cloudflare.com/ajax/libs/rangy/1.3.0/rangy-core.min.js", function( data, textStatus, jqxhr ) {
-      // console.log( "Load was performed." );
       $.getScript("https://cdnjs.cloudflare.com/ajax/libs/rangy/1.3.0/rangy-selectionsaverestore.min.js", function( data, textStatus, jqxhr ) {
-        // console.log( "Load was performed 2  ." );
         $.getScript("resources/js/tinymce-writer/suggester.js", function( data, textStatus, jqxhr ) {
-          console.log( "Load was performed 3  ." );
           $.getScript("resources/js/tinymce-writer/app.js", function( data, textStatus, jqxhr ) {
-            console.log( "Load was performed 4  ." );
             _this.enableDesktopTransliteration();
           });                  
         });                
