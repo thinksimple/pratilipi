@@ -48,6 +48,7 @@ import com.pratilipi.api.impl.userpratilipi.UserPratilipiReviewListApi;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.BatchProcessType;
 import com.pratilipi.common.type.BlogPostState;
 import com.pratilipi.common.type.Language;
@@ -63,6 +64,7 @@ import com.pratilipi.common.util.FreeMarkerUtil;
 import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.common.util.SystemProperty;
 import com.pratilipi.common.util.ThirdPartyResource;
+import com.pratilipi.common.util.UserAccessUtil;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
@@ -384,7 +386,12 @@ public class PratilipiSite extends HttpServlet {
 				if( action != null )
 					dataModel.put( "action", action );
 
-				templateName = SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) ? "Writer.ftl" : "WriterPOC.ftl";
+				// New writer only for AEE's
+				templateName = UserAccessUtil.hasUserAccess( AccessTokenFilter.getAccessToken().getUserId(), 
+																filterLanguage, 
+																AccessType.PRATILIPI_UPDATE )
+
+																? "WriterPOC.ftl" : "Writer.ftl";
 
 			// Internal link
 			} else if( ! basicMode && uri.equals( "/authors" ) ) {
