@@ -15,9 +15,6 @@ do
 	cd ~/worker/pratilipi
 	sudo bash ~/test/pratilipi/shell-scripts/update-worker.sh     2>&1 | grep -v "^\[INFO\]" | grep -v "Fetching origin" | logger -t cont_dep_script
 
-	cd ~/test/pratilipi
-	sudo bash ~/test/pratilipi/shell-scripts/update-test.sh       2>&1 | grep -v "^\[INFO\]" | grep -v "Fetching origin" | logger -t cont_dep_script
-	
 	sleep 60
 
 done
