@@ -14,8 +14,8 @@ var Content = function (content_container_id, parent_object) {
 };
 
 Content.prototype.init = function() {
-  //this.delegateRemoveImageListeners();
-  //this.attachImageRemovalListener();
+  this.delegateRemoveImageListeners();
+  this.attachImageRemovalListener();
 };
 
 

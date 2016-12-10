@@ -751,6 +751,7 @@ body {
 }
 .highlight-suggestion {
   background: lightgrey;
+  font-weight: 700;
 }
 blockquote {
   padding: 10px 20px;
