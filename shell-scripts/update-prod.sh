@@ -15,8 +15,8 @@ then
 	ant
 	
 	
-	cp src/main/webapp/WEB-INF/prod-web.xml				src/main/webapp/WEB-INF/web.xml
-	cp src/main/webapp/WEB-INF/prod-appengine-web.xml	src/main/webapp/WEB-INF/appengine-web.xml
+	cp src/main/webapp/WEB-INF/prod-web.xml             src/main/webapp/WEB-INF/web.xml
+	cp src/main/webapp/WEB-INF/prod-appengine-web.xml   src/main/webapp/WEB-INF/appengine-web.xml
 
 	# Update prod-pratilipi/prod
 	mvn appengine:update -Dapp.id=prod-pratilipi -Dapp.module=default
