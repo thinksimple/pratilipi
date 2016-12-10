@@ -170,6 +170,7 @@ public class AuditLogProcessApi extends GenericApi {
 		}
 
 
+		/*
 		// auditLog.getAccessType() == AccessType.USER_PRATILIPI_REVIEW
 		for( String userPratilipiId : userPratilipiUpdateIds ) {
 
@@ -182,6 +183,7 @@ public class AuditLogProcessApi extends GenericApi {
 			_createUserPratilipiReviewEmail( userPratilipi, authors.get( pratilipis.get( pratilipiId ).getAuthorId() ) );
 
 		}
+		*/
 
 
 		// auditLog.getAccessType() == AccessType.USER_AUTHOR_FOLLOWING
@@ -193,11 +195,12 @@ public class AuditLogProcessApi extends GenericApi {
 				continue;
 
 			_createUserAuthorFollowingNotifications( userAuthor, authors.get( userAuthor.getAuthorId() ) );
-			_createUserAuthorFollowingEmails( userAuthor, authors.get( userAuthor.getAuthorId() ) );
+//			_createUserAuthorFollowingEmails( userAuthor, authors.get( userAuthor.getAuthorId() ) );
 
 		}
 
 
+		/*
 		// auditLog.getAccessType() == AccessType.COMMENT_ADD
 		for( Long commentId : commentUpdateIds ) {
 
@@ -217,8 +220,10 @@ public class AuditLogProcessApi extends GenericApi {
 			_createCommentAddedAuthorEmail( author, comment );
 
 		}
+		*/
+		
 
-
+		/*
 		// auditLog.getAccessType() == AccessType.VOTE
 		for( String voteId : voteUpdateIds ) {
 
@@ -247,6 +252,7 @@ public class AuditLogProcessApi extends GenericApi {
 			}
 
 		}
+		*/
 		
 		// Updating AppProperty.
 		if( auditLogDataListCursorTuple.getDataList().size() > 0 ) {
