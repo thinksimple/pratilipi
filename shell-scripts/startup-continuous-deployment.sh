@@ -6,11 +6,11 @@ do
 
 	if [ -d "/home/pratilipi/test" ]; then
 		cd /home/pratilipi/test/pratilipi
-		sudo bash /home/pratilipi/test/pratilipi/shell-scripts/update-test.sh   2>&1 | grep -v "Fetching origin" | logger -t update-test
+		sudo bash /home/pratilipi/test/pratilipi/shell-scripts/update-test.sh   2>&1 | logger -t update-test
 	else
 		sudo mkdir -p /home/pratilipi/test
 		cd /home/pratilipi/test
-		sudo git clone -b master https://github.com/Pratilipi/pratilipi.git     2>&1 | logger
+		sudo git clone -b master https://github.com/Pratilipi/pratilipi.git     2>&1 | logger -t update-test
 	fi
 
 	
