@@ -98,25 +98,25 @@ public class AuditLogProcessApi extends GenericApi {
 
 
 		// Batch get Vote entities
-		Map<String, Vote> votes = dataAccessor.getVotes( voteUpdateIds );
+//		Map<String, Vote> votes = dataAccessor.getVotes( voteUpdateIds );
 
 
 		// Batch get Comment and entities
-		Set<Long> commentIds = new HashSet<>( commentUpdateIds );
-		for( Vote vote : votes.values() )
-			if( vote.getParentType() == VoteParentType.COMMENT )
-				commentIds.add( vote.getParentIdLong() );
-		Map<Long, Comment> comments = dataAccessor.getComments( commentIds );
+//		Set<Long> commentIds = new HashSet<>( commentUpdateIds );
+//		for( Vote vote : votes.values() )
+//			if( vote.getParentType() == VoteParentType.COMMENT )
+//				commentIds.add( vote.getParentIdLong() );
+//		Map<Long, Comment> comments = dataAccessor.getComments( commentIds );
 
 
 		// Batch get UserPratilipi entities
 		Set<String> userPratilipiIds = new HashSet<>( userPratilipiUpdateIds );
-		for( Comment comment : comments.values() )
-			if( comment.getParentType() == CommentParentType.REVIEW )
-				userPratilipiIds.add( comment.getParentId() );
-		for( Vote vote : votes.values() )
-			if( vote.getParentType() == VoteParentType.REVIEW )
-				userPratilipiIds.add( vote.getParentId() );
+//		for( Comment comment : comments.values() )
+//			if( comment.getParentType() == CommentParentType.REVIEW )
+//				userPratilipiIds.add( comment.getParentId() );
+//		for( Vote vote : votes.values() )
+//			if( vote.getParentType() == VoteParentType.REVIEW )
+//				userPratilipiIds.add( vote.getParentId() );
 		Map<String, UserPratilipi> userPratilipis = dataAccessor.getUserPratilipis( userPratilipiIds );
 
 
