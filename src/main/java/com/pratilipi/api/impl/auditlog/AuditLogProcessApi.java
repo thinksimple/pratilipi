@@ -117,9 +117,6 @@ public class AuditLogProcessApi extends GenericApi {
 		for( Vote vote : votes.values() )
 			if( vote.getParentType() == VoteParentType.REVIEW )
 				userPratilipiIds.add( vote.getParentId() );
-				
-
-		// Getting all UserPratilipi entities
 		Map<String, UserPratilipi> userPratilipis = dataAccessor.getUserPratilipis( userPratilipiIds );
 
 
@@ -158,8 +155,8 @@ public class AuditLogProcessApi extends GenericApi {
 					null,
 					null ).getDataList();
 
-			_createPratilipiPublishedEmail( pratilipi, authors.get( pratilipi.getAuthorId() ) );
-			_createPratilipiPublishedEmails( pratilipi, followerUserIdList );
+//			_createPratilipiPublishedEmail( pratilipi, authors.get( pratilipi.getAuthorId() ) );
+//			_createPratilipiPublishedEmails( pratilipi, followerUserIdList );
 
 			// Send notification to all AEEs all well
 			followerUserIdList.addAll( _getAeeUserIdList( pratilipi.getLanguage() ) );
