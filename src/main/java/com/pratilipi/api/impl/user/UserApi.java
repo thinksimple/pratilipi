@@ -19,6 +19,7 @@ import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
+import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.UserState;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.client.UserData;
@@ -47,6 +48,9 @@ public class UserApi extends GenericApi {
 		@Validate( regEx = REGEX_PHONE, regExErrMsg = ERR_PHONE_INVALID )
 		private String phone;
 		private boolean hasPhone;
+		
+		private Language language;
+		private boolean hasLanguage;
 		
 		
 		public Long getId() {
@@ -244,6 +248,8 @@ public class UserApi extends GenericApi {
 			userData.setEmail( request.getEmail() );
 		if( request.hasPhone() )
 			userData.setPhone( request.getPhone() );
+		if( request.hasLanguage )
+			userData.setLanguage( request.language );
 		
 		// Save UserData.
 		userData = UserDataUtil.saveUserData( userData );

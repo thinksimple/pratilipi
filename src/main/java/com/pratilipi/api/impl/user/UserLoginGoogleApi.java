@@ -33,7 +33,7 @@ public class UserLoginGoogleApi extends GenericApi {
 	public UserApi.Response post( PostRequest request )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
-		UserData userData = UserDataUtil.loginUserWithGoogle(
+		UserData userData = UserDataUtil.loginGoogleUser(
 				request.googleIdToken,
 				UserDataUtil.getUserSignUpSource( false, true ) );
 
