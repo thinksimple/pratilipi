@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import com.pratilipi.common.type.Gender;
+import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.UserState;
 
 public class UserData implements Serializable {
@@ -36,6 +37,9 @@ public class UserData implements Serializable {
 
 	private String phone;
 	private boolean hasPhone;
+	
+	private Language language;
+	private boolean hasLanguage;
 
 	
 	private UserState state;
@@ -163,6 +167,20 @@ public class UserData implements Serializable {
 	
 	public boolean hasPhone() {
 		return hasPhone;
+	}
+	
+	
+	public Language getLanguage() {
+		return language;
+	}
+
+	public void setLanguage( Language language ) {
+		this.language = language;
+		this.hasLanguage = true;
+	}
+	
+	public boolean hasLanguage() {
+		return hasLanguage;
 	}
 	
 	
