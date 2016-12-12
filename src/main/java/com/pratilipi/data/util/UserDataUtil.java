@@ -277,7 +277,7 @@ public class UserDataUtil {
 	
 	
 	public static UserData registerUser( String firstName, String lastName,
-			String email, String password, Language language, UserSignUpSource signUpSource )
+			String email, String password, UserSignUpSource signUpSource )
 			throws InvalidArgumentException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -299,7 +299,6 @@ public class UserDataUtil {
 		
 		user.setPassword( PasswordUtil.getSaltedHash( password ) );
 		user.setEmail( email.toLowerCase() );
-		user.setLanguage( language );
 		user.setState( UserState.REGISTERED );
 		user.setSignUpDate( new Date() );
 		user.setSignUpSource( signUpSource );

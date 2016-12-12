@@ -55,7 +55,7 @@ public class UserRegisterApi extends GenericApi {
 
 		// Register the User.
 		UserData userData = UserDataUtil.registerUser( firstName, lastName,
-				email, request.password, request.language,
+				email, request.password,
 				UserDataUtil.getUserSignUpSource( false, false ) );
 		// Create Author profile for the User.
 		Long authorId = AuthorDataUtil.createAuthorProfile( userData, request.language );
