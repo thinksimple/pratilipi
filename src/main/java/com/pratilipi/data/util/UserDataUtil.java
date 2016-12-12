@@ -594,8 +594,7 @@ public class UserDataUtil {
 				user );
 
 		user.setState( UserState.ACTIVE );
-		user.setVerificationToken( null );
-		
+		// Note: Do not clear VerificationToken
 		user = dataAccessor.createOrUpdateUser( user, auditLog );
 		
 	}
@@ -653,7 +652,7 @@ public class UserDataUtil {
 				AccessType.USER_UPDATE,
 				user );
 		user.setPassword( PasswordUtil.getSaltedHash( newPassword ) );
-		user.setVerificationToken( null );
+		// Note: Do not clear VerificationToken
 		user = dataAccessor.createOrUpdateUser( user, auditLog );
 
 	}
