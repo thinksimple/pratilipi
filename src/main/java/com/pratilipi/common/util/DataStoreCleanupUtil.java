@@ -34,6 +34,36 @@ import com.pratilipi.taskqueue.TaskQueueFactory;
 
 public class DataStoreCleanupUtil {
 
+	public static void blockReview( Long userId, Long pratilipiId ) {
+
+		UserPratilipi userPratilipi = ObjectifyService.ofy().load()
+				.type( UserPratilipiEntity.class )
+				.id( userId + "-" + pratilipiId )
+				.now();
+
+		if( userPratilipi.getRating() != null || userPratilipi.getReviewState() != UserReviewState.BLOCKED ) {
+		
+			userPratilipi.setRating( null );
+			userPratilipi.setReviewState( UserReviewState.BLOCKED );
+			
+			ObjectifyService.ofy().save().entity( userPratilipi ).now();
+			
+			Task task = TaskQueueFactory.newTask()
+					.setUrl( "/pratilipi/process" )
+					.addParam( "pratilipiId", pratilipiId.toString() )
+					.addParam( "updateReviewsDoc", "true" )
+					.addParam( "updateUserPratilipiStats", "true" );
+			TaskQueueFactory.getPratilipiTaskQueue().add( task );
+			
+		}
+		
+		System.out.println();
+		System.out.println( "Blocked review: " + userPratilipi.getReview() );
+		
+	}
+
+	
+	
 	public static void delete( String email, boolean preview ) {
 
 		// USER Table
