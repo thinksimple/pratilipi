@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
 
 import com.google.gson.JsonObject;
 import com.pratilipi.api.shared.GenericRequest;
@@ -36,10 +35,6 @@ import com.pratilipi.filter.AccessTokenFilter;
 import com.pratilipi.filter.UxModeFilter;
 
 public class UserDataUtil {
-	
-	private static final Logger logger =
-			Logger.getLogger( UserDataUtil.class.getName() );
-
 	
 	public static boolean hasAccessToAddUserData( UserData userData ) {
 		return UserAccessUtil.hasUserAccess(
@@ -302,7 +297,6 @@ public class UserDataUtil {
 				AccessType.USER_ADD,
 				user );
 		
-		
 		user.setPassword( PasswordUtil.getSaltedHash( password ) );
 		user.setEmail( email.toLowerCase() );
 		user.setLanguage( language );
@@ -311,14 +305,23 @@ public class UserDataUtil {
 		user.setSignUpSource( signUpSource );
 		
 		user = dataAccessor.createOrUpdateUser( user, auditLog );
-		
-		return createUserData( user );
+
+
+		UserData userData = createUserData( user );
+		userData.setFirstName( firstName );		
+		userData.setLastName( lastName );
+		return userData;
 
 	}
 
 	public static UserData loginUser( String email, String password )
 			throws InvalidArgumentException, InsufficientAccessException {
+
+		// Do nothing if a user is already logged in
+		if( AccessTokenFilter.getAccessToken().getUserId().equals( 0L ) )
+			return getCurrentUser();
 		
+
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		User user = dataAccessor.getUserByEmail( email.toLowerCase() );
 
@@ -342,8 +345,12 @@ public class UserDataUtil {
 		}
 		
 		if( verifyToken( user, password ) ) {
+			AuditLog auditLog = dataAccessor.newAuditLog(
+					AccessTokenFilter.getAccessToken(),
+					AccessType.USER_ADD,
+					user );
 			user.setVerificationToken( null );
-			dataAccessor.createOrUpdateUser( user );
+			dataAccessor.createOrUpdateUser( user, auditLog );
 			_loginUser( AccessTokenFilter.getAccessToken(), user );
 			return createUserData( user );
 		}
@@ -352,14 +359,41 @@ public class UserDataUtil {
 
 	}
 
-	private static UserData processFederatedLoginData( UserData apiUserData, User user, UserSignUpSource signUpSource ) 
+	public static UserData loginFacebookUser( String fbUserAccessToken, UserSignUpSource signUpSource )
+			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
+
+		UserData fbUserData = FacebookApi.getUserData( fbUserAccessToken );
+		return _loginFederatedUser(
+				fbUserData,
+				DataAccessorFactory.getDataAccessor().getUserByFacebookId( fbUserData.getFacebookId() ), 
+				signUpSource );
+
+	}
+	
+	public static UserData loginGoogleUser( String googleIdToken, UserSignUpSource signUpSource )
+			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
+
+		UserData googleUserData = GoogleApi.getUserData( googleIdToken );
+		return _loginFederatedUser(
+				googleUserData, 
+				DataAccessorFactory.getDataAccessor().getUserByGoogleId( googleUserData.getGoogleId() ), 
+				signUpSource );
+
+	}
+	
+	private static UserData _loginFederatedUser( UserData apiUserData, User user, UserSignUpSource signUpSource )
 			throws InsufficientAccessException {
+
+		// Do nothing if a user is already logged in
+		if( AccessTokenFilter.getAccessToken().getUserId().equals( 0L ) )
+			return getCurrentUser();
+		
+		
+		// Note: Users having Facebook or Google Id can never be in GUEST or REFERRAL state.
+		// Note: No action required for REGISTERED or ACTIVE users.
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		boolean isNew = false;
-
-		// * Users having Facebook or google Id can never be in GUEST or REFERRAL state.
-		// * No action required for REGISTERED or ACTIVE users.
 
 		if( user == null || user.getState() == UserState.DELETED ) {
 
@@ -379,7 +413,7 @@ public class UserDataUtil {
 				auditLog.setEventDataOld( user );
 
 				user.setEmail( apiUserData.getEmail() );
-				user.setState( UserState.ACTIVE ); // Counting on Facebook / google for e-mail/user verification
+				user.setState( UserState.ACTIVE ); // Counting on Facebook / Google for e-mail/user verification
 				user.setSignUpDate( new Date() );
 				user.setSignUpSource( signUpSource );
 
@@ -390,7 +424,7 @@ public class UserDataUtil {
 				auditLog.setAccessType( AccessType.USER_ADD );
 				auditLog.setEventDataOld( user );
 
-				user.setState( UserState.ACTIVE ); // Counting on Facebook / google for e-mail/user verification
+				user.setState( UserState.ACTIVE ); // Counting on Facebook / Google for e-mail/user verification
 				user.setSignUpDate( new Date() );
 				user.setSignUpSource( signUpSource );
 
@@ -415,8 +449,6 @@ public class UserDataUtil {
 
 			if( apiUserData.getGoogleId() != null )
 				user.setGoogleId( apiUserData.getGoogleId() );
-
-			auditLog.setEventDataNew( user );
 
 			user.setLastUpdated( new Date() );
 			
@@ -443,63 +475,11 @@ public class UserDataUtil {
 		return userData;
 
 	}
-
-	public static UserData loginUserWithFacebook( String fbUserAccessToken, UserSignUpSource signUpSource )
-			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
-
-		UserData fbUserData = FacebookApi.getUserData( fbUserAccessToken );
-
-		return processFederatedLoginData( fbUserData, 
-						DataAccessorFactory.getDataAccessor().getUserByFacebookId( fbUserData.getFacebookId() ), 
-						signUpSource );
-
-	}
-	
-	public static UserData loginUserWithGoogle( String googleIdToken, UserSignUpSource signUpSource )
-			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
-
-		UserData googleUserData = GoogleApi.getUserData( googleIdToken );
-
-		return processFederatedLoginData( googleUserData, 
-						DataAccessorFactory.getDataAccessor().getUserByGoogleId( googleUserData.getGoogleId() ), 
-						signUpSource );
-
-	}
 	
 	private static void _loginUser( AccessToken accessToken, User user ) {
-		
-		if( ! accessToken.getUserId().equals( 0L ) )
-			return;
-		
 		accessToken.setUserId( user.getId() );
 		accessToken.setLogInDate( new Date() );
 		accessToken = DataAccessorFactory.getDataAccessor().createOrUpdateAccessToken( accessToken );
-
-		/*
-		while( true ) { 
-			try {
-				dataAccessor.beginTx();
-				accessToken = dataAccessor.getAccessToken( accessToken.getId() );
-				if( ! accessToken.getUserId().equals( 0L ) )
-					return createUserData( user );
-				accessToken.setUserId( user.getId() );
-				accessToken.setLogInDate( new Date() );
-				accessToken = dataAccessor.createOrUpdateAccessToken( accessToken );
-				dataAccessor.commitTx();
-				return createUserData( user );
-			} catch( JDODataStoreException ex ) {
-				logger.log( Level.INFO, "Transaction failed. Retrying in 100 ms...", ex );
-			} finally {
-				if( dataAccessor.isTxActive() )
-					dataAccessor.rollbackTx();
-			}
-			
-			try {
-				Thread.sleep( 1000 );
-			} catch( InterruptedException e ) { } // Do nothing
-		}
-		*/
-		
 	}
 
 	public static UserData logoutUser() {
@@ -514,7 +494,6 @@ public class UserDataUtil {
 		}
 		return getCurrentUser();
 	}
-	
 	
 	
 	
@@ -595,6 +574,7 @@ public class UserDataUtil {
 	}
 
 	
+	
 	public static void verifyUserEmail( String email, String verificationToken )
 			throws InvalidArgumentException {
 
@@ -607,8 +587,16 @@ public class UserDataUtil {
 		if( ! verifyToken( user, verificationToken ) )
 			throw new InvalidArgumentException( GenericRequest.ERR_VERIFICATION_TOKEN_INVALID_OR_EXPIRED );
 		
+		
+		AuditLog auditLog = dataAccessor.newAuditLog(
+				AccessTokenFilter.getAccessToken(),
+				AccessType.USER_UPDATE,
+				user );
+
 		user.setState( UserState.ACTIVE );
-		dataAccessor.createOrUpdateUser( user );
+		user.setVerificationToken( null );
+		
+		user = dataAccessor.createOrUpdateUser( user, auditLog );
 		
 	}
 	
@@ -619,6 +607,7 @@ public class UserDataUtil {
 		if( userId.equals( 0L ) )
 			throw new InsufficientAccessException();
 		
+		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		User user = dataAccessor.getUser( userId );
 		if( user.getState() != UserState.REGISTERED && user.getState() != UserState.ACTIVE  )
@@ -626,8 +615,12 @@ public class UserDataUtil {
 		
 		if( PasswordUtil.check( password, user.getPassword() ) ) {
 			if( ! password.equals( newPassword ) ) {
+				AuditLog auditLog = dataAccessor.newAuditLog(
+						AccessTokenFilter.getAccessToken(),
+						AccessType.USER_UPDATE,
+						user );
 				user.setPassword( PasswordUtil.getSaltedHash( newPassword ) );
-				user = dataAccessor.createOrUpdateUser( user );
+				user = dataAccessor.createOrUpdateUser( user, auditLog );
 			}
 		} else {
 			JsonObject errorMessages = new JsonObject();
@@ -653,9 +646,15 @@ public class UserDataUtil {
 		
 		if( ! verifyToken( user, verificationToken ) )
 			throw new InvalidArgumentException( GenericRequest.ERR_VERIFICATION_TOKEN_INVALID_OR_EXPIRED );
-			
+
+		
+		AuditLog auditLog = dataAccessor.newAuditLog(
+				AccessTokenFilter.getAccessToken(),
+				AccessType.USER_UPDATE,
+				user );
 		user.setPassword( PasswordUtil.getSaltedHash( newPassword ) );
-		dataAccessor.createOrUpdateUser( user );
+		user.setVerificationToken( null );
+		user = dataAccessor.createOrUpdateUser( user, auditLog );
 
 	}
 	
@@ -674,13 +673,7 @@ public class UserDataUtil {
 				AccessType.USER_UPDATE,
 				user );
 
-		long followCount = dataAccessor.getUserAuthorFollowList( userId, null, null, null, null )
-				.getDataList()
-				.size();
-		user.setFollowCount( followCount );
-		
-		auditLog.setEventDataNew( user );
-
+		user.setFollowCount( dataAccessor.getUserAuthorFollowCount( userId, null ) );
 		
 		user = dataAccessor.createOrUpdateUser( user, auditLog );
 		
