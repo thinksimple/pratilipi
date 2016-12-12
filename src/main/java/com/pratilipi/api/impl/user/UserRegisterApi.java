@@ -59,7 +59,7 @@ public class UserRegisterApi extends GenericApi {
 				UserDataUtil.getUserSignUpSource( false, false ) );
 		// Create Author profile for the User.
 		Long authorId = AuthorDataUtil.createAuthorProfile( userData, request.language );
-		// Log-in the User.
+		// Log-in the User and get update UserData
 		userData = UserDataUtil.loginUser( email, request.password );
 
 		
@@ -78,7 +78,8 @@ public class UserRegisterApi extends GenericApi {
 				.addParam( "authorId", authorId.toString() )
 				.addParam( "processData", "true" );
 
-		TaskQueueFactory.getUserTaskQueue().addAll( task1, task2, task3 );
+		TaskQueueFactory.getUserTaskQueue().addAll( task1, task2 );
+		TaskQueueFactory.getAuthorTaskQueue().add( task3 );
 
 		
 		return new UserApi.Response( userData, UserRegisterApi.class );

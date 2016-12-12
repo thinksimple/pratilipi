@@ -10,6 +10,7 @@ import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.Language;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.util.AuthorDataUtil;
 import com.pratilipi.data.util.UserDataUtil;
@@ -26,6 +27,8 @@ public class UserLoginGoogleApi extends GenericApi {
 		@Validate( required = true )
 		private String googleIdToken;
 
+		private Language language;
+		
 	}
 
 	
@@ -40,17 +43,26 @@ public class UserLoginGoogleApi extends GenericApi {
 
 		if( new Date().getTime() - userData.getSignUpDate().getTime() <= 60000 ) {
 
-			AuthorDataUtil.createAuthorProfile( userData, UxModeFilter.getFilterLanguage() );
-			userData = UserDataUtil.getCurrentUser();
+			Long authorId = AuthorDataUtil.createAuthorProfile(
+					userData,
+					request.language == null ? UxModeFilter.getFilterLanguage() : request.language );
+			userData = UserDataUtil.getCurrentUser(); // Fetching updated UserData
 
+			// Send welcome mail to the user
 			Task welcomeMailTask = TaskQueueFactory.newTask()
 					.setUrl( "/user/email" )
 					.addParam( "userId", userData.getId().toString() )
-					.addParam( "language", UxModeFilter.getDisplayLanguage().toString() )
+					.addParam( "language", request.language == null ? UxModeFilter.getDisplayLanguage().toString() : request.language.toString() )
 					.addParam( "sendWelcomeMail", "true" );
-
 			TaskQueueFactory.getUserTaskQueue().add(  welcomeMailTask  );
 
+			// Process Author data
+			Task task = TaskQueueFactory.newTask()
+					.setUrl( "/author/process" )
+					.addParam( "authorId", authorId.toString() )
+					.addParam( "processData", "true" );
+			TaskQueueFactory.getAuthorTaskQueue().add( task );
+			
 		}
 
 		return new UserApi.Response( userData, UserLoginGoogleApi.class );

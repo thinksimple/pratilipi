@@ -15,6 +15,7 @@ public class UserFirebaseTokenApi extends GenericApi {
 
 	public static class Response extends GenericResponse {
 		
+		@SuppressWarnings("unused")
 		private String firebaseToken;
 
 		

@@ -18,19 +18,10 @@ public class UserFacebookValidationApi extends GenericApi {
 	public static class PostRequest extends GenericRequest {
 		
 		@Validate( required = true )
-		private String fbAccessToken;
+		private String fbUserAccessToken;
 		
 		@Validate( required = true )
-		private String pratilipiAccessToken;
-		
-		
-		public String getFbAccessToken() {
-			return fbAccessToken;
-		}
-		
-		public String getPratilipiAccessToken() {
-			return pratilipiAccessToken;
-		}
+		private String accessToken;
 		
 	}
 	
@@ -39,8 +30,8 @@ public class UserFacebookValidationApi extends GenericApi {
 	public GenericResponse post( PostRequest request )
 			throws UnexpectedServerException {
 		
-		if( ! FacebookApi.validateUserAccessToken( request.getFbAccessToken() ) ) 
-			UserDataUtil.logoutUser( DataAccessorFactory.getDataAccessor().getAccessToken( request.getPratilipiAccessToken() ) );
+		if( ! FacebookApi.validateUserAccessToken( request.fbUserAccessToken ) ) 
+			UserDataUtil.logoutUser( DataAccessorFactory.getDataAccessor().getAccessToken( request.accessToken ) );
 		
 		return new GenericResponse();
 	}

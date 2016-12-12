@@ -25,6 +25,7 @@ import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.util.AuthorDataUtil;
 import com.pratilipi.data.util.UserDataUtil;
+import com.pratilipi.filter.AccessTokenFilter;
 import com.pratilipi.filter.UxModeFilter;
 import com.pratilipi.taskqueue.Task;
 import com.pratilipi.taskqueue.TaskQueueFactory;
@@ -35,8 +36,8 @@ public class UserApi extends GenericApi {
 
 	public static class PostRequest extends GenericRequest {
 
-		@Validate( minLong = 1L )
-		private Long userId;
+		@Validate( minLong = 0L )
+		private Long userId; // userId == 0L, for adding new user
 		
 		private String name;
 		private boolean hasName;
@@ -243,7 +244,10 @@ public class UserApi extends GenericApi {
 	public Response post( PostRequest request )
 			throws InvalidArgumentException, InsufficientAccessException {
 
-		UserData userData = new UserData( request.getId() );
+		UserData userData = request.userId == null
+				? new UserData( AccessTokenFilter.getAccessToken().getUserId() )
+				: new UserData( request.userId.equals( 0L ) ? null : request.userId );
+		
 		if( request.hasEmail() )
 			userData.setEmail( request.getEmail() );
 		if( request.hasPhone() )
@@ -259,7 +263,7 @@ public class UserApi extends GenericApi {
 		Long authorId = null;
 		
 		
-		if( request.getId() == null ) { // New user
+		if( request.getId().equals( 0L ) ) { // New user
 			
 			String firstName = request.getName().trim();
 			String lastName = null;
@@ -272,7 +276,9 @@ public class UserApi extends GenericApi {
 			userData.setLastName( lastName );
 			
 			// Create Author profile for the User.
-			authorId = AuthorDataUtil.createAuthorProfile( userData, UxModeFilter.getFilterLanguage() );
+			authorId = AuthorDataUtil.createAuthorProfile(
+					userData,
+					request.language == null ? UxModeFilter.getFilterLanguage() : request.language );
 			
 			userData.setProfilePageUrl( "/author/" + authorId );
 			
@@ -281,7 +287,7 @@ public class UserApi extends GenericApi {
 			Task task = TaskQueueFactory.newTask()
 					.setUrl( "/user/email" )
 					.addParam( "userId", userData.getId().toString() )
-					.addParam( "language", UxModeFilter.getDisplayLanguage().toString() )
+					.addParam( "language", request.language == null ? UxModeFilter.getDisplayLanguage().toString() : request.language.toString() )
 					.addParam( "sendWelcomeMail", "true" );
 			taskList.add( task );
 			

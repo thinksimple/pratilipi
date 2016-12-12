@@ -12,6 +12,7 @@ import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.Language;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.util.AuthorDataUtil;
 import com.pratilipi.data.util.UserDataUtil;
@@ -29,10 +30,7 @@ public class UserLoginFacebookApi extends GenericApi {
 		@Validate( required = true )
 		private String fbUserAccessToken;
 		
-		
-		public String getFbUserAccessToken() {
-			return this.fbUserAccessToken;
-		}
+		private Language language;
 
 	}
 	
@@ -41,7 +39,7 @@ public class UserLoginFacebookApi extends GenericApi {
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 		
 		UserData userData = UserDataUtil.loginFacebookUser(
-				request.getFbUserAccessToken(),
+				request.fbUserAccessToken,
 				UserDataUtil.getUserSignUpSource( true, false ) );
 
 		
@@ -50,24 +48,34 @@ public class UserLoginFacebookApi extends GenericApi {
 
 		Task fbValidationTask = TaskQueueFactory.newTask()
 				.setUrl( "/user/facebook/validation" )
-				.addParam( "pratilipiAccessToken", AccessTokenFilter.getAccessToken().getId() )
-				.addParam( "fbAccessToken", request.getFbUserAccessToken() );
+				.addParam( "accessToken", AccessTokenFilter.getAccessToken().getId() )
+				.addParam( "fbUserAccessToken", request.fbUserAccessToken );
 		taskList.add( fbValidationTask );
 
 		
 		if( new Date().getTime() - userData.getSignUpDate().getTime() <= 60000 ) {
 			
-			AuthorDataUtil.createAuthorProfile( userData, UxModeFilter.getFilterLanguage() );
-			userData = UserDataUtil.getCurrentUser();
+			Long authorId = AuthorDataUtil.createAuthorProfile(
+					userData,
+					request.language == null ? UxModeFilter.getFilterLanguage() : request.language );
+			userData = UserDataUtil.getCurrentUser(); // Fetching updated UserData
 
 			if( userData.getEmail() != null ) {
+				// Send welcome mail to the user
 				Task welcomeMailTask = TaskQueueFactory.newTask()
 						.setUrl( "/user/email" )
 						.addParam( "userId", userData.getId().toString() )
-						.addParam( "language", UxModeFilter.getDisplayLanguage().toString() )
+						.addParam( "language", request.language == null ? UxModeFilter.getDisplayLanguage().toString() : request.language.toString() )
 						.addParam( "sendWelcomeMail", "true" );
 				taskList.add( welcomeMailTask );
 			}
+			
+			// Process Author data
+			Task task = TaskQueueFactory.newTask()
+					.setUrl( "/author/process" )
+					.addParam( "authorId", authorId.toString() )
+					.addParam( "processData", "true" );
+			TaskQueueFactory.getAuthorTaskQueue().add( task );
 			
 		}
 

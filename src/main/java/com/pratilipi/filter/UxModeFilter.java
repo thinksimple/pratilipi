@@ -273,11 +273,13 @@ public class UxModeFilter implements Filter {
 		return threadLocalWebsite.get();
 	}
 
+	@Deprecated
 	public static Language getDisplayLanguage() {
 		Website website = threadLocalWebsite.get();
 		return website == null ? null : website.getDisplayLanguage();
 	}
 
+	@Deprecated
 	public static Language getFilterLanguage() {
 		Website website = threadLocalWebsite.get();
 		return website == null ? null : website.getFilterLanguage();
