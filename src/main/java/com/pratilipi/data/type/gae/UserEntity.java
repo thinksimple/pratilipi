@@ -8,6 +8,7 @@ import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.condition.IfNotNull;
+import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.UserCampaign;
 import com.pratilipi.common.type.UserSignUpSource;
 import com.pratilipi.common.type.UserState;
@@ -38,6 +39,9 @@ public class UserEntity implements User {
 	@Index( IfNotNull.class )
 	private String PHONE;
 	
+	@Index( IfNotNull.class )
+	private Language LANGUAGE;
+	
 	
 	@Index( IfNotNull.class )
 	private String VERIFICATION_TOKEN;
@@ -65,10 +69,12 @@ public class UserEntity implements User {
 	@Index
 	private Date LAST_UPDATED;
 	
+	
 	@Index
 	private Long FOLLOW_COUNT;
 	
 
+	
 	public UserEntity() {}
 	
 	public UserEntity( Long id ) {
@@ -147,6 +153,16 @@ public class UserEntity implements User {
 		this.PHONE = phone;
 	}
 	
+	@Override
+	public Language getLanguage() {
+		return LANGUAGE;
+	}
+
+	@Override
+	public void setLanguage( Language language ) {
+		this.LANGUAGE = language;
+	}
+
 	
 	@Override 
 	public String getVerificationToken() {

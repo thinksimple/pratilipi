@@ -3,6 +3,7 @@ package com.pratilipi.data.type;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.UserCampaign;
 import com.pratilipi.common.type.UserSignUpSource;
 import com.pratilipi.common.type.UserState;
@@ -32,7 +33,11 @@ public interface User extends GenericOfyType, Serializable {
 	
 	void setPhone( String phone );
 	
-	
+	Language getLanguage();
+
+	void setLanguage( Language language );
+
+
 	String getVerificationToken();
 	
 	void setVerificationToken( String verificationToken );
