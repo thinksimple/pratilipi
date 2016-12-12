@@ -2,7 +2,7 @@
 /readers-top-choice         वाचकांची सर्वात जास्त आवड    App#imageName::mostpopular.jpg           App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"readers-top-choice" }
 /newly-published-content    नवीन प्रकाशित साहित्य        App#imageName::newpublished.jpg          App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"newly-published-content" }
 /sane-guruji-kathamala      साने गुरुजी कथामाला         App#imageName::event_generic2.jpg        App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"sane-guruji-kathamala" }
-/event/chitra-bolte-kahi    चित्र बोलते काही            App#imageName::event_generic6.jpg        App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "eventId":6491580593602560 }
+/event/kalpataru-sam-to-spardha    "कल्पतरु" सम 'तो' स्पर्धा      App#imageName::event_generic6.jpg        App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "eventId":5991649931952128 }
 /events                     ऑनलाइन स्पर्धा             App#imageName::events.jpg                App#EventList::{ "language":"MARATHI" }
 /blog                       संपादकीय                 App#imageName::blog.jpg                  App#BlogPostList::{ "language":"MARATHI", "blogId":5683739602452480 }
 /author-interviews          साहित्यकारांची मुलाखत        App#imageName::authorinterviews.jpg     App#BlogPostList::{ "language":"MARATHI", "blogId":5197509039226880 }
