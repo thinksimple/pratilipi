@@ -8,7 +8,6 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.common.exception.InsufficientAccessException;
@@ -135,6 +134,7 @@ public class UserDataUtil {
 		userData.setFacebookId( user.getFacebookId() );
 		userData.setEmail( user.getEmail() );
 		userData.setPhone( user.getPhone() );
+		userData.setLanguage( user.getLanguage() );
 		userData.setState( user.getState() );
 		userData.setSignUpDate( user.getSignUpDate() );
 		userData.setFollowCount( user.getFollowCount() );
@@ -144,6 +144,9 @@ public class UserDataUtil {
 			AuthorData authorData = AuthorDataUtil.createAuthorData( author );
 			userData.setAuthor( authorData );
 			
+			if( userData.getLanguage() == null )
+				userData.setLanguage( author.getLanguage() );
+			
 			userData.setFirstName( authorData.getFirstName() != null ? authorData.getFirstName() : authorData.getFirstNameEn() );
 			userData.setLastName( authorData.getLastName() != null ? authorData.getLastName() : authorData.getLastNameEn() );
 			userData.setDisplayName( userData.getFirstName() != null ? userData.getFirstName() : userData.getLastName() );
@@ -152,6 +155,7 @@ public class UserDataUtil {
 			userData.setProfilePageUrl( authorData.getPageUrl() );
 			userData.setProfileImageUrl( authorData.getImageUrl() );
 			userData.setFirebaseToken( FirebaseApi.getCustomTokenForUser( userData.getId() ) );
+			
 		}
 		
 		return userData;
@@ -166,9 +170,9 @@ public class UserDataUtil {
 		
 		Map<Long, UserData> userDataList = new HashMap<>( userIdList.size() );
 		if( includeAuthorData ) {
-			List<Author> authorList = dataAccessor.getAuthorListByUserIdList( userIdList );
-			for( int i = 0; i < userIdList.size(); i++ )
-				userDataList.put( userIdList.get( i ), createUserData( userList.get( i ), authorList.get( i ) ) );
+			Map<Long, Author> authors = dataAccessor.getAuthorsByUserIds( userIdList );
+			for( User user : userList )
+				userDataList.put( user.getId(), createUserData( user, authors.get( user.getId() ) ) );
 		} else {
 			for( User user : userList )
 				userDataList.put( user.getId(), createUserData( user, null ) );
@@ -179,22 +183,19 @@ public class UserDataUtil {
 	}
 
 	
-	public static UserData getGuestUser() {
-		UserData userData = new UserData( 0L );
-		userData.setAuthor( new AuthorData() );
-		userData.setFirstName( "Guest" );
-		userData.setLastName( "User" );
-		userData.setState( UserState.GUEST );
-		return userData;
-	}
-
 	public static UserData getCurrentUser() {
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
 		Long userId = accessToken.getUserId();
-		if( userId.equals( 0L ) )
-			return getGuestUser();
-		else
+		if( userId.equals( 0L ) ) {
+			UserData userData = new UserData( 0L );
+			userData.setAuthor( new AuthorData() );
+			userData.setFirstName( "Guest" );
+			userData.setLastName( "User" );
+			userData.setState( UserState.GUEST );
+			return userData;
+		} else {
 			return createUserData( DataAccessorFactory.getDataAccessor().getUser( accessToken.getUserId() ) );
+		}
 	}
 
 	
@@ -214,14 +215,10 @@ public class UserDataUtil {
 			throw new InsufficientAccessException();
 
 		
-		Gson gson = new Gson();
-
-		
 		AuditLog auditLog = dataAccessor.newAuditLog(
 				AccessTokenFilter.getAccessToken(),
 				isNew ? AccessType.USER_ADD : AccessType.USER_UPDATE,
-				user
-				);
+				user );
 
 		
 		if( userData.hasEmail() && ! userData.getEmail().equals( user.getEmail() ) ) {
@@ -230,9 +227,13 @@ public class UserDataUtil {
 				user.setState( UserState.REGISTERED );
 			user.setVerificationToken( null );
 		}
+		
 		if( userData.hasPhone() )
 			user.setPhone( userData.getPhone() );
 
+		if( userData.hasLanguage() )
+			user.setLanguage( userData.getLanguage() );
+		
 		if( isNew ) { // Assuming only AEEs have USER_ADD access.
 			user.setState( UserState.REFERRAL );
 			user.setCampaign( UserCampaign.AEE_TEAM );
@@ -243,9 +244,6 @@ public class UserDataUtil {
 		
 		user.setLastUpdated( new Date() );
 
-		
-		auditLog.setEventDataNew( gson.toJson( user ) );
-		
 		
 		user = dataAccessor.createOrUpdateUser( user, auditLog );
 		
@@ -284,8 +282,8 @@ public class UserDataUtil {
 	
 	
 	public static UserData registerUser( String firstName, String lastName,
-			String email, String password, UserSignUpSource signUpSource )
-			throws InvalidArgumentException, UnexpectedServerException {
+			String email, String password, Language language, UserSignUpSource signUpSource )
+			throws InvalidArgumentException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		User user = dataAccessor.getUserByEmail( email.toLowerCase() );
@@ -307,18 +305,14 @@ public class UserDataUtil {
 		
 		user.setPassword( PasswordUtil.getSaltedHash( password ) );
 		user.setEmail( email.toLowerCase() );
+		user.setLanguage( language );
 		user.setState( UserState.REGISTERED );
 		user.setSignUpDate( new Date() );
 		user.setSignUpSource( signUpSource );
-
 		
 		user = dataAccessor.createOrUpdateUser( user, auditLog );
 		
-		UserData userData = createUserData( user );
-		userData.setFirstName( firstName );
-		userData.setLastName( lastName );
-		
-		return userData;
+		return createUserData( user );
 
 	}
 
@@ -513,42 +507,15 @@ public class UserDataUtil {
 	}
 
 	public static UserData logoutUser( AccessToken accessToken ) {
-
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-
-		if( accessToken.getUserId().equals( 0L ) )
-			return getGuestUser();
-
-		accessToken.setLogOutDate( new Date() );
-		accessToken.setExpiry( new Date() );
-		accessToken = dataAccessor.createOrUpdateAccessToken( accessToken );
-		return getGuestUser();
-
-		/*
-		while( true ) {
-			try {
-				dataAccessor.beginTx();
-				accessToken = dataAccessor.getAccessToken( accessToken.getId() );
-				if( accessToken.getUserId().equals( 0L ) )
-					return getGuestUser();
-				accessToken.setLogOutDate( new Date() );
-				accessToken.setExpiry( new Date() );
-				accessToken = dataAccessor.createOrUpdateAccessToken( accessToken );
-				dataAccessor.commitTx();
-				return getGuestUser();
-			} catch( JDODataStoreException ex ) {
-				logger.log( Level.INFO, "Transaction failed. Retrying in 100 ms...", ex );
-			} finally {
-				if( dataAccessor.isTxActive() )
-					dataAccessor.rollbackTx();
-			}
-			
-			try {
-				Thread.sleep( 1000 );
-			} catch( InterruptedException e ) { } // Do nothing
+		if( ! accessToken.getUserId().equals( 0L ) ) {
+			accessToken.setLogOutDate( new Date() );
+			accessToken.setExpiry( new Date() );
+			accessToken = DataAccessorFactory.getDataAccessor().createOrUpdateAccessToken( accessToken );
 		}
- 		*/
+		return getCurrentUser();
 	}
+	
+	
 	
 	
 	public static void sendWelcomeMail( Long userId, Language language )
