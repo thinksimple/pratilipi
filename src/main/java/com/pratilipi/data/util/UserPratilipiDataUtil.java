@@ -38,8 +38,10 @@ public class UserPratilipiDataUtil {
 		if( ! UserAccessUtil.hasUserAccess( accessToken.getUserId(), null, accessType ) )
 			return false;
 
-		// Review can not be created for content pieces created by the user.
+		// Review can not be created for content pieces created by the user
 		if( accessType == AccessType.USER_PRATILIPI_REVIEW ) {
+			if( userPratilipi.getReviewState() == UserReviewState.BLOCKED )
+				return false;
 			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 			Pratilipi pratilipi = dataAccessor.getPratilipi( userPratilipi.getPratilipiId() );
 			Author author = pratilipi.getAuthorId() == null ? null : dataAccessor.getAuthor( pratilipi.getAuthorId() );
