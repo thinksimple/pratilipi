@@ -61,7 +61,7 @@ public interface DataAccessor {
 	User getUserByEmail( String email );
 	User getUserByFacebookId( String facebookId );
 	User getUserByGoogleId( String googleId );
-	Map<Long, User> getUsers( List<Long> idList );
+	Map<Long, User> getUsers( Collection<Long> idList );
 	List<User> getUserList( List<Long> idList );
 	DataListCursorTuple<User> getUserList( String cursorStr, Integer resultCount );
 	@Deprecated
@@ -106,7 +106,7 @@ public interface DataAccessor {
 	Author getAuthor( Long id );
 	Author getAuthorByUserId( Long userId );
 	Map<Long, Author> getAuthors( Collection<Long> authorIds );
-	List<Author> getAuthorListByUserIdList( List<Long> userIdList );
+	Map<Long, Author> getAuthorsByUserIds( Collection<Long> userIds );
 	List<Author> getAuthorList( List<Long> idList );
 	DataListCursorTuple<Long> getAuthorIdList( AuthorFilter authorFilter, String cursor, Integer resultCount );
 	DataListCursorTuple<Author> getAuthorList( AuthorFilter authorFilter, String cursor, Integer resultCount );
@@ -153,6 +153,7 @@ public interface DataAccessor {
 	Map<String, UserAuthor> getUserAuthors( Collection<String> userAuthoriIds );
 	List<UserAuthor> getUserAuthorList( Long userId, List<Long> authorIdList );
 	List<UserAuthor> getUserAuthorList( List<Long> userIdList, Long authorId );
+	long getUserAuthorFollowCount( Long userId, Long authorId );
 	DataListCursorTuple<Long> getUserAuthorFollowList( Long userId, Long authorId, String cursor, Integer offset, Integer resultCount );
 	DataListCursorTuple<UserAuthor> getUserAuthorList( Long userId, Long authorId, String cursor, Integer offset, Integer resultCount );
 	UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor, AuditLog auditLog );

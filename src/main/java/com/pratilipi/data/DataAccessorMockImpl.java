@@ -208,7 +208,7 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 
 	@Override
-	public Map<Long, User> getUsers( List<Long> idList ) {
+	public Map<Long, User> getUsers( Collection<Long> idList ) {
 
 		Map<Long, User> userMap = new HashMap<Long, User>();
 
@@ -734,6 +734,12 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 
 	@Override
+	public long getUserAuthorFollowCount( Long userId, Long authorId ) {
+		// TODO: Implementation
+		return 5L;
+	}
+	
+	@Override
 	public DataListCursorTuple<Long> getUserAuthorFollowList( Long userId, Long authorId, String cursor, Integer offset, Integer resultCount ) {
 		// TODO: Implementation
 		return new DataListCursorTuple<Long>( new ArrayList<Long>(), cursor );
@@ -1005,7 +1011,7 @@ public class DataAccessorMockImpl implements DataAccessor {
 
 
 	@Override
-	public List<Author> getAuthorListByUserIdList(List<Long> userIdList) {
+	public Map<Long, Author> getAuthorsByUserIds( Collection<Long> userIdList ) {
 		// TODO Auto-generated method stub
 		return null;
 	}

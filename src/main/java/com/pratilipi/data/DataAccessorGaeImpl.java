@@ -6,9 +6,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -376,7 +378,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 
 	@Override
-	public Map<Long, User> getUsers( List<Long> idList ) {
+	public Map<Long, User> getUsers( Collection<Long> idList ) {
 		return getEntities( UserEntity.class, idList );
 	}
 	
@@ -938,23 +940,23 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	@Override
-	public List<Author> getAuthorListByUserIdList( List<Long> userIdList ) {
+	public Map<Long, Author> getAuthorsByUserIds( Collection<Long> userIds ) {
 
-		List<String> memcacheIdList = new ArrayList<>( userIdList.size() );
-		for( Long userId : userIdList )
-			memcacheIdList.add( _createAuthorEntityMemcacheId( userId ) );
+		Set<String> memcacheIds = new HashSet<>( userIds.size() );
+		for( Long userId : userIds )
+			memcacheIds.add( _createAuthorEntityMemcacheId( userId ) );
 		
-		Map<String, Author> authors = memcache.getAll( memcacheIdList );
+		Map<String, Author> memcacheAuthors = memcache.getAll( memcacheIds );
 		
-		List<Author> authorList = new ArrayList<>();
-		for( Long userId : userIdList ) {
-			Author author = authors.get( _createAuthorEntityMemcacheId( userId ) );
+		Map<Long, Author> authors = new HashMap<>();
+		for( Long userId : userIds ) {
+			Author author = memcacheAuthors.get( _createAuthorEntityMemcacheId( userId ) );
 			if( author == null )
 				author = getAuthorByUserId( userId );
-			authorList.add( author );
+			authors.put( userId, author );
 		}
 
-		return authorList;
+		return authors;
 		
 	}
 
@@ -1359,6 +1361,24 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		
 	}
 
+	@Override
+	public long getUserAuthorFollowCount( Long userId, Long authorId ) {
+		
+		Query<UserAuthorEntity> query = ObjectifyService.ofy().load().type( UserAuthorEntity.class );
+		
+		if( userId != null )
+			query = query.filter( "USER_ID", userId );
+
+		if( authorId != null )
+			query = query.filter( "AUTHOR_ID", authorId );
+		
+		query = query.filter( "FOLLOWING", true );
+		query = query.order( "-FOLLOWING_SINCE" ); // Adding this to avoid another index
+		
+		return query.keys().list().size();
+			
+	}
+	
 	@Override
 	public DataListCursorTuple<Long> getUserAuthorFollowList( Long userId, Long authorId, String cursorStr, Integer offset, Integer resultCount ) {
 
