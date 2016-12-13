@@ -769,3 +769,6 @@ div.mce-tinymce-inline {
   display: block !important;
   z-index: 999 !important;
 }
+.mce-floatpanel.mce-fixed {
+  top: 53px !important;
+}

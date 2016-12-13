@@ -226,7 +226,7 @@ Editor.prototype.init = function() {
     extended_valid_elements: 'img[src|width|height],p[style],blockquote,ul,ol,li[style],a[href|target=_blank]',
     valid_children : 'body[p|img|blockquote|ol|ul],-body[br],p[b|i|u|a[href]|br],-p[img],blockquote[b|i|u|a[href]|br],-blockquote[blockquote|img|p],ol[li],ul[li],-ul[ul|ol|img],li[b|i|u|a[href]|br],-li[img|blockquote|p]', 
     invalid_elements : "div",
-    valid_styles: {'p': 'text-align'},
+    valid_styles: {'p': 'text-align', 'li': 'text-align'},
 
     <#-- image -->
     image_description: false,
