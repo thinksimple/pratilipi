@@ -22,6 +22,7 @@ import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.UserState;
 import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.util.AuthorDataUtil;
 import com.pratilipi.data.util.UserDataUtil;
@@ -280,6 +281,7 @@ public class UserApi extends GenericApi {
 					userData,
 					request.language == null ? UxModeFilter.getFilterLanguage() : request.language );
 			
+			userData.setAuthor( new AuthorData( authorId ) );
 			userData.setProfilePageUrl( "/author/" + authorId );
 			
 			
