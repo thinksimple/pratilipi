@@ -2125,12 +2125,17 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		if( resultCount != null && resultCount > 0 )
 			query = query.limit( resultCount );
 
-		List<BatchProcess> dataList = resultCount == null ? new ArrayList<BatchProcess>() : new ArrayList<BatchProcess>( resultCount );
+		List<BatchProcess> dataList = resultCount == null
+				? new ArrayList<BatchProcess>()
+				: new ArrayList<BatchProcess>( resultCount );
+		
 		QueryResultIterator <BatchProcessEntity> iterator = query.iterator();
 		while( iterator.hasNext() )
 			dataList.add( iterator.next() );
 
-		return new DataListCursorTuple<BatchProcess>( dataList, cursor == null ? null : iterator.getCursor().toWebSafeString() );
+		return new DataListCursorTuple<BatchProcess>(
+				dataList,
+				cursor == null ? null : iterator.getCursor().toWebSafeString() );
 
 	}
 

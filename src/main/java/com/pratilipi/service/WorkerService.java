@@ -7,7 +7,6 @@ import com.pratilipi.api.impl.accesstoken.AccessTokenCleanupApi;
 import com.pratilipi.api.impl.auditlog.AuditLogProcessApi;
 import com.pratilipi.api.impl.author.AuthorBackupApi;
 import com.pratilipi.api.impl.author.AuthorProcessApi;
-import com.pratilipi.api.impl.debug.DebugApi;
 import com.pratilipi.api.impl.email.EmailProcessApi;
 import com.pratilipi.api.impl.notification.NotificationProcessApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiBackupApi;
@@ -26,9 +25,7 @@ public class WorkerService extends GenericService {
 	static {
 
 		ApiRegistry.register( TestApi.class );
-		
-		
-		ApiRegistry.register( DebugApi.class );
+
 		
 		ApiRegistry.register( UserProcessApi.class );
 		ApiRegistry.register( UserEmailApi.class );
