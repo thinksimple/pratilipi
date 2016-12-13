@@ -71,8 +71,9 @@ Content.prototype.getContentWithoutNbsps = function( ) {
 
 <#-- Change content before saving -->
 Content.prototype.getContentBeforeSaving = function() {
-  this.convertTextNodesToParagraphs();
+  /* this.convertTextNodesToParagraphs(); */
   this.removeBrs();
+  this.preserveAndConvertBrs();
   return this.getContentWithoutNbsps();
 };
 
@@ -91,6 +92,10 @@ Content.prototype.convertTextNodesToParagraphs = function() {
 
 Content.prototype.removeBrs = function() {
   this.$content_container.children("br:not([data-mce-bogus])").remove();
+};
+
+Content.prototype.preserveAndConvertBrs = function() {
+  this.$content_container.find("p br").removeAttr( "data-mce-bogus" );
 };
 
 Content.prototype.replaceNbsps = function() {
