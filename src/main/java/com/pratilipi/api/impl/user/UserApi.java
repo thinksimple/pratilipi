@@ -264,7 +264,7 @@ public class UserApi extends GenericApi {
 		Long authorId = null;
 		
 		
-		if( request.getId().equals( 0L ) ) { // New user
+		if( request.getId() != null && request.getId().equals( 0L ) ) { // New user
 			
 			String firstName = request.getName().trim();
 			String lastName = null;
