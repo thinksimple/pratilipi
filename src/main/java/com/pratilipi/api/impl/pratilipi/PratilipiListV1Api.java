@@ -106,7 +106,7 @@ public class PratilipiListV1Api extends GenericApi {
 		private Response() {}
 		
 		public Response( List<PratilipiData> pratilipiList, String cursor, Long numberFound ) {
-			this.pratilipiList = new ArrayList<>( pratilipiList.size() ); 
+			this.pratilipiList = new ArrayList<>( pratilipiList.size() );
 			for( PratilipiData pratilipi : pratilipiList )
 				this.pratilipiList.add( new PratilipiV1Api.Response( pratilipi, PratilipiListV1Api.class ) );
 			this.cursor = cursor;

@@ -45,7 +45,6 @@ public class UserPratilipiReviewListApi extends GenericApi {
 
 	}
 	
-	@SuppressWarnings("unused")
 	public static class Response extends GenericResponse {
 		
 		private List<UserPratilipiApi.Response> reviewList;

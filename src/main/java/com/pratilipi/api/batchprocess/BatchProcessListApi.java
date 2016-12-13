@@ -1,5 +1,6 @@
 package com.pratilipi.api.batchprocess;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.pratilipi.api.GenericApi;
@@ -8,12 +9,9 @@ import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
-import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.BatchProcessType;
-import com.pratilipi.data.DataAccessor;
-import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
-import com.pratilipi.data.type.BatchProcess;
+import com.pratilipi.data.client.BatchProcessData;
 import com.pratilipi.data.util.BatchProcessDataUtil;
 
 
@@ -44,22 +42,25 @@ public class BatchProcessListApi extends GenericApi {
 
 	}
 
-	public static class Response extends GenericResponse { 
+	public static class Response extends GenericResponse {
 
-		private List<BatchProcess> batchProcessList;
+		private List<BatchProcessApi.Response> batchProcessList;
 
 		private String cursor;
 
+		
 		@SuppressWarnings("unused")
 		private Response() {}
 
-		public Response( List<BatchProcess> batchProcessList, String cursor ) {
-			this.batchProcessList = batchProcessList;
+		public Response( List<BatchProcessData> batchProcessList, String cursor ) {
+			this.batchProcessList = new ArrayList<>( batchProcessList.size() );
+			for( BatchProcessData batchProcess : batchProcessList )
+				this.batchProcessList.add( new BatchProcessApi.Response( batchProcess ) );
 			this.cursor = cursor;
 		}
 
 
-		public List<BatchProcess> getBatchProcessList() {
+		public List<BatchProcessApi.Response> getBatchProcessList() {
 			return batchProcessList;
 		}
 
@@ -68,23 +69,19 @@ public class BatchProcessListApi extends GenericApi {
 		}
 
 	}
+	
 
 	@Get
-	public Response get( GetRequest request ) 
-			throws InsufficientAccessException, UnexpectedServerException {
+	public Response get( GetRequest request ) throws InsufficientAccessException {
 
-		if( !BatchProcessDataUtil.hasAccessToListBatchProcess() )
-			throw new InsufficientAccessException();
-
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		DataListCursorTuple<BatchProcess> batchProcessTuple = dataAccessor.getBatchProcessList( 
-																				request.type, 
-																				null, 
-																				null, 
-																				request.cursor, 
-																				request.resultCount );
-
-		return new Response( batchProcessTuple.getDataList(), batchProcessTuple.getCursor() );
+		DataListCursorTuple<BatchProcessData> batchProcessListCursorTuple = BatchProcessDataUtil.getBatchProcessList(
+				request.type,
+				request.cursor,
+				request.resultCount );
+		
+		return new Response(
+				batchProcessListCursorTuple.getDataList(),
+				batchProcessListCursorTuple.getCursor() );
 
 	}
 

@@ -29,6 +29,7 @@ import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.DocAccessor;
+import com.pratilipi.data.client.BatchProcessData;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.BatchProcess;
@@ -53,8 +54,49 @@ public class BatchProcessDataUtil {
 		return UserAccessUtil.hasUserAccess( accessToken.getUserId(), null, AccessType.BATCH_PROCESS_LIST );
 	}
 
+	
+	public static BatchProcessData createBatchProcessData( BatchProcess batchProcess ) {
+		
+		BatchProcessData batchProcessData = new BatchProcessData();
+		
+		batchProcessData.setId( batchProcess.getId() );
+		batchProcessData.setType( batchProcess.getType() );
+		batchProcessData.setInitDoc( batchProcess.getInitDoc() );
+		batchProcessData.setExecDoc( batchProcess.getExecDoc() );
+		batchProcessData.setStateInProgress( batchProcess.getStateInProgress() );
+		batchProcessData.setStateCompleted( batchProcess.getStateCompleted() );
+		batchProcessData.setCreationDate( batchProcess.getCreationDate() );
+		batchProcessData.setLastUpdated( batchProcess.getLastUpdated() );
+		
+		return batchProcessData;
+		
+	}
+	
+	public static List<BatchProcessData> createBatchProcessDataList( List<BatchProcess> batchProcessList ) {
+		List<BatchProcessData> batchProcessDataList = new ArrayList<>();
+		for( BatchProcess batchProcess : batchProcessList )
+			batchProcessDataList.add( createBatchProcessData( batchProcess ) );
+		return batchProcessDataList;
+	}
+	
 
-	public static void createBatchProcess( String initDoc, String execDoc, BatchProcessType type, Language language ) 
+	public static DataListCursorTuple<BatchProcessData> getBatchProcessList(
+			BatchProcessType batchProcessType, String cursor, Integer resultCount )
+			throws InsufficientAccessException {
+		
+		if( ! hasAccessToListBatchProcess() )
+			throw new InsufficientAccessException();
+
+		DataListCursorTuple<BatchProcess> batchProcessListCursorTuple = DataAccessorFactory.getDataAccessor()
+				.getBatchProcessList( batchProcessType, null, null, cursor, resultCount );
+		
+		return new DataListCursorTuple<BatchProcessData>(
+				createBatchProcessDataList( batchProcessListCursorTuple.getDataList() ),
+				batchProcessListCursorTuple.getCursor() );
+
+	}
+	
+	public static void createBatchProcess( BatchProcessType type, String initDoc, String execDoc, Language language ) 
 			throws InsufficientAccessException, InvalidArgumentException {
 
 		if( ! hasAccessToCreateBatchProcess( language ) )
@@ -63,13 +105,12 @@ public class BatchProcessDataUtil {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
 		BatchProcess batchProcess = dataAccessor.newBatchProcess();
-		batchProcess.setCreationDate( new Date() );
+		batchProcess.setType( type );
 		batchProcess.setInitDoc( initDoc );
 		batchProcess.setExecDoc( execDoc );
-		batchProcess.setType( type );
+		batchProcess.setCreationDate( new Date() );
 
-		logger.log( Level.INFO, "Creating new BatchProcess: " + new Gson().toJson( batchProcess ) );
-		dataAccessor.createOrUpdateBatchProcess( batchProcess );
+		batchProcess = dataAccessor.createOrUpdateBatchProcess( batchProcess );
 
 	}
 	

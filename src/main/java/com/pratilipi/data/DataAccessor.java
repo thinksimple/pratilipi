@@ -248,7 +248,7 @@ public interface DataAccessor {
 	// BATCH_PROCESS Table
 	BatchProcess newBatchProcess();
 	BatchProcess getBatchProcess( Long batchProcessId );
-	DataListCursorTuple<BatchProcess> getBatchProcessList( BatchProcessType type, BatchProcessState stateCompleted, BatchProcessState stateInProgress, String cursor, Integer resultCount );
+	DataListCursorTuple<BatchProcess> getBatchProcessList( BatchProcessType type, BatchProcessState stateInProgress, BatchProcessState stateCompleted, String cursor, Integer resultCount );
 	List<BatchProcess> getIncompleteBatchProcessList();
 	BatchProcess createOrUpdateBatchProcess( BatchProcess batchProcess );
 	

@@ -2107,19 +2107,18 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 
 	@Override
-	public DataListCursorTuple<BatchProcess> getBatchProcessList(
-			BatchProcessType type, BatchProcessState stateCompleted,
-			BatchProcessState stateInProgress, String cursor,
-			Integer resultCount ) {
+	public DataListCursorTuple<BatchProcess> getBatchProcessList( BatchProcessType type,
+			BatchProcessState stateInProgress,BatchProcessState stateCompleted,
+			String cursor, Integer resultCount ) {
 
 		Query<BatchProcessEntity> query = ObjectifyService.ofy().load().type( BatchProcessEntity.class );
 
 		if( type != null )
 			query = query.filter( "TYPE", type );
-		if( stateCompleted != null )
-			query = query.filter( "STATE_COMPLETED", stateCompleted );
 		if( stateInProgress != null )
 			query = query.filter( "STATE_IN_PROGRESS", stateInProgress );
+		if( stateCompleted != null )
+			query = query.filter( "STATE_COMPLETED", stateCompleted );
 
 		if( cursor != null )
 			query = query.startAt( Cursor.fromWebSafeString( cursor ) );
