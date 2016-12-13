@@ -35,7 +35,7 @@ public class GenericRequest {
 	public static final String ERR_PHONE_REQUIRED			= "Phone is required.";
 	public static final String ERR_PHONE_INVALID			= "Invalid phone number.";
 	public static final String ERR_EMAIL_NOT_REGISTERED		= "Email not registered.";
-	public static final String ERR_EMAIL_REGISTERED_WITH_FB = "You have registered with us via Facebook. Kindly login with Facebook.";
+	public static final String ERR_EMAIL_REGISTERED_WITH_FACEBOOK = "You have registered with us via Facebook. Kindly login with Facebook.";
 	public static final String ERR_EMAIL_REGISTERED_WITH_GOOGLE = "You have registered with us via Google. Kindly login with Google.";
 	public static final String ERR_EMAIL_REGISTERED_ALREADY = "Email is already registered.";
 	

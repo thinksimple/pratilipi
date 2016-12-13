@@ -89,7 +89,7 @@ public class UserDataUtil {
 		
 	}
 	
-	private static String getNextToken( String verificationToken ) {
+	private static String _getNextToken( String verificationToken ) {
 		if( verificationToken != null ) {
 			Long expiryDateMillis = Long.parseLong( verificationToken.substring( verificationToken.indexOf( "|" ) + 1 ) );
 			if( ( expiryDateMillis - new Date().getTime() ) > TimeUnit.MILLISECONDS.convert( 4, TimeUnit.DAYS ) )
@@ -99,7 +99,7 @@ public class UserDataUtil {
 		return UUID.randomUUID().toString() + "|" + ( new Date().getTime() + TimeUnit.MILLISECONDS.convert( 7, TimeUnit.DAYS ) ); // Valid for 7 days.
 	}
 	
-	private static boolean verifyToken( User user, String verificationToken ) {
+	private static boolean _verifyToken( User user, String verificationToken ) {
 		if( user.getVerificationToken() == null )
 			return false;
 		
@@ -317,7 +317,7 @@ public class UserDataUtil {
 			throws InvalidArgumentException, InsufficientAccessException {
 
 		// Do nothing if a user is already logged in
-		if( AccessTokenFilter.getAccessToken().getUserId().equals( 0L ) )
+		if( ! AccessTokenFilter.getAccessToken().getUserId().equals( 0L ) )
 			return getCurrentUser();
 		
 
@@ -333,7 +333,7 @@ public class UserDataUtil {
 		}
 		
 		if( user.getPassword() == null && user.getFacebookId() != null )
-			throw new InvalidArgumentException( GenericRequest.ERR_EMAIL_REGISTERED_WITH_FB );
+			throw new InvalidArgumentException( GenericRequest.ERR_EMAIL_REGISTERED_WITH_FACEBOOK );
 		
 		if( user.getPassword() == null && user.getGoogleId() != null )
 			throw new InvalidArgumentException( GenericRequest.ERR_EMAIL_REGISTERED_WITH_GOOGLE );
@@ -343,7 +343,7 @@ public class UserDataUtil {
 			return createUserData( user );
 		}
 		
-		if( verifyToken( user, password ) ) {
+		if( _verifyToken( user, password ) ) {
 			AuditLog auditLog = dataAccessor.newAuditLog(
 					AccessTokenFilter.getAccessToken(),
 					AccessType.USER_ADD,
@@ -531,7 +531,7 @@ public class UserDataUtil {
 	private static void _sendEmailVerificationMail( User user, Language language )
 			throws InvalidArgumentException, UnexpectedServerException {
 		
-		String verificationToken = getNextToken( user.getVerificationToken() );
+		String verificationToken = _getNextToken( user.getVerificationToken() );
 		if( ! verificationToken.equals( user.getVerificationToken() ) ) {
 			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 			user.setVerificationToken( verificationToken );
@@ -556,7 +556,7 @@ public class UserDataUtil {
 		if( user == null )
 			throw new InvalidArgumentException( GenericRequest.ERR_EMAIL_NOT_REGISTERED );
 		
-		String verificationToken = getNextToken( user.getVerificationToken() );
+		String verificationToken = _getNextToken( user.getVerificationToken() );
 		if( ! verificationToken.equals( user.getVerificationToken() ) ) {
 			user.setVerificationToken( verificationToken );
 			user = dataAccessor.createOrUpdateUser( user );
@@ -583,7 +583,7 @@ public class UserDataUtil {
 		if( user == null || user.getState() != UserState.REGISTERED )
 			return;
 		
-		if( ! verifyToken( user, verificationToken ) )
+		if( ! _verifyToken( user, verificationToken ) )
 			throw new InvalidArgumentException( GenericRequest.ERR_VERIFICATION_TOKEN_INVALID_OR_EXPIRED );
 		
 		
@@ -642,7 +642,7 @@ public class UserDataUtil {
 			throw new InvalidArgumentException( GenericRequest.ERR_ACCOUNT_BLOCKED );
 		}
 		
-		if( ! verifyToken( user, verificationToken ) )
+		if( ! _verifyToken( user, verificationToken ) )
 			throw new InvalidArgumentException( GenericRequest.ERR_VERIFICATION_TOKEN_INVALID_OR_EXPIRED );
 
 		
