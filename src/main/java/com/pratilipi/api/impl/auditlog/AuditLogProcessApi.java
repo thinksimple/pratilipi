@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.googlecode.objectify.ObjectifyService;
 import com.pratilipi.api.GenericApi;
@@ -17,17 +19,12 @@ import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.type.AccessType;
-import com.pratilipi.common.type.CommentParentType;
-import com.pratilipi.common.type.CommentState;
 import com.pratilipi.common.type.EmailState;
 import com.pratilipi.common.type.EmailType;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.NotificationState;
 import com.pratilipi.common.type.NotificationType;
 import com.pratilipi.common.type.PratilipiState;
-import com.pratilipi.common.type.UserReviewState;
-import com.pratilipi.common.type.VoteParentType;
-import com.pratilipi.common.type.VoteType;
 import com.pratilipi.common.util.SystemProperty;
 import com.pratilipi.common.util.UserAccessUtil;
 import com.pratilipi.data.DataAccessor;
@@ -48,6 +45,8 @@ import com.pratilipi.data.type.Vote;
 @SuppressWarnings("serial")
 @Bind( uri = "/auditlog/process" )
 public class AuditLogProcessApi extends GenericApi {
+	
+	private static final Logger logger = Logger.getLogger( AuditLogProcessApi.class.getName() );
 
 	@Get
 	public GenericResponse get( GenericRequest request ) {
@@ -98,6 +97,7 @@ public class AuditLogProcessApi extends GenericApi {
 
 
 		// Batch get Vote entities
+//		logger.log( Level.INFO, "Fetching " + voteUpdateIds.size() + " Vote Entities." );
 //		Map<String, Vote> votes = dataAccessor.getVotes( voteUpdateIds );
 
 
@@ -106,6 +106,7 @@ public class AuditLogProcessApi extends GenericApi {
 //		for( Vote vote : votes.values() )
 //			if( vote.getParentType() == VoteParentType.COMMENT )
 //				commentIds.add( vote.getParentIdLong() );
+//		logger.log( Level.INFO, "Fetching " + commentIds.size() + " Comment Entities." );
 //		Map<Long, Comment> comments = dataAccessor.getComments( commentIds );
 
 
@@ -117,6 +118,7 @@ public class AuditLogProcessApi extends GenericApi {
 //		for( Vote vote : votes.values() )
 //			if( vote.getParentType() == VoteParentType.REVIEW )
 //				userPratilipiIds.add( vote.getParentId() );
+		logger.log( Level.INFO, "Fetching " + userPratilipiIds.size() + " UserPratilipi Entities." );
 		Map<String, UserPratilipi> userPratilipis = dataAccessor.getUserPratilipis( userPratilipiIds );
 
 
@@ -124,10 +126,12 @@ public class AuditLogProcessApi extends GenericApi {
 		Set<Long> pratilipiIds = new HashSet<>( pratilipiUpdateIds );
 		for( UserPratilipi userPratilipi : userPratilipis.values() )
 			pratilipiIds.add( userPratilipi.getPratilipiId() );
+		logger.log( Level.INFO, "Fetching " + pratilipiIds.size() + " Pratilipi Entities." );
 		Map<Long, Pratilipi> pratilipis = dataAccessor.getPratilipis( pratilipiIds );
 
 
 		// Batch get UserAuthor entities
+		logger.log( Level.INFO, "Fetching " + userAuthorUpdateIds.size() + " UserAuthor Entities." );
 		Map<String, UserAuthor> userAuthors = dataAccessor.getUserAuthors( userAuthorUpdateIds );
 
 		// Batch get Author entities
@@ -136,6 +140,7 @@ public class AuditLogProcessApi extends GenericApi {
 			authorIds.add( pratilipi.getAuthorId() );
 		for( UserAuthor userAuthor : userAuthors.values() )
 			authorIds.add( userAuthor.getAuthorId() );
+		logger.log( Level.INFO, "Fetching " + authorIds.size() + " Author Entities." );
 		Map<Long, Author> authors = dataAccessor.getAuthors( authorIds );
 
 
