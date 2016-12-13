@@ -7,7 +7,7 @@
 	</head>
 
 	<body>
-		<link rel='import' href='/elements.${lang}/pratilipi-author-list-page.html?1'>
+		<link rel='import' href='/elements.${lang}/pratilipi-author-list-page.html?2'>
 		<pratilipi-author-list-page 
 			user-data='${ userJson }'
 			author-list='${ authorListJson }'
