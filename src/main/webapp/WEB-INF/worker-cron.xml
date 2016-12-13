@@ -100,11 +100,11 @@
 
 	<!-- EMAIL Table -->				
 
-	<cron>				
-		<url>/email/process?cron</url>				
-		<target>worker</target>				
-		<schedule>every 5 minutes</schedule>				
-		<timezone>Asia/Calcutta</timezone>				
+	<cron>
+		<url>/email/process?cron</url>
+		<target>worker</target>
+		<schedule>every 5 minutes</schedule>
+		<timezone>Asia/Calcutta</timezone>
 	</cron>
 
 </cronentries>
