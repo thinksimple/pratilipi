@@ -57,7 +57,7 @@ Editor.prototype.init = function() {
     forced_root_block : 'p',
     force_br_newlines : false,
     force_p_newlines : true,
-    remove_trailing_brs: true,
+    remove_trailing_brs: false,
       
     <#-- u instead of text decoration -->
     formats : {
@@ -66,9 +66,9 @@ Editor.prototype.init = function() {
       underline : {inline : 'u', exact : true},
       blockquote: {block: 'blockquote'},
       img: { block:'img' },
-      alignleft : {selector : 'p', styles : {textAlign : 'left'} },
-      aligncenter :{selector : 'p', styles : {textAlign : 'center'} },
-      alignright : {selector : 'p', styles : {textAlign : 'right'} },        
+      alignleft : {selector : 'p,li', styles : {textAlign : 'left'} },
+      aligncenter :{selector : 'p,li', styles : {textAlign : 'center'} },
+      alignright : {selector : 'p,li', styles : {textAlign : 'right'} },        
     },
     setup : function(ed) {
       ed.on('init', function (e) {
