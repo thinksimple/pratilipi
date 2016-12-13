@@ -2,7 +2,7 @@ package com.pratilipi.common.type;
 
 public enum BatchProcessType {
 
-	ANDROID_NOTIFACTION_BY_AUTHOR_FILTER(
+	NOTIFACTION_BY_AUTHOR_FILTER(
 			BatchProcessState.INIT,
 			BatchProcessState.GET_USER_IDS_BY_AUTHOR_FILTER,
 			BatchProcessState.CREATE_NOTIFICATIONS_FOR_USER_IDS,
