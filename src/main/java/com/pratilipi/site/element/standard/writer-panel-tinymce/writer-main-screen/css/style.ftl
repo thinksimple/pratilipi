@@ -753,6 +753,9 @@ blockquote {
   font-size: 17.5px;
   border-left: 5px solid #eee;
 }  
+ul,ol{
+  list-style-position: inside;
+}
 .mce-edit-focus {
     outline: none !important;
 }   

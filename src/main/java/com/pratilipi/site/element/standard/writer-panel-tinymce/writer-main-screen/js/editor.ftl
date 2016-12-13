@@ -54,7 +54,7 @@ Editor.prototype.init = function() {
     allow_html_in_named_anchor: false,
     
     <#-- p on clicking Enter key -->
-    forced_root_block : false,
+    forced_root_block : 'p',
     force_br_newlines : false,
     force_p_newlines : true,
     remove_trailing_brs: true,
