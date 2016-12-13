@@ -319,7 +319,7 @@ public class DataUtil {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		
 		BatchProcess batchProcess = dataAccessor.newBatchProcess();
-		batchProcess.setType( BatchProcessType.ANDROID_NOTIFACTION_BY_AUTHOR_FILTER );
+		batchProcess.setType( BatchProcessType.NOTIFACTION_BY_AUTHOR_FILTER );
 		batchProcess.setCreationDate( new Date() );
 		batchProcess.setInitDoc( initDoc.toString() );
 		batchProcess.setExecDoc( execDoc.toString() );

@@ -1000,7 +1000,7 @@ public class PratilipiSite extends HttpServlet {
 			throws InsufficientAccessException, UnexpectedServerException {
 
 		BatchProcessListApi.GetRequest request = new BatchProcessListApi.GetRequest();
-		request.setType( BatchProcessType.ANDROID_NOTIFACTION_BY_AUTHOR_FILTER );
+		request.setType( BatchProcessType.NOTIFACTION_BY_AUTHOR_FILTER );
 		BatchProcessListApi.Response batchProcessListResponse = ApiRegistry.getApi( BatchProcessListApi.class ).get( request );
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", "Notifications - Admin Access" );
