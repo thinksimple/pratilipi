@@ -161,7 +161,7 @@
 					ajaxGet.generateRequest();
 				},
 				editUser: function() {
-					document.querySelector( 'pratilipi-create-user' ).createOrEditUser( this.author.user );
+					document.querySelector( 'pratilipi-create-user' ).createOrEditUser( this.author );
 				},
 				_handleAjaxGetResponse: function( event ) {
 					document.querySelector( 'pratilipi-edit-author' ).createOrEditAuthor( event.detail.response );
@@ -201,95 +201,133 @@
 
 
 				// Boolean values
-				orderByContentPublished: { type: Boolean, value: null },
-				orderByRegistrationDate: { type: Boolean, value: null },
-				orderByReadCount: { type: Boolean, value: null },
-				orderByLastUpdated: { type: Boolean, value: null }
+				orderByContentPublished: { type: Boolean, value: null, observer: "_orderByContentPublishedObserver" },
+				orderByRegistrationDate: { type: Boolean, value: null, observer: "_orderByRegistrationDateObserver" },
+				orderByReadCount: { type: Boolean, value: null, observer: "_orderByReadCountObserver" },
+				orderByLastUpdated: { type: Boolean, value: null, observer: "_orderByLastUpdatedObserver" }
+			},
 
+			_orderByContentPublishedObserver: function() {
+				if( this.orderByContentPublished == null ) {
+					this.set( 'orderByContentPublishedIcon', "hidden" );
+					delete this.$.AjaxGet.params[ "orderByContentPublished" ];
+
+				} else if( this.orderByContentPublished ) {
+					this.set( 'orderByContentPublishedIcon', "hardware:keyboard-arrow-down" );
+					this.$.AjaxGet.params.orderByContentPublished = true;
+
+				} else {
+					this.set( 'orderByContentPublishedIcon', "hardware:keyboard-arrow-up" );
+					this.$.AjaxGet.params.orderByContentPublished = false;
+
+				} 
+			},
+
+			_orderByRegistrationDateObserver: function() {
+				if( this.orderByRegistrationDate == null ) {
+					this.set( 'orderByRegistrationDateIcon', "hidden" );
+					delete this.$.AjaxGet.params[ "orderByRegistrationDate" ];
+
+				} else if( this.orderByRegistrationDate ) {
+					this.set( 'orderByRegistrationDateIcon', "hardware:keyboard-arrow-down" );
+					this.$.AjaxGet.params.orderByRegistrationDate = true;
+
+				} else {
+					this.set( 'orderByRegistrationDateIcon', "hardware:keyboard-arrow-up" );
+					this.$.AjaxGet.params.orderByRegistrationDate = false;
+
+				}
+			},
+
+			_orderByReadCountObserver: function() {
+				if( this.orderByReadCount == null ) {
+					this.set( 'orderByReadCountIcon', "hidden" );
+					delete this.$.AjaxGet.params[ "orderByReadCount" ];
+
+				} else if( this.orderByReadCount ) {
+					this.set( 'orderByReadCountIcon', "hardware:keyboard-arrow-down" );
+					this.$.AjaxGet.params.orderByReadCount = true;
+
+				} else {
+					this.set( 'orderByReadCountIcon', "hardware:keyboard-arrow-up" );
+					this.$.AjaxGet.params.orderByReadCount = false;
+
+				}
+			},
+
+			_orderByLastUpdatedObserver: function() {
+				if( this.orderByLastUpdated == null ) {
+					this.set( 'orderByLastUpdatedIcon', "hidden" );
+					delete this.$.AjaxGet.params[ "orderByLastUpdated" ];
+
+				} else if( this.orderByLastUpdated ) {
+					this.set( 'orderByLastUpdatedIcon', "hardware:keyboard-arrow-down" );
+					this.$.AjaxGet.params.orderByLastUpdated = true;
+
+				} else {
+					this.set( 'orderByLastUpdatedIcon', "hardware:keyboard-arrow-up" );
+					this.$.AjaxGet.params.orderByLastUpdated = false;
+
+				}
 			},
 			
-			_clearAllFlags: function() {
-				this.set( 'orderByContentPublished', null );
-				this.set( 'orderByRegistrationDate', null );
-				this.set( 'orderByReadCount', null );
-				this.set( 'orderByLastUpdated', null );
-				delete this.$.AjaxGet.params[ "orderByContentPublished" ];
-				delete this.$.AjaxGet.params[ "orderByRegistrationDate" ];
-				delete this.$.AjaxGet.params[ "orderByReadCount" ];
-				delete this.$.AjaxGet.params[ "orderByLastUpdated" ];
-				
-				this.orderByContentPublishedIcon = null;
-				this.orderByRegistrationDateIcon = null;
-				this.orderByReadCountIcon = null;
-				this.orderByLastUpdatedIcon = null;
+			_clearAllFlags: function( exception ) {
+				if( exception != null && exception != "orderByContentPublished" )
+					this.set( 'orderByContentPublished', null );
+				if( exception != null && exception != "orderByRegistrationDate" )
+					this.set( 'orderByRegistrationDate', null );
+				if( exception != null && exception != "orderByReadCount" )
+					this.set( 'orderByReadCount', null );
+				if( exception != null && exception != "orderByLastUpdated" )
+					this.set( 'orderByLastUpdated', null );
 			},
 			
 			_orderByContentPublished: function() {
+				this._clearAllFlags( "orderByContentPublished" );
 				if( this.orderByContentPublished != null && this.orderByContentPublished ) {
 					this.set( 'orderByContentPublished', false );
-					this.orderByContentPublishedIcon = "icons:trending-up";
 				} else if( this.orderByContentPublished != null && !this.orderByContentPublished ) {
-					this._clearAllFlags();
+					this.set( 'orderByContentPublished', null );
 				} else {
-					this._clearAllFlags();
 					this.set( 'orderByContentPublished', true );
-					this.orderByContentPublishedIcon = "icons:trending-down";
 				}
-				if( this.orderByContentPublished != null )
-					this.$.AjaxGet.params.orderByContentPublished = this.orderByContentPublished;
-				this.clearAuthorList();
-				this.loadMore();
+				this.loadMore( true );
 			},
 			
 			_orderByRegistrationDate: function() {
+				this._clearAllFlags( "orderByRegistrationDate" );
 				if( this.orderByRegistrationDate != null && this.orderByRegistrationDate ) {
 					this.set( 'orderByRegistrationDate', false );
-					this.orderByRegistrationDateIcon = "icons:trending-up";
 				} else if( this.orderByRegistrationDate != null && !this.orderByRegistrationDate ) {
-					this._clearAllFlags();
+					this.set( 'orderByRegistrationDate', null );
 				} else {
-					this._clearAllFlags();
 					this.set( 'orderByRegistrationDate', true );
-					this.orderByRegistrationDateIcon = "icons:trending-down";
 				}
-				if( this.orderByRegistrationDate != null )
-					this.$.AjaxGet.params.orderByRegistrationDate = this.orderByRegistrationDate;
-				this.clearAuthorList();
-				this.loadMore();
+				this.loadMore( true );
 			},
 			
 			_orderByReadCount: function() {
+				this._clearAllFlags( "orderByReadCount" );
 				if( this.orderByReadCount != null && this.orderByReadCount ) {
 					this.set( 'orderByReadCount', false );
-					this.orderByReadCountIcon = "icons:trending-up";
 				} else if( this.orderByReadCount != null && !this.orderByReadCount ) {
-					this._clearAllFlags();
+					this.set( 'orderByReadCount', null );
 				} else {
-					this._clearAllFlags();
 					this.set( 'orderByReadCount', true );
-					this.orderByReadCountIcon = "icons:trending-dowm";
 				}
-				if( this.orderByReadCount != null )
-					this.$.AjaxGet.params.orderByReadCount = this.orderByReadCount;
-				this.clearAuthorList();
-				this.loadMore();
+				this.loadMore( true );
 			},
 			
 			_orderByLastUpdated: function() {
+				this._clearAllFlags( "orderByLastUpdated" );
 				if( this.orderByLastUpdated != null && this.orderByLastUpdated ) {
 					this.set( 'orderByLastUpdated', false );
-					this.orderByLastUpdatedIcon = "icons:trending-up";
 				} else if( this.orderByLastUpdated != null && !this.orderByLastUpdated ) {
-					this._clearAllFlags();
+					this.set( 'orderByLastUpdated', null );
 				} else {
-					this._clearAllFlags();
 					this.set( 'orderByLastUpdated', true );
-					this.orderByLastUpdatedIcon = "icons:trending-down";
 				}
-				if( this.orderByLastUpdated != null )
-					this.$.AjaxGet.params.orderByLastUpdated = this.orderByLastUpdated;
-				this.clearAuthorList();
-				this.loadMore();
+				this.loadMore( true );
 			},
 			
 			clearAuthorList: function() {
@@ -325,13 +363,19 @@
 				// Set params and make ajax GET call. Filters already set when element initialised.
 				this._clearAllFlags();
 				this.isLoading = true;
-				ajaxGet.params.searchQuery = this.searchQuery;
-				ajaxGet.params.cursor = this.cursor;
+				if( this.searchQuery != null && this.searchQuery != "" )
+					ajaxGet.params.searchQuery = this.searchQuery;
+				else
+					delete ajaxGet.params.searchQuery;
+				if( this.cursor != null && this.cursor.trim() != "" )
+					ajaxGet.params.cursor = this.cursor;
+				else
+					delete ajaxGet.params.cursor;
 				ajaxGet.generateRequest();
 			},
 			
 			createAuthor: function() {
-				this.querySelector( 'pratilipi-create-user' ).createOrEditUser( {} );
+				this.querySelector( 'pratilipi-create-user' ).createOrEditUser();
 			},
 			
 			process: function( authorList ) {
@@ -366,7 +410,10 @@
 					this.isFinished = true;
 			},
 			
-			loadMore: function() {
+			loadMore: function( clearList ) {
+
+				if( clearList )
+					this.clearAuthorList();
 				
 				if( !this.isLoading && !this.isFinished )
 					this.includeShowMoreButton = true;
@@ -391,7 +438,10 @@
 				
 				// Set params and make ajax GET call. Filters already set when element initialised.
 				var ajaxGet = this.$.AjaxGet;
-				ajaxGet.params.cursor = this.cursor;
+				if( this.cursor != null && this.cursor.trim() != "" )
+					ajaxGet.params.cursor = this.cursor;
+				else
+					delete ajaxGet.params.cursor;
 				ajaxGet.generateRequest();
 			},
 			

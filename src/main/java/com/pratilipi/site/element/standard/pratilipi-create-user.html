@@ -20,9 +20,9 @@
 					<h6 class="modal-fullscreen-heading">{{ modalTitle }}</h6>
 					<div style="height: 2px; background-color: #FFF; text-align: center; margin-top: 30px; margin-bottom: 10px;"></div>
 					
-					<pratilipi-input label="${ _strings.user_full_name }" value="{{ name::input }}" icon="icons:account-box"></pratilipi-input>
+					<pratilipi-input hidden$="{{ !createUser }}" label="${ _strings.user_full_name } *" value="{{ name::input }}" icon="icons:account-box"></pratilipi-input>
 					<pratilipi-input label="${ _strings.user_email }" value="{{ email::input }}" icon="icons:mail" type="email"></pratilipi-input>
-					<pratilipi-input label="Facebook Url ( optional )" value="{{ facebookUrl::input }}" icon="icons:link" type="url"></pratilipi-input>
+					<pratilipi-input hidden$="{{ !createUser }}" label="Facebook Url ( optional )" value="{{ facebookUrl::input }}" icon="icons:link" type="url"></pratilipi-input>
 					<pratilipi-input disabled="{{ disablePhone }}" label="10 digit Phone Number" value="{{ phone::input }}" icon="icons:settings-phone" type="tel"></pratilipi-input>
 					
 					<div class="display-message-div"><p>{{ message }}</p></div>
@@ -68,21 +68,27 @@
 
  				// Specific to this modal
  				modalTitle: { type: String },
- 				modalButtonText: { type: String }
+ 				modalButtonText: { type: String },
+ 				createUser: { type: Boolean }
 			},
 			
-			createOrEditUser: function( user ) {
-				this.userId = user.userId == null ? null : user.userId;
-				if( user.firstName != null && user.lastName != null )
-					this.name = user.firstName + " " + user.lastName;
-				else if( user.firstName != null )
-					this.name = user.firstName;
-				else
-					this.name = user.lastName;
-				this.email = user.email == null ? null : user.email;
-				this.phone = user.phone == null ? null : user.phone;
+			createOrEditUser: function( author ) {
+				this.set( 'createUser', author == null );
+				if( author != null ) {
+					this.set( 'userId', author.user.userId );
+					this.set( 'name', author.name );
+					this.set( 'email', author.user.email != null ? author.user.email : null ); // Registered with Facebook without Email
+					this.set( 'facebookUrl', null );
+					this.set( 'phone', author.user.phone != null ? author.user.phone : null );
+				} else {
+					this.set( 'userId', null );
+					this.set( 'name', null );
+					this.set( 'email', null );
+					this.set( 'facebookUrl', null );
+					this.set( 'phone', null );
+				}
 
-				this.modalTitle = this.userId == null ? "Create New Author" : "Edit Existing Author";
+				this.modalTitle = this.userId == null ? "Create New Author" : "Edit Email and Phone";
 				this.modalButtonText = this.userId == null ? "Create" : "Save Changes";
 				this.open();
 			},
@@ -145,7 +151,7 @@
 					return;
 				}
 				
-				if( this.phone != null && this.phone.trim() != "" && ( isNaN( this.phone ) || this.phone.length != 10 ) ) {
+				if( this.phone != null && this.phone.trim() != "" && !validatePhone( this.phone ) ) {
 					this.message = "Invalid Number";
 					return;
 				}
@@ -181,8 +187,7 @@
 					body.lastName = lastName;
 				if( this.phone != null && this.phone.trim() != "" )
 					body.phone = this.phone.trim();
-				if( this.userId != null )
-					body.userId = this.userId;
+				body.userId = this.userId != null ? this.userId : "0";
 				
 				this.message = "${ _strings.working }";
 				jQuery( '#createUserButton' ).prop( 'disabled', true );
