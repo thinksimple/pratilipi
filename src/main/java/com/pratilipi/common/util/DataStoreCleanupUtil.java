@@ -3,6 +3,7 @@ package com.pratilipi.common.util;
 import java.util.Date;
 import java.util.List;
 
+import com.google.appengine.api.datastore.QueryResultIterator;
 import com.googlecode.objectify.ObjectifyService;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.CommentState;
@@ -34,6 +35,31 @@ import com.pratilipi.taskqueue.TaskQueueFactory;
 
 public class DataStoreCleanupUtil {
 
+	public static void migratePratilipi( Long fromAuthorId, Long toAuthorId ) {
+		
+		QueryResultIterator<PratilipiEntity> iterator = ObjectifyService.ofy().load()
+				.type( PratilipiEntity.class )
+				.filter( "AUTHOR_ID", fromAuthorId )
+				.chunk( 100 )
+				.iterator();
+		
+		while( iterator.hasNext() ) {
+			Pratilipi pratilipi = iterator.next();
+			pratilipi.setAuthorId( toAuthorId );
+			ObjectifyService.ofy().save().entity( pratilipi ).now();
+			Task task = TaskQueueFactory.newTask()
+					.setUrl( "/pratilipi/process" )
+					.addParam( "pratilipiId", pratilipi.getId().toString() )
+					.addParam( "processData", "true" );
+			TaskQueueFactory.getPratilipiTaskQueue().add( task );
+			System.out.println( "Migrating Pratilipi: " + pratilipi.getId() );
+		}
+		
+		
+	}
+
+	
+	
 	public static void blockReview( Long userId, Long pratilipiId ) {
 
 		UserPratilipi userPratilipi = ObjectifyService.ofy().load()
