@@ -19,7 +19,7 @@ public class UserPreferenceRtdbImpl implements UserPreferenceRtdb {
 	
 	@Override
 	public EmailFrequency getEmailFrequency() {
-		return emailFrequency;
+		return emailFrequency == null ? EmailFrequency.IMMEDIATELY : emailFrequency;
 	}
 
 	@Override
@@ -30,7 +30,7 @@ public class UserPreferenceRtdbImpl implements UserPreferenceRtdb {
 	@Override
 	public boolean isNotificationSubscribed( NotificationType notificationType ) {
 		return notificationSubscriptions == null || notificationSubscriptions.get( notificationType ) == null
-				? notificationType.getDefault()
+				? notificationType.getSubscriptionDefault()
 				: notificationSubscriptions.get( notificationType );
 	}
 
