@@ -12,7 +12,7 @@ public interface Memcache {
 
 	<K, T extends Serializable> void put( K key, T value );
 
-	<K, T extends Serializable> void put( K key, T value, long expirationDeltaMillis );
+	<K, T extends Serializable> void put( K key, T value, int expirationDeltaMinutes );
 
 	<K, T extends Serializable> void putAll( Map<K, T> keyValueMap );
 

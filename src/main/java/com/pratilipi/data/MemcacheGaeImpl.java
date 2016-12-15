@@ -63,18 +63,18 @@ public class MemcacheGaeImpl implements Memcache {
 
 	@Override
 	public <K, T extends Serializable> void put( K key, T value ) {
-		put( key, value, TimeUnit.DAYS.toMillis( 30 ) );
+		put( key, value, (int) TimeUnit.DAYS.toMinutes( 30 ) );
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public <K, T extends Serializable> void put( K key, T value, long expirationDeltaMillis ) {
+	public <K, T extends Serializable> void put( K key, T value, int expirationDeltaMinutes ) {
 
-		if( expirationDeltaMillis <= 0 )
+		if( expirationDeltaMinutes <= 0 )
 			return;
 
 		Map props = new HashMap();
-		props.put( GCacheFactory.EXPIRATION_DELTA_MILLIS, expirationDeltaMillis );
+		props.put( GCacheFactory.EXPIRATION_DELTA, expirationDeltaMinutes * 60 );
 
 		for( int i = 0; i < 5; i++ ) {
 
@@ -90,7 +90,7 @@ public class MemcacheGaeImpl implements Memcache {
 			
 			try {
 				Cache cache = CacheManager.getInstance().getCacheFactory()
-						.createCache(props);
+						.createCache( props );
 				cache.put( key, value );
 				break;
 			} catch( GCacheException | MemcacheServiceException ex ) {

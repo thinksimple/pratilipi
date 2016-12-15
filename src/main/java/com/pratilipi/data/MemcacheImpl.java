@@ -53,7 +53,7 @@ public class MemcacheImpl implements Memcache {
 	}
 
 	@Override
-	public <K, T extends Serializable> void put( K key, T value, long expirationDeltaMillis ) {
+	public <K, T extends Serializable> void put( K key, T value, int expirationDeltaMinutes ) {
 		cache.put( key, value );
 	}
 

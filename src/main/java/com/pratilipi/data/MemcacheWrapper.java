@@ -55,9 +55,9 @@ public class MemcacheWrapper implements Memcache {
 	}
 
 	@Override
-	public <K, T extends Serializable> void put( K key, T value, long expirationDeltaMillis ) {
-		cacheL1.put( key, value, expirationDeltaMillis );
-		cacheL2.put( key, value, expirationDeltaMillis );
+	public <K, T extends Serializable> void put( K key, T value, int expirationDeltaMinutes ) {
+		cacheL1.put( key, value, expirationDeltaMinutes );
+		cacheL2.put( key, value, expirationDeltaMinutes );
 	}
 
 	@Override
