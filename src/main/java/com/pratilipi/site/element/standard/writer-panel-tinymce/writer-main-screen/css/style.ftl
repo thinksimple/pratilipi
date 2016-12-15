@@ -726,7 +726,7 @@ body {
   min-width: 100px;
   display: none;
   background: white;
-  z-index: 1051;
+  z-index: 65538;
   font-size: 16px;
   }
 
