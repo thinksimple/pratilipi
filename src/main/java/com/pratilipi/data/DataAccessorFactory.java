@@ -1,5 +1,9 @@
 package com.pratilipi.data;
 
+import java.util.Arrays;
+
+import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.util.GoogleApi;
 import com.pratilipi.common.util.SystemProperty;
 
 public class DataAccessorFactory {
@@ -14,6 +18,7 @@ public class DataAccessorFactory {
 	private static final Memcache cacheL2 = new MemcacheGaeImpl();
 	
 	private static final ThreadLocal<DataAccessor> threadLocalDataAccessor = new ThreadLocal<>();
+	private static final ThreadLocal<RtdbAccessor> threadLocalRtdbAccessor = new ThreadLocal<>();
 	private static final SearchAccessor searchAccessor = datasource.equals( "gae" )	 
 														? new SearchAccessorGaeImpl( indexName ) 
 														: new SearchAccessorMockImpl( indexName );
@@ -39,6 +44,19 @@ public class DataAccessorFactory {
 			threadLocalDataAccessor.set( dataAccessor );
 		}
 		return dataAccessor;
+	}
+
+	public static RtdbAccessor getRtdbAccessor() throws UnexpectedServerException {
+		RtdbAccessor rtdbAccessor = threadLocalRtdbAccessor.get();
+		if( rtdbAccessor == null ) {
+			rtdbAccessor = new RtdbAccessorFirebaseImpl(
+					GoogleApi.getGoogleCredential( Arrays.asList(
+							"https://www.googleapis.com/auth/firebase.database",
+							"https://www.googleapis.com/auth/userinfo.email" ) ),
+					new MemcacheWrapper( cacheL1, cacheL2 ) );
+			threadLocalRtdbAccessor.set( rtdbAccessor );
+		}
+		return rtdbAccessor;
 	}
 	
 	public static SearchAccessor getSearchAccessor() {
