@@ -16,7 +16,7 @@ Editor.prototype.init = function() {
     block_formats: 'Paragraph=p;',  
     <#-- plugins needed and setting up toolbar -->
     plugins : ['autoresize autolink lists link image',
-    'visualblocks code fullscreen',
+    'fullscreen',
     'paste'],
     menubar: false,
     statusbar: false,
