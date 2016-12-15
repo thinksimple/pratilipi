@@ -94,7 +94,7 @@ Editor.prototype.init = function() {
             }
         });
         ed.on('OpenWindow', function (e) {
-		  var $url_text_object = e.win.$el.find(".mce-textbox.mce-last")
+		  var $url_text_object = $( e.win.$el.find(".mce-textbox.mce-last")[0] );
 		  var url_text_transliteration_object = new transliterationApp( $url_text_object, "${ lang }" );
 		  url_text_transliteration_object.init();     
         });        
