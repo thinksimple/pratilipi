@@ -182,13 +182,13 @@
 					</tr>
 					<tbody data-bind="foreach: {data: batchProcessList, as: 'batchProcess'}">
 						<tr>
-							<td data-bind="text: getLanguage( batchProcess.INIT_DOC )"></td>
-							<td data-bind="text: batchProcess.CREATION_DATE"></td>
-							<td data-bind="text: getMessage( batchProcess.EXEC_DOC )"></td>
+							<td data-bind="text: getLanguage( batchProcess.initDoc )"></td>
+							<td data-bind="text: new Date( batchProcess.creationDate )"></td>
+							<td data-bind="text: getMessage( batchProcess.execDoc )"></td>
 							<td>
-								<a data-bind="attr: { href: getSourceLink( batchProcess.INIT_DOC, batchProcess.EXEC_DOC ), target: '_blank' }, text: getSourceLink( batchProcess.INIT_DOC, batchProcess.EXEC_DOC )"></a>
+								<a data-bind="attr: { href: getSourceLink( batchProcess.initDoc, batchProcess.execDoc ), target: '_blank' }, text: getSourceLink( batchProcess.initDoc, batchProcess.execDoc )"></a>
 							</td>
-							<td data-bind="text: batchProcess.STATE_COMPLETED"></td>
+							<td data-bind="text: batchProcess.stateCompleted"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -235,17 +235,17 @@
 
 
 		<script type="application/javascript">
-			function getLanguage( INIT_DOC ) {
-				return JSON.parse( INIT_DOC ).authorFilter.language;
+			function getLanguage( initDoc ) {
+				return JSON.parse( initDoc ).authorFilter.language;
 			}
-			function getSourceLink( INIT_DOC, EXEC_DOC ) {
-				var sourceId = JSON.parse( EXEC_DOC ).sourceId;
-				var type = JSON.parse( EXEC_DOC ).type;
+			function getSourceLink( initDoc, execDoc ) {
+				var sourceId = JSON.parse( execDoc ).sourceId;
+				var type = JSON.parse( execDoc ).type;
 				if( type == "PRATILIPI" )
-					return "http://" + getLanguage( INIT_DOC ).toLowerCase() + ".pratilipi.com/pratilipi/" + sourceId;
+					return "http://" + getLanguage( initDoc ).toLowerCase() + ".pratilipi.com/pratilipi/" + sourceId;
 			}
-			function getMessage( EXEC_DOC ) {
-				return JSON.parse( EXEC_DOC ).message;
+			function getMessage( execDoc ) {
+				return JSON.parse( execDoc ).message;
 			}
 			function transformList( batchProcessList ) {
 				return {
@@ -264,6 +264,8 @@
 				return languageArray;
 			}
 			function getUriFromUrl( url ) {
+				if( url.indexOf( "pratilipi.com" ) == -1 )
+					return url;
 				var patt = new RegExp( /http?:\/\/.*.pratilipi.com\b([-a-zA-Z0-9@:%_\+.~#&\/\/=]*)/g );
 				var match = patt.exec( url );
 				if( match ) {
@@ -310,7 +312,7 @@
 								'language': this.selectedLanguage(), 
 								'message': this.inputMessage(),
 								'sourceUri': getUriFromUrl( this.inputUrl() ),
-								'type': "ANDROID_NOTIFACTION_BY_AUTHOR_FILTER"
+								'type': "NOTIFACTION_BY_AUTHOR_FILTER"
 							},
 							success: function( response ) {
 								ViewModel.progressMessage( "Success!!" );
