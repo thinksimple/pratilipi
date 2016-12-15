@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
@@ -34,10 +35,26 @@ public class GoogleApi {
 	private static GoogleIdTokenVerifier androidTokenVerifier;
 
 
+	// Using "App Engine default Service Account", implementation will change for systems other than Google App Engine
+	public static GoogleCredential getGoogleCredential( Collection<String> scopes ) throws UnexpectedServerException {
+		try {
+			GoogleCredential googleCredential = GoogleCredential.getApplicationDefault();
+			if( scopes != null && scopes.size() != 0 )
+				googleCredential = GoogleCredential.getApplicationDefault().createScoped( scopes );
+//			googleCredential.refreshToken();
+			return googleCredential;
+		} catch( IOException e ) {
+			logger.log( Level.SEVERE, "Failed to create GoogleCredential.", e );
+			throw new UnexpectedServerException();
+		}
+	}
+	
+	@Deprecated
 	private static HttpRequestInitializer getCredential( Collection<String> scopes ) {
 		return new AppIdentityCredential( scopes ); // Works only on Google AppEngine
 	}
 
+	
 	private static String getWebClientId() {
 		return DataAccessorFactory.getDataAccessor()
 				.getAppProperty( AppProperty.GOOGLE_WEB_CLIENT_ID )
@@ -50,6 +67,7 @@ public class GoogleApi {
 				.getValue();
 	}
 
+	
 	public static GoogleIdTokenVerifier getWebIdTokenVerifier() {
 		if( webTokenVerifier == null )
 			webTokenVerifier = new GoogleIdTokenVerifier
@@ -70,6 +88,7 @@ public class GoogleApi {
 		return androidTokenVerifier;
 	}
 	
+
 	public static Analytics getAnalytics( Collection<String> scopes )
 			throws UnexpectedServerException {
 		
@@ -94,8 +113,8 @@ public class GoogleApi {
 		try {
 
 			GoogleIdToken idToken = UxModeFilter.isAndroidApp() 
-									? getAndroidIdTokenVerifier().verify( googleIdToken ) 
-									: getWebIdTokenVerifier().verify( googleIdToken );
+					? getAndroidIdTokenVerifier().verify( googleIdToken ) 
+					: getWebIdTokenVerifier().verify( googleIdToken );
 
 			String authorisedParty = UxModeFilter.isAndroidApp() ? getAppClientId() : getWebClientId();
 			if( idToken == null || idToken.getPayload() == null || ! idToken.getPayload().getAuthorizedParty().equals( authorisedParty ) ) {
