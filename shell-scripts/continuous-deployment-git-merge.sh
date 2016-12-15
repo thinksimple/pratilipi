@@ -6,7 +6,7 @@ minute=$(date +%M)
 hour=${hour#0}
 minute=${minute#0}
 
-if [ $hour -eq 17 -a $minute -eq 40 ]
+if [ $hour -eq 15 -a $minute -eq 45 ]
 then
 	
 	git remote set-url origin https://antshpra:$1@github.com/Pratilipi/pratilipi.git
