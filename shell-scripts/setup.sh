@@ -8,11 +8,14 @@ apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EEA14886
 sudo apt-get update
 
 
+# https://cloud.google.com/sdk/downloads#apt-get
+sudo apt-get install google-cloud-sdk
+sudo apt-get install google-cloud-sdk-app-engine-java
+
+
 # Install required software
-sudo apt-get install vim
 sudo apt-get install git
 sudo apt-get install oracle-java7-installer
-sudo apt-get install screen
 # sudo apt-get install maven
 sudo apt-get install ant
 
@@ -20,9 +23,9 @@ sudo apt-get install ant
 # Manually install maven. Apt-get installs older version of maven.
 sudo mkdir -p /usr/local/apache-maven
 cd /usr/local/apache-maven
-sudo wget http://apache.go-parts.com/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz
-sudo tar -xzvf apache-maven-3.3.3-bin.tar.gz
-rm apache-maven-3.3.3-bin.tar.gz
+sudo wget http://www-eu.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
+sudo tar -xzvf apache-maven-3.3.9-bin.tar.gz
+sudo rm apache-maven-3.3.9-bin.tar.gz
 cd ~
 
 
@@ -30,7 +33,7 @@ cd ~
 sudo wget https://storage.googleapis.com/signals-agents/logging/google-fluentd-install.sh
 sha256sum google-fluentd-install.sh
 sudo bash google-fluentd-install.sh
-rm google-fluentd-install.sh
+sudo rm google-fluentd-install.sh
 
 
 # Cloning git repository for prod-pratilipi/default
