@@ -1,10 +1,7 @@
 package com.pratilipi.common.util;
 
-import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
@@ -41,12 +38,21 @@ public class HttpUtil {
 	}
 
 
-	public static BlobEntry doGet( String requestUrl ) 
+	public static BlobEntry doGet( String targetURL ) throws UnexpectedServerException {
+		return doGet( targetURL, null, null );
+	}
+	
+	public static BlobEntry doGet( String targetURL, Map<String, String> headersMap, Map<String, String> paramsMap ) 
 			throws UnexpectedServerException {
 		
 		try {
-			logger.log( Level.INFO, "Http GET Request: " + requestUrl );
-			URLConnection urlConn = new URL( requestUrl ).openConnection();
+			if( paramsMap != null && paramsMap.size() != 0 )
+				targetURL = targetURL + "?" + createQueryString( paramsMap );
+			logger.log( Level.INFO, "Http GET Request: " + targetURL );
+			URLConnection urlConn = new URL( targetURL ).openConnection();
+			if( headersMap != null )
+				for( Entry<String, String> entry : headersMap.entrySet() )
+					urlConn.setRequestProperty( entry.getKey(), entry.getValue() );
 			String mimeType = urlConn.getContentType();
 			byte[] data = IOUtils.toByteArray( urlConn );
 			logger.log( Level.INFO, "Http GET Response Type: " + mimeType + " & Length: "  + data.length );
@@ -55,23 +61,24 @@ public class HttpUtil {
 			logger.log( Level.SEVERE, "Failed to execute Http Get call.", e );
 			throw new UnexpectedServerException();
 		}
-		
+
 	}
-	
+
+	@Deprecated
 	public static String doGet( String targetURL, Map<String, String> paramsMap ) 
 			throws UnexpectedServerException {
 		
 		try {
-			String requestUrl = targetURL + "?" + createQueryString( paramsMap );
+			String requestUrl = paramsMap == null ? targetURL : targetURL + "?" + createQueryString( paramsMap );
 			logger.log( Level.INFO, "Http GET Request: " + requestUrl );
 			String response = URLDecoder.decode( IOUtils.toString( new URL( requestUrl ).openStream(), "UTF-8" ), "UTF-8" );
-			logger.log( Level.INFO, "Http GET Response: " + response );
+			logger.log( Level.INFO, "Http GET Response Length: "  + response.length() );
 			return response;
 		} catch( IOException e ) {
 			logger.log( Level.SEVERE, "Failed to execute Http Get call.", e );
 			throw new UnexpectedServerException();
 		}
-		
+
 	}
 	
 	public static String doPost( String targetURL, Map<String, String> paramsMap )
@@ -80,15 +87,15 @@ public class HttpUtil {
 		HttpURLConnection connection = null;
 		
 		try {
-			// Forming request parameters
-			String urlParams = createQueryString( paramsMap );
+			
+			// Forming content from request parameters
+			byte[] content = createQueryString( paramsMap ).getBytes( Charset.forName( "UTF-8" ) );
 			
 			// Create connection
-			URL url = new URL( targetURL );
-			connection = (HttpURLConnection) url.openConnection();
+			connection = (HttpURLConnection) new URL( targetURL ).openConnection();
 			connection.setRequestMethod( "POST" );
 			connection.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded" );
-			connection.setRequestProperty( "Content-Length", urlParams.getBytes().length + "" );
+			connection.setRequestProperty( "Content-Length", content.length + "" );
 			connection.setConnectTimeout( 60000 );	//60 Seconds
 			connection.setReadTimeout( 60000 );		//60 Seconds
 			connection.setUseCaches( false );
@@ -97,11 +104,11 @@ public class HttpUtil {
 
 			// Send request
 			OutputStream outputStream = new DataOutputStream( connection.getOutputStream() );
-			outputStream.write( urlParams.getBytes() );
+			outputStream.write( content );
 			outputStream.flush();
 			outputStream.close();
 			
-			logger.log( Level.INFO, "Http POST Request: " + targetURL + "?" + urlParams );
+			logger.log( Level.INFO, "Http POST Request: " + targetURL );
 
 			// Response
 			return _processPostResponse( connection );
@@ -123,6 +130,7 @@ public class HttpUtil {
 		HttpURLConnection connection = null;
 		
 		try {
+			
 			// Forming request parameters
 			byte[] body = jsonBody.toString().getBytes( Charset.forName( "UTF-8" ) );
 			
@@ -131,9 +139,9 @@ public class HttpUtil {
 			connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod( "POST" );
 			connection.setRequestProperty( "Content-Type", "application/json" );
+			connection.setRequestProperty( "Content-Length", body.length + "" );
 			for( Entry<String, String> entry : headersMap.entrySet() )
 				connection.setRequestProperty( entry.getKey(), entry.getValue() );
-			connection.setRequestProperty( "Content-Length", body.length + "" );
 			connection.setConnectTimeout( 60000 );	//60 Seconds
 			connection.setReadTimeout( 60000 );		//60 Seconds
 			connection.setUseCaches( false );
@@ -147,7 +155,7 @@ public class HttpUtil {
 			outputStream.close();
 			
 			// Response
-			logger.log( Level.INFO, "Http POST Request: " + targetURL + " " + jsonBody );
+			logger.log( Level.INFO, "Http POST Request: " + targetURL );
 
 			return _processPostResponse( connection );
 		
@@ -163,23 +171,9 @@ public class HttpUtil {
 	}
 	
 	private static String _processPostResponse( HttpURLConnection connection ) throws IOException {
-		
-		InputStream inputStream = connection.getInputStream();
-		BufferedReader bufferedReader = new BufferedReader( new InputStreamReader( inputStream ) );
-		StringBuffer responseBuffer = new StringBuffer();
-		String line;
-		while( ( line = bufferedReader.readLine() ) != null )
-			responseBuffer.append( line + "\n" );
-		bufferedReader.close();
-		
-		String response = URLDecoder.decode( responseBuffer.toString(), "UTF-8" );
-		
-		logger.log( Level.INFO, "Http POST Response: " + response );
-		
+		String response = URLDecoder.decode( IOUtils.toString( connection.getInputStream(), "UTF-8" ), "UTF-8" );
+		logger.log( Level.INFO, "Http POST Response Type: " + response + " & Length: "  + response.length() );
 		return response;
-		
 	}
-	
-
 	
 }
