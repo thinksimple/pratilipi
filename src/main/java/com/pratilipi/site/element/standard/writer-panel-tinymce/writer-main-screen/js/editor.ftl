@@ -22,8 +22,8 @@ Editor.prototype.init = function() {
     statusbar: false,
     toolbar: 'bold italic underline | CustomLeftAlign CustomCenterAlign CustomRightAlign | CustomBlockquote link imageCustom | Ulist Olist',
     height: 300,
-    /* language: '${ lang }',
-    language_url : 'https://storage.googleapis.com/writer-translations/${lang}.js', */
+    language: '${ lang }',
+    /* language_url : 'https://storage.googleapis.com/writer-translations/${lang}.js', */
     link_context_toolbar: true,
     default_link_target:"_blank", 
     allow_unsafe_link_target: false,
