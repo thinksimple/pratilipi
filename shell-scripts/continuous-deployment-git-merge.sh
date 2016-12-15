@@ -6,7 +6,7 @@ minute=$(date +%M)
 hour=${hour#0}
 minute=${minute#0}
 
-if [ $hour -eq 16 -a $minute -eq 0 ]
+if [ $hour -eq 17 -a $minute -eq 40 ]
 then
 	
 	git remote set-url origin https://antshpra:$1@github.com/Pratilipi/pratilipi.git
@@ -25,7 +25,7 @@ then
 	
 	update_module () {
 		echo "Syncing $1 from $2 ..."
-		git branch --delete --force $1
+		git branch -D $1
 		git push origin --delete --force $1
 		git checkout -b $1 $2
 		git push origin $1

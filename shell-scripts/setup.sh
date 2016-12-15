@@ -60,3 +60,9 @@ sudo git clone -b release-worker https://github.com/Pratilipi/pratilipi.git
 sudo mkdir -p ~/test
 cd ~/test
 sudo git clone -b master https://github.com/Pratilipi/pratilipi.git
+
+
+# Cloning git repository for git-merge
+sudo mkdir -p ~/git-merge
+cd ~/git-merge
+sudo git clone -b master https://github.com/Pratilipi/pratilipi.git
