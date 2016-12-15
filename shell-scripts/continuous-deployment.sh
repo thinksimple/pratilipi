@@ -14,7 +14,7 @@ do
 	fi
 
 	
-	sudo bash /home/pratilipi/test/pratilipi/shell-scripts/continuous-deployment-git-merge.sh 2>&1 | logger -t git-merge
+	sudo bash /home/pratilipi/test/pratilipi/shell-scripts/continuous-deployment-git-merge.sh $1 2>&1 | logger -t git-merge
 
 
 	sleep 60
