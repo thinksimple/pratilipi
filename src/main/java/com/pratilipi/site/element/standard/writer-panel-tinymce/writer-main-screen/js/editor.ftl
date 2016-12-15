@@ -74,6 +74,14 @@ Editor.prototype.init = function() {
       ed.on('init', function (e) {
         console.log('Editor was initialized.');
         _this.parent_object.initializeData();
+        
+        ed.on("keydown", function(e) {
+          var keycode = e.keycode || e.which;
+          var translation = new Translation( keycode );
+          if( translation.action == 'enter' && _this.getClosestSelectionNode('blockquote').length ) {
+            ed.formatter.remove('blockquote');
+          }            
+        });         
       });
       
       if( screen.width > 480 ) {
@@ -85,6 +93,11 @@ Editor.prototype.init = function() {
               e.preventDefault(); 
             }
         });
+        ed.on('OpenWindow', function (e) {
+		  var $url_text_object = e.win.$el.find(".mce-textbox.mce-last")
+		  var url_text_transliteration_object = new transliterationApp( $url_text_object, "${ lang }" );
+		  url_text_transliteration_object.init();     
+        });        
       }
       ed.addButton('imageCustom', {
         icon: 'image',
@@ -95,14 +108,27 @@ Editor.prototype.init = function() {
       ed.addButton('Ulist', {
         icon: 'mce-ico mce-i-bullist',
         tooltip: "Bullet list",
-        cmd: "InsertUnorderedList",
-        onpostrender: monitorListChange
+        onpostrender: monitorListChange,
+        onclick: function() {
+          var alignment = _this.getClosestSelectionNode('li').css("textAlign");
+          ed.execCommand('InsertUnorderedList', false, null);
+          if( alignment ) {
+            _this.getClosestSelectionNode('p').css("textAlign", alignment);
+          }
+        }        
       }); 
       ed.addButton('Olist', {
         icon: 'mce-ico mce-i-numlist',
         tooltip: "Numbered list",
-        cmd: "InsertOrderedList",
-        onpostrender: monitorListChange
+        <#-- cmd: "InsertOrderedList", -->
+        onpostrender: monitorListChange,
+        onclick: function() {
+          var alignment = _this.getClosestSelectionNode('li').css("textAlign");
+          ed.execCommand('InsertOrderedList', false, null);
+          if( alignment ) {
+            _this.getClosestSelectionNode('p').css("textAlign", alignment);
+          }
+        }        
       });      
       ed.addButton('CustomBlockquote', {
         icon: 'mce-ico mce-i-blockquote',
@@ -232,6 +258,10 @@ Editor.prototype.init = function() {
     image_description: false,
     image_dimensions: false,
   });    
+};
+
+Editor.prototype.getClosestSelectionNode = function( nodeName ) {
+  return $( tinymce.activeEditor.selection.getNode() ).closest( nodeName );
 };
 
 Editor.prototype.attachImageInputListener = function() {

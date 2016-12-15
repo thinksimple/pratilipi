@@ -58,7 +58,8 @@ Content.prototype.populateContent = function( response ) {
 }; 
 
 Content.prototype.reset = function() {
-  this.tinymce_content_container.setContent("<p></p>");
+  /* this.tinymce_content_container.setContent("<p></p>"); */
+  this.tinymce_content_container.setContent("");
 };
 <#-- get content without line breaks -->
 Content.prototype.getContent = function( ) {
