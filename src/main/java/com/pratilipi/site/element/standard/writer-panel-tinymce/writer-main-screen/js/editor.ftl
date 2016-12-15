@@ -24,7 +24,9 @@ Editor.prototype.init = function() {
     height: 300,
     language: '${ lang }',
     /* language_url : 'https://storage.googleapis.com/writer-translations/${lang}.js', */
-    link_context_toolbar: true,
+    link_context_toolbar: false,
+    anchor_bottom: false,
+    anchor_top: false
     default_link_target:"_blank", 
     allow_unsafe_link_target: false,
     target_list: false,
