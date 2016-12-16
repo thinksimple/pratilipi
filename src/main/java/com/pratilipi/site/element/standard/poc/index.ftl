@@ -7,24 +7,6 @@
         <meta name="description" content="A platform to discover, read and share your favorite stories, poems and books in a language, device and format of your choice.">
         <title>Knockout Test</title>
 
-        <#-- Google Analytics -->
-		<#include "meta/GoogleAnalytics.ftl">
-		
-		
-		<#-- Clevertap Script -->
-		<script type="text/javascript">
-			var clevertap = {event:[], profile:[], account:[], onUserLogin:[], notifications:[]};
-			clevertap.account.push({"id": "TEST-Z88-4ZZ-974Z"});
-			(function () {
-			 var wzrk = document.createElement('script');
-			 wzrk.type = 'text/javascript';
-			 wzrk.async = true;
-			 wzrk.src = ('https:' == document.location.protocol ? 'https://d2r1yp2w7bby2u.cloudfront.net' : 'http://static.clevertap.com') + '/js/a.js';
-			 var s = document.getElementsByTagName('script')[0];
-			 s.parentNode.insertBefore(wzrk, s);
-			})();
-		</script>
-
         <script src="http://0.ptlp.co/resource-all/jquery.knockout.boostrap.js" type="text/javascript"></script>
         <link rel='stylesheet' href='http://1.ptlp.co/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>
 
@@ -261,130 +243,8 @@
             });
         });
     </script>
-    <script src="https://www.gstatic.com/firebasejs/3.0.4/firebase.js" async defer></script>
-    
-    
-    
-  <#-- Testing Tinymce -->
-  <script src="https://cdn.tinymce.com/4/tinymce.min.js"></script>
-  <script>
-  tinymce.init({
 
-    // initialise and auto focus
-    selector: '#myeditablediv',
-    auto_focus: 'myeditablediv',
-    inline: true,
-
-    //plugins needed and setting up toolbar
-    plugins : ["image","imagetools","link","paste"],
-    menubar: false,
-    statusbar: false,
-    toolbar: 'bold italic underline | alignleft aligncenter alignright | blockquote link image',
-    height: 300,
-
-    // pasting from other sources
-    paste_data_images: false,
-    paste_remove_styles: true,
-    paste_remove_styles_if_webkit: true,
-    paste_strip_class_attributes: true,
-    paste_text_sticky: true,
-    paste_text_sticky_default: true,
-    paste_as_text: true,
-    paste_auto_cleanup_on_paste : true,
-
-    // spell check and other options
-    browser_spellcheck: false,
-    allow_conditional_comments: false,
-    allow_html_in_named_anchor: false,
-
-    // p on clicking Enter key
-    forced_root_block : 'p',
-    force_br_newlines : false,
-    force_p_newlines : true,
-    remove_trailing_brs: true,
-
-    // u instead of text decoration
-    formats : {
-        bold: {inline : 'b', exact : true},
-        italic: {inline : 'i', exact : true},
-        underline : {inline : 'u', exact : true},
-        blockquote: {block: 'blockquote', exact: true},
-        img: { block:'img', exact: true },
-        // alignleft: { selector: 'p', classes: 'left' },
-        // alignright: { selector: 'p', classes: 'right' },
-        // aligncenter: { selector: 'p', classes: 'center' }
-    },
-
-    // enforcing rules to editor
-    valid_elements : 'p[style],img[src],blockquote,b,i,u,a[href|target=_blank],br,b/strong,i/em',
-    extended_valid_elements: 'img[src],p[style],blockquote',
-    valid_children : 'body[p|img|blockquote],p[b|i|u|a|br],blockquote[b|i|u]',
-    valid_styles: {'p': 'text-align'},
-
-    // image
-    image_description: false,
-    image_dimensions: false,
-    file_browser_callback: function(field_name, url, type, win) {
-		if(type=='image') $('#file_name').click(); $('#field_name').val(field_name);
-	}
-  });
-  </script>
-
-  <script>
-        function log() {
-            console.log(tinyMCE.get('myeditablediv').getContent());
-        }
-    </script>
-
-    <div id="myeditablediv"></div>
-    <button style="margin-top: 50px;" onClick="log()">log</button>
-
-    <form enctype="multipart/form-data" id="form_file" style="width:0px; height:0px; overflow:hidden">
-		<input id="file_name" name="file" type="file" />
-	</form>
-		<input type="hidden" id="field_name" value="" />
-    
-    
-    <script>
-    	$('#file_name').change(function(){
-			var field_name = $('#field_name').val()
-			document.getElementById(field_name).value='';
-			var file = this.files[0];
-			var name = file.name;
-			var size = file.size;
-			var type = file.type;
-			var field_name = $('#field_name').val()
-			var type = type.substring(0, 5);
-			if(type=='image') { 
-			
-			    var formData = new FormData($('#form_file')[0]);
-			
-			    $.ajax({
-			        url: "/api/pratilipi/content/image?pratilipiId=4853358213988352",
-			        type: "POST",
-			        data: formData,
-			        success: function (response) {
-			        	var res = jQuery.parseJSON( response );
-			            document.getElementById(field_name).value = "/api/pratilipi/content/image?pratilipiId=4853358213988352&name=" + res.name;        
-			        },
-			        cache: false,
-			        contentType: false,
-			        processData: false
-			    });
-			
-			} else {
-			    alert('Le fichier doit etre une image') 
-			}
-		});
-    </script>
-    
-    <#include "meta/Font.ftl">
-     <style>
-        #myeditablediv  img {
-            display: block;
-            margin: 8px auto;
-        }
-    </style>
+  
   </body>
 </html>
 
