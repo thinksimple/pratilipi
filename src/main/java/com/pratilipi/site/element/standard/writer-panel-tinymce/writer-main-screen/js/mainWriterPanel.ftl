@@ -3,6 +3,7 @@ var MainWriterPanel = function() {
   this.$preview_button = $( "[data-behaviour='preview_button_desktop']" );
   this.$publish_button = $( "[data-behaviour='publish_button']" );
   this.$back_button = $( "[data-behaviour='back_button']" );
+  this.$final_publish_button = $("#publishModal [data-behaviour='final_publish_button']");
 };
 
 
@@ -189,6 +190,7 @@ MainWriterPanel.prototype.attachActionButtonListeners = function() {
   }
   
   this.$publish_button.on('click', function() {
+  	_this.$final_publish_button.attr('disabled', 'disabled');
     _this.saveChapter();
   } );
   
@@ -370,12 +372,14 @@ MainWriterPanel.prototype.saveChapter = function( autosaveFlag ) {
 
         var title = ajaxData.chapterTitle;
         _this.lastSavedContent = ajaxData.content;
+        _this.$final_publish_button.removeAttr("disabled");
         _this.table_of_contents_object.changeCurrentChapterName( _this.currChapter, title );
       },
       error:function(response) {
         _this.$panel_container.find(".spinner").remove();
         $("#header1").removeClass("small-spinner");
         _this.$save_button.removeAttr("disabled");
+        _this.$final_publish_button.removeAttr("disabled");
         if( !autosaveFlag ) {
           toastr.success('${ _strings.server_error_message }');
         }       
