@@ -469,7 +469,7 @@ public class PratilipiSite extends HttpServlet {
 				dataModel = createDataModelForHomePage( basicMode, filterLanguage );
 				templateName = "Knockout.ftl";
 				
-			} else if( uri.equals( "/test" ) && SystemProperty.STAGE.equals( SystemProperty.STAGE_GAMMA ) ) {
+			} else if( uri.equals( "/testapi" ) && SystemProperty.STAGE.equals( SystemProperty.STAGE_GAMMA ) ) {
 				dataModel = createDataModelForTestPage( filterLanguage );
 				templateName = "Test.ftl";
 
