@@ -54,6 +54,12 @@
 		<property name="REGISTRATION_DATE" direction="asc"/>
 	</datastore-index>
 
+	<datastore-index kind="AUTHOR" ancestor="false" source="manual">
+		<property name="LANGUAGE" direction="asc"/>
+		<property name="STATE" direction="asc"/>
+		<property name="FOLLOW_COUNT" direction="desc"/>
+	</datastore-index>
+
 
 	<datastore-index kind="EVENT" ancestor="false" source="manual">
 		<property name="LANGUAGE" direction="asc"/>
