@@ -772,3 +772,11 @@ div.mce-tinymce-inline {
 .mce-floatpanel.mce-fixed {
   top: 53px !important;
 }
+
+button[disabled], html input[disabled] {
+  cursor: not-allowed;
+  filter: alpha(opacity=65);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  opacity: .75;
+}
