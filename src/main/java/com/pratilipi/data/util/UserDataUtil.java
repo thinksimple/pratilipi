@@ -384,7 +384,7 @@ public class UserDataUtil {
 			throws InsufficientAccessException {
 
 		// Do nothing if a user is already logged in
-		if( AccessTokenFilter.getAccessToken().getUserId().equals( 0L ) )
+		if( ! AccessTokenFilter.getAccessToken().getUserId().equals( 0L ) )
 			return getCurrentUser();
 		
 		
