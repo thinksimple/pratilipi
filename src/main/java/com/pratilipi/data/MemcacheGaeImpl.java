@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -63,18 +62,16 @@ public class MemcacheGaeImpl implements Memcache {
 
 	@Override
 	public <K, T extends Serializable> void put( K key, T value ) {
-		put( key, value, (int) TimeUnit.DAYS.toMinutes( 30 ) );
+		put( key, value, 0 );
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public <K, T extends Serializable> void put( K key, T value, int expirationDeltaMinutes ) {
 
-		if( expirationDeltaMinutes <= 0 )
-			return;
-
 		Map props = new HashMap();
-		props.put( GCacheFactory.EXPIRATION_DELTA, expirationDeltaMinutes * 60 );
+		if( expirationDeltaMinutes > 0 )
+			props.put( GCacheFactory.EXPIRATION_DELTA, expirationDeltaMinutes * 60 );
 
 		for( int i = 0; i < 5; i++ ) {
 
