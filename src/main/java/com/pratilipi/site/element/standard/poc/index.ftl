@@ -26,9 +26,9 @@
         </div>
     </div>
     <script src="http://0.ptlp.co/resource-all/jquery.knockout.boostrap.js"></script>
-    <script src="js/pwa-poc/arrivals.js"></script>
-    <script src="js/pwa-poc/page.js"></script>    
-    <script src="js/pwa-poc/main.js"></script>
+    <script src="resources/js/pwa-poc/arrivals.js"></script>
+    <script src="resources/js/pwa-poc/page.js"></script>    
+    <script src="resources/js/pwa-poc/main.js"></script>
 </body>
 
 </html>

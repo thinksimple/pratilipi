@@ -8,9 +8,9 @@ self.addEventListener('install', function(e) {
         caches.open(cacheName).then(function(cache) {
             return cache.addAll([
                 './',,
-                'js/pwa-poc/arrivals.js',
-                "js/pwa-poc/page.js",
-                "js/pwa-poc/main.js",
+                'resources/js/pwa-poc/arrivals.js',
+                "resources/js/pwa-poc/page.js",
+                "resources/js/pwa-poc/main.js",
                 'http://0.ptlp.co/resource-all/jquery.knockout.boostrap.js',
                 './offline.html'
             ]).then(function() {
