@@ -63,9 +63,9 @@ public class InitDataUtil {
 		
 		initBannerDocs = new InitBannerDoc[] {
 				docAccessor.newInitBannerDoc( "pratilipi-tamil-carousel-19.jpg", null, "/event/ore-oru-oorla" ),
+				docAccessor.newInitBannerDoc( "pratilipi-tamil-carousel-20.jpg", null, "/romance" ),
+				docAccessor.newInitBannerDoc( "pratilipi-tamil-carousel-21.jpg", null, "/humour" ),
 				docAccessor.newInitBannerDoc( "pratilipi-tamil-carousel-17.jpg", null, "/horror" ),
-				docAccessor.newInitBannerDoc( "pratilipi-tamil-carousel-18.jpg", null, "/education" ),
-				docAccessor.newInitBannerDoc( "pratilipi-tamil-carousel-13.jpg", null, "/fiveminstories" ),
 		};
 			
 		InitDoc taInitDoc = docAccessor.newInitDoc();
@@ -87,11 +87,11 @@ public class InitDataUtil {
 		
 		initBannerDocs = new InitBannerDoc[] {
 				docAccessor.newInitBannerDoc( "pratilipi-malayalam-carousel-15.jpg", null, "/event/tellastory" ),
-				docAccessor.newInitBannerDoc( "pratilipi-malayalam-carousel-11.jpg", null, "/society" ),
-				docAccessor.newInitBannerDoc( "pratilipi-malayalam-carousel-12.jpg", null, "/mystery" ),
-				docAccessor.newInitBannerDoc( "pratilipi-malayalam-carousel-13.jpg", null, "/lives" ),
+				docAccessor.newInitBannerDoc( "pratilipi-malayalam-carousel-16.jpg", null, "/fiveminute" ),
+				docAccessor.newInitBannerDoc( "pratilipi-malayalam-carousel-17.jpg", null, "/love" ),
+				docAccessor.newInitBannerDoc( "pratilipi-malayalam-carousel-18.jpg", null, "/two-minute" ),
 		};
-			
+
 		InitDoc mlInitDoc = docAccessor.newInitDoc();
 		mlInitDoc.setBanners( Arrays.asList( initBannerDocs ) );
 		langInitDocs.put( Language.MALAYALAM, mlInitDoc );
