@@ -13,7 +13,7 @@ var Arrivals = (function() {
         self.getAll = function() {
             return new Promise(function(resolve, reject) {
                 var request = new XMLHttpRequest();
-                request.open('GET', '/api/init?_apiVer=2&language=${ language }');
+                request.open('GET', '/api/init?_apiVer=2&language=HINDI');
 
                 request.onload = function() {
                     // success
