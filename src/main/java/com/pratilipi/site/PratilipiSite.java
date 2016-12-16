@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -454,10 +455,6 @@ public class PratilipiSite extends HttpServlet {
 				dataModel.put( "title", "Registration for Android App!" );
 				templateName = "AppRegistration.ftl";
 
-			} else if( uri.equals( "/poc" ) && SystemProperty.STAGE.equals( SystemProperty.STAGE_GAMMA ) ) {
-				dataModel = createDataModelForHomePage( basicMode, filterLanguage );
-				templateName = "Knockout.ftl";
-
 			} else if( uri.matches( "^/[a-z0-9-]+$" ) && ( dataModel = createDataModelForListPage( uri.substring( 1 ), basicMode, displayLanguage, filterLanguage, request ) ) != null ) {
 				templateName = ( basicMode ? "ListBasic.ftl" : "List.ftl" );
 				
@@ -466,7 +463,16 @@ public class PratilipiSite extends HttpServlet {
 				
 			} else if( uri.matches( "^/[a-z0-9-/]+$" ) && ( dataModel = createDataModelForStaticPage( uri.substring( 1 ).replaceAll( "/", "_" ), Language.ENGLISH ) ) != null ) {
 				templateName = ( basicMode ? "StaticBasic.ftl" : "Static.ftl" );
-			
+
+			// Testing Links on gamma
+			} else if( uri.equals( "/poc" ) && SystemProperty.STAGE.equals( SystemProperty.STAGE_GAMMA ) ) {
+				dataModel = createDataModelForHomePage( basicMode, filterLanguage );
+				templateName = "Knockout.ftl";
+				
+			} else if( uri.equals( "/test" ) && SystemProperty.STAGE.equals( SystemProperty.STAGE_GAMMA ) ) {
+				dataModel = createDataModelForTestPage( filterLanguage );
+				templateName = "Test.ftl";
+
 			} else {
 				dataModel = new HashMap<String, Object>();
 				dataModel.put( "title", "Page Not Found !" );
@@ -1481,6 +1487,20 @@ public class PratilipiSite extends HttpServlet {
 		dataModel.put( "title", title );
 		dataModel.put( "content", content.toString() );
 		return dataModel;
+	}
+	
+	public Map<String, Object> createDataModelForTestPage( Language language ) {
+
+		Map<String, Object> dataModel = new HashMap<String, Object>();
+		dataModel.put( "title", "Test" );
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Long x = new Date().getTime();
+		List<Long> authorIds = dataAccessor.getRecommendAuthorIdList( language );
+		Long y = new Date().getTime();
+		logger.log( Level.INFO, "Fetched " + authorIds.size() + " Author Id's for Recommendation in " + (y-x) + " millis." );
+		return dataModel;
+
 	}
 
 	private List<PratilipiV2Api.Response> toListResponseObject( List<PratilipiData> pratilipiDataList ) {
