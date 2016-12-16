@@ -974,17 +974,18 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		if( authorIdList != null )
 			return authorIdList;
 
-		QueryKeys<AuthorEntity> query = ObjectifyService.ofy().load()
+		List<Key<AuthorEntity>> authorKeyList = ObjectifyService.ofy().load()
 				.type( AuthorEntity.class )
 				.filter( "STATE", "ACTIVE" )
 				.filter( "LANGUAGE", language.toString() )
 				.filter( "FOLLOW_COUNT >", 0 )
 				.order( "-FOLLOW_COUNT" )
-				.keys();
+				.keys()
+				.list();
 
-		List<Long> authorList = new ArrayList<>( query.list().size() );
-		for( Key<AuthorEntity> author : query.list() )
-			authorList.add( author.getId() );
+		List<Long> authorList = new ArrayList<>( authorKeyList.size() );
+		for( Key<AuthorEntity> key : authorKeyList )
+			authorList.add( key.getId() );
 
 		memcache.put( memcacheId, authorIdList, 15 );
 
