@@ -964,7 +964,34 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	public List<Author> getAuthorList( List<Long> idList ) {
 		return getEntityList( AuthorEntity.class, idList );
 	}
-	
+
+	@Override
+	public List<Long> getRecommendAuthorIdList( Language language ) {
+
+		String memcacheId = "Recommend.AuthorList-" + language.getCode();
+
+		ArrayList<Long> authorIdList = memcache.get( memcacheId );
+		if( authorIdList != null )
+			return authorIdList;
+
+		QueryKeys<AuthorEntity> query = ObjectifyService.ofy().load()
+				.type( AuthorEntity.class )
+				.filter( "STATE", "ACTIVE" )
+				.filter( "LANGUAGE", language.toString() )
+				.filter( "FOLLOW_COUNT >", 0 )
+				.order( "-FOLLOW_COUNT" )
+				.keys();
+
+		List<Long> authorList = new ArrayList<>( query.list().size() );
+		for( Key<AuthorEntity> author : query.list() )
+			authorList.add( author.getId() );
+
+		memcache.put( memcacheId, authorIdList, 15 );
+
+		return authorList;
+
+	}
+
 	@Override
 	public DataListCursorTuple<Long> getAuthorIdList( AuthorFilter authorFilter, String cursorStr, Integer resultCount ) {
 		return _getAuthorList( authorFilter, cursorStr, resultCount, true );

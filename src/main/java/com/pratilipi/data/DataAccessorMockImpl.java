@@ -498,6 +498,12 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 	
 	@Override
+	public List<Long> getRecommendAuthorIdList( Language language ) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
 	public DataListCursorTuple<Long> getAuthorIdList( AuthorFilter authorFilter,
 			String cursor, Integer resultCount ) {
 		
@@ -1278,6 +1284,4 @@ public class DataAccessorMockImpl implements DataAccessor {
 		return null;
 	}
 
-
-	
 }
