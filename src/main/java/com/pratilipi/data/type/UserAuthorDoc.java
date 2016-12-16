@@ -16,11 +16,15 @@ public interface UserAuthorDoc {
 
 	Long getAuthorId();
 
-	void setUserId();
+	void setAuthorId( Long authorId );
 
 
 	FollowState getState();
+	
+	void setState( FollowState state );
 
 	Date getLastUpdated();
+	
+	void setLastUpdated( Date date );
 
 }
