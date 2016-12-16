@@ -13,13 +13,13 @@ var Arrivals = (function() {
         self.getAll = function() {
             return new Promise(function(resolve, reject) {
                 var request = new XMLHttpRequest();
-                request.open('GET', '/api/init?_apiVer=2&language=HINDI');
+                request.open('GET', '/api/init?_apiVer=2&language=${ language }');
 
                 request.onload = function() {
                     // success
                     if (request.status === 200) {
                         // resolve the promise with the parsed response text (assumes JSON)
-                        resolve(JSON.parse(request.response.sections));
+                        resolve(JSON.parse(request.response)["sections"]);
                     } else {
                         // error retrieving file
                         reject(Error(request.statusText));
