@@ -19,8 +19,8 @@
             <ul class="arrivals-list" data-bind="foreach: arrivals">
                 <li class="item">
                     <span class="title" data-bind="html: title"></span>
-                    <span class="status" data-bind="html: averageRating"></span>
-                    <span class="time" data-bind="html: time"></span>
+                    <span class="status" data-bind="html: listPageUrl"></span>
+                    <span class="time" data-bind="html: title"></span>
                 </li>
             </ul>
         </div>
