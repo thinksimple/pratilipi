@@ -1494,12 +1494,6 @@ public class PratilipiSite extends HttpServlet {
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", "Test" );
-
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Long x = new Date().getTime();
-		List<Long> authorIds = dataAccessor.getRecommendAuthorIdList( language );
-		Long y = new Date().getTime();
-		logger.log( Level.INFO, "Fetched " + authorIds.size() + " Author Id's for Recommendation in " + (y-x) + " millis." );
 		return dataModel;
 
 	}

@@ -735,7 +735,7 @@ public class AuthorDataUtil {
 		List<Long> userFollowedauthorIds = new ArrayList<Long>();
 
 		// Get the total list of recommended authors
-		List<Long> recommendAuthors = dataAccessor.getRecommendAuthorIdList( language );
+		List<Long> recommendAuthors = dataAccessor.getAuthorIdListWithMaxFollowCount( language, null, null );
 
 		// Filter
 		for( Long authorId : userFollowedauthorIds )
