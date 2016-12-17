@@ -731,7 +731,7 @@ public class UserDataUtil {
 
 		} while( followedList.size() == 1000 );
 
-		UserFollowsDoc userFollowingDoc = docAccessor.newUserFollowingDoc();
+		UserFollowsDoc userFollowingDoc = docAccessor.newUserFollowsDoc();
 		userFollowingDoc.setFollows( UserFollowState.FOLLOWING, followedAuthorsList );
 		userFollowingDoc.setFollows( UserFollowState.UNFOLLOWED, unfollowedAuthorsList );
 		userFollowingDoc.setFollows( UserFollowState.IGNORED, ignoredAuthorsList );

@@ -176,21 +176,21 @@ public class DocAccessorImpl implements DocAccessor {
 	// User Doc
 
 	@Override
-	public UserFollowsDoc newUserFollowingDoc() {
+	public UserFollowsDoc newUserFollowsDoc() {
 		return new UserFollowsDocImpl();
 	}
 
 	@Override
-	public UserFollowsDoc getUserFollowingDoc( Long userId ) throws UnexpectedServerException {
+	public UserFollowsDoc getUserFollowsDoc( Long userId ) throws UnexpectedServerException {
 		if( userId != null && userId > 0L )
-			return _get( "user/" + userId + "/userFollowing", UserFollowsDoc.class );
+			return _get( "user/" + userId + "/follows", UserFollowsDocImpl.class );
 		return null;
 	}
 
 	@Override
-	public void save( Long userId, UserFollowsDoc userDoc ) throws UnexpectedServerException {
+	public void save( Long userId, UserFollowsDoc followsDoc ) throws UnexpectedServerException {
 		if( userId != null && userId > 0L )
-			_save( "user/" + userId + "/userFollowing", userDoc );
+			_save( "user/" + userId + "/follows", followsDoc );
 	}
 
 

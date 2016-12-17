@@ -56,9 +56,9 @@ public interface DocAccessor {
 	PratilipiGoogleAnalyticsDoc getPratilipiGoogleAnalyticsDoc( Long pratilipiId ) throws UnexpectedServerException;
 	void save( Long pratilipiId, PratilipiGoogleAnalyticsDoc gaDoc ) throws UnexpectedServerException;
 	
-	// UserFollowing Doc
-	UserFollowsDoc newUserFollowingDoc();
-	UserFollowsDoc getUserFollowingDoc( Long userId ) throws UnexpectedServerException;
-	void save( Long userId, UserFollowsDoc userDoc ) throws UnexpectedServerException;
+	// UserFollows Doc
+	UserFollowsDoc newUserFollowsDoc();
+	UserFollowsDoc getUserFollowsDoc( Long userId ) throws UnexpectedServerException;
+	void save( Long userId, UserFollowsDoc followsDoc ) throws UnexpectedServerException;
 
 }
