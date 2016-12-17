@@ -39,7 +39,7 @@ do
 
 	if [ -d "/root/android" ]; then
 		cd /root/android/pratilipi
-		bash $scripts/continuous-update-android.sh                        2>&1 | logger -t update-android
+		bash $scripts/continuous-deployment-update-android.sh             2>&1 | logger -t update-android
 	else
 		mkdir -p /root/android
 		cd /root/android
