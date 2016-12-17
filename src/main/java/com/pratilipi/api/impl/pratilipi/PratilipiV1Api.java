@@ -318,16 +318,21 @@ public class PratilipiV1Api extends GenericApi {
 	
 	
 	@Get
-	public Response get( GetRequest request ) throws UnexpectedServerException {
+	public Response get( GetRequest request ) 
+			throws InsufficientAccessException, UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( request.pratilipiId );
+
+		if( ! PratilipiDataUtil.hasAccessToReadPratilipiMetaData( pratilipi ) )
+			throw new InsufficientAccessException();
+
 		Author author = pratilipi.getAuthorId() == null
 				? null
 				: dataAccessor.getAuthor( pratilipi.getAuthorId() );
 		
 		PratilipiData pratilipiData = PratilipiDataUtil.createPratilipiData( pratilipi, author );
-		
+
 		if( UxModeFilter.isAndroidApp() ) {
 			DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
 			PratilipiContentDoc pcDoc = docAccessor.getPratilipiContentDoc( request.pratilipiId );

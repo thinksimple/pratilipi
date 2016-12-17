@@ -2,6 +2,7 @@ package com.pratilipi.api.impl.pratilipi;
 
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
+import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
@@ -14,16 +15,21 @@ import com.pratilipi.data.util.PratilipiDataUtil;
 public class PratilipiV2Api extends PratilipiV1Api {
 	
 	@Get
-	public Response get( GetRequest request ) throws UnexpectedServerException {
+	public Response get( GetRequest request ) 
+		throws InsufficientAccessException, UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Pratilipi pratilipi = dataAccessor.getPratilipi( request.pratilipiId );
+
+		if( ! PratilipiDataUtil.hasAccessToReadPratilipiMetaData( pratilipi ) )
+			throw new InsufficientAccessException();
+
 		Author author = pratilipi.getAuthorId() == null
 				? null
 				: dataAccessor.getAuthor( pratilipi.getAuthorId() );
-		
+
 		return new Response( PratilipiDataUtil.createPratilipiData( pratilipi, author ) );
-		
+
 	}
 
 }
