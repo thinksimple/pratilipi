@@ -498,7 +498,7 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 	
 	@Override
-	public List<Long> getRecommendAuthorIdList( Language language ) {
+	public List<Long> getAuthorIdListWithMaxFollowCount( Language language, String cursor, Integer resultCount ) {
 		// TODO Auto-generated method stub
 		return null;
 	}
