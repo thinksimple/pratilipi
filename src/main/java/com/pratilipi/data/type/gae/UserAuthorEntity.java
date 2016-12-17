@@ -128,7 +128,9 @@ public class UserAuthorEntity implements UserAuthor {
 	}
 	
 	public Date getFollowDate() {
-		return FOLLOW_DATE == null ? FOLLOWING_SINCE : FOLLOW_DATE;
+		if( FOLLOW_DATE == null )
+			FOLLOW_DATE = FOLLOWING_SINCE;
+		return FOLLOW_DATE;
 	}
 	
 	public void setFollowDate( Date date ) {
