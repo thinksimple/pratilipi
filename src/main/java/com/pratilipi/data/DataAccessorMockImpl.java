@@ -738,12 +738,6 @@ public class DataAccessorMockImpl implements DataAccessor {
 		// TODO: Implementation
 		return null;
 	}
-
-	@Override
-	public long getUserAuthorFollowCount( Long userId, Long authorId ) {
-		// TODO: Implementation
-		return 5L;
-	}
 	
 	@Override
 	public DataListCursorTuple<Long> getUserAuthorFollowList( Long userId, Long authorId, String cursor, Integer offset, Integer resultCount ) {

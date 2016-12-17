@@ -1390,24 +1390,6 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 
 	@Override
-	public long getUserAuthorFollowCount( Long userId, Long authorId ) {
-		
-		Query<UserAuthorEntity> query = ObjectifyService.ofy().load().type( UserAuthorEntity.class );
-		
-		if( userId != null )
-			query = query.filter( "USER_ID", userId );
-
-		if( authorId != null )
-			query = query.filter( "AUTHOR_ID", authorId );
-		
-		query = query.filter( "FOLLOWING", true );
-		query = query.order( "-FOLLOWING_SINCE" ); // Adding this to avoid another index
-		
-		return query.keys().list().size();
-			
-	}
-	
-	@Override
 	public DataListCursorTuple<Long> getUserAuthorFollowList( Long userId, Long authorId, String cursorStr, Integer offset, Integer resultCount ) {
 
 		Query<UserAuthorEntity> query = ObjectifyService.ofy().load().type( UserAuthorEntity.class );

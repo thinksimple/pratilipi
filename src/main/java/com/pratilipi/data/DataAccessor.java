@@ -154,7 +154,6 @@ public interface DataAccessor {
 	Map<String, UserAuthor> getUserAuthors( Collection<String> userAuthoriIds );
 	List<UserAuthor> getUserAuthorList( Long userId, List<Long> authorIdList );
 	List<UserAuthor> getUserAuthorList( List<Long> userIdList, Long authorId );
-	long getUserAuthorFollowCount( Long userId, Long authorId );
 	DataListCursorTuple<Long> getUserAuthorFollowList( Long userId, Long authorId, String cursor, Integer offset, Integer resultCount );
 	DataListCursorTuple<UserAuthor> getUserAuthorList( Long userId, Long authorId, String cursor, Integer offset, Integer resultCount );
 	DataListIterator<UserAuthor> getUserAuthorListIterator( Long userId, Long authorId, String cursor, Integer offset, Integer resultCount );
