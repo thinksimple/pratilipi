@@ -23,7 +23,6 @@ import com.pratilipi.data.client.InitBannerData;
 import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.InitBannerDoc;
 import com.pratilipi.data.type.InitDoc;
-import com.pratilipi.data.type.Navigation;
 import com.pratilipi.filter.AccessTokenFilter;
 
 public class InitDataUtil {
@@ -37,10 +36,10 @@ public class InitDataUtil {
 
 		
 		InitBannerDoc[] initBannerDocs = new InitBannerDoc[] {
-				docAccessor.newInitBannerDoc( "pratilipi-hindi-carousel-39.jpg", null, "/november-hits" ),
-				docAccessor.newInitBannerDoc( "pratilipi-hindi-carousel-40.jpg", null, "/suspense-aur-thriller" ),
-				docAccessor.newInitBannerDoc( "pratilipi-hindi-carousel-41.jpg", null, "/lovestories" ),
-				docAccessor.newInitBannerDoc( "pratilipi-hindi-carousel-42.jpg", null, "/vyastata" ),
+				docAccessor.newInitBannerDoc( null, "pratilipi-hindi-carousel-39.jpg", null, "/november-hits", null, null ),
+				docAccessor.newInitBannerDoc( null, "pratilipi-hindi-carousel-40.jpg", null, "/suspense-aur-thriller", null, null ),
+				docAccessor.newInitBannerDoc( null, "pratilipi-hindi-carousel-41.jpg", null, "/lovestories", null, null ),
+				docAccessor.newInitBannerDoc( null, "pratilipi-hindi-carousel-42.jpg", null, "/vyastata", null, null ),
 		};
 		
 		InitDoc hiInitDoc = docAccessor.newInitDoc();
@@ -49,11 +48,11 @@ public class InitDataUtil {
 		
 		
 		initBannerDocs = new InitBannerDoc[] {
-				docAccessor.newInitBannerDoc( "pratilipi-gujarati-carousel-41.jpg", null, "/november-hits" ),
-				docAccessor.newInitBannerDoc( "pratilipi-gujarati-carousel-37.jpg", null, "/rahasyamay-ane-romanchak" ),
-				docAccessor.newInitBannerDoc( "pratilipi-gujarati-carousel-38.jpg", null, "/romance" ),
-				docAccessor.newInitBannerDoc( "pratilipi-gujarati-carousel-39.jpg", null, "/five-minutes-story" ),
-				docAccessor.newInitBannerDoc( "pratilipi-gujarati-carousel-40.jpg", null, "/film-and-music" ),
+				docAccessor.newInitBannerDoc( null, "pratilipi-gujarati-carousel-41.jpg", null, "/november-hits", null, null ),
+				docAccessor.newInitBannerDoc( null, "pratilipi-gujarati-carousel-37.jpg", null, "/rahasyamay-ane-romanchak", null, null ),
+				docAccessor.newInitBannerDoc( null, "pratilipi-gujarati-carousel-38.jpg", null, "/romance", null, null ),
+				docAccessor.newInitBannerDoc( null, "pratilipi-gujarati-carousel-39.jpg", null, "/five-minutes-story", null, null ),
+				docAccessor.newInitBannerDoc( null, "pratilipi-gujarati-carousel-40.jpg", null, "/film-and-music", null, null ),
 		};
 			
 		InitDoc guInitDoc = docAccessor.newInitDoc();
@@ -62,10 +61,10 @@ public class InitDataUtil {
 		
 		
 		initBannerDocs = new InitBannerDoc[] {
-				docAccessor.newInitBannerDoc( "pratilipi-tamil-carousel-19.jpg", null, "/event/ore-oru-oorla" ),
-				docAccessor.newInitBannerDoc( "pratilipi-tamil-carousel-20.jpg", null, "/romance" ),
-				docAccessor.newInitBannerDoc( "pratilipi-tamil-carousel-21.jpg", null, "/humour" ),
-				docAccessor.newInitBannerDoc( "pratilipi-tamil-carousel-17.jpg", null, "/horror" ),
+				docAccessor.newInitBannerDoc( null, "pratilipi-tamil-carousel-19.jpg", null, "/event/ore-oru-oorla", null, null ),
+				docAccessor.newInitBannerDoc( null, "pratilipi-tamil-carousel-20.jpg", null, "/romance", null, null ),
+				docAccessor.newInitBannerDoc( null, "pratilipi-tamil-carousel-21.jpg", null, "/humour", null, null ),
+				docAccessor.newInitBannerDoc( null, "pratilipi-tamil-carousel-17.jpg", null, "/horror", null, null ),
 		};
 			
 		InitDoc taInitDoc = docAccessor.newInitDoc();
@@ -74,10 +73,10 @@ public class InitDataUtil {
 		
 		
 		initBannerDocs = new InitBannerDoc[] {
-				docAccessor.newInitBannerDoc( "pratilipi-marathi-carousel-34.jpg", null, "/november-hit" ),
-				docAccessor.newInitBannerDoc( "pratilipi-marathi-carousel-35.jpg", null, "/rahasyakatha" ),
-				docAccessor.newInitBannerDoc( "pratilipi-marathi-carousel-36.jpg", null, "/lovestories" ),
-				docAccessor.newInitBannerDoc( "pratilipi-marathi-carousel-37.jpg", null, "/five-minutes-read" ),
+				docAccessor.newInitBannerDoc( null, "pratilipi-marathi-carousel-34.jpg", null, "/november-hit", null, null ),
+				docAccessor.newInitBannerDoc( null, "pratilipi-marathi-carousel-35.jpg", null, "/rahasyakatha", null, null ),
+				docAccessor.newInitBannerDoc( null, "pratilipi-marathi-carousel-36.jpg", null, "/lovestories", null, null ),
+				docAccessor.newInitBannerDoc( null, "pratilipi-marathi-carousel-37.jpg", null, "/five-minutes-read", null, null ),
 		};
 			
 		InitDoc mrInitDoc = docAccessor.newInitDoc();
@@ -86,10 +85,10 @@ public class InitDataUtil {
 		
 		
 		initBannerDocs = new InitBannerDoc[] {
-				docAccessor.newInitBannerDoc( "pratilipi-malayalam-carousel-15.jpg", null, "/event/tellastory" ),
-				docAccessor.newInitBannerDoc( "pratilipi-malayalam-carousel-16.jpg", null, "/fiveminute" ),
-				docAccessor.newInitBannerDoc( "pratilipi-malayalam-carousel-17.jpg", null, "/love" ),
-				docAccessor.newInitBannerDoc( "pratilipi-malayalam-carousel-18.jpg", null, "/two-minute" ),
+				docAccessor.newInitBannerDoc( null, "pratilipi-malayalam-carousel-15.jpg", null, "/event/tellastory", null, null ),
+				docAccessor.newInitBannerDoc( null, "pratilipi-malayalam-carousel-16.jpg", null, "/fiveminute", null, null ),
+				docAccessor.newInitBannerDoc( null, "pratilipi-malayalam-carousel-17.jpg", null, "/love", null, null ),
+				docAccessor.newInitBannerDoc( null, "pratilipi-malayalam-carousel-18.jpg", null, "/two-minute", null, null ),
 		};
 
 		InitDoc mlInitDoc = docAccessor.newInitDoc();
@@ -98,11 +97,11 @@ public class InitDataUtil {
 		
 		
 		initBannerDocs = new InitBannerDoc[] {
-				docAccessor.newInitBannerDoc( "pratilipi-bengali-carousel-35.jpg", null, "/rahashyogalpo" ),
-				docAccessor.newInitBannerDoc( "pratilipi-bengali-carousel-36.jpg", null, "/november-hits" ),
-				docAccessor.newInitBannerDoc( "pratilipi-bengali-carousel-37.jpg", null, "/premkahini" ),
-				docAccessor.newInitBannerDoc( "pratilipi-bengali-carousel-38.jpg", null, "/a-lot-in-few-minutes" ),
-				docAccessor.newInitBannerDoc( "pratilipi-bengali-carousel-34.jpg", null, "/event/nohi-daanob-nohi-mahamaanob" ),
+				docAccessor.newInitBannerDoc( null, "pratilipi-bengali-carousel-35.jpg", null, "/rahashyogalpo", null, null ),
+				docAccessor.newInitBannerDoc( null, "pratilipi-bengali-carousel-36.jpg", null, "/november-hits", null, null ),
+				docAccessor.newInitBannerDoc( null, "pratilipi-bengali-carousel-37.jpg", null, "/premkahini", null, null ),
+				docAccessor.newInitBannerDoc( null, "pratilipi-bengali-carousel-38.jpg", null, "/a-lot-in-few-minutes", null, null ),
+				docAccessor.newInitBannerDoc( null, "pratilipi-bengali-carousel-34.jpg", null, "/event/nohi-daanob-nohi-mahamaanob", null, null ),
 		};
 			
 		InitDoc bnInitDoc = docAccessor.newInitDoc();
@@ -111,10 +110,10 @@ public class InitDataUtil {
 		
 		
 		initBannerDocs = new InitBannerDoc[] {
-				docAccessor.newInitBannerDoc( "pratilipi-telugu-carousel-21.jpg", null, "/love" ),
-				docAccessor.newInitBannerDoc( "pratilipi-telugu-carousel-22.jpg", null, "/ministories" ),
-				docAccessor.newInitBannerDoc( "pratilipi-telugu-carousel-23.jpg", null, "/fivemin" ),
-				docAccessor.newInitBannerDoc( "pratilipi-telugu-carousel-18.jpg", null, "/life" )
+				docAccessor.newInitBannerDoc( null, "pratilipi-telugu-carousel-21.jpg", null, "/love", null, null ),
+				docAccessor.newInitBannerDoc( null, "pratilipi-telugu-carousel-22.jpg", null, "/ministories", null, null ),
+				docAccessor.newInitBannerDoc( null, "pratilipi-telugu-carousel-23.jpg", null, "/fivemin", null, null ),
+				docAccessor.newInitBannerDoc( null, "pratilipi-telugu-carousel-18.jpg", null, "/life", null, null ),
 		};
 			
 		InitDoc teInitDoc = docAccessor.newInitDoc();
@@ -123,10 +122,10 @@ public class InitDataUtil {
 		
 		
 		initBannerDocs = new InitBannerDoc[] {
-				docAccessor.newInitBannerDoc( "pratilipi-kannada-carousel-09.jpg", null, "/cinema" ),
-				docAccessor.newInitBannerDoc( "pratilipi-kannada-carousel-10.jpg", null, "/society" ),
-				docAccessor.newInitBannerDoc( "pratilipi-kannada-carousel-11.jpg", null, "/women" ),
-				docAccessor.newInitBannerDoc( "pratilipi-kannada-carousel-12.jpg", null, "/event/kr" ),
+				docAccessor.newInitBannerDoc( null, "pratilipi-kannada-carousel-09.jpg", null, "/cinema", null, null ),
+				docAccessor.newInitBannerDoc( null, "pratilipi-kannada-carousel-10.jpg", null, "/society", null, null ),
+				docAccessor.newInitBannerDoc( null, "pratilipi-kannada-carousel-11.jpg", null, "/women", null, null ),
+				docAccessor.newInitBannerDoc( null, "pratilipi-kannada-carousel-12.jpg", null, "/event/kr", null, null ),
 		};
 			
 		InitDoc knInitDoc = docAccessor.newInitDoc();
@@ -159,7 +158,7 @@ public class InitDataUtil {
 	}
 	
 	public static String createInitBannerUrl( Language language, String bannerId, Integer width ) {
-		String url = "/init/banner?language=" + language + "&bannerId=" + bannerId;
+		String url = "/init/banner?language=" + language + "&name=" + bannerId;
 		if( width != null )
 			url = url + "&width=" + width;
 		if( SystemProperty.CDN != null )
@@ -168,15 +167,15 @@ public class InitDataUtil {
 	}
 
 
-	public static BlobEntry getInitBanner( Language language, String bannerId, Integer width )
+	public static BlobEntry getInitBanner( Language language, String name, Integer width )
 			throws InvalidArgumentException, UnexpectedServerException {
 		
 		BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor()
-				.getBlob( "init/banners/" + language.getCode() + "/" + bannerId );
+				.getBlob( "init/banners/" + language.getCode() + "/" + name );
 		
 		if( blobEntry == null ) {
 			JsonObject errorMessages = new JsonObject();
-			errorMessages.addProperty( "bannerId", "Invalid bannerId." );
+			errorMessages.addProperty( "name", "Invalid banner name." );
 			throw new InvalidArgumentException( errorMessages );
 		}
 			
@@ -187,28 +186,18 @@ public class InitDataUtil {
 		
 	}
 
-	public static List<InitBannerData> getInitBannerList( Language language ) {
+	public static List<InitBannerData> getInitBannerList( Language language, boolean isMini ) {
 		
 		List<InitBannerDoc> initBanners = langInitDocs.get( language ).getBanners();
 		List<InitBannerData> initBannerDataList = new ArrayList<>( initBanners.size() );
 
-		List<Navigation> navigationList = DataAccessorFactory.getDataAccessor().getNavigationList( language );
-		Map<String, Navigation.Link> links = new HashMap<>();
-		for( Navigation navigation : navigationList )
-			for( Navigation.Link link : navigation.getLinkList() )
-				links.put( link.getUrl(), link );
-		
 		for( InitBannerDoc initBanner : initBanners ) {
-			InitBannerData initBannerData = new InitBannerData( initBanner.getId() );
+			InitBannerData initBannerData = new InitBannerData();
 			initBannerData.setTitle( initBanner.getTitle() );
-			initBannerData.setImageUrl( createInitBannerUrl( language, initBanner.getId() ) );
+			initBannerData.setImageUrl( createInitBannerUrl( language, isMini ? initBanner.getBannerMini() : initBanner.getBanner() ) );
 			initBannerData.setActionUrl( initBanner.getActionUrl() );
-			Navigation.Link link = links.get( initBanner.getActionUrl() );
-			if( link == null )
-				continue;
-			initBannerData.setTitle( link.getName() );
-			initBannerData.setApiName( link.getApiName() );
-			initBannerData.setApiRequest( (String) link.getApiRequest() );
+			initBannerData.setApiName( initBanner.getApiName() );
+			initBannerData.setApiRequest( initBanner.getApiRequest() );
 			initBannerDataList.add( initBannerData );
 		}
 		
@@ -216,15 +205,20 @@ public class InitDataUtil {
 	
 	}
 	
-	public static void saveInitBanner( Language language, String name, BlobEntry blobEntry )
+	public static String saveInitBanner( Language language, BlobEntry blobEntry )
 			throws InsufficientAccessException, UnexpectedServerException {
 		
 		if( ! hasAccessToUpdateInit( language ) )
 			throw new InsufficientAccessException();
 		
+		
+		String name = new Date().getTime() + "";
+		
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
-		blobEntry.setName( "init/banners/" + language.getCode() + "/" + new Date().getTime() );
+		blobEntry.setName( "init/banners/" + language.getCode() + "/" + name );
 		blobAccessor.createOrUpdateBlob( blobEntry );
+		
+		return name;
 		
 	}
 	

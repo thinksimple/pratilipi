@@ -1,5 +1,6 @@
 package com.pratilipi.data;
 
+import com.google.gson.JsonObject;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.data.type.BatchProcessDoc;
 import com.pratilipi.data.type.CommentDoc;
@@ -32,7 +33,7 @@ public interface DocAccessor {
 	
 	InitDoc newInitDoc();
 	
-	InitBannerDoc newInitBannerDoc( String bannerId, String title, String actionUrl );
+	InitBannerDoc newInitBannerDoc( String title, String banner, String bannerMini, String actionUrl, String apiName, JsonObject apiRequest );
 
 
 	// Pratilipi Content Doc

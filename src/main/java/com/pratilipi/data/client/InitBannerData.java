@@ -2,9 +2,8 @@ package com.pratilipi.data.client;
 
 import com.google.gson.JsonObject;
 
-public class InitBannerData {
 
-	private String bannerId;
+public class InitBannerData {
 
 	private String title;
 	
@@ -14,17 +13,8 @@ public class InitBannerData {
 	
 	private String apiName;
 	
-	private Object apiRequest;
+	private JsonObject apiRequest;
 	
-	
-	public InitBannerData( String bannerId ) {
-		this.bannerId = bannerId;
-	}
-
-
-	public String getId() {
-		return bannerId;
-	}
 	
 	public String getTitle() {
 		return title;
@@ -58,12 +48,8 @@ public class InitBannerData {
 		this.apiName = apiName;
 	}
 	
-	public Object getApiRequest() {
+	public JsonObject getApiRequest() {
 		return apiRequest;
-	}
-	
-	public void setApiRequest( String apiRequest ) {
-		this.apiRequest = apiRequest;
 	}
 	
 	public void setApiRequest( JsonObject apiRequest ) {

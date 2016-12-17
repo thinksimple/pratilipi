@@ -22,8 +22,8 @@ public class InitDocImpl implements InitDoc {
 			this.banners = null;
 		} else {
 			this.banners = new ArrayList<>( banners.size() );
-			for( InitBannerDoc reviewDoc : banners )
-				this.banners.add( (InitBannerDocImpl) reviewDoc );
+			for( InitBannerDoc bannerDoc : banners )
+				this.banners.add( (InitBannerDocImpl) bannerDoc );
 		}
 	}
 	

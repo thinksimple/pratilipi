@@ -6,6 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.util.GsonLongDateAdapter;
@@ -94,8 +95,8 @@ public class DocAccessorImpl implements DocAccessor {
 
 
 	@Override
-	public InitBannerDoc newInitBannerDoc( String bannerId, String title, String actionUrl ) {
-		return new InitBannerDocImpl( bannerId, title, actionUrl );
+	public InitBannerDoc newInitBannerDoc( String title, String banner, String bannerMini, String actionUrl, String apiName, JsonObject apiRequest ) {
+		return new InitBannerDocImpl( title, banner, bannerMini, actionUrl, apiName, apiRequest );
 	}
 	
 

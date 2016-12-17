@@ -1,5 +1,6 @@
 package com.pratilipi.api.impl.init;
 
+import com.google.gson.JsonObject;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -10,8 +11,10 @@ import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.Language;
+import com.pratilipi.data.client.InitBannerData;
 import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.util.InitDataUtil;
+import com.pratilipi.filter.UxModeFilter;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/init/banner" )
@@ -26,6 +29,35 @@ public class InitBannerApi extends GenericApi {
 		private String bannerId;
 		
 		private Integer width;
+		
+	}
+	
+	@SuppressWarnings("unused")
+	public static class Response extends GenericResponse {
+
+		private String title;
+		
+		private String imageUrl;
+		
+		private String actionUrl;
+		
+		private String apiName;
+		
+		private JsonObject apiRequest;
+		
+		
+		public Response( InitBannerData initBannerData ) {
+			
+			this.title = initBannerData.getTitle();
+			this.imageUrl = initBannerData.getImageUrl();
+			if( UxModeFilter.isAndroidApp() ) {
+				this.apiName = initBannerData.getApiName();
+				this.apiRequest = initBannerData.getApiRequest();
+			} else {
+				this.actionUrl= initBannerData.getActionUrl();
+			}
+			
+		}
 		
 	}
 	
