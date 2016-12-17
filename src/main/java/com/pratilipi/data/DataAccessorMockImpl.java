@@ -758,6 +758,12 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 
 	@Override
+	public DataListIterator<UserAuthor> getUserAuthorListIterator( Long userId, Long authorId, String cursor, Integer offset, Integer resultCount ) {
+		// TODO: Implementation
+		return null;
+	}
+	
+	@Override
 	public UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor, AuditLog auditLog ) {
 		// TODO: Implementation
 		return userAuthor;

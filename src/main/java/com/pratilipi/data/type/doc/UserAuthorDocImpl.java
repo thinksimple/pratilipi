@@ -11,8 +11,8 @@ public class UserAuthorDocImpl implements UserAuthorDoc {
 	private Long userId;
 	private Long authorId;
 
-	private UserFollowState state;
-	private Date lastUpdated;
+	private UserFollowState followState;
+	private Date followDate;
 
 	
 	@Override
@@ -47,23 +47,23 @@ public class UserAuthorDocImpl implements UserAuthorDoc {
 
 
 	@Override
-	public UserFollowState getState() {
-		return state;
+	public UserFollowState getFollowState() {
+		return followState;
 	}
 
 	@Override
-	public void setState( UserFollowState state ) {
-		this.state = state;
+	public void setFollowState( UserFollowState followState ) {
+		this.followState = followState;
 	}
 
 	@Override
-	public Date getLastUpdated() {
-		return this.lastUpdated;
+	public Date getFollowDate() {
+		return this.followDate;
 	}
 
 	@Override
-	public void setLastUpdated( Date date ) {
-		this.lastUpdated = date;
+	public void setFollowDate( Date date ) {
+		this.followDate = date;
 	}
 
 }

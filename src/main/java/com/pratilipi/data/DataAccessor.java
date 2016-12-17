@@ -157,6 +157,7 @@ public interface DataAccessor {
 	long getUserAuthorFollowCount( Long userId, Long authorId );
 	DataListCursorTuple<Long> getUserAuthorFollowList( Long userId, Long authorId, String cursor, Integer offset, Integer resultCount );
 	DataListCursorTuple<UserAuthor> getUserAuthorList( Long userId, Long authorId, String cursor, Integer offset, Integer resultCount );
+	DataListIterator<UserAuthor> getUserAuthorListIterator( Long userId, Long authorId, String cursor, Integer offset, Integer resultCount );
 	UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor, AuditLog auditLog );
 
 

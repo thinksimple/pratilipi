@@ -1,6 +1,5 @@
 package com.pratilipi.data.util;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +13,6 @@ import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AccessType;
-import com.pratilipi.common.type.UserFollowState;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.UserCampaign;
 import com.pratilipi.common.type.UserSignUpSource;
@@ -26,17 +24,12 @@ import com.pratilipi.common.util.PasswordUtil;
 import com.pratilipi.common.util.UserAccessUtil;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
-import com.pratilipi.data.DataListCursorTuple;
-import com.pratilipi.data.DocAccessor;
 import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.User;
-import com.pratilipi.data.type.UserAuthor;
-import com.pratilipi.data.type.UserAuthorDoc;
-import com.pratilipi.data.type.UserFollowsDoc;
 import com.pratilipi.email.EmailUtil;
 import com.pratilipi.filter.AccessTokenFilter;
 import com.pratilipi.filter.UxModeFilter;
@@ -682,63 +675,6 @@ public class UserDataUtil {
 		
 		user = dataAccessor.createOrUpdateUser( user, auditLog );
 		
-	}
-
-	public static void updateUserFollowedDoc( Long userId ) 
-			throws UnexpectedServerException {
-
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
-
-		List<UserAuthor> followedList;
-		String cursor = null;
-
-		List<UserAuthorDoc> followedAuthorsList = new ArrayList<>();
-		List<UserAuthorDoc> unfollowedAuthorsList = new ArrayList<>();
-		List<UserAuthorDoc> ignoredAuthorsList = new ArrayList<>();
-
-		do {
-
-			DataListCursorTuple<UserAuthor> userAuthorDataTuple = 
-							dataAccessor.getUserAuthorList( userId, null, cursor, null, 1000 );
-
-			followedList = userAuthorDataTuple.getDataList();
-			cursor = userAuthorDataTuple.getCursor();
-
-			for( UserAuthor userAuthor : followedList ) {
-
-				UserAuthorDoc uad = docAccessor.newUserAuthorDoc();
-				uad.setAuthorId( userAuthor.getAuthorId() );
-				uad.setLastUpdated( userAuthor.getFollowingSince() );
-
-				if( userAuthor.isFollowing() )
-					followedAuthorsList.add( uad );
-				else
-					unfollowedAuthorsList.add( uad );
-
-				// TODO: Uncomment once implemented states on UserAuthor
-				/*
-				if( userAuthor.getState() == FollowState.FOLLOWED ) {
-					followedAuthorsList.add( uad );
-				} else if( userAuthor.getState() == FollowState.UNFOLLOWED ) {
-					unfollowedAuthorsList.add( uad );
-				} else if( userAuthor.getState() == FollowState.IGNORED ) {
-					ignoredAuthorsList.add( uad );
-				}
-				*/
-
-			}
-
-		} while( followedList.size() == 1000 );
-
-		UserFollowsDoc userFollowingDoc = docAccessor.newUserFollowsDoc();
-		userFollowingDoc.setFollows( UserFollowState.FOLLOWING, followedAuthorsList );
-		userFollowingDoc.setFollows( UserFollowState.UNFOLLOWED, unfollowedAuthorsList );
-		userFollowingDoc.setFollows( UserFollowState.IGNORED, ignoredAuthorsList );
-
-		docAccessor.save( userId, userFollowingDoc );
-
-
 	}
 
 }

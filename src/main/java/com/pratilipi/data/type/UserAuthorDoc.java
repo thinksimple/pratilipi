@@ -19,12 +19,12 @@ public interface UserAuthorDoc {
 	void setAuthorId( Long authorId );
 
 
-	UserFollowState getState();
+	UserFollowState getFollowState();
 	
-	void setState( UserFollowState state );
+	void setFollowState( UserFollowState state );
 
-	Date getLastUpdated();
+	Date getFollowDate();
 	
-	void setLastUpdated( Date date );
+	void setFollowDate( Date date );
 
 }

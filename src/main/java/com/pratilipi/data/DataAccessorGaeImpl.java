@@ -1502,6 +1502,33 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 
 	@Override
+	public DataListIterator<UserAuthor> getUserAuthorListIterator(
+			Long userId, Long authorId, String cursorStr, Integer offset, Integer resultCount ) {
+
+		Query<UserAuthorEntity> query = ObjectifyService.ofy().load().type( UserAuthorEntity.class );
+		
+		if( userId != null )
+			query = query.filter( "USER_ID", userId );
+		
+		if( authorId != null )
+			query = query.filter( "AUTHOR_ID", authorId );
+		
+		if( cursorStr != null )
+			query = query.startAt( Cursor.fromWebSafeString( cursorStr ) );
+		
+		if( offset != null && offset > 0 )
+			query = query.offset( offset );
+		
+		if( resultCount != null && resultCount > 0 )
+			query = query.limit( resultCount );
+		
+		query = query.chunk( resultCount == null || resultCount > 1000 ? 1000 : resultCount );
+		
+		return new DataListIterator<UserAuthor>( query.iterator() );
+		
+	}
+
+	@Override
 	public UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor, AuditLog auditLog ) {
 		( (UserAuthorEntity) userAuthor ).setId( userAuthor.getUserId() + "-" + userAuthor.getAuthorId() );
 		return createOrUpdateEntity( userAuthor, auditLog );
