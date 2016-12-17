@@ -2,6 +2,8 @@ package com.pratilipi.data.type;
 
 import java.util.Date;
 
+import com.pratilipi.common.type.UserFollowState;
+
 public interface UserAuthor extends GenericOfyType {
 
 	String getId();
@@ -19,6 +21,11 @@ public interface UserAuthor extends GenericOfyType {
 	Boolean isFollowing();
 	
 	void setFollowing( Boolean isFollowing );
+	
+	UserFollowState getState();
+	
+	void setState( UserFollowState state );
+
 
 	Date getFollowingSince();
 	

@@ -7,6 +7,7 @@ import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
+import com.pratilipi.common.type.UserFollowState;
 import com.pratilipi.data.type.UserAuthor;
 
 @Cache
@@ -23,6 +24,8 @@ public class UserAuthorEntity implements UserAuthor {
 
 	@Index
 	private Boolean FOLLOWING;
+	@Index
+	private UserFollowState STATE;
 	@Index
 	private Date FOLLOWING_SINCE;
 	
@@ -84,6 +87,14 @@ public class UserAuthorEntity implements UserAuthor {
 	
 	public void setFollowing( Boolean isFollowing ) {
 		this.FOLLOWING = isFollowing;
+	}
+
+	public UserFollowState getState() {
+		return STATE;
+	}
+
+	public void setState( UserFollowState state ) {
+		this.STATE = state;
 	}
 
 	public Date getFollowingSince() {
