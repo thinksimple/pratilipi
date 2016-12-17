@@ -18,7 +18,7 @@ import com.pratilipi.data.type.PratilipiContentDoc;
 import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
 import com.pratilipi.data.type.PratilipiMetaDoc;
 import com.pratilipi.data.type.PratilipiReviewsDoc;
-import com.pratilipi.data.type.UserDoc;
+import com.pratilipi.data.type.UserFollowingDoc;
 import com.pratilipi.data.type.UserPratilipiDoc;
 import com.pratilipi.data.type.doc.BatchProcessDocImpl;
 import com.pratilipi.data.type.doc.CommentDocImpl;
@@ -28,7 +28,7 @@ import com.pratilipi.data.type.doc.PratilipiContentDocImpl;
 import com.pratilipi.data.type.doc.PratilipiGoogleAnalyticsDocImpl;
 import com.pratilipi.data.type.doc.PratilipiMetaDocImpl;
 import com.pratilipi.data.type.doc.PratilipiReviewsDocImpl;
-import com.pratilipi.data.type.doc.UserDocImpl;
+import com.pratilipi.data.type.doc.UserFollowingDocImpl;
 import com.pratilipi.data.type.doc.UserPratilipiDocImpl;
 
 public class DocAccessorImpl implements DocAccessor {
@@ -166,21 +166,21 @@ public class DocAccessorImpl implements DocAccessor {
 	// User Doc
 
 	@Override
-	public UserDoc newUserDoc() {
-		return new UserDocImpl();
+	public UserFollowingDoc newUserFollowingDoc() {
+		return new UserFollowingDocImpl();
 	}
 
 	@Override
-	public UserDoc getUserDoc( Long userId ) throws UnexpectedServerException {
+	public UserFollowingDoc getUserFollowingDoc( Long userId ) throws UnexpectedServerException {
 		if( userId != null && userId > 0L )
-			return _get( "user/" + userId + "/followedAuthors", UserDoc.class );
+			return _get( "user/" + userId + "/userFollowing", UserFollowingDoc.class );
 		return null;
 	}
 
 	@Override
-	public void save( Long userId, UserDoc userDoc ) throws UnexpectedServerException {
+	public void save( Long userId, UserFollowingDoc userDoc ) throws UnexpectedServerException {
 		if( userId != null && userId > 0L )
-			_save( "user/" + userId + "/followedAuthors", userDoc );
+			_save( "user/" + userId + "/userFollowing", userDoc );
 	}
 
 

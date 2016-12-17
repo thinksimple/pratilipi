@@ -12,7 +12,7 @@ public class UserAuthorDocImpl implements UserAuthorDoc {
 	private Long authorId;
 
 	private FollowState state;
-	private Long lastUpdatedMillis;
+	private Date lastUpdated;
 
 	@Override
 	public String getId() {
@@ -57,12 +57,12 @@ public class UserAuthorDocImpl implements UserAuthorDoc {
 
 	@Override
 	public Date getLastUpdated() {
-		return new Date( this.lastUpdatedMillis );
+		return this.lastUpdated;
 	}
 
 	@Override
 	public void setLastUpdated( Date date ) {
-		this.lastUpdatedMillis = date.getTime();
+		this.lastUpdated = date;
 	}
 
 }
