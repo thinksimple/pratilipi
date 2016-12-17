@@ -1,3 +1,4 @@
+sudo su
 cd ~
 
 
@@ -5,39 +6,42 @@ cd ~
 echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu precise main" | sudo tee /etc/apt/sources.list.d/webupd8team-java.list
 echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu precise main" | sudo tee -a /etc/apt/sources.list.d/webupd8team-java.list
 apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EEA14886
-sudo apt-get update
+apt-get update
 
 
 # https://cloud.google.com/sdk/downloads#apt-get
-sudo apt-get install google-cloud-sdk
-sudo apt-get install google-cloud-sdk-app-engine-java
+apt-get install google-cloud-sdk
+apt-get install google-cloud-sdk-app-engine-java
 
 
 # Install required software
-sudo apt-get install git
-sudo apt-get install oracle-java7-installer
-# sudo apt-get install maven
-sudo apt-get install ant
+apt-get install git
+apt-get install oracle-java7-installer
+# apt-get install maven
+apt-get install ant
 
 
 # Manually install maven. Apt-get installs older version of maven.
-sudo mkdir -p /usr/local/apache-maven
+mkdir -p /usr/local/apache-maven
 cd /usr/local/apache-maven
-sudo wget http://www-eu.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
-sudo tar -xzvf apache-maven-3.3.9-bin.tar.gz
-sudo rm apache-maven-3.3.9-bin.tar.gz
+wget http://www-eu.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
+tar -xzvf apache-maven-3.3.9-bin.tar.gz
+rm apache-maven-3.3.9-bin.tar.gz
 cd ~
 
 
 # Installing Google Cloud Logging agent
-sudo wget https://storage.googleapis.com/signals-agents/logging/google-fluentd-install.sh
+wget https://storage.googleapis.com/signals-agents/logging/google-fluentd-install.sh
 sha256sum google-fluentd-install.sh
-sudo bash google-fluentd-install.sh
-sudo rm google-fluentd-install.sh
+bash google-fluentd-install.sh
+rm google-fluentd-install.sh
+
+
+
 
 
 # Cloning git repository for prod-pratilipi/default
-sudo mkdir -p ~/prod
+mkdir -p ~/prod
 cd ~/prod
 sudo git clone -b release-prod https://github.com/Pratilipi/pratilipi.git
 
@@ -55,14 +59,3 @@ sudo git clone -b release-android https://github.com/Pratilipi/pratilipi.git
 sudo mkdir -p ~/worker
 cd ~/worker
 sudo git clone -b release-worker https://github.com/Pratilipi/pratilipi.git
-
-# Cloning git repository for prod-pratilipi/gamma & devo-pratilipi/*
-sudo mkdir -p ~/test
-cd ~/test
-sudo git clone -b master https://github.com/Pratilipi/pratilipi.git
-
-
-# Cloning git repository for git-merge
-sudo mkdir -p ~/git-merge
-cd ~/git-merge
-sudo git clone -b master https://github.com/Pratilipi/pratilipi.git
