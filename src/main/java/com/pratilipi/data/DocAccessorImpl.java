@@ -36,6 +36,10 @@ import com.pratilipi.data.type.doc.UserPratilipiDocImpl;
 
 public class DocAccessorImpl implements DocAccessor {
 
+	private static final Logger logger =
+			Logger.getLogger( DocAccessorImpl.class.getName() );
+	
+	
 	private final BlobAccessor blobAccessor;
 	
 	
@@ -43,28 +47,38 @@ public class DocAccessorImpl implements DocAccessor {
 		this.blobAccessor = blobAccessor;
 	}
 	
-	
-	private static final Logger logger =
-			Logger.getLogger( DocAccessorImpl.class.getName() );
 
 	
-	// BatchProcess Doc
-	
-	public BatchProcessDoc newBatchProcessDoc() {
-		return new BatchProcessDocImpl();
+	private <T> T _get( String docPath, Class<T> clazz ) throws UnexpectedServerException {
+		BlobEntry blobEntry = blobAccessor.getBlob( docPath );
+		try {
+			if( blobEntry == null )
+				return clazz.newInstance();
+			else
+				return new GsonBuilder()
+						.registerTypeAdapter( Date.class, new GsonLongDateAdapter() ).create()
+						.fromJson( new String( blobEntry.getData(), "UTF-8" ), clazz );
+		} catch( InstantiationException | IllegalAccessException | JsonSyntaxException | UnsupportedEncodingException e) {
+			logger.log( Level.SEVERE, e.getMessage() );
+			throw new UnexpectedServerException();
+		}
 	}
 	
-	public BatchProcessDoc getBatchProcessDoc( Long processId ) throws UnexpectedServerException {
-		if( processId != null )
-			return _get( "batch-process/" + processId, BatchProcessDocImpl.class );
-		return null;
+	private <T> void _save( String docPath, T doc ) throws UnexpectedServerException {
+		try {
+			byte[] blobData = new GsonBuilder()
+					.registerTypeAdapter( Date.class, new GsonLongDateAdapter() ).create()
+					.toJson( doc )
+					.getBytes( "UTF-8" );
+			BlobEntry blobEntry = blobAccessor.newBlob( docPath, blobData, "application/json" );
+			blobAccessor.createOrUpdateBlob( blobEntry );
+		} catch( UnsupportedEncodingException e ) {
+			logger.log( Level.SEVERE, e.getMessage() );
+			throw new UnexpectedServerException();
+		}
 	}
-	
-	public void save( Long processId, BatchProcessDoc processDoc ) throws UnexpectedServerException {
-		if( processId != null )
-			_save( "batch-process/" + processId, processDoc );
-	}
-	
+
+
 	
 	// UserAuthor Doc
 	
@@ -72,7 +86,7 @@ public class DocAccessorImpl implements DocAccessor {
 		return new UserAuthorDocImpl();
 	}
 	
-	
+
 	// UserPratilipi Doc
 	
 	public UserPratilipiDoc newUserPratilipiDoc() {
@@ -93,14 +107,35 @@ public class DocAccessorImpl implements DocAccessor {
 		return new InitDocImpl();
 	}
 
-
 	@Override
 	public InitBannerDoc newInitBannerDoc( String title, String banner, String bannerMini, String actionUrl, String apiName, JsonObject apiRequest ) {
 		return new InitBannerDocImpl( title, banner, bannerMini, actionUrl, apiName, apiRequest );
 	}
 	
 
+	// User Follows Doc
+
+	@Override
+	public UserFollowsDoc newUserFollowsDoc() {
+		return new UserFollowsDocImpl();
+	}
+
+	@Override
+	public UserFollowsDoc getUserFollowsDoc( Long userId ) throws UnexpectedServerException {
+		if( userId != null && userId > 0L )
+			return _get( "user/" + userId + "/follows", UserFollowsDocImpl.class );
+		return null;
+	}
+
+	@Override
+	public void save( Long userId, UserFollowsDoc followsDoc ) throws UnexpectedServerException {
+		if( userId != null && userId > 0L )
+			_save( "user/" + userId + "/follows", followsDoc );
+	}
+
+	
 	// Pratilipi Content Doc
+
 	public PratilipiContentDoc newPratilipiContentDoc() {
 		return new PratilipiContentDocImpl();
 	}
@@ -119,6 +154,7 @@ public class DocAccessorImpl implements DocAccessor {
 
 	
 	// Pratilipi Meta Doc
+	
 	public PratilipiMetaDoc newPratilipiMetaDoc() {
 		return new PratilipiMetaDocImpl();
 	}
@@ -173,55 +209,21 @@ public class DocAccessorImpl implements DocAccessor {
 	}
 	
 	
-	// User Doc
-
-	@Override
-	public UserFollowsDoc newUserFollowsDoc() {
-		return new UserFollowsDocImpl();
-	}
-
-	@Override
-	public UserFollowsDoc getUserFollowsDoc( Long userId ) throws UnexpectedServerException {
-		if( userId != null && userId > 0L )
-			return _get( "user/" + userId + "/follows", UserFollowsDocImpl.class );
-		return null;
-	}
-
-	@Override
-	public void save( Long userId, UserFollowsDoc followsDoc ) throws UnexpectedServerException {
-		if( userId != null && userId > 0L )
-			_save( "user/" + userId + "/follows", followsDoc );
-	}
-
-
-	private <T> T _get( String docPath, Class<T> clazz ) throws UnexpectedServerException {
-		BlobEntry blobEntry = blobAccessor.getBlob( docPath );
-		try {
-			if( blobEntry == null )
-				return clazz.newInstance();
-			else
-				return new GsonBuilder()
-						.registerTypeAdapter( Date.class, new GsonLongDateAdapter() ).create()
-						.fromJson( new String( blobEntry.getData(), "UTF-8" ), clazz );
-		} catch( InstantiationException | IllegalAccessException | JsonSyntaxException | UnsupportedEncodingException e) {
-			logger.log( Level.SEVERE, e.getMessage() );
-			throw new UnexpectedServerException();
-		}
+	// BatchProcess Doc
+	
+	public BatchProcessDoc newBatchProcessDoc() {
+		return new BatchProcessDocImpl();
 	}
 	
-	private <T> void _save( String docPath, T doc ) throws UnexpectedServerException {
-		try {
-			byte[] blobData = new GsonBuilder()
-					.registerTypeAdapter( Date.class, new GsonLongDateAdapter() ).create()
-					.toJson( doc )
-					.getBytes( "UTF-8" );
-			BlobEntry blobEntry = blobAccessor.newBlob( docPath, blobData, "application/json" );
-			blobAccessor.createOrUpdateBlob( blobEntry );
-		} catch( UnsupportedEncodingException e ) {
-			logger.log( Level.SEVERE, e.getMessage() );
-			throw new UnexpectedServerException();
-		}
+	public BatchProcessDoc getBatchProcessDoc( Long processId ) throws UnexpectedServerException {
+		if( processId != null )
+			return _get( "batch-process/" + processId, BatchProcessDocImpl.class );
+		return null;
 	}
-
-
+	
+	public void save( Long processId, BatchProcessDoc processDoc ) throws UnexpectedServerException {
+		if( processId != null )
+			_save( "batch-process/" + processId, processDoc );
+	}
+	
 }

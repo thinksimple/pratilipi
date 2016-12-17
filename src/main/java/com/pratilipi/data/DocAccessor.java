@@ -16,11 +16,6 @@ import com.pratilipi.data.type.UserPratilipiDoc;
 
 public interface DocAccessor {
 
-	// BatchProcess Doc
-	BatchProcessDoc newBatchProcessDoc();
-	BatchProcessDoc getBatchProcessDoc( Long batchProcessId ) throws UnexpectedServerException;
-	void save( Long processId, BatchProcessDoc batchProcessDoc ) throws UnexpectedServerException;
-	
 	// UserAuthor Doc
 	UserAuthorDoc newUserAuthorDoc();
 	
@@ -36,6 +31,12 @@ public interface DocAccessor {
 	InitBannerDoc newInitBannerDoc( String title, String banner, String bannerMini, String actionUrl, String apiName, JsonObject apiRequest );
 
 
+	// User Follows Doc
+	UserFollowsDoc newUserFollowsDoc();
+	UserFollowsDoc getUserFollowsDoc( Long userId ) throws UnexpectedServerException;
+	void save( Long userId, UserFollowsDoc followsDoc ) throws UnexpectedServerException;
+
+	
 	// Pratilipi Content Doc
 	PratilipiContentDoc newPratilipiContentDoc();
 	PratilipiContentDoc getPratilipiContentDoc( Long pratilipiId ) throws UnexpectedServerException;
@@ -55,10 +56,11 @@ public interface DocAccessor {
 	// Pratilipi GoogleAnalytics Doc
 	PratilipiGoogleAnalyticsDoc getPratilipiGoogleAnalyticsDoc( Long pratilipiId ) throws UnexpectedServerException;
 	void save( Long pratilipiId, PratilipiGoogleAnalyticsDoc gaDoc ) throws UnexpectedServerException;
-	
-	// UserFollows Doc
-	UserFollowsDoc newUserFollowsDoc();
-	UserFollowsDoc getUserFollowsDoc( Long userId ) throws UnexpectedServerException;
-	void save( Long userId, UserFollowsDoc followsDoc ) throws UnexpectedServerException;
 
+	
+	// BatchProcess Doc
+	BatchProcessDoc newBatchProcessDoc();
+	BatchProcessDoc getBatchProcessDoc( Long batchProcessId ) throws UnexpectedServerException;
+	void save( Long processId, BatchProcessDoc batchProcessDoc ) throws UnexpectedServerException;
+	
 }
