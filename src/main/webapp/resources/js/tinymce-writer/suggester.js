@@ -22,12 +22,12 @@ var Suggester = function(selectorOrElem, onResolve, content_holder, isInputEleme
   this.url = "https://www.google.com/inputtools/request?ime=transliteration_en_" + this.lang + "&num=5&cp=0&cs=0&ie=utf-8&oe=utf-8&app=jsapi";
   this.text = '';
   this.savedSelection = null;
+  this.words_map = {};
 };
 
 var suggesterMethods = {
   init: function() {
     var self = this;
-
     this.content_holder.on("blur", function() {
       if( self.getMode() ) {
         if (this.savedSelection) {
@@ -110,11 +110,26 @@ var suggesterMethods = {
   },
 
   getSuggestions: function() {
+
+    if( this.words_map[this.text] ) {
+      this.suggestFromWordsMap();
+    } else {
+      this.suggestFromGoogleApi();
+    }
+
+  },
+
+  suggestFromWordsMap: function() {
+    this.suggestions = this.words_map[this.text];
+    this.suggest();
+  },
+
+  suggestFromGoogleApi: function() {
     var self = this;
     $.ajax({
       url: self.url,
       data: {
-          text: self.text
+        text: self.text
       },
       type: "GET",
    
@@ -124,6 +139,7 @@ var suggesterMethods = {
       self.suggestions = json[1][0][1];
       self.suggestions.push( self.text );
       self.suggest();
+      self.words_map[ self.text ] = self.suggestions;
     });
   },
 
