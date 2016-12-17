@@ -14,7 +14,9 @@ do
 	
 	if [ $hour -eq 20 -a $minute -eq 0 ]; then
 		cd /root/scripts/pratilipi
-		bash $scripts/blobstore-cleanup.sh                                      2>&1 | logger -t git-merge
+		gsutil -m rm -r gs://backup.pratilipi.com/static.pratilipi.com/yyyy-mm-09          2>&1 | logger -t blobstore-cleanup
+		gsutil -m rm -r gs://backup.pratilipi.com/static.pratilipi.com/yyyy-mm-10          2>&1 | logger -t blobstore-cleanup
+		gsutil -m rm -r gs://backup.pratilipi.com/static.pratilipi.com/yyyy-mm-$(date +%d) 2>&1 | logger -t blobstore-cleanup
 	fi
 
 
