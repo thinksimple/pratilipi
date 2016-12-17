@@ -407,7 +407,8 @@ public class InitDataUtil {
 		for( InitBannerDoc initBanner : initBanners ) {
 			InitBannerData initBannerData = new InitBannerData();
 			initBannerData.setTitle( initBanner.getTitle() );
-			initBannerData.setImageUrl( createInitBannerUrl( language, isMini ? initBanner.getBannerMini() : initBanner.getBanner() ) );
+			initBannerData.setImageUrl( createInitBannerUrl( language, initBanner.getBanner() ) );
+			initBannerData.setMiniImageUrl( createInitBannerUrl( language, initBanner.getBannerMini() ) );
 			initBannerData.setActionUrl( initBanner.getActionUrl() );
 			initBannerData.setApiName( initBanner.getApiName() );
 			initBannerData.setApiRequest( initBanner.getApiRequest() );

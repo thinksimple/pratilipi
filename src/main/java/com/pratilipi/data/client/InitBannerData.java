@@ -9,6 +9,8 @@ public class InitBannerData {
 	
 	private String imageUrl;
 	
+	private String miniImageUrl;
+	
 	private String actionUrl;
 	
 	private String apiName;
@@ -30,6 +32,14 @@ public class InitBannerData {
 
 	public void setImageUrl( String imageUrl ) {
 		this.imageUrl = imageUrl;
+	}
+	
+	public String getMiniImageUrl() {
+		return miniImageUrl;
+	}
+
+	public void setMiniImageUrl( String miniImageUrl ) {
+		this.miniImageUrl = miniImageUrl;
 	}
 	
 	public String getActionUrl() {

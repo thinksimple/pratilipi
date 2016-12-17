@@ -39,6 +39,8 @@ public class InitBannerApi extends GenericApi {
 		
 		private String imageUrl;
 		
+		private String miniImageUrl;
+		
 		private String actionUrl;
 		
 		private String apiName;
@@ -54,6 +56,7 @@ public class InitBannerApi extends GenericApi {
 				this.apiName = initBannerData.getApiName();
 				this.apiRequest = initBannerData.getApiRequest();
 			} else {
+				this.miniImageUrl = initBannerData.getMiniImageUrl();
 				this.actionUrl= initBannerData.getActionUrl();
 			}
 			
