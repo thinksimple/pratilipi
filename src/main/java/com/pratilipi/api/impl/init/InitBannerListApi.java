@@ -22,8 +22,6 @@ public class InitBannerListApi extends GenericApi {
 		@Validate( required = true )
 		private Language language;
 		
-		private Boolean mini;
-		
 	}
 	
 	public static class Response extends GenericResponse {
@@ -44,9 +42,7 @@ public class InitBannerListApi extends GenericApi {
 	
 	@Get
 	public GenericResponse get( GetRequest request ) {
-		return new Response( InitDataUtil.getInitBannerList(
-				request.language,
-				request.mini == null ? false : request.mini ) );
+		return new Response( InitDataUtil.getInitBannerList( request.language ) );
 	}
 	
 }

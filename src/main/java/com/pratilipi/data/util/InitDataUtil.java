@@ -399,7 +399,7 @@ public class InitDataUtil {
 		
 	}
 
-	public static List<InitBannerData> getInitBannerList( Language language, boolean isMini ) {
+	public static List<InitBannerData> getInitBannerList( Language language ) {
 		
 		List<InitBannerDoc> initBanners = langInitDocs.get( language ).getBanners();
 		List<InitBannerData> initBannerDataList = new ArrayList<>( initBanners.size() );
