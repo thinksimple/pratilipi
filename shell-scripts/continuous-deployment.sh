@@ -1,3 +1,11 @@
+export TZ=Asia/Calcutta
+
+hour=$(date +%H)
+minute=$(date +%M)
+
+hour=${hour#0}
+minute=${minute#0}
+
 scripts="/root/scripts/pratilipi/shell-scripts"
 
 
@@ -12,7 +20,7 @@ do
 	fi
 	
 	
-	if [ $hour -eq 0 -a $minute -eq 0 ]; then
+	if [ $hour -eq 20 -a $minute -eq 0 ]; then
 		cd /root/scripts/pratilipi
 		gsutil -m rm -r gs://backup.pratilipi.com/static.pratilipi.com/yyyy-mm-09          2>&1 | logger -t blobstore-cleanup
 		gsutil -m rm -r gs://backup.pratilipi.com/static.pratilipi.com/yyyy-mm-10          2>&1 | logger -t blobstore-cleanup
