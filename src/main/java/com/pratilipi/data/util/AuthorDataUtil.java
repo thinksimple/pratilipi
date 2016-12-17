@@ -1,6 +1,5 @@
 package com.pratilipi.data.util;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -747,7 +746,7 @@ public class AuthorDataUtil {
 
 		// Randomization based on hour
 		int chunkSize = ( recommendAuthors.size() / 12 ) + ( recommendAuthors.size() % 12 == 0 ? 0 : 1 );
-		int beginIndex = ( LocalDateTime.now().getHour() % 12 ) * chunkSize;
+		int beginIndex = ( new Date().getHours() % 12 ) * chunkSize;
 		beginIndex = beginIndex % recommendAuthors.size();
 
 		List<Long> recommendAuthorsSubList = recommendAuthors.subList( beginIndex, Math.min( beginIndex + resultCount, recommendAuthors.size() - 1 ) );
