@@ -2,7 +2,7 @@ package com.pratilipi.data.type.doc;
 
 import java.util.Date;
 
-import com.pratilipi.common.type.FollowState;
+import com.pratilipi.common.type.UserFollowState;
 import com.pratilipi.data.type.UserAuthorDoc;
 
 public class UserAuthorDocImpl implements UserAuthorDoc {
@@ -11,9 +11,10 @@ public class UserAuthorDocImpl implements UserAuthorDoc {
 	private Long userId;
 	private Long authorId;
 
-	private FollowState state;
+	private UserFollowState state;
 	private Date lastUpdated;
 
+	
 	@Override
 	public String getId() {
 		return id;
@@ -46,12 +47,12 @@ public class UserAuthorDocImpl implements UserAuthorDoc {
 
 
 	@Override
-	public FollowState getState() {
+	public UserFollowState getState() {
 		return state;
 	}
 
 	@Override
-	public void setState( FollowState state ) {
+	public void setState( UserFollowState state ) {
 		this.state = state;
 	}
 

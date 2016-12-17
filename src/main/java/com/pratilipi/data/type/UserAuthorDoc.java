@@ -2,7 +2,7 @@ package com.pratilipi.data.type;
 
 import java.util.Date;
 
-import com.pratilipi.common.type.FollowState;
+import com.pratilipi.common.type.UserFollowState;
 
 public interface UserAuthorDoc {
 
@@ -19,9 +19,9 @@ public interface UserAuthorDoc {
 	void setAuthorId( Long authorId );
 
 
-	FollowState getState();
+	UserFollowState getState();
 	
-	void setState( FollowState state );
+	void setState( UserFollowState state );
 
 	Date getLastUpdated();
 	

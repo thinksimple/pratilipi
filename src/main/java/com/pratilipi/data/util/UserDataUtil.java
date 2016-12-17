@@ -14,7 +14,7 @@ import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AccessType;
-import com.pratilipi.common.type.FollowState;
+import com.pratilipi.common.type.UserFollowState;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.UserCampaign;
 import com.pratilipi.common.type.UserSignUpSource;
@@ -36,7 +36,7 @@ import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.UserAuthor;
 import com.pratilipi.data.type.UserAuthorDoc;
-import com.pratilipi.data.type.UserFollowingDoc;
+import com.pratilipi.data.type.UserFollowsDoc;
 import com.pratilipi.email.EmailUtil;
 import com.pratilipi.filter.AccessTokenFilter;
 import com.pratilipi.filter.UxModeFilter;
@@ -731,10 +731,10 @@ public class UserDataUtil {
 
 		} while( followedList.size() == 1000 );
 
-		UserFollowingDoc userFollowingDoc = docAccessor.newUserFollowingDoc();
-		userFollowingDoc.setUserFollowingDoc( FollowState.FOLLOWED, followedAuthorsList );
-		userFollowingDoc.setUserFollowingDoc( FollowState.UNFOLLOWED, unfollowedAuthorsList );
-		userFollowingDoc.setUserFollowingDoc( FollowState.IGNORED, ignoredAuthorsList );
+		UserFollowsDoc userFollowingDoc = docAccessor.newUserFollowingDoc();
+		userFollowingDoc.setFollows( UserFollowState.FOLLOWING, followedAuthorsList );
+		userFollowingDoc.setFollows( UserFollowState.UNFOLLOWED, unfollowedAuthorsList );
+		userFollowingDoc.setFollows( UserFollowState.IGNORED, ignoredAuthorsList );
 
 		docAccessor.save( userId, userFollowingDoc );
 

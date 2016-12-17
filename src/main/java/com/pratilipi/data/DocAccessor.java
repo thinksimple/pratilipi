@@ -11,7 +11,7 @@ import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
 import com.pratilipi.data.type.PratilipiMetaDoc;
 import com.pratilipi.data.type.PratilipiReviewsDoc;
 import com.pratilipi.data.type.UserAuthorDoc;
-import com.pratilipi.data.type.UserFollowingDoc;
+import com.pratilipi.data.type.UserFollowsDoc;
 import com.pratilipi.data.type.UserPratilipiDoc;
 
 public interface DocAccessor {
@@ -57,8 +57,8 @@ public interface DocAccessor {
 	void save( Long pratilipiId, PratilipiGoogleAnalyticsDoc gaDoc ) throws UnexpectedServerException;
 	
 	// UserFollowing Doc
-	UserFollowingDoc newUserFollowingDoc();
-	UserFollowingDoc getUserFollowingDoc( Long userId ) throws UnexpectedServerException;
-	void save( Long userId, UserFollowingDoc userDoc ) throws UnexpectedServerException;
+	UserFollowsDoc newUserFollowingDoc();
+	UserFollowsDoc getUserFollowingDoc( Long userId ) throws UnexpectedServerException;
+	void save( Long userId, UserFollowsDoc userDoc ) throws UnexpectedServerException;
 
 }
