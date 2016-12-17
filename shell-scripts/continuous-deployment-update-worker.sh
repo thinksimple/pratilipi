@@ -19,19 +19,19 @@ then
 	cp src/main/webapp/WEB-INF/worker-appengine-web.xml   src/main/webapp/WEB-INF/appengine-web.xml
 
 	# Update prod-pratilipi/worker
-	mvn gcloud:deploy -Dgcloud.gcloud_project=prod-pratilipi -Dgcloud.service=worker
+	mvn gcloud:deploy -Dapp.id=prod-pratilipi -Dapp.module=worker
 
 	
 	cp src/main/webapp/WEB-INF/worker-fe-appengine-web.xml src/main/webapp/WEB-INF/appengine-web.xml
 	
 	# Update prod-pratilipi/worker-fe
-	mvn gcloud:deploy -Dgcloud.gcloud_project=prod-pratilipi -Dgcloud.service=worker-fe
+	mvn gcloud:deploy -Dapp.id=prod-pratilipi -Dapp.module=worker-fe
 	
 	
 	cp src/main/webapp/WEB-INF/worker-be-appengine-web.xml src/main/webapp/WEB-INF/appengine-web.xml
 	
 	# Update prod-pratilipi/worker-be
-	mvn gcloud:deploy -Dgcloud.gcloud_project=prod-pratilipi -Dgcloud.service=worker-be
+	mvn gcloud:deploy -Dapp.id=prod-pratilipi -Dapp.module=worker-be
 	
 	
 	# Cleaning up .git directory

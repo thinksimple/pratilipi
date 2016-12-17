@@ -19,7 +19,7 @@ then
 	cp src/main/webapp/WEB-INF/api-appengine-web.xml   src/main/webapp/WEB-INF/appengine-web.xml
 
 	# Update prod-pratilipi/api
-	mvn gcloud:deploy -Dgcloud.gcloud_project=prod-pratilipi -Dgcloud.service=api
+	mvn gcloud:deploy -Dapp.id=prod-pratilipi -Dapp.module=api
 
 	
 	# Cleaning up .git directory

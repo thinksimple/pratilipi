@@ -19,7 +19,7 @@ then
 	cp src/main/webapp/WEB-INF/gamma-appengine-web.xml src/main/webapp/WEB-INF/appengine-web.xml
 	
 	# Update prod-pratilipi/gamma
-	mvn gcloud:deploy -Dgcloud.gcloud_project=prod-pratilipi -Dgcloud.service=gamma
+	mvn gcloud:deploy -Dapp.id=prod-pratilipi -Dapp.module=gamma
 	
 	
 	# Cleaning up .git directory
