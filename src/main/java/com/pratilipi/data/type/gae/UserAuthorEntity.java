@@ -87,6 +87,8 @@ public class UserAuthorEntity implements UserAuthor {
 	
 	public void setFollowing( Boolean isFollowing ) {
 		this.FOLLOWING = isFollowing;
+		// TODO: Remove it after backfilling
+		this.STATE = isFollowing ? UserFollowState.FOLLOWING : UserFollowState.UNFOLLOWED;
 	}
 
 	public UserFollowState getState() {
