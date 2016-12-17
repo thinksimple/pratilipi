@@ -8,18 +8,59 @@ do
 		cd /root/scripts/pratilipi
 		sudo bash /root/scripts/pratilipi/shell-scripts/continuous-deployment-git-merge.sh $1 2>&1 | logger -t git-merge
 	else
-		sudo mkdir -p ~/scripts
-		cd ~/scripts
+		sudo mkdir -p /root/scripts
+		cd /root/scripts
 		sudo git clone -b master https://github.com/Pratilipi/pratilipi.git
 	fi
 
-	if [ -d "/root/test" ]; then
-		cd /root/test/pratilipi
-		sudo bash /root/scripts/pratilipi/shell-scripts/update-test.sh          2>&1 | logger -t update-test
+
+	if [ -d "/root/prod" ]; then
+		cd /root/prod/pratilipi
+#		sudo bash /root/scripts/pratilipi/shell-scripts/update-prod.sh          2>&1 | logger -t update-prod
 	else
-		sudo mkdir -p /root/test
-		cd /root/test
-		git clone -b master https://github.com/Pratilipi/pratilipi.git          2>&1 | logger -t update-test
+		sudo mkdir -p /root/prod
+		cd /root/prod
+		git clone -b master https://github.com/Pratilipi/pratilipi.git          2>&1 | logger -t update-prod
+	fi
+
+	
+	if [ -d "/root/api" ]; then
+		cd /root/api/pratilipi
+#		sudo bash /root/scripts/pratilipi/shell-scripts/update-api.sh           2>&1 | logger -t update-api
+	else
+		sudo mkdir -p /root/api
+		cd /root/api
+		git clone -b master https://github.com/Pratilipi/pratilipi.git          2>&1 | logger -t update-api
+	fi
+
+
+	if [ -d "/root/android" ]; then
+		cd /root/android/pratilipi
+#		sudo bash /root/scripts/pratilipi/shell-scripts/update-android.sh       2>&1 | logger -t update-android
+	else
+		sudo mkdir -p /root/android
+		cd /root/android
+		git clone -b master https://github.com/Pratilipi/pratilipi.git          2>&1 | logger -t update-android
+	fi
+
+
+	if [ -d "/root/worker" ]; then
+		cd /root/worker/pratilipi
+#		sudo bash /root/scripts/pratilipi/shell-scripts/update-worker.sh        2>&1 | logger -t update-worker
+	else
+		sudo mkdir -p /root/worker
+		cd /root/worker
+		git clone -b master https://github.com/Pratilipi/pratilipi.git          2>&1 | logger -t update-worker
+	fi
+
+
+	if [ -d "/root/gamma" ]; then
+		cd /root/gamma/pratilipi
+		sudo bash /root/scripts/pratilipi/shell-scripts/update-gamma.sh         2>&1 | logger -t update-gamma
+	else
+		sudo mkdir -p /root/gamma
+		cd /root/gamma
+		git clone -b master https://github.com/Pratilipi/pratilipi.git          2>&1 | logger -t update-gamma
 	fi
 
 	
