@@ -7,12 +7,12 @@ do
 	logger -t ping "_CONTINUOUS_DEPLOYMENT_RUNNING_"
 
 
-	if [ $hour -eq 8 -a $minute -eq 0 ]; then
+	if [ $hour -eq 12 -a $minute -eq 0 ]; then
 		reboot
 	fi
 	
 	
-	if [ $hour -eq 20 -a $minute -eq 0 ]; then
+	if [ $hour -eq 0 -a $minute -eq 0 ]; then
 		cd /root/scripts/pratilipi
 		gsutil -m rm -r gs://backup.pratilipi.com/static.pratilipi.com/yyyy-mm-09          2>&1 | logger -t blobstore-cleanup
 		gsutil -m rm -r gs://backup.pratilipi.com/static.pratilipi.com/yyyy-mm-10          2>&1 | logger -t blobstore-cleanup
