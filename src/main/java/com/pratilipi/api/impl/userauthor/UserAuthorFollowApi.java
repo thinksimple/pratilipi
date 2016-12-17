@@ -96,6 +96,7 @@ public class UserAuthorFollowApi extends GenericApi {
 		Task task_2 = TaskQueueFactory.newTask()
 				.setUrl( "/user/process" )
 				.addParam( "userId", userId.toString() )
+				.addParam( "updateFollowsDoc", "true" )
 				.addParam( "updateUserAuthorStats", "true" );
 		TaskQueueFactory.getUserAuthorTaskQueue().addAll( task_1, task_2 );
 		

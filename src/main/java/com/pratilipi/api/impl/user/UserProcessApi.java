@@ -17,6 +17,7 @@ import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InvalidArgumentException;
+import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.UserSignUpSource;
 import com.pratilipi.common.type.UserState;
@@ -28,6 +29,7 @@ import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.UserEntity;
 import com.pratilipi.data.util.UserDataUtil;
+import com.pratilipi.data.util.UserDocUtil;
 import com.pratilipi.taskqueue.Task;
 import com.pratilipi.taskqueue.TaskQueueFactory;
 
@@ -47,6 +49,9 @@ public class UserProcessApi extends GenericApi {
 		private Long userId;
 
 		private Boolean validateData;
+		
+		private Boolean updateFollowsDoc;
+		
 		private Boolean updateUserAuthorStats;
 
 	}
@@ -97,7 +102,7 @@ public class UserProcessApi extends GenericApi {
 	
 	@Post
 	public GenericResponse post( PostRequest request )
-			throws InvalidArgumentException {
+			throws InvalidArgumentException, UnexpectedServerException {
 
 		if( request.validateData != null && request.validateData ) {
 			
@@ -183,6 +188,11 @@ public class UserProcessApi extends GenericApi {
 				
 			}
 
+		}
+		
+		
+		if( request.updateFollowsDoc != null && request.updateFollowsDoc ) {
+			UserDocUtil.updateUserFollows( request.userId );
 		}
 		
 		
