@@ -16,7 +16,7 @@ do
 
 	if [ -d "/root/prod" ]; then
 		cd /root/prod/pratilipi
-#		bash /root/scripts/pratilipi/shell-scripts/update-prod.sh               2>&1 | logger -t update-prod
+		bash /root/scripts/pratilipi/shell-scripts/continuous-deployment-update-prod.sh  2>&1 | logger -t update-prod
 	else
 		mkdir -p /root/prod
 		cd /root/prod
@@ -26,7 +26,7 @@ do
 	
 	if [ -d "/root/api" ]; then
 		cd /root/api/pratilipi
-#		bash /root/scripts/pratilipi/shell-scripts/update-api.sh                2>&1 | logger -t update-api
+		bash /root/scripts/pratilipi/shell-scripts/continuous-deployment-update-api.sh   2>&1 | logger -t update-api
 	else
 		mkdir -p /root/api
 		cd /root/api

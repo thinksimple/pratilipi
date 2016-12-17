@@ -1,3 +1,15 @@
+git remote update
+
+if [ $(git rev-parse HEAD) != $(git rev-parse origin) ]
+then
+	git fetch
+	git reset --hard origin/master
+	
+	# Cleaning up .git directory
+	git gc
+fi
+
+
 export TZ=Asia/Calcutta
 
 hour=$(date +%H)
@@ -10,10 +22,6 @@ if [ $hour -eq 11 -a $minute -eq 0 ]
 then
 	
 	git remote set-url origin https://antshpra:$1@github.com/Pratilipi/pratilipi.git
-	
-	git fetch
-	git reset --hard origin/master
-
 	
 	branch=$(date +%d-%b-%H-%M-Release)
 
