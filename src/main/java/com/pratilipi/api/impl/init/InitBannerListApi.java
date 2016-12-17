@@ -12,7 +12,6 @@ import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.data.client.InitBannerData;
 import com.pratilipi.data.util.InitDataUtil;
-import com.pratilipi.filter.UxModeFilter;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/init/banner/list" )
@@ -22,6 +21,8 @@ public class InitBannerListApi extends GenericApi {
 		
 		@Validate( required = true )
 		private Language language;
+		
+		private Boolean mini;
 		
 	}
 	
@@ -43,7 +44,9 @@ public class InitBannerListApi extends GenericApi {
 	
 	@Get
 	public GenericResponse get( GetRequest request ) {
-		return new Response( InitDataUtil.getInitBannerList( request.language, UxModeFilter.isBasicMode() ) );
+		return new Response( InitDataUtil.getInitBannerList(
+				request.language,
+				request.mini == null ? false : request.mini ) );
 	}
 	
 }
