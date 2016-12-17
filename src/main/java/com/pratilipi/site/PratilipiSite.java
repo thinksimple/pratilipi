@@ -644,7 +644,8 @@ public class PratilipiSite extends HttpServlet {
 	}
 
 	
-	private List<String> createFbOpenGraphTags( Long pratilipiId ) throws UnexpectedServerException {
+	private List<String> createFbOpenGraphTags( Long pratilipiId ) 
+			throws InsufficientAccessException, UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Page page = dataAccessor.getPage( PageType.PRATILIPI, pratilipiId );
