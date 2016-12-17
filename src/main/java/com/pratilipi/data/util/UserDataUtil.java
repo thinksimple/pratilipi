@@ -15,6 +15,7 @@ import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.UserCampaign;
+import com.pratilipi.common.type.UserFollowState;
 import com.pratilipi.common.type.UserSignUpSource;
 import com.pratilipi.common.type.UserState;
 import com.pratilipi.common.util.FacebookApi;
@@ -24,12 +25,14 @@ import com.pratilipi.common.util.PasswordUtil;
 import com.pratilipi.common.util.UserAccessUtil;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.DocAccessor;
 import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.User;
+import com.pratilipi.data.type.UserFollowsDoc;
 import com.pratilipi.email.EmailUtil;
 import com.pratilipi.filter.AccessTokenFilter;
 import com.pratilipi.filter.UxModeFilter;
@@ -657,21 +660,23 @@ public class UserDataUtil {
 	}
 	
 	
-	public static void updateUserAuthorStats( Long userId ) {
-		
+	public static void updateUserAuthorStats( Long userId ) throws UnexpectedServerException {
+
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
 		
 		User user = dataAccessor.getUser( userId );
-		if( user.getState() != UserState.REGISTERED && user.getState() != UserState.ACTIVE )
+		UserFollowsDoc followsDoc = docAccessor.getUserFollowsDoc( userId );
+		
+		if( user.getFollowCount().equals( followsDoc.getFollows( UserFollowState.FOLLOWING ).size() ) )
 			return;
-
 		
 		AuditLog auditLog = dataAccessor.newAuditLog(
 				AccessTokenFilter.getAccessToken(),
 				AccessType.USER_UPDATE,
 				user );
 
-		user.setFollowCount( dataAccessor.getUserAuthorFollowCount( userId, null ) );
+		user.setFollowCount( (long) followsDoc.getFollows( UserFollowState.FOLLOWING ).size() );
 		
 		user = dataAccessor.createOrUpdateUser( user, auditLog );
 		
