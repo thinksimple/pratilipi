@@ -18,6 +18,7 @@ import com.pratilipi.data.type.PratilipiContentDoc;
 import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
 import com.pratilipi.data.type.PratilipiMetaDoc;
 import com.pratilipi.data.type.PratilipiReviewsDoc;
+import com.pratilipi.data.type.UserAuthorDoc;
 import com.pratilipi.data.type.UserFollowingDoc;
 import com.pratilipi.data.type.UserPratilipiDoc;
 import com.pratilipi.data.type.doc.BatchProcessDocImpl;
@@ -28,6 +29,7 @@ import com.pratilipi.data.type.doc.PratilipiContentDocImpl;
 import com.pratilipi.data.type.doc.PratilipiGoogleAnalyticsDocImpl;
 import com.pratilipi.data.type.doc.PratilipiMetaDocImpl;
 import com.pratilipi.data.type.doc.PratilipiReviewsDocImpl;
+import com.pratilipi.data.type.doc.UserAuthorDocImpl;
 import com.pratilipi.data.type.doc.UserFollowingDocImpl;
 import com.pratilipi.data.type.doc.UserPratilipiDocImpl;
 
@@ -60,6 +62,13 @@ public class DocAccessorImpl implements DocAccessor {
 	public void save( Long processId, BatchProcessDoc processDoc ) throws UnexpectedServerException {
 		if( processId != null )
 			_save( "batch-process/" + processId, processDoc );
+	}
+	
+	
+	// UserAuthor Doc
+	
+	public UserAuthorDoc newUserAuthorDoc() {
+		return new UserAuthorDocImpl();
 	}
 	
 	

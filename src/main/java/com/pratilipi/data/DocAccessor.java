@@ -9,6 +9,7 @@ import com.pratilipi.data.type.PratilipiContentDoc;
 import com.pratilipi.data.type.PratilipiGoogleAnalyticsDoc;
 import com.pratilipi.data.type.PratilipiMetaDoc;
 import com.pratilipi.data.type.PratilipiReviewsDoc;
+import com.pratilipi.data.type.UserAuthorDoc;
 import com.pratilipi.data.type.UserFollowingDoc;
 import com.pratilipi.data.type.UserPratilipiDoc;
 
@@ -19,6 +20,8 @@ public interface DocAccessor {
 	BatchProcessDoc getBatchProcessDoc( Long batchProcessId ) throws UnexpectedServerException;
 	void save( Long processId, BatchProcessDoc batchProcessDoc ) throws UnexpectedServerException;
 	
+	// UserAuthor Doc
+	UserAuthorDoc newUserAuthorDoc();
 	
 	// UserPratilipi Doc
 	UserPratilipiDoc newUserPratilipiDoc();
