@@ -1,6 +1,8 @@
 package com.pratilipi.data.util;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -722,6 +724,47 @@ public class AuthorDataUtil {
 			searchAccessor.deleteAuthorDataIndex( authorId );
 		}
 		
+	}
+
+	public static List<AuthorData> getRecommendedAuthorList( Long userId, Language language, Integer resultCount ) {
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+
+		// Get the user followings
+		// TODO: Uncomment after Implementing the same
+//		List<Long> userFollowedauthorIds = UserDataUtil.getUserFollowedList( userId ); // UserId Might be 0L
+		List<Long> userFollowedauthorIds = new ArrayList<Long>();
+
+		// Get the total list of recommended authors
+		List<Long> recommendAuthors = dataAccessor.getRecommendAuthorIdList( language );
+
+		// Filter
+		for( Long authorId : userFollowedauthorIds )
+			recommendAuthors.remove( authorId );
+
+		// Edge case
+		resultCount = Math.min( resultCount, recommendAuthors.size() );
+
+		// Randomization based on hour
+		int chunkSize = ( recommendAuthors.size() / 12 ) + ( recommendAuthors.size() % 12 == 0 ? 0 : 1 );
+		int beginIndex = ( LocalDateTime.now().getHour() % 12 ) * chunkSize;
+		beginIndex = beginIndex % recommendAuthors.size();
+
+		List<Long> recommendAuthorsSubList = recommendAuthors.subList( beginIndex, Math.min( beginIndex + resultCount, recommendAuthors.size() - 1 ) );
+
+		int i = 0;
+		while( recommendAuthorsSubList.size() < resultCount )
+			recommendAuthorsSubList.add( recommendAuthors.get( i++ ) );
+
+		// Randomization on the subset of AuthorList
+		Collections.shuffle( recommendAuthorsSubList );
+
+		List<AuthorData> recommendAuthorData = new ArrayList<>( recommendAuthorsSubList.size() );
+		for( Long authorId : recommendAuthorsSubList )
+			recommendAuthorData.add( createAuthorData( dataAccessor.getAuthor( authorId ) ) );
+
+		return recommendAuthorData;
+
 	}
 
 }
