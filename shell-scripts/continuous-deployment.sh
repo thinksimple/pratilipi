@@ -7,6 +7,17 @@ do
 	logger -t ping "_CONTINUOUS_DEPLOYMENT_RUNNING_"
 
 
+	if [ $hour -eq 8 -a $minute -eq 0 ]; then
+		reboot
+	fi
+	
+	
+	if [ $hour -eq 20 -a $minute -eq 0 ]; then
+		cd /root/scripts/pratilipi
+		bash $scripts/blobstore-cleanup.sh                                      2>&1 | logger -t git-merge
+	fi
+
+
 	if [ -d "/root/scripts" ]; then
 		cd /root/scripts/pratilipi
 		bash $scripts/continuous-deployment-git-merge.sh $1                     2>&1 | logger -t git-merge
