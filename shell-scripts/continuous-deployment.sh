@@ -56,7 +56,7 @@ do
 
 	if [ -d "/root/gamma" ]; then
 		cd /root/gamma/pratilipi
-		bash /root/scripts/pratilipi/shell-scripts/update-gamma.sh              2>&1 | logger -t update-gamma
+		bash /root/scripts/pratilipi/shell-scripts/continuous-deployment-update-gamma.sh 2>&1 | logger -t update-gamma
 	else
 		mkdir -p /root/gamma
 		cd /root/gamma
