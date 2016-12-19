@@ -50,6 +50,15 @@ public enum NotificationType {
 	},
 	
 	
+	USER_PRATILIPI_RATING( true, "NOTIFICATION_RATING" ) { // Notification sent to the Author when a user rates his content.
+		@Override
+		public boolean isValid( Notification notif ) {
+			return DataAccessorFactory.getDataAccessor()
+					.getUserPratilipi( notif.getSourceId() )
+					.getReviewState() == UserReviewState.PUBLISHED;
+		}
+	},
+
 	USER_PRATILIPI_REVIEW( true, "NOTIFICATION_REVIEW" ) { // Notification sent to the Author when a user reviews his content.
 		@Override
 		public boolean isValid( Notification notif ) {
