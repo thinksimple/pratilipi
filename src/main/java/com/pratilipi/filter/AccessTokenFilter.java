@@ -58,12 +58,13 @@ public class AccessTokenFilter implements Filter {
 		HttpServletResponse response = ( HttpServletResponse ) resp;
 		
 		String requestUri = request.getRequestURI();
+		String userAgent = request.getHeader( "user-agent" );
 		
 		String accessTokenId = request.getParameter( RequestParameter.ACCESS_TOKEN.getName() );
 		accessTokenId = accessTokenId == null ? null : accessTokenId.trim();
 		AccessToken accessToken;
 
-		if( requestUri.equals( "/remote_api" ) ) {
+		if( requestUri.equals( "/remote_api" ) || ( userAgent != null && userAgent.equals( "Amazon CloudFront" ) ) ) {
 			
 			accessToken = null;
 			
