@@ -730,7 +730,7 @@ public class AuthorDataUtil {
 		
 	}
 
-	public static DataListCursorTuple<AuthorData> getRecommendedAuthorList( Long userId, Language language, String cursor, Integer resultCount ) 
+	public static DataListCursorTuple<AuthorData> getRecommendedAuthorList( Long userId, Language language, String after, Integer resultCount ) 
 			throws UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -769,11 +769,20 @@ public class AuthorDataUtil {
 		resultCount = Math.min( resultCount, recommendAuthors.size() );
 
 		// Edge case - cursor exceeding the size of list
-		int beginIndex = cursor != null ? Integer.parseInt( cursor ) : 0;
+		int beginIndex = 0;
+		if( after != null ) {
+			for( Long authorId : recommendAuthors ) {
+				beginIndex++;
+				if( after.equals( authorId ) )
+					break;
+			}
+		}
+
 		if( beginIndex > recommendAuthors.size() )
 			beginIndex = recommendAuthors.size();
 
-		List<Long> recommendAuthorsSubList = recommendAuthors.subList( beginIndex, Math.min( beginIndex + resultCount, recommendAuthors.size() - 1 ) );
+		List<Long> recommendAuthorsSubList = recommendAuthors.subList( beginIndex, 
+													Math.min( beginIndex + resultCount, recommendAuthors.size() - 1 ) );
 
 		// Randomization on the subset of AuthorList
 		Collections.shuffle( recommendAuthorsSubList );
@@ -782,7 +791,8 @@ public class AuthorDataUtil {
 		for( Long authorId : recommendAuthorsSubList )
 			recommendAuthorData.add( createAuthorData( dataAccessor.getAuthor( authorId ) ) );
 
-		return new DataListCursorTuple<AuthorData>( recommendAuthorData, Integer.toString( beginIndex + resultCount ) );
+		return new DataListCursorTuple<AuthorData>( recommendAuthorData, 
+				recommendAuthorsSubList.get( recommendAuthorsSubList.size() - 1 ).toString() );
 
 	}
 
