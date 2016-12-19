@@ -725,7 +725,7 @@ public class AuthorDataUtil {
 		
 	}
 
-	public static List<AuthorData> getRecommendedAuthorList( Long userId, Language language, Integer resultCount ) {
+	public static DataListCursorTuple<AuthorData> getRecommendedAuthorList( Long userId, Language language, String cursor, Integer resultCount ) {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
@@ -735,11 +735,20 @@ public class AuthorDataUtil {
 		List<Long> userFollowedauthorIds = new ArrayList<Long>();
 
 		// Get the total list of recommended authors
-		List<Long> recommendAuthors = dataAccessor.getAuthorIdListWithMaxFollowCount( language, null, null ).getDataList();
+		List<Long> recommendAuthors = new ArrayList<>();
+		Integer size = null;
 
-		// Filter
-		for( Long authorId : userFollowedauthorIds )
-			recommendAuthors.remove( authorId );
+		do {
+			DataListCursorTuple<Long> recommendAuthorsTuple = dataAccessor.getAuthorIdListWithMaxFollowCount( language, cursor, 1000 );
+			recommendAuthors.addAll( recommendAuthorsTuple.getDataList() );
+			cursor = recommendAuthorsTuple.getCursor();
+			size = recommendAuthorsTuple.getDataList().size();
+
+			// Filter
+			for( Long authorId : userFollowedauthorIds )
+				recommendAuthors.remove( authorId );
+
+		} while( recommendAuthors.size() < ( resultCount * 12 ) && size == 1000 );
 
 		// Edge case
 		resultCount = Math.min( resultCount, recommendAuthors.size() );
@@ -762,7 +771,7 @@ public class AuthorDataUtil {
 		for( Long authorId : recommendAuthorsSubList )
 			recommendAuthorData.add( createAuthorData( dataAccessor.getAuthor( authorId ) ) );
 
-		return recommendAuthorData;
+		return new DataListCursorTuple<AuthorData>( recommendAuthorData, cursor );
 
 	}
 

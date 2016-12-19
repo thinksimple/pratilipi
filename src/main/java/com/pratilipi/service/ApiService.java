@@ -11,6 +11,7 @@ import com.pratilipi.api.impl.author.AuthorCoverRemoveApi;
 import com.pratilipi.api.impl.author.AuthorImageApi;
 import com.pratilipi.api.impl.author.AuthorImageRemoveApi;
 import com.pratilipi.api.impl.author.AuthorListApi;
+import com.pratilipi.api.impl.author.AuthorRecommendApi;
 import com.pratilipi.api.impl.blogpost.BlogPostApi;
 import com.pratilipi.api.impl.blogpost.BlogPostListApi;
 import com.pratilipi.api.impl.comment.CommentApi;
@@ -102,6 +103,7 @@ public class ApiService extends GenericService {
 		ApiRegistry.register( AuthorImageRemoveApi.class );			// *.pratilipi.com
 		ApiRegistry.register( AuthorCoverApi.class );				// *.pratilipi.com & AWS CloudFront
 		ApiRegistry.register( AuthorCoverRemoveApi.class );			// *.pratilipi.com
+		ApiRegistry.register( AuthorRecommendApi.class );			// *.pratilipi.com
 		
 		ApiRegistry.register( EventApi.class );						// *.pratilipi.com
 		ApiRegistry.register( EventListApi.class );					// *.pratilipi.com
