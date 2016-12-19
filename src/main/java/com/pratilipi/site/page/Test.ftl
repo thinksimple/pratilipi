@@ -6,6 +6,6 @@
 	</head>
 	
 	<body>
-		Testing page! Yo!
+		${ authorList }
 	</body>
 </html>
