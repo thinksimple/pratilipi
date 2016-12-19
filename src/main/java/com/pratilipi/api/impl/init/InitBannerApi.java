@@ -26,7 +26,7 @@ public class InitBannerApi extends GenericApi {
 		private Language language;
 		
 		@Validate( required = true )
-		private String bannerId;
+		private String name;
 		
 		private Integer width;
 		
@@ -35,6 +35,9 @@ public class InitBannerApi extends GenericApi {
 	@SuppressWarnings("unused")
 	public static class Response extends GenericResponse {
 
+		@Deprecated
+		private String bannerId;
+		
 		private String title;
 		
 		private String imageUrl;
@@ -53,6 +56,7 @@ public class InitBannerApi extends GenericApi {
 			this.title = initBannerData.getTitle();
 			this.imageUrl = initBannerData.getImageUrl();
 			if( UxModeFilter.isAndroidApp() ) {
+				this.bannerId = "this-field-is-deprecated";
 				this.apiName = initBannerData.getApiName();
 				this.apiRequest = initBannerData.getApiRequest();
 			} else {
@@ -71,7 +75,7 @@ public class InitBannerApi extends GenericApi {
 		
 		BlobEntry blobEntry = InitDataUtil.getInitBanner(
 				request.language,
-				request.bannerId,
+				request.name,
 				request.width );
 		
 		return new GenericFileDownloadResponse(
