@@ -39,6 +39,7 @@ import com.pratilipi.api.impl.pratilipi.PratilipiListV1Api;
 import com.pratilipi.api.impl.pratilipi.PratilipiListV2Api;
 import com.pratilipi.api.impl.pratilipi.PratilipiV1Api;
 import com.pratilipi.api.impl.pratilipi.PratilipiV2Api;
+import com.pratilipi.api.impl.test.TestApi;
 import com.pratilipi.api.impl.user.UserApi;
 import com.pratilipi.api.impl.user.UserEmailApi;
 import com.pratilipi.api.impl.user.UserLoginApi;
@@ -61,6 +62,8 @@ import com.pratilipi.api.impl.vote.VoteApi;
 public class ApiService extends GenericService {
 	
 	static {
+		
+		ApiRegistry.register( TestApi.class );
 
 		ApiRegistry.register( InitV2Api.class );						// *.pratilipi.com
 		ApiRegistry.register( GenericBatchApi.class );				// *.pratilipi.com

@@ -8,10 +8,13 @@ import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
+import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.UserFollowState;
+import com.pratilipi.common.util.UserAccessUtil;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.type.UserAuthor;
+import com.pratilipi.filter.AccessTokenFilter;
 
 @SuppressWarnings("serial")
 @Bind( uri = "/test" )
@@ -30,6 +33,9 @@ public class TestApi extends GenericApi {
 
 	@Get
 	public GenericResponse get( GetRequest request ) {
+
+		if( ! UserAccessUtil.hasUserAccess( AccessTokenFilter.getAccessToken().getUserId(), null, AccessType.USER_ADD ) )
+			return new GenericResponse();
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
