@@ -25,6 +25,7 @@ import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.NotificationState;
 import com.pratilipi.common.type.NotificationType;
 import com.pratilipi.common.type.PratilipiState;
+import com.pratilipi.common.type.UserFollowState;
 import com.pratilipi.common.util.SystemProperty;
 import com.pratilipi.common.util.UserAccessUtil;
 import com.pratilipi.data.DataAccessor;
@@ -193,7 +194,7 @@ public class AuditLogProcessApi extends GenericApi {
 
 			UserAuthor userAuthor = userAuthors.get( userAuthorId );
 
-			if( ! userAuthor.isFollowing() )
+			if( userAuthor.getFollowState()  != UserFollowState.FOLLOWING )
 				continue;
 
 			_createUserAuthorFollowingNotifications( userAuthor, authors.get( userAuthor.getAuthorId() ) );
@@ -336,18 +337,18 @@ public class AuditLogProcessApi extends GenericApi {
 				NotificationType.AUTHOR_FOLLOW,
 				author.getId() );
 			
-		if( notification == null || ( userAuthor.isFollowing() && ! _isToday( notification.getCreationDate() ) ) )
+		if( notification == null || ( userAuthor.getFollowState() == UserFollowState.FOLLOWING && ! _isToday( notification.getCreationDate() ) ) )
 			notification = dataAccessor.newNotification(
 					author.getUserId(),
 					NotificationType.AUTHOR_FOLLOW,
 					author.getId() );
 
 		
-		if( userAuthor.isFollowing() && notification.addDataId( userAuthor.getUserId() ) ) {
+		if( userAuthor.getFollowState() == UserFollowState.FOLLOWING && notification.addDataId( userAuthor.getUserId() ) ) {
 			if( notification.getState() == NotificationState.READ )
 				notification.setState( NotificationState.UNREAD );
 			notification.setFcmPending( true );
-		} else if( ! userAuthor.isFollowing() && notification.removeDataId( userAuthor.getUserId() ) ) {
+		} else if( userAuthor.getFollowState() != UserFollowState.FOLLOWING && notification.removeDataId( userAuthor.getUserId() ) ) {
 			// Do nothing
 		} else {
 			return;

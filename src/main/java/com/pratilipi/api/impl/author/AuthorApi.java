@@ -22,6 +22,7 @@ import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.Gender;
 import com.pratilipi.common.type.Language;
+import com.pratilipi.common.type.UserFollowState;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.client.AuthorData;
@@ -516,7 +517,7 @@ public class AuthorApi extends GenericApi {
 		AuthorData authorData = AuthorDataUtil.createAuthorData( author, null, null );
 		
 		Response response = new Response( authorData );
-		response.setFollowing( userAuthor != null && userAuthor.isFollowing() );
+		response.setFollowing( userAuthor != null && userAuthor.getFollowState() == UserFollowState.FOLLOWING );
 		
 		return response;
 		
