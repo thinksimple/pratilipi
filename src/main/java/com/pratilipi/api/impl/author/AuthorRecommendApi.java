@@ -9,6 +9,7 @@ import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
+import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.client.AuthorData;
@@ -71,7 +72,8 @@ public class AuthorRecommendApi extends GenericApi {
 
 
 	@Get
-	public GenericResponse get( GetRequest request ) {
+	public GenericResponse get( GetRequest request ) 
+			throws UnexpectedServerException {
 
 		DataListCursorTuple<AuthorData> recommendedAuthorList = AuthorDataUtil.
 							getRecommendedAuthorList( AccessTokenFilter.getAccessToken().getUserId(), 
