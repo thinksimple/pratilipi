@@ -8,9 +8,11 @@ import com.googlecode.objectify.ObjectifyService;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.CommentState;
 import com.pratilipi.common.type.PratilipiState;
+import com.pratilipi.common.type.UserFollowState;
 import com.pratilipi.common.type.UserReviewState;
 import com.pratilipi.common.type.UserState;
 import com.pratilipi.common.type.VoteType;
+import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.type.AccessToken;
 import com.pratilipi.data.type.Author;
@@ -34,6 +36,13 @@ import com.pratilipi.taskqueue.Task;
 import com.pratilipi.taskqueue.TaskQueueFactory;
 
 public class DataStoreCleanupUtil {
+	
+	public static void migratePratilipi( String fromAuthorPageUri, String toAuthorPageUri ) {
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		migratePratilipi(
+			dataAccessor.getPage( fromAuthorPageUri ).getPrimaryContentId(),
+			dataAccessor.getPage( toAuthorPageUri ).getPrimaryContentId() );
+	}
 
 	public static void migratePratilipi( Long fromAuthorId, Long toAuthorId ) {
 		
@@ -88,6 +97,11 @@ public class DataStoreCleanupUtil {
 		
 	}
 
+	
+	public static void deleteUser( String userProfileUri, boolean preview ) {
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		delete( dataAccessor.getUser( dataAccessor.getAuthor( dataAccessor.getPage( userProfileUri ).getPrimaryContentId() ).getUserId() ), preview );
+	}
 	
 	
 	public static void delete( String email, boolean preview ) {
@@ -195,15 +209,15 @@ public class DataStoreCleanupUtil {
 
 		int followCount = 0;
 		for( UserAuthor userAuthor : userAuthorList )
-			if( userAuthor.isFollowing() )
+			if( userAuthor.getFollowState() == UserFollowState.FOLLOWING )
 				followCount++;
 		
 		System.out.println( "Follow ## " + followCount );
 
 		if( ! preview ) {
 			for( UserAuthor userAuthor : userAuthorList ) {
-				if( userAuthor.isFollowing() ) {
-					userAuthor.setFollowing( false );
+				if( userAuthor.getFollowState() != null ) {
+					userAuthor.setFollowState( null );
 					ObjectifyService.ofy().save().entity( userAuthor ).now(); // Save
 				}
 			}
@@ -299,15 +313,15 @@ public class DataStoreCleanupUtil {
 
 		int followerCount = 0;
 		for( UserAuthor userAuthor : userAuthorList )
-			if( userAuthor.isFollowing() )
+			if( userAuthor.getFollowState() == UserFollowState.FOLLOWING )
 				followerCount++;
 		
 		System.out.println( "Follower ## " + followerCount );
 
 		if( ! preview ) {
 			for( UserAuthor userAuthor : userAuthorList ) {
-				if( userAuthor.isFollowing() ) {
-					userAuthor.setFollowing( false );
+				if( userAuthor.getFollowState() != null ) {
+					userAuthor.setFollowState( null );
 					ObjectifyService.ofy().save().entity( userAuthor ).now(); // Save
 				}
 			}
