@@ -1,4 +1,4 @@
-<script src="http://0.ptlp.co/resource-all/firebase_3_6_1.js" async defer></script>
+<script src="http://0.ptlp.co/resource-all/firebase_3_6_1.js"></script>
 
 <script>
 	var config = {
