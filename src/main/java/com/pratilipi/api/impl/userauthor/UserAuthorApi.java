@@ -7,6 +7,7 @@ import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.UserFollowState;
 import com.pratilipi.data.client.UserAuthorData;
 import com.pratilipi.data.util.UserAuthorDataUtil;
 import com.pratilipi.filter.AccessTokenFilter;
@@ -33,9 +34,9 @@ public class UserAuthorApi extends GenericApi {
 		private Response() {}
 		
 		private Response( UserAuthorData userAuthorData ) {
-			this.following = userAuthorData.isFollowing();
-			if( userAuthorData.isFollowing() )
-				this.followingSinceMillis = userAuthorData.getFollowingSince().getTime();
+			this.following = userAuthorData.getFollowState() == UserFollowState.FOLLOWING;
+			if( this.following )
+				this.followingSinceMillis = userAuthorData.getFollowDate().getTime();
 		}
 		
 	}

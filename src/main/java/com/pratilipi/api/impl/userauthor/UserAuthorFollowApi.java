@@ -9,6 +9,7 @@ import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
+import com.pratilipi.common.type.UserFollowState;
 import com.pratilipi.data.client.UserAuthorData;
 import com.pratilipi.data.util.UserAuthorDataUtil;
 import com.pratilipi.filter.AccessTokenFilter;
@@ -53,7 +54,7 @@ public class UserAuthorFollowApi extends GenericApi {
 		Response( UserAuthorData userAuthorData ) {
 			if( userAuthorData != null ) {
 				this.authorId = userAuthorData.getAuthorId();
-				this.following = userAuthorData.isFollowing();
+				this.following = userAuthorData.getFollowState() == UserFollowState.FOLLOWING;
 			}
 		}
 		
@@ -71,8 +72,8 @@ public class UserAuthorFollowApi extends GenericApi {
 	
 	@Get
 	public Response get( GetRequest request ) {
-		UserAuthorData userAuthorData = UserAuthorDataUtil.getUserAuthor( 
-				AccessTokenFilter.getAccessToken().getUserId(), 
+		UserAuthorData userAuthorData = UserAuthorDataUtil.getUserAuthor(
+				AccessTokenFilter.getAccessToken().getUserId(),
 				request.authorId );
 		return new Response( userAuthorData );
 	}
@@ -87,7 +88,7 @@ public class UserAuthorFollowApi extends GenericApi {
 		UserAuthorData userAuthorData = UserAuthorDataUtil.saveUserAuthorFollow(
 				userId,
 				request.authorId,
-				request.following );
+				request.following ? UserFollowState.FOLLOWING : UserFollowState.UNFOLLOWED );
 		
 		Task task_1 = TaskQueueFactory.newTask()
 				.setUrl( "/author/process" )
