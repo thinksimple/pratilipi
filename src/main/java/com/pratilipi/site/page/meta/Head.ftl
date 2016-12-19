@@ -17,7 +17,8 @@
 <#include "GoogleAnalytics.ftl">
 
 <#-- External dependencies -->
-<script src='http://0.ptlp.co/resource-all/jquery.bootstrap.polymer.firebase.jsapi.compressed.js'></script>
+<script src="http://0.ptlp.co/resource-all/jquery_3_1_1.bootstrap_3_3_7.webcomponents_lite.js"></script>
+<#--<script src='http://0.ptlp.co/resource-all/jquery.bootstrap.polymer.firebase.jsapi.compressed.js'></script>-->
 <link rel='stylesheet' href='http://1.ptlp.co/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>
 
 <#-- Polymer Dependencies -->
