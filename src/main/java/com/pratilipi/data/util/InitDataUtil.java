@@ -38,28 +38,28 @@ public class InitDataUtil {
 
 		InitBannerDoc[] initBannerDocs = new InitBannerDoc[] {
 
-				docAccessor.newInitBannerDoc( null, 
+				docAccessor.newInitBannerDoc( "November Hits", 
 						"pratilipi-hindi-carousel-39.jpg", 
 						"pratilipi-hindi-carousel-39-small.jpg", 
 						"/november-hits",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"HINDI\", \"state\":\"PUBLISHED\", \"listName\":\"november-hits\" }", JsonElement.class ).getAsJsonObject() ),
 
-				docAccessor.newInitBannerDoc( null, 
+				docAccessor.newInitBannerDoc( "सस्पेंस और थ्रिलर कथाए", 
 						"pratilipi-hindi-carousel-40.jpg", 
 						"pratilipi-hindi-carousel-40-small.jpg", 
 						"/suspense-aur-thriller",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"HINDI\", \"state\":\"PUBLISHED\", \"listName\":\"suspense-aur-thriller\" }", JsonElement.class ).getAsJsonObject() ),
 
-				docAccessor.newInitBannerDoc( null, 
+				docAccessor.newInitBannerDoc( "प्रेम कथाएं", 
 						"pratilipi-hindi-carousel-41.jpg", 
 						"pratilipi-hindi-carousel-41-small.jpg", 
 						"/lovestories",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"HINDI\", \"state\":\"PUBLISHED\", \"listName\":\"lovestories\" }", JsonElement.class ).getAsJsonObject() ),
 						
-				docAccessor.newInitBannerDoc( null, 
+				docAccessor.newInitBannerDoc( "Vyastata", 
 						"pratilipi-hindi-carousel-42.jpg", 
 						"pratilipi-hindi-carousel-42-small.jpg", 
 						"/vyastata",
@@ -75,35 +75,35 @@ public class InitDataUtil {
 		
 		initBannerDocs = new InitBannerDoc[] {
 
-				docAccessor.newInitBannerDoc( null, 
+				docAccessor.newInitBannerDoc( "November Hits", 
 						"pratilipi-gujarati-carousel-41.jpg", 
 						"pratilipi-gujarati-carousel-41-small.jpg", 
 						"/november-hits",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"GUJARATI\", \"state\":\"PUBLISHED\", \"listName\":\"november-hits\" }", JsonElement.class ).getAsJsonObject() ),
 
-				docAccessor.newInitBannerDoc( null, 
+				docAccessor.newInitBannerDoc( "રહસ્યમય અને રોમાંચક વાર્તાઓ", 
 						"pratilipi-gujarati-carousel-37.jpg", 
 						"pratilipi-gujarati-carousel-37-small.jpg", 
 						"/rahasyamay-ane-romanchak",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"GUJARATI\", \"state\":\"PUBLISHED\", \"listName\":\"rahasyamay-ane-romanchak\" }", JsonElement.class ).getAsJsonObject() ),
 
-				docAccessor.newInitBannerDoc( null, 
+				docAccessor.newInitBannerDoc( "રોમાંસ વાર્તાઓ", 
 						"pratilipi-gujarati-carousel-38.jpg", 
 						"pratilipi-gujarati-carousel-38-small.jpg", 
 						"/romance",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"GUJARATI\", \"state\":\"PUBLISHED\", \"listName\":\"romance\" }", JsonElement.class ).getAsJsonObject() ),
 
-				docAccessor.newInitBannerDoc( null, 
+				docAccessor.newInitBannerDoc( "Five Minutes Story", 
 						"pratilipi-gujarati-carousel-39.jpg", 
 						"pratilipi-gujarati-carousel-39-small.jpg", 
 						"/five-minutes-story",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"GUJARATI\", \"state\":\"PUBLISHED\", \"listName\":\"five-minutes-story\" }", JsonElement.class ).getAsJsonObject() ),
 
-				docAccessor.newInitBannerDoc( null, 
+				docAccessor.newInitBannerDoc( "ફિલ્મ અને મ્યુઝીક", 
 						"pratilipi-gujarati-carousel-40.jpg", 
 						"pratilipi-gujarati-carousel-40-small.jpg", 
 						"/film-and-music",
@@ -119,28 +119,28 @@ public class InitDataUtil {
 		
 		initBannerDocs = new InitBannerDoc[] {
 
-				docAccessor.newInitBannerDoc( null, 
+				docAccessor.newInitBannerDoc( "ஒரே ஒரு ஊர்ல", 
 						"pratilipi-tamil-carousel-19.jpg", 
 						"pratilipi-tamil-carousel-19-small.jpg", 
 						"/event/ore-oru-oorla",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"TAMIL\", \"state\":\"PUBLISHED\", \"eventId\":5132634108723200 }", JsonElement.class ).getAsJsonObject() ),
 
-				docAccessor.newInitBannerDoc( null, 
+				docAccessor.newInitBannerDoc( "காதல்", 
 						"pratilipi-tamil-carousel-20.jpg", 
 						"pratilipi-tamil-carousel-20-small.jpg", 
 						"/romance",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"TAMIL\", \"state\":\"PUBLISHED\", \"listName\":\"romance\" }", JsonElement.class ).getAsJsonObject() ),
 
-				docAccessor.newInitBannerDoc( null, 
+				docAccessor.newInitBannerDoc( "நகைச்சுவை", 
 						"pratilipi-tamil-carousel-21.jpg", 
 						"pratilipi-tamil-carousel-21-small.jpg", 
 						"/humour",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"TAMIL\", \"state\":\"PUBLISHED\", \"listName\":\"humour\" }", JsonElement.class ).getAsJsonObject() ),
 
-				docAccessor.newInitBannerDoc( null, 
+				docAccessor.newInitBannerDoc( "மர்மம் / திகில்", 
 						"pratilipi-tamil-carousel-17.jpg", 
 						"pratilipi-tamil-carousel-17-small.jpg", 
 						"/horror",
@@ -156,28 +156,28 @@ public class InitDataUtil {
 		
 		initBannerDocs = new InitBannerDoc[] {
 
-				docAccessor.newInitBannerDoc( null, 
+				docAccessor.newInitBannerDoc( "November Hit", 
 						"pratilipi-marathi-carousel-34.jpg", 
 						"pratilipi-marathi-carousel-34-small.jpg", 
 						"/november-hit",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"MARATHI\", \"state\":\"PUBLISHED\", \"listName\":\"november-hit\" }", JsonElement.class ).getAsJsonObject() ),
 
-				docAccessor.newInitBannerDoc( null, 
+				docAccessor.newInitBannerDoc( "रहस्य कथा", 
 						"pratilipi-marathi-carousel-35.jpg", 
 						"pratilipi-marathi-carousel-35-small.jpg", 
 						"/rahasyakatha",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"MARATHI\", \"state\":\"PUBLISHED\", \"listName\":\"rahasyakatha\" }", JsonElement.class ).getAsJsonObject() ),
 
-				docAccessor.newInitBannerDoc( null, 
+				docAccessor.newInitBannerDoc( "प्रेम कथा", 
 						"pratilipi-marathi-carousel-36.jpg", 
 						"pratilipi-marathi-carousel-36-small.jpg", 
 						"/lovestories",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"MARATHI\", \"state\":\"PUBLISHED\", \"listName\":\"lovestories\" }", JsonElement.class ).getAsJsonObject() ),
 
-				docAccessor.newInitBannerDoc( null, 
+				docAccessor.newInitBannerDoc( "Five Minutes Read", 
 						"pratilipi-marathi-carousel-37.jpg", 
 						"pratilipi-marathi-carousel-37-small.jpg", 
 						"/five-minutes-read",
@@ -193,28 +193,28 @@ public class InitDataUtil {
 		
 		initBannerDocs = new InitBannerDoc[] {
 
-				docAccessor.newInitBannerDoc( null, 
+				docAccessor.newInitBannerDoc( "ഒരു കഥ പറയാ", 
 						"pratilipi-malayalam-carousel-15.jpg", 
 						"pratilipi-malayalam-carousel-15-small.jpg", 
 						"/event/tellastory",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"MALAYALAM\", \"state\":\"PUBLISHED\", \"eventId\":4557681508483072 }", JsonElement.class ).getAsJsonObject() ),
 
-				docAccessor.newInitBannerDoc( null, 
+				docAccessor.newInitBannerDoc( "5 മിനിറ്റ് കഥകള്‍", 
 						"pratilipi-malayalam-carousel-16.jpg", 
 						"pratilipi-malayalam-carousel-16-small.jpg", 
 						"/fiveminute",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"MALAYALAM\", \"state\":\"PUBLISHED\", \"listName\":\"fiveminute\" }", JsonElement.class ).getAsJsonObject() ),
 
-				docAccessor.newInitBannerDoc( null, 
+				docAccessor.newInitBannerDoc( "പ്രണയം", 
 						"pratilipi-malayalam-carousel-17.jpg", 
 						"pratilipi-malayalam-carousel-17-small.jpg", 
 						"/love",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"MALAYALAM\", \"state\":\"PUBLISHED\", \"listName\":\"love\" }", JsonElement.class ).getAsJsonObject() ),
 
-				docAccessor.newInitBannerDoc( null, 
+				docAccessor.newInitBannerDoc( "കുഞ്ഞിക്കഥകള്‍", 
 						"pratilipi-malayalam-carousel-18.jpg", 
 						"pratilipi-malayalam-carousel-18-small.jpg", 
 						"/two-minute",
@@ -230,35 +230,35 @@ public class InitDataUtil {
 		
 		initBannerDocs = new InitBannerDoc[] {
 
-				docAccessor.newInitBannerDoc( null, 
+				docAccessor.newInitBannerDoc( "রহস্যগল্প", 
 						"pratilipi-bengali-carousel-35.jpg", 
 						"pratilipi-bengali-carousel-35-small.jpg", 
 						"/rahashyogalpo",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"BENGALI\", \"state\":\"PUBLISHED\", \"listName\":\"rahashyogalpo\" }", JsonElement.class ).getAsJsonObject() ),
 
-				docAccessor.newInitBannerDoc( null, 
+				docAccessor.newInitBannerDoc( "November Hits", 
 						"pratilipi-bengali-carousel-36.jpg", 
 						"pratilipi-bengali-carousel-36-small.jpg", 
 						"/november-hits",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"BENGALI\", \"state\":\"PUBLISHED\", \"listName\":\"november-hits\" }", JsonElement.class ).getAsJsonObject() ),
 
-				docAccessor.newInitBannerDoc( null, 
+				docAccessor.newInitBannerDoc( "প্রেমকাহিনী", 
 						"pratilipi-bengali-carousel-37.jpg", 
 						"pratilipi-bengali-carousel-37-small.jpg", 
 						"/premkahini",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"BENGALI\", \"state\":\"PUBLISHED\", \"listName\":\"premkahini\" }", JsonElement.class ).getAsJsonObject() ),
 
-				docAccessor.newInitBannerDoc( null, 
+				docAccessor.newInitBannerDoc( "A lot in few minutes", 
 						"pratilipi-bengali-carousel-38.jpg", 
 						"pratilipi-bengali-carousel-38-small.jpg", 
 						"/a-lot-in-few-minutes",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"BENGALI\", \"state\":\"PUBLISHED\", \"listName\":\"a-lot-in-few-minutes\" }", JsonElement.class ).getAsJsonObject() ),
 
-				docAccessor.newInitBannerDoc( null, 
+				docAccessor.newInitBannerDoc( "Nohi daanob nohi mahamaanob", 
 						"pratilipi-bengali-carousel-34.jpg", 
 						"pratilipi-bengali-carousel-34-small.jpg", 
 						"/event/nohi-daanob-nohi-mahamaanob",
@@ -274,28 +274,28 @@ public class InitDataUtil {
 		
 		initBannerDocs = new InitBannerDoc[] {
 
-				docAccessor.newInitBannerDoc( null, 
+				docAccessor.newInitBannerDoc( "ప్రేమ", 
 						"pratilipi-telugu-carousel-21.jpg", 
 						"pratilipi-telugu-carousel-21-small.jpg", 
 						"/love",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"TELUGU\", \"state\":\"PUBLISHED\", \"listName\":\"love\" }", JsonElement.class ).getAsJsonObject() ),
 
-				docAccessor.newInitBannerDoc( null, 
+				docAccessor.newInitBannerDoc( "మినీకథలు", 
 						"pratilipi-telugu-carousel-22.jpg", 
 						"pratilipi-telugu-carousel-22-small.jpg", 
 						"/ministories",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"TELUGU\", \"state\":\"PUBLISHED\", \"listName\":\"ministories\" }", JsonElement.class ).getAsJsonObject() ),
 
-				docAccessor.newInitBannerDoc( null, 
+				docAccessor.newInitBannerDoc( "అయిదు నిమిషాల కథలు", 
 						"pratilipi-telugu-carousel-23.jpg", 
 						"pratilipi-telugu-carousel-23-small.jpg", 
 						"/fivemin",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"TELUGU\", \"state\":\"PUBLISHED\", \"listName\":\"fivemin\" }", JsonElement.class ).getAsJsonObject() ),
 
-				docAccessor.newInitBannerDoc( null, 
+				docAccessor.newInitBannerDoc( "జీవితం", 
 						"pratilipi-telugu-carousel-18.jpg", 
 						"pratilipi-telugu-carousel-18-small.jpg", 
 						"/life",
@@ -311,28 +311,28 @@ public class InitDataUtil {
 		
 		initBannerDocs = new InitBannerDoc[] {
 
-				docAccessor.newInitBannerDoc( null, 
+				docAccessor.newInitBannerDoc( "ಸಿನಿಮಾ", 
 						"pratilipi-kannada-carousel-09.jpg", 
 						"pratilipi-kannada-carousel-09-small.jpg", 
 						"/cinema",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"KANNADA\", \"state\":\"PUBLISHED\", \"listName\":\"cinema\" }", JsonElement.class ).getAsJsonObject() ),
 
-				docAccessor.newInitBannerDoc( null, 
+				docAccessor.newInitBannerDoc( "ಸಮಾಜ", 
 						"pratilipi-kannada-carousel-10.jpg", 
 						"pratilipi-kannada-carousel-10-small.jpg", 
 						"/society",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"KANNADA\", \"state\":\"PUBLISHED\", \"listName\":\"society\" }", JsonElement.class ).getAsJsonObject() ),
 
-				docAccessor.newInitBannerDoc( null, 
+				docAccessor.newInitBannerDoc( "ಮಹಿಳೆ", 
 						"pratilipi-kannada-carousel-11.jpg", 
 						"pratilipi-kannada-carousel-11-small.jpg", 
 						"/women",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"KANNADA\", \"state\":\"PUBLISHED\", \"listName\":\"women\" }", JsonElement.class ).getAsJsonObject() ),
 
-				docAccessor.newInitBannerDoc( null, 
+				docAccessor.newInitBannerDoc( "ಕನ್ನಡ-ಕನ್ನಡಿಗ-ಕರ್ನಾಟಕ", 
 						"pratilipi-kannada-carousel-12.jpg", 
 						"pratilipi-kannada-carousel-12-small.jpg", 
 						"/event/kr",
