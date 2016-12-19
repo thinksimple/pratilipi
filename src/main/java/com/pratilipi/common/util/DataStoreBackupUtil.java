@@ -136,6 +136,7 @@ public class DataStoreBackupUtil {
 		int count = 0;
 		QueryResultIterator<AuthorEntity> itr = ObjectifyService.ofy().load()
 				.type( AuthorEntity.class )
+				.chunk( 1000 )
 				.iterator();
 		while( itr.hasNext() ) {
 			Author author = itr.next();
