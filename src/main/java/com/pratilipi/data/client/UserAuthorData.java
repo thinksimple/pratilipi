@@ -2,6 +2,8 @@ package com.pratilipi.data.client;
 
 import java.util.Date;
 
+import com.pratilipi.common.type.UserFollowState;
+
 public class UserAuthorData {
 
 	private String userAuthorId;
@@ -13,6 +15,7 @@ public class UserAuthorData {
 	private Boolean following;
 	private boolean hasFollowing;
 
+	private UserFollowState state;
 	private Long followingSinceMillis;
 
 	
@@ -52,6 +55,14 @@ public class UserAuthorData {
 	
 	public boolean hasFollowing() {
 		return hasFollowing;
+	}
+
+	public UserFollowState getState() {
+		return state;
+	}
+
+	public void setState( UserFollowState state ) {
+		this.state = state;
 	}
 
 	public Date getFollowingSince() {
