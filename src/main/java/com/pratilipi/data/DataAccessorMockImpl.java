@@ -763,6 +763,12 @@ public class DataAccessorMockImpl implements DataAccessor {
 		return userAuthor;
 	}
 	
+	@Override
+	public List<UserAuthor> createOrUpdateUserAuthorList( List<UserAuthor> userAuthorList ) {
+		// TODO: Implementation
+		return null;
+	}
+	
 
 	// curated/home.<lang>
 	

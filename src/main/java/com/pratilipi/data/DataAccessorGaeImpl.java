@@ -1529,6 +1529,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		( (UserAuthorEntity) userAuthor ).setId( userAuthor.getUserId() + "-" + userAuthor.getAuthorId() );
 		return createOrUpdateEntity( userAuthor, auditLog );
 	}
+
+	@Override
+	public List<UserAuthor> createOrUpdateUserAuthorList( List<UserAuthor> userAuthorList ) {
+		return createOrUpdateEntityList( userAuthorList );
+	}
 	
 	
 	// curated/home.<lang>

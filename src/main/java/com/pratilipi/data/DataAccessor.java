@@ -158,6 +158,7 @@ public interface DataAccessor {
 	DataListCursorTuple<UserAuthor> getUserAuthorList( Long userId, Long authorId, String cursor, Integer offset, Integer resultCount );
 	DataListIterator<UserAuthor> getUserAuthorListIterator( Long userId, Long authorId, String cursor, Integer offset, Integer resultCount );
 	UserAuthor createOrUpdateUserAuthor( UserAuthor userAuthor, AuditLog auditLog );
+	List<UserAuthor> createOrUpdateUserAuthorList( List<UserAuthor> userAuthorList );
 
 
 	// curated/home.<lang>
