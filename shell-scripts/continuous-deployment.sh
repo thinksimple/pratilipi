@@ -15,17 +15,6 @@ do
 	logger -t ping "_CONTINUOUS_DEPLOYMENT_RUNNING_"
 
 
-	if [ $hour -eq 8 -a $minute -eq 0 ]; then
-		reboot
-	fi
-	
-	
-	if [ $hour -eq 21 -a $minute -eq 0 ]; then
-		cd ~
-		gsutil -m rm -r gs://backup.pratilipi.com/static.pratilipi.com/yyyy-mm-$(date +%d) 2>&1 | logger -t blobstore-cleanup &
-	fi
-
-
 	if [ -d "/root/scripts" ]; then
 		cd /root/scripts/pratilipi
 		bash $scripts/continuous-deployment-git-merge.sh $1                     2>&1 | logger -t git-merge
