@@ -7,7 +7,6 @@ import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
-import com.googlecode.objectify.condition.IfNotNull;
 import com.pratilipi.common.type.UserFollowState;
 import com.pratilipi.data.type.UserAuthor;
 
@@ -22,13 +21,6 @@ public class UserAuthorEntity implements UserAuthor {
 	private Long USER_ID;
 	@Index
 	private Long AUTHOR_ID;
-
-	@Deprecated
-	@Index( IfNotNull.class )
-	private Boolean FOLLOWING;
-	@Deprecated
-	@Index( IfNotNull.class )
-	private Date FOLLOWING_SINCE;
 
 	@Index
 	private UserFollowState FOLLOW_STATE;
@@ -89,35 +81,21 @@ public class UserAuthorEntity implements UserAuthor {
 	
 	@Override
 	public UserFollowState getFollowState() {
-		if( FOLLOW_STATE == null && FOLLOWING != null )
-			FOLLOW_STATE = FOLLOWING ? UserFollowState.FOLLOWING : UserFollowState.UNFOLLOWED; 
 		return FOLLOW_STATE;
 	}
 
 	@Override
 	public void setFollowState( UserFollowState state ) {
-		this.FOLLOWING = null;
-		switch( state ) {
-			case FOLLOWING:
-				this.FOLLOWING = true; break;
-			case UNFOLLOWED:
-				this.FOLLOWING = false; break;
-			case IGNORED:
-				this.FOLLOWING = null; break;
-		}
 		this.FOLLOW_STATE = state;
 	}
 	
 	@Override
 	public Date getFollowDate() {
-		if( FOLLOW_DATE == null )
-			FOLLOW_DATE = FOLLOWING_SINCE;
 		return FOLLOW_DATE;
 	}
 	
 	@Override
 	public void setFollowDate( Date date ) {
-		this.FOLLOWING_SINCE = null;
 		this.FOLLOW_DATE = date;
 	}
 
