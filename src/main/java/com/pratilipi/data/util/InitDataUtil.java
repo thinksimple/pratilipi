@@ -311,33 +311,33 @@ public class InitDataUtil {
 		
 		initBannerDocs = new InitBannerDoc[] {
 
+				docAccessor.newInitBannerDoc( "ಪ್ರೀತಿ", 
+						"pratilipi-kannada-carousel-13.jpg", 
+						"pratilipi-kannada-carousel-13-small.jpg", 
+						"/love",
+						"PratilipiListApi",
+						gson.fromJson( "{ \"language\":\"KANNADA\", \"state\":\"PUBLISHED\", \"listName\":\"love\" }", JsonElement.class ).getAsJsonObject() ),
+
+				docAccessor.newInitBannerDoc( "ವಿಜ್ಞಾನ", 
+						"pratilipi-kannada-carousel-14.jpg", 
+						"pratilipi-kannada-carousel-14-small.jpg", 
+						"/science",
+						"PratilipiListApi",
+						gson.fromJson( "{ \"language\":\"KANNADA\", \"state\":\"PUBLISHED\", \"listName\":\"science\" }", JsonElement.class ).getAsJsonObject() ),
+
+				docAccessor.newInitBannerDoc( "ಸ್ಫೂರ್ತಿದಾಯಕ", 
+						"pratilipi-kannada-carousel-15.jpg", 
+						"pratilipi-kannada-carousel-15-small.jpg", 
+						"/inspirational",
+						"PratilipiListApi",
+						gson.fromJson( "{ \"language\":\"KANNADA\", \"state\":\"PUBLISHED\", \"listName\":inspirational }", JsonElement.class ).getAsJsonObject() ),
+
 				docAccessor.newInitBannerDoc( "ಸಿನಿಮಾ", 
 						"pratilipi-kannada-carousel-09.jpg", 
 						"pratilipi-kannada-carousel-09-small.jpg", 
 						"/cinema",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"KANNADA\", \"state\":\"PUBLISHED\", \"listName\":\"cinema\" }", JsonElement.class ).getAsJsonObject() ),
-
-				docAccessor.newInitBannerDoc( "ಸಮಾಜ", 
-						"pratilipi-kannada-carousel-10.jpg", 
-						"pratilipi-kannada-carousel-10-small.jpg", 
-						"/society",
-						"PratilipiListApi",
-						gson.fromJson( "{ \"language\":\"KANNADA\", \"state\":\"PUBLISHED\", \"listName\":\"society\" }", JsonElement.class ).getAsJsonObject() ),
-
-				docAccessor.newInitBannerDoc( "ಮಹಿಳೆ", 
-						"pratilipi-kannada-carousel-11.jpg", 
-						"pratilipi-kannada-carousel-11-small.jpg", 
-						"/women",
-						"PratilipiListApi",
-						gson.fromJson( "{ \"language\":\"KANNADA\", \"state\":\"PUBLISHED\", \"listName\":\"women\" }", JsonElement.class ).getAsJsonObject() ),
-
-				docAccessor.newInitBannerDoc( "ಕನ್ನಡ-ಕನ್ನಡಿಗ-ಕರ್ನಾಟಕ", 
-						"pratilipi-kannada-carousel-12.jpg", 
-						"pratilipi-kannada-carousel-12-small.jpg", 
-						"/event/kr",
-						"PratilipiListApi",
-						gson.fromJson( "{ \"language\":\"KANNADA\", \"state\":\"PUBLISHED\", \"eventId\":6530871927504896 }", JsonElement.class ).getAsJsonObject() ),
 
 		};
 			
