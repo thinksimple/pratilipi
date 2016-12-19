@@ -18,22 +18,9 @@ public interface UserAuthor extends GenericOfyType {
 	void setAuthorId( Long authorId );
 
 
-	@Deprecated
-	Boolean isFollowing();
+	UserFollowState getFollowState();
 	
-	@Deprecated
-	void setFollowing( Boolean isFollowing );
-	
-	@Deprecated
-	Date getFollowingSince();
-	
-	@Deprecated
-	void setFollowingSince( Date followingSince );
-
-	
-	UserFollowState getState();
-	
-	void setState( UserFollowState state );
+	void setFollowState( UserFollowState state );
 
 	Date getFollowDate();
 	

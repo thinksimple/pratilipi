@@ -12,11 +12,10 @@ public class UserAuthorData {
 	
 	private Long authorId;
 	
-	private Boolean following;
-	private boolean hasFollowing;
-
-	private UserFollowState state;
-	private Long followingSinceMillis;
+	private UserFollowState followState;
+	private boolean hasFollowState;
+	
+	private Long followDateMillis;
 
 	
 	public String getId() {
@@ -44,33 +43,26 @@ public class UserAuthorData {
 	}
 
 	
-	public Boolean isFollowing() {
-		return following;
+	public UserFollowState getFollowState() {
+		return followState;
 	}
 
-	public void setFollowing( Boolean following ) {
-		this.following = following;
-		this.hasFollowing = true;
+	public void setFollowState( UserFollowState state ) {
+		this.followState = state;
+		this.hasFollowState = true;
 	}
 	
-	public boolean hasFollowing() {
-		return hasFollowing;
+	public boolean hasFollowState() {
+		return hasFollowState;
 	}
 
-	public UserFollowState getState() {
-		return state;
-	}
 
-	public void setState( UserFollowState state ) {
-		this.state = state;
-	}
-
-	public Date getFollowingSince() {
-		return followingSinceMillis == null ? null : new Date( followingSinceMillis );
+	public Date getFollowDate() {
+		return followDateMillis == null ? null : new Date( followDateMillis );
 	}
 
 	public void setFollowingSince( Date followingSince ) {
-		followingSinceMillis = followingSince == null ? null : followingSince.getTime();
+		followDateMillis = followingSince == null ? null : followingSince.getTime();
 	}
 
 }

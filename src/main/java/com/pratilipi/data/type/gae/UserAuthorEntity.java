@@ -87,34 +87,15 @@ public class UserAuthorEntity implements UserAuthor {
 	}
 	
 	
-	public Boolean isFollowing() {
-		return FOLLOW_STATE == null
-				? ( FOLLOWING == null ? false : FOLLOWING )
-				: FOLLOW_STATE == UserFollowState.FOLLOWING;
-	}
-	
-	public void setFollowing( Boolean isFollowing ) {
-		this.FOLLOWING = null;
-		this.FOLLOW_STATE = isFollowing ? UserFollowState.FOLLOWING : UserFollowState.UNFOLLOWED;
-	}
-
-	public Date getFollowingSince() {
-		return FOLLOW_DATE == null ? FOLLOWING_SINCE : FOLLOW_DATE;
-	}
-	
-	public void setFollowingSince( Date followingSince ) {
-		this.FOLLOWING_SINCE = null;
-		this.FOLLOW_DATE = followingSince;
-	}
-	
-	
-	public UserFollowState getState() {
+	@Override
+	public UserFollowState getFollowState() {
 		if( FOLLOW_STATE == null && FOLLOWING != null )
 			FOLLOW_STATE = FOLLOWING ? UserFollowState.FOLLOWING : UserFollowState.UNFOLLOWED; 
 		return FOLLOW_STATE;
 	}
 
-	public void setState( UserFollowState state ) {
+	@Override
+	public void setFollowState( UserFollowState state ) {
 		this.FOLLOWING = null;
 		switch( state ) {
 			case FOLLOWING:
@@ -127,12 +108,14 @@ public class UserAuthorEntity implements UserAuthor {
 		this.FOLLOW_STATE = state;
 	}
 	
+	@Override
 	public Date getFollowDate() {
 		if( FOLLOW_DATE == null )
 			FOLLOW_DATE = FOLLOWING_SINCE;
 		return FOLLOW_DATE;
 	}
 	
+	@Override
 	public void setFollowDate( Date date ) {
 		this.FOLLOWING_SINCE = null;
 		this.FOLLOW_DATE = date;
