@@ -24,7 +24,7 @@ public class UserAuthorEntity implements UserAuthor {
 	private Long AUTHOR_ID;
 
 	@Deprecated
-	@Index
+	@Index( IfNotNull.class )
 	private Boolean FOLLOWING;
 	@Deprecated
 	@Index( IfNotNull.class )
@@ -94,7 +94,7 @@ public class UserAuthorEntity implements UserAuthor {
 	}
 	
 	public void setFollowing( Boolean isFollowing ) {
-		this.FOLLOWING = isFollowing;
+		this.FOLLOWING = null;
 		this.FOLLOW_STATE = isFollowing ? UserFollowState.FOLLOWING : UserFollowState.UNFOLLOWED;
 	}
 
