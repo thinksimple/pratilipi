@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -999,9 +1000,21 @@ public class DataAccessorGaeImpl implements DataAccessor {
 			authorIdList.add( (Long) iterator.next().getId() );
 		cursor = iterator.getCursor();
 
-		authorIdTuple = new DataListCursorTuple<Long>( authorIdList, cursor == null ? null : cursor.toWebSafeString() ); 
+		int[] order = { 1, 9, 13, 2, 17, 21, 3, 10, 14, 4, 18, 22, 5, 11, 15, 6, 19, 23, 7, 12, 16, 8, 20, 24 };
+		List<Long> resultList = new ArrayList<>( authorIdList );
 
-		memcache.put( memcacheId, authorIdTuple, 15 );
+		int chunkSize = ( authorIdList.size() / 24 ) + ( authorIdList.size() % 24 == 0 ? 0 : 1 );
+
+		for( int i = 0; i < order.length; i++ ) {
+			int beginIndex = ( order[i] - 1 ) * chunkSize;
+			List<Long> idList = authorIdList.subList( beginIndex, Math.min( authorIdList.size(), beginIndex + chunkSize ) );
+			Collections.shuffle( idList );
+			resultList.addAll( idList );
+		}
+
+		authorIdTuple = new DataListCursorTuple<Long>( resultList, cursor == null ? null : cursor.toWebSafeString() ); 
+
+		memcache.put( memcacheId, authorIdTuple, 180 );
 
 		return authorIdTuple;
 
