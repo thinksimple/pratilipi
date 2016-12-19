@@ -61,8 +61,8 @@ public class UserAuthorData {
 		return followDateMillis == null ? null : new Date( followDateMillis );
 	}
 
-	public void setFollowingSince( Date followingSince ) {
-		followDateMillis = followingSince == null ? null : followingSince.getTime();
+	public void setFollowDate( Date followDate ) {
+		followDateMillis = followDate == null ? null : followDate.getTime();
 	}
 
 }

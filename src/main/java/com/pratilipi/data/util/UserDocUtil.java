@@ -33,7 +33,7 @@ public class UserDocUtil {
 			userAuthorDoc.setAuthorId( userAuthor.getAuthorId() );
 			userAuthorDoc.setFollowDate( userAuthor.getFollowDate() );
 			
-			switch( userAuthor.getState() ) {
+			switch( userAuthor.getFollowState() ) {
 				case FOLLOWING:
 					followingAuthorList.add( userAuthorDoc );
 					break;

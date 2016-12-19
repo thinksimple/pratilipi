@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.type.AccessType;
+import com.pratilipi.common.type.UserFollowState;
 import com.pratilipi.common.util.UserAccessUtil;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
@@ -61,8 +62,8 @@ public class UserAuthorDataUtil {
 		userAuthorData.setId( userAuthor.getId() );
 		userAuthorData.setUserId( userAuthor.getUserId() );
 		userAuthorData.setAuthorId( userAuthor.getAuthorId() );
-		userAuthorData.setFollowing( userAuthor.isFollowing() );
-		userAuthorData.setFollowingSince( userAuthor.getFollowingSince() );
+		userAuthorData.setFollowState( userAuthor.getFollowState() );
+		userAuthorData.setFollowDate( userAuthor.getFollowDate() );
 		
 		return userAuthorData;
 		
@@ -87,7 +88,6 @@ public class UserAuthorDataUtil {
 			userAuthor = dataAccessor.newUserAuthor();
 			userAuthor.setUserId( userId );
 			userAuthor.setAuthorId( authorId );
-			userAuthor.setFollowing( false );
 		}
 		
 		return createUserAuthorData( userAuthor );
@@ -122,7 +122,7 @@ public class UserAuthorDataUtil {
 			
 			if( userAuthorList.size() != 0 )
 				for( int i = 0; i < authorIdList.size(); i++ )
-					if( userAuthorList.get( i ) != null && userAuthorList.get( i ).isFollowing() )
+					if( userAuthorList.get( i ) != null && userAuthorList.get( i ).getFollowState() == UserFollowState.FOLLOWING )
 						authorDataList.get( i ).setFollowing( true );
 			
 		}
@@ -147,7 +147,7 @@ public class UserAuthorDataUtil {
 
 			if( userAuthorList != null ) {
 				for( UserAuthor userAuthor : userAuthorList )
-					if( userAuthor != null && userAuthor.isFollowing() )
+					if( userAuthor != null && userAuthor.getFollowState() == UserFollowState.FOLLOWING )
 						userDataList.get( userIdList.indexOf( userAuthor.getUserId() ) ).setFollowing( true );
 			}
 
@@ -192,7 +192,7 @@ public class UserAuthorDataUtil {
 			if( authorProfile != null ) {
 				List<UserAuthor> userAuthorList = dataAccessor.getUserAuthorList( userIdList, authorProfile.getId() );
 				for( int i = 0; i < userIdList.size(); i++ )
-					if( userAuthorList.get( i ) != null && userAuthorList.get( i ).isFollowing() )
+					if( userAuthorList.get( i ) != null && userAuthorList.get( i ).getFollowState() == UserFollowState.FOLLOWING )
 						userDataList.get( i ).setFollowing( true );
 			}
 			
@@ -210,7 +210,7 @@ public class UserAuthorDataUtil {
 		
 		if( userAuthorList.size() != 0 )
 			for( int i = 0; i < authorIdList.size(); i++ )
-				if( userAuthorList.get( i ) != null && userAuthorList.get( i ).isFollowing() )
+				if( userAuthorList.get( i ) != null && userAuthorList.get( i ).getFollowState() == UserFollowState.FOLLOWING )
 					userDataList.get( i ).getAuthor().setFollowing( true );
 		
 		
@@ -222,7 +222,7 @@ public class UserAuthorDataUtil {
 	}
 	
 	
-	public static UserAuthorData saveUserAuthorFollow( Long userId, Long authorId, Boolean following )
+	public static UserAuthorData saveUserAuthorFollow( Long userId, Long authorId, UserFollowState followState )
 			throws InvalidArgumentException, InsufficientAccessException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -241,8 +241,8 @@ public class UserAuthorDataUtil {
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
 		AuditLog auditLog = dataAccessor.newAuditLog( accessToken, AccessType.USER_AUTHOR_FOLLOWING, userAuthor );
 		
-		userAuthor.setFollowing( following );
-		userAuthor.setFollowingSince( new Date() );
+		userAuthor.setFollowState( followState );
+		userAuthor.setFollowDate( new Date() );
 		
 		userAuthor = dataAccessor.createOrUpdateUserAuthor( userAuthor, auditLog );
 		
