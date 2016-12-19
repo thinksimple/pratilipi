@@ -63,7 +63,11 @@ public class AccessTokenFilter implements Filter {
 		accessTokenId = accessTokenId == null ? null : accessTokenId.trim();
 		AccessToken accessToken;
 
-		if( autoGenerate ) { // Used by gamma, default & api modules.
+		if( requestUri.equals( "/remote_api" ) ) {
+			
+			accessToken = null;
+			
+		} else if( autoGenerate ) { // Used by gamma, default & api modules.
 		
 			String accessTokenCookie = getCookieValue( RequestCookie.ACCESS_TOKEN.getName(), request );
 			
