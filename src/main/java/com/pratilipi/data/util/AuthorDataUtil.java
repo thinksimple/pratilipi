@@ -737,11 +737,12 @@ public class AuthorDataUtil {
 		// Get the total list of recommended authors
 		List<Long> recommendAuthors = new ArrayList<>();
 		Integer size = null;
+		String cursorStr = null;
 
 		do {
-			DataListCursorTuple<Long> recommendAuthorsTuple = dataAccessor.getAuthorIdListWithMaxFollowCount( language, cursor, 1000 );
+			DataListCursorTuple<Long> recommendAuthorsTuple = dataAccessor.getAuthorIdListWithMaxFollowCount( language, cursorStr, 1000 );
 			recommendAuthors.addAll( recommendAuthorsTuple.getDataList() );
-			cursor = recommendAuthorsTuple.getCursor();
+			cursorStr = recommendAuthorsTuple.getCursor();
 			size = recommendAuthorsTuple.getDataList().size();
 
 			// Filter
