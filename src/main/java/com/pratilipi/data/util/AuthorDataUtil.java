@@ -745,8 +745,7 @@ public class AuthorDataUtil {
 			size = recommendAuthorsTuple.getDataList().size();
 
 			// Filter
-			for( Long authorId : userFollowedauthorIds )
-				recommendAuthors.remove( authorId );
+			recommendAuthors.removeAll( userFollowedauthorIds );
 
 		} while( recommendAuthors.size() < resultCount && size == 1000 );
 
