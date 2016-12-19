@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,6 +20,7 @@ import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.PratilipiState;
+import com.pratilipi.common.type.UserFollowState;
 import com.pratilipi.common.util.AuthorFilter;
 import com.pratilipi.common.util.HtmlUtil;
 import com.pratilipi.common.util.ImageUtil;
@@ -30,6 +32,7 @@ import com.pratilipi.data.BlobAccessor;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
+import com.pratilipi.data.DocAccessor;
 import com.pratilipi.data.SearchAccessor;
 import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.client.UserData;
@@ -40,6 +43,8 @@ import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.User;
+import com.pratilipi.data.type.UserAuthorDoc;
+import com.pratilipi.data.type.UserFollowsDoc;
 import com.pratilipi.filter.AccessTokenFilter;
 
 public class AuthorDataUtil {
@@ -725,14 +730,24 @@ public class AuthorDataUtil {
 		
 	}
 
-	public static DataListCursorTuple<AuthorData> getRecommendedAuthorList( Long userId, Language language, String cursor, Integer resultCount ) {
+	public static DataListCursorTuple<AuthorData> getRecommendedAuthorList( Long userId, Language language, String cursor, Integer resultCount ) 
+			throws UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
 		// Get the user followings
-		// TODO: Uncomment after Implementing the same
-//		List<Long> userFollowedauthorIds = UserDataUtil.getUserFollowedList( userId ); // UserId Might be 0L
+		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
+		UserFollowsDoc followsDoc = docAccessor.getUserFollowsDoc( userId );
 		List<Long> userFollowedauthorIds = new ArrayList<Long>();
+		if( followsDoc != null ) {
+			List<UserAuthorDoc> followingAuthors = followsDoc.getFollows( UserFollowState.FOLLOWING );
+			List<UserAuthorDoc> ignoredAuthors = followsDoc.getFollows( UserFollowState.IGNORED );
+			for( UserAuthorDoc doc : followingAuthors )
+				userFollowedauthorIds.add( doc.getAuthorId() );
+			for( UserAuthorDoc doc : ignoredAuthors )
+				if( new Date().getTime() - doc.getFollowDate().getTime() >= TimeUnit.DAYS.toMillis( 30 ) )
+					userFollowedauthorIds.add( doc.getAuthorId() );
+		}
 
 		// Get the total list of recommended authors
 		List<Long> recommendAuthors = new ArrayList<>();
