@@ -966,30 +966,44 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 
 	@Override
-	public List<Long> getAuthorIdListWithMaxFollowCount( Language language, String cursor, Integer resultCount ) {
+	public DataListCursorTuple<Long> getAuthorIdListWithMaxFollowCount( Language language, String cursorStr, Integer resultCount ) {
 
 		String memcacheId = "Recommend.AuthorList-" + language.getCode();
+		if( cursorStr != null )
+			memcacheId = memcacheId + "-" + cursorStr;
+		if( resultCount != null && resultCount > 0 )
+			memcacheId = memcacheId + "-" + resultCount;
 
-		ArrayList<Long> authorIdList = memcache.get( memcacheId );
-		if( authorIdList != null )
-			return authorIdList;
+		DataListCursorTuple<Long> authorIdTuple = memcache.get( memcacheId );
+		if( authorIdTuple != null )
+			return authorIdTuple;
 
-		List<Key<AuthorEntity>> authorKeyList = ObjectifyService.ofy().load()
-				.type( AuthorEntity.class )
-				.filter( "STATE", "ACTIVE" )
-				.filter( "LANGUAGE", language.toString() )
-				.filter( "FOLLOW_COUNT >", 0 )
-				.order( "-FOLLOW_COUNT" )
-				.keys()
-				.list();
+		Query<AuthorEntity> query = ObjectifyService.ofy().load()
+									.type( AuthorEntity.class )
+									.filter( "STATE", "ACTIVE" )
+									.filter( "LANGUAGE", language.toString() )
+									.filter( "FOLLOW_COUNT >", 0 )
+									.order( "-FOLLOW_COUNT" );
 
-		List<Long> authorList = new ArrayList<>( authorKeyList.size() );
-		for( Key<AuthorEntity> key : authorKeyList )
-			authorList.add( key.getId() );
+		if( cursorStr != null )
+			query = query.startAt( Cursor.fromWebSafeString( cursorStr ) );
+		if( resultCount != null && resultCount > 0 )
+			query = query.limit( resultCount );
 
-		memcache.put( memcacheId, authorIdList, 15 );
+		List<Long> authorIdList = resultCount != null ? new ArrayList<Long>( resultCount ) : new ArrayList<Long>();
 
-		return authorList;
+		QueryResultIterator <Key<AuthorEntity>> iterator = query.keys().iterator();
+		Cursor cursor = null;
+
+		while( iterator.hasNext() )
+			authorIdList.add( (Long) iterator.next().getId() );
+		cursor = iterator.getCursor();
+
+		authorIdTuple = new DataListCursorTuple<Long>( authorIdList, cursor == null ? null : cursor.toWebSafeString() ); 
+
+		memcache.put( memcacheId, authorIdTuple, 15 );
+
+		return authorIdTuple;
 
 	}
 
