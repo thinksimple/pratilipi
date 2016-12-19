@@ -13,7 +13,7 @@ public enum NotificationType {
 	},
 
 	
-	PRATILIPI( true, "NOTIFICATION_BOOK" ) {
+	PRATILIPI( true, "NOTIFICATION_BOOK" ) { // Custom notification by AEEs
 		@Override
 		public boolean isValid( Notification notif ) {
 			return DataAccessorFactory.getDataAccessor()
@@ -23,7 +23,7 @@ public enum NotificationType {
 	},
 
 	
-	PRATILIPI_PUBLISHED_AUTHOR( true, "NOTIFICATION_BOOK" ) { // Notification sent to the Author when a Pratilipi is published
+	PRATILIPI_PUBLISHED_AUTHOR( true, "NOTIFICATION_BOOK" ) { // Notification sent to the Author when a content is published
 		@Override
 		public boolean isValid( Notification notif ) {
 			return DataAccessorFactory.getDataAccessor()
@@ -32,7 +32,7 @@ public enum NotificationType {
 		}
 	},
 
-	PRATILIPI_PUBLISHED_FOLLOWER( true, "NOTIFICATION_BOOK" ) { // Notification sent to Author's followers when a Pratilipi is published
+	PRATILIPI_PUBLISHED_FOLLOWER( true, "NOTIFICATION_BOOK" ) { // Notification sent to Author's followers when a content is published.
 		@Override
 		public boolean isValid( Notification notif ) {
 			return DataAccessorFactory.getDataAccessor()
@@ -42,7 +42,7 @@ public enum NotificationType {
 	},
 
 	
-	AUTHOR_FOLLOW( true, "NOTIFICATION_FOLLOWERS" ) {
+	AUTHOR_FOLLOW( true, "NOTIFICATION_FOLLOWERS" ) { // Notification sent to the Author when a user follows his profile.
 		@Override
 		public boolean isValid( Notification notif ) {
 			return ! notif.getDataIds().isEmpty();
@@ -50,12 +50,50 @@ public enum NotificationType {
 	},
 	
 	
-	USER_PRATILIPI_REVIEW( true, "NOTIFICATION_REVIEW" ) {
+	USER_PRATILIPI_REVIEW( true, "NOTIFICATION_REVIEW" ) { // Notification sent to the Author when a user reviews his content.
 		@Override
 		public boolean isValid( Notification notif ) {
 			return DataAccessorFactory.getDataAccessor()
 					.getUserPratilipi( notif.getSourceId() )
 					.getReviewState() == UserReviewState.PUBLISHED;
+		}
+	},
+
+	
+	COMMENT_REVIEW_REVIEWER( true, null ) { // Notification sent to the Reviewer when a user comments on it.
+		@Override
+		public boolean isValid( Notification notif ) {
+			return false;
+		}
+	},
+	
+	COMMENT_REVIEW_AUTHOR( true, null ) { // Notification sent to the Author when a user comments on a (his content's) review.
+		@Override
+		public boolean isValid( Notification notif ) {
+			return false;
+		}
+	},
+
+	
+	VOTE_REVIEW_REVIEWER( true, null ) { // Notification sent to the Reviewer when a user likes it.
+		@Override
+		public boolean isValid( Notification notif ) {
+			return false;
+		}
+	},
+	
+	VOTE_REVIEW_AUTHOR( true, null ) { // Notification sent to the Author when a user likes a (his content's) review.
+		@Override
+		public boolean isValid( Notification notif ) {
+			return false;
+		}
+	},
+	
+	
+	VOTE_COMMENT_REVIEW_COMMENTOR( true, null ) { // Notification sent to the Commenter when a user likes a (content's review's) comment.
+		@Override
+		public boolean isValid( Notification notif ) {
+			return false;
 		}
 	},
 
