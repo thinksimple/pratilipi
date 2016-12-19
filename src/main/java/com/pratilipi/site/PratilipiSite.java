@@ -1496,8 +1496,11 @@ public class PratilipiSite extends HttpServlet {
 		dataModel.put( "title", "Test" );
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Long x = new Date().getTime();
 		DataListCursorTuple<Long> authorList = dataAccessor.getAuthorIdListWithMaxFollowCount( language, null, 1000 );
+		Long y = new Date().getTime();
 		dataModel.put( "authorList", new Gson().toJson( authorList ) );
+		dataModel.put( "delay", Long.toString( y-x ) );
 		return dataModel;
 
 	}
