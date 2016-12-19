@@ -748,21 +748,17 @@ public class AuthorDataUtil {
 			for( Long authorId : userFollowedauthorIds )
 				recommendAuthors.remove( authorId );
 
-		} while( recommendAuthors.size() < ( resultCount * 12 ) && size == 1000 );
+		} while( recommendAuthors.size() < resultCount && size == 1000 );
 
-		// Edge case
+		// Edge case - resultcount exceeding the size of list
 		resultCount = Math.min( resultCount, recommendAuthors.size() );
 
-		// Randomization based on hour
-		int chunkSize = ( recommendAuthors.size() / 12 ) + ( recommendAuthors.size() % 12 == 0 ? 0 : 1 );
-		int beginIndex = ( new Date().getHours() % 12 ) * chunkSize;
-		beginIndex = beginIndex % recommendAuthors.size();
+		// Edge case - cursor exceeding the size of list
+		int beginIndex = cursor != null ? Integer.parseInt( cursor ) : 0;
+		if( beginIndex > recommendAuthors.size() )
+			beginIndex = recommendAuthors.size();
 
 		List<Long> recommendAuthorsSubList = recommendAuthors.subList( beginIndex, Math.min( beginIndex + resultCount, recommendAuthors.size() - 1 ) );
-
-		int i = 0;
-		while( recommendAuthorsSubList.size() < resultCount )
-			recommendAuthorsSubList.add( recommendAuthors.get( i++ ) );
 
 		// Randomization on the subset of AuthorList
 		Collections.shuffle( recommendAuthorsSubList );
@@ -771,7 +767,7 @@ public class AuthorDataUtil {
 		for( Long authorId : recommendAuthorsSubList )
 			recommendAuthorData.add( createAuthorData( dataAccessor.getAuthor( authorId ) ) );
 
-		return new DataListCursorTuple<AuthorData>( recommendAuthorData, cursor );
+		return new DataListCursorTuple<AuthorData>( recommendAuthorData, Integer.toString( beginIndex + resultCount ) );
 
 	}
 
