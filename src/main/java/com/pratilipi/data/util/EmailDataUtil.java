@@ -90,7 +90,7 @@ public class EmailDataUtil {
 					|| email.getType() == EmailType.VOTE_REVIEW_AUTHOR )
 			dataModel = createDataModelForVoteReviewEmail( email.getPrimaryContentId() );
 
-		else if( email.getType() == EmailType.VOTE_COMMENT_COMMENTOR )
+		else if( email.getType() == EmailType.VOTE_COMMENT_REVIEW_COMMENTOR )
 			dataModel = createDataModelForVoteCommentEmail( email.getPrimaryContentId() );
 
 

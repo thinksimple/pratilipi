@@ -646,14 +646,14 @@ public class AuditLogProcessApi extends GenericApi {
 
 		Email email = dataAccessor.getEmail(
 				comment.getUserId(),
-				EmailType.VOTE_COMMENT_COMMENTOR, 
+				EmailType.VOTE_COMMENT_REVIEW_COMMENTOR, 
 				vote.getId() );
 
 
 		if( email == null ) {
 			email = dataAccessor.newEmail(
 					comment.getUserId(),
-					EmailType.VOTE_COMMENT_COMMENTOR, 
+					EmailType.VOTE_COMMENT_REVIEW_COMMENTOR, 
 					vote.getId() );
 		} else if( email.getState() == EmailState.DEFERRED ) {
 			email.setState( EmailState.PENDING );
