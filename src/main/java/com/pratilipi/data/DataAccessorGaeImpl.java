@@ -41,6 +41,7 @@ import com.pratilipi.common.type.NotificationState;
 import com.pratilipi.common.type.NotificationType;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.ReferenceType;
+import com.pratilipi.common.type.UserFollowState;
 import com.pratilipi.common.type.UserState;
 import com.pratilipi.common.type.VoteParentType;
 import com.pratilipi.common.util.AuthorFilter;
@@ -1428,8 +1429,8 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		if( authorId != null )
 			query = query.filter( "AUTHOR_ID", authorId );
 		
-		query = query.filter( "FOLLOWING", true );
-		query = query.order( "-FOLLOWING_SINCE" );
+		query = query.filter( "FOLLOW_STATE", UserFollowState.FOLLOWING );
+		query = query.order( "-FOLLOW_DATE" );
 		
 		if( cursorStr != null )
 			query = query.startAt( Cursor.fromWebSafeString( cursorStr ) );
