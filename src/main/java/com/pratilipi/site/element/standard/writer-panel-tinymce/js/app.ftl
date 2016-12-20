@@ -1,4 +1,4 @@
-$(document).ready(function() {  
-  var mainWriterPanelObject = new MainWriterPanel();
-  mainWriterPanelObject.init();
+$(document).ready( function() {	
+	var mainWriterPanelObject = new MainWriterPanel();
+	mainWriterPanelObject.init();
 });
