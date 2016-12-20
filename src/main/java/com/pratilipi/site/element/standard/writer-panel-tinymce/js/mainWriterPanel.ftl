@@ -445,20 +445,20 @@ MainWriterPanel.prototype.addNewChapter = function( chapterNum ) {
 
 /* Helper functions */
 MainWriterPanel.prototype.confirmLeavingWithoutSaving = function() {
-	var dfd = jQuery.Deferred();
+	var deferred = jQuery.Deferred();
 	var $confirm = $( '#saveChangesModal' );
 	$confirm.modal( 'show' );
 	$confirm.find( '[data-behaviour=save]' ).off( 'click' ).click( function() {
 		$confirm.modal( 'hide' );
-		dfd.resolve( "save" );
+		deferred.resolve( "save" );
 		return 1;
 	});
 	$confirm.find( '[data-behaviour=cancel]' ).off( 'click' ).click( function() {
 		$confirm.modal( 'hide' );
-		dfd.resolve( "cancel" );
+		deferred.resolve( "cancel" );
 		return 1;
 	});
-	return dfd.promise(); 
+	return deferred.promise(); 
 };
 
 MainWriterPanel.prototype.hasUnsavedChanges = function() {
