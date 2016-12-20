@@ -295,6 +295,8 @@ public class PratilipiSite extends HttpServlet {
 
 			} else if( uri.equals( "/notifications" ) ) {
 				dataModel = createDataModelForNotificationsPage( filterLanguage, basicMode );
+				if( request.getParameter( "action" ) != null )
+					dataModel.put( "action", request.getParameter( "action" ) );
 				templateName = ( basicMode ? "NotificationBasic.ftl" : "Notification.ftl" );
 
 				// Master website specific links
@@ -392,7 +394,7 @@ public class PratilipiSite extends HttpServlet {
 																filterLanguage, 
 																AccessType.PRATILIPI_UPDATE )
 
-																? "WriterPOC.ftl" : "Writer.ftl";
+																? "WriterPOC.ftl" : "WriterPOC.ftl";
 
 			// Internal link
 			} else if( ! basicMode && uri.equals( "/authors" ) ) {
