@@ -17,35 +17,36 @@ MainWriterPanel.prototype.init = function() {
 	this.preventBackspaceDefaultAction();
 	this.loadScriptsForDesktopTransliteration();
 
-	var pagination_container = $("#pagination"); /* done */
+	var pagination_container = $( "#pagination" );
 	this.pagination_object = new Pagination( pagination_container, this );
 	this.pagination_object.init();
 
-	var toc_container = $( "#toc_container" ); /* done */
+	var toc_container = $( "#toc_container" );
 	this.table_of_contents_object = new TableOfContents( toc_container, this.pagination_object, this );
 	this.table_of_contents_object.init();
 
-	this.tinymce_object = new Editor( this ); /* done */
+	this.tinymce_object = new Editor( this );
 	this.tinymce_object.init();
 
 	this.content_object = new Content( "chapter-content", this );
-	this.content_object.init(); 
-	
-	var chapter_name_container = $( "#subtitle" ); /* done */
+	this.content_object.init();
+
+	var chapter_name_container = $( "#subtitle" );
 	this.chapter_name_object = new ChapterName( chapter_name_container, this );
 	this.chapter_name_object.init();
-	
-	var publish_modal_container = $("#publishModal"); /* done */
+
+	var publish_modal_container = $( "#publishModal" );
 	this.publish_modal_object = new PublishModal( publish_modal_container );
 	this.publish_modal_object.init();
-	
+
 	this.hideProgressBarOnMobileFocus();
 	<#-- this.initializeData(); -->
-	
+
 	/* add button listeners */
 	this.attachActionButtonListeners();
-	this.initializeAutosave(); 
-	this.preventUserFromLeaving();		
+	this.initializeAutosave();
+	this.preventUserFromLeaving();
+
 };
 
 MainWriterPanel.prototype.addAffixClasses = function() {
@@ -95,8 +96,7 @@ MainWriterPanel.prototype.initializeGlobalVariables = function() {
 
 MainWriterPanel.prototype.preventBackspaceDefaultAction = function() {
 	$(document).on( "keydown", function (e) {
-		if( e.which === 8 && !$( e.target ).is( "input:not([readonly]):not([type=radio]):not([type=checkbox]), 
-							textarea, [contentEditable], [contentEditable=true]" ) ) {
+		if( e.which === 8 && !$( e.target ).is( "input:not([readonly]):not([type=radio]):not([type=checkbox]), textarea, [contentEditable], [contentEditable=true]" ) ) {
 			e.preventDefault();
 		}
 	});
@@ -136,25 +136,25 @@ MainWriterPanel.prototype.enableDesktopTransliteration = function() {
 };
 
 MainWriterPanel.prototype.hideProgressBarOnMobileFocus = function() {
-	if(navigator.userAgent.indexOf('Android') > -1 ){
+	if( navigator.userAgent.indexOf( 'Android' ) > -1 ) {
 		this.lastWindowHeight = $(window).height();
 		this.lastWindowWidth = $(window).width();
 		var _this = this;
-		
-		$(window).resize(function () {
-			if ($("#subtitle,#chapter-content").is(":focus")) {
-				var keyboardIsOn = ((_this.lastWindowWidth == $(window).width()) && (_this.lastWindowHeight > $(window).height()));
-			}	 
-			if(keyboardIsOn){
-				$("#pagination").hide();
-			} else {
-				$("#pagination").show();
+
+		$(window).resize( function() {
+			if( $( "#subtitle, #chapter-content" ).is( ":focus" ) ) {
+				var keyboardIsOn = ( ( _this.lastWindowWidth == $(window).width() ) && ( _this.lastWindowHeight > $(window).height() ) );
 			}
-		}); 
+			if( keyboardIsOn ){
+				$( "#pagination" ).hide();
+			} else {
+				$( "#pagination" ).show();
+			}
+		});
 	}
 };
 
-MainWriterPanel.prototype.initializeData = function() { /* done */
+MainWriterPanel.prototype.initializeData = function() {
 	/* if indexJson is not null, book exists, get first chapter and populate the index too. */
 	var indexJson = ${ indexJson };
 	if ( indexJson.index.length ) {
@@ -169,65 +169,65 @@ MainWriterPanel.prototype.initializeData = function() { /* done */
 };
 
 MainWriterPanel.prototype.attachActionButtonListeners = function() {
+
 	var _this = this;
-	this.$save_button.on('click', function() {
-		$("#header1").addClass("small-spinner");
-		_this.$save_button.attr('disabled', 'disabled');
+	this.$save_button.on( 'click', function() {
+		$( "#header1" ).addClass( "small-spinner" );
+		_this.$save_button.attr( 'disabled', 'disabled' );
 		_this.saveChapter();
-	} );
-	
+	});
+
 	if( isMobile() ) {
 		$(document).on( "click", "a[data-behaviour='save_button_mobile']", function( event ) {
 			event.preventDefault();
-			$("#header1").addClass("small-spinner");
-			$(".mobile_options_container").popover('hide');
+			$( "#header1" ).addClass( "small-spinner" );
+			$( ".mobile_options_container" ).popover( 'hide' );
 			_this.saveChapter();
 		});
 		$(document).on( "click", "[data-behaviour='preview_button_mobile']", function( event ) {
 			_this.saveChapter();
-		});	 
+		});
 	}
-	
-	this.$publish_button.on('click', function() {
-		_this.$final_publish_button.attr('disabled', 'disabled');
-		_this.saveChapter();
-	} );
-	
-	this.$preview_button.on('click', function() {
-		_this.saveChapter();
 
-	} );
-	
-	this.$back_button.on('click', function(e) {
+	this.$publish_button.on( 'click', function() {
+		_this.$final_publish_button.attr( 'disabled', 'disabled' );
+		_this.saveChapter();
+	});
+
+	this.$preview_button.on( 'click', function() {
+		_this.saveChapter();
+	});
+
+	this.$back_button.on( 'click', function(e) {
 		_this.writer_back_button_active = true;
 		if( _this.hasUnsavedChanges() ) {
 			e.preventDefault();
 			var a = _this.confirmLeavingWithoutSaving();
-			a.then(function (b) {
+			a.then( function (b) {
 				if( b == "save" ) {
 					_this.saveChapter();
 					_this.writer_back_button_active = false;
 				}
 				else {
 					_this.saveChapter( true );
-				window.location = "${ pratilipi.getPageUrl() }";
+					window.location = "${ pratilipi.getPageUrl() }";
 				}
 			});
 		}
-	} );
+	});
 
 };
 
 MainWriterPanel.prototype.initializeAutosave = function() {
 	var _this = this;
-	this.chapter_name_object.$chapter_name_container.keyup( $.debounce( 300, _this.saveChapter.bind(this, true) ) );
-	this.content_object.$content_container.keyup( $.debounce( 1500, _this.saveChapter.bind(this, true) ) );
+	this.chapter_name_object.$chapter_name_container.keyup( $.debounce( 300, _this.saveChapter.bind( this, true ) ) );
+	this.content_object.$content_container.keyup( $.debounce( 1500, _this.saveChapter.bind( this, true ) ) );
 	this.activateRegularAutosaveCalls();
 };
 
 MainWriterPanel.prototype.preventUserFromLeaving = function() {
 	var _this = this;
-	$(window).bind("beforeunload",function(event) {
+	$(window).bind( "beforeunload",function( event ) {
 		if( _this.hasUnsavedChanges() && !_this.writer_back_button_active ) {
 				return true;
 		}
@@ -236,7 +236,6 @@ MainWriterPanel.prototype.preventUserFromLeaving = function() {
 };
 
 /* ajax calls functions */
-/* done */
 MainWriterPanel.prototype.getChapter = function( chapterNum ) {
 	var _this = this;
 	var $spinner = $("<div>").addClass("spinner");
@@ -389,18 +388,18 @@ MainWriterPanel.prototype.saveChapter = function( autosaveFlag ) {
 
 
 /* content related functions */
-MainWriterPanel.prototype.resetContent = function() { /* done */
+MainWriterPanel.prototype.resetContent = function() {
 	this.table_of_contents_object.populateIndex( this.index );
 	this.content_object.reset();
 	this.chapter_name_object.reset();
 };
 
-MainWriterPanel.prototype.changeName = function( name ) { /* done */
+MainWriterPanel.prototype.changeName = function( name ) {
 	this.publish_modal_object.setBookName( name );
 	this.table_of_contents_object.changeName( name );
 };
 
-MainWriterPanel.prototype.setCurrentPage = function( chapterNum ) { /* done */
+MainWriterPanel.prototype.setCurrentPage = function( chapterNum ) {
 	var _this = this;
 	if( this.hasUnsavedChanges() ) {
 		var a = this.confirmLeavingWithoutSaving();
@@ -419,18 +418,18 @@ MainWriterPanel.prototype.setCurrentPage = function( chapterNum ) { /* done */
 	}
 };
 
-MainWriterPanel.prototype.ajaxSetCurrentPage = function( chapterNum ) { /* done */
+MainWriterPanel.prototype.ajaxSetCurrentPage = function( chapterNum ) {
 	this.currChapter = chapterNum;
 	this.getChapter( chapterNum );
 };
 
-MainWriterPanel.prototype.populateContent = function( parsed_data ) { /* done */
+MainWriterPanel.prototype.populateContent = function( parsed_data ) {
 	this.content_object.populateContent( parsed_data.content );
 	this.chapter_name_object.change_name( parsed_data.chapterTitle );
 };
 
 
-MainWriterPanel.prototype.addNewChapter = function( chapterNum ) { /* done */
+MainWriterPanel.prototype.addNewChapter = function( chapterNum ) {
 	var _this = this;
 	if( this.hasUnsavedChanges() ) {
 		var a = this.confirmLeavingWithoutSaving();
@@ -449,7 +448,7 @@ MainWriterPanel.prototype.addNewChapter = function( chapterNum ) { /* done */
 };
 
 /* Helper functions */
-MainWriterPanel.prototype.confirmLeavingWithoutSaving = function() { /* done */
+MainWriterPanel.prototype.confirmLeavingWithoutSaving = function() {
 	var dfd = jQuery.Deferred();
 	var $confirm = $('#saveChangesModal');
 	$confirm.modal('show');
@@ -466,7 +465,7 @@ MainWriterPanel.prototype.confirmLeavingWithoutSaving = function() { /* done */
 	return dfd.promise(); 
 };
 
-MainWriterPanel.prototype.hasUnsavedChanges = function() { /* done */
+MainWriterPanel.prototype.hasUnsavedChanges = function() {
 	return ( this.lastSavedContent != this.content_object.getContentWithoutNbsps() );
 };
 
@@ -476,26 +475,28 @@ MainWriterPanel.prototype.setNewImageFlag = function( value ) {
 
 MainWriterPanel.prototype.activateRegularAutosaveCalls = function() {
 	var _this = this;
-	$(window).on("blur focus", function(e) {
-		var prevTypeVal = $(this).data("prevTypeVal");
+	$(window).on( "blur focus", function(e) {
+		var prevTypeVal = $(this).data( "prevTypeVal" );
 
-		if (prevTypeVal != e.type) {
-			switch (e.type) {
+		if( prevTypeVal != e.type ) {
+			switch( e.type ) {
 				case "blur":
 					clearInterval( _this.autosaveIntervalId );
 					break;
-					case "focus":
-						_this.autosaveIntervalId = setInterval(function () {
-							if( _this.hasUnsavedChanges()	) {
-								_this.saveChapter( true );
-							}
-						}, 60000);
-						break;
+				case "focus":
+					_this.autosaveIntervalId = setInterval( function () {
+						if( _this.hasUnsavedChanges() ) {
+							_this.saveChapter( true );
+						}
+					}, 60000);
+					break;
 			}
 		}
 
-		$(this).data("prevTypeVal", e.type);
+		$(this).data( "prevTypeVal", e.type );
+
 	});
+
 };
 
 MainWriterPanel.prototype.isMozilla = function() {
