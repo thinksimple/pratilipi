@@ -65,4 +65,36 @@
 		}
 	});
 	
+	function getNotificationPreferences() {
+		node = firebase.database().ref( "PREFERENCE" ).child( user.userId );
+		
+		var email_frequency_node = node.child('emailFrequency');
+		var notification_subscriptions_node = node.child('notificationSubscriptions');
+		
+		node.once('value', function(snapshot) ) {
+			var email_frequency = snapshot.child('emailFrequency').val();			
+			var notification_subscriptions = snapshot.child('notificationSubscriptions').val();
+			
+			/* notification_subscriptions_snapshot.forEach(function(childSnapshot) {
+		      notification_subscriptions_snapshot[ childSnapshot.key ] = childSnapshot.val();
+		  	}); */
+		  	
+			var notification_preferences = {};
+			notification_preferences["email_frequency"] = email_frequency;	
+			notification_preferences["notification_subscriptions"] = notification_subscriptions;
+			console.log( notification_preferences );
+			return notification_preferences;		  				
+		}		
+	}
+
+	function setNotificationPreferences( notification_preferences ) {
+		var email_frequency = notification_preferences["email_frequency"];
+		var notification_subscriptions = notification_preferences["notification_subscriptions"];
+		
+	    var node = firebase.database().ref( "PREFERENCE" ).child( user.userId );
+	    
+	    node.set({"email_frequency": email_frequency });
+	    node.set({"notification_subscriptions": notification_subscriptions });		
+	}	
+	
 </script>
