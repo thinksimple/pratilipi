@@ -238,7 +238,7 @@ MainWriterPanel.prototype.preventUserFromLeaving = function() {
 /* ajax calls functions */
 MainWriterPanel.prototype.getChapter = function( chapterNum ) {
 	var _this = this;
-	var $spinner = $("<div>").addClass("spinner");
+	var $spinner = $( "<div>" ).addClass( "spinner" );
 	this.$panel_container.append( $spinner );
 	$.ajax({
 		type: "GET",
@@ -248,56 +248,53 @@ MainWriterPanel.prototype.getChapter = function( chapterNum ) {
 			chapterNo: chapterNum,
 			_apiVer: getUrlParameter( "_apiVer" ) != null ? getUrlParameter( "_apiVer" ) : "3"
 		},
-		success:function(response){
-			
+		success: function( response ) {
 			var parsed_data = jQuery.parseJSON( response );
 			_this.populateContent( parsed_data );
 			_this.pagination_object.setProgressPage();
 			_this.lastSavedContent = parsed_data.content;
-			setCookie( "writer_current_page_${ pratilipiId?c }", _this.currChapter, 15, "/pratilipi-write");
+			setCookie( "writer_current_page_${ pratilipiId?c }", _this.currChapter, 15, "/pratilipi-write" );
 		},
-		fail:function(response){
+		fail: function( response ) {
 			var message = jQuery.parseJSON( response.responseText );
-			alert(message);
+			alert( message );
 		},
 		complete: function() {
 			$spinner.remove();
-		}								 
-	}); 
+		}		 
+	});
 };
 
-/* done */
 MainWriterPanel.prototype.ajaxAddNewChapter = function( chapterNum ) {
 	var _this = this;
-	var $spinner = $("<div>").addClass("spinner");
+	var $spinner = $( "<div>" ).addClass( "spinner" );
 	this.$panel_container.append( $spinner );
 	var ajaxData = { pratilipiId: ${ pratilipiId?c } };
-	if( chapterNum !== undefined ){
+	if( chapterNum !== undefined ) {
 		ajaxData.chapterNo = chapterNum;	 
 	}
-	$.ajax({type: "POST",
+	$.ajax({
+		type: "POST",
 		url: "/api/pratilipi/content/chapter/add",
 		data: ajaxData,
-		success:function(response){
+		success: function( response ) {
 			var index = jQuery.parseJSON( response ).index;
 			_this.index = index;
-				/* increase current chapter and reset */ 
 			_this.currChapter++;
 			_this.resetContent();
 			_this.lastSavedContent = "";
 			setCookie( "writer_current_page_${ pratilipiId?c }", _this.currChapter, 15, "/pratilipi-writer");			
 		},
-		fail:function(response){
+		fail: function( response ) {
 			var message = jQuery.parseJSON( response.responseText );
-			alert(message);
+			alert( message );
 		},
 		complete: function() {
 			$spinner.remove();
-		}									 
-	}); 
+		}
+	});
 };
 
-/* done */
 MainWriterPanel.prototype.removeChapter = function( chapterNum ) {
 	var _this = this;
 	/* first and only chapter, dont remove, just reset content and save. */
@@ -337,8 +334,9 @@ MainWriterPanel.prototype.removeChapter = function( chapterNum ) {
 
 /* done */
 MainWriterPanel.prototype.saveChapter = function( autosaveFlag ) {
+
 	var _this = this;
-	
+
 	var ajaxData = { 
 		pratilipiId: ${ pratilipiId?c },
 		chapterNo: this.currChapter,
@@ -349,41 +347,39 @@ MainWriterPanel.prototype.saveChapter = function( autosaveFlag ) {
 	toastr.options = {
 		positionClass: 'toast-top-center',
 		"timeOut": "1100"
-	};				 
-	if( !autosaveFlag || ( !( autosaveFlag.originalEvent instanceof Event ) ) ) {				
+	};
+	if( !autosaveFlag || ( !( autosaveFlag.originalEvent instanceof Event ) ) ) {
 		$.ajax({
 			type: "POST",
 			url: " /api/pratilipi/content",
 			data: ajaxData,
-			success:function(response){
+			success: function( response ){
 				if( _this.newImageAddedFlag ) {
 					_this.content_object.setContent( ajaxData.content );
 					_this.setNewImageFlag( false );
 				}
-
 				if( !autosaveFlag ) {
-					$("#header1").removeClass("small-spinner");
-					_this.$save_button.removeAttr("disabled");
-					toastr.success('${ _strings.writer_changes_saved }');
+					$( "#header1" ).removeClass( "small-spinner" );
+					_this.$save_button.removeAttr( "disabled" );
+					toastr.success( '${ _strings.writer_changes_saved }' );
 					_this.content_object.setContent( ajaxData.content );
-				} 
-
+				}
 				var title = ajaxData.chapterTitle;
 				_this.lastSavedContent = ajaxData.content;
-				_this.$final_publish_button.removeAttr("disabled");
+				_this.$final_publish_button.removeAttr( "disabled" );
 				_this.table_of_contents_object.changeCurrentChapterName( _this.currChapter, title );
 			},
-			error:function(response) {
-				_this.$panel_container.find(".spinner").remove();
-				$("#header1").removeClass("small-spinner");
-				_this.$save_button.removeAttr("disabled");
-				_this.$final_publish_button.removeAttr("disabled");
+			error: function( response ) {
+				_this.$panel_container.find( ".spinner" ).remove();
+				$( "#header1" ).removeClass( "small-spinner" );
+				_this.$save_button.removeAttr( "disabled" );
+				_this.$final_publish_button.removeAttr( "disabled" );
 				if( !autosaveFlag ) {
-					toastr.success('${ _strings.server_error_message }');
-				}			 
-			}									 
+					toastr.success( '${ _strings.server_error_message }' );
+				}
+			}
 		});
-	} 
+	}
 };
 
 
@@ -403,7 +399,7 @@ MainWriterPanel.prototype.setCurrentPage = function( chapterNum ) {
 	var _this = this;
 	if( this.hasUnsavedChanges() ) {
 		var a = this.confirmLeavingWithoutSaving();
-		a.then(function (b) {
+		a.then( function (b) {
 			if( b == "save" ) {
 				_this.saveChapter();
 				_this.pagination_object.setCurrentPageNo();
@@ -433,7 +429,7 @@ MainWriterPanel.prototype.addNewChapter = function( chapterNum ) {
 	var _this = this;
 	if( this.hasUnsavedChanges() ) {
 		var a = this.confirmLeavingWithoutSaving();
-		a.then(function (b) {
+		a.then( function (b) {
 			if( b == "save" ) {
 				_this.saveChapter();
 			}
@@ -450,16 +446,16 @@ MainWriterPanel.prototype.addNewChapter = function( chapterNum ) {
 /* Helper functions */
 MainWriterPanel.prototype.confirmLeavingWithoutSaving = function() {
 	var dfd = jQuery.Deferred();
-	var $confirm = $('#saveChangesModal');
-	$confirm.modal('show');
-	$confirm.find('[data-behaviour=save]').off('click').click(function () {
-		$confirm.modal('hide');
-		dfd.resolve("save");
+	var $confirm = $( '#saveChangesModal' );
+	$confirm.modal( 'show' );
+	$confirm.find( '[data-behaviour=save]' ).off( 'click' ).click( function() {
+		$confirm.modal( 'hide' );
+		dfd.resolve( "save" );
 		return 1;
 	});
-	$confirm.find('[data-behaviour=cancel]').off('click').click(function () {
-		$confirm.modal('hide');
-		dfd.resolve("cancel");
+	$confirm.find( '[data-behaviour=cancel]' ).off( 'click' ).click( function() {
+		$confirm.modal( 'hide' );
+		dfd.resolve( "cancel" );
 		return 1;
 	});
 	return dfd.promise(); 
