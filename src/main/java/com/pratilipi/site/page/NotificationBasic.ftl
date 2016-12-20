@@ -8,7 +8,7 @@
 	<body>
 		<#include "../element/basic/pratilipi-header.ftl">
 		<#include "../element/basic/pratilipi-facebook-login.ftl">
-		<#if ( ( action == "settings") )>
+		<#if ( action?? && action == "settings" )>
 			<#include "../element/basic/pratilipi-notification-settings.ftl">
 		<#else>
 			<div class="parent-container">
