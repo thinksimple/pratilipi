@@ -65,7 +65,7 @@
 		}
 	});
 	
-	function getNotificationPreferences() {
+	function getNotificationPreferences( getNotifPreferencesCallback ) {
 		node = firebase.database().ref( "PREFERENCE" ).child( user.userId );
 		
 		var email_frequency_node = node.child('emailFrequency');
@@ -83,7 +83,7 @@
 			notification_preferences["email_frequency"] = email_frequency;	
 			notification_preferences["notification_subscriptions"] = notification_subscriptions;
 			console.log( notification_preferences );
-			return notification_preferences;		  				
+			getNotifPreferencesCallback( notification_preferences );		  				
 		});		
 	}
 
