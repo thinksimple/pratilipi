@@ -93,8 +93,8 @@
 		
 	    var node = firebase.database().ref( "PREFERENCE" ).child( user.userId );
 	    
-	    node.set({"email_frequency": email_frequency });
-	    node.set({"notification_subscriptions": notification_subscriptions });		
+	    node.set({"emailFrequency": email_frequency });
+	    node.set({"notificationSubscriptions": notification_subscriptions });		
 	}	
 	
 </script>
