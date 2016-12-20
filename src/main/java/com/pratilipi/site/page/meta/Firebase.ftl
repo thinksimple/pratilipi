@@ -95,7 +95,7 @@
 
 	    node.set({
 	    	"emailFrequency": email_frequency,
-    		notificationSubscriptions": notification_subscriptions 
+    		"notificationSubscriptions": notification_subscriptions 
     		});		
 	}	
 	
