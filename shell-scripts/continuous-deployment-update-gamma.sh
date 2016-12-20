@@ -24,4 +24,7 @@ then
 	
 	# Cleaning up .git directory
 	git gc
+	
+	
+	sleep 300
 fi
