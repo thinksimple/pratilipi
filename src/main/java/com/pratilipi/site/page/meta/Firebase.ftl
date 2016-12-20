@@ -71,7 +71,7 @@
 		var email_frequency_node = node.child('emailFrequency');
 		var notification_subscriptions_node = node.child('notificationSubscriptions');
 		
-		node.once('value', function(snapshot) ) {
+		node.once('value', function(snapshot)  {
 			var email_frequency = snapshot.child('emailFrequency').val();			
 			var notification_subscriptions = snapshot.child('notificationSubscriptions').val();
 			
@@ -84,7 +84,7 @@
 			notification_preferences["notification_subscriptions"] = notification_subscriptions;
 			console.log( notification_preferences );
 			return notification_preferences;		  				
-		}		
+		});		
 	}
 
 	function setNotificationPreferences( notification_preferences ) {
