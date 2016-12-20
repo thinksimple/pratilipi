@@ -77,5 +77,16 @@
       } ); 
       console.log( notification_preferences );   
       setNotificationPreferences( notification_preferences );
-    } )
+    });
+    
+    $( document ).ready(function() {
+      var notification_preferences = getNotificationPreferences();
+      var notification_subscriptions = notification_preferences[ "notification_subscriptions" ];
+      $( "#email_frequency" ).val( notification_preferences[ "email_frequency" ] );
+
+      $( "input:checkbox" ).each( function() {
+        $( this ).prop('checked', notification_subscriptions[ $( this ).val() ]) ;
+      });         
+
+    });     
   </script>

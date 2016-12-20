@@ -43,6 +43,9 @@
 <#-- Custom Stylesheet -->
 <link type="text/css" rel="stylesheet" href="/resources/style-basic.css?16">
 
+<#-- Firebase Script -->
+<#include "Firebase.ftl">
+
 <#-- Basic functions -->
 <#include "Scripts.ftl">
 
