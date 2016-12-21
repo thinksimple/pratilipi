@@ -149,7 +149,7 @@
 				this.pratilipiId = userpratilipi.pratilipiId == null ? this.pratilipi.pratilipiId : userpratilipi.pratilipiId; 
 				this.rating = userpratilipi.rating == null ? null : userpratilipi.rating;
 				this.reviewState = userpratilipi.reviewState == "PUBLISHED" ? null : userpratilipi.reviewState;
-				this.review = userpratilipi.review;
+				this.review = userpratilipi.review != null ? userpratilipi.review : null;
 			},
 			
 			openReviewInput: function( userpratilipi ) {
