@@ -39,7 +39,7 @@ public class PratilipiSiteFilter implements Filter {
 			+ "|"
 			+ mobileSubDomainPrefix + "\\.devo-pratilipi\\.appspot\\.com" // Devo (Basic)
 			+ "|"
-			+ "(raghu)\\.devo-pratilipi\\.appspot\\.com" // Devo (Raghu)
+			+ "gamma-dot-prod-pratilipi\\.appspot\\.com" // TODO: Remove this as soon as https support added
 			+ "|"
 			+ "localhost|127.0.0.1" );
 	private final Map<String, String> redirections = new HashMap<>();
