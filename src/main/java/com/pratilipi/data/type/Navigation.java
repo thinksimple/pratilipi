@@ -13,13 +13,15 @@ public interface Navigation extends Serializable {
 		
 		private String name;
 		private String url;
+		private String categoryName;
 		private String apiName;
 		private Object apiRequest;
 		private String imageUrl;
 		
-		public Link( String name, String url, String apiName, String apiRequest, String imageName ) {
+		public Link( String name, String url, String apiName, String categoryName, String apiRequest, String imageName ) {
 			this.name = name;
 			this.url = url;
+			this.categoryName = categoryName;
 			this.apiName = apiName;
 			this.apiRequest = apiRequest;
 			// TODO: Move images to static.pratilipi.com asap
@@ -33,7 +35,11 @@ public interface Navigation extends Serializable {
 		public String getUrl() {
 			return url;
 		}
-		
+
+		public String getcategoryName() {
+			return categoryName;
+		}
+
 		public String getApiName() {
 			return apiName;
 		}
