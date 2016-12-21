@@ -72,11 +72,11 @@ public class GenericBatchApi extends GenericApi {
 						continue;
 					Object varResp = apiResps.get( var.substring( 1, var.indexOf( "." ) ) );
 					if( varResp == null )
-						paramVal.setValue( null );
+						reqPayloadJson.add( paramVal.getKey(), null );
 					else if( varResp instanceof JsonElement )
-						paramVal.setValue( ((JsonElement) varResp).getAsJsonObject().get( var.substring( var.indexOf( "." ) + 1 ) ) );
+						reqPayloadJson.add( paramVal.getKey(), ((JsonElement) varResp).getAsJsonObject().get( var.substring( var.indexOf( "." ) + 1 ) ) );
 					else
-						paramVal.setValue( null );
+						reqPayloadJson.add( paramVal.getKey(), null );
 				}
 				
 				Object apiResp = executeApi( api, api.getMethod, reqPayloadJson, api.getMethodParameterType, request );
