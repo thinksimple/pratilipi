@@ -81,7 +81,7 @@ public class GenericBatchApi extends GenericApi {
 				
 				Object apiResp = executeApi( api, api.getMethod, reqPayloadJson, api.getMethodParameterType, request );
 				if( apiResp instanceof GenericResponse )
-					apiResp = gson.toJson( apiResp );
+					apiResp = gson.toJsonTree( apiResp );
 				apiResps.put( apiReq.getKey(), apiResp );
 				
 			}
