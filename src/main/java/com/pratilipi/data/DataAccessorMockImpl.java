@@ -832,6 +832,7 @@ public class DataAccessorMockImpl implements DataAccessor {
 			} else if( navigation != null && ! line.isEmpty() ) {
 				String url = null;
 				String title = null;
+				String categoryName = null;
 				String imageName = null;
 				String apiName = null;
 				String apiRequest = null;
@@ -843,12 +844,17 @@ public class DataAccessorMockImpl implements DataAccessor {
 					apiRequest = line.substring( line.indexOf( '{' ), line.indexOf( '}' ) + 1 );
 					line = line.substring( 0, line.indexOf( "App#" ) ).trim();
 				}
+				if( line.contains( "Analytics#" ) ) {
+					String analyticsInfo = line.substring( line.indexOf( "Analytics#" ) ).trim();
+					categoryName = analyticsInfo.substring( "Analytics#categoryName::".length() ).trim();
+					line = line.substring( 0, line.indexOf( "Analytics#" ) ).trim();
+				}
 				if( line.indexOf( ' ' ) != -1 ) {
 					url = line.substring( 0, line.indexOf( ' ' ) );
 					title = line.substring( line.indexOf( ' ' ) + 1 ).trim();
 				}
 
-				navigation.addLink( new Navigation.Link( title, url, apiName, apiRequest, imageName ) );
+				navigation.addLink( new Navigation.Link( title, url, apiName, categoryName, apiRequest, imageName ) );
 			}
 			
 		}
