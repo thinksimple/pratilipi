@@ -218,11 +218,11 @@ public class AuditLogProcessApi extends GenericApi {
 			if( comment.getParentType() != CommentParentType.REVIEW )
 				continue;
 
-			UserPratilipi reviewer = userPratilipis.get( comment.getParentId() );
-			Pratilipi pratilipi = pratilipis.get( comment.getReferenceId() );
+			UserPratilipi userPratilipi = userPratilipis.get( comment.getParentId() );
+			Pratilipi pratilipi = pratilipis.get( userPratilipi.getPratilipiId() );
 			Author author = authors.get( pratilipi.getAuthorId() );
 
-			_createCommentAddedReviewerEmail( reviewer, comment );
+			_createCommentAddedReviewerEmail( userPratilipi, comment );
 			_createCommentAddedAuthorEmail( author, comment );
 
 		}
