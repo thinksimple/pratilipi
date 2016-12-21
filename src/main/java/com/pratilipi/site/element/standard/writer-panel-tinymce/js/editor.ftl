@@ -14,7 +14,7 @@ Editor.prototype.init = function() {
 		min_height: 400,
 		max_height: 500,
 		block_formats: 'Paragraph=p;',	
-		plugins : ['autoresize autolink lists link image','fullscreen','paste'],
+		plugins : ['autoresize autolink lists link image', 'paste'],
 		menubar: false,
 		statusbar: false,
 		toolbar: 'bold italic underline | CustomLeftAlign CustomCenterAlign CustomRightAlign | CustomBlockquote link imageCustom | Ulist Olist',

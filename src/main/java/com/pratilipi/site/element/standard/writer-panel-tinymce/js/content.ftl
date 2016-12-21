@@ -65,7 +65,7 @@ Content.prototype.getContent = function() {
 };
 
 Content.prototype.getContentWithoutNbsps = function() {
-	return this.getContent().replace( /&nbsp;/g, ' ' );
+	return this.getContent().replace( /&nbsp;/g, ' ' ).replace( /<br \/>/g, '<br>' );
 };
 
 Content.prototype.getContentBeforeSaving = function() {
