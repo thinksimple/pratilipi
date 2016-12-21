@@ -27,6 +27,7 @@ import com.pratilipi.common.type.NotificationState;
 import com.pratilipi.common.type.NotificationType;
 import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.UserFollowState;
+import com.pratilipi.common.type.UserReviewState;
 import com.pratilipi.common.type.VoteParentType;
 import com.pratilipi.common.util.SystemProperty;
 import com.pratilipi.common.util.UserAccessUtil;
@@ -175,7 +176,7 @@ public class AuditLogProcessApi extends GenericApi {
 		}
 
 
-		/*
+
 		// auditLog.getAccessType() == AccessType.USER_PRATILIPI_REVIEW
 		for( String userPratilipiId : userPratilipiUpdateIds ) {
 
@@ -188,7 +189,7 @@ public class AuditLogProcessApi extends GenericApi {
 			_createUserPratilipiReviewEmail( userPratilipi, authors.get( pratilipis.get( pratilipiId ).getAuthorId() ) );
 
 		}
-		*/
+		
 
 
 		// auditLog.getAccessType() == AccessType.USER_AUTHOR_FOLLOWING
