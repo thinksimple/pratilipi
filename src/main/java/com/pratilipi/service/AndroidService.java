@@ -8,6 +8,7 @@ import com.pratilipi.api.impl.author.AuthorCoverApi;
 import com.pratilipi.api.impl.author.AuthorCoverRemoveApi;
 import com.pratilipi.api.impl.author.AuthorImageApi;
 import com.pratilipi.api.impl.author.AuthorImageRemoveApi;
+import com.pratilipi.api.impl.author.AuthorRecommendApi;
 import com.pratilipi.api.impl.category.CategoryListApi;
 import com.pratilipi.api.impl.comment.CommentApi;
 import com.pratilipi.api.impl.comment.CommentListApi;
@@ -91,6 +92,7 @@ public class AndroidService extends GenericService {
 		ApiRegistry.register( AuthorImageRemoveApi.class );
 		ApiRegistry.register( AuthorCoverApi.class );
 		ApiRegistry.register( AuthorCoverRemoveApi.class );
+		ApiRegistry.register( AuthorRecommendApi.class );
 		
 		ApiRegistry.register( EventApi.class );
 		ApiRegistry.register( EventListApi.class );
