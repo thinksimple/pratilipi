@@ -207,8 +207,14 @@ var suggesterMethods = {
       coordinates["left"] = caret_coordinates.left + this.content_holder.offset().left;
     }
     else {
+      var doc_height = $(document).height();
       coordinates["top"] = this.curSpan.offsetTop + this.curSpan.offsetHeight + this.content_holder.get(0).offsetTop;
       coordinates["left"] = this.curSpan.offsetLeft + this.content_holder.get(0).offsetLeft;
+      console.log( doc_height, coordinates["top"], doc_height - coordinates["top"] );
+      if( doc_height - coordinates["top"] < 200 ) {
+        this.content_holder.height( this.content_holder.height() + 200 );
+        window.scrollTo( 0, document.body.scrollHeight + 200 );
+      }
     }
     return coordinates;
   },
