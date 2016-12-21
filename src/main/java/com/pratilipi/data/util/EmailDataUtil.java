@@ -198,6 +198,7 @@ public class EmailDataUtil {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
 		CommentData comment = CommentDataUtil.createCommentData( dataAccessor.getComment( commentId ) );
+		comment.setUser( UserDataUtil.createUserData( dataAccessor.getUser( comment.getUserId() ) ) );
 		UserPratilipiData review = UserPratilipiDataUtil.createUserPratilipiData( dataAccessor.getUserPratilipi( comment.getParentId() ) );
 		PratilipiData pratilipi = PratilipiDataUtil.createPratilipiData( dataAccessor.getPratilipi( review.getPratilipiId() ) );
 
