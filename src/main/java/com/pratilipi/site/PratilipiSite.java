@@ -42,7 +42,7 @@ import com.pratilipi.api.impl.pratilipi.PratilipiContentV3Api;
 import com.pratilipi.api.impl.pratilipi.PratilipiListV2Api;
 import com.pratilipi.api.impl.pratilipi.PratilipiV2Api;
 import com.pratilipi.api.impl.user.UserApi;
-import com.pratilipi.api.impl.userauthor.UserAuthorFollowApi;
+import com.pratilipi.api.impl.userauthor.UserAuthorFollowV1Api;
 import com.pratilipi.api.impl.userauthor.UserAuthorFollowListApi;
 import com.pratilipi.api.impl.userpratilipi.UserPratilipiApi;
 import com.pratilipi.api.impl.userpratilipi.UserPratilipiReviewListApi;
@@ -855,10 +855,10 @@ public class PratilipiSite extends HttpServlet {
 		}
 
 
-		UserAuthorFollowApi.GetRequest getRequest = new UserAuthorFollowApi.GetRequest();
+		UserAuthorFollowV1Api.GetRequest getRequest = new UserAuthorFollowV1Api.GetRequest();
 		getRequest.setAuthorId( authorId );
-		UserAuthorFollowApi.Response userAuthorResponse = ApiRegistry
-				.getApi( UserAuthorFollowApi.class )
+		UserAuthorFollowV1Api.Response userAuthorResponse = ApiRegistry
+				.getApi( UserAuthorFollowV1Api.class )
 				.get( getRequest );
 		if( basicMode )
 			dataModel.put( "userAuthor", userAuthorResponse );

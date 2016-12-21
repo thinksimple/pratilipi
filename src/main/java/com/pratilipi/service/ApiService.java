@@ -49,7 +49,7 @@ import com.pratilipi.api.impl.user.UserLogoutApi;
 import com.pratilipi.api.impl.user.UserPasswordUpdateApi;
 import com.pratilipi.api.impl.user.UserRegisterApi;
 import com.pratilipi.api.impl.user.UserVerificationApi;
-import com.pratilipi.api.impl.userauthor.UserAuthorFollowApi;
+import com.pratilipi.api.impl.userauthor.UserAuthorFollowV1Api;
 import com.pratilipi.api.impl.userauthor.UserAuthorFollowListApi;
 import com.pratilipi.api.impl.userpratilipi.UserPratilipiApi;
 import com.pratilipi.api.impl.userpratilipi.UserPratilipiLibraryApi;
@@ -118,7 +118,7 @@ public class ApiService extends GenericService {
 		ApiRegistry.register( UserPratilipiReviewApi.class );		// *.pratilipi.com
 		ApiRegistry.register( UserPratilipiReviewListApi.class );	// *.pratilipi.com
 		
-		ApiRegistry.register( UserAuthorFollowApi.class );			// *.pratilipi.com
+		ApiRegistry.register( UserAuthorFollowV1Api.class );			// *.pratilipi.com
 		ApiRegistry.register( UserAuthorFollowListApi.class );		// *.pratilipi.com
 
 		ApiRegistry.register( CommentApi.class );					// *.pratilipi.com

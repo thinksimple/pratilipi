@@ -17,8 +17,8 @@ import com.pratilipi.taskqueue.Task;
 import com.pratilipi.taskqueue.TaskQueueFactory;
 
 @SuppressWarnings("serial")
-@Bind( uri = "/userauthor/follow" )
-public class UserAuthorFollowApi extends GenericApi {
+@Bind( uri = "/userauthor/follow", ver = "1" )
+public class UserAuthorFollowV1Api extends GenericApi {
 	
 	public static class GetRequest extends GenericRequest {
 
