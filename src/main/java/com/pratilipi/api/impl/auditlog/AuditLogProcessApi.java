@@ -19,6 +19,7 @@ import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.type.AccessType;
+import com.pratilipi.common.type.CommentParentType;
 import com.pratilipi.common.type.EmailState;
 import com.pratilipi.common.type.EmailType;
 import com.pratilipi.common.type.Language;
@@ -26,6 +27,7 @@ import com.pratilipi.common.type.NotificationState;
 import com.pratilipi.common.type.NotificationType;
 import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.UserFollowState;
+import com.pratilipi.common.type.VoteParentType;
 import com.pratilipi.common.util.SystemProperty;
 import com.pratilipi.common.util.UserAccessUtil;
 import com.pratilipi.data.DataAccessor;
@@ -98,27 +100,27 @@ public class AuditLogProcessApi extends GenericApi {
 
 
 		// Batch get Vote entities
-//		logger.log( Level.INFO, "Fetching " + voteUpdateIds.size() + " Vote Entities." );
-//		Map<String, Vote> votes = dataAccessor.getVotes( voteUpdateIds );
+		logger.log( Level.INFO, "Fetching " + voteUpdateIds.size() + " Vote Entities." );
+		Map<String, Vote> votes = dataAccessor.getVotes( voteUpdateIds );
 
 
 		// Batch get Comment and entities
-//		Set<Long> commentIds = new HashSet<>( commentUpdateIds );
-//		for( Vote vote : votes.values() )
-//			if( vote.getParentType() == VoteParentType.COMMENT )
-//				commentIds.add( vote.getParentIdLong() );
-//		logger.log( Level.INFO, "Fetching " + commentIds.size() + " Comment Entities." );
-//		Map<Long, Comment> comments = dataAccessor.getComments( commentIds );
+		Set<Long> commentIds = new HashSet<>( commentUpdateIds );
+		for( Vote vote : votes.values() )
+			if( vote.getParentType() == VoteParentType.COMMENT )
+				commentIds.add( vote.getParentIdLong() );
+		logger.log( Level.INFO, "Fetching " + commentIds.size() + " Comment Entities." );
+		Map<Long, Comment> comments = dataAccessor.getComments( commentIds );
 
 
 		// Batch get UserPratilipi entities
 		Set<String> userPratilipiIds = new HashSet<>( userPratilipiUpdateIds );
-//		for( Comment comment : comments.values() )
-//			if( comment.getParentType() == CommentParentType.REVIEW )
-//				userPratilipiIds.add( comment.getParentId() );
-//		for( Vote vote : votes.values() )
-//			if( vote.getParentType() == VoteParentType.REVIEW )
-//				userPratilipiIds.add( vote.getParentId() );
+		for( Comment comment : comments.values() )
+			if( comment.getParentType() == CommentParentType.REVIEW )
+				userPratilipiIds.add( comment.getParentId() );
+		for( Vote vote : votes.values() )
+			if( vote.getParentType() == VoteParentType.REVIEW )
+				userPratilipiIds.add( vote.getParentId() );
 		logger.log( Level.INFO, "Fetching " + userPratilipiIds.size() + " UserPratilipi Entities." );
 		Map<String, UserPratilipi> userPratilipis = dataAccessor.getUserPratilipis( userPratilipiIds );
 
