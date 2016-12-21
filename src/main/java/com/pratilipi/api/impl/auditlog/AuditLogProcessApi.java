@@ -20,6 +20,7 @@ import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.CommentParentType;
+import com.pratilipi.common.type.CommentState;
 import com.pratilipi.common.type.EmailState;
 import com.pratilipi.common.type.EmailType;
 import com.pratilipi.common.type.Language;
@@ -206,7 +207,6 @@ public class AuditLogProcessApi extends GenericApi {
 		}
 
 
-		/*
 		// auditLog.getAccessType() == AccessType.COMMENT_ADD
 		for( Long commentId : commentUpdateIds ) {
 
@@ -226,8 +226,7 @@ public class AuditLogProcessApi extends GenericApi {
 			_createCommentAddedAuthorEmail( author, comment );
 
 		}
-		*/
-		
+
 
 		/*
 		// auditLog.getAccessType() == AccessType.VOTE
