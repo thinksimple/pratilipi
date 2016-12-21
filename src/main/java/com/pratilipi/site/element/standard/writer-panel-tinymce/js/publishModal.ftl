@@ -1,9 +1,9 @@
 var PublishModal = function ( publish_modal_container ) {
   this.$publish_modal_container = publish_modal_container;
-  this.$form = this.$publish_modal_container.find("#publish_form");
-  this.$category_select = this.$form.find("#category");
-  this.$image_container = this.$form.find(".image-container");
-  this.$summary = this.$form.find("#summary");
+  this.$form = this.$publish_modal_container.find( "#publish_form" );
+  this.$category_select = this.$form.find( "#category" );
+  this.$image_container = this.$form.find( ".image-container" );
+  this.$summary = this.$form.find( "#summary" );
   this.form_validated = true;
   this.pratilipi_data = ${ pratilipiJson };
 };
@@ -16,7 +16,7 @@ PublishModal.prototype.init = function() {
   this.attachFormSubmitListener();
 };
 
-PublishModal.prototype.setBookName = function( name ){
+PublishModal.prototype.setBookName = function( name ) {
   var book_name;
   if( name ) {
     book_name = name;
@@ -24,22 +24,22 @@ PublishModal.prototype.setBookName = function( name ){
   else {
     book_name = this.pratilipi_data.title ? this.pratilipi_data.title : this.pratilipi_data.titleEn;
   }
-  this.$publish_modal_container.find('[data-behaviour="publish_book_name"]').text( book_name );
+  this.$publish_modal_container.find( '[data-behaviour="publish_book_name"]' ).text( book_name );
 };
 
 PublishModal.prototype.generateCategoryOptions = function() {
   var _this = this;
   var category_map = ${ pratilipiTypesJson };
-  $.each(category_map, function( key, value ) {
-    var $option = $("<option>",{
+  $.each( category_map, function( key, value ) {
+    var $option = $( "<option>", {
       value: key,
-    }).html( value["name"] );
+    } ).html( value["name"] );
     _this.$category_select.append( $option );
   });
 };
 
 PublishModal.prototype.hideCoverImageForm = function() {
-  $("#uploadPratilipiImageInput").hide();
+  $( "#uploadPratilipiImageInput" ).hide();
 };
 
 PublishModal.prototype.prepopulateBookDetails = function() {
@@ -61,39 +61,39 @@ PublishModal.prototype.prepopulateBookDetails = function() {
 
 PublishModal.prototype.attachCoverImageListeners = function() {
   var _this = this;
-  this.$image_container.on('click', function() {
-    $("#uploadPratilipiImageInput").trigger('click');
+  this.$image_container.on( 'click', function() {
+    $( "#uploadPratilipiImageInput" ).trigger( 'click' );
   });
     
-  $("#uploadPratilipiImageInput").on('change', function() {
-    $("#uploadPratilipiImage").submit();
+  $( "#uploadPratilipiImageInput" ).on( 'change', function() {
+    $( "#uploadPratilipiImage" ).submit();
   });
     
-  $('#uploadPratilipiImage').on('submit',function(e) {
+  $( '#uploadPratilipiImage' ).on( 'submit',function(e) {
     e.preventDefault();
-    var blob = $(this).find("#uploadPratilipiImageInput").get(0).files[0];
+    var blob = $( this ).find( "#uploadPratilipiImageInput" ).get( 0 ).files[0];
     /* didItResize will be true if it managed to resize it, otherwise false (and will return the original file as 'blob') */
-    var $img = _this.$image_container.find(".cover-image");
-    $img.attr("src", window.URL.createObjectURL(blob) ).addClass("blur-image");
+    var $img = _this.$image_container.find( ".cover-image" );
+    $img.attr( "src", window.URL.createObjectURL( blob ) ).addClass( "blur-image" );
     var fd = new FormData();
-    fd.append('data', blob);
-    fd.append('pratilipiId', ${ pratilipiId?c } );  
+    fd.append( 'data', blob );
+    fd.append( 'pratilipiId', ${ pratilipiId?c } );  
     
-    $.ajax({
+    $.ajax( {
       type:'POST',
       url: '/api/pratilipi/cover?pratilipiId=${ pratilipiId?c }',
       data:fd,
       cache:true,
       contentType: false,
       processData: false,
-      success:function(data){
+      success:function( data ) {
         var image_url = jQuery.parseJSON( data ).coverImageUrl;
-        $img.attr( "src", image_url ).removeClass("blur-image");
-        $("#uploadPratilipiImageInput").val("");
+        $img.attr( "src", image_url ).removeClass( "blur-image" );
+        $( "#uploadPratilipiImageInput" ).val( "" );
         _this.lastCoverUrl = image_url;
       },
-      error: function(data){
-        $img.removeClass("blur-image").attr("src", _this.lastCoverUrl);
+      error: function( data ) {
+        $img.removeClass( "blur-image" ).attr( "src", _this.lastCoverUrl );
       }
     });
   });                  
@@ -111,8 +111,8 @@ PublishModal.prototype.attachFormSubmitListener = function() {
 <#-- PublishModal.prototype.validateForm = function() {
   this.resetErrorStates();
   if( this.isEmptyStr( this.$category_select.val() ) ) {
-    this.$category_select.closest(".form-group").addClass("has-error");
-    this.$category_select.after('<span class="error-exclamation glyphicon glyphicon-exclamation-sign form-control-feedback" style="right: 5%;" aria-hidden="true"></span>');
+    this.$category_select.closest( ".form-group" ).addClass( "has-error" );
+    this.$category_select.after( '<span class="error-exclamation glyphicon glyphicon-exclamation-sign form-control-feedback" style="right: 5%;" aria-hidden="true"></span>' );
     this.form_validated = false;
   }
   
@@ -124,14 +124,14 @@ PublishModal.prototype.attachFormSubmitListener = function() {
 
 PublishModal.prototype.resetErrorStates = function() {
   this.form_validated = true;
-  this.$form.find(".has-error").removeClass("has-error");
-  this.$form.find(".error-exclamation").remove();
+  this.$form.find( ".has-error" ).removeClass( "has-error" );
+  this.$form.find( ".error-exclamation" ).remove();
   
 };
 
 PublishModal.prototype.ajaxSubmitForm = function() {
-  var $spinner = $("<div>").addClass("spinner");
-  this.$publish_modal_container.find(".modal-content").append( $spinner );
+  var $spinner = $( "<div>" ).addClass( "spinner" );
+  this.$publish_modal_container.find( ".modal-content" ).append( $spinner );
   var _this = this;
   var ajax_data = {
     pratilipiId: ${ pratilipiId?c },
@@ -139,23 +139,24 @@ PublishModal.prototype.ajaxSubmitForm = function() {
     summary: this.$summary.val(),
     state: "PUBLISHED"
   };
-  $.ajax({
+  $.ajax( {
     type: "POST",
     url: "/api/pratilipi?_apiVer=2",
     data: ajax_data,
-    success:function(response){        
+    success:function( response ) {        
       var parsed_data = jQuery.parseJSON( response );
-      _this.$publish_modal_container.find(".spinner").remove();
       window.location.href = parsed_data.pageUrl;
     },
-    fail:function(response){
+    fail: function( response ) {
       var message = jQuery.parseJSON( response.responseText );
-      alert(message);
-      _this.$publish_modal_container.find(".spinner").remove();
-    }                   
+      alert( message );
+    },
+    complete: function() {
+    	 _this.$publish_modal_container.find( ".spinner" ).remove();
+    }                    
   });   
 };
 
-PublishModal.prototype.isEmptyStr = function(str) {
+PublishModal.prototype.isEmptyStr = function( str ) {
   return ( str==null || str.length === 0 || !str.trim() );
 };

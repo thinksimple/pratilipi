@@ -266,6 +266,7 @@ Editor.prototype.getClosestSelectionNode = function( nodeName ) {
 Editor.prototype.attachImageInputListener = function() {
 	var _this = this;
 	this.$image_input.on( "change", function() {
+		$( $( '#field_name' ).val() ).closest( "div" ).addClass( "small-spinner" );
 		_this.uploadOnServer();
 	});
 };
@@ -295,11 +296,15 @@ Editor.prototype.uploadOnServer = function() {
 				 image_url += "&width=240";
 			 } */
 			_this.$image_input.val( "" );
-			$(field_name).val( image_url );
+			$( field_name ).val( image_url );
 			_this.parent_object.setNewImageFlag( true );
 		},
 		error: function( data ){
-			_this.$image_input.val("");							
+			_this.$image_input.val("");	
+			alert( "Sorry your image could not be uploaded due to a server problem" );						
+		},
+		complete: function() {
+			$( $( '#field_name' ).val() ).closest( "div" ).removeClass( "small-spinner" );
 		}
 	});
 };

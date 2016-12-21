@@ -255,7 +255,7 @@ MainWriterPanel.prototype.getChapter = function( chapterNum ) {
 			_this.lastSavedContent = parsed_data.content;
 			setCookie( "writer_current_page_${ pratilipiId?c }", _this.currChapter, 15, "/pratilipi-write" );
 		},
-		fail: function( response ) {
+		error: function( response ) {
 			var message = jQuery.parseJSON( response.responseText );
 			alert( message );
 		},
@@ -285,7 +285,7 @@ MainWriterPanel.prototype.ajaxAddNewChapter = function( chapterNum ) {
 			_this.lastSavedContent = "";
 			setCookie( "writer_current_page_${ pratilipiId?c }", _this.currChapter, 15, "/pratilipi-writer");			
 		},
-		fail: function( response ) {
+		error: function( response ) {
 			var message = jQuery.parseJSON( response.responseText );
 			alert( message );
 		},
@@ -324,10 +324,12 @@ MainWriterPanel.prototype.removeChapter = function( chapterNum ) {
 				_this.table_of_contents_object.populateIndex( _this.index );
 				/* check if we need to change the page number */			
 			},
-			fail:function(response){
+			error:function(response){
 				var message = jQuery.parseJSON( response.responseText );
 				alert(message);
-			}						 
+			},
+			complete: function() {
+			}									 
 		}); 
 	}
 };
@@ -359,25 +361,26 @@ MainWriterPanel.prototype.saveChapter = function( autosaveFlag ) {
 					_this.setNewImageFlag( false );
 				}
 				if( !autosaveFlag ) {
-					$( "#header1" ).removeClass( "small-spinner" );
-					_this.$save_button.removeAttr( "disabled" );
 					toastr.success( '${ _strings.writer_changes_saved }' );
 					_this.content_object.setContent( ajaxData.content );
 				}
 				var title = ajaxData.chapterTitle;
 				_this.lastSavedContent = ajaxData.content;
-				_this.$final_publish_button.removeAttr( "disabled" );
 				_this.table_of_contents_object.changeCurrentChapterName( _this.currChapter, title );
 			},
 			error: function( response ) {
-				_this.$panel_container.find( ".spinner" ).remove();
-				$( "#header1" ).removeClass( "small-spinner" );
-				_this.$save_button.removeAttr( "disabled" );
-				_this.$final_publish_button.removeAttr( "disabled" );
 				if( !autosaveFlag ) {
 					toastr.success( '${ _strings.server_error_message }' );
 				}
-			}
+			},
+			complete: function() {
+				<#-- _this.$panel_container.find( ".spinner" ).remove(); -->
+				if( !autosaveFlag ) {
+					$( "#header1" ).removeClass( "small-spinner" );
+					_this.$save_button.removeAttr( "disabled" );
+				}
+				_this.$final_publish_button.removeAttr( "disabled" );
+			}			
 		});
 	}
 };
