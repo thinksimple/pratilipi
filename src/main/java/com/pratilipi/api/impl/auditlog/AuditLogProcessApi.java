@@ -163,8 +163,8 @@ public class AuditLogProcessApi extends GenericApi {
 					null,
 					null ).getDataList();
 
-//			_createPratilipiPublishedEmail( pratilipi, authors.get( pratilipi.getAuthorId() ) );
-//			_createPratilipiPublishedEmails( pratilipi, followerUserIdList );
+			_createPratilipiPublishedEmail( pratilipi, authors.get( pratilipi.getAuthorId() ) );
+			_createPratilipiPublishedEmails( pratilipi, followerUserIdList );
 
 			// Send notification to all AEEs all well
 			followerUserIdList.addAll( _getAeeUserIdList( pratilipi.getLanguage() ) );
