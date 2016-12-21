@@ -12,8 +12,8 @@
 /children         బాల సాహిత్యం          App#imageName::children.jpg            App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"children" }
 /nonfiction       ఇతర రచనలు           App#imageName::classic.jpg            App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"nonfiction" }
 /love             ప్రేమ                App#imageName::event_romance.jpg            App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"love" }
-/life             జీవితం                App#imageName:life.jpg                App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"life" }
-/social           సామాజికం             App#imageName:social.jpg             App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"social" }     
-/ministories      మినీకథలు             App#imageName:shortstories.jpg         App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"ministories" }
+/life             జీవితం                App#imageName::life.jpg                App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"life" }
+/social           సామాజికం             App#imageName::social.jpg             App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"social" }     
+/ministories      మినీకథలు             App#imageName::shortstories.jpg         App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"ministories" }
 /poems            కవితలు               App#imageName::poems.jpg             App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"poems" }
 
