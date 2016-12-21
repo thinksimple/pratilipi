@@ -48,22 +48,42 @@ public class GenericBatchApi extends GenericApi {
 			Gson gson = new Gson();
 			
 			JsonObject apiReqs = gson.fromJson(
-					request.getParameter( "requests" ),
+					request.getParameter( "requests" ), // e.g. {"req1":"/pratilipi?pratilipiId=123","req2":"/pratilipi?pratilipiId=234"}
 					JsonElement.class ).getAsJsonObject();
 			
 			Map<String, Object> apiResps = new HashMap<>();
 			for( Entry<String, JsonElement> apiReq : apiReqs.entrySet() ) {
-				String reqUri = apiReq.getValue().getAsString();
+				
+				String reqUri = apiReq.getValue().getAsString(); // e.g. /pratilipi?pratilipiId=123
 				int index = reqUri.indexOf( '?' );
-				GenericApi api = index == -1
+				GenericApi api = index == -1 // e.g. /pratilipi
 						? ApiRegistry.getApi( reqUri )
 						: ApiRegistry.getApi( reqUri.substring( 0, index ) );
-				JsonObject reqPayloadJson = index == -1
+				JsonObject reqPayloadJson = index == -1 // e.g. pratilipiId=123
 						? new JsonObject()
 						: createRequestPayloadJson( reqUri.substring( index + 1 ), request );
-				apiResps.put(
-						apiReq.getKey(),
-						executeApi( api, api.getMethod, reqPayloadJson, api.getMethodParameterType, request ) );
+				
+				// Replacing variables by values
+				for( Entry<String, JsonElement> paramVal : reqPayloadJson.entrySet() ) {
+					if( paramVal.getValue() == null )
+						continue;
+					String var = paramVal.getValue().getAsString();
+					if( ! var.startsWith( "$" ) )
+						continue;
+					Object varResp = apiResps.get( var.substring( 1, var.indexOf( "." ) ) );
+					if( varResp == null )
+						paramVal.setValue( null );
+					else if( varResp instanceof JsonElement )
+						paramVal.setValue( ((JsonElement) varResp).getAsJsonObject().get( var.substring( var.indexOf( "." ) + 1 ) ) );
+					else
+						paramVal.setValue( null );
+				}
+				
+				Object apiResp = executeApi( api, api.getMethod, reqPayloadJson, api.getMethodParameterType, request );
+				if( apiResp instanceof GenericResponse )
+					apiResp = gson.toJson( apiResp );
+				apiResps.put( apiReq.getKey(), apiResp );
+				
 			}
 			
 			dispatchApiResponse( apiResps, request, response );
@@ -74,7 +94,6 @@ public class GenericBatchApi extends GenericApi {
 			dispatchApiResponse( apiResponse, request, response );
 		
 		}
-		
 		
 	}
 	
@@ -96,7 +115,6 @@ public class GenericBatchApi extends GenericApi {
 		response.setContentType( "text/html" );
 		response.setCharacterEncoding( "UTF-8" );
 		
-		Gson gson = new Gson();
 		boolean bool = true;
 		
 		PrintWriter writer = response.getWriter();
@@ -107,9 +125,9 @@ public class GenericBatchApi extends GenericApi {
 			else
 				writer.print( "," );
 			writer.print( "\"" + apiResp.getKey() + "\":{" );
-			if( apiResp.getValue() instanceof GenericResponse ) {
+			if( apiResp.getValue() instanceof JsonElement ) {
 				writer.print( "\"status\":" + HttpServletResponse.SC_OK + "," );
-				writer.print( "\"response\":" + gson.toJson( apiResp.getValue() ) );
+				writer.print( "\"response\":" + apiResp.getValue() );
 			} else if( apiResp.getValue() instanceof InvalidArgumentException ) {
 				logger.log( Level.INFO, ((Throwable) apiResp.getValue() ).getMessage() );
 				writer.print( "\"status\":" + HttpServletResponse.SC_BAD_REQUEST + "," );
