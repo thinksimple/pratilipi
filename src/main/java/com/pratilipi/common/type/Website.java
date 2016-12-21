@@ -14,7 +14,7 @@ public enum Website {
 	
 	GAMMA_ALL_LANGUAGE	(       "www.gamma.pratilipi.com",  "m.gamma.pratilipi.com", Language.ENGLISH,		null ),
 	GAMMA_HINDI			(     "hindi.gamma.pratilipi.com", "hi.gamma.pratilipi.com", Language.HINDI,		Language.HINDI ),
-	GAMMA_HINDI_HTTPS	(            "gamma-dot-prod-pratilipi.pratilipi.com", null, Language.HINDI,		Language.HINDI ),
+	GAMMA_HINDI_HTTPS	(              "gamma-dot-prod-pratilipi.appspot.com", null, Language.HINDI,		Language.HINDI ),
 	GAMMA_GUJARATI		(  "gujarati.gamma.pratilipi.com", "gu.gamma.pratilipi.com", Language.GUJARATI,		Language.GUJARATI ),
 	GAMMA_TAMIL			(     "tamil.gamma.pratilipi.com", "ta.gamma.pratilipi.com", Language.TAMIL,		Language.TAMIL ),
 	GAMMA_MARATHI		(   "marathi.gamma.pratilipi.com", "mr.gamma.pratilipi.com", Language.MARATHI,		Language.MARATHI ),
