@@ -24,7 +24,8 @@ public class SystemProperty {
 			DATASOURCE = "gae";
 			BLOBSERVICE_GCS_BUCKET = "static.pratilipi.com";
 			BLOBSERVICE_GCS_BUCKET_BACKUP = "backup.pratilipi.com";
-			CDN = "http://*.ptlp.co";
+			// TODO: Update this as soon as https support is added
+			CDN = moduleId.equals( "gamma" ) ? "https://d3cwrmdwk8nw1j.cloudfront.net" : "http://*.ptlp.co";
 			STAGE = moduleId.equals( "gamma" ) || moduleId.equals( "gamma-android" ) ? STAGE_GAMMA : STAGE_PROD;
 		} else if( appId.equals( "devo-pratilipi" ) || appId.equals( "s~devo-pratilipi" ) ) {
 			DATASOURCE = "gae";
