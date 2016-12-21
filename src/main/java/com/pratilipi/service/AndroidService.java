@@ -43,8 +43,9 @@ import com.pratilipi.api.impl.user.UserLogoutApi;
 import com.pratilipi.api.impl.user.UserPasswordUpdateApi;
 import com.pratilipi.api.impl.user.UserRegisterApi;
 import com.pratilipi.api.impl.userauthor.UserAuthorApi;
-import com.pratilipi.api.impl.userauthor.UserAuthorFollowV1Api;
 import com.pratilipi.api.impl.userauthor.UserAuthorFollowListApi;
+import com.pratilipi.api.impl.userauthor.UserAuthorFollowV1Api;
+import com.pratilipi.api.impl.userauthor.UserAuthorFollowV2Api;
 import com.pratilipi.api.impl.userpratilipi.UserPratilipiApi;
 import com.pratilipi.api.impl.userpratilipi.UserPratilipiLibraryApi;
 import com.pratilipi.api.impl.userpratilipi.UserPratilipiLibraryListApi;
@@ -106,6 +107,7 @@ public class AndroidService extends GenericService {
 
 		ApiRegistry.register( UserAuthorApi.class );
 		ApiRegistry.register( UserAuthorFollowV1Api.class );
+		ApiRegistry.register( UserAuthorFollowV2Api.class );
 		ApiRegistry.register( UserAuthorFollowListApi.class );
 
 		ApiRegistry.register( CommentApi.class );
