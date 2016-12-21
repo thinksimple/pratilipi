@@ -266,7 +266,6 @@ Editor.prototype.getClosestSelectionNode = function( nodeName ) {
 Editor.prototype.attachImageInputListener = function() {
 	var _this = this;
 	this.$image_input.on( "change", function() {
-		$( $( '#field_name' ).val() ).closest( "div" ).addClass( "small-spinner" );
 		_this.uploadOnServer();
 	});
 };
@@ -274,12 +273,14 @@ Editor.prototype.attachImageInputListener = function() {
 Editor.prototype.uploadOnServer = function() {
 	var _this = this;
 	var field_name = "#" + $( '#field_name' ).val();
+	var $parent_div = $( field_name ).closest( "div" );
 	var fd = new FormData();
 	var cur_page = this.parent_object.currChapter;
 	var blob = this.$image_input.get(0).files[0];
 	fd.append( 'data', blob );
 	fd.append( 'pratilipiId', ${ pratilipiId?c } );
 	fd.append( 'pageNo', cur_page );
+	$parent_div.addClass( "small-spinner" );
 
 	$.ajax({
 		type:'POST',
@@ -300,11 +301,11 @@ Editor.prototype.uploadOnServer = function() {
 			_this.parent_object.setNewImageFlag( true );
 		},
 		error: function( data ){
-			_this.$image_input.val("");	
+			_this.$image_input.val( "" );	
 			alert( "Sorry your image could not be uploaded due to a server problem" );						
 		},
 		complete: function() {
-			$( $( '#field_name' ).val() ).closest( "div" ).removeClass( "small-spinner" );
+			$parent_div.removeClass( "small-spinner" );
 		}
 	});
 };
