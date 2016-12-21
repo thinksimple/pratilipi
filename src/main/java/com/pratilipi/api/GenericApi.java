@@ -61,13 +61,13 @@ public abstract class GenericApi extends HttpServlet {
 	public void init() throws ServletException {
 		
 		for( Method method : this.getClass().getMethods() ) {
-			if( method.getAnnotation( Get.class ) != null ) {
+			if( getMethod == null && method.getAnnotation( Get.class ) != null ) {
 				getMethod = method;
 				getMethodParameterType = (Class<? extends GenericRequest>) method.getParameterTypes()[0];
 				for( Field field : getMethodParameterType.getDeclaredFields() )
 					if( field.getAnnotation( Sensitive.class ) != null )
 						getRequestSensitiveFieldList.add( field.getName() );
-			} else if( method.getAnnotation( Post.class ) != null ) {
+			} else if( postMethod == null && method.getAnnotation( Post.class ) != null ) {
 				postMethod = method;
 				postMethodParameterType = (Class<? extends GenericRequest>) method.getParameterTypes()[0];
 				for( Field field : postMethodParameterType.getDeclaredFields() )
