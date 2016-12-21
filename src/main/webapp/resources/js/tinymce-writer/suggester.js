@@ -208,16 +208,17 @@ var suggesterMethods = {
     }
     else {
       var doc_height = $(document).height();
-      var client_height = document.body.clientHeight;
+      // var client_height = document.body.clientHeight;
       coordinates["top"] = this.curSpan.offsetTop + this.curSpan.offsetHeight + this.content_holder.get(0).offsetTop;
       coordinates["left"] = this.curSpan.offsetLeft + this.content_holder.get(0).offsetLeft;
 
-      var visibleTop = coordinates["top"] - $(window).scrollTop();
-      console.log( doc_height, coordinates["top"], doc_height - coordinates["top"] );
-      console.log( client_height, visibleTop, client_height - visibleTop );
+      // var visibleTop = coordinates["top"] - $(window).scrollTop();
+      // console.log( doc_height, coordinates["top"], doc_height - coordinates["top"] );
+      // console.log( client_height, visibleTop, client_height - visibleTop );
       var last_usable_value = doc_height - coordinates["top"];
-      if( client_height - visibleTop < 200 ) {
-        this.content_holder.height( this.content_holder.height() + 200 );
+      if( doc_height - coordinates["top"] < 200 ) {
+        // this.content_holder.height( this.content_holder.height() + 200 );
+        coordinates["top"] -= 180;
         window.scrollTo( 0, document.body.scrollHeight + 200 );
       }
     }
