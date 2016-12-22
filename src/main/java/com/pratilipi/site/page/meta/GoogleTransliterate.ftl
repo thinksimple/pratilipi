@@ -1,5 +1,3 @@
-<script type="text/javascript" src="http://0.ptlp.co/resource-all/jsapi.js"></script>
-
 <script type="text/javascript">
 	google.load( "elements", "1", {
 		packages: "transliteration"

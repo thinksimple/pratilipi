@@ -1,3 +1,6 @@
+<#-- Deffered ResourceList -->
+<#list deferredResourceList as resource>${ resource }</#list>
+
 <#-- Style CSS -->
 <#include "Font.ftl">
 <link type="text/css" rel="stylesheet" href="/resources/style.css?2311">

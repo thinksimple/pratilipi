@@ -1,5 +1,3 @@
-<script src="http://0.ptlp.co/resource-all/firebase_3_6_1.js"></script>
-
 <script>
 	var config = {
 		apiKey: "AIzaSyAAnK0-vDmY1UEcrRRbCzXgdpF2oQn-E0w",

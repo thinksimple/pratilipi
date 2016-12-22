@@ -137,9 +137,19 @@ public class PratilipiSite extends HttpServlet {
 		if( basicMode ) {
 			resourceList.add( ThirdPartyResource.JQUERY.getTag() );
 			resourceList.add( ThirdPartyResource.BOOTSTRAP_JS.getTag() );
-			resourceList.add( ThirdPartyResource.BOOTSTRAP_CSS.getTag() );
+		} else {
+			resourceList.add( ThirdPartyResource.JQUERY_BOOTSTRAP_POLYMER_JS.getTag() );
+			resourceList.add( ThirdPartyResource.POLYMER_ELEMENTS.getTag() );
+			resourceList.add( ThirdPartyResource.FIREBASE.getTag() );
 		}
 
+		List<String> deferredResourceList = new LinkedList<>();
+		if( basicMode ) {
+			resourceList.add( ThirdPartyResource.BOOTSTRAP_CSS.getTag() );
+		} else {
+			deferredResourceList.add( ThirdPartyResource.BOOTSTRAP_CSS.getTag() );
+			deferredResourceList.add( ThirdPartyResource.GOOGLE_TRANSLITERATION.getTag() );
+		}
 
 		// Data Model for FreeMarker
 		Map<String, Object> dataModel = null;
@@ -251,13 +261,6 @@ public class PratilipiSite extends HttpServlet {
 				templateName = ( basicMode ? "BlogPostBasic.ftl" : "BlogPost.ftl" );
 			
 			} else if( page != null && page.getType() == PageType.READ ) {
-				if( !basicMode ) {
-//					resourceList.add( ThirdPartyResource.POLYMER_PAPER_FAB.getTag() );
-//					resourceList.add( ThirdPartyResource.POLYMER_PAPER_SLIDER.getTag() );
-//					resourceList.add( ThirdPartyResource.POLYMER_IRON_ICONS_SOCIAL.getTag() );
-//					resourceList.add( ThirdPartyResource.POLYMER_IRON_ICONS_AV.getTag() );
-//					resourceList.add( ThirdPartyResource.POLYMER_IRON_ICONS_EDITOR.getTag() );
-				}
 
 				Long pratilipiId = Long.parseLong( request.getParameter( RequestParameter.CONTENT_ID.getName() ) );
 				String fontSize = AccessTokenFilter.getCookieValue( RequestCookie.FONT_SIZE.getName(), request );
@@ -353,6 +356,8 @@ public class PratilipiSite extends HttpServlet {
 				templateName = ( basicMode ? "PasswordResetBasic.ftl" : "PasswordReset.ftl" );
 				
 			} else if( uri.equals( "/pratilipi-write" ) ) {
+
+				resourceList.remove( ThirdPartyResource.POLYMER_ELEMENTS.getTag() );
 
 				dataModel = new HashMap<String, Object>();
 				dataModel.put( "title", "Writer Panel" );
@@ -531,6 +536,7 @@ public class PratilipiSite extends HttpServlet {
 		dataModel.put( "languageMap", gson.toJson( languageMap ) );
 		dataModel.put( "_strings", I18n.getStrings( displayLanguage ) );
 		dataModel.put( "resourceList", resourceList );
+		dataModel.put( "deferredResourceList", deferredResourceList );
 		dataModel.put( "user", userResponse );
 		dataModel.put( "userJson", gson.toJson( userResponse ) );
 		dataModel.put( "pratilipiTypesJson", gson.toJson( pratilipiTypes ) );
