@@ -26,5 +26,5 @@
 /yatra-vrutant           यात्रा – वृत्तांत               Analytics#categoryName::travel       App#imageName::youth.jpg              App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"yatra-vrutant" }
 /self-help               स्व - विकास                Analytics#categoryName::self-help   App#imageName::selfhelp.jpg            App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"self-help" }
 /swad-ka-tadka           स्वाद का तड़का             Analytics#categoryName::cooking      App#imageName::cooking.jpg             App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"swad-ka-tadka" }
-/numerology              अंकों में छुपे रहस्य           Analytics#categoryName::astronomy    App#imageName::finance.jpg            App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"numerology" }
+/numerology              अंकों में छुपे रहस्य           Analytics#categoryName::astrology    App#imageName::finance.jpg            App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"numerology" }
 /etihasik-dastavej       ऐतिहासिक दस्तावेज           Analytics#categoryName::children    App#imageName::manuscripts.jpg        App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"etihasik-dastavej" }
