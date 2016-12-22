@@ -16,7 +16,7 @@
 /women         സ്ത്രീ                   Analytics#categoryName::women       App#imageName::women.jpg             App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"women" }
 /series        തുടര്‍ക്കഥകള്‍           Analytics#categoryName::series        App#imageName::series.jpg         App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"series" }
 /society       സമൂഹം                Analytics#categoryName::social      App#imageName::social.jpg          App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"society" }
-/memory        ഓര്‍മ്മ                  Analytics#categoryName::memory          App#imageName::experiences.jpg     App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"memory" }
+/memory        ഓര്‍മ്മ                  Analytics#categoryName::experiences          App#imageName::experiences.jpg     App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"memory" }
 /letters       കത്തുകള്‍             Analytics#categoryName::letters         App#imageName::letters.jpg            App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"letters" }
 /stories       മറ്റു കഥകള്‍              Analytics#categoryName::other-stories         App#imageName::event_generic3.jpg      App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"stories" } 
 /poems         കവിതകൾ         Analytics#categoryName::poetry            App#imageName::poems.jpg             App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"poems" }
