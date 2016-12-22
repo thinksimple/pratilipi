@@ -2,7 +2,7 @@
 /mostread         పాఠకులకు ప్రత్యేకం       Analytics#categoryName::most-read          App#imageName::mostpopular.jpg          App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"mostread" }
 /event/lb         లేఖారచన పోటీ           Analytics#categoryName::event-lb          App#imageName::events.jpg                App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "eventId":5659096691769344 }
 /new              కొత్త రచనలు             Analytics#categoryName::newly-published     App#imageName::newpublished.jpg          App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"new" }
-/fivemin          అయిదు నిమిషాల కథలు  Analytics#categoryName::five-min          App#imageName::5minread.jpg            App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"fivemin" }
+/fivemin          అయిదు నిమిషాల కథలు  Analytics#categoryName::short-stories          App#imageName::5minread.jpg            App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"fivemin" }
 /event/frday      ఫ్రెండ్ షిప్ డే కంటెస్ట్    Analytics#categoryName::event-frday     App#imageName::event_experiences.jpg    App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "eventId":6004824194678784 }
 /blog             బ్లాగు                   Analytics#categoryName::blogs     App#imageName::blog.jpg                   App#BlogPostList::{ "language":"TELUGU", "blogId":5683739602452480 }
 
@@ -14,6 +14,6 @@
 /love             ప్రేమ               Analytics#categoryName::romance     App#imageName::event_romance.jpg            App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"love" }
 /life             జీవితం             Analytics#categoryName::life        App#imageName::life.jpg                App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"life" }
 /social           సామాజికం          Analytics#categoryName::social        App#imageName::social.jpg             App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"social" }     
-/ministories      మినీకథలు          Analytics#categoryName::short-stories        App#imageName::shortstories.jpg         App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"ministories" }
+/ministories      మినీకథలు          Analytics#categoryName::two-min        App#imageName::shortstories.jpg         App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"ministories" }
 /poems            కవితలు            Analytics#categoryName::poetry        App#imageName::poems.jpg             App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"poems" }
 
