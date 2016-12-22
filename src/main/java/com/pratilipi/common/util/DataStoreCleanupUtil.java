@@ -126,7 +126,10 @@ public class DataStoreCleanupUtil {
 	public static void delete( User user, boolean preview ) {
 
 		System.out.println();
-		System.out.println( "User id: " + user.getId() + ", state: " + user.getState() );
+		System.out.println(
+				"User id: " + user.getId()
+				+ ", state: " + user.getState()
+				+ ", signUpDate:" + user.getSignUpDate() );
 
 
 		if( ! preview && user.getState() != UserState.DELETED && user.getState() != UserState.BLOCKED ) {
