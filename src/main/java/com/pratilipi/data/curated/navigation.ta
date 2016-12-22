@@ -11,7 +11,7 @@
 /romance                     காதல்                    Analytics#categoryName::romance                 App#imageName::romance.jpg            App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"romance" }  
 /cinema                      சினிமா                  Analytics#categoryName::cinema               App#imageName::movies.jpg             App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"cinema" }         
 /horror                      மர்மம் / திகில்          Analytics#categoryName::horror                App#imageName::horror.jpg            App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"horror" }
-/stories                     மறகதைகள்                 Analytics#categoryName::other-stories        App#imageName::event_generic3.jpg    App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"stories" }
+/stories                     மற்ற கதைகள்          Analytics#categoryName::other-stories        App#imageName::event_generic3.jpg    App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"stories" }
 /poems                       கவிதைகள்                Analytics#categoryName::poetry               App#imageName::poems.jpg             App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"poems" }
 /experience                  அனுபவம்                 Analytics#categoryName::experiences         App#imageName::experiences.jpg       App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"experience" }
 /family                      இல்லறம்  / உறவு       Analytics#categoryName::family               App#imageName::family.jpg             App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"family" }
