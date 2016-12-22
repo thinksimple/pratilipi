@@ -2,7 +2,9 @@ package com.pratilipi.common.util;
 
 public enum ThirdPartyResource {
 
-	JQUERY							( "<script src='/third-party/compress/jquery-3.1.1.min.js'></script>" ),
+	JQUERY							( "<script src='/third-party/compress/jquery_3_1_1.js'></script>" ),
+
+	JQUERY_BOOTSTRAP				( "<script src='/third-party/compress/jquery_3_1_1.bootstrap_3_3_7.js'></script>" ),
 
 	JQUERY_BOOTSTRAP_POLYMER_JS		( "<script src='/third-party/compress/jquery_3_1_1.bootstrap_3_3_7.webcomponents_lite.js'></script>" ),
 

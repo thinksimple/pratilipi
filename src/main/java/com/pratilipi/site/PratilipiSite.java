@@ -130,13 +130,12 @@ public class PratilipiSite extends HttpServlet {
 		List<Navigation> navigationList = dataAccessor.getNavigationList(
 				filterLanguage == null ? Language.ENGLISH : filterLanguage
 		);
-		
-		
+
 		// Common resource list
 		List<String> resourceList = new LinkedList<>();
 		if( basicMode ) {
-			resourceList.add( ThirdPartyResource.JQUERY.getTag() );
-			resourceList.add( ThirdPartyResource.BOOTSTRAP_JS.getTag() );
+			resourceList.add( ThirdPartyResource.JQUERY_BOOTSTRAP.getTag() );
+			resourceList.add( ThirdPartyResource.FIREBASE.getTag() );
 		} else {
 			resourceList.add( ThirdPartyResource.JQUERY_BOOTSTRAP_POLYMER_JS.getTag() );
 			resourceList.add( ThirdPartyResource.POLYMER_ELEMENTS.getTag() );

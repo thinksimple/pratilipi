@@ -7,12 +7,11 @@
 <title>${ title }</title>
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 
-<#-- Third-Party Library and Facebook OG Tags-->
-<#list resourceList as resource>${ resource }</#list>
-
 <#-- DNS Prefetch -->
 <#list 0..4 as i><link rel="dns-prefetch" href="//${i}.ptlp.co/"></#list>
 
+<#-- Third-Party Library and Facebook OG Tags-->
+<#list resourceList as resource>${ resource }</#list>
 
 <#-- Load Facebook sdk -->
 <script>
