@@ -30,6 +30,7 @@ import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.UserFollowState;
 import com.pratilipi.common.type.UserReviewState;
 import com.pratilipi.common.type.VoteParentType;
+import com.pratilipi.common.type.VoteType;
 import com.pratilipi.common.util.SystemProperty;
 import com.pratilipi.common.util.UserAccessUtil;
 import com.pratilipi.data.DataAccessor;
@@ -228,7 +229,7 @@ public class AuditLogProcessApi extends GenericApi {
 		}
 
 
-		/*
+
 		// auditLog.getAccessType() == AccessType.VOTE
 		for( String voteId : voteUpdateIds ) {
 
@@ -257,8 +258,8 @@ public class AuditLogProcessApi extends GenericApi {
 			}
 
 		}
-		*/
-		
+
+
 		// Updating AppProperty.
 		if( auditLogDataListCursorTuple.getDataList().size() > 0 ) {
 			appProperty.setValue( auditLogDataListCursorTuple.getCursor() );
