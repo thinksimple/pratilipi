@@ -13,7 +13,7 @@
 /horror                      மர்மம் / திகில்          Analytics#categoryName::horror                App#imageName::horror.jpg            App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"horror" }
 /stories                     மற்ற கதைகள்          Analytics#categoryName::other-stories        App#imageName::event_generic3.jpg    App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"stories" }
 /poems                       கவிதைகள்                Analytics#categoryName::poetry               App#imageName::poems.jpg             App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"poems" }
-/experience                  அனுபவம்                 Analytics#categoryName::life         App#imageName::experiences.jpg       App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"experience" }
+/experience                  அனுபவம்                 Analytics#categoryName::experiences         App#imageName::experiences.jpg       App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"experience" }
 /family                      இல்லறம்  / உறவு       Analytics#categoryName::family               App#imageName::family.jpg             App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"family" }
 /education                   கல்வி                     Analytics#categoryName::educational         App#imageName::education.jpg         App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"education" }
 /spiritual                   ஆன்மீகம்                 Analytics#categoryName::spiritual         App#imageName::spirituality.jpg      App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"spiritual" }
