@@ -8,14 +8,11 @@
 	<threadsafe>true</threadsafe>
 	<sessions-enabled>false</sessions-enabled>
 
-	<instance-class>F1</instance-class>
-	<automatic-scaling>
-		<min-idle-instances>0</min-idle-instances>
-		<max-idle-instances>1</max-idle-instances>
-		<min-pending-latency>automatic</min-pending-latency>
-		<max-pending-latency>automatic</max-pending-latency>
-		<max-concurrent-requests>10</max-concurrent-requests>
-	</automatic-scaling>
+	<instance-class>B1</instance-class>
+	<basic-scaling>
+		<max-instances>5</max-instances>
+		<idle-timeout>15m</idle-timeout>
+	</basic-scaling>
 
 	<system-properties>
 		<property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
