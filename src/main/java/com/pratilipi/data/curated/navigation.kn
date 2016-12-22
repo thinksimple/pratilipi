@@ -1,18 +1,18 @@
 ಪ್ರಖ್ಯಾತ ಬರಹಗಳು 
-/event/kr   ಕನ್ನಡ-ಕನ್ನಡಿಗ-ಕರ್ನಾಟಕ     App#imageName::event_generic6.jpg       App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "eventId":6530871927504896 }
-/most-read   ಹೆಚ್ಚು ಓದಲ್ಪಟ್ಟ           App#imageName::mostpopular.jpg      App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"most-read" }
-/new         ಹೊಸ  ಬರಹಗಳು         App#imageName::newpublished.jpg     App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"new" } 
-/events       ಸ್ಪರ್ಧೆಗಳು              App#imageName::events.jpg     App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"events" }
+/event/kr   ಕನ್ನಡ-ಕನ್ನಡಿಗ-ಕರ್ನಾಟಕ     Analytics#categoryName::event-kr        App#imageName::event_generic6.jpg       App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "eventId":6530871927504896 }
+/most-read   ಹೆಚ್ಚು ಓದಲ್ಪಟ್ಟ           Analytics#categoryName::most-read        App#imageName::mostpopular.jpg      App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"most-read" }
+/new         ಹೊಸ  ಬರಹಗಳು         Analytics#categoryName::newly-published        App#imageName::newpublished.jpg     App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"new" } 
+/events       ಸ್ಪರ್ಧೆಗಳು              Analytics#categoryName::online-events        App#imageName::events.jpg     App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"events" }
 
 ಪ್ರಭೇದಗಳು 
-/love       ಪ್ರೀತಿ            App#imageName::romance.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"love" }
-/women      ಮಹಿಳೆ          App#imageName::event_women.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"women" }
-/cinema     ಸಿನಿಮಾ         App#imageName::movies.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"cinema" }
-/poems        ಕವಿತೆಗಳು       App#imageName::poems.jpg                  App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"poems" } 
-/society    ಸಮಾಜ          App#imageName::social.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"society" } 
-/science   ವಿಜ್ಞಾನ          App#imageName::scifi.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"science" } 
-/life     ಜೀವನ          App#imageName::monsoon.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"life" } 
-/inspirational ಸ್ಫೂರ್ತಿದಾಯಕ  App#imageName::inspirational.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"inspirational" } 
-/otherstories   ಇತರೆ ಕಥೆಗಳು App#imageName::fiction.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"otherstories" } 
-/nonfiction ಅಕಲ್ಪಿತ         App#imageName::articles.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"nonfiction" } 
+/love       ಪ್ರೀತಿ            Analytics#categoryName::romance        App#imageName::romance.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"love" }
+/women      ಮಹಿಳೆ          Analytics#categoryName::women        App#imageName::event_women.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"women" }
+/cinema     ಸಿನಿಮಾ         Analytics#categoryName::cinema        App#imageName::movies.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"cinema" }
+/poems        ಕವಿತೆಗಳು       Analytics#categoryName::poetry        App#imageName::poems.jpg                  App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"poems" } 
+/society    ಸಮಾಜ          Analytics#categoryName::social        App#imageName::social.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"society" } 
+/science   ವಿಜ್ಞಾನ          Analytics#categoryName::educational        App#imageName::scifi.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"science" } 
+/life     ಜೀವನ          Analytics#categoryName::life        App#imageName::monsoon.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"life" } 
+/inspirational ಸ್ಫೂರ್ತಿದಾಯಕ  Analytics#categoryName::inspirational        App#imageName::inspirational.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"inspirational" } 
+/otherstories   ಇತರೆ ಕಥೆಗಳು Analytics#categoryName::other-stories        App#imageName::fiction.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"otherstories" } 
+/nonfiction ಅಕಲ್ಪಿತ         Analytics#categoryName::articles        App#imageName::articles.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"nonfiction" } 
 
