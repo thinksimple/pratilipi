@@ -1,5 +1,5 @@
 பிரபலமானவை    
-/event/ore-oru-oorla         ஒரே ஒரு ஊர்ல         Analytics#categoryName::ore-oru-oorla         App#imageName::classic.jpg        App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "eventId":5132634108723200 } 
+/event/ore-oru-oorla         ஒரே ஒரு ஊர்ல         Analytics#categoryName::event-ore-oru-oorla         App#imageName::classic.jpg        App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "eventId":5132634108723200 } 
 /fiveminstories              ஐந்து நிமிடக்கதைகள்  Analytics#categoryName::short-stories      App#imageName::5minread.jpg        App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"fiveminstories" } 
 /most-read                   வாசகர் தேர்வு           Analytics#categoryName::most-read        App#imageName::mostpopular.jpg     App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"most-read" }
 /ministories                 குட்டிக்கதைகள்         Analytics#categoryName::five-min         App#imageName::shortstories.jpg        App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"ministories" } 
