@@ -8,6 +8,10 @@ public enum ThirdPartyResource {
 
 	JQUERY_BOOTSTRAP_POLYMER_JS		( "<script src='/third-party/compress/jquery_3_1_1.bootstrap_3_3_7.webcomponents_lite.js'></script>" ),
 
+	KNOCKOUT						( "<script src='/third-party/compress/knockout_3_4_1.js'></script>" ),
+
+	JQUERY_KNOCKOUT_BOOTSTRAP		( "<script src='/third-party/compress/jquery_3_1_1.knockout_3_4_1.bootstrap_3_3_7.js'></script>" ),
+
 	BOOTSTRAP_JS					( "<script defer src='/third-party/bootstrap-3.3.4/js/bootstrap.min.js'></script>" ),
 
 	BOOTSTRAP_CSS					( "<link rel='stylesheet' href='/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>" ),
