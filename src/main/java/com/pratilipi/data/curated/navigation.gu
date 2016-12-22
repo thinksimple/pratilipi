@@ -1,29 +1,29 @@
 અવનવું
-/vachakoni-top-pasand     વાચકોની ટોપ પસંદ            App#imageName::mostpopular.jpg         App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"vachakoni-top-pasand" } 
-/meghanino-vartavaibhav   મેઘાણીનો વાર્તાવૈભવ            App#imageName::event_generic2.jpg        App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"meghanino-vartavaibhav" }
-/navi-prakashit-rachnao   નવી પ્રકાશિત રચનાઓ          App#imageName::newpublished.jpg       App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"navi-prakashit-rachnao" }
-/event/kalam-aek-kalpvruksh  'કલમ' - એક કલ્પવૃક્ષ         App#imageName::event_generic6.jpg        App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "eventId":5285077077458944 }
-/events                   ઓનલાઈન સ્પર્ધાઓ            App#imageName::events.jpg         App#EventList::{ "language":"GUJARATI" }
-/gujarati-samayiko        ગુજરાતી સામયિકો             App#imageName::magazines.jpg         App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"gujarati-samayiko" }
-/blog                     બ્લોગ                      App#imageName::blog.jpg         App#BlogPostList::{ "language":"GUJARATI", "blogId":5683739602452480 }
-/author-interviews        લેખકો સાથે વાર્તાલાપ           App#imageName::authorinterviews.jpg         App#BlogPostList::{ "language":"GUJARATI", "blogId":5197509039226880 }
+/vachakoni-top-pasand     વાચકોની ટોપ પસંદ         Analytics#categoryName::most-read       App#imageName::mostpopular.jpg         App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"vachakoni-top-pasand" } 
+/meghanino-vartavaibhav   મેઘાણીનો વાર્તાવૈભવ            Analytics#categoryName::meghanino-vartavaibhav       App#imageName::event_generic2.jpg        App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"meghanino-vartavaibhav" }
+/navi-prakashit-rachnao   નવી પ્રકાશિત રચનાઓ          Analytics#categoryName::newly-published       App#imageName::newpublished.jpg       App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"navi-prakashit-rachnao" }
+/event/kalam-aek-kalpvruksh  'કલમ' - એક કલ્પવૃક્ષ      Analytics#categoryName::event-kalam-aek-kalpvruksh          App#imageName::event_generic6.jpg        App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "eventId":5285077077458944 }
+/events                   ઓનલાઈન સ્પર્ધાઓ           Analytics#categoryName::online-events    App#imageName::events.jpg         App#EventList::{ "language":"GUJARATI" }
+/gujarati-samayiko        ગુજરાતી સામયિકો             Analytics#categoryName::gujarati-samayiko       App#imageName::magazines.jpg         App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"gujarati-samayiko" }
+/blog                     બ્લોગ                      Analytics#categoryName::blogs       App#imageName::blog.jpg         App#BlogPostList::{ "language":"GUJARATI", "blogId":5683739602452480 }
+/author-interviews        લેખકો સાથે વાર્તાલાપ         Analytics#categoryName::author-interviews         App#imageName::authorinterviews.jpg         App#BlogPostList::{ "language":"GUJARATI", "blogId":5197509039226880 }
 
 
 શ્રેણી
-/romance                  રોમાંસ વાર્તાઓ                App#imageName::romance.jpg          App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"romance" }
-/rahasyamay-ane-romanchak રહસ્યમય અને રોમાંચક વાર્તાઓ    App#imageName::suspence.jpg           App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"rahasyamay-ane-romanchak" }
-/horror                   હોરર વાર્તાઓ                 App#imageName::horror.jpg          App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"horror" }
-/short-stories            ટૂંકી વાર્તાઓ                  App#imageName::shortstories.jpg          App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"short-stories" }
-/navalkatha               નવલકથા                     App#imageName::novels.jpg           App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"navalkatha" }
-/poetry                   પદ્ય                        App#imageName::poems.jpg            App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"poetry" }
-/non-fiction              લેખ                        App#imageName::classic.jpg            App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"non-fiction" }
-/bal-sahitya              બાળસાહિત્ય                  App#imageName::children.jpg            App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"bal-sahitya" } 
-/hasya-killol             હાસ્ય-કિલ્લોલ                  App#imageName::comedy.jpg           App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"hasya-killol" }
-/film-and-music           ફિલ્મ અને મ્યુઝીક              App#imageName::music.jpg           App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"film-and-music" }
-/aatmakatha               આત્મકથા                    App#imageName::biography.jpg            App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"aatmakatha" }
-/swa-vikas                સ્વ-વિકાસ                   App#imageName::selfhelp.jpg             App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"swa-vikas" }
-/pravas-ane-yatra         પ્રવાસ અને યાત્રા              App#imageName::travel.jpg             App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"pravas-ane-yatra" }
-/spiritual                પૌરાણીક                    App#imageName::spirituality.jpg            App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"spiritual" }
-/rasthaal                 રસથાળ                     App#imageName::cooking.jpg            App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"rasthaal" }
-/tachukadi-vato           રોજિંદી વાતો                 App#imageName::experiences.jpg           App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"tachukadi-vato" }
-/yangistaan               યંગિસ્તાન                    App#imageName::youth.jpg           App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"yangistaan" }
+/romance                  રોમાંસ વાર્તાઓ                Analytics#categoryName::romance       App#imageName::romance.jpg          App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"romance" }
+/rahasyamay-ane-romanchak રહસ્યમય અને રોમાંચક વાર્તાઓ    Analytics#categoryName::mystery       App#imageName::suspence.jpg           App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"rahasyamay-ane-romanchak" }
+/horror                   હોરર વાર્તાઓ                 Analytics#categoryName::horror       App#imageName::horror.jpg          App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"horror" }
+/short-stories            ટૂંકી વાર્તાઓ                  Analytics#categoryName::short-stories       App#imageName::shortstories.jpg          App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"short-stories" }
+/navalkatha               નવલકથા                     Analytics#categoryName::novels       App#imageName::novels.jpg           App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"navalkatha" }
+/poetry                   પદ્ય                        Analytics#categoryName::poetry       App#imageName::poems.jpg            App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"poetry" }
+/non-fiction              લેખ                        Analytics#categoryName::articles       App#imageName::classic.jpg            App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"non-fiction" }
+/bal-sahitya              બાળસાહિત્ય                 Analytics#categoryName::children        App#imageName::children.jpg            App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"bal-sahitya" } 
+/hasya-killol             હાસ્ય-કિલ્લોલ                 Analytics#categoryName::comedy        App#imageName::comedy.jpg           App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"hasya-killol" }
+/film-and-music           ફિલ્મ અને મ્યુઝીક            Analytics#categoryName::film-and-music         App#imageName::music.jpg           App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"film-and-music" }
+/aatmakatha               આત્મકથા                    Analytics#categoryName::biographies       App#imageName::biography.jpg            App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"aatmakatha" }
+/swa-vikas                સ્વ-વિકાસ                 Analytics#categoryName::self-help         App#imageName::selfhelp.jpg             App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"swa-vikas" }
+/pravas-ane-yatra         પ્રવાસ અને યાત્રા              Analytics#categoryName::travel       App#imageName::travel.jpg             App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"pravas-ane-yatra" }
+/spiritual                પૌરાણીક                    Analytics#categoryName::spiritual       App#imageName::spirituality.jpg            App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"spiritual" }
+/rasthaal                 રસથાળ                    Analytics#categoryName::cooking        App#imageName::cooking.jpg            App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"rasthaal" }
+/tachukadi-vato           રોજિંદી વાતો               Analytics#categoryName::tachukadi-vato         App#imageName::experiences.jpg           App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"tachukadi-vato" }
+/yangistaan               યંગિસ્તાન                  Analytics#categoryName::yangistaan         App#imageName::youth.jpg           App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"yangistaan" }
