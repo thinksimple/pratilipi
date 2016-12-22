@@ -357,6 +357,7 @@ public class PratilipiSite extends HttpServlet {
 			} else if( uri.equals( "/pratilipi-write" ) ) {
 
 				resourceList.remove( ThirdPartyResource.POLYMER_ELEMENTS.getTag() );
+				resourceList.add( ThirdPartyResource.BOOTSTRAP_CSS.getTag() );
 
 				dataModel = new HashMap<String, Object>();
 				dataModel.put( "title", "Writer Panel" );
