@@ -730,7 +730,7 @@ public class AuthorDataUtil {
 		
 	}
 
-	public static DataListCursorTuple<AuthorData> getRecommendedAuthorList( Long userId, Language language, String after, Integer resultCount ) 
+	public static DataListCursorTuple<AuthorData> getRecommendedAuthorList( Long userId, Language language, String startAfter, Integer resultCount ) 
 			throws UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -756,43 +756,33 @@ public class AuthorDataUtil {
 
 		do {
 			DataListCursorTuple<Long> recommendAuthorsTuple = dataAccessor.getAuthorIdListWithMaxFollowCount( language, cursorStr, 1000 );
-			recommendAuthors.addAll( recommendAuthorsTuple.getDataList() );
 			cursorStr = recommendAuthorsTuple.getCursor();
 			size = recommendAuthorsTuple.getDataList().size();
 
-			// Filter
+			recommendAuthors.addAll( recommendAuthorsTuple.getDataList() );
+
+			// startAfter cursor passed from front-end
+			if( recommendAuthors.contains( startAfter ) )
+				recommendAuthors = recommendAuthors.subList( recommendAuthors.indexOf( startAfter ) + 1, recommendAuthors.size() );
+
+			// Filter all user followings
 			recommendAuthors.removeAll( userFollowedauthorIds );
 
 		} while( recommendAuthors.size() < resultCount && size == 1000 );
 
 		// Edge case - resultcount exceeding the size of list
 		resultCount = Math.min( resultCount, recommendAuthors.size() );
-
-		// Edge case - cursor exceeding the size of list
-		int beginIndex = 0;
-		if( after != null ) {
-			for( Long authorId : recommendAuthors ) {
-				beginIndex++;
-				if( after.equals( authorId ) )
-					break;
-			}
-		}
-
-		if( beginIndex > recommendAuthors.size() )
-			beginIndex = recommendAuthors.size();
-
-		List<Long> recommendAuthorsSubList = recommendAuthors.subList( beginIndex, 
-													Math.min( beginIndex + resultCount, recommendAuthors.size() - 1 ) );
+		recommendAuthors = recommendAuthors.subList( 0, resultCount );
 
 		// Randomization on the subset of AuthorList
-		Collections.shuffle( recommendAuthorsSubList );
+		Collections.shuffle( recommendAuthors );
 
-		List<AuthorData> recommendAuthorData = new ArrayList<>( recommendAuthorsSubList.size() );
-		for( Long authorId : recommendAuthorsSubList )
+		List<AuthorData> recommendAuthorData = new ArrayList<>( recommendAuthors.size() );
+		for( Long authorId : recommendAuthors )
 			recommendAuthorData.add( createAuthorData( dataAccessor.getAuthor( authorId ) ) );
 
 		return new DataListCursorTuple<AuthorData>( recommendAuthorData, 
-				recommendAuthorsSubList.get( recommendAuthorsSubList.size() - 1 ).toString() );
+				recommendAuthors.get( recommendAuthors.size() - 1 ).toString() );
 
 	}
 
