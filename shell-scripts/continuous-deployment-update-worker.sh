@@ -22,16 +22,10 @@ then
 	mvn gcloud:deploy -Dapp.id=prod-pratilipi -Dapp.module=worker
 
 	
-	cp src/main/webapp/WEB-INF/worker-fe-appengine-web.xml src/main/webapp/WEB-INF/appengine-web.xml
+	cp src/main/webapp/WEB-INF/queues-appengine-web.xml src/main/webapp/WEB-INF/appengine-web.xml
 	
-	# Update prod-pratilipi/worker-fe
-	mvn gcloud:deploy -Dapp.id=prod-pratilipi -Dapp.module=worker-fe
-	
-	
-	cp src/main/webapp/WEB-INF/worker-be-appengine-web.xml src/main/webapp/WEB-INF/appengine-web.xml
-	
-	# Update prod-pratilipi/worker-be
-	mvn gcloud:deploy -Dapp.id=prod-pratilipi -Dapp.module=worker-be
+	# Update prod-pratilipi/queues
+	mvn gcloud:deploy -Dapp.id=prod-pratilipi -Dapp.module=queues
 	
 	
 	# Cleaning up .git directory

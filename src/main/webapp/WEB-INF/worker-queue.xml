@@ -4,7 +4,7 @@
 	
 	<queue>
 		<name>user</name>
-		<target>worker-fe</target>
+		<target>queues</target>
 		<rate>500/s</rate>
 		<bucket-size>10</bucket-size>
 		<max-concurrent-requests>100</max-concurrent-requests>
@@ -18,7 +18,7 @@
 	
 	<queue>
 		<name>user-offline</name>
-		<target>worker-be</target>
+		<target>queues</target>
 		<rate>500/s</rate>
 		<bucket-size>10</bucket-size>
 		<max-concurrent-requests>100</max-concurrent-requests>
@@ -36,7 +36,7 @@
 
 	<queue>
 		<name>pratilipi</name>
-		<target>worker-fe</target>
+		<target>queues</target>
 		<rate>500/s</rate>
 		<bucket-size>10</bucket-size>
 		<max-concurrent-requests>100</max-concurrent-requests>
@@ -50,7 +50,7 @@
 
 	<queue>
 		<name>pratilipi-offline</name>
-		<target>worker-be</target>
+		<target>queues</target>
 		<rate>500/s</rate>
 		<bucket-size>10</bucket-size>
 		<max-concurrent-requests>100</max-concurrent-requests>
@@ -68,7 +68,7 @@
 	
 	<queue>
 		<name>author</name>
-		<target>worker-fe</target>
+		<target>queues</target>
 		<rate>500/s</rate>
 		<bucket-size>10</bucket-size>
 		<max-concurrent-requests>100</max-concurrent-requests>
@@ -82,7 +82,7 @@
 
 	<queue>
 		<name>author-offline</name>
-		<target>worker-be</target>
+		<target>queues</target>
 		<rate>500/s</rate>
 		<bucket-size>10</bucket-size>
 		<max-concurrent-requests>100</max-concurrent-requests>
@@ -100,7 +100,7 @@
 	
 	<queue>
 		<name>user-author</name>
-		<target>worker-fe</target>
+		<target>queues</target>
 		<rate>500/s</rate>
 		<bucket-size>10</bucket-size>
 		<max-concurrent-requests>100</max-concurrent-requests>
@@ -118,7 +118,7 @@
 	
 	<queue>
 		<name>fe-notification</name>
-		<target>worker-fe</target>
+		<target>queues</target>
 		<rate>500/s</rate>
 		<bucket-size>10</bucket-size>
 		<max-concurrent-requests>100</max-concurrent-requests>
@@ -136,7 +136,7 @@
 
 	<queue>
 		<name>be-email</name>
-		<target>worker-be</target>
+		<target>queues</target>
 		<rate>500/s</rate>
 		<bucket-size>10</bucket-size>
 		<max-concurrent-requests>100</max-concurrent-requests>
