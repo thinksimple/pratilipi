@@ -8,7 +8,7 @@
 /events                      போட்டிகள்               Analytics#categoryName::online-events     App#imageName::events.jpg               App#EventList::{ "language":"TAMIL" }
 
 பிரிவுகள்
-/romance                     காதல்                    Analytics#categoryName::love                 App#imageName::romance.jpg            App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"romance" }  
+/romance                     காதல்                    Analytics#categoryName::romance                 App#imageName::romance.jpg            App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"romance" }  
 /cinema                      சினிமா                  Analytics#categoryName::cinema               App#imageName::movies.jpg             App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"cinema" }         
 /horror                      மர்மம் / திகில்          Analytics#categoryName::horror                App#imageName::horror.jpg            App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"horror" }
 /stories                     கதைகள்                 Analytics#categoryName::other-stories        App#imageName::event_generic3.jpg    App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"stories" }
