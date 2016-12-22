@@ -25,11 +25,11 @@
 									<div class="sprites-icon black-arrow-left-icon"></div>
 							  	</a>	
 							</div>
-							<div class="pull-right">
+							<#-- <div class="pull-right">
 								<a style="cursor: pointer;" href="/notifications?action=settings">
 									<div class="sprites-icon settings-icon"></div>
 							  	</a>	
-							</div>						
+							</div>  -->						
 							<div class="center-heading">
 								<h5 class="pratilipi-red pratilipi-bold pratilipi-no-margin">
 									${ _strings.notification_notifications }

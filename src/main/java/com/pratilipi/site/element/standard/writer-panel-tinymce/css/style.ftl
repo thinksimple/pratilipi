@@ -588,18 +588,24 @@ blockquote {
 .left-arrow-icon {
 	background-position:0 0;
 }
+.cross-icon {
+	background-position:0 -24px;
+}
 .edit-icon {
     margin-right: 10px;
-    background-position:0 -24px;
-}
-.list-icon {
-	background-position: 0 -120px;
+    background-position:0 -48px;
 }
 .delete-icon {
-	background-position: 0 -48px;
+	background-position: 0 -72px;
 }
 .angle-down-icon {
-	background-position: 0 -72px;
+	background-position: 0 -96px;
+}
+.red-circle-icon-16 {
+	background-position: 0 -80px;
+}
+.list-icon {
+	background-position: 0 -144px;
 }
 .chevron-left-icon-36 {	
 	background-position: 0 108px;
@@ -611,9 +617,7 @@ blockquote {
 .camera-sprite-icon {
 	background-position: 0 24px;
 }
-.red-circle-icon-16 {
-	background-position: 0 -64px;
-}
+
 @media only screen and (max-device-width: 549px)  {
 
   #mce-modal-block {
