@@ -18,6 +18,8 @@ public enum ThirdPartyResource {
 
 	CKEDITOR						( "<script src='/third-party/ckeditor-4.5.10-full/ckeditor.js'></script>" ),
 
+	TINYMCE							( "<script src='/third-party/tinymce-4.5.1/tinymce.min.js'></script>" ),
+
 	POLYMER_ELEMENTS				( "<link rel='import' href='/third-party/compress/pratilipi.polymer.elements.2.html'>" ),
 
 	FIREBASE						( "<script src='/third-party/compress/firebase_3_6_1.js'></script>" ),

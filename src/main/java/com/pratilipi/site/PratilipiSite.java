@@ -358,6 +358,7 @@ public class PratilipiSite extends HttpServlet {
 
 				resourceList.remove( ThirdPartyResource.POLYMER_ELEMENTS.getTag() );
 				resourceList.add( ThirdPartyResource.BOOTSTRAP_CSS.getTag() );
+				resourceList.add( ThirdPartyResource.TINYMCE.getTag() );
 
 				dataModel = new HashMap<String, Object>();
 				dataModel.put( "title", "Writer Panel" );
