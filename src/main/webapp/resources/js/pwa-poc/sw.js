@@ -8,10 +8,10 @@ self.addEventListener('install', function(e) {
         caches.open(cacheName).then(function(cache) {
             return cache.addAll([
                 './',,
-                'resources/js/pwa-poc/arrivals.js',
-                "resources/js/pwa-poc/page.js",
-                "resources/js/pwa-poc/main.js",
-                'http://0.ptlp.co/resource-all/jquery.knockout.boostrap.js',
+                'arrivals.js',
+                "page.js",
+                "main.js",
+                'https://0.ptlp.co/resource-all/jquery.knockout.boostrap.js',
                 './offline.html'
             ]).then(function() {
                 self.skipWaiting();
