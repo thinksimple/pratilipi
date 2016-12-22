@@ -11,7 +11,7 @@ self.addEventListener('install', function(e) {
                 'arrivals.js',
                 "page.js",
                 "main.js",
-                'https://0.ptlp.co/resource-all/jquery.knockout.boostrap.js',
+                'https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js',
                 './offline.html'
             ]).then(function() {
                 self.skipWaiting();

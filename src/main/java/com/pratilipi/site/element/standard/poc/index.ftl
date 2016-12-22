@@ -25,7 +25,7 @@
             </ul>
         </div>
     </div>
-    <#list resourceList as resource>${ resource }</#list>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js"></script>
     <script src="resources/js/pwa-poc/arrivals.js?1"></script>
     <script src="resources/js/pwa-poc/page.js?1"></script>    
     <script src="resources/js/pwa-poc/main.js?1"></script>
