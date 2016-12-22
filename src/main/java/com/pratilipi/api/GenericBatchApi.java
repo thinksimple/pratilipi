@@ -48,18 +48,18 @@ public class GenericBatchApi extends GenericApi {
 			Gson gson = new Gson();
 			
 			JsonObject apiReqs = gson.fromJson(
-					request.getParameter( "requests" ), // e.g. {"req1":"/pratilipi?pratilipiId=123","req2":"/pratilipi?pratilipiId=234"}
+					request.getParameter( "requests" ), // e.g. {"req1":"/page?uri=/munshi-premchand/godan","req2":"/pratilipi?pratilipiId=$req1.primaryContentId"}
 					JsonElement.class ).getAsJsonObject();
 			
 			Map<String, Object> apiResps = new HashMap<>();
 			for( Entry<String, JsonElement> apiReq : apiReqs.entrySet() ) {
 				
-				String reqUri = apiReq.getValue().getAsString(); // e.g. /pratilipi?pratilipiId=123
+				String reqUri = apiReq.getValue().getAsString(); // e.g. /pratilipi?pratilipiId=$req1.primaryContentId
 				int index = reqUri.indexOf( '?' );
 				GenericApi api = index == -1 // e.g. /pratilipi
 						? ApiRegistry.getApi( reqUri )
 						: ApiRegistry.getApi( reqUri.substring( 0, index ) );
-				JsonObject reqPayloadJson = index == -1 // e.g. pratilipiId=123
+				JsonObject reqPayloadJson = index == -1 // e.g. pratilipiId=$req1.primaryContentId
 						? new JsonObject()
 						: createRequestPayloadJson( reqUri.substring( index + 1 ), request );
 				

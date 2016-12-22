@@ -785,13 +785,6 @@ public class PratilipiDataUtil {
 		long fbLikeShareCount = FacebookApi.getUrlShareCount( "http://" + Website.ALL_LANGUAGE.getHostName() + pratilipiPage.getUri() );
 		
 		
-		if( pratilipi.getFbLikeShareCount() - 5 > fbLikeShareCount ) {
-			logger.log( Level.SEVERE, "Facebook LikeShare count for " + pratilipiId
-					+ " decreased from " + pratilipi.getFbLikeShareCount()
-					+ " to " + fbLikeShareCount + "." );
-			throw new UnexpectedServerException();
-		}
-		
 		if( pratilipi.getReadCountOffset() == readCountOffset
 				&& pratilipi.getReadCount() == readCount
 				&& pratilipi.getFbLikeShareCount() == fbLikeShareCount )
