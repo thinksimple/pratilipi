@@ -563,7 +563,7 @@ blockquote {
 }
 .sprites-icon {
 	background-image: url(resources/icons-writer.svg);
-    background-size: 24px 216px;
+    background-size: 24px 240px;
     display: inline-block;
     width: 24px;
     height: 24px;
