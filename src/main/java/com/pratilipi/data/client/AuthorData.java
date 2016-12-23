@@ -366,16 +366,19 @@ public class AuthorData implements Serializable {
 		this.pageUrl = pageUrl;
 	}
 
+	@Deprecated
 	public String getImageUrl() {
 		return imageUrl;
 	}
 
+	@Deprecated
 	public String getImageUrl( int width ) {
 		return imageUrl.indexOf( '?' ) == -1
 				? imageUrl + "?width=" + width
 				: imageUrl + "&width=" + width;
 	}
 
+	@Deprecated
 	public void setImageUrl( String imageUrl ) {
 		this.imageUrl = imageUrl;
 	}

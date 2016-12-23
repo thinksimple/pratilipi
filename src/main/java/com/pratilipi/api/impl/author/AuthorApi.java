@@ -326,6 +326,30 @@ public class AuthorApi extends GenericApi {
 
 				this.hasAccessToUpdate = authorData.hasAccessToUpdate();
 				
+			} else if( clazz == AuthorRecommendApi.class ) {
+				
+				this.authorId = authorData.getId();
+				if( UxModeFilter.isAndroidApp() ) {
+					if( authorData.getFirstName() != null )
+						this.firstName = authorData.getFirstName();
+					else if( authorData.getFirstNameEn() != null )
+						this.firstName = authorData.getFirstNameEn();
+					else if( authorData.getLastName() != null )
+						this.firstName = authorData.getLastName();
+					else if( authorData.getLastNameEn() != null )
+						this.firstName = authorData.getLastNameEn();
+				}
+				this.name = authorData.getName() == null
+						? authorData.getNameEn()
+						: authorData.getName();
+				this.profileImageUrl = authorData.getProfileImageUrl();
+				this.followCount = authorData.getFollowCount();
+				if( UxModeFilter.isAndroidApp() )
+					this.totalReadCount = authorData.getTotalReadCount();
+				if( UxModeFilter.isAndroidApp() )
+					this.contentPublished = authorData.getContentPublished();
+				this.following = authorData.isFollowing();
+				
 			} else if( clazz == PratilipiV1Api.class || clazz == PratilipiV2Api.class
 					|| clazz == PratilipiListV1Api.class || clazz == PratilipiListV2Api.class ) {
 
@@ -351,16 +375,6 @@ public class AuthorApi extends GenericApi {
 				} else {
 					this.authorId = authorData.getId();
 					this.user = new UserApi.Response( authorData.getUser(), clazz );
-					if( UxModeFilter.isAndroidApp() ) {
-						if( authorData.getFirstName() != null )
-							this.firstName = authorData.getFirstName();
-						else if( authorData.getFirstNameEn() != null )
-							this.firstName = authorData.getFirstNameEn();
-						else if( authorData.getLastName() != null )
-							this.firstName = authorData.getLastName();
-						else if( authorData.getLastNameEn() != null )
-							this.firstName = authorData.getLastNameEn();
-					}
 					this.name = authorData.getName() == null
 							? authorData.getNameEn()
 							: authorData.getName();
@@ -368,10 +382,6 @@ public class AuthorApi extends GenericApi {
 					this.imageUrl = authorData.getImageUrl();
 					this.profileImageUrl = authorData.getProfileImageUrl();
 					this.followCount = authorData.getFollowCount();
-					if( UxModeFilter.isAndroidApp() )
-						this.totalReadCount = authorData.getTotalReadCount();
-					if( UxModeFilter.isAndroidApp() )
-						this.contentPublished = authorData.getContentPublished();
 					this.following = authorData.isFollowing();
 				}
 				

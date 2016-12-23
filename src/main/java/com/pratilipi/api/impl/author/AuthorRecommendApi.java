@@ -7,7 +7,6 @@ import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.annotation.Validate;
-import com.pratilipi.api.impl.userauthor.UserAuthorFollowListApi;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -56,7 +55,7 @@ public class AuthorRecommendApi extends GenericApi {
 		private Response( List<AuthorData> authorList, String cursor ) {
 			this.authorList = new ArrayList<>( authorList.size() );
 			for( AuthorData authorData : authorList )
-				this.authorList.add( new AuthorApi.Response( authorData, UserAuthorFollowListApi.class ) );
+				this.authorList.add( new AuthorApi.Response( authorData, AuthorRecommendApi.class ) );
 			this.cursor = cursor;
 		}
 
