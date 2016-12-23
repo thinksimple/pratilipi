@@ -980,11 +980,52 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		if( authorIdTuple != null )
 			return authorIdTuple;
 
+		Long readCount;
+		Integer publishedCount;
+		switch( language ) {
+			case BENGALI:
+				readCount = 1000L;
+				publishedCount = 2;
+				break;
+			case GUJARATI:
+				readCount = 2000L;
+				publishedCount = 2;
+				break;
+			case HINDI:
+				readCount = 5000L;
+				publishedCount = 4;
+				break;
+			case KANNADA:
+				readCount = 100L;
+				publishedCount = 1;
+				break;
+			case MALAYALAM:
+				readCount = 1000L;
+				publishedCount = 2;
+				break;
+			case MARATHI:
+				readCount = 1000L;
+				publishedCount = 2;
+				break;
+			case TAMIL:
+				readCount = 1500L;
+				publishedCount = 2;
+				break;
+			case TELUGU:
+				readCount = 100L;
+				publishedCount = 2;
+				break;
+			default: 
+				readCount = 1000L;
+				publishedCount = 1;
+		}
+
 		Query<AuthorEntity> query = ObjectifyService.ofy().load()
 									.type( AuthorEntity.class )
 									.filter( "STATE", "ACTIVE" )
 									.filter( "LANGUAGE", language.toString() )
-									.filter( "FOLLOW_COUNT >", 1 )
+									.filter( "TOTAL_READ_COUNT >", readCount )
+									.filter( "CONTENT_PUBLISHED >", publishedCount )
 									.order( "-FOLLOW_COUNT" );
 
 		if( cursorStr != null )
