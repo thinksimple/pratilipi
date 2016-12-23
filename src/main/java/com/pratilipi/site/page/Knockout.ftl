@@ -1,1 +1,1 @@
-<#include "../element/standard/poc/index.ftl">
+<#include "/index.html">

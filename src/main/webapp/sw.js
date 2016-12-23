@@ -7,12 +7,12 @@ self.addEventListener('install', function(e) {
     e.waitUntil(
         caches.open(cacheName).then(function(cache) {
             return cache.addAll([
-                './',,
+                './',
                 'arrivals.js',
                 "page.js",
                 "main.js",
                 'https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js',
-                './offline.html'
+                'offline.html'
             ]).then(function() {
                 self.skipWaiting();
             });
