@@ -2197,6 +2197,8 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		if( stateCompleted != null )
 			query = query.filter( "STATE_COMPLETED", stateCompleted );
 
+		query = query.order( "-CREATION_DATE" );
+		
 		if( cursor != null )
 			query = query.startAt( Cursor.fromWebSafeString( cursor ) );
 		if( resultCount != null && resultCount > 0 )
