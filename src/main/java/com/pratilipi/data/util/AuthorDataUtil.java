@@ -845,9 +845,12 @@ public class AuthorDataUtil {
 
 		} while( recommendAuthors.size() < resultCount && dbListSize == dbResultCount );
 
-		// Edge case - resultcount exceeding the size of list
+		// Edge case - result-count exceeding the size of list
 		resultCount = Math.min( resultCount, recommendAuthors.size() );
 		recommendAuthors = recommendAuthors.subList( 0, resultCount );
+
+		// Setting new cursor
+		startAfter = recommendAuthors.get( recommendAuthors.size() - 1 ).toString(); 
 
 		// Randomization on the subset of AuthorList
 		Collections.shuffle( recommendAuthors );
@@ -856,8 +859,7 @@ public class AuthorDataUtil {
 		for( Long authorId : recommendAuthors )
 			recommendAuthorData.add( createAuthorData( dataAccessor.getAuthor( authorId ) ) );
 
-		return new DataListCursorTuple<AuthorData>( recommendAuthorData, 
-				recommendAuthors.get( recommendAuthors.size() - 1 ).toString() );
+		return new DataListCursorTuple<AuthorData>( recommendAuthorData, startAfter );
 
 	}
 
