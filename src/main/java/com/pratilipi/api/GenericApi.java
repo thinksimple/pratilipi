@@ -99,11 +99,8 @@ public abstract class GenericApi extends HttpServlet {
 		// Invoking get/put method for API response
 		if( method.equals( "GET" ) && getMethod != null )
 			apiResponse = executeApi( this, getMethod, requestPayloadJson, getMethodParameterType, request );
-		else if( method.equals( "POST" ) && postMethod != null ) {
+		else if( method.equals( "POST" ) && postMethod != null )
 			apiResponse = executeApi( this, postMethod, requestPayloadJson, postMethodParameterType, request );
-			logger.log( Level.INFO, this.getClass().getName() );
-			logger.log( Level.INFO, postMethod.getClass().getName() );
-		}
 		else
 			apiResponse = new InvalidArgumentException( "Invalid resource or method." );
 		
