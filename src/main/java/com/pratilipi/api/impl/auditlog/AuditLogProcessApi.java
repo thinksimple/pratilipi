@@ -253,7 +253,7 @@ public class AuditLogProcessApi extends GenericApi {
 			} else if( vote.getParentType() == VoteParentType.COMMENT ) {
 
 				// To the commentor
-				_createVoteOnCommentCommentorEmail( comments.get( vote.getParentId() ), vote );
+				_createVoteOnCommentCommentorEmail( comments.get( vote.getParentIdLong() ), vote );
 
 			}
 
