@@ -498,7 +498,7 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 	
 	@Override
-	public DataListCursorTuple<Long> getAuthorIdListWithMaxFollowCount( Language language, Long minReadCount, 
+	public DataListCursorTuple<Long> getAuthorIdListWithMaxReadCount( Language language, Long minReadCount, 
 			String cursorStr, Integer resultCount ) {
 		// TODO Auto-generated method stub
 		return null;

@@ -838,7 +838,7 @@ public class AuthorDataUtil {
 		}
 
 		recommendAuthorsTuple =  
-				dataAccessor.getAuthorIdListWithMaxFollowCount( language, minReadCount, cursor, resultCount );
+				dataAccessor.getAuthorIdListWithMaxReadCount( language, minReadCount, cursor, resultCount );
 
 		// Algorithm - Shuffling the list in order
 		List<Long> originalList = recommendAuthorsTuple.getDataList();
@@ -861,7 +861,7 @@ public class AuthorDataUtil {
 				originalList.size() - ( originalList.size() % orderSize ), originalList.size() ) );
 
 		recommendAuthorsTuple = new DataListCursorTuple<Long>( resultList, cursor );
-		memcache.put( memcacheId, recommendAuthorsTuple );
+		memcache.put( memcacheId, recommendAuthorsTuple, 180 );
 
 		return recommendAuthorsTuple;
 
