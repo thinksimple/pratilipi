@@ -33,6 +33,7 @@ import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
 import com.pratilipi.data.DocAccessor;
+import com.pratilipi.data.Memcache;
 import com.pratilipi.data.SearchAccessor;
 import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.client.UserData;
@@ -734,6 +735,8 @@ public class AuthorDataUtil {
 			throws UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Memcache memcache = DataAccessorFactory.getL2CacheAccessor();
+		String recommendAuthorListMemcacheId = "Recommend.AuthorList-" + language.getCode();
 
 		// Get the user followings
 		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
@@ -751,24 +754,101 @@ public class AuthorDataUtil {
 
 		// Get the total list of recommended authors
 		List<Long> recommendAuthors = new ArrayList<>();
-		Integer size = null;
-		String cursorStr = null;
+		Integer dbListSize = null;
+		String dbCursor = null;
+		Integer dbResultCount = 1000;
 
 		do {
-			DataListCursorTuple<Long> recommendAuthorsTuple = dataAccessor.getAuthorIdListWithMaxFollowCount( language, cursorStr, 1000 );
-			cursorStr = recommendAuthorsTuple.getCursor();
-			size = recommendAuthorsTuple.getDataList().size();
+			String memcacheId = recommendAuthorListMemcacheId;
+			if( dbResultCount != null && dbResultCount > 0 )
+				memcacheId = memcacheId + "-" + dbResultCount;
+			if( dbCursor != null )
+				memcacheId = memcacheId + "-" + dbCursor;
 
-			recommendAuthors.addAll( recommendAuthorsTuple.getDataList() );
+			DataListCursorTuple<Long> recommendAuthorsTuple = memcache.get( recommendAuthorListMemcacheId );
+			if( recommendAuthorsTuple == null ) {
+				Long minReadCount;
+				Integer minPublishedCount;
+				switch( language ) {
+					case BENGALI:
+						minReadCount = 1000L;
+						minPublishedCount = 2;
+						break;
+					case GUJARATI:
+						minReadCount = 2000L;
+						minPublishedCount = 2;
+						break;
+					case HINDI:
+						minReadCount = 5000L;
+						minPublishedCount = 4;
+						break;
+					case KANNADA:
+						minReadCount = 100L;
+						minPublishedCount = 1;
+						break;
+					case MALAYALAM:
+						minReadCount = 1000L;
+						minPublishedCount = 2;
+						break;
+					case MARATHI:
+						minReadCount = 1000L;
+						minPublishedCount = 2;
+						break;
+					case TAMIL:
+						minReadCount = 1500L;
+						minPublishedCount = 2;
+						break;
+					case TELUGU:
+						minReadCount = 100L;
+						minPublishedCount = 2;
+						break;
+					default: 
+						minReadCount = 1000L;
+						minPublishedCount = 1;
+				}
+
+				recommendAuthorsTuple = 
+						dataAccessor.getAuthorIdListWithMaxFollowCount( language, minReadCount, minPublishedCount, dbCursor, dbResultCount );
+
+				List<Long> authorIdList = recommendAuthorsTuple.getDataList();
+
+
+				// Algorithm
+				int[] order = { 1, 9, 13, 2, 17, 21, 3, 10, 14, 4, 18, 22, 5, 11, 15, 6, 19, 23, 7, 12, 16, 8, 20, 24 };
+				List<Long> resultList = new ArrayList<>( authorIdList );
+
+				int chunkSize = ( authorIdList.size() / 24 ) + ( authorIdList.size() % 24 == 0 ? 0 : 1 );
+
+				for( int i = 0; i < order.length; i++ ) {
+					int beginIndex = ( order[i] - 1 ) * chunkSize;
+					List<Long> idList = authorIdList.subList( beginIndex, Math.min( authorIdList.size(), beginIndex + chunkSize ) );
+					Collections.shuffle( idList );
+					resultList.addAll( idList );
+				}
+
+				recommendAuthorsTuple = new DataListCursorTuple<Long>( resultList, dbCursor );
+
+				memcache.put( memcacheId, recommendAuthorsTuple );
+
+			}
+
+			dbCursor = recommendAuthorsTuple.getCursor();
+			dbListSize = recommendAuthorsTuple.getDataList().size();
 
 			// startAfter cursor passed from front-end
-			if( recommendAuthors.contains( startAfter ) )
-				recommendAuthors = recommendAuthors.subList( recommendAuthors.indexOf( startAfter ) + 1, recommendAuthors.size() );
+			if( recommendAuthorsTuple.getDataList().contains( startAfter ) ) {
+				recommendAuthors.addAll( recommendAuthorsTuple.getDataList().subList( 
+						recommendAuthorsTuple.getDataList().indexOf( startAfter ) + 1, 
+						recommendAuthorsTuple.getDataList().size() ) );
+			} else {
+				recommendAuthors.addAll( recommendAuthorsTuple.getDataList() );
+			}
+
 
 			// Filter all user followings
 			recommendAuthors.removeAll( userFollowedauthorIds );
 
-		} while( recommendAuthors.size() < resultCount && size == 1000 );
+		} while( recommendAuthors.size() < resultCount && dbListSize == dbResultCount );
 
 		// Edge case - resultcount exceeding the size of list
 		resultCount = Math.min( resultCount, recommendAuthors.size() );
