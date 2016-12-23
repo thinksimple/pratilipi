@@ -22,6 +22,20 @@ public enum NotificationType {
 		}
 	},
 
+	AUTHOR( true, "NOTIFICATION_AUTHOR" ) { // Custom notification by AEEs
+		@Override
+		public boolean isValid( Notification notif ) {
+			return true; // TODO
+		}
+	},
+
+	EVENT( true, "NOTIFICATION_EVENT" ) { // Custom notification by AEEs
+		@Override
+		public boolean isValid( Notification notif ) {
+			return true; // TODO
+		}
+	},
+	
 	
 	PRATILIPI_PUBLISHED_AUTHOR( true, "NOTIFICATION_BOOK" ) { // Notification sent to the Author when a content is published
 		@Override
@@ -50,7 +64,7 @@ public enum NotificationType {
 	},
 	
 	
-	USER_PRATILIPI_RATING( true, "NOTIFICATION_RATING" ) { // Notification sent to the Author when a user rates his content.
+	USER_PRATILIPI_RATING( true, "NOTIFICATION_NEW_RATING" ) { // Notification sent to the Author when a user rates his content.
 		@Override
 		public boolean isValid( Notification notif ) {
 			return DataAccessorFactory.getDataAccessor()
@@ -59,7 +73,7 @@ public enum NotificationType {
 		}
 	},
 
-	USER_PRATILIPI_REVIEW( true, "NOTIFICATION_REVIEW" ) { // Notification sent to the Author when a user reviews his content.
+	USER_PRATILIPI_REVIEW( true, "NOTIFICATION_NEW_REVIEW" ) { // Notification sent to the Author when a user reviews his content.
 		@Override
 		public boolean isValid( Notification notif ) {
 			return DataAccessorFactory.getDataAccessor()
@@ -69,7 +83,7 @@ public enum NotificationType {
 	},
 
 	
-	COMMENT_REVIEW_REVIEWER( true, null ) { // Notification sent to the Reviewer when a user comments on it.
+	COMMENT_REVIEW_REVIEWER( true, "NOTIFICATION_NEW_COMMENT_REVIEW" ) { // Notification sent to the Reviewer when a user comments on it.
 		@Override
 		public boolean isValid( Notification notif ) {
 			return false;
@@ -84,7 +98,15 @@ public enum NotificationType {
 	},
 
 	
-	VOTE_REVIEW_REVIEWER( true, null ) { // Notification sent to the Reviewer when a user likes it.
+	COMMENT_COMMENT_REVIEW_COMMENTOR( true, "NOTIFICATION_NEW_COMMENT_COMMENT" ) { // Notification sent to the Commenter when a user comments on a (content's review's comment's) comment.
+		@Override
+		public boolean isValid( Notification notif ) {
+			return false;
+		}
+	},
+
+	
+	VOTE_REVIEW_REVIEWER( true, "NOTIFICATION_NEW_LIKE_REVIEW" ) { // Notification sent to the Reviewer when a user likes it.
 		@Override
 		public boolean isValid( Notification notif ) {
 			return false;
@@ -99,7 +121,7 @@ public enum NotificationType {
 	},
 	
 	
-	VOTE_COMMENT_REVIEW_COMMENTOR( true, null ) { // Notification sent to the Commenter when a user likes a (content's review's) comment.
+	VOTE_COMMENT_REVIEW_COMMENTOR( true, "NOTIFICATION_NEW_LIKE_COMMENT" ) { // Notification sent to the Commenter when a user likes a (content's review's) comment.
 		@Override
 		public boolean isValid( Notification notif ) {
 			return false;
