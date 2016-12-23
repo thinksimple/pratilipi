@@ -1,11 +1,11 @@
 പ്രസിദ്ധമായവ 
 /event/tellastory  ഒരു കഥ പറയാം		  Analytics#categoryName::event-tell-a-story        App#imageName::event_children.jpg        App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "eventId":4557681508483072 }
 /most-read     നിര്‍ദ്ദേശിക്കപ്പെട്ടവ        Analytics#categoryName::most-read        App#imageName::mostpopular.jpg       App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"most-read" }
-/fiveminute    5 മിനിറ്റ് കഥകള്‍         Analytics#categoryName::short-stories        App#imageName::5minread.jpg        App#PratilipiList::{ "language":"MALAYതുടര്‍ക്കഥകള്‍ALAM", "state":"PUBLISHED", "listName":"fiveminute" } 
-/new           പുതിയവ                Analytics#categoryName::newly-published        App#imageName::newpublished.jpg       App#PratilipiList::{ "language":"MALAYതുടര്‍ക്കഥകള്‍ALAM", "state":"PUBLISHED", "listName":"new" } 
+/fiveminute    5 മിനിറ്റ് കഥകള്‍         Analytics#categoryName::short-stories        App#imageName::5minread.jpg        App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"fiveminute" } 
+/new           പുതിയവ                Analytics#categoryName::newly-published        App#imageName::newpublished.jpg       App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"new" } 
 /two-minute    കുഞ്ഞിക്കഥകള്‍        Analytics#categoryName::two-min        App#imageName::events.jpg           App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"two-minute " }
 /classics      ക്ലാസ്സിക്സ്                 Analytics#categoryName::classics        App#imageName::classic.jpg        App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"classics" }
-/events        മത്സരങ്ങള്‍              Analytics#categoryName::online-events        App#imageName::festival.jpg           App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"events" }
+/events        മത്സരങ്ങള്‍              Analytics#categoryName::online-events        App#imageName::festival.jpg           App#EventList::{ "language":"MALAYALAM" }
 /blog          ബ്ലോഗുകള്‍              Analytics#categoryName::blogs        App#imageName::blog.jpg              App#BlogPostList::{ "language":"MALAYALAM", "blogId":5683739602452480 } 
 
 വിഭാഗങ്ങൾ 
