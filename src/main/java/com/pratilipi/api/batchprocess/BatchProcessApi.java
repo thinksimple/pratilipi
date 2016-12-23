@@ -141,8 +141,8 @@ public class BatchProcessApi extends GenericApi {
 	
 			BatchProcessDataUtil.createBatchProcess(
 					request.type,
-					execDoc.toString(),
 					initDoc.toString(),
+					execDoc.toString(),
 					request.language );
 			
 		}
