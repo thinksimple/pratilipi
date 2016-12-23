@@ -968,64 +968,15 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 
 	@Override
-	public DataListCursorTuple<Long> getAuthorIdListWithMaxFollowCount( Language language, String cursorStr, Integer resultCount ) {
-
-		String memcacheId = "Recommend.AuthorList-" + language.getCode();
-		if( cursorStr != null )
-			memcacheId = memcacheId + "-" + cursorStr;
-		if( resultCount != null && resultCount > 0 )
-			memcacheId = memcacheId + "-" + resultCount;
-
-		DataListCursorTuple<Long> authorIdTuple = memcache.get( memcacheId );
-		if( authorIdTuple != null )
-			return authorIdTuple;
-
-		Long readCount;
-		Integer publishedCount;
-		switch( language ) {
-			case BENGALI:
-				readCount = 1000L;
-				publishedCount = 2;
-				break;
-			case GUJARATI:
-				readCount = 2000L;
-				publishedCount = 2;
-				break;
-			case HINDI:
-				readCount = 5000L;
-				publishedCount = 4;
-				break;
-			case KANNADA:
-				readCount = 100L;
-				publishedCount = 1;
-				break;
-			case MALAYALAM:
-				readCount = 1000L;
-				publishedCount = 2;
-				break;
-			case MARATHI:
-				readCount = 1000L;
-				publishedCount = 2;
-				break;
-			case TAMIL:
-				readCount = 1500L;
-				publishedCount = 2;
-				break;
-			case TELUGU:
-				readCount = 100L;
-				publishedCount = 2;
-				break;
-			default: 
-				readCount = 1000L;
-				publishedCount = 1;
-		}
+	public DataListCursorTuple<Long> getAuthorIdListWithMaxFollowCount( Language language, Long minReadCount, 
+			Integer minPublishedCount, String cursorStr, Integer resultCount ) {
 
 		Query<AuthorEntity> query = ObjectifyService.ofy().load()
 									.type( AuthorEntity.class )
 									.filter( "STATE", "ACTIVE" )
 									.filter( "LANGUAGE", language.toString() )
-									.filter( "TOTAL_READ_COUNT >", readCount )
-									.filter( "CONTENT_PUBLISHED >", publishedCount )
+									.filter( "TOTAL_READ_COUNT >", minReadCount )
+									.filter( "CONTENT_PUBLISHED >", minPublishedCount )
 									.order( "-FOLLOW_COUNT" );
 
 		if( cursorStr != null )
@@ -1042,23 +993,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 			authorIdList.add( (Long) iterator.next().getId() );
 		cursor = iterator.getCursor();
 
-		int[] order = { 1, 9, 13, 2, 17, 21, 3, 10, 14, 4, 18, 22, 5, 11, 15, 6, 19, 23, 7, 12, 16, 8, 20, 24 };
-		List<Long> resultList = new ArrayList<>( authorIdList );
-
-		int chunkSize = ( authorIdList.size() / 24 ) + ( authorIdList.size() % 24 == 0 ? 0 : 1 );
-
-		for( int i = 0; i < order.length; i++ ) {
-			int beginIndex = ( order[i] - 1 ) * chunkSize;
-			List<Long> idList = authorIdList.subList( beginIndex, Math.min( authorIdList.size(), beginIndex + chunkSize ) );
-			Collections.shuffle( idList );
-			resultList.addAll( idList );
-		}
-
-		authorIdTuple = new DataListCursorTuple<Long>( authorIdList, cursor == null ? null : cursor.toWebSafeString() ); 
-
-		memcache.put( memcacheId, authorIdTuple, 180 );
-
-		return authorIdTuple;
+		return new DataListCursorTuple<Long>( authorIdList, cursor == null ? null : cursor.toWebSafeString() ); 
 
 	}
 
