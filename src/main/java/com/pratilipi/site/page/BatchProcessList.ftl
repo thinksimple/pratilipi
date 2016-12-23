@@ -188,7 +188,7 @@
 							<td>
 								<a data-bind="attr: { href: getSourceLink( batchProcess.initDoc, batchProcess.execDoc ), target: '_blank' }, text: getSourceLink( batchProcess.initDoc, batchProcess.execDoc )"></a>
 							</td>
-							<td data-bind="text: batchProcess.stateCompleted"></td>
+							<td data-bind="text: getStateCompleted( batchProcess.stateCompleted )"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -235,6 +235,9 @@
 
 
 		<script type="application/javascript">
+			function getStateCompleted( stateCompleted ) {
+				return stateCompleted != null ? stateCompleted : "PROCESSING...";
+			}
 			function getLanguage( initDoc ) {
 				return JSON.parse( initDoc ).authorFilter.language;
 			}
@@ -326,8 +329,8 @@
 								console.log( response );
 								ViewModel.requestOnFlight( false );
 								var res = JSON.parse( response.responseText );
-								if( res.uri != null )
-									ViewModel.progressMessage( res.uri );
+								if( res.sourceUri != null )
+									ViewModel.progressMessage( res.sourceUri );
 								else if( res.message != null )
 									ViewModel.progressMessage( res.message );
 								else
@@ -355,7 +358,7 @@
 				function intervalTrigger() {
 					return window.setInterval( function() {
 						ViewModel.refreshPage();
-					}, 30*1000 );
+					}, 15*1000 );
 				};
 				var id = intervalTrigger();
 				$([window, document]).blur( function(){
