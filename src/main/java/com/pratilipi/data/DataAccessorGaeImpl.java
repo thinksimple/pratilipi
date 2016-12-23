@@ -973,9 +973,9 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 		Query<AuthorEntity> query = ObjectifyService.ofy().load()
 									.type( AuthorEntity.class )
+									.filter( "TOTAL_READ_COUNT >", minReadCount )
 									.filter( "STATE", "ACTIVE" )
 									.filter( "LANGUAGE", language.toString() )
-									.filter( "TOTAL_READ_COUNT >", minReadCount )
 									.order( "-FOLLOW_COUNT" );
 
 		if( cursorStr != null )
