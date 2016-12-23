@@ -368,6 +368,10 @@ public class AuthorApi extends GenericApi {
 					this.imageUrl = authorData.getImageUrl();
 					this.profileImageUrl = authorData.getProfileImageUrl();
 					this.followCount = authorData.getFollowCount();
+					if( UxModeFilter.isAndroidApp() )
+						this.totalReadCount = authorData.getTotalReadCount();
+					if( UxModeFilter.isAndroidApp() )
+						this.contentPublished = authorData.getContentPublished();
 					this.following = authorData.isFollowing();
 				}
 				
