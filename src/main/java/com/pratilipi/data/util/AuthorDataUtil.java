@@ -805,16 +805,20 @@ public class AuthorDataUtil {
 
 				// Algorithm
 				int[] order = { 1, 9, 13, 2, 17, 21, 3, 10, 14, 4, 18, 22, 5, 11, 15, 6, 19, 23, 7, 12, 16, 8, 20, 24 };
-				List<Long> resultList = new ArrayList<>( authorIdList );
+				int orderSize = order.length;
 
-				int chunkSize = ( authorIdList.size() / 24 ) + ( authorIdList.size() % 24 == 0 ? 0 : 1 );
+				List<Long> resultList = new ArrayList<>( authorIdList.size() );
+
+				int chunkSize = authorIdList.size() / orderSize;
 
 				for( int i = 0; i < order.length; i++ ) {
 					int beginIndex = ( order[i] - 1 ) * chunkSize;
-					List<Long> idList = authorIdList.subList( beginIndex, Math.min( authorIdList.size(), beginIndex + chunkSize ) );
+					List<Long> idList = authorIdList.subList( beginIndex, beginIndex + chunkSize );
 					Collections.shuffle( idList );
 					resultList.addAll( idList );
 				}
+
+				resultList.addAll( authorIdList.subList(  authorIdList.size() - ( authorIdList.size() % orderSize ), authorIdList.size() ) );
 
 				recommendAuthorsTuple = new DataListCursorTuple<Long>( resultList, dbCursor );
 
