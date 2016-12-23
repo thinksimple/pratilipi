@@ -768,47 +768,37 @@ public class AuthorDataUtil {
 			DataListCursorTuple<Long> recommendAuthorsTuple = memcache.get( recommendAuthorListMemcacheId );
 			if( recommendAuthorsTuple == null ) {
 				Long minReadCount;
-				Integer minPublishedCount;
 				switch( language ) {
 					case BENGALI:
 						minReadCount = 1000L;
-						minPublishedCount = 2;
 						break;
 					case GUJARATI:
 						minReadCount = 2000L;
-						minPublishedCount = 2;
 						break;
 					case HINDI:
 						minReadCount = 5000L;
-						minPublishedCount = 4;
 						break;
 					case KANNADA:
 						minReadCount = 100L;
-						minPublishedCount = 1;
 						break;
 					case MALAYALAM:
 						minReadCount = 1000L;
-						minPublishedCount = 2;
 						break;
 					case MARATHI:
 						minReadCount = 1000L;
-						minPublishedCount = 2;
 						break;
 					case TAMIL:
 						minReadCount = 1500L;
-						minPublishedCount = 2;
 						break;
 					case TELUGU:
 						minReadCount = 100L;
-						minPublishedCount = 2;
 						break;
 					default: 
 						minReadCount = 1000L;
-						minPublishedCount = 1;
 				}
 
 				recommendAuthorsTuple = 
-						dataAccessor.getAuthorIdListWithMaxFollowCount( language, minReadCount, minPublishedCount, dbCursor, dbResultCount );
+						dataAccessor.getAuthorIdListWithMaxFollowCount( language, minReadCount, dbCursor, dbResultCount );
 
 				List<Long> authorIdList = recommendAuthorsTuple.getDataList();
 

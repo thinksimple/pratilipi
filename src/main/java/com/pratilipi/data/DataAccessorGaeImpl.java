@@ -969,14 +969,13 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 	@Override
 	public DataListCursorTuple<Long> getAuthorIdListWithMaxFollowCount( Language language, Long minReadCount, 
-			Integer minPublishedCount, String cursorStr, Integer resultCount ) {
+			String cursorStr, Integer resultCount ) {
 
 		Query<AuthorEntity> query = ObjectifyService.ofy().load()
 									.type( AuthorEntity.class )
 									.filter( "STATE", "ACTIVE" )
 									.filter( "LANGUAGE", language.toString() )
 									.filter( "TOTAL_READ_COUNT >", minReadCount )
-									.filter( "CONTENT_PUBLISHED >", minPublishedCount )
 									.order( "-FOLLOW_COUNT" );
 
 		if( cursorStr != null )

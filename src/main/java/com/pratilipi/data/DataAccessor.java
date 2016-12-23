@@ -108,7 +108,7 @@ public interface DataAccessor {
 	Map<Long, Author> getAuthors( Collection<Long> authorIds );
 	Map<Long, Author> getAuthorsByUserIds( Collection<Long> userIds );
 	List<Author> getAuthorList( List<Long> idList );
-	DataListCursorTuple<Long> getAuthorIdListWithMaxFollowCount( Language language, Long minReadCount, Integer minPublishedCount, String cursorStr, Integer resultCount );
+	DataListCursorTuple<Long> getAuthorIdListWithMaxFollowCount( Language language, Long minReadCount, String cursorStr, Integer resultCount );
 	DataListCursorTuple<Long> getAuthorIdList( AuthorFilter authorFilter, String cursor, Integer resultCount );
 	DataListCursorTuple<Author> getAuthorList( AuthorFilter authorFilter, String cursor, Integer resultCount );
 	@Deprecated
