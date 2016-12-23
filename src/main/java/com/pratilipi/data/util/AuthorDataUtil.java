@@ -834,11 +834,12 @@ public class AuthorDataUtil {
 
 			dbCursor = recommendAuthorsTuple.getCursor();
 			dbListSize = recommendAuthorsTuple.getDataList().size();
-
+			
 			// startAfter cursor passed from front-end
-			if( recommendAuthorsTuple.getDataList().contains( startAfter ) ) {
+			Long startAfterLong = Long.parseLong( startAfter );
+			if( recommendAuthorsTuple.getDataList().contains( startAfterLong ) ) {
 				recommendAuthors.addAll( recommendAuthorsTuple.getDataList().subList( 
-						recommendAuthorsTuple.getDataList().indexOf( startAfter ) + 1, 
+						recommendAuthorsTuple.getDataList().indexOf( startAfterLong ) + 1, 
 						recommendAuthorsTuple.getDataList().size() ) );
 			} else {
 				recommendAuthors.addAll( recommendAuthorsTuple.getDataList() );
