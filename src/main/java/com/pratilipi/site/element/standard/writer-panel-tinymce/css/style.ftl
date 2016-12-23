@@ -789,5 +789,5 @@ button[disabled], html input[disabled] {
     display: inline-block;
     margin-top: 0;
     margin-bottom: 0;
-    line-height: 1.2;
+    line-height: 24px;
 }
