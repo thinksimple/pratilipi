@@ -1042,19 +1042,18 @@ public class DataAccessorGaeImpl implements DataAccessor {
 			authorIdList.add( (Long) iterator.next().getId() );
 		cursor = iterator.getCursor();
 
-//		int[] order = { 1, 9, 13, 2, 17, 21, 3, 10, 14, 4, 18, 22, 5, 11, 15, 6, 19, 23, 7, 12, 16, 8, 20, 24 };
-//		List<Long> resultList = new ArrayList<>( authorIdList );
-//
-//		int chunkSize = ( authorIdList.size() / 24 ) + ( authorIdList.size() % 24 == 0 ? 0 : 1 );
-//
-//		for( int i = 0; i < order.length; i++ ) {
-//			int beginIndex = ( order[i] - 1 ) * chunkSize;
-//			List<Long> idList = authorIdList.subList( beginIndex, Math.min( authorIdList.size(), beginIndex + chunkSize ) );
-//			Collections.shuffle( idList );
-//			resultList.addAll( idList );
-//		}
+		int[] order = { 1, 9, 13, 2, 17, 21, 3, 10, 14, 4, 18, 22, 5, 11, 15, 6, 19, 23, 7, 12, 16, 8, 20, 24 };
+		List<Long> resultList = new ArrayList<>( authorIdList );
 
-		Collections.shuffle( authorIdList );
+		int chunkSize = ( authorIdList.size() / 24 ) + ( authorIdList.size() % 24 == 0 ? 0 : 1 );
+
+		for( int i = 0; i < order.length; i++ ) {
+			int beginIndex = ( order[i] - 1 ) * chunkSize;
+			List<Long> idList = authorIdList.subList( beginIndex, Math.min( authorIdList.size(), beginIndex + chunkSize ) );
+			Collections.shuffle( idList );
+			resultList.addAll( idList );
+		}
+
 		authorIdTuple = new DataListCursorTuple<Long>( authorIdList, cursor == null ? null : cursor.toWebSafeString() ); 
 
 		memcache.put( memcacheId, authorIdTuple, 180 );
