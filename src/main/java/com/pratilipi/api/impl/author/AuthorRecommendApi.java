@@ -7,6 +7,7 @@ import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.annotation.Validate;
+import com.pratilipi.api.impl.userauthor.UserAuthorFollowListApi;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -47,15 +48,15 @@ public class AuthorRecommendApi extends GenericApi {
 	public static class Response extends GenericResponse {
 
 		private List<AuthorApi.Response> authorList;
-
 		private String cursor;
 
+		
 		private Response() {}
 
 		private Response( List<AuthorData> authorList, String cursor ) {
 			this.authorList = new ArrayList<>( authorList.size() );
 			for( AuthorData authorData : authorList )
-				this.authorList.add( new AuthorApi.Response( authorData, AuthorListApi.class ) );
+				this.authorList.add( new AuthorApi.Response( authorData, UserAuthorFollowListApi.class ) );
 			this.cursor = cursor;
 		}
 
@@ -72,16 +73,18 @@ public class AuthorRecommendApi extends GenericApi {
 
 
 	@Get
-	public GenericResponse get( GetRequest request ) 
-			throws UnexpectedServerException {
+	public GenericResponse get( GetRequest request ) throws UnexpectedServerException {
 
-		DataListCursorTuple<AuthorData> recommendedAuthorList = AuthorDataUtil.
-							getRecommendedAuthorList( AccessTokenFilter.getAccessToken().getUserId(), 
-														request.language, 
-														request.cursor,
-														request.resultCount != null ? request.resultCount : 20 );
+		DataListCursorTuple<AuthorData> recommendedAuthorList =
+				AuthorDataUtil.getRecommendedAuthorList(
+						AccessTokenFilter.getAccessToken().getUserId(),
+						request.language,
+						request.cursor,
+						request.resultCount != null ? request.resultCount : 20 );
 
-		return new Response( recommendedAuthorList.getDataList(), recommendedAuthorList.getCursor() );
+		return new Response(
+				recommendedAuthorList.getDataList(),
+				recommendedAuthorList.getCursor() );
 
 	}
 

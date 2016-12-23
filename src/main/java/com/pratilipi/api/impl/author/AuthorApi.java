@@ -30,6 +30,7 @@ import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.UserAuthor;
 import com.pratilipi.data.util.AuthorDataUtil;
 import com.pratilipi.filter.AccessTokenFilter;
+import com.pratilipi.filter.UxModeFilter;
 import com.pratilipi.taskqueue.Task;
 import com.pratilipi.taskqueue.TaskQueueFactory;
 
@@ -350,11 +351,22 @@ public class AuthorApi extends GenericApi {
 				} else {
 					this.authorId = authorData.getId();
 					this.user = new UserApi.Response( authorData.getUser(), clazz );
+					if( UxModeFilter.isAndroidApp() ) {
+						if( authorData.getFirstName() != null )
+							this.firstName = authorData.getFirstName();
+						else if( authorData.getFirstNameEn() != null )
+							this.firstName = authorData.getFirstNameEn();
+						else if( authorData.getLastName() != null )
+							this.firstName = authorData.getLastName();
+						else if( authorData.getLastNameEn() != null )
+							this.firstName = authorData.getLastNameEn();
+					}
 					this.name = authorData.getName() == null
 							? authorData.getNameEn()
 							: authorData.getName();
 					this.pageUrl = authorData.getPageUrl();
 					this.imageUrl = authorData.getImageUrl();
+					this.profileImageUrl = authorData.getProfileImageUrl();
 					this.followCount = authorData.getFollowCount();
 					this.following = authorData.isFollowing();
 				}
