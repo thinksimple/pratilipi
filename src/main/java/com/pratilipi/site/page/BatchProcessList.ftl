@@ -183,7 +183,7 @@
 					<tbody data-bind="foreach: {data: batchProcessList, as: 'batchProcess'}">
 						<tr>
 							<td data-bind="text: getLanguage( batchProcess.initDoc )"></td>
-							<td data-bind="text: new Date( batchProcess.creationDate )"></td>
+							<td data-bind="text: processDate( batchProcess.creationDate )"></td>
 							<td data-bind="text: getMessage( batchProcess.execDoc )"></td>
 							<td>
 								<a data-bind="attr: { href: getSourceLink( batchProcess.initDoc, batchProcess.execDoc ), target: '_blank' }, text: getSourceLink( batchProcess.initDoc, batchProcess.execDoc )"></a>
@@ -235,6 +235,28 @@
 
 
 		<script type="application/javascript">
+			function processDate( date ) {
+				var delta = Math.round( ( new Date() - new Date( date ) ) / 1000 );
+				var minute = 60,
+					hour = minute * 60,
+					day = hour * 24;
+				if( delta < 30 )
+					return "Just Now...";
+				else if( delta < minute )
+					return delta + " seconds ago...";
+				else if( delta < 2 * minute )
+					return "A minute ago...";
+				else if( delta < hour )
+					return Math.floor( delta / minute ) + " minutes ago...";
+				else if( Math.floor( delta / hour ) == 1 )
+					return "1 hour ago...";
+				else if( delta < day )
+					return Math.floor( delta / hour ) + " hours ago...";
+				else if( delta < day * 2 )
+					return "Yesterday!" + "\n" + new Date( date ).toLocaleString( 'en-US', { hour: 'numeric', hour12: true, minute: 'numeric' } );
+				else
+					return new Date( date ).toLocaleDateString() + "\n" + new Date( date ).toLocaleString( 'en-US', { hour: 'numeric', hour12: true, minute: 'numeric' } );
+			}
 			function getStateCompleted( stateCompleted ) {
 				return stateCompleted != null ? stateCompleted : "PROCESSING...";
 			}
@@ -358,7 +380,7 @@
 				function intervalTrigger() {
 					return window.setInterval( function() {
 						ViewModel.refreshPage();
-					}, 15*1000 );
+					}, 10*1000 );
 				};
 				var id = intervalTrigger();
 				$([window, document]).blur( function(){
