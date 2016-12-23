@@ -184,7 +184,7 @@ public class UserDataUtil {
 	public static UserData getCurrentUser() {
 		AccessToken accessToken = AccessTokenFilter.getAccessToken();
 		Long userId = accessToken.getUserId();
-		if( userId.equals( 0L ) ) {
+		if( userId.equals( 0L ) || accessToken.isExpired() ) {
 			UserData userData = new UserData( 0L );
 			userData.setAuthor( new AuthorData() );
 			userData.setFirstName( "Guest" );
