@@ -395,12 +395,7 @@ public class PratilipiSite extends HttpServlet {
 				if( action != null )
 					dataModel.put( "action", action );
 
-				// New writer only for AEE's
-				templateName = UserAccessUtil.hasUserAccess( AccessTokenFilter.getAccessToken().getUserId(), 
-																filterLanguage, 
-																AccessType.PRATILIPI_UPDATE )
-
-																? "WriterPOC.ftl" : "WriterPOC.ftl";
+				templateName = "WriterV2.ftl";
 
 			// Internal link
 			} else if( ! basicMode && uri.equals( "/authors" ) ) {
