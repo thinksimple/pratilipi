@@ -770,31 +770,31 @@ public class AuthorDataUtil {
 				Long minReadCount;
 				switch( language ) {
 					case BENGALI:
-						minReadCount = 1000L;
+						minReadCount = 3000L;
 						break;
 					case GUJARATI:
 						minReadCount = 2000L;
 						break;
 					case HINDI:
-						minReadCount = 5000L;
+						minReadCount = 7500L;
 						break;
 					case KANNADA:
-						minReadCount = 100L;
+						minReadCount = 200L;
 						break;
 					case MALAYALAM:
-						minReadCount = 1000L;
+						minReadCount = 4000L;
 						break;
 					case MARATHI:
-						minReadCount = 1000L;
+						minReadCount = 2000L;
 						break;
 					case TAMIL:
-						minReadCount = 1500L;
+						minReadCount = 2200L;
 						break;
 					case TELUGU:
-						minReadCount = 100L;
+						minReadCount = 500L;
 						break;
 					default: 
-						minReadCount = 1000L;
+						minReadCount = 2000L;
 				}
 
 				recommendAuthorsTuple = 
