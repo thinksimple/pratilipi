@@ -731,12 +731,11 @@ public class AuthorDataUtil {
 		
 	}
 
-	public static DataListCursorTuple<AuthorData> getRecommendedAuthorList( Long userId, Language language, String startAfter, Integer resultCount ) 
+	public static DataListCursorTuple<AuthorData> getRecommendedAuthorList( 
+			Long userId, Language language, String startAfter, Integer resultCount ) 
 			throws UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Memcache memcache = DataAccessorFactory.getL2CacheAccessor();
-		String recommendAuthorListMemcacheId = "Recommend.AuthorList-" + language.getCode();
 
 		// Get the user followings
 		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
@@ -759,73 +758,8 @@ public class AuthorDataUtil {
 		Integer dbResultCount = 1000;
 
 		do {
-			String memcacheId = recommendAuthorListMemcacheId;
-			if( dbResultCount != null && dbResultCount > 0 )
-				memcacheId = memcacheId + "-" + dbResultCount;
-			if( dbCursor != null )
-				memcacheId = memcacheId + "-" + dbCursor;
 
-			DataListCursorTuple<Long> recommendAuthorsTuple = memcache.get( recommendAuthorListMemcacheId );
-			if( recommendAuthorsTuple == null ) {
-				Long minReadCount;
-				switch( language ) {
-					case BENGALI:
-						minReadCount = 3000L;
-						break;
-					case GUJARATI:
-						minReadCount = 2000L;
-						break;
-					case HINDI:
-						minReadCount = 7500L;
-						break;
-					case KANNADA:
-						minReadCount = 200L;
-						break;
-					case MALAYALAM:
-						minReadCount = 4000L;
-						break;
-					case MARATHI:
-						minReadCount = 2000L;
-						break;
-					case TAMIL:
-						minReadCount = 2200L;
-						break;
-					case TELUGU:
-						minReadCount = 500L;
-						break;
-					default: 
-						minReadCount = 2000L;
-				}
-
-				recommendAuthorsTuple = 
-						dataAccessor.getAuthorIdListWithMaxFollowCount( language, minReadCount, dbCursor, dbResultCount );
-
-				List<Long> authorIdList = recommendAuthorsTuple.getDataList();
-
-
-				// Algorithm
-				int[] order = { 1, 9, 13, 2, 17, 21, 3, 10, 14, 4, 18, 22, 5, 11, 15, 6, 19, 23, 7, 12, 16, 8, 20, 24 };
-				int orderSize = order.length;
-
-				List<Long> resultList = new ArrayList<>( authorIdList.size() );
-
-				int chunkSize = authorIdList.size() / orderSize;
-
-				for( int i = 0; i < order.length; i++ ) {
-					int beginIndex = ( order[i] - 1 ) * chunkSize;
-					List<Long> idList = authorIdList.subList( beginIndex, beginIndex + chunkSize );
-					Collections.shuffle( idList );
-					resultList.addAll( idList );
-				}
-
-				resultList.addAll( authorIdList.subList(  authorIdList.size() - ( authorIdList.size() % orderSize ), authorIdList.size() ) );
-
-				recommendAuthorsTuple = new DataListCursorTuple<Long>( resultList, dbCursor );
-
-				memcache.put( memcacheId, recommendAuthorsTuple );
-
-			}
-
+			DataListCursorTuple<Long> recommendAuthorsTuple = _getRecommendAuthorList( language, dbCursor, dbResultCount );
 			dbCursor = recommendAuthorsTuple.getCursor();
 			dbListSize = recommendAuthorsTuple.getDataList().size();
 
@@ -838,7 +772,6 @@ public class AuthorDataUtil {
 			} else {
 				recommendAuthors.addAll( recommendAuthorsTuple.getDataList() );
 			}
-
 
 			// Filter all user followings
 			recommendAuthors.removeAll( userFollowedauthorIds );
@@ -860,6 +793,77 @@ public class AuthorDataUtil {
 			recommendAuthorData.add( createAuthorData( dataAccessor.getAuthor( authorId ) ) );
 
 		return new DataListCursorTuple<AuthorData>( recommendAuthorData, startAfter );
+
+	}
+
+
+	private static DataListCursorTuple<Long> _getRecommendAuthorList( 
+				Language language, String cursor, Integer resultCount ) {
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Memcache memcache = DataAccessorFactory.getL2CacheAccessor();
+
+		String memcacheId = "Recommend.AuthorList-" + language.getCode();
+
+		if( resultCount != null && resultCount > 0 )
+			memcacheId = memcacheId + "-" + resultCount;
+		if( cursor != null )
+			memcacheId = memcacheId + "-" + cursor;
+
+		DataListCursorTuple<Long> recommendAuthorsTuple = memcache.get( memcacheId );
+
+		if( recommendAuthorsTuple != null )
+			return recommendAuthorsTuple;
+
+		Long minReadCount;
+		switch( language ) {
+			case BENGALI:
+				minReadCount = 3000L; break;
+			case GUJARATI:
+				minReadCount = 2000L; break;
+			case HINDI:
+				minReadCount = 7500L; break;
+			case KANNADA:
+				minReadCount = 200L; break;
+			case MALAYALAM:
+				minReadCount = 4000L; break;
+			case MARATHI:
+				minReadCount = 2000L; break;
+			case TAMIL:
+				minReadCount = 2200L; break;
+			case TELUGU:
+				minReadCount = 500L; break;
+			default: 
+				minReadCount = 2000L;
+		}
+
+		recommendAuthorsTuple =  
+				dataAccessor.getAuthorIdListWithMaxFollowCount( language, minReadCount, cursor, resultCount );
+
+		// Algorithm - Shuffling the list in order
+		List<Long> originalList = recommendAuthorsTuple.getDataList();
+
+		int[] order = { 1, 9, 13, 2, 17, 21, 3, 10, 14, 4, 18, 22, 5, 11, 15, 6, 19, 23, 7, 12, 16, 8, 20, 24 };
+		int orderSize = order.length;
+
+		List<Long> resultList = new ArrayList<>( originalList.size() );
+
+		int chunkSize = originalList.size() / orderSize;
+
+		for( int i = 0; i < order.length; i++ ) {
+			int beginIndex = ( order[i] - 1 ) * chunkSize;
+			List<Long> idList = originalList.subList( beginIndex, beginIndex + chunkSize );
+			Collections.shuffle( idList );
+			resultList.addAll( idList );
+		}
+
+		resultList.addAll( originalList.subList(  
+				originalList.size() - ( originalList.size() % orderSize ), originalList.size() ) );
+
+		recommendAuthorsTuple = new DataListCursorTuple<Long>( resultList, cursor );
+		memcache.put( memcacheId, recommendAuthorsTuple );
+
+		return recommendAuthorsTuple;
 
 	}
 
