@@ -166,4 +166,10 @@
 		<property name="LAST_UPDATED" direction="desc"/>
     </datastore-index>
 
+
+	<datastore-index kind="BATCH_PROCESS" ancestor="false" source="manual">
+		<property name="TYPE" direction="asc"/>
+		<property name="CREATION_DATE" direction="desc"/>
+	</datastore-index>
+
 </datastore-indexes>
