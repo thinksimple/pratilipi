@@ -1506,10 +1506,16 @@ public class PratilipiSite extends HttpServlet {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Long x = new Date().getTime();
-		DataListCursorTuple<Long> authorList = dataAccessor.getAuthorIdListWithMaxReadCount( language, 1000L, null, 1000 );
+		DataListCursorTuple<Long> authorTuple = dataAccessor.getAuthorIdListWithMaxReadCount( language, 1000L, null, 1000 );
 		Long y = new Date().getTime();
+		Map<Long, Author> authors = dataAccessor.getAuthors( authorTuple.getDataList() );
+		Long z = new Date().getTime();
+		List<Author> authorList = new ArrayList<>( authors.size() );
+		for( Long authorId : authorTuple.getDataList() )
+			authorList.add( authors.get( authorId ) );
 		dataModel.put( "authorList", new Gson().toJson( authorList ) );
-		dataModel.put( "delay", Long.toString( y-x ) );
+		dataModel.put( "delay1", Long.toString( y-x ) );
+		dataModel.put( "delay2", Long.toString( z-y ) );
 		return dataModel;
 
 	}
