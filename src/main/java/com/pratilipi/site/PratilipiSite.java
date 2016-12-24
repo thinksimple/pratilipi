@@ -42,14 +42,13 @@ import com.pratilipi.api.impl.pratilipi.PratilipiContentV3Api;
 import com.pratilipi.api.impl.pratilipi.PratilipiListV2Api;
 import com.pratilipi.api.impl.pratilipi.PratilipiV2Api;
 import com.pratilipi.api.impl.user.UserApi;
-import com.pratilipi.api.impl.userauthor.UserAuthorFollowV1Api;
 import com.pratilipi.api.impl.userauthor.UserAuthorFollowListApi;
+import com.pratilipi.api.impl.userauthor.UserAuthorFollowV1Api;
 import com.pratilipi.api.impl.userpratilipi.UserPratilipiApi;
 import com.pratilipi.api.impl.userpratilipi.UserPratilipiReviewListApi;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
-import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.BatchProcessType;
 import com.pratilipi.common.type.BlogPostState;
 import com.pratilipi.common.type.Language;
@@ -65,7 +64,6 @@ import com.pratilipi.common.util.FreeMarkerUtil;
 import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.common.util.SystemProperty;
 import com.pratilipi.common.util.ThirdPartyResource;
-import com.pratilipi.common.util.UserAccessUtil;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
@@ -1504,9 +1502,31 @@ public class PratilipiSite extends HttpServlet {
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", "Test" );
 		
+		Long minReadCount;
+		switch( language ) {
+			case BENGALI:
+				minReadCount = 3000L; break;
+			case GUJARATI:
+				minReadCount = 2000L; break;
+			case HINDI:
+				minReadCount = 7500L; break;
+			case KANNADA:
+				minReadCount = 200L; break;
+			case MALAYALAM:
+				minReadCount = 4000L; break;
+			case MARATHI:
+				minReadCount = 2000L; break;
+			case TAMIL:
+				minReadCount = 2200L; break;
+			case TELUGU:
+				minReadCount = 500L; break;
+			default: 
+				minReadCount = 2000L;
+		}
+		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Long x = new Date().getTime();
-		List<Long> idList = dataAccessor.getAuthorIdListWithMaxReadCount( language, 1000L );
+		List<Long> idList = dataAccessor.getAuthorIdListWithMaxReadCount( language, minReadCount );
 		Long y = new Date().getTime();
 		Map<Long, Author> authors = dataAccessor.getAuthors( idList );
 		Long z = new Date().getTime();
