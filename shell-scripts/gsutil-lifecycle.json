@@ -3,16 +3,33 @@
 {
   "rule":
   [
+  
+    {
+      "action": {
+        "type": "SetStorageClass",
+        "storageClass": "NEARLINE"
+      },
+      "condition": {
+        "age": 15,
+        "matchesStorageClass": ["MULTI_REGIONAL", "REGIONAL", "STANDARD", "DURABLE_REDUCED_AVAILABILITY"]
+      }
+    },
+    
     {
       "action": {
         "type": "SetStorageClass",
         "storageClass": "COLDLINE"
       },
-      "condition": {"age": 7}
+      "condition": {
+        "age": 30,
+        "matchesStorageClass": ["NEARLINE"]
+      }
     },
+    
     {
       "action": {"type": "Delete"},
-      "condition": {"age": 90}
+      "condition": {"age": 180}
     }
+    
   ]
 }
