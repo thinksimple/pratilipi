@@ -14,9 +14,9 @@
 			</tr>
 			<tbody data-bind="foreach: {data: authorList, as: 'author'}">
 				<tr>
-					<td data-bind="text: author.authorId"></td>
-					<td data-bind="text: author.totalReadCount"></td>
-					<td data-bind="text: author.followCount"></td>
+					<td data-bind="text: author.AUTHOR_ID"></td>
+					<td data-bind="text: author.TOTAL_READ_COUNT"></td>
+					<td data-bind="text: author.FOLLOW_COUNT"></td>
 				</tr>
 			</tbody>
 		</table>
