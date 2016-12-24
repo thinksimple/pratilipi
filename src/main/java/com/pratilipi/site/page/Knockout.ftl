@@ -1,1 +1,1 @@
-<#include "/poc-index.html">
+<#include "/pwa1.html">
