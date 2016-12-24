@@ -970,7 +970,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	@Override
 	public List<Long> getAuthorIdListWithMaxReadCount( Language language, Long minReadCount ) {
 
-		List<Key<AuthorEntity>> keyList = ObjectifyService.ofy().load()
+		List<Key<AuthorEntity>> readCountKeyList = ObjectifyService.ofy().load()
 									.type( AuthorEntity.class )
 									.filter( "LANGUAGE", language )
 									.filter( "STATE", AuthorState.ACTIVE )
@@ -979,27 +979,31 @@ public class DataAccessorGaeImpl implements DataAccessor {
 									.keys()
 									.list();
 
-		List<Long> authorIdReadCount = new ArrayList<>( keyList.size() );
-		for( Key<AuthorEntity> key : keyList )
+		List<Key<AuthorEntity>> followCountKeyList = ObjectifyService.ofy().load()
+									.type( AuthorEntity.class )
+									.filter( "LANGUAGE", language )
+									.filter( "STATE", AuthorState.ACTIVE )
+									.filter( "FOLLOW_COUNT >=", 1 )
+									.order( "-FOLLOW_COUNT" )
+									.keys()
+									.list();
+
+		List<Long> authorIdReadCount = new ArrayList<>( readCountKeyList.size() );
+		for( Key<AuthorEntity> key : readCountKeyList )
 			authorIdReadCount.add( key.getId() );
 
-		Map<Long, Author> authors = getAuthors( authorIdReadCount );
-		Map<Long, List<Long>> followCountAuthorList = new TreeMap<>();
-		for( Author author : authors.values() ) {
-			List<Long> authorIdList = followCountAuthorList.get( author.getFollowCount() );
-			if( authorIdList == null ) {
-				authorIdList = new LinkedList<>();
-				followCountAuthorList.put( author.getFollowCount(), authorIdList );
+		List<Long> authorIdList = new ArrayList<>( readCountKeyList.size() );
+		for( Key<AuthorEntity> key : followCountKeyList ) {
+			Long authorId = key.getId();
+			if( authorIdReadCount.contains( authorId ) ) {
+				authorIdList.add( authorId );
+				authorIdReadCount.remove( authorId );
 			}
-			authorIdList.add( author.getId() );
 		}
 
-		List<Long> finalList = new ArrayList<>( followCountAuthorList.size() );
-		ArrayList<Long> keys = new ArrayList<>( followCountAuthorList.keySet() );
-        for( int i = keys.size() - 1; i >= 0; i-- )
-            finalList.addAll( followCountAuthorList.get( keys.get(i) ) );
+		authorIdList.addAll( authorIdReadCount );
 
-        return finalList;
+		return authorIdList;
 
 	}
 
