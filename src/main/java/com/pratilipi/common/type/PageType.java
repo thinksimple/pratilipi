@@ -15,6 +15,8 @@ public enum PageType {
 	
 	BLOG( "/blog/" ),
 	BLOG_POST( "/blogpost/" ),
+	
+	CATEGORY_LIST( null ),
 	;
 	
 	
