@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -22,8 +21,6 @@ import org.apache.commons.io.LineIterator;
 
 import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.api.datastore.QueryResultIterator;
-import com.google.appengine.repackaged.org.apache.commons.collections.list.TreeList;
-import com.google.firebase.database.core.utilities.Tree;
 import com.google.gson.Gson;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
@@ -986,6 +983,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		for( Key<AuthorEntity> key : keyList )
 			authorIdReadCount.add( key.getId() );
 
+		logger.log( Level.INFO, "Fetching " + authorIdReadCount.size() + " Author Entities for recommendation." );
 		Map<Long, Author> authors = getAuthors( authorIdReadCount );
 		Map<Long, List<Long>> followCountAuthorList = new TreeMap<>();
 		for( Author author : authors.values() ) {
