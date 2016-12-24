@@ -61,6 +61,8 @@ public class PageApi extends GenericApi {
 	@Get
 	public Response get( GetRequest request ) throws InvalidArgumentException, UnexpectedServerException {
 
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+
 		if( request.uri.startsWith( "/read?id=" ) ) { // TODO: Remove this as soon as READ uri(s) are added to Page table.
 
 			String pratilipiId = request.uri.substring( "/read?id=".length() );
@@ -68,7 +70,17 @@ public class PageApi extends GenericApi {
 				pratilipiId = pratilipiId.substring( 0, pratilipiId.indexOf( '&' ) );
 			return new Response( PageType.READ, Long.parseLong( pratilipiId ) );
 
-		} else if( request.uri.matches( "^/[a-z0-9-]+$" ) ) { // TODO: Remove this as soon as CATEGORY_LIST uri(s) are added to Page table.
+		} 
+
+		Page page = dataAccessor.getPage( request.uri.contains( "?" )
+										? request.uri.substring( 0, request.uri.indexOf( "?" ) )
+										: request.uri );
+
+		if( page != null )
+			return new Response( page.getType(), page.getPrimaryContentId() );
+
+
+		if( request.uri.matches( "^/[a-z0-9-]+$" ) ) { // TODO: Remove this as soon as CATEGORY_LIST uri(s) are added to Page table.
 
 			try {
 				String folder = DataAccessor.class.getResource( "curated/" ).toURI().getPath();
@@ -81,16 +93,6 @@ public class PageApi extends GenericApi {
 			}
 
 		}
-
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-
-		Page page = dataAccessor.getPage( request.uri.contains( "?" )
-										? request.uri.substring( 0, request.uri.indexOf( "?" ) )
-										: request.uri );
-
-		if( page != null )
-			return new Response( page.getType(), page.getPrimaryContentId() );
-
 
 		JsonObject errorMessages = new JsonObject();
 		errorMessages.addProperty( "uri", "Invalid uri !" );
