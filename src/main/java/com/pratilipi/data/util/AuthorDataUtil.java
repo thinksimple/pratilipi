@@ -832,7 +832,7 @@ public class AuthorDataUtil {
 		authorList = dataAccessor.getAuthorIdListWithMaxReadCount( language, minReadCount );
 
 		// Algorithm - Shuffling the list in order
-		int[] order = { 1, 9, 13, 2, 17, 21, 3, 10, 14, 4, 18, 22, 5, 11, 15, 6, 19, 23, 7, 12, 16, 8, 20, 24 };
+		int[] order = { 1, 3, 2, 4, 6, 5, 7, 9, 8, 10, 12, 11, 13, 15, 14, 16, 18, 17, 19, 21, 20, 22, 24, 23 };
 		int orderSize = order.length;
 
 		ArrayList<Long> resultList = new ArrayList<>( authorList.size() );
