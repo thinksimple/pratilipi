@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,6 +22,8 @@ import org.apache.commons.io.LineIterator;
 
 import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.api.datastore.QueryResultIterator;
+import com.google.appengine.repackaged.org.apache.commons.collections.list.TreeList;
+import com.google.firebase.database.core.utilities.Tree;
 import com.google.gson.Gson;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
@@ -968,37 +971,35 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 
 	@Override
-	public DataListCursorTuple<Long> getAuthorIdListWithMaxReadCount( Language language, Long minReadCount, 
-			String cursorStr, Integer resultCount ) {
+	public List<Long> getAuthorIdListWithMaxReadCount( Language language, Long minReadCount ) {
 
-		Query<AuthorEntity> query = ObjectifyService.ofy().load()
+		List<Key<AuthorEntity>> keyList = ObjectifyService.ofy().load()
 									.type( AuthorEntity.class )
 									.filter( "LANGUAGE", language )
 									.filter( "STATE", AuthorState.ACTIVE )
 									.filter( "TOTAL_READ_COUNT >=", minReadCount )
-									.order( "-TOTAL_READ_COUNT" );
+									.order( "-TOTAL_READ_COUNT" )
+									.keys()
+									.list();
 
+		List<Long> authorIdReadCount = new ArrayList<>( keyList.size() );
+		for( Key<AuthorEntity> key : keyList )
+			authorIdReadCount.add( key.getId() );
 
-		if( cursorStr != null )
-			query = query.startAt( Cursor.fromWebSafeString( cursorStr ) );
-		if( resultCount != null && resultCount > 0 )
-			query = query.limit( resultCount );
+		Map<Long, Author> authors = getAuthors( authorIdReadCount );
+		Map<Long, List<Long>> followCountAuthorList = new TreeMap<>();
+		for( Author author : authors.values() ) {
+			List<Long> authorIdList = followCountAuthorList.containsKey( author.getFollowCount() ) ?
+					followCountAuthorList.get( author.getFollowCount() ) : new ArrayList<Long>();
+			authorIdList.add( author.getId() );
+		}
 
-		QueryKeys<AuthorEntity> keys = query.keys();
+		List<Long> finalList = new ArrayList<>( followCountAuthorList.size() );
+		ArrayList<Long> keys = new ArrayList<>( followCountAuthorList.keySet() );
+        for( int i = keys.size() - 1; i >= 0; i-- )
+            finalList.addAll( followCountAuthorList.get( keys.get(i) ) );
 
-		QueryResultIterator <Key<AuthorEntity>> iterator = ObjectifyService.ofy().load()
-									.type( AuthorEntity.class )
-									.filterKey( "in", keys )
-									.order( "-FOLLOW_COUNT" )
-									.keys().iterator();
-
-		List<Long> authorIdList = resultCount != null ? new ArrayList<Long>( resultCount ) : new ArrayList<Long>();
-		while( iterator.hasNext() )
-			authorIdList.add( (Long) iterator.next().getId() );
-
-		Cursor cursor = iterator.getCursor();
-
-		return new DataListCursorTuple<Long>( authorIdList, cursor == null ? null : cursor.toWebSafeString() ); 
+        return finalList;
 
 	}
 
