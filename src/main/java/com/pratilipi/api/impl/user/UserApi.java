@@ -307,7 +307,7 @@ public class UserApi extends GenericApi {
 			Task task = TaskQueueFactory.newTask()
 					.setUrl( "/user/email" )
 					.addParam( "userId", userData.getId().toString() )
-					.addParam( "language", UxModeFilter.getDisplayLanguage().toString() )
+					.addParam( "language", ( userData.getLanguage() == null ? Language.ENGLISH : userData.getLanguage() ).toString() )
 					.addParam( "sendEmailVerificationMail", "true" );
 			taskList.add( task );
 		}

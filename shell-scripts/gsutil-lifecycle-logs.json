@@ -9,7 +9,7 @@
       },
       "condition": {
         "age": 15,
-        "matchesStorageClass": ["MULTI_REGIONAL", "REGIONAL", "STANDARD", "DURABLE_REDUCED_AVAILABILITY"]
+        "matchesStorageClass": ["MULTI_REGIONAL", "STANDARD", "DURABLE_REDUCED_AVAILABILITY"]
       }
     },
     
