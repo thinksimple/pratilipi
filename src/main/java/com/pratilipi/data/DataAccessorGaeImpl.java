@@ -983,12 +983,14 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		for( Key<AuthorEntity> key : keyList )
 			authorIdReadCount.add( key.getId() );
 
-		logger.log( Level.INFO, "Fetching " + authorIdReadCount.size() + " Author Entities for recommendation." );
 		Map<Long, Author> authors = getAuthors( authorIdReadCount );
 		Map<Long, List<Long>> followCountAuthorList = new TreeMap<>();
 		for( Author author : authors.values() ) {
-			List<Long> authorIdList = followCountAuthorList.containsKey( author.getFollowCount() ) ?
-					followCountAuthorList.get( author.getFollowCount() ) : new ArrayList<Long>();
+			List<Long> authorIdList = followCountAuthorList.get( author.getFollowCount() );
+			if( authorIdList == null ) {
+				authorIdList = new LinkedList<>();
+				followCountAuthorList.put( author.getFollowCount(), authorIdList );
+			}
 			authorIdList.add( author.getId() );
 		}
 
