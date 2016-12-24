@@ -1,0 +1,11 @@
+# https://cloud.google.com/storage/docs/managing-lifecycles
+
+{
+  "rule":
+  [
+    {
+      "action": {"type": "Delete"},
+      "condition": {"age": 7}
+    }
+  ]
+}

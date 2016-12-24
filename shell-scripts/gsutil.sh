@@ -7,13 +7,17 @@ gsutil versioning set off gs://backup.pratilipi.com
 gsutil versioning set off gs://logs.pratilipi.com
 gsutil versioning set off gs://prod-pratilipi-backups
 
+gsutil versioning set off gs://staging.prod-pratilipi.appspot.com
+
 
 
 # https://cloud.google.com/storage/docs/gsutil/commands/lifecycle
 
-gsutil lifecycle set gsutil-lifecycle.json gs://backup.pratilipi.com
-gsutil lifecycle set gsutil-lifecycle.json gs://logs.pratilipi.com
-gsutil lifecycle set gsutil-lifecycle.json gs://prod-pratilipi-backups
+gsutil lifecycle set gsutil-lifecycle-backup.json gs://backup.pratilipi.com
+gsutil lifecycle set gsutil-lifecycle-backup.json gs://logs.pratilipi.com
+gsutil lifecycle set gsutil-lifecycle-backup.json gs://prod-pratilipi-backups
+
+gsutil lifecycle set gsutil-lifecycle-temp.json gs://staging.prod-pratilipi.appspot.com
 
 
 gsutil lifecycle get gs://static.pratilipi.com
@@ -22,6 +26,8 @@ gsutil lifecycle get gs://public.pratilipi.com
 gsutil lifecycle get gs://backup.pratilipi.com
 gsutil lifecycle get gs://logs.pratilipi.com
 gsutil lifecycle get gs://prod-pratilipi-backups
+
+gsutil lifecycle get gs://staging.prod-pratilipi.appspot.com
 
 
 
@@ -37,6 +43,7 @@ gsutil cors get gs://backup.pratilipi.com
 gsutil cors get gs://logs.pratilipi.com
 gsutil cors get gs://prod-pratilipi-backups
 
+gsutil cors get gs://staging.prod-pratilipi.appspot.com
 
 
 # https://cloud.google.com/storage/docs/gsutil/commands/setmeta
