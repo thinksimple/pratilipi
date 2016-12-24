@@ -766,8 +766,10 @@ public class AuthorDataUtil {
 			// startAfter cursor passed from front-end
 			Long startAfterLong = startAfter == null ? null : Long.parseLong( startAfter );
 			if( startAfterLong != null && recommendAuthorsTuple.getDataList().contains( startAfterLong ) ) {
-				recommendAuthors.addAll( recommendAuthorsTuple.getDataList().subList( 
-						recommendAuthorsTuple.getDataList().indexOf( startAfterLong ) + 1, 
+				int beginIndex = Math.min( recommendAuthorsTuple.getDataList().indexOf( startAfterLong ) + 1,
+						recommendAuthorsTuple.getDataList().size() ); // Edge case
+				recommendAuthors = new ArrayList<>( recommendAuthorsTuple.getDataList().subList( 
+						beginIndex, 
 						recommendAuthorsTuple.getDataList().size() ) );
 			} else {
 				recommendAuthors.addAll( recommendAuthorsTuple.getDataList() );
@@ -776,14 +778,15 @@ public class AuthorDataUtil {
 			// Filter all user followings
 			recommendAuthors.removeAll( userFollowedauthorIds );
 
-		} while( recommendAuthors.size() < resultCount && dbListSize == dbResultCount );
+		} while( recommendAuthors.size() < resultCount && dbResultCount != null && dbListSize == dbResultCount );
 
 		// Edge case - result-count exceeding the size of list
 		resultCount = Math.min( resultCount, recommendAuthors.size() );
 		recommendAuthors = recommendAuthors.subList( 0, resultCount );
 
 		// Setting new cursor
-		startAfter = recommendAuthors.get( recommendAuthors.size() - 1 ).toString(); 
+		if( ! recommendAuthors.isEmpty() )
+			startAfter = recommendAuthors.get( recommendAuthors.size() - 1 ).toString(); 
 
 		// Randomization on the subset of AuthorList
 		Collections.shuffle( recommendAuthors );
