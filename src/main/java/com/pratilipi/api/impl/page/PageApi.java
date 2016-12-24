@@ -82,7 +82,7 @@ public class PageApi extends GenericApi {
 				String folder = DataAccessor.class.getResource( "curated/" ).toURI().getPath();
 				for( String fileName : new File( folder ).list() )
 					if( fileName.matches( "list[.]\\w\\w[.]" + "poems" ) )
-						return new Response( PageType.CATEGORY_LIST, Long.parseLong( fileName.substring( fileName.lastIndexOf( '.' ) + 1 ) ) );
+						return new Response( PageType.CATEGORY_LIST, fileName.substring( fileName.lastIndexOf( '.' ) + 1 ) );
 			} catch( URISyntaxException e ) {
 				logger.log( Level.SEVERE, "Failed to list category list files.", e );
 				throw new UnexpectedServerException();
