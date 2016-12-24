@@ -984,14 +984,19 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		if( resultCount != null && resultCount > 0 )
 			query = query.limit( resultCount );
 
+		QueryKeys<AuthorEntity> keys = query.keys();
+
+		QueryResultIterator <Key<AuthorEntity>> iterator = ObjectifyService.ofy().load()
+									.type( AuthorEntity.class )
+									.filterKey( "in", keys )
+									.order( "-FOLLOW_COUNT" )
+									.keys().iterator();
+
 		List<Long> authorIdList = resultCount != null ? new ArrayList<Long>( resultCount ) : new ArrayList<Long>();
-
-		QueryResultIterator <Key<AuthorEntity>> iterator = query.keys().iterator();
-		Cursor cursor = null;
-
 		while( iterator.hasNext() )
 			authorIdList.add( (Long) iterator.next().getId() );
-		cursor = iterator.getCursor();
+
+		Cursor cursor = iterator.getCursor();
 
 		return new DataListCursorTuple<Long>( authorIdList, cursor == null ? null : cursor.toWebSafeString() ); 
 
