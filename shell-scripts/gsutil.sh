@@ -12,12 +12,13 @@ gsutil versioning set off gs://staging.prod-pratilipi.appspot.com
 
 
 # https://cloud.google.com/storage/docs/gsutil/commands/lifecycle
+# https://cloud.google.com/storage/docs/managing-lifecycles
 
-gsutil lifecycle set gsutil-lifecycle-backup.json gs://backup.pratilipi.com
-gsutil lifecycle set gsutil-lifecycle-backup.json gs://logs.pratilipi.com
-gsutil lifecycle set gsutil-lifecycle-backup.json gs://prod-pratilipi-backups
+gsutil lifecycle set gsutil-lifecycle-backup.json      gs://backup.pratilipi.com
+gsutil lifecycle set gsutil-lifecycle-logs.json        gs://logs.pratilipi.com
+gsutil lifecycle set gsutil-lifecycle-firebase-db.json gs://prod-pratilipi-backups
 
-gsutil lifecycle set gsutil-lifecycle-temp.json gs://staging.prod-pratilipi.appspot.com
+gsutil lifecycle set gsutil-lifecycle-staging.json     gs://staging.prod-pratilipi.appspot.com
 
 
 gsutil lifecycle get gs://static.pratilipi.com
