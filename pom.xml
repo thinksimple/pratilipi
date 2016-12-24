@@ -73,7 +73,7 @@
 		<dependency>
 			<groupId>com.google.apis</groupId>
 			<artifactId>google-api-services-storage</artifactId>
-			<version>v1-rev89-1.22.0</version>
+			<version>v1-rev92-1.22.0</version>
 			<exclusions>
 				<!-- Exclude an old version of guava that is being pulled
 						 in by a transitive dependency of google-api-client -->
@@ -258,7 +258,7 @@
 					<version>${app.version}</version>
 					<set_default>${app.setDefault}</set_default>
 					<gcloud_directory>/usr/lib/google-cloud-sdk</gcloud_directory>
-					<bucket>gs://prod-pratilipi.appspot.com</bucket>
+					<!-- bucket>gs://prod-pratilipi.appspot.com</bucket -->
 				</configuration>
 			</plugin>
 			
