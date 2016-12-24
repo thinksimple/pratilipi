@@ -791,9 +791,12 @@ public class AuthorDataUtil {
 		// Randomization on the subset of AuthorList
 		Collections.shuffle( recommendAuthors );
 
+		Map<Long, Author> authors = dataAccessor.getAuthors( recommendAuthors );
+		Map<Long, Page> authorPages = dataAccessor.getPages( PageType.AUTHOR, recommendAuthors );
+
 		List<AuthorData> recommendAuthorData = new ArrayList<>( recommendAuthors.size() );
 		for( Long authorId : recommendAuthors )
-			recommendAuthorData.add( createAuthorData( dataAccessor.getAuthor( authorId ) ) );
+			recommendAuthorData.add( createAuthorData( authors.get( authorId ), authorPages.get( authorId ) ) );
 
 		return new DataListCursorTuple<AuthorData>( recommendAuthorData, startAfter );
 
