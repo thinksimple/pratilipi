@@ -975,9 +975,9 @@ public class DataAccessorGaeImpl implements DataAccessor {
 									.type( AuthorEntity.class )
 									.filter( "LANGUAGE", language )
 									.filter( "STATE", AuthorState.ACTIVE )
-									.filter( "TOTAL_READ_COUNT >", minReadCount )
-									.order( "TOTAL_READ_COUNT" )
-									.order( "-FOLLOW_COUNT" );
+									.filter( "TOTAL_READ_COUNT >=", minReadCount )
+									.order( "-TOTAL_READ_COUNT" );
+
 
 		if( cursorStr != null )
 			query = query.startAt( Cursor.fromWebSafeString( cursorStr ) );
