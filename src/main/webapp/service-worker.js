@@ -1,7 +1,7 @@
 var cacheName = 'weatherPWA-step-6-1';
 var filesToCache = [
                     '/',
-                    '/pwa1.html',
+                    '/poc',
                     '/app.js',
                     'https://d3cwrmdwk8nw1j.cloudfront.net/third-party/compress/jquery.knockout.boostrap.js'
                    ];
