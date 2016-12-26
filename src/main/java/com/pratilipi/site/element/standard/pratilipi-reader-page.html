@@ -266,6 +266,10 @@
 			
 			// Reader functions
 			redirectToWriterPanel: function() {
+				if( isMobile() ) {
+					document.querySelector( 'pratilipi-alert' ).alert( '${ _strings.write_on_desktop_only }' );
+					return;
+				}
 				if( this.stage == "gamma" ) {
 					window.location.href = "/pratilipi-write?id=" + this.pratilipi.pratilipiId;
 					

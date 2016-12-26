@@ -472,13 +472,13 @@
 				}
 				this.set( 'writeButtonActive', false );
 
-				/* if( isMobile() ) {
+				if( isMobile() ) {
 					document.querySelector( 'pratilipi-alert' ).alert( '${ _strings.write_on_desktop_only }' );
-				} else {
-					document.querySelector( 'pratilipi-write' ).createNewPratilipi();
-				} */
+					return;
+				}
 
 				document.querySelector( 'pratilipi-write' ).createNewPratilipi();
+
 			},
 
 			_gotoLibrary: function() {
