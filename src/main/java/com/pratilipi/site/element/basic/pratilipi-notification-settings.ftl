@@ -80,21 +80,25 @@
 		$( "#notification_settings_form input:checkbox" ).each( function() {
 			notification_preferences[ "notificationSubscriptions" ][ $( this ).val() ] = $( this ).is( ':checked' );
 		});
-		console.log( notification_preferences );
-		<#-- setNotificationPreferences( notification_preferences ); -->
+
+		setNotificationPreferences( notification_preferences );
 
 	});
 
-	<#-- $( document ).ready( function() {
+	$( document ).ready( function() {
 		getNotificationPreferences( getNotifPreferencesCallback );
 	});
 
 	function getNotifPreferencesCallback( notification_preferences ) {
-		var notification_subscriptions = notification_preferences[ "notification_subscriptions" ];
-		$( "#email_frequency" ).val( notification_preferences[ "email_frequency" ] );
+
+		var notification_subscriptions = notification_preferences[ "notificationSubscriptions" ];
+
+		$( "#email_frequency" ).val( notification_preferences[ "emailFrequency" ] != null ? 
+				notification_preferences[ "emailFrequency" ] : "IMMEDIATELY" );
 
 		$( "input:checkbox" ).each( function() {
-			$( this ).prop('checked', notification_subscriptions[ $( this ).val() ]) ;
-		}); 
-	} -->
+			$( this ).prop( 'checked', notification_subscriptions != null && notification_subscriptions[ $( this ).val() ] != null ?
+				notification_subscriptions[ $( this ).val() ] : true );
+		});
+	}
 </script>

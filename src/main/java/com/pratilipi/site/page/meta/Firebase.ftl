@@ -62,39 +62,29 @@
 			node = null;
 		}
 	});
-	
+
 	function getNotificationPreferences( getNotifPreferencesCallback ) {
-		node = firebase.database().ref( "PREFERENCE" ).child( user.userId );
-		
-		var email_frequency_node = node.child('emailFrequency');
-		var notification_subscriptions_node = node.child('notificationSubscriptions');
-		
-		node.once('value', function(snapshot)  {
-			var email_frequency = snapshot.child('emailFrequency').val();			
-			var notification_subscriptions = snapshot.child('notificationSubscriptions').val();
-			
-			/* notification_subscriptions_snapshot.forEach(function(childSnapshot) {
-		      notification_subscriptions_snapshot[ childSnapshot.key ] = childSnapshot.val();
-		  	}); */
-		  	
+
+		var node = firebase.database().ref( "PREFERENCE" ).child( user.userId );
+
+		node.once( 'value', function( snapshot ) {
 			var notification_preferences = {};
-			notification_preferences["email_frequency"] = email_frequency;	
-			notification_preferences["notification_subscriptions"] = notification_subscriptions;
-			console.log( notification_preferences );
-			getNotifPreferencesCallback( notification_preferences );		  				
-		});		
+			notification_preferences[ "emailFrequency" ] = snapshot.child( 'emailFrequency' ).val();
+			notification_preferences[ "notificationSubscriptions" ] = snapshot.child( 'notificationSubscriptions' ).val();
+			getNotifPreferencesCallback( notification_preferences );
+		});
+
 	}
 
 	function setNotificationPreferences( notification_preferences ) {
-		var email_frequency = notification_preferences["email_frequency"];
-		var notification_subscriptions = notification_preferences["notification_subscriptions"];
-		
+
 	    var node = firebase.database().ref( "PREFERENCE" ).child( user.userId );
 
 	    node.set({
-	    	"emailFrequency": email_frequency,
-    		"notificationSubscriptions": notification_subscriptions 
-    		});		
-	}	
+			"emailFrequency": notification_preferences[ "emailFrequency" ],
+			"notificationSubscriptions": notification_preferences[ "notificationSubscriptions" ] 
+		});
+
+	}
 	
 </script>
