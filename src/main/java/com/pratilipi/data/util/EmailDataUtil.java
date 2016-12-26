@@ -4,14 +4,18 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.EmailState;
 import com.pratilipi.common.type.EmailType;
 import com.pratilipi.common.type.Language;
+import com.pratilipi.common.util.FreeMarkerUtil;
 import com.pratilipi.common.util.HtmlUtil;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
@@ -28,40 +32,108 @@ import com.pratilipi.email.EmailUtil;
 
 public class EmailDataUtil {
 
+	private final static String filePath = 
+			EmailUtil.class.getName().substring( 0, EmailUtil.class.getName().lastIndexOf(".") ).replace( ".", "/" ) + "/template/";
+
 	@SuppressWarnings("unused")
 	private static final Logger logger =
 			Logger.getLogger( EmailDataUtil.class.getName() );
 
 
+	@SuppressWarnings("deprecation")
 	private static String _getDomainName( Language language ) {
 		return "http://" + language.getHostName();
 	}
 
 	private static String _getDateFormat( Date date ) {
-
 		DateFormat dateFormat = new SimpleDateFormat( "dd MMM yyyy" );
 		dateFormat.setTimeZone( TimeZone.getTimeZone( "IST" ) );
-
 		return dateFormat.format( date );
-
 	}
-	
+
 	private static String _getContactEmail( Language language ) {
 		return language == null || language == Language.ENGLISH ? 
 				"contact@pratilipi.com" : language.name().toLowerCase() + "@pratilipi.com";
 	}
 
+	private static String _getEmailBody( Email email, Language language ) throws UnexpectedServerException {
+
+		Map<String, Object> dataModel = null;
+		if( email.getType() == EmailType.PRATILIPI_PUBLISHED_AUTHOR 
+				|| email.getType() == EmailType.PRATILIPI_PUBLISHED_FOLLOWER )
+			dataModel = _createDataModelForPratilipiPublishedEmail( email.getPrimaryContentIdLong() );
+
+		else if( email.getType() == EmailType.AUTHOR_FOLLOW )
+			dataModel = _createDataModelForAuthorFollowEmail( email.getPrimaryContentId() );
+
+		else if( email.getType() == EmailType.USER_PRATILIPI_RATING || email.getType() == EmailType.USER_PRATILIPI_REVIEW )
+			dataModel = _createDataModelForUserPratilipiReviewEmail( email.getPrimaryContentId() );
+
+		else if( email.getType() == EmailType.COMMENT_REVIEW_REVIEWER 
+					|| email.getType() == EmailType.COMMENT_REVIEW_AUTHOR )
+			dataModel = _createDataModelForCommentReviewEmail( email.getPrimaryContentIdLong() );
+
+		else if( email.getType() == EmailType.VOTE_REVIEW_REVIEWER 
+					|| email.getType() == EmailType.VOTE_REVIEW_AUTHOR )
+			dataModel = _createDataModelForVoteReviewEmail( email.getPrimaryContentId() );
+
+		else if( email.getType() == EmailType.VOTE_COMMENT_REVIEW_COMMENTOR )
+			dataModel = _createDataModelForVoteCommentEmail( email.getPrimaryContentId() );
+
+		return FreeMarkerUtil.processTemplate( dataModel, 
+				filePath + email.getType().getTemplateName() + "." + language.getCode() + ".ftl" );
+
+	}
+
+	public static void sendConsolidatedEmail( Long userId ) throws UnexpectedServerException {
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		List<Email> emailList = dataAccessor.getEmailList( userId, null, (String) null, EmailState.PENDING, null );
+
+		UserData user = UserDataUtil.createUserData( dataAccessor.getUser( userId ) );
+		if( user.getEmail() == null ) {
+			for( Email email : emailList ) {
+				email.setState( EmailState.INVALID_EMAIL );
+				email.setLastUpdated( new Date() );
+			}
+			dataAccessor.createOrUpdateEmailList( emailList );
+			return;
+		}
+
+		String consolidatedBody = new String();
+
+		for( Email email : emailList ) {
+
+			consolidatedBody = consolidatedBody + _getEmailBody( email, user.getLanguage() );
+
+			email.setState( EmailState.SENT );
+			email.setLastUpdated( new Date() );
+
+		}
+
+		// TODO: Implementation - Set fields
+		String senderName = null;
+		String senderEmail = null;
+		String subject = null;
+
+		Map<String, String> dataModel = new HashMap<>();
+		dataModel.put( "language", user.getLanguage().name() );
+		dataModel.put( "contact_email", _getContactEmail( user.getAuthor().getLanguage() ) );
+
+		EmailUtil.sendUserEmail( senderName, senderEmail,
+				user.getDisplayName(), user.getEmail(), 
+				subject, consolidatedBody, dataModel );
+
+		dataAccessor.createOrUpdateEmailList( emailList );
+
+	}
+	
 	public static void sendEmail( Long emailId ) throws UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-
 		Email email = dataAccessor.getEmail( emailId );
 
-		if( email.getState() != EmailState.PENDING )
-			return;
-
 		UserData user = UserDataUtil.createUserData( dataAccessor.getUser( email.getUserId() ) );
-
 		if( user.getEmail() == null ) {
 			email.setState( EmailState.INVALID_EMAIL );
 			email.setLastUpdated( new Date() );
@@ -69,52 +141,39 @@ public class EmailDataUtil {
 			return;
 		}
 
-
-		Map<String, Object> dataModel = null;
-
-		if( email.getType() == EmailType.PRATILIPI_PUBLISHED_AUTHOR 
-				|| email.getType() == EmailType.PRATILIPI_PUBLISHED_FOLLOWER )
-			dataModel = createDataModelForPratilipiPublishedEmail( email.getPrimaryContentIdLong() );
-
-		else if( email.getType() == EmailType.AUTHOR_FOLLOW )
-			dataModel = createDataModelForAuthorFollowEmail( email.getPrimaryContentId() );
-
-		else if( email.getType() == EmailType.USER_PRATILIPI_REVIEW )
-			dataModel = createDataModelForUserPratilipiReviewEmail( email.getPrimaryContentId() );
-
-		else if( email.getType() == EmailType.COMMENT_REVIEW_REVIEWER 
-					|| email.getType() == EmailType.COMMENT_REVIEW_AUTHOR )
-			dataModel = createDataModelForCommentReviewEmail( email.getPrimaryContentIdLong() );
-
-		else if( email.getType() == EmailType.VOTE_REVIEW_REVIEWER 
-					|| email.getType() == EmailType.VOTE_REVIEW_AUTHOR )
-			dataModel = createDataModelForVoteReviewEmail( email.getPrimaryContentId() );
-
-		else if( email.getType() == EmailType.VOTE_COMMENT_REVIEW_COMMENTOR )
-			dataModel = createDataModelForVoteCommentEmail( email.getPrimaryContentId() );
+		String body = _getEmailBody( email, user.getLanguage() );
 
 
-		// Defaulting to user's language
-		if( ! dataModel.containsKey( "language" ) ) {
-			dataModel.put( "language", user.getAuthor().getLanguage() );
-			dataModel.put( "contact_email", _getContactEmail( user.getAuthor().getLanguage() ) );
-		}
+		Pattern senderNamePattern = Pattern.compile( "<!-- SENDER_NAME:(.+?) -->" );
+		Pattern senderEmailPattern = Pattern.compile( "<!-- SENDER_EMAIL:(.+?) -->" );
+		Pattern subjectPattern = Pattern.compile( "<!-- SUBJECT:(.+?) -->" );
 
-		EmailUtil.sendMail(
-				user.getDisplayName(),
-				user.getEmail(),
-				email.getType(),
-				dataModel );
+		String senderName = null;
+		String senderEmail = null;
+		String subject = null;
 
-		email.setState( EmailState.SENT );
-		email.setLastUpdated( new Date() );
+		Matcher m = null;
+		if( ( m = senderNamePattern.matcher( body ) ).find() )
+			senderName = m.group( 1 ).trim();
+		if( ( m = senderEmailPattern.matcher( body ) ).find() )
+			senderEmail = m.group( 1 ).trim();
+		if( ( m = subjectPattern.matcher( body ) ).find() )
+			subject = m.group( 1 ).trim();
+
+		Map<String, String> dataModel = new HashMap<>();
+		dataModel.put( "language", user.getLanguage().name() );
+		dataModel.put( "contact_email", _getContactEmail( user.getAuthor().getLanguage() ) );
+
+		EmailUtil.sendUserEmail( senderName, senderEmail,
+				user.getDisplayName(), user.getEmail(), 
+				subject, body, dataModel );
 
 		dataAccessor.createOrUpdateEmail( email );
 
 	}
-	
-	
-	private static Map<String, Object> createDataModelForPratilipiPublishedEmail( Long pratilipiId )
+
+
+	private static Map<String, Object> _createDataModelForPratilipiPublishedEmail( Long pratilipiId )
 			throws UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -129,13 +188,11 @@ public class EmailDataUtil {
 		dataModel.put( "pratilipi_page_url", _getDomainName( pratilipi.getLanguage() ) + pratilipi.getPageUrl() );
 		dataModel.put( "author_name", pratilipi.getAuthor().getName() != null ? pratilipi.getAuthor().getName() : pratilipi.getAuthor().getNameEn() );
 		dataModel.put( "author_page_url", _getDomainName( pratilipi.getLanguage() ) + pratilipi.getAuthor().getPageUrl() );
-		dataModel.put( "language", pratilipi.getLanguage() );
-		dataModel.put( "contact_email", _getContactEmail( pratilipi.getLanguage() ) );
 		return dataModel;
 
 	}
 
-	private static Map<String, Object> createDataModelForAuthorFollowEmail( String userAuthorId ) 
+	private static Map<String, Object> _createDataModelForAuthorFollowEmail( String userAuthorId ) 
 			throws UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -154,7 +211,7 @@ public class EmailDataUtil {
 
 	}
 
-	private static Map<String, Object> createDataModelForUserPratilipiReviewEmail( String userPratilipiId )
+	private static Map<String, Object> _createDataModelForUserPratilipiReviewEmail( String userPratilipiId )
 			throws UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -173,7 +230,7 @@ public class EmailDataUtil {
 												? reviewer.getAuthor().getName() 
 												: reviewer.getAuthor().getNameEn() );
 		dataModel.put( "user_pratilipi_page_url", _getDomainName( pratilipi.getLanguage() ) + reviewer.getProfilePageUrl() );
-		dataModel.put( "user_pratilipi_image_url", reviewer.getAuthor().getImageUrl( 100 ) );
+		dataModel.put( "user_pratilipi_image_url", reviewer.getAuthor().getProfileImageUrl( 100 ) );
 		dataModel.put( "user_pratilipi_creation_date", _getDateFormat( userPratilipi.getReviewDate() ) );
 
 		if( userPratilipi.getRating() != null )
@@ -185,14 +242,11 @@ public class EmailDataUtil {
 		if( userPratilipi.getCommentCount() != null )
 			dataModel.put( "user_pratilipi_comment_count", userPratilipi.getCommentCount().toString() );
 
-		dataModel.put( "language", pratilipi.getLanguage() );
-		dataModel.put( "contact_email", _getContactEmail( pratilipi.getLanguage() ) );
-
 		return dataModel;
 
 	}
-	
-	private static Map<String, Object> createDataModelForCommentReviewEmail( Long commentId ) 
+
+	private static Map<String, Object> _createDataModelForCommentReviewEmail( Long commentId ) 
 			throws UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -210,7 +264,7 @@ public class EmailDataUtil {
 		dataModel.put( "review_name", review.getUser().getAuthor().getName() != null ?
 								review.getUser().getAuthor().getName() : review.getUser().getAuthor().getNameEn() );
 		dataModel.put( "review_page_url", _getDomainName( review.getUser().getAuthor().getLanguage() ) + review.getUser().getProfilePageUrl() );
-		dataModel.put( "review_image_url", review.getUser().getAuthor().getImageUrl( 64 ) );
+		dataModel.put( "review_image_url", review.getUser().getAuthor().getProfileImageUrl( 64 ) );
 		dataModel.put( "review_date", _getDateFormat( review.getReviewDate() ) );
 		dataModel.put( "review_review", HtmlUtil.truncateText( review.getReview(), 250 ) );
 
@@ -218,18 +272,15 @@ public class EmailDataUtil {
 										? comment.getUser().getAuthor().getName()
 										: comment.getUser().getAuthor().getNameEn() );
 		dataModel.put( "comment_page_url", _getDomainName( comment.getUser().getAuthor().getLanguage() ) + comment.getUser().getProfilePageUrl() );
-		dataModel.put( "comment_image_url", comment.getUser().getAuthor().getImageUrl( 50 ) );
+		dataModel.put( "comment_image_url", comment.getUser().getAuthor().getProfileImageUrl( 50 ) );
 		dataModel.put( "comment_date", _getDateFormat( comment.getCreationDate() ) );
 		dataModel.put( "comment_content", HtmlUtil.truncateText( comment.getContent(), 200 ) );
-
-		dataModel.put( "language", pratilipi.getLanguage() );
-		dataModel.put( "contact_email", _getContactEmail( pratilipi.getLanguage() ) );
 
 		return dataModel;
 
 	}
 	
-	private static Map<String, Object> createDataModelForVoteReviewEmail( String voteId ) 
+	private static Map<String, Object> _createDataModelForVoteReviewEmail( String voteId ) 
 			throws UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -244,7 +295,7 @@ public class EmailDataUtil {
 		dataModel.put( "pratilipi_title", pratilipi.getTitle() != null ? pratilipi.getTitle() : pratilipi.getTitleEn() );
 		dataModel.put( "pratilipi_page_url", pratilipi.getPageUrl() );
 		dataModel.put( "user_pratilipi_page_url", userPratilipi.getUser().getProfilePageUrl() );
-		dataModel.put( "user_pratilipi_image_url", userPratilipi.getUser().getAuthor().getImageUrl( 64 ) );
+		dataModel.put( "user_pratilipi_image_url", userPratilipi.getUser().getAuthor().getProfileImageUrl( 64 ) );
 		dataModel.put( "user_pratilipi_name", userPratilipi.getUser().getAuthor().getName() != null
 												? userPratilipi.getUser().getAuthor().getName() 
 												: userPratilipi.getUser().getAuthor().getNameEn() );
@@ -262,7 +313,7 @@ public class EmailDataUtil {
 
 	}
 	
-	private static Map<String, Object> createDataModelForVoteCommentEmail( String voteId ) 
+	private static Map<String, Object> _createDataModelForVoteCommentEmail( String voteId ) 
 			throws UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -284,7 +335,7 @@ public class EmailDataUtil {
 		dataModel.put( "review_name", review.getUser().getAuthor().getName() != null ?
 								review.getUser().getAuthor().getName() : review.getUser().getAuthor().getNameEn() );
 		dataModel.put( "review_page_url", _getDomainName( review.getUser().getAuthor().getLanguage() ) + review.getUser().getProfilePageUrl() );
-		dataModel.put( "review_image_url", review.getUser().getAuthor().getImageUrl( 64 ) );
+		dataModel.put( "review_image_url", review.getUser().getAuthor().getProfileImageUrl( 64 ) );
 		dataModel.put( "review_date", _getDateFormat( review.getReviewDate() ) );
 		dataModel.put( "review_review", HtmlUtil.truncateText( review.getReview(), 250 ) );
 
@@ -292,12 +343,9 @@ public class EmailDataUtil {
 										? comment.getUser().getAuthor().getName()
 										: comment.getUser().getAuthor().getNameEn() );
 		dataModel.put( "comment_page_url", _getDomainName( comment.getUser().getAuthor().getLanguage() ) + comment.getUser().getProfilePageUrl() );
-		dataModel.put( "comment_image_url", comment.getUser().getAuthor().getImageUrl( 50 ) );
+		dataModel.put( "comment_image_url", comment.getUser().getAuthor().getProfileImageUrl( 50 ) );
 		dataModel.put( "comment_date", _getDateFormat( comment.getCreationDate() ) );
 		dataModel.put( "comment_content", HtmlUtil.truncateText( comment.getContent(), 200 ) );
-
-		dataModel.put( "language", pratilipi.getLanguage() );
-		dataModel.put( "contact_email", _getContactEmail( pratilipi.getLanguage() ) );
 
 		return dataModel;
 

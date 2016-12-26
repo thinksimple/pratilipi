@@ -89,28 +89,15 @@ public class EmailUtil {
 		}
 		
 	}
-	
-	public static void sendMail(
-			String recipientName, String recipientEmail, EmailType emailType, Map<String, Object> dataModel )
+
+	public static void sendUserEmail( String senderName, String senderEmail,
+			String recipientName, String recipientEmail, 
+			String subject, String body, Map<String, String> dataModel ) 
 			throws UnexpectedServerException {
 
-		String body = FreeMarkerUtil.processTemplate( dataModel, filePath + emailType.getTemplateName() );
-
-		Pattern senderNamePattern = Pattern.compile( "<!-- SENDER_NAME:(.+?) -->" );
-		Pattern senderEmailPattern = Pattern.compile( "<!-- SENDER_EMAIL:(.+?) -->" );
-		Pattern subjectPattern = Pattern.compile( "<!-- SUBJECT:(.+?) -->" );
-
-		String senderName = null;
-		String senderEmail = null;
-		String subject = null;
-
-		Matcher m = null;
-		if( ( m = senderNamePattern.matcher( body ) ).find() )
-			senderName = m.group( 1 ).trim();
-		if( ( m = senderEmailPattern.matcher( body ) ).find() )
-			senderEmail = m.group( 1 ).trim();
-		if( ( m = subjectPattern.matcher( body ) ).find() )
-			subject = m.group( 1 ).trim();
+		dataModel.put( "emailBody", body );
+		dataModel.put( "user_name", recipientName );
+		body = FreeMarkerUtil.processTemplate( dataModel, filePath + "MainEmailTemplate.ftl" );
 
 		_sendMail( senderName, senderEmail, recipientName, recipientEmail, subject, body );
 
