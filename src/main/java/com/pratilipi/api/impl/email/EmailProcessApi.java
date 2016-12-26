@@ -24,8 +24,11 @@ public class EmailProcessApi extends GenericApi {
 	
 	public static class PostRequest extends GenericRequest {
 
-		@Validate( required = true, minLong = 1L )
+		@Validate( minLong = 1L )
 		private Long emailId;
+
+		@Validate( minLong = 1L )
+		private Long userId;
 
 	}
 
@@ -60,9 +63,12 @@ public class EmailProcessApi extends GenericApi {
 	public GenericResponse post( PostRequest request )
 			throws UnexpectedServerException {
 
+		if( request.emailId != null )
+			EmailDataUtil.sendEmail( request.emailId );
 
-		EmailDataUtil.sendEmail( request.emailId );
-		
+		if( request.userId != null )
+			EmailDataUtil.sendConsolidatedEmail( request.userId );
+
 		return new GenericResponse();
 
 	}		
