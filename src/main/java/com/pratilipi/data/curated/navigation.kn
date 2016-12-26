@@ -2,7 +2,7 @@
 /event/kr   ಕನ್ನಡ-ಕನ್ನಡಿಗ-ಕರ್ನಾಟಕ     Analytics#categoryName::event-kr        App#imageName::event_generic6.jpg       App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "eventId":6530871927504896 }
 /most-read   ಹೆಚ್ಚು ಓದಲ್ಪಟ್ಟ           Analytics#categoryName::most-read        App#imageName::mostpopular.jpg      App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"most-read" }
 /new         ಹೊಸ  ಬರಹಗಳು         Analytics#categoryName::newly-published        App#imageName::newpublished.jpg     App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"new" } 
-/events       ಸ್ಪರ್ಧೆಗಳು              Analytics#categoryName::online-events        App#imageName::events.jpg     App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"events" }
+/events       ಸ್ಪರ್ಧೆಗಳು              Analytics#categoryName::online-events        App#imageName::events.jpg     App#EventList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"events" }
 
 ಪ್ರಭೇದಗಳು 
 /love       ಪ್ರೀತಿ            Analytics#categoryName::romance        App#imageName::romance.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"love" }
