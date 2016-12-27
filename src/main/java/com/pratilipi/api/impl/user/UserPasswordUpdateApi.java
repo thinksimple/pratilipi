@@ -17,7 +17,7 @@ public class UserPasswordUpdateApi extends GenericApi {
 	
 	public static class PostRequest extends GenericRequest {
 		
-		@Validate( regEx = REGEX_EMAIL )
+		@Validate( regEx = REGEX_EMAIL, regExErrMsg = ERR_EMAIL_INVALID )
 		private String email;
 		
 		private String verificationToken;
