@@ -119,12 +119,19 @@ public class InitDataUtil {
 		
 		initBannerDocs = new InitBannerDoc[] {
 
-				docAccessor.newInitBannerDoc( "ஒரே ஒரு ஊர்ல", 
-						"pratilipi-tamil-carousel-19.jpg", 
-						"pratilipi-tamil-carousel-19-small.jpg", 
-						"/event/ore-oru-oorla",
+				docAccessor.newInitBannerDoc( "New Year", 
+						"pratilipi-tamil-carousel-22.jpg", 
+						"pratilipi-tamil-carousel-22-small.jpg", 
+						"/newyear",
 						"PratilipiListApi",
-						gson.fromJson( "{ \"language\":\"TAMIL\", \"state\":\"PUBLISHED\", \"eventId\":5132634108723200 }", JsonElement.class ).getAsJsonObject() ),
+						gson.fromJson( "{ \"language\":\"TAMIL\", \"state\":\"PUBLISHED\", \"listName\":\"newyear\" }", JsonElement.class ).getAsJsonObject() ),
+
+				docAccessor.newInitBannerDoc( "மர்மம் / திகில்", 
+						"pratilipi-tamil-carousel-23.jpg", 
+						"pratilipi-tamil-carousel-23-small.jpg", 
+						"/horror",
+						"PratilipiListApi",
+						gson.fromJson( "{ \"language\":\"TAMIL\", \"state\":\"PUBLISHED\", \"listName\":\"horror\" }", JsonElement.class ).getAsJsonObject() ),
 
 				docAccessor.newInitBannerDoc( "காதல்", 
 						"pratilipi-tamil-carousel-20.jpg", 
@@ -132,20 +139,6 @@ public class InitDataUtil {
 						"/romance",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"TAMIL\", \"state\":\"PUBLISHED\", \"listName\":\"romance\" }", JsonElement.class ).getAsJsonObject() ),
-
-				docAccessor.newInitBannerDoc( "நகைச்சுவை", 
-						"pratilipi-tamil-carousel-21.jpg", 
-						"pratilipi-tamil-carousel-21-small.jpg", 
-						"/humour",
-						"PratilipiListApi",
-						gson.fromJson( "{ \"language\":\"TAMIL\", \"state\":\"PUBLISHED\", \"listName\":\"humour\" }", JsonElement.class ).getAsJsonObject() ),
-
-				docAccessor.newInitBannerDoc( "மர்மம் / திகில்", 
-						"pratilipi-tamil-carousel-17.jpg", 
-						"pratilipi-tamil-carousel-17-small.jpg", 
-						"/horror",
-						"PratilipiListApi",
-						gson.fromJson( "{ \"language\":\"TAMIL\", \"state\":\"PUBLISHED\", \"listName\":\"horror\" }", JsonElement.class ).getAsJsonObject() ),
 
 		};
 			
@@ -193,33 +186,26 @@ public class InitDataUtil {
 		
 		initBannerDocs = new InitBannerDoc[] {
 
-				docAccessor.newInitBannerDoc( "ഒരു കഥ പറയാ", 
-						"pratilipi-malayalam-carousel-15.jpg", 
-						"pratilipi-malayalam-carousel-15-small.jpg", 
-						"/event/tellastory",
+				docAccessor.newInitBannerDoc( "2016 Most Read", 
+						"pratilipi-malayalam-carousel-20.jpg", 
+						"pratilipi-malayalam-carousel-20-small.jpg", 
+						"/2016mostread",
 						"PratilipiListApi",
-						gson.fromJson( "{ \"language\":\"MALAYALAM\", \"state\":\"PUBLISHED\", \"eventId\":4557681508483072 }", JsonElement.class ).getAsJsonObject() ),
+						gson.fromJson( "{ \"language\":\"MALAYALAM\", \"state\":\"PUBLISHED\", \"listName\":\"2016mostread\" }", JsonElement.class ).getAsJsonObject() ),
+
+				docAccessor.newInitBannerDoc( "ദുരൂഹം", 
+						"pratilipi-malayalam-carousel-21.jpg", 
+						"pratilipi-malayalam-carousel-21-small.jpg", 
+						"/mystery",
+						"PratilipiListApi",
+						gson.fromJson( "{ \"language\":\"MALAYALAM\", \"state\":\"PUBLISHED\", \"listName\":\"mystery\" }", JsonElement.class ).getAsJsonObject() ),
 
 				docAccessor.newInitBannerDoc( "5 മിനിറ്റ് കഥകള്‍", 
-						"pratilipi-malayalam-carousel-16.jpg", 
-						"pratilipi-malayalam-carousel-16-small.jpg", 
+						"pratilipi-malayalam-carousel-19.jpg", 
+						"pratilipi-malayalam-carousel-19-small.jpg", 
 						"/fiveminute",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"MALAYALAM\", \"state\":\"PUBLISHED\", \"listName\":\"fiveminute\" }", JsonElement.class ).getAsJsonObject() ),
-
-				docAccessor.newInitBannerDoc( "പ്രണയം", 
-						"pratilipi-malayalam-carousel-17.jpg", 
-						"pratilipi-malayalam-carousel-17-small.jpg", 
-						"/love",
-						"PratilipiListApi",
-						gson.fromJson( "{ \"language\":\"MALAYALAM\", \"state\":\"PUBLISHED\", \"listName\":\"love\" }", JsonElement.class ).getAsJsonObject() ),
-
-				docAccessor.newInitBannerDoc( "കുഞ്ഞിക്കഥകള്‍", 
-						"pratilipi-malayalam-carousel-18.jpg", 
-						"pratilipi-malayalam-carousel-18-small.jpg", 
-						"/two-minute",
-						"PratilipiListApi",
-						gson.fromJson( "{ \"language\":\"MALAYALAM\", \"state\":\"PUBLISHED\", \"listName\":\"two-minute\" }", JsonElement.class ).getAsJsonObject() ),
 
 		};
 
@@ -274,19 +260,12 @@ public class InitDataUtil {
 		
 		initBannerDocs = new InitBannerDoc[] {
 
-				docAccessor.newInitBannerDoc( "ప్రేమ", 
-						"pratilipi-telugu-carousel-21.jpg", 
-						"pratilipi-telugu-carousel-21-small.jpg", 
-						"/love",
+				docAccessor.newInitBannerDoc( "New Year 2017", 
+						"pratilipi-telugu-carousel-24.jpg", 
+						"pratilipi-telugu-carousel-24-small.jpg", 
+						"/newyear2017",
 						"PratilipiListApi",
-						gson.fromJson( "{ \"language\":\"TELUGU\", \"state\":\"PUBLISHED\", \"listName\":\"love\" }", JsonElement.class ).getAsJsonObject() ),
-
-				docAccessor.newInitBannerDoc( "మినీకథలు", 
-						"pratilipi-telugu-carousel-22.jpg", 
-						"pratilipi-telugu-carousel-22-small.jpg", 
-						"/ministories",
-						"PratilipiListApi",
-						gson.fromJson( "{ \"language\":\"TELUGU\", \"state\":\"PUBLISHED\", \"listName\":\"ministories\" }", JsonElement.class ).getAsJsonObject() ),
+						gson.fromJson( "{ \"language\":\"TELUGU\", \"state\":\"PUBLISHED\", \"listName\":\"newyear2017\" }", JsonElement.class ).getAsJsonObject() ),
 
 				docAccessor.newInitBannerDoc( "అయిదు నిమిషాల కథలు", 
 						"pratilipi-telugu-carousel-23.jpg", 
@@ -295,12 +274,12 @@ public class InitDataUtil {
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"TELUGU\", \"state\":\"PUBLISHED\", \"listName\":\"fivemin\" }", JsonElement.class ).getAsJsonObject() ),
 
-				docAccessor.newInitBannerDoc( "జీవితం", 
-						"pratilipi-telugu-carousel-18.jpg", 
-						"pratilipi-telugu-carousel-18-small.jpg", 
-						"/life",
+				docAccessor.newInitBannerDoc( "ప్రేమ", 
+						"pratilipi-telugu-carousel-21.jpg", 
+						"pratilipi-telugu-carousel-21-small.jpg", 
+						"/love",
 						"PratilipiListApi",
-						gson.fromJson( "{ \"language\":\"TELUGU\", \"state\":\"PUBLISHED\", \"listName\":\"life\" }", JsonElement.class ).getAsJsonObject() ),
+						gson.fromJson( "{ \"language\":\"TELUGU\", \"state\":\"PUBLISHED\", \"listName\":\"love\" }", JsonElement.class ).getAsJsonObject() ),
 
 		};
 			
@@ -311,6 +290,13 @@ public class InitDataUtil {
 		
 		initBannerDocs = new InitBannerDoc[] {
 
+				docAccessor.newInitBannerDoc( "New Year 2017", 
+						"pratilipi-kannada-carousel-16.jpg", 
+						"pratilipi-kannada-carousel-16-small.jpg", 
+						"/newyear2017",
+						"PratilipiListApi",
+						gson.fromJson( "{ \"language\":\"KANNADA\", \"state\":\"PUBLISHED\", \"listName\":\"newyear2017\" }", JsonElement.class ).getAsJsonObject() ),
+
 				docAccessor.newInitBannerDoc( "ಪ್ರೀತಿ", 
 						"pratilipi-kannada-carousel-13.jpg", 
 						"pratilipi-kannada-carousel-13-small.jpg", 
@@ -318,26 +304,12 @@ public class InitDataUtil {
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"KANNADA\", \"state\":\"PUBLISHED\", \"listName\":\"love\" }", JsonElement.class ).getAsJsonObject() ),
 
-				docAccessor.newInitBannerDoc( "ವಿಜ್ಞಾನ", 
-						"pratilipi-kannada-carousel-14.jpg", 
-						"pratilipi-kannada-carousel-14-small.jpg", 
-						"/science",
-						"PratilipiListApi",
-						gson.fromJson( "{ \"language\":\"KANNADA\", \"state\":\"PUBLISHED\", \"listName\":\"science\" }", JsonElement.class ).getAsJsonObject() ),
-
 				docAccessor.newInitBannerDoc( "ಸ್ಫೂರ್ತಿದಾಯಕ", 
 						"pratilipi-kannada-carousel-15.jpg", 
 						"pratilipi-kannada-carousel-15-small.jpg", 
 						"/inspirational",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"KANNADA\", \"state\":\"PUBLISHED\", \"listName\":inspirational }", JsonElement.class ).getAsJsonObject() ),
-
-				docAccessor.newInitBannerDoc( "ಸಿನಿಮಾ", 
-						"pratilipi-kannada-carousel-09.jpg", 
-						"pratilipi-kannada-carousel-09-small.jpg", 
-						"/cinema",
-						"PratilipiListApi",
-						gson.fromJson( "{ \"language\":\"KANNADA\", \"state\":\"PUBLISHED\", \"listName\":\"cinema\" }", JsonElement.class ).getAsJsonObject() ),
 
 		};
 			
