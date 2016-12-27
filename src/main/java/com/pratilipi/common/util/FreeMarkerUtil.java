@@ -2,6 +2,7 @@ package com.pratilipi.common.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.logging.Level;
@@ -14,6 +15,8 @@ import freemarker.cache.FileTemplateLoader;
 import freemarker.cache.MultiTemplateLoader;
 import freemarker.cache.TemplateLoader;
 import freemarker.template.Configuration;
+import freemarker.template.DefaultObjectWrapper;
+import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
 
@@ -46,7 +49,26 @@ public class FreeMarkerUtil {
 		}
 		return cfg;
 	}
-	
+
+	@SuppressWarnings("deprecation")
+	public static String processString( Object model, String template ) 
+			throws UnexpectedServerException {
+
+		Configuration cfg = new Configuration();
+		cfg.setObjectWrapper( new DefaultObjectWrapper() );
+
+		try {
+			Template t = new Template( "templateName", new StringReader( template ), cfg );
+			Writer out = new StringWriter();
+			t.process( model, out );
+			String transformedTemplate = out.toString();
+			return transformedTemplate;
+		} catch( TemplateException | IOException e ) {
+			throw new UnexpectedServerException();
+		}
+
+	}
+
 	public static String processTemplate( Object dataModel, String templateName )
 			throws UnexpectedServerException {
 		
