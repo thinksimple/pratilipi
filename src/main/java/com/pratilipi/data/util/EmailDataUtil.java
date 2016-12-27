@@ -28,6 +28,7 @@ import com.pratilipi.data.client.VoteData;
 import com.pratilipi.data.type.Email;
 import com.pratilipi.data.type.UserAuthor;
 import com.pratilipi.data.type.Vote;
+import com.pratilipi.email.EmailTemplateUtil;
 import com.pratilipi.email.EmailUtil;
 
 public class EmailDataUtil {
@@ -42,7 +43,7 @@ public class EmailDataUtil {
 	}
 
 	private static String _getDateFormat( Date date ) {
-		DateFormat dateFormat = new SimpleDateFormat( "dd MMM yyyy" );
+		DateFormat dateFormat = new SimpleDateFormat( "dd/mm/yyyy" );
 		dateFormat.setTimeZone( TimeZone.getTimeZone( "IST" ) );
 		return dateFormat.format( date );
 	}
@@ -50,7 +51,7 @@ public class EmailDataUtil {
 
 	private static String _getEmailBody( Email email, Language language ) throws UnexpectedServerException {
 
-		String body = EmailUtil.getEmailTemplate( email.getType(), language );
+		String body = EmailTemplateUtil.getEmailTemplate( email.getType(), language );
 
 		Map<String, Object> dataModel = null;
 		if( email.getType() == EmailType.PRATILIPI_PUBLISHED_AUTHOR 
@@ -75,22 +76,6 @@ public class EmailDataUtil {
 			dataModel = _createDataModelForVoteCommentEmail( email.getPrimaryContentId() );
 
 		return FreeMarkerUtil.processString( dataModel, body );
-
-	}
-
-	private static void _sendEmail( String senderName, String senderEmail,
-			String recipientName, String recipientEmail, 
-			String subject, String body, Language language ) 
-					throws UnexpectedServerException {
-
-		Map<String, Object> dataModel = new HashMap<>();
-		dataModel.put( "language", language );
-		dataModel.put( "contact_email", language == null || language == Language.ENGLISH ? 
-				"contact@pratilipi.com" : language.name().toLowerCase() + "@pratilipi.com" );
-
-		EmailUtil.sendUserEmail( senderName, senderEmail,
-				recipientName, recipientEmail, 
-				subject, body, dataModel );
 
 	}
 
@@ -125,12 +110,15 @@ public class EmailDataUtil {
 		String senderEmail = null;
 		String subject = null;
 
-		_sendEmail( senderName, senderEmail, user.getDisplayName(), user.getEmail(), subject, consolidatedBody, user.getLanguage() );
+		EmailUtil.sendMail( senderName, senderEmail, 
+				user.getDisplayName(), user.getEmail(), 
+				subject, 
+				EmailTemplateUtil.getCompleteEmail( consolidatedBody, user.getLanguage() ) );
 
 		dataAccessor.createOrUpdateEmailList( emailList );
 
 	}
-	
+
 	public static void sendEmail( Long emailId ) throws UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -163,7 +151,10 @@ public class EmailDataUtil {
 		if( ( m = subjectPattern.matcher( body ) ).find() )
 			subject = m.group( 1 ).trim();
 
-		_sendEmail( senderName, senderEmail, user.getDisplayName(), user.getEmail(), subject, body, user.getLanguage() );
+		EmailUtil.sendMail( senderName, senderEmail, 
+				user.getDisplayName(), user.getEmail(), 
+				subject, 
+				EmailTemplateUtil.getCompleteEmail( body, user.getLanguage() ) );
 
 		dataAccessor.createOrUpdateEmail( email );
 
