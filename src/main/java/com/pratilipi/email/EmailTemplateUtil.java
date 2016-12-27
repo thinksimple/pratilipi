@@ -21,10 +21,18 @@ public class EmailTemplateUtil {
 	private static final Map<Language, Map<String, String>> i18nMap;
 
 	static {
-		List<I18n> i18nList = DataAccessorFactory.getDataAccessor().getI18nList( I18nGroup.EMAIL );
-		i18nMap = new HashMap<>( i18nList.size() );
-		// TODO: Implementation
 		// Map<Language, Map<key,value>> -> Map<TAMIL, Map<"user_followed_you", "${user} has followed you!">>
+		i18nMap = new HashMap<>( Language.values().length );
+
+		List<I18n> i18nList = DataAccessorFactory.getDataAccessor().getI18nList( I18nGroup.EMAIL );
+		for( Language language : Language.values() ) {
+			Map<String, String> stringMap = new HashMap<>( i18nList.size() );
+			i18nMap.put( language, stringMap );
+			for( I18n i18n : i18nList ) {
+				stringMap.put( i18n.getId(), i18n.getI18nString( language ) != null ? 
+						i18n.getI18nString( language ) : i18n.getI18nString( Language.ENGLISH ) );
+			}
+		}
 	}
 
 
