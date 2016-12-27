@@ -14,7 +14,6 @@ import java.util.regex.Pattern;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.EmailState;
 import com.pratilipi.common.type.EmailType;
-import com.pratilipi.common.type.I18nGroup;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.util.FreeMarkerUtil;
 import com.pratilipi.common.util.HtmlUtil;
@@ -27,7 +26,6 @@ import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.client.UserPratilipiData;
 import com.pratilipi.data.client.VoteData;
 import com.pratilipi.data.type.Email;
-import com.pratilipi.data.type.I18n;
 import com.pratilipi.data.type.UserAuthor;
 import com.pratilipi.data.type.Vote;
 import com.pratilipi.email.EmailUtil;
@@ -37,19 +35,6 @@ public class EmailDataUtil {
 	@SuppressWarnings("unused")
 	private static final Logger logger =
 			Logger.getLogger( EmailDataUtil.class.getName() );
-
-	private final static String filePath = 
-			EmailUtil.class.getName().substring( 0, EmailUtil.class.getName().lastIndexOf(".") ).replace( ".", "/" ) + "/template/";
-
-	private static final Map<String, I18n> i18ns;
-
-	static {
-		List<I18n> i18nList = DataAccessorFactory.getDataAccessor().getI18nList( I18nGroup.EMAIL );
-		i18ns = new HashMap<>( i18nList.size() );
-		for( I18n i18n : i18nList )
-			i18ns.put( i18n.getId(), i18n );
-	}
-
 
 	@SuppressWarnings("deprecation")
 	private static String _getDomainName( Language language ) {
@@ -62,21 +47,10 @@ public class EmailDataUtil {
 		return dateFormat.format( date );
 	}
 
-	private static String _getContactEmail( Language language ) {
-		return language == null || language == Language.ENGLISH ? 
-				"contact@pratilipi.com" : language.name().toLowerCase() + "@pratilipi.com";
-	}
-
-
-	private static String _getEmailTemplate( EmailType emailType, Language language ) 
-			throws UnexpectedServerException {
-
-		return FreeMarkerUtil.processTemplate( i18ns, filePath + emailType.getTemplateName() );
-	}
 
 	private static String _getEmailBody( Email email, Language language ) throws UnexpectedServerException {
 
-		String body = _getEmailTemplate( email.getType(), language );
+		String body = EmailUtil.getEmailTemplate( email.getType(), language );
 
 		Map<String, Object> dataModel = null;
 		if( email.getType() == EmailType.PRATILIPI_PUBLISHED_AUTHOR 
@@ -101,6 +75,22 @@ public class EmailDataUtil {
 			dataModel = _createDataModelForVoteCommentEmail( email.getPrimaryContentId() );
 
 		return FreeMarkerUtil.processString( dataModel, body );
+
+	}
+
+	private static void _sendEmail( String senderName, String senderEmail,
+			String recipientName, String recipientEmail, 
+			String subject, String body, Language language ) 
+					throws UnexpectedServerException {
+
+		Map<String, Object> dataModel = new HashMap<>();
+		dataModel.put( "language", language );
+		dataModel.put( "contact_email", language == null || language == Language.ENGLISH ? 
+				"contact@pratilipi.com" : language.name().toLowerCase() + "@pratilipi.com" );
+
+		EmailUtil.sendUserEmail( senderName, senderEmail,
+				recipientName, recipientEmail, 
+				subject, body, dataModel );
 
 	}
 
@@ -135,13 +125,7 @@ public class EmailDataUtil {
 		String senderEmail = null;
 		String subject = null;
 
-		Map<String, String> dataModel = new HashMap<>();
-		dataModel.put( "language", user.getLanguage().name() );
-		dataModel.put( "contact_email", _getContactEmail( user.getAuthor().getLanguage() ) );
-
-		EmailUtil.sendUserEmail( senderName, senderEmail,
-				user.getDisplayName(), user.getEmail(), 
-				subject, consolidatedBody, dataModel );
+		_sendEmail( senderName, senderEmail, user.getDisplayName(), user.getEmail(), subject, consolidatedBody, user.getLanguage() );
 
 		dataAccessor.createOrUpdateEmailList( emailList );
 
@@ -179,13 +163,7 @@ public class EmailDataUtil {
 		if( ( m = subjectPattern.matcher( body ) ).find() )
 			subject = m.group( 1 ).trim();
 
-		Map<String, String> dataModel = new HashMap<>();
-		dataModel.put( "language", user.getLanguage().name() );
-		dataModel.put( "contact_email", _getContactEmail( user.getAuthor().getLanguage() ) );
-
-		EmailUtil.sendUserEmail( senderName, senderEmail,
-				user.getDisplayName(), user.getEmail(), 
-				subject, body, dataModel );
+		_sendEmail( senderName, senderEmail, user.getDisplayName(), user.getEmail(), subject, body, user.getLanguage() );
 
 		dataAccessor.createOrUpdateEmail( email );
 

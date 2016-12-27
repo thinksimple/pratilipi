@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -25,18 +26,30 @@ import org.apache.commons.io.LineIterator;
 
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.EmailType;
+import com.pratilipi.common.type.I18nGroup;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.util.FreeMarkerUtil;
+import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.type.I18n;
 
 
 public class EmailUtil {
-	
+
 	private static final Logger logger = Logger.getLogger( EmailUtil.class.getName() );
 
 	private final static Properties properties = new Properties();
 	private final static Session session = Session.getDefaultInstance( properties, null );
 	private final static String filePath = 
 			EmailUtil.class.getName().substring( 0, EmailUtil.class.getName().lastIndexOf(".") ).replace( ".", "/" ) + "/template/";
+
+	private static final Map<String, I18n> i18ns;
+
+	static {
+		List<I18n> i18nList = DataAccessorFactory.getDataAccessor().getI18nList( I18nGroup.EMAIL );
+		i18ns = new HashMap<>( i18nList.size() );
+		for( I18n i18n : i18nList )
+			i18ns.put( i18n.getId(), i18n );
+	}
 
 
 	@Deprecated
@@ -45,7 +58,7 @@ public class EmailUtil {
 		
 		sendMail( name, email, templateName, language, new HashMap<String, String>() );
 	}
-	
+
 	@Deprecated
 	public static void sendMail( String name, String email, String templateName,
 			Language language, Map<String, String> dataModel ) throws UnexpectedServerException {
@@ -90,9 +103,15 @@ public class EmailUtil {
 		
 	}
 
+	public static String getEmailTemplate( EmailType emailType, Language language ) 
+			throws UnexpectedServerException {
+
+		return FreeMarkerUtil.processTemplate( i18ns, filePath + emailType.getTemplateName() );
+	}
+
 	public static void sendUserEmail( String senderName, String senderEmail,
 			String recipientName, String recipientEmail, 
-			String subject, String body, Map<String, String> dataModel ) 
+			String subject, String body, Map<String, Object> dataModel ) 
 			throws UnexpectedServerException {
 
 		dataModel.put( "emailBody", body );
