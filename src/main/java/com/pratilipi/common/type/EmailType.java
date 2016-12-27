@@ -7,7 +7,7 @@ public enum EmailType {
 
 	AUTHOR_FOLLOW					( "AuthorFollowTemplate.ftl" ),			// Email sent to Author whenever someone follows him/her.
 
-	USER_PRATILIPI_RATING			( "UserPratilipiRatingTemplate.ftl" ),	// Email sent to Author when someone rates his/her content.
+	USER_PRATILIPI_RATING			( "UserPratilipiReviewTemplate.ftl" ),	// Email sent to Author when someone rates his/her content.
 	USER_PRATILIPI_REVIEW			( "UserPratilipiReviewTemplate.ftl" ),	// Email sent to Author when someone reviews( with/without rating ) his/her content.
 
 	COMMENT_REVIEW_REVIEWER		( "CommentReviewReviewerTemplate.ftl" ),	// Email sent to Reviewer when someone comments on his/her review.
@@ -16,7 +16,7 @@ public enum EmailType {
 	VOTE_REVIEW_REVIEWER 		( "VoteReviewReviewerTemplate.ftl" ),		// Email sent to the reviewer when someone likes his/her comment.
 	VOTE_REVIEW_AUTHOR 			( "VoteReviewAuthorTemplate.ftl" ),			// Email sent to the author when someone likes on review of his/her content.
 
-	VOTE_COMMENT_REVIEW_COMMENTOR 		( "VoteCommentCommentorTemplate.ftl" ),		// Email sent to the commentor when someone likes his/her comment on a review on a content.
+	VOTE_COMMENT_REVIEW_COMMENTOR 		( "VoteCommentReviewCommentorTemplate.ftl" ),		// Email sent to the commentor when someone likes his/her comment on a review on a content.
 
 	;
 
