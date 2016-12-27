@@ -10,7 +10,9 @@ public enum I18nGroup {
 			"notification_has_followed",		// Ram has followed you
 			"notification_have_followed",		// Ram & Shayam have followed you
 			"notification_others_have_followed"	// Ram, Shyam and 7 others have followed you
-			)
+			),
+
+	EMAIL ()
 	;
 	
 	
