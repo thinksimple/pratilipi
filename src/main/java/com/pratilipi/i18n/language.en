@@ -421,3 +421,23 @@ android_banner_reader_3 = Bookmark, Night Mode, Share, Review
 android_banner_profile_1 = Your Profile, your way
 android_banner_profile_2 = Create profile which defines you
 android_banner_profile_3 = Manage your contents and network
+
+
+# Notification Settings
+notification_settings = Notification Settings
+email_frequency = Email Frequncy
+email_frequency_immediate = Immediately
+email_frequency_daily = Daily
+email_frequency_weekly = Weekly
+email_frequency_monthly = Monthly
+email_frequency_never = Never
+notification_group_content = Content
+option_new_review =  New Review 
+option_new_comment =  New Comment 
+option_like_review =  Like on review 
+option_like_comment =  New Like on Comment 
+notification_group_network = Network
+option_new_follower = New Follower
+option_pratilipi_published_follower =  New Content by people you follow 
+option_pratilipi_updates =  Pratilipi Updates and Offers 
+notification_settings_save_changes = Save Changes
