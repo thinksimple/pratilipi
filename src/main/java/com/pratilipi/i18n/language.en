@@ -425,7 +425,7 @@ android_banner_profile_3 = Manage your contents and network
 
 # Notification Settings
 notification_settings = Notification Settings
-email_frequency = Email Frequncy
+email_frequency = Email Frequency
 email_frequency_immediate = Immediately
 email_frequency_daily = Daily
 email_frequency_weekly = Weekly
