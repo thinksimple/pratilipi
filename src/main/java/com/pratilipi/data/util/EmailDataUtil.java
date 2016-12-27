@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.EmailState;
 import com.pratilipi.common.type.EmailType;
+import com.pratilipi.common.type.I18nGroup;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.util.FreeMarkerUtil;
 import com.pratilipi.common.util.HtmlUtil;
@@ -26,18 +27,28 @@ import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.client.UserPratilipiData;
 import com.pratilipi.data.client.VoteData;
 import com.pratilipi.data.type.Email;
+import com.pratilipi.data.type.I18n;
 import com.pratilipi.data.type.UserAuthor;
 import com.pratilipi.data.type.Vote;
 import com.pratilipi.email.EmailUtil;
 
 public class EmailDataUtil {
 
-	private final static String filePath = 
-			EmailUtil.class.getName().substring( 0, EmailUtil.class.getName().lastIndexOf(".") ).replace( ".", "/" ) + "/template/";
-
 	@SuppressWarnings("unused")
 	private static final Logger logger =
 			Logger.getLogger( EmailDataUtil.class.getName() );
+
+	private final static String filePath = 
+			EmailUtil.class.getName().substring( 0, EmailUtil.class.getName().lastIndexOf(".") ).replace( ".", "/" ) + "/template/";
+
+	private static final Map<String, I18n> i18ns;
+
+	static {
+		List<I18n> i18nList = DataAccessorFactory.getDataAccessor().getI18nList( I18nGroup.EMAIL );
+		i18ns = new HashMap<>( i18nList.size() );
+		for( I18n i18n : i18nList )
+			i18ns.put( i18n.getId(), i18n );
+	}
 
 
 	@SuppressWarnings("deprecation")
@@ -56,7 +67,16 @@ public class EmailDataUtil {
 				"contact@pratilipi.com" : language.name().toLowerCase() + "@pratilipi.com";
 	}
 
+
+	private static String _getEmailTemplate( EmailType emailType, Language language ) 
+			throws UnexpectedServerException {
+
+		return FreeMarkerUtil.processTemplate( i18ns, filePath + emailType.getTemplateName() );
+	}
+
 	private static String _getEmailBody( Email email, Language language ) throws UnexpectedServerException {
+
+		String body = _getEmailTemplate( email.getType(), language );
 
 		Map<String, Object> dataModel = null;
 		if( email.getType() == EmailType.PRATILIPI_PUBLISHED_AUTHOR 
@@ -80,8 +100,7 @@ public class EmailDataUtil {
 		else if( email.getType() == EmailType.VOTE_COMMENT_REVIEW_COMMENTOR )
 			dataModel = _createDataModelForVoteCommentEmail( email.getPrimaryContentId() );
 
-		return FreeMarkerUtil.processTemplate( dataModel, 
-				filePath + email.getType().getTemplateName() + "." + language.getCode() + ".ftl" );
+		return FreeMarkerUtil.processString( dataModel, body );
 
 	}
 
