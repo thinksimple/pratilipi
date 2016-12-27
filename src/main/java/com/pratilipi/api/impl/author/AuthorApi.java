@@ -13,6 +13,7 @@ import com.pratilipi.api.impl.pratilipi.PratilipiV2Api;
 import com.pratilipi.api.impl.user.UserApi;
 import com.pratilipi.api.impl.user.UserLoginApi;
 import com.pratilipi.api.impl.userauthor.UserAuthorFollowListApi;
+import com.pratilipi.api.impl.userpratilipi.UserPratilipiApi;
 import com.pratilipi.api.impl.userpratilipi.UserPratilipiReviewListApi;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
@@ -359,7 +360,7 @@ public class AuthorApi extends GenericApi {
 						: authorData.getName();
 				this.pageUrl = authorData.getPageUrl();
 			
-			} else if( clazz == UserPratilipiReviewListApi.class ) {
+			} else if( clazz == UserPratilipiApi.class || clazz == UserPratilipiReviewListApi.class ) {
 				
 				this.authorId = authorData.getId();
 				
