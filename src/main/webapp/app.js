@@ -4,7 +4,18 @@ $(document).ready(function() {
 });
 
 var pratilipiSummaryController = function() {
-  this.ViewModel = {};
+  this.reqProperties = ['title', 'titleEn', 'language', 'summary', 'state', 'listingDateMillis', 'ratingCount', 'readCount']
+  this.ViewModel = {
+    title: ko.observable(),
+    titleEn: ko.observable(),
+    language: ko.observable(),
+    summary: ko.observable(),
+    state: ko.observable(),
+    listingDateMillis: ko.observable(),
+    ratingCount: ko.observable(),
+    readCount: ko.observable(),
+  };
+  ko.applyBindings( this.ViewModel );
 };
 
 pratilipiSummaryController.prototype.init = function() {
@@ -15,10 +26,11 @@ pratilipiSummaryController.prototype.init = function() {
 };
 
 pratilipiSummaryController.prototype.getData = function() {
+  this.requestFromCache();
   var self = this;
   $.ajax({
       type: 'get',
-      url: '/api/pratilipi?_apiVer=2&pratilipiId=5187823242051584',
+      url: '/api/pratilipi?_apiVer=2&pratilipiId=5639631493136384',
       data: { 
           // 'language': "${ language }"
       },
@@ -33,12 +45,35 @@ pratilipiSummaryController.prototype.getData = function() {
   });
 };
 
+pratilipiSummaryController.prototype.requestFromCache = function() {
+  var self = this;
+  var url = '/api/pratilipi?_apiVer=2&pratilipiId=5639631493136384';  
+  if ('caches' in window) {
+    /*
+     * Check if the service worker has already cached this books
+     * data. If the service worker has the data, then display the cached
+     * data while the app fetches the latest data.
+     */
+    caches.match(url).then(function(response) {
+      if (response) {
+        response.json().then(function updateFromCache(json) {
+          self.pushToViewModel( json );
+        });
+        
+      }
+    });
+  } 
+};
+
 pratilipiSummaryController.prototype.pushToViewModel = function( data ) {
   var self = this;
   $.each( data, function( key, value ) {
-    self.ViewModel[ key ] = ko.observable( value );
+    if( self.reqProperties.includes( key ) ) {
+      self.ViewModel[key]( value );
+    }
+    //self.ViewModel[ key ] = ko.observable( value );
   });
-  ko.applyBindings( self.ViewModel );
+  //ko.applyBindings( self.ViewModel );
 };
 
 pratilipiSummaryController.prototype.registerServiceWorker = function() {
