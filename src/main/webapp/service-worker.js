@@ -2,7 +2,7 @@ var dataCacheName = 'data-v1';
 var cacheName = 'appshell-v1';
 var filesToCache = [
                     '/poc',
-                    '/app.js',
+                    '/app.js?1',
                     'https://d3cwrmdwk8nw1j.cloudfront.net/third-party/compress/jquery.knockout.boostrap.js'
                    ];
 
