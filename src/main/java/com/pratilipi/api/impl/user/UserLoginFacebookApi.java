@@ -30,7 +30,7 @@ public class UserLoginFacebookApi extends GenericApi {
 		@Validate( required = true )
 		private String fbUserAccessToken;
 		
-		private Language language;
+		private Language language; // Used for SignUp only. Ignored for SingIn.
 
 	}
 	
@@ -65,7 +65,7 @@ public class UserLoginFacebookApi extends GenericApi {
 				Task welcomeMailTask = TaskQueueFactory.newTask()
 						.setUrl( "/user/email" )
 						.addParam( "userId", userData.getId().toString() )
-						.addParam( "language", request.language == null ? UxModeFilter.getDisplayLanguage().toString() : request.language.toString() )
+						.addParam( "language", ( request.language == null ? ( UxModeFilter.getDisplayLanguage() == null ? Language.ENGLISH : UxModeFilter.getDisplayLanguage() ) : request.language ).toString() )
 						.addParam( "sendWelcomeMail", "true" );
 				taskList.add( welcomeMailTask );
 			}
