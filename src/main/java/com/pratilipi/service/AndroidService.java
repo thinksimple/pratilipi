@@ -34,6 +34,7 @@ import com.pratilipi.api.impl.pratilipi.PratilipiV1Api;
 import com.pratilipi.api.impl.pratilipi.PratilipiV2Api;
 import com.pratilipi.api.impl.user.UserAccessTokenApi;
 import com.pratilipi.api.impl.user.UserAccessTokenFcmTokenApi;
+import com.pratilipi.api.impl.user.UserApi;
 import com.pratilipi.api.impl.user.UserEmailApi;
 import com.pratilipi.api.impl.user.UserFirebaseTokenApi;
 import com.pratilipi.api.impl.user.UserLoginApi;
@@ -64,6 +65,7 @@ public class AndroidService extends GenericService {
 		ApiRegistry.register( InitV2Api.class );
 		ApiRegistry.register( InitBannerListApi.class );
 		
+		ApiRegistry.register( UserApi.class );
 		ApiRegistry.register( UserAccessTokenApi.class );
 		ApiRegistry.register( UserAccessTokenFcmTokenApi.class );
 		ApiRegistry.register( UserFirebaseTokenApi.class );
