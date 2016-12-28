@@ -6,31 +6,33 @@
 		<link rel='stylesheet' href='http://1.ptlp.co/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>
 	</head>
 	<body>
-		<table width="100%">
-			<tr>
-				<th>AuthorId</th>
-				<th>Read Count</th>
-				<th>FollowCount</th>
-			</tr>
-			<tbody data-bind="foreach: {data: authorList, as: 'author'}">
-				<tr>
-					<td data-bind="text: author.AUTHOR_ID"></td>
-					<td data-bind="text: author.TOTAL_READ_COUNT"></td>
-					<td data-bind="text: author.FOLLOW_COUNT"></td>
-				</tr>
-			</tbody>
-		</table>
-		<br/>
-		<br/>
-		<h1>delay1=${ delay1 }</h1>
-		<h2>delay2=${ delay2 }</h2>
-		<script type="application/javascript">
-			$(function(){
-				var ViewModel = {
-					authorList: ${ authorList }
-				};
-				ko.applyBindings( ViewModel );
+		<style>
+			*[data-key] {
+				border: 2px solid #107fe5;
+				padding: 4px;
+				border-radius: 4px;
+				outline: none;
+			}
+		</style>
+		<div style="max-width: 600px; margin: auto; border: 1px solid; padding: 12px;">
+			${ body }
+		</div>
+		<button style="margin: 32px auto; display: block;" onClick="saveChanges()" class="btn btn-primary">Save Changes</button>
+		<script>
+			$( document ).ready( function() {
+				$( '[data-key]' ).each( function( index ) {
+					$(this).attr( 'contenteditable','true' );
+				});
+				$( "a" ).click( function() { return false; } );
 			});
+			function saveChanges() {
+				var data = {};
+				$( '[data-key]' ).each( function( index ) {
+					data[ $( this ).attr( "data-key" ) ] = $( this ).html().trim();
+				});
+				console.log( data );
+				<#-- Make Api call and reload here -->
+			}
 		</script>
 	</body>
 </html>

@@ -53,6 +53,7 @@ import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.BatchProcessType;
 import com.pratilipi.common.type.BlogPostState;
+import com.pratilipi.common.type.EmailType;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.PratilipiContentType;
@@ -86,6 +87,7 @@ import com.pratilipi.data.util.PratilipiDataUtil;
 import com.pratilipi.data.util.PratilipiDocUtil;
 import com.pratilipi.data.util.UserDataUtil;
 import com.pratilipi.data.util.UserPratilipiDataUtil;
+import com.pratilipi.email.EmailTemplateUtil;
 import com.pratilipi.filter.AccessTokenFilter;
 import com.pratilipi.filter.UxModeFilter;
 import com.pratilipi.i18n.I18n;
@@ -1507,45 +1509,16 @@ public class PratilipiSite extends HttpServlet {
 		return dataModel;
 	}
 	
-	public Map<String, Object> createDataModelForTestPage( Language language ) {
+	public Map<String, Object> createDataModelForTestPage( Language language ) throws UnexpectedServerException {
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", "Test" );
-		
-		Long minReadCount;
-		switch( language ) {
-			case BENGALI:
-				minReadCount = 3000L; break;
-			case GUJARATI:
-				minReadCount = 2000L; break;
-			case HINDI:
-				minReadCount = 7500L; break;
-			case KANNADA:
-				minReadCount = 200L; break;
-			case MALAYALAM:
-				minReadCount = 4000L; break;
-			case MARATHI:
-				minReadCount = 2000L; break;
-			case TAMIL:
-				minReadCount = 2200L; break;
-			case TELUGU:
-				minReadCount = 500L; break;
-			default: 
-				minReadCount = 2000L;
-		}
-		
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Long x = new Date().getTime();
-		List<Long> idList = dataAccessor.getAuthorIdListWithMaxReadCount( language, minReadCount );
-		Long y = new Date().getTime();
-		Map<Long, Author> authors = dataAccessor.getAuthors( idList );
-		Long z = new Date().getTime();
-		List<Author> authorList = new ArrayList<>( authors.size() );
-		for( Long authorId : idList )
-			authorList.add( authors.get( authorId ) );
-		dataModel.put( "authorList", new Gson().toJson( authorList ) );
-		dataModel.put( "delay1", Long.toString( y-x ) );
-		dataModel.put( "delay2", Long.toString( z-y ) );
+
+		String body = new String();
+		for( EmailType eT : EmailType.values() )
+			body = body + EmailTemplateUtil.getEmailTemplate( eT, language );
+
+		dataModel.put( "body", body );
 		return dataModel;
 
 	}
