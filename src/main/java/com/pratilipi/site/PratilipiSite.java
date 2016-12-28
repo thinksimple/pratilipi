@@ -8,9 +8,11 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -130,17 +132,9 @@ public class PratilipiSite extends HttpServlet {
 		);
 
 		// Common resource list
-		List<String> resourceList = new LinkedList<>();
-		if( basicMode ) {
-			resourceList.add( ThirdPartyResource.JQUERY_BOOTSTRAP.getTag() );
-			resourceList.add( ThirdPartyResource.FIREBASE.getTag() );
-		} else {
-			resourceList.add( ThirdPartyResource.JQUERY_BOOTSTRAP_POLYMER_JS.getTag() );
-			resourceList.add( ThirdPartyResource.POLYMER_ELEMENTS.getTag() );
-			resourceList.add( ThirdPartyResource.FIREBASE.getTag() );
-		}
+		Set<String> resourceList = getResourceList( basicMode );
 
-		List<String> deferredResourceList = new LinkedList<>();
+		Set<String> deferredResourceList = new HashSet<>();
 		if( basicMode ) {
 			resourceList.add( ThirdPartyResource.BOOTSTRAP_CSS.getTag() );
 		} else {
@@ -487,19 +481,21 @@ public class PratilipiSite extends HttpServlet {
 			}
 
 		} catch( InsufficientAccessException e ) {
+			resourceList = getResourceList( basicMode );
 			dataModel = new HashMap<String, Object>();
 			dataModel.put( "title", "Unauthorized Access !" );
 			templateName = ( basicMode ? "error/AuthorizationErrorBasic.ftl" : "error/AuthorizationError.ftl" );
 			response.setStatus( HttpServletResponse.SC_UNAUTHORIZED );
 
 		} catch( InvalidArgumentException | UnexpectedServerException e ) {
+			resourceList = getResourceList( basicMode );
 			dataModel = new HashMap<String, Object>();
 			dataModel.put( "title", "Server Error !" );
 			templateName = ( basicMode ? "error/ServerErrorBasic.ftl" : "error/ServerError.ftl" );
 			response.setStatus( HttpServletResponse.SC_SERVICE_UNAVAILABLE );
 		}
 
-		
+
 		// Adding common data to the Data Model
 		Gson gson = new Gson();
 		UserData userData = UserDataUtil.getCurrentUser();
@@ -577,7 +573,21 @@ public class PratilipiSite extends HttpServlet {
 		
 	}
 	
-	
+
+
+	private Set<String> getResourceList( Boolean basicMode ) {
+		Set<String> resourceList = new HashSet<>();
+		if( basicMode ) {
+			resourceList.add( ThirdPartyResource.JQUERY_BOOTSTRAP.getTag() );
+			resourceList.add( ThirdPartyResource.FIREBASE.getTag() );
+		} else {
+			resourceList.add( ThirdPartyResource.JQUERY_BOOTSTRAP_POLYMER_JS.getTag() );
+			resourceList.add( ThirdPartyResource.POLYMER_ELEMENTS.getTag() );
+			resourceList.add( ThirdPartyResource.FIREBASE.getTag() );
+		}
+		return resourceList;
+	}
+
 	private String createPageTitle( String contentTitle, String contentTitleEn ) {
 		return createPageTitle( contentTitle, contentTitleEn, UxModeFilter.getDisplayLanguage() );
 	}
