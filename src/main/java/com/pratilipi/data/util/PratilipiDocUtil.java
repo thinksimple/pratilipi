@@ -39,6 +39,7 @@ import com.pratilipi.common.util.GoogleAnalyticsApi;
 import com.pratilipi.common.util.HtmlUtil;
 import com.pratilipi.common.util.HttpUtil;
 import com.pratilipi.common.util.ImageUtil;
+import com.pratilipi.common.util.SvgUtil;
 import com.pratilipi.data.BlobAccessor;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
@@ -295,13 +296,17 @@ public class PratilipiDocUtil {
 		BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor()
 				.getBlob( "pratilipi/" + pratilipiId + "/images/" + name );
 	
-		if( width != null )
-			blobEntry.setData( ImageUtil.resize( blobEntry.getData(), width ) );
-		
+		if( width != null ) {
+			if( blobEntry.getMimeType().equalsIgnoreCase( "image/svg+xml" ) )
+				blobEntry.setData( SvgUtil.resizeSvg( blobEntry.getData(), width ) );
+			else
+				blobEntry.setData( ImageUtil.resize( blobEntry.getData(), width ) );
+		}
+
 		return blobEntry;
-		
+
 	}
-	
+
 	public static JsonArray addContentChapter( Long pratilipiId, Integer chapterNo ) 
 			throws InsufficientAccessException, UnexpectedServerException {
 
