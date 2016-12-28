@@ -89,7 +89,7 @@ public class PratilipiSiteFilter implements Filter {
 		redirections.put( "/articles/hindi", "http://hindi.pratilipi.com/search?q=articles" );
 		
 		redirections.put( "/about", "/about/pratilipi" );
-		redirections.put( "/career", "/JoinTheGang" );
+		redirections.put( "/career", "/work-with-us" );
 	}
 	
 
