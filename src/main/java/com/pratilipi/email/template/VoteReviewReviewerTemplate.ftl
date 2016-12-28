@@ -32,7 +32,7 @@
 <table align="left" table-layout="fixed;" style="width: 100%; height: 100%;">
 	<tr>
 		<td>
-			<p style="margin: 15px 0 10px 0; color: #000; font-size: 16px;">${ vote_name } likes your review of ${ pratilipi_title }</p>
+			<p data-key="vote_review_reviewer_heading" style="margin: 15px 0 10px 0; color: #000; font-size: 16px;">${ vote_name } likes your review of ${ pratilipi_title }</p>
 		</td>
 	</tr>
 </table>
@@ -95,7 +95,7 @@
 	<tr>
 		<td align="center" height="40" bgcolor="#D0021B" style="-webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; color: #ffffff; display: block; width: 100%; margin: auto;">
 			<a href="${ pratilipi_page_url }" target="_blank" style="font-size: 18px; text-decoration: none; line-height: 40px; width: 100%; display: inline-block;">
-				<span style="color: #ffffff; padding-left: 15px; padding-right: 15px;">
+				<span data-key="vote_review_reviewer_button" style="color: #ffffff; padding-left: 15px; padding-right: 15px;">
 					View on Pratilipi
 				</span>
 			</a>

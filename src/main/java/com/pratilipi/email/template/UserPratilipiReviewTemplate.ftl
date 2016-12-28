@@ -32,7 +32,7 @@
 <table align="left" table-layout="fixed;" style="width: 100%; height: 100%;">
 	<tr>
 		<td>
-			<p style="margin: 15px 0 10px 0; color: #000; font-size: 16px;">${ user_pratilipi_name } has given a review on your story <b>${ pratilipi_title }</b>.</p>
+			<p data-key="userpratilipi_review_heading" style="margin: 15px 0 10px 0; color: #000; font-size: 16px;">${ user_pratilipi_name } has given a review on your story <b>${ pratilipi_title }</b>.</p>
 		</td>
 	</tr>
 </table>
@@ -95,7 +95,7 @@
 	<tr>
 		<td align="center" height="40" bgcolor="#D0021B" style="-webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; color: #ffffff; display: block; width: 100%; margin: auto;">
 			<a href="${ pratilipi_page_url }" target="_blank" style="font-size: 18px; text-decoration: none; line-height: 40px; width: 100%; display: inline-block;">
-				<span style="color: #ffffff; padding-left: 15px; padding-right: 15px;">
+				<span data-bind="userpratilipi_review_button" style="color: #ffffff; padding-left: 15px; padding-right: 15px;">
 					View on Pratilipi
 				</span>
 			</a>

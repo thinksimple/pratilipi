@@ -6,7 +6,7 @@
 <table align="left" table-layout="fixed;" style="width: 100%; height: 100%;">
 	<tr>
 		<td>
-			<p style="margin: 15px 0 10px 0; color: #000; font-size: 16px;"><b>${ follower_name }</b> has started following you.</p>
+			<p data-key="author_follow_heading" style="margin: 15px 0 10px 0; color: #000; font-size: 16px;"><b>${ follower_name }</b> has started following you.</p>
 		</td>
 	</tr>
 </table>
@@ -35,7 +35,7 @@
 							<#if follower_followers_count??>
 								<tr>
 									<td>
-										<span style="font-size: 14px; line-height: 19px; color: #c7c7c7;">${ follower_followers_count } Followers</span>
+										<span data-key="followers_count" style="font-size: 14px; line-height: 19px; color: #c7c7c7;">${ follower_followers_count } Followers</span>
 									</td>
 								</tr>
 							</#if>
@@ -55,7 +55,7 @@
 	<tr>
 		<td align="center" height="40" bgcolor="#D0021B" style="-webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; color: #ffffff; display: block; width: 100%; margin: auto;">
 			<a href="${ follower_page_url }" target="_blank" style="font-size: 18px; text-decoration: none; line-height: 40px; width: 100%; display: inline-block;">
-				<span style="color: #ffffff; padding-left: 15px; padding-right: 15px;">
+				<span data-key="author_follow_button" style="color: #ffffff; padding-left: 15px; padding-right: 15px;">
 					View ${ follower_name } on Pratilipi
 				</span>
 			</a>
