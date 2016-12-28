@@ -6,7 +6,7 @@
 <table align="left" table-layout="fixed;" style="width: 100%; height: 100%;">
 	<tr>
 		<td>
-			<p data-key="pratilipi_published_author_heading" style="margin: 15px 0 10px 0; color: #000; font-size: 16px;">Your story <b>${ pratilipi_title }</b> has been published.</p>
+			<p data-key="pratilipi_published_author_heading" style="margin: 15px 0 10px 0; color: #000; font-size: 16px;">Your story <b>${"$"}{ pratilipi_title }</b> has been published.</p>
 		</td>
 	</tr>
 </table>
@@ -16,8 +16,8 @@
 			<table align="left" style="border-collapse: collapse;" cellspacing="0" cellpadding="0">
 				<tr>
 					<td>
-						<a href="${ pratilipi_page_url }" target="_blank">
-							<img src="${ pratilipi_cover_image_url }" style="border:0; width: 50px; height: auto;" />
+						<a href="${"$"}{ pratilipi_page_url }" target="_blank">
+							<img src="${"$"}{ pratilipi_cover_image_url }" style="border:0; width: 50px; height: auto;" />
 						</a>
 					</td>
 					<td width="10">
@@ -27,21 +27,21 @@
 						<table style="border-collapse: collapse;">
 							<tr>
 								<td>
-									<a href="${ pratilipi_page_url }" style="text-decoration: none; font-size: 16px; line-height: 21px; font-weight: bold; color: #000;"  target="_blank">
-										${ pratilipi_title }
+									<a href="${"$"}{ pratilipi_page_url }" style="text-decoration: none; font-size: 16px; line-height: 21px; font-weight: bold; color: #000;"  target="_blank">
+										${"$"}{ pratilipi_title }
 									</a>
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<a href="${ author_page_url }" style="color: #000; text-decoration: none; font-size: 14px; line-height: 19px; font-weight: bold;" target="_blank">
-										${ author_name }
+									<a href="${"$"}{ author_page_url }" style="color: #000; text-decoration: none; font-size: 14px; line-height: 19px; font-weight: bold;" target="_blank">
+										${"$"}{ author_name }
 									</a>
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<span style="font-size: 14px; line-height: 19px; color: #c7c7c7;">${ pratilipi_listing_date }</span>
+									<span style="font-size: 14px; line-height: 19px; color: #c7c7c7;">${"$"}{ pratilipi_listing_date }</span>
 								</td>
 							</tr>
 						</table>
@@ -56,7 +56,7 @@
 					<tr>
 						<td colspan="3">
 							<span style="font-size: 14px; line-height: 19px; color: #646464;">
-								${ pratilipi_summary }
+								${"$"}{ pratilipi_summary }
 							</span>
 						</td>
 					</tr>
@@ -73,7 +73,7 @@
 	</tr>
 	<tr>
 		<td align="center" height="40" bgcolor="#D0021B" style="-webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; color: #ffffff; display: block; width: 100%; margin: auto;">   
-			<a href="${ pratilipi_page_url }" target="_blank" style="font-size: 18px; text-decoration: none; line-height: 40px; width: 100%; display: inline-block;">
+			<a href="${"$"}{ pratilipi_page_url }" target="_blank" style="font-size: 18px; text-decoration: none; line-height: 40px; width: 100%; display: inline-block;">
 				<span data-key="pratilipi_published_author_button" style="color: #ffffff; padding-left: 15px; padding-right: 15px;">
 					View on Pratilipi
 				</span>
