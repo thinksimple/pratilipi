@@ -646,6 +646,16 @@ public class PratilipiDocUtil {
 			imageName = imageName.replace( "%20", " " );
 		}
 
+
+		if( blobEntry.getMimeType().equalsIgnoreCase( "image/svg+xml" ) ) {
+			JsonObject imgData = new JsonObject();
+			imgData.addProperty( "name", imageName );
+			imgData.addProperty( "width", Integer.parseInt( imageNode.attr( "width" ) ) );
+			imgData.addProperty( "height", Integer.parseInt( imageNode.attr( "height" ) ) );
+			imgData.addProperty( "ratio", (double) 1 );
+			return imgData;
+		}
+
 		Integer width = ImageUtil.getWidth( blobEntry.getData() );
 		Integer height = ImageUtil.getHeight( blobEntry.getData() );
 		Integer widthSet = imageNode.hasAttr( "width" ) && ! imageNode.attr( "width" ).trim().isEmpty() ?
