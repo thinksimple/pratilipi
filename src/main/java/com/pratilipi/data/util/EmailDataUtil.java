@@ -155,6 +155,7 @@ public class EmailDataUtil {
 				subject, 
 				EmailTemplateUtil.getEmailBody( content, user.getLanguage() ) );
 
+		email.setState( EmailState.SENT );
 		dataAccessor.createOrUpdateEmail( email );
 
 	}
