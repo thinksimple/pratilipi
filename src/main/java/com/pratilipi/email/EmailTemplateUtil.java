@@ -43,14 +43,14 @@ public class EmailTemplateUtil {
 
 	}
 
-	public static String getCompleteEmail( String body, Language language ) 
+	public static String getEmailBody( String content, Language language ) 
 			throws UnexpectedServerException {
 
 		Map<String, Object> dataModel = new HashMap<>();
 		dataModel.put( "language", language );
 		dataModel.put( "contact_email", language == null || language == Language.ENGLISH ? 
 				"contact@pratilipi.com" : language.name().toLowerCase() + "@pratilipi.com" );
-		dataModel.put( "emailBody", body );
+		dataModel.put( "emailBody", content );
 
 		return FreeMarkerUtil.processTemplate( dataModel, filePath + "MainEmailTemplate.ftl" );
 

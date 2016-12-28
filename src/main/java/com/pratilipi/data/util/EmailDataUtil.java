@@ -49,9 +49,7 @@ public class EmailDataUtil {
 	}
 
 
-	private static String _getEmailBody( Email email, Language language ) throws UnexpectedServerException {
-
-		String body = EmailTemplateUtil.getEmailTemplate( email.getType(), language );
+	private static String _getContentSnippet( Email email, Language language ) throws UnexpectedServerException {
 
 		Map<String, Object> dataModel = null;
 		if( email.getType() == EmailType.PRATILIPI_PUBLISHED_AUTHOR 
@@ -75,7 +73,8 @@ public class EmailDataUtil {
 		else if( email.getType() == EmailType.VOTE_COMMENT_REVIEW_COMMENTOR )
 			dataModel = _createDataModelForVoteCommentEmail( email.getPrimaryContentId() );
 
-		return FreeMarkerUtil.processString( dataModel, body );
+		String template = EmailTemplateUtil.getEmailTemplate( email.getType(), language );
+		return FreeMarkerUtil.processString( dataModel, template );
 
 	}
 
@@ -94,11 +93,11 @@ public class EmailDataUtil {
 			return;
 		}
 
-		String consolidatedBody = new String();
+		String consolidatedContent = new String();
 
 		for( Email email : emailList ) {
 
-			consolidatedBody = consolidatedBody + _getEmailBody( email, user.getLanguage() );
+			consolidatedContent = consolidatedContent + _getContentSnippet( email, user.getLanguage() );
 
 			email.setState( EmailState.SENT );
 			email.setLastUpdated( new Date() );
@@ -113,7 +112,7 @@ public class EmailDataUtil {
 		EmailUtil.sendMail( senderName, senderEmail, 
 				user.getDisplayName(), user.getEmail(), 
 				subject, 
-				EmailTemplateUtil.getCompleteEmail( consolidatedBody, user.getLanguage() ) );
+				EmailTemplateUtil.getEmailBody( consolidatedContent, user.getLanguage() ) );
 
 		dataAccessor.createOrUpdateEmailList( emailList );
 
@@ -132,7 +131,7 @@ public class EmailDataUtil {
 			return;
 		}
 
-		String body = _getEmailBody( email, user.getLanguage() );
+		String content = _getContentSnippet( email, user.getLanguage() );
 
 
 		Pattern senderNamePattern = Pattern.compile( "<!-- SENDER_NAME:(.+?) -->" );
@@ -144,17 +143,17 @@ public class EmailDataUtil {
 		String subject = null;
 
 		Matcher m = null;
-		if( ( m = senderNamePattern.matcher( body ) ).find() )
+		if( ( m = senderNamePattern.matcher( content ) ).find() )
 			senderName = m.group( 1 ).trim();
-		if( ( m = senderEmailPattern.matcher( body ) ).find() )
+		if( ( m = senderEmailPattern.matcher( content ) ).find() )
 			senderEmail = m.group( 1 ).trim();
-		if( ( m = subjectPattern.matcher( body ) ).find() )
+		if( ( m = subjectPattern.matcher( content ) ).find() )
 			subject = m.group( 1 ).trim();
 
 		EmailUtil.sendMail( senderName, senderEmail, 
 				user.getDisplayName(), user.getEmail(), 
 				subject, 
-				EmailTemplateUtil.getCompleteEmail( body, user.getLanguage() ) );
+				EmailTemplateUtil.getEmailBody( content, user.getLanguage() ) );
 
 		dataAccessor.createOrUpdateEmail( email );
 
