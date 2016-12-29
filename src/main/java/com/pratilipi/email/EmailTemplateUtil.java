@@ -18,25 +18,21 @@ public class EmailTemplateUtil {
 	private final static String filePath = 
 			EmailUtil.class.getName().substring( 0, EmailTemplateUtil.class.getName().lastIndexOf(".") ).replace( ".", "/" ) + "/template/";
 
-	private static final Map<Language, Map<String, String>> i18nMap;
-
-	static {
-		// Map<Language, Map<key,value>> -> Map<TAMIL, Map<"user_followed_you", "${user} has followed you!">>
-		i18nMap = new HashMap<>( Language.values().length );
-
-		List<I18n> i18nList = DataAccessorFactory.getDataAccessor().getI18nList( I18nGroup.EMAIL );
-		for( Language language : Language.values() ) {
-			Map<String, String> stringMap = new HashMap<>( i18nList.size() );
-			i18nMap.put( language, stringMap );
-			for( I18n i18n : i18nList ) {
-				stringMap.put( i18n.getId(), i18n.getI18nString( language ) );
-			}
-		}
-	}
-
 
 	public static String getEmailTemplate( EmailType emailType, Language language ) 
 			throws UnexpectedServerException {
+
+		Map<Language, Map<String, String>> i18nMap = new HashMap<>( Language.values().length );
+
+		// TODO: i18nList in Memcache - Flush when any i18n entity is updated
+		List<I18n> i18nList = DataAccessorFactory.getDataAccessor().getI18nList( I18nGroup.EMAIL );
+		for( Language lang : Language.values() ) {
+			Map<String, String> stringMap = new HashMap<>( i18nList.size() );
+			i18nMap.put( lang, stringMap );
+			for( I18n i18n : i18nList ) {
+				stringMap.put( i18n.getId(), i18n.getI18nString( lang ) );
+			}
+		}
 
 		return FreeMarkerUtil.processTemplate( i18nMap.get( language ), filePath + emailType.getTemplateName() );
 
