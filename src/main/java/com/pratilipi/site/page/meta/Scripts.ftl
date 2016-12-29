@@ -3,10 +3,12 @@
 		return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test( navigator.userAgent );
 	}
 	function setCookie( name, value, days, path ) {
-		var date = new Date();
-		date.setTime( date.getTime() + ( days * 24 * 60 * 60 * 1000 ) );
-		var expires = "; expires=" + date.toGMTString();
-		document.cookie = name + "=" + value + expires + "; path=" + path;
+		if( days ) {
+			var date = new Date();
+			date.setTime( date.getTime() + ( days * 24 * 60 * 60 * 1000 ) );
+			var expires = days ? "; expires=" + date.toGMTString() : "";
+		}	
+		document.cookie = name + "=" + value + "; path=" + path + expires;
 	}
 	function getCookie( cname ) {
 		var name = cname + "=";
