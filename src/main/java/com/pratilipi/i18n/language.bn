@@ -421,3 +421,7 @@ android_banner_reader_3 = বুক মার্ক,রাত্রি মোড
 android_banner_profile_1 = আপনার প্রোফাইল,আপনার অনুযায়ী
 android_banner_profile_2 = Create profile which defines you
 android_banner_profile_3 = আপনাার কাহিনী এবং নেটওয়ার্ক পরিচালনা করুন
+
+# Android App launched promotion
+pratilipi_app_launched_website_strip = প্রতিলিপির মোবাইল অ্যাপস এখন এসে গেছে
+pratilipi_app_click_download = ডাউনলোড করার জন্য ক্লিক করুন

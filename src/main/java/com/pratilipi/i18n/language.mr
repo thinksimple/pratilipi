@@ -421,3 +421,7 @@ android_banner_reader_3 = बुकमार्क, रात्री मोड
 android_banner_profile_1 = आपले प्रोफाइल, आपले मार्ग
 android_banner_profile_2 = Create profile which defines you
 android_banner_profile_3 = आपले वाचन साहित्य आणि नेटवर्क व्यवस्थापित करा
+
+# Android App launched promotion
+pratilipi_app_launched_website_strip = प्रतिलिपि ची मोबाइल ऍप उपलब्ध आहे. डाउनलोड करा अगणित पुस्तके.
+pratilipi_app_click_download = डाउनलोड करण्यासाठी क्लिक करा.
