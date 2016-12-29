@@ -6,7 +6,7 @@
 <table align="left" table-layout="fixed;" style="width: 100%; height: 100%;">
 	<tr>
 		<td>
-			<p data-key="email_vote_comment_review_commentor_heading" style="margin: 15px 0 10px 0; color: #000; font-size: 16px;">${"$"}{ vote_name } has liked your comment on ${"$"}{ pratilipi_title }.</p>
+			<p data-key="email_vote_comment_review_commentor_heading" style="margin: 15px 0 10px 0; color: #000; font-size: 16px;">${ email_vote_comment_review_commentor_heading }</p>
 		</td>
 	</tr>
 </table>
@@ -105,7 +105,7 @@
 		<td align="center" height="40" bgcolor="#D0021B" style="-webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; color: #ffffff; display: block; width: 100%; margin: auto;">
 			<a href="${"$"}{ pratilipi_page_url }" target="_blank" style="font-size: 18px; text-decoration: none; line-height: 40px; width: 100%; display: inline-block;">
 				<span data-key="email_vote_comment_review_commentor_button" style="color: #ffffff; padding-left: 15px; padding-right: 15px;">
-					View on Pratilipi
+					${ email_vote_comment_review_commentor_button }
 				</span>
 			</a>
 		</td>
