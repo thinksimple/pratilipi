@@ -245,6 +245,7 @@ public interface DataAccessor {
 	List<I18n> getI18nList( I18nGroup i18nGroup );
 	Map<String, String> getI18nStrings( I18nGroup i18nGroup, Language language );
 	I18n createOrUpdateI18n( I18n i18n );
+	List<I18n> createOrUpdateI18nList( List<I18n> i18nList );
 	
 	
 	// BATCH_PROCESS Table

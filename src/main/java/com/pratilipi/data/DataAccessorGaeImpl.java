@@ -2156,7 +2156,12 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return createOrUpdateEntity( i18n );
 	}
 
-	
+	@Override
+	public List<I18n> createOrUpdateI18nList( List<I18n> i18nList ) {
+		return createOrUpdateEntityList( i18nList );
+	}
+
+
 	// BatchProcess Table
 	@Override
 	public BatchProcess newBatchProcess() {

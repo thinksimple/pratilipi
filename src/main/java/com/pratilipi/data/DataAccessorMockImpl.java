@@ -1231,6 +1231,11 @@ public class DataAccessorMockImpl implements DataAccessor {
 		// TODO Auto-generated method stub
 		return i18n;
 	}
+	
+	@Override
+	public List<I18n> createOrUpdateI18nList( List<I18n> i18nList ) {
+		return null;
+	}
 
 	
 	// BatchProcess Table
