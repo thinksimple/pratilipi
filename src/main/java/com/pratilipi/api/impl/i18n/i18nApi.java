@@ -13,13 +13,15 @@ import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
-import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.I18nGroup;
 import com.pratilipi.common.type.Language;
+import com.pratilipi.common.util.UserAccessUtil;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.type.I18n;
+import com.pratilipi.filter.AccessTokenFilter;
 
 @SuppressWarnings( "serial" )
 @Bind( uri = "/i18n" )
@@ -37,14 +39,17 @@ public class i18nApi extends GenericApi {
 
 	@Post
 	public GenericResponse post( PostRequest request ) 
-			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
+			throws InsufficientAccessException, UnexpectedServerException {
 
+
+		if( ! UserAccessUtil.hasUserAccess( AccessTokenFilter.getAccessToken().getUserId(), null, AccessType.EMAIL_UPDATE ) )
+			throw new InsufficientAccessException();
 
 		JsonObject jsonObject = null;
 
 		try {
 			jsonObject = new Gson().fromJson( URLDecoder.decode( request.keyValues, "UTF-8" ), JsonObject.class );
-		} catch (JsonSyntaxException | UnsupportedEncodingException e) {
+		} catch( JsonSyntaxException | UnsupportedEncodingException e ) {
 			throw new UnexpectedServerException();
 		}
 
@@ -54,7 +59,6 @@ public class i18nApi extends GenericApi {
 			if( jsonObject.has( i18n.getId() ) )
 				i18n.setI18nString( request.language, jsonObject.get( i18n.getId() ).getAsString() );
 
-		System.out.println( new Gson().toJson( i18nList ) );
 		dataAccessor.createOrUpdateI18nList( i18nList );
 
 		return new GenericResponse();
