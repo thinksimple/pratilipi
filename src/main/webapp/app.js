@@ -76,10 +76,10 @@ pratilipiSummaryController.prototype.pushToViewModel = function( data ) {
   //ko.applyBindings( self.ViewModel );
 };
 
-pratilipiSummaryController.prototype.registerServiceWorker = function() {
+/* pratilipiSummaryController.prototype.registerServiceWorker = function() {
   if ('serviceWorker' in navigator) {
       navigator.serviceWorker
              .register('service-worker.js?2')
              .then(function() { console.log('Service Worker Registered'); });
   }    
-};
+}; */
