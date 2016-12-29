@@ -191,7 +191,7 @@ public class EmailDataUtil {
 		Map<String, Object> dataModel = new HashMap<>();
 		dataModel.put( "follower_name", follower.getName() != null ?  follower.getName() : follower.getNameEn() );
 		dataModel.put( "follower_page_url", _getDomainName( follower.getLanguage() ) + follower.getPageUrl() );
-		dataModel.put( "follower_profile_image_url", _getDomainName( follower.getLanguage() ) + follower.getProfileImageUrl( 50 ) );
+		dataModel.put( "follower_profile_image_url", follower.getProfileImageUrl( 50 ) );
 		if( follower.getFollowCount() > 0 )
 			dataModel.put( "follower_followers_count", follower.getFollowCount() );
 
