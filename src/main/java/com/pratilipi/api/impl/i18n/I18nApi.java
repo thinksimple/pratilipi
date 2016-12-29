@@ -25,7 +25,7 @@ import com.pratilipi.filter.AccessTokenFilter;
 
 @SuppressWarnings( "serial" )
 @Bind( uri = "/i18n" )
-public class i18nApi extends GenericApi {
+public class I18nApi extends GenericApi {
 
 	public static class PostRequest extends GenericRequest {
 

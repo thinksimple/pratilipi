@@ -20,7 +20,7 @@ import com.pratilipi.api.impl.contact.ContactApi;
 import com.pratilipi.api.impl.event.EventApi;
 import com.pratilipi.api.impl.event.EventBannerApi;
 import com.pratilipi.api.impl.event.EventListApi;
-import com.pratilipi.api.impl.i18n.i18nApi;
+import com.pratilipi.api.impl.i18n.I18nApi;
 import com.pratilipi.api.impl.init.InitBannerApi;
 import com.pratilipi.api.impl.init.InitBannerListApi;
 import com.pratilipi.api.impl.init.InitV2Api;
@@ -139,7 +139,7 @@ public class ApiService extends GenericService {
 		ApiRegistry.register( BatchProcessApi.class );				// *.pratilipi.com
 		ApiRegistry.register( BatchProcessListApi.class );			// *.pratilipi.com
 
-		ApiRegistry.register( i18nApi.class );						// *.pratilipi.com
+		ApiRegistry.register( I18nApi.class );						// *.pratilipi.com
 
 	}
 	
