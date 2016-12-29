@@ -237,7 +237,7 @@
 			}
 			.landing-page .pratilipi-banner .content-wrapper .description div.bg-white {
 				display: block;
-				margin-top: 12px;
+				margin-top: 32px;
 				margin-bottom: 12px;
 				border-radius: 16px;
 				font-size: 18px;
@@ -636,6 +636,27 @@
 			color: #666;
 			margin-right: 16px; 
 		}
+		.android-logo {
+			max-width: 128px;
+			width: 128px;
+			z-index: 64456;
+			opacity: 1;
+		}
+		@media only screen and (max-width: 512px) {
+			.android-logo {
+				position: absolute;
+				margin-top: -40px;
+				margin-left: 20px;
+			}
+		}
+		@media only screen and (min-width: 512px) {
+			.android-logo {
+				float: right;
+				margin-top: 32px;
+				margin-right: -86px;
+				margin-left: 12px;
+			}
+		}
 	</style>
 </head>
 
@@ -654,7 +675,12 @@
 
 					<div class="logo">
 						<div class="pratilipi"></div>
-						<h1>pratilipi</h1>
+						<h1>
+							pratilipi
+							<a target="_blank" href="https://play.google.com/store/apps/details?id=com.pratilipi.mobile.android&utm_source=pratilipi_homepage&utm_campaign=app_download&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
+								<img src="http://0.ptlp.co/resource-all/image/google-play-badge.png" class="android-logo" />
+							</a>
+						</h1>
 					</div>
 
 					<div class="description description-mobile">
