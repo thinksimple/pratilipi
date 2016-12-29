@@ -119,7 +119,7 @@
 	<div style="padding-top: 20px; padding-bottom: 20px;">
 		<a class="pratilipi-light-blue-button" onClick="trackPixelEvents( 'ReadOnSummaryPage' );" href="${ pratilipi.readPageUrl }&ret=${ pratilipi.getPageUrl() }">${ _strings.read }</a>
 		<br />
-		<a style="margin-left: 7px;" data-behaviour="share_whatsapp" href="whatsapp://send?text=I+Found+this+book+nice+%0Ahttp%3A%2F%2F${ language?lower_case }.pratilipi.com${ pratilipi.getPageUrl()?url('UTF-8') }"><img style="width:40px;height:40px;" class="img-circle" src="http://0.ptlp.co/resource-all/home-page/WhatsAppLogo.png"></a>
+		<#-- <a style="margin-left: 7px;" data-behaviour="share_whatsapp" href="whatsapp://send?text=I+Found+this+book+nice+%0Ahttp%3A%2F%2F${ language?lower_case }.pratilipi.com${ pratilipi.getPageUrl()?url('UTF-8') }"><img style="width:40px;height:40px;" class="img-circle" src="http://0.ptlp.co/resource-all/home-page/WhatsAppLogo.png"></a> -->
 		<#if userpratilipi?? && userpratilipi.isAddedtoLib()??>
 			<button style="margin-top: 15px;" type="button" class="pratilipi-grey-button" onclick="addToOrRemoveFromLibrary()">
 				<#if !userpratilipi.isAddedtoLib()>${ _strings.add_to_library }<#else>${ _strings.remove_from_library }</#if>
