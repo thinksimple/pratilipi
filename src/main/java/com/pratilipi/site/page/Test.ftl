@@ -30,8 +30,28 @@
 				$( '[data-key]' ).each( function( index ) {
 					data[ $( this ).attr( "data-key" ) ] = $( this ).html().trim();
 				});
-				console.log( data );
-				<#-- Make Api call and reload here -->
+
+				$.ajax({
+
+					type: 'post',
+					url: '/api/i18n',
+
+					data: { 
+						'language': "${ language }", 
+						'group': "EMAIL",
+						'keyValues': encodeURIComponent( JSON.stringify( data ) )
+					},
+
+					success: function( response ) {
+						alert( "success" );
+						window.reload();
+					},
+
+					error: function( response ) {
+						console.log( "fail" );
+					}
+
+				});
 			}
 		</script>
 	</body>
