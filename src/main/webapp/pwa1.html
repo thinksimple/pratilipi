@@ -53,22 +53,22 @@
     <h1 class="header__title">Summary Knockout PWA</h1>
   </header>
 
-  <main class="main">
+  <div class="main">
 <!--     <div class="card cardTemplate" hidden>
       <div class="city-key" hidden></div>
       <div class="card-last-updated" hidden></div> -->
-      <div class="title" data-bind="html: title"></div>
-      <div class="titleEn" data-bind="html: titleEn"></div>
-      <div class="language" data-bind="html: language"></div>
-      <!--  <div class="author" data-bind="html: author.name"></div> -->
-      <div class="state" data-bind="html: state"></div>
-      <div class="publish-date" data-bind="html: listingDateMillis"></div>
-      <div class="rating" data-bind="html: ratingCount"></div>
-      <div class="read-count" data-bind="html: readCount"></div>
-    </div>
-  </main>
+      <p class="title" data-bind="text: title"></p>
+      <p class="titleEn" data-bind="text: titleEn"></p>
+      <p class="language" data-bind="text: language"><p>
+      <!--  <div class="author" data-bind="text: author.name"></div> -->
+      <p class="state" data-bind="text: state"></p>
+      <p class="publish-date" data-bind="text: listingDateMillis"></p>
+      <p class="rating" data-bind="text: ratingCount"></p>
+      <p class="read-count" data-bind="text: readCount"></p>
+  </div>
+<!--  </div>
 
-<!--  <div class="loader">
+  <div class="loader">
     <svg viewBox="0 0 32 32" width="32" height="32">
       <circle id="spinner" cx="16" cy="16" r="14" fill="none"></circle>
     </svg>
