@@ -65,4 +65,46 @@ public class SvgUtil {
 
 	}
 
+	public static Integer getWidth( byte[] svgData ) throws UnexpectedServerException {
+
+		try {
+
+			String svg = new String( svgData, "UTF-8" );
+			Pattern pattern = Pattern.compile( svgPatternString );
+			Matcher m = pattern.matcher( svg );
+
+			if( m.find() ) {
+				String w = m.group(1).trim();
+				return Integer.parseInt( w.substring( w.indexOf( "\"" ) + 1, w.lastIndexOf( "\"" ) ) );
+			}
+
+			return null;
+
+		} catch( UnsupportedEncodingException e ) {
+			throw new UnexpectedServerException();
+		}
+
+	}
+
+	public static Integer getHeight( byte[] svgData ) throws UnexpectedServerException {
+
+		try {
+
+			String svg = new String( svgData, "UTF-8" );
+			Pattern pattern = Pattern.compile( svgPatternString );
+			Matcher m = pattern.matcher( svg );
+
+			if( m.find() ) {
+				String h = m.group(2).trim();
+				return Integer.parseInt( h.substring( h.indexOf( "\"" ) + 1, h.lastIndexOf( "\"" ) ) );
+			}
+
+			return null;
+
+		} catch( UnsupportedEncodingException e ) {
+			throw new UnexpectedServerException();
+		}
+
+	}
+
 }
