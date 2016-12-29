@@ -655,8 +655,18 @@ public class PratilipiDocUtil {
 
 		Integer width = isSvg ? SvgUtil.getWidth( blobEntry.getData() ) : ImageUtil.getWidth( blobEntry.getData() );
 		Integer height = isSvg ? SvgUtil.getHeight( blobEntry.getData() ) : ImageUtil.getHeight( blobEntry.getData() );
-		Integer widthSet = imageNode.hasAttr( "width" ) && ! imageNode.attr( "width" ).trim().isEmpty() ?
-							Integer.parseInt( imageNode.attr( "width" ) ) : width; 
+		Integer widthSet = null;
+
+		if( imageNode.hasAttr( "width" ) && ! imageNode.attr( "width" ).trim().isEmpty() ) {
+			widthSet = Integer.parseInt( imageNode.attr( "width" ) );
+		} else if( imageUrl.contains( "width=" ) ) {
+			String widthString = imageUrl.substring( imageUrl.indexOf( "width=" ) + 6 );
+			if( widthString.indexOf( '&' ) != -1 )
+				widthString = widthString.substring( 0, widthString.indexOf( '&' ) );
+			widthSet = Integer.parseInt( widthString );
+		} else {
+			widthSet = width;
+		}
 
 		JsonObject imgData = new JsonObject();
 		imgData.addProperty( "name", imageName );
