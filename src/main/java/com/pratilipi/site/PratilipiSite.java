@@ -541,7 +541,7 @@ public class PratilipiSite extends HttpServlet {
 		dataModel.put( "stage", SystemProperty.STAGE );
 
 		// Android App Registration
-		if( AccessTokenFilter.getCookieValue( "USER_NOTIFIED", request ) != null ) {
+		if( AccessTokenFilter.getCookieValue( "USER_NOTIFIED_APP_LAUNCHED", request ) != null ) {
 			dataModel.put( "userNotifed", true );
 		}
 
