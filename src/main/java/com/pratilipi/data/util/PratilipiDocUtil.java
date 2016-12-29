@@ -651,20 +651,10 @@ public class PratilipiDocUtil {
 			imageName = imageName.replace( "%20", " " );
 		}
 
+		boolean isSvg = blobEntry.getMimeType().equalsIgnoreCase( "image/svg+xml" );
 
-		if( blobEntry.getMimeType().equalsIgnoreCase( "image/svg+xml" ) ) {
-			JsonObject imgData = new JsonObject();
-			imgData.addProperty( "name", imageName );
-			imgData.addProperty( "width", imageNode.hasAttr( "width" ) && ! imageNode.attr( "width" ).trim().isEmpty() ?
-					Integer.parseInt( imageNode.attr( "width" ) ) : SvgUtil.getWidth( blobEntry.getData() ) );
-			imgData.addProperty( "height", imageNode.hasAttr( "height" ) && ! imageNode.attr( "height" ).trim().isEmpty() ?
-					Integer.parseInt( imageNode.attr( "height" ) ) : SvgUtil.getHeight( blobEntry.getData() ) );
-			imgData.addProperty( "ratio", (double) 1 );
-			return imgData;
-		}
-
-		Integer width = ImageUtil.getWidth( blobEntry.getData() );
-		Integer height = ImageUtil.getHeight( blobEntry.getData() );
+		Integer width = isSvg ? SvgUtil.getWidth( blobEntry.getData() ) : ImageUtil.getWidth( blobEntry.getData() );
+		Integer height = isSvg ? SvgUtil.getHeight( blobEntry.getData() ) : ImageUtil.getHeight( blobEntry.getData() );
 		Integer widthSet = imageNode.hasAttr( "width" ) && ! imageNode.attr( "width" ).trim().isEmpty() ?
 							Integer.parseInt( imageNode.attr( "width" ) ) : width; 
 
