@@ -133,7 +133,8 @@ public class UxModeFilter implements Filter {
 			
 			boolean basicBrowser = false;
 			
-			if( isWebApp ) {
+			// TODO: Remove check once GAMMA_HINDI_HTTPS deprecated
+			if( isWebApp && ! request.getHeader( "host" ).equals( Website.GAMMA_HINDI_HTTPS.getHostName() ) ) {
 
 				if( userAgent == null || userAgent.trim().isEmpty() ) {
 					basicBrowser = true;
