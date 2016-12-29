@@ -8,7 +8,7 @@ ${r' <#if rating??><#if rating <= 0.5 ><#assign img_name="0_5"><#elseif rating <
 <table align="left" table-layout="fixed;" style="width: 100%; height: 100%;">
 	<tr>
 		<td>
-			<p data-key="userpratilipi_review_heading" style="margin: 15px 0 10px 0; color: #000; font-size: 16px;">${"$"}{ user_pratilipi_name } has given a review on your story <b>${"$"}{ pratilipi_title }</b>.</p>
+			<p data-key="email_userpratilipi_review_heading" style="margin: 15px 0 10px 0; color: #000; font-size: 16px;">${"$"}{ user_pratilipi_name } has given a review on your story <b>${"$"}{ pratilipi_title }</b>.</p>
 		</td>
 	</tr>
 </table>
