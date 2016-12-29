@@ -441,3 +441,7 @@ option_new_follower = New Follower
 option_pratilipi_published_follower =  New Content by people you follow 
 option_pratilipi_updates =  Pratilipi Updates and Offers 
 notification_settings_save_changes = Save Changes
+
+# Android App launched promotion
+pratilipi_app_launched_website_strip = Pratilipi App Launched : Download unlimited books.
+pratilipi_app_click_download = Click to download
