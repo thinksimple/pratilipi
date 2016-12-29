@@ -26,7 +26,7 @@ pratilipiSummaryController.prototype.init = function() {
 };
 
 pratilipiSummaryController.prototype.getData = function() {
-  this.requestFromCache();
+  //this.requestFromCache();
   var self = this;
   $.ajax({
       type: 'get',
