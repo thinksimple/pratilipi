@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -51,6 +50,7 @@ import com.pratilipi.api.impl.userpratilipi.UserPratilipiReviewListApi;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.BatchProcessType;
 import com.pratilipi.common.type.BlogPostState;
 import com.pratilipi.common.type.EmailType;
@@ -67,6 +67,7 @@ import com.pratilipi.common.util.FreeMarkerUtil;
 import com.pratilipi.common.util.PratilipiFilter;
 import com.pratilipi.common.util.SystemProperty;
 import com.pratilipi.common.util.ThirdPartyResource;
+import com.pratilipi.common.util.UserAccessUtil;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
@@ -401,6 +402,11 @@ public class PratilipiSite extends HttpServlet {
 				dataModel = createDataModelForBatchProcessListPage();
 				templateName = "BatchProcessList.ftl";
 
+			// Internal link
+			} else if( uri.equals( "/email-templates" ) ) {
+				dataModel = createDataModelForEmailTemplatesPage( filterLanguage );
+				templateName = "EmailTemplate.ftl";
+
 			} else if( uri.equals( "/events" ) ) {
 				dataModel = createDataModelForEventsPage( filterLanguage, basicMode );
 				templateName = ( basicMode ? "EventListBasic.ftl" : "EventList.ftl" );
@@ -471,10 +477,6 @@ public class PratilipiSite extends HttpServlet {
 				dataModel = createDataModelForHomePage( basicMode, filterLanguage );
 				templateName = "Knockout.ftl";
 				
-			} else if( uri.equals( "/testapi" ) && SystemProperty.STAGE.equals( SystemProperty.STAGE_GAMMA ) ) {
-				dataModel = createDataModelForTestPage( filterLanguage );
-				templateName = "Test.ftl";
-
 			} else {
 				dataModel = new HashMap<String, Object>();
 				dataModel.put( "title", "Page Not Found !" );
@@ -1509,7 +1511,11 @@ public class PratilipiSite extends HttpServlet {
 		return dataModel;
 	}
 	
-	public Map<String, Object> createDataModelForTestPage( Language language ) throws UnexpectedServerException {
+	public Map<String, Object> createDataModelForEmailTemplatesPage( Language language ) 
+			throws UnexpectedServerException, InsufficientAccessException {
+
+		if( ! UserAccessUtil.hasUserAccess( AccessTokenFilter.getAccessToken().getUserId(), null, AccessType.I18N_UPDATE ) )
+			throw new InsufficientAccessException();
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", "Test" );

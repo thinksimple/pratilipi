@@ -41,8 +41,7 @@ public class I18nApi extends GenericApi {
 	public GenericResponse post( PostRequest request ) 
 			throws InsufficientAccessException, UnexpectedServerException {
 
-
-		if( ! UserAccessUtil.hasUserAccess( AccessTokenFilter.getAccessToken().getUserId(), null, AccessType.EMAIL_UPDATE ) )
+		if( ! UserAccessUtil.hasUserAccess( AccessTokenFilter.getAccessToken().getUserId(), null, AccessType.I18N_UPDATE ) )
 			throw new InsufficientAccessException();
 
 		JsonObject jsonObject = null;

@@ -23,7 +23,7 @@ public enum AccessType {
 	EVENT_ADD	( "Add Event" ),
 	EVENT_UPDATE( "Update Event" ),
 
-	EMAIL_UPDATE( "Update Email Templates" ),
+	I18N_UPDATE( "Update I18N Table" ),
 
 	BLOG_POST_LIST	( "List BlogPost" ),
 	BLOG_POST_ADD	( "Add BlogPost" ),
