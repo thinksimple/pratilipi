@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Post;
@@ -36,9 +37,16 @@ public class i18nApi extends GenericApi {
 
 	@Post
 	public GenericResponse post( PostRequest request ) 
-			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException, UnsupportedEncodingException {
+			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
-		JsonObject jsonObject = new Gson().fromJson( URLDecoder.decode( request.keyValues, "UTF-8" ), JsonObject.class );
+
+		JsonObject jsonObject = null;
+
+		try {
+			jsonObject = new Gson().fromJson( URLDecoder.decode( request.keyValues, "UTF-8" ), JsonObject.class );
+		} catch (JsonSyntaxException | UnsupportedEncodingException e) {
+			throw new UnexpectedServerException();
+		}
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		List<I18n> i18nList = dataAccessor.getI18nList( request.group );
@@ -47,7 +55,7 @@ public class i18nApi extends GenericApi {
 				i18n.setI18nString( request.language, jsonObject.get( i18n.getId() ).getAsString() );
 
 		System.out.println( new Gson().toJson( i18nList ) );
-//		dataAccessor.createOrUpdateI18nList( i18nList );
+		dataAccessor.createOrUpdateI18nList( i18nList );
 
 		return new GenericResponse();
 

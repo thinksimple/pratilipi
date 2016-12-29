@@ -29,8 +29,7 @@ public class EmailTemplateUtil {
 			Map<String, String> stringMap = new HashMap<>( i18nList.size() );
 			i18nMap.put( language, stringMap );
 			for( I18n i18n : i18nList ) {
-				stringMap.put( i18n.getId(), i18n.getI18nString( language ) != null ? 
-						i18n.getI18nString( language ) : i18n.getI18nString( Language.ENGLISH ) );
+				stringMap.put( i18n.getId(), i18n.getI18nString( language ) );
 			}
 		}
 	}

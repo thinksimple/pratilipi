@@ -44,7 +44,7 @@
 
 					success: function( response ) {
 						alert( "success" );
-						window.reload();
+						window.location.reload();
 					},
 
 					error: function( response ) {
