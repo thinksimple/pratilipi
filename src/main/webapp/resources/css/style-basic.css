@@ -844,6 +844,10 @@ a:hover {
 	background-position: -24px -48px;
 }  
 .share-icon {
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+    display: inline-block;	
 	background-position: -48px 0;
 }
 .reader-footer-icon {
