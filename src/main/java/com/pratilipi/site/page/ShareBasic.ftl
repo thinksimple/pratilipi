@@ -54,7 +54,8 @@
 						<span>${ _strings.share_on_gplus }</span>
 					</a>
 					<a style="cursor: pointer;" onclick="shareOnWhatsapp()" >
-						<div class="sprites-icon reader-footer-icon whatsapp-black-icon"></div>
+						<div class="sprites-icon reader-setting-icon whatsapp-black-icon"></div>
+						<span>${ _strings.share_on_whatsapp }</span>
 					</a>					
 				</div>	
 			</div>
