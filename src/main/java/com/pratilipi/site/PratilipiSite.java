@@ -1521,8 +1521,11 @@ public class PratilipiSite extends HttpServlet {
 		dataModel.put( "title", "Email Templates - Admin Access" );
 
 		String body = new String();
-		for( EmailType eT : EmailType.values() )
+		for( EmailType eT : EmailType.values() ) {
+			body = body + "<h2>" + eT.getDescription() + "</h2>";
 			body = body + EmailTemplateUtil.getEmailTemplate( eT, language );
+			body = body + "<br>";
+		}
 
 		dataModel.put( "body", body );
 		return dataModel;
