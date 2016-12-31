@@ -15,6 +15,7 @@ public enum AccessType {
 	@Deprecated
 	PRATILIPI_ADD_REVIEW  ( "Add Pratilipi Review" ),
 	PRATILIPI_READ_CONTENT( "View Pratilipi Content" ),
+	PRATILIPI_UPDATE_CONTENT( "Update Pratilipi Content" ),
 
 	AUTHOR_LIST	 ( "List Author" ),
 	AUTHOR_ADD	 ( "Add Author" ),
