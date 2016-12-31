@@ -3,6 +3,7 @@ package com.pratilipi.api.impl.auditlog;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -48,6 +49,7 @@ import com.pratilipi.data.type.Comment;
 import com.pratilipi.data.type.Email;
 import com.pratilipi.data.type.Notification;
 import com.pratilipi.data.type.Pratilipi;
+import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.UserAuthor;
 import com.pratilipi.data.type.UserPratilipi;
 import com.pratilipi.data.type.UserPreferenceRtdb;
@@ -807,6 +809,62 @@ public class AuditLogProcessApi extends GenericApi {
 		}
 
 		immediateEmails = dataAccessor.createOrUpdateEmailList( immediateEmails );
+
+		/*
+		Set<Long> userIds = new HashSet<>();
+
+		Map<Long,UserPreferenceRtdb> userPreferenceMap = new HashMap<>( emailList.size() );
+		for( Email email : emailList ) {
+			UserPreferenceRtdb preference = rtdbAccessor.getUserPreference( email.getUserId() );
+			userPreferenceMap.put( email.getUserId(), preference );
+			if( preference.getEmailFrequency() != null && preference.getEmailFrequency() != EmailFrequency.IMMEDIATELY ) // Consolidated
+				userIds.add( email.getUserId() );
+		}
+
+		Map<Long,User> users = dataAccessor.getUsers( userIds );
+		for( Email email : emailList ) {
+			UserPreferenceRtdb preference = userPreferenceMap.get( email.getUserId() );
+			if( preference.getEmailFrequency() == null || preference.getEmailFrequency() == EmailFrequency.IMMEDIATELY )
+				email.setScheduledDate( new Date() );
+			else if( preference.getEmailFrequency() == EmailFrequency.NEVER )
+				emailList.remove( email );
+			else
+				email.setScheduledDate( _getScheduleDate( users.get( email.getUserId() ), preference.getEmailFrequency() ) );
+		}
+
+		emailList = dataAccessor.createOrUpdateEmailList( emailList );
+		*/
+
+	}
+
+	private Date _getScheduleDate( User user, EmailFrequency preference ) {
+
+		// Date lastSentDate = user.getLastEmailedDate();
+		Date lastSentDate = new Date();
+
+		if( lastSentDate == null )
+			return new Date();
+
+		Integer days = null;
+		switch( preference ) {
+			case DAILY:
+				days = 1;
+				break;
+			case WEEKLY:
+				days = 7;
+				break;
+			case MONTHLY:
+				days = 30;
+				break;
+			default:
+				break;
+		}
+
+		Date date = new Date();
+		if( date.getTime() > ( lastSentDate.getTime() + TimeUnit.DAYS.toMillis( days ) ) )
+			return date;
+
+		return new Date( lastSentDate.getTime() + TimeUnit.DAYS.toMillis( days ) );
 
 	}
 
