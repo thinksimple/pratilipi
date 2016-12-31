@@ -60,7 +60,7 @@ public class EmailDataUtil {
 			dataModel = _createDataModelForAuthorFollowEmail( email.getPrimaryContentId() );
 
 		else if( email.getType() == EmailType.USER_PRATILIPI_RATING || email.getType() == EmailType.USER_PRATILIPI_REVIEW )
-			dataModel = _createDataModelForUserPratilipiReviewEmail( email.getPrimaryContentId() );
+			dataModel = _createDataModelForUserPratilipiEmail( email.getPrimaryContentId() );
 
 		else if( email.getType() == EmailType.COMMENT_REVIEW_REVIEWER 
 					|| email.getType() == EmailType.COMMENT_REVIEW_AUTHOR )
@@ -199,7 +199,7 @@ public class EmailDataUtil {
 
 	}
 
-	private static Map<String, Object> _createDataModelForUserPratilipiReviewEmail( String userPratilipiId )
+	private static Map<String, Object> _createDataModelForUserPratilipiEmail( String userPratilipiId )
 			throws UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -214,21 +214,21 @@ public class EmailDataUtil {
 		dataModel.put( "pratilipi_title", pratilipi.getTitle() != null ? pratilipi.getTitle() : pratilipi.getTitleEn() );
 		dataModel.put( "pratilipi_page_url", _getDomainName( pratilipi.getLanguage() ) + pratilipi.getPageUrl() );
 		
-		dataModel.put( "user_pratilipi_name", reviewer.getAuthor().getName() != null 
+		dataModel.put( "reviewer_name", reviewer.getAuthor().getName() != null 
 												? reviewer.getAuthor().getName() 
 												: reviewer.getAuthor().getNameEn() );
-		dataModel.put( "user_pratilipi_page_url", _getDomainName( pratilipi.getLanguage() ) + reviewer.getProfilePageUrl() );
-		dataModel.put( "user_pratilipi_image_url", reviewer.getAuthor().getProfileImageUrl( 100 ) );
-		dataModel.put( "user_pratilipi_creation_date", _getDateFormat( userPratilipi.getReviewDate() ) );
+		dataModel.put( "reviewer_page_url", _getDomainName( pratilipi.getLanguage() ) + reviewer.getProfilePageUrl() );
+		dataModel.put( "reviewer_image_url", reviewer.getAuthor().getProfileImageUrl( 100 ) );
+		dataModel.put( "review_creation_date", _getDateFormat( userPratilipi.getReviewDate() ) );
 
 		if( userPratilipi.getRating() != null )
 			dataModel.put( "rating", userPratilipi.getRating() );
 
 		if( userPratilipi.getReview() != null )
-			dataModel.put( "user_pratilipi_review", HtmlUtil.truncateText( userPratilipi.getReview(), 250 ) );
+			dataModel.put( "review_review", HtmlUtil.truncateText( userPratilipi.getReview(), 250 ) );
 
 		if( userPratilipi.getCommentCount() != null )
-			dataModel.put( "user_pratilipi_comment_count", userPratilipi.getCommentCount().toString() );
+			dataModel.put( "review_comment_count", userPratilipi.getCommentCount().toString() );
 
 		return dataModel;
 
@@ -249,20 +249,20 @@ public class EmailDataUtil {
 		dataModel.put( "pratilipi_title", pratilipi.getTitle() != null ? pratilipi.getTitle() : pratilipi.getTitleEn() );
 		dataModel.put( "pratilipi_page_url", _getDomainName( pratilipi.getLanguage() ) + pratilipi.getPageUrl() );
 
-		dataModel.put( "review_name", review.getUser().getAuthor().getName() != null ?
+		dataModel.put( "reviewer_name", review.getUser().getAuthor().getName() != null ?
 								review.getUser().getAuthor().getName() : review.getUser().getAuthor().getNameEn() );
-		dataModel.put( "review_page_url", _getDomainName( review.getUser().getAuthor().getLanguage() ) + review.getUser().getProfilePageUrl() );
-		dataModel.put( "review_image_url", review.getUser().getAuthor().getProfileImageUrl( 64 ) );
+		dataModel.put( "reviewer_page_url", _getDomainName( review.getUser().getAuthor().getLanguage() ) + review.getUser().getProfilePageUrl() );
+		dataModel.put( "reviewer_image_url", review.getUser().getAuthor().getProfileImageUrl( 64 ) );
 		dataModel.put( "review_date", _getDateFormat( review.getReviewDate() ) );
 		dataModel.put( "review_review", HtmlUtil.truncateText( review.getReview(), 250 ) );
 
-		dataModel.put( "comment_name", comment.getUser().getAuthor().getName() != null 
+		dataModel.put( "commentor_name", comment.getUser().getAuthor().getName() != null 
 										? comment.getUser().getAuthor().getName()
 										: comment.getUser().getAuthor().getNameEn() );
-		dataModel.put( "comment_page_url", _getDomainName( comment.getUser().getAuthor().getLanguage() ) + comment.getUser().getProfilePageUrl() );
-		dataModel.put( "comment_image_url", comment.getUser().getAuthor().getProfileImageUrl( 50 ) );
+		dataModel.put( "commentor_page_url", _getDomainName( comment.getUser().getAuthor().getLanguage() ) + comment.getUser().getProfilePageUrl() );
+		dataModel.put( "commentor_image_url", comment.getUser().getAuthor().getProfileImageUrl( 50 ) );
 		dataModel.put( "comment_date", _getDateFormat( comment.getCreationDate() ) );
-		dataModel.put( "comment_content", HtmlUtil.truncateText( comment.getContent(), 200 ) );
+		dataModel.put( "comment_comment", HtmlUtil.truncateText( comment.getContent(), 200 ) );
 
 		return dataModel;
 
@@ -282,18 +282,18 @@ public class EmailDataUtil {
 		Map<String, Object> dataModel = new HashMap<>();
 		dataModel.put( "pratilipi_title", pratilipi.getTitle() != null ? pratilipi.getTitle() : pratilipi.getTitleEn() );
 		dataModel.put( "pratilipi_page_url", pratilipi.getPageUrl() );
-		dataModel.put( "user_pratilipi_page_url", userPratilipi.getUser().getProfilePageUrl() );
-		dataModel.put( "user_pratilipi_image_url", userPratilipi.getUser().getAuthor().getProfileImageUrl( 64 ) );
-		dataModel.put( "user_pratilipi_name", userPratilipi.getUser().getAuthor().getName() != null
+		dataModel.put( "reviewer_page_url", userPratilipi.getUser().getProfilePageUrl() );
+		dataModel.put( "reviewer_image_url", userPratilipi.getUser().getAuthor().getProfileImageUrl( 64 ) );
+		dataModel.put( "reviewer_name", userPratilipi.getUser().getAuthor().getName() != null
 												? userPratilipi.getUser().getAuthor().getName() 
 												: userPratilipi.getUser().getAuthor().getNameEn() );
-		dataModel.put( "user_pratilipi_creation_date", _getDateFormat( userPratilipi.getReviewDate() ) );
-		dataModel.put( "user_pratilipi_review", HtmlUtil.toPlainText( userPratilipi.getReview() ) );
+		dataModel.put( "review_creation_date", _getDateFormat( userPratilipi.getReviewDate() ) );
+		dataModel.put( "review_review", HtmlUtil.toPlainText( userPratilipi.getReview() ) );
 
 		if( userPratilipi.getRating() != null )
 			dataModel.put( "rating", userPratilipi.getRating() );
 
-		dataModel.put( "vote_name", voter.getAuthor().getName() != null
+		dataModel.put( "voter_name", voter.getAuthor().getName() != null
 				? voter.getAuthor().getName()
 				: voter.getAuthor().getNameEn() );
 
@@ -313,27 +313,27 @@ public class EmailDataUtil {
 
 		Map<String, Object> dataModel = new HashMap<>();
 
-		dataModel.put( "vote_name", vote.getUser().getAuthor().getName() != null
+		dataModel.put( "voter_name", vote.getUser().getAuthor().getName() != null
 									? vote.getUser().getAuthor().getName()
 									: vote.getUser().getAuthor().getNameEn() );
 
 		dataModel.put( "pratilipi_title", pratilipi.getTitle() != null ? pratilipi.getTitle() : pratilipi.getTitleEn() );
 		dataModel.put( "pratilipi_page_url", _getDomainName( pratilipi.getLanguage() ) + pratilipi.getPageUrl() );
 
-		dataModel.put( "review_name", review.getUser().getAuthor().getName() != null ?
+		dataModel.put( "reviewer_name", review.getUser().getAuthor().getName() != null ?
 								review.getUser().getAuthor().getName() : review.getUser().getAuthor().getNameEn() );
-		dataModel.put( "review_page_url", _getDomainName( review.getUser().getAuthor().getLanguage() ) + review.getUser().getProfilePageUrl() );
-		dataModel.put( "review_image_url", review.getUser().getAuthor().getProfileImageUrl( 64 ) );
+		dataModel.put( "reviewer_page_url", _getDomainName( review.getUser().getAuthor().getLanguage() ) + review.getUser().getProfilePageUrl() );
+		dataModel.put( "reviewer_image_url", review.getUser().getAuthor().getProfileImageUrl( 64 ) );
 		dataModel.put( "review_date", _getDateFormat( review.getReviewDate() ) );
 		dataModel.put( "review_review", HtmlUtil.truncateText( review.getReview(), 250 ) );
 
-		dataModel.put( "comment_name", comment.getUser().getAuthor().getName() != null 
+		dataModel.put( "commentor_name", comment.getUser().getAuthor().getName() != null 
 										? comment.getUser().getAuthor().getName()
 										: comment.getUser().getAuthor().getNameEn() );
-		dataModel.put( "comment_page_url", _getDomainName( comment.getUser().getAuthor().getLanguage() ) + comment.getUser().getProfilePageUrl() );
-		dataModel.put( "comment_image_url", comment.getUser().getAuthor().getProfileImageUrl( 50 ) );
+		dataModel.put( "commentor_page_url", _getDomainName( comment.getUser().getAuthor().getLanguage() ) + comment.getUser().getProfilePageUrl() );
+		dataModel.put( "commentor_image_url", comment.getUser().getAuthor().getProfileImageUrl( 50 ) );
 		dataModel.put( "comment_date", _getDateFormat( comment.getCreationDate() ) );
-		dataModel.put( "comment_content", HtmlUtil.truncateText( comment.getContent(), 200 ) );
+		dataModel.put( "comment_comment", HtmlUtil.truncateText( comment.getContent(), 200 ) );
 
 		return dataModel;
 
