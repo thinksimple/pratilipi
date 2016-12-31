@@ -81,9 +81,6 @@
 
 <div class="secondary-500 pratilipi-shadow box text-center">
 	<h2 class="pratilipi-red" style="position: relative;">${ pratilipi.title!pratilipi.titleEn }
-		<#if pratilipi.hasAccessToUpdate()==true >
-			<a href="?action=edit_content" style="position: absolute;right: 20px;top: 15px;"><div class="sprites-icon settings-icon"></div></a>
-		</#if>
 	</h2>
 	
 	<#if pratilipi.author?? >
