@@ -404,7 +404,7 @@ public class PratilipiSite extends HttpServlet {
 
 			// Internal link
 			} else if( uri.equals( "/email-templates" ) ) {
-				dataModel = createDataModelForEmailTemplatesPage( displayLanguage );
+				dataModel = createDataModelForEmailTemplatesPage( filterLanguage );
 				templateName = "EmailTemplate.ftl";
 
 			} else if( uri.equals( "/events" ) ) {

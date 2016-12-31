@@ -3,7 +3,7 @@ ${r' <#if rating??><#if rating <= 0.5 ><#assign img_name="0_5"><#elseif rating <
 <!-- SENDER_NAME: Team Pratilipi -->
 <!-- SENDER_EMAIL: contact@pratilipi.com -->
 
-<div subject data-key="email_userpratilipi_rating_subject" style="display: none;">New rating on your story ${"$"}{ pratilipi_title }</div>
+<div subject data-key="email_userpratilipi_rating_subject" style="display: none;">${ email_userpratilipi_rating_subject }</div>
 
 <hr style="border: 1px solid #eeeeee;">
 <table align="left" table-layout="fixed;" style="width: 100%; height: 100%;">
