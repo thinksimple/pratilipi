@@ -12,7 +12,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.googlecode.objectify.ObjectifyService;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -31,6 +32,7 @@ import com.pratilipi.common.type.UserFollowState;
 import com.pratilipi.common.type.UserReviewState;
 import com.pratilipi.common.type.VoteParentType;
 import com.pratilipi.common.type.VoteType;
+import com.pratilipi.common.util.GsonLongDateAdapter;
 import com.pratilipi.common.util.SystemProperty;
 import com.pratilipi.common.util.UserAccessUtil;
 import com.pratilipi.data.DataAccessor;
@@ -46,6 +48,10 @@ import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.UserAuthor;
 import com.pratilipi.data.type.UserPratilipi;
 import com.pratilipi.data.type.Vote;
+import com.pratilipi.data.type.gae.PratilipiEntity;
+import com.pratilipi.data.type.gae.UserAuthorEntity;
+import com.pratilipi.data.type.gae.UserPratilipiEntity;
+import com.pratilipi.data.type.gae.VoteEntity;
 
 
 @SuppressWarnings("serial")
@@ -79,24 +85,45 @@ public class AuditLogProcessApi extends GenericApi {
 		Set<Long> commentUpdateIds = new HashSet<>();
 		Set<String> voteUpdateIds = new HashSet<>();
 
+		Gson gson = new GsonBuilder()
+					.registerTypeAdapter( Date.class, new GsonLongDateAdapter() )
+					.create();
+
 		for( AuditLog auditLog : auditLogDataListCursorTuple.getDataList() ) {
 			// TODO: Delete following condition as soon as 'legacy' module is removed
 			if( auditLog.getUserId() == null || auditLog.getPrimaryContentId() == null ) {
-				ObjectifyService.ofy().delete().entity( auditLog ).now();
 				continue;
 			}
-			if( auditLog.getUserId().equals( SystemProperty.SYSTEM_USER_ID ) )
+			if( auditLog.getUserId().equals( SystemProperty.SYSTEM_USER_ID ) ) {
 				continue;
-			if( auditLog.getAccessType() == AccessType.PRATILIPI_UPDATE )
-				pratilipiUpdateIds.add( auditLog.getPrimaryContentIdLong() );
-			else if( auditLog.getAccessType()  == AccessType.USER_PRATILIPI_REVIEW )
-				userPratilipiUpdateIds.add( auditLog.getPrimaryContentId() );
-			else if( auditLog.getAccessType() == AccessType.USER_AUTHOR_FOLLOWING )
-				userAuthorUpdateIds.add( auditLog.getPrimaryContentId() );
-			else if( auditLog.getAccessType() == AccessType.COMMENT_ADD )
+			}
+			if( auditLog.getAccessType() == AccessType.PRATILIPI_UPDATE ) {
+				Pratilipi oldPratilipi = gson.fromJson( auditLog.getEventDataOld(), PratilipiEntity.class );
+				Pratilipi newPratilipi = gson.fromJson( auditLog.getEventDataNew(), PratilipiEntity.class );
+				if( oldPratilipi.getState() == PratilipiState.DRAFTED && newPratilipi.getState() == PratilipiState.PUBLISHED )
+					pratilipiUpdateIds.add( auditLog.getPrimaryContentIdLong() );
+			}
+			else if( auditLog.getAccessType()  == AccessType.USER_PRATILIPI_REVIEW ) {
+				UserPratilipi oldUserPratilipi = gson.fromJson( auditLog.getEventDataOld(), UserPratilipiEntity.class );
+				UserPratilipi newUserPratilipi = gson.fromJson( auditLog.getEventDataNew(), UserPratilipiEntity.class );
+				if( oldUserPratilipi.getRating() == null && oldUserPratilipi.getReview() == null && 
+						( newUserPratilipi.getRating() != null || newUserPratilipi.getReview() != null ) )
+					userPratilipiUpdateIds.add( auditLog.getPrimaryContentId() );
+			}
+			else if( auditLog.getAccessType() == AccessType.USER_AUTHOR_FOLLOWING ) {
+				UserAuthor oldUserAuthor = gson.fromJson( auditLog.getEventDataOld(), UserAuthorEntity.class );
+				UserAuthor newUserAuthor = gson.fromJson( auditLog.getEventDataNew(), UserAuthorEntity.class );
+				if( oldUserAuthor.getFollowState() == null && newUserAuthor.getFollowState() == UserFollowState.FOLLOWING )
+					userAuthorUpdateIds.add( auditLog.getPrimaryContentId() );
+			}
+			else if( auditLog.getAccessType() == AccessType.COMMENT_ADD ) {
 				commentUpdateIds.add( auditLog.getPrimaryContentIdLong() );
-			else if( auditLog.getAccessType() == AccessType.VOTE )
-				voteUpdateIds.add( auditLog.getPrimaryContentId() );
+			}
+			else if( auditLog.getAccessType() == AccessType.VOTE ) {
+				Vote newVote = gson.fromJson( auditLog.getEventDataNew(), VoteEntity.class );
+				if( newVote.getType() == VoteType.LIKE )
+					voteUpdateIds.add( auditLog.getPrimaryContentId() );
+			}
 		}
 
 		
