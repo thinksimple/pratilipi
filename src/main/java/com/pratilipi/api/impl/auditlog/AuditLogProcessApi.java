@@ -19,9 +19,11 @@ import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
+import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.CommentParentType;
 import com.pratilipi.common.type.CommentState;
+import com.pratilipi.common.type.EmailFrequency;
 import com.pratilipi.common.type.EmailState;
 import com.pratilipi.common.type.EmailType;
 import com.pratilipi.common.type.Language;
@@ -38,6 +40,7 @@ import com.pratilipi.common.util.UserAccessUtil;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
+import com.pratilipi.data.RtdbAccessor;
 import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
@@ -47,6 +50,7 @@ import com.pratilipi.data.type.Notification;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.type.UserAuthor;
 import com.pratilipi.data.type.UserPratilipi;
+import com.pratilipi.data.type.UserPreferenceRtdb;
 import com.pratilipi.data.type.Vote;
 import com.pratilipi.data.type.gae.PratilipiEntity;
 import com.pratilipi.data.type.gae.UserAuthorEntity;
@@ -61,7 +65,8 @@ public class AuditLogProcessApi extends GenericApi {
 	private static final Logger logger = Logger.getLogger( AuditLogProcessApi.class.getName() );
 
 	@Get
-	public GenericResponse get( GenericRequest request ) {
+	public GenericResponse get( GenericRequest request ) 
+			throws UnexpectedServerException {
 		
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
@@ -125,8 +130,6 @@ public class AuditLogProcessApi extends GenericApi {
 					voteUpdateIds.add( auditLog.getPrimaryContentId() );
 			}
 		}
-
-		
 
 
 		// Batch get Vote entities
@@ -304,8 +307,7 @@ public class AuditLogProcessApi extends GenericApi {
 
 		}
 
-		// Updating Email Table
-		totalEmailList = dataAccessor.createOrUpdateEmailList( totalEmailList );
+		_updateEmailTable( totalEmailList );
 
 		// Updating AppProperty.
 		if( auditLogDataListCursorTuple.getDataList().size() > 0 ) {
@@ -792,4 +794,20 @@ public class AuditLogProcessApi extends GenericApi {
 		
 	}
 	
+	private void _updateEmailTable( List<Email> emailList ) throws UnexpectedServerException {
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		RtdbAccessor rtdbAccessor = DataAccessorFactory.getRtdbAccessor();
+
+		List<Email> immediateEmails = new ArrayList<>();
+		for( Email email : emailList ) {
+			UserPreferenceRtdb preference = rtdbAccessor.getUserPreference( email.getUserId() );
+			if( preference.getEmailFrequency() == null || preference.getEmailFrequency() == EmailFrequency.IMMEDIATELY )
+				immediateEmails.add( email );
+		}
+
+		immediateEmails = dataAccessor.createOrUpdateEmailList( immediateEmails );
+
+	}
+
 }
