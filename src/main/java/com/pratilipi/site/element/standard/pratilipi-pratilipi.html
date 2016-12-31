@@ -112,6 +112,7 @@
 					<paper-item on-click="sharePratilipiOnFacebook"><span class="icon icon-facebook"></span></paper-item>
 					<paper-item on-click="sharePratilipiOnTwitter"><span class="icon icon-twitter"></span></paper-item>
 					<paper-item on-click="sharePratilipiOnGplus"><span class="icon icon-google-plus"></span></paper-item>
+					<paper-item on-click="sharePratilipiOnWhatsapp"><span class="icon icon-whatsapp"></span></paper-item>
 				</paper-menu>
 			</paper-menu-button>
 			
@@ -603,6 +604,10 @@
 			sharePratilipiOnGplus: function() {
 				window.open( "https://plus.google.com/share?url=" + this._getShareUrl( "gplus" ), 
 						"share", "width=1100,height=500,left=70px,top=60px" );
+			},
+			
+			sharePratilipiOnWhatsapp: function() {
+			  	window.open( "whatsapp://send?text=I+Loved+this+Book%0A" + this._getShareUrl( "whatsapp" ) );
 			}
 			
 		});
