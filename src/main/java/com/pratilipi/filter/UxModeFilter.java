@@ -132,9 +132,8 @@ public class UxModeFilter implements Filter {
 			// Figuring out Browser capability
 			
 			boolean basicBrowser = false;
-			
-			// TODO: Remove check once GAMMA_HINDI_HTTPS deprecated
-			if( isWebApp && ! request.getHeader( "host" ).equals( Website.GAMMA_HINDI_HTTPS.getHostName() ) ) {
+
+			if( isWebApp ) {
 
 				if( userAgent == null || userAgent.trim().isEmpty() ) {
 					basicBrowser = true;
@@ -239,7 +238,7 @@ public class UxModeFilter implements Filter {
 			
 
 			// Redirecting requests coming from basic browsers to BasicMode
-			if( basicBrowser && ! basicMode && website != null ) {
+			if( basicBrowser && ! basicMode && website != null && website.getMobileHostName() != null ) {
 				response.setStatus( HttpServletResponse.SC_MOVED_TEMPORARILY );
 				String queryString = request.getQueryString();
 				if( queryString == null || queryString.isEmpty() )
