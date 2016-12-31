@@ -73,10 +73,18 @@ public class PratilipiDocUtil {
 
 
 	public static String getImageTag( Long pratilipiId, JsonObject jsonObject ) {
+
 		double widthSet = jsonObject.has( "ratio" ) 
 				? jsonObject.get( "ratio" ).getAsDouble() * jsonObject.get( "width" ).getAsDouble()
 				: jsonObject.get( "width" ).getAsDouble();
-		return "<img src=\"/api/pratilipi/content/image?pratilipiId=" + pratilipiId + "&name=" + jsonObject.get( "name" ).getAsString() + "&width=" + (int)widthSet +"\"/>";
+		double heightSet = jsonObject.has( "ratio" ) 
+				? jsonObject.get( "ratio" ).getAsDouble() * jsonObject.get( "height" ).getAsDouble()
+				: jsonObject.get( "height" ).getAsDouble();
+
+		return "<img" + " " + "style=\"width: " + (int)widthSet + "px; height: " + (int)heightSet + "px;\"" + " " + 
+				"src=\"/api/pratilipi/content/image?pratilipiId=" + pratilipiId + 
+				"&name=" + jsonObject.get( "name" ).getAsString() + "&width=" + (int)widthSet +"\"/>";
+
 	}
 
 
