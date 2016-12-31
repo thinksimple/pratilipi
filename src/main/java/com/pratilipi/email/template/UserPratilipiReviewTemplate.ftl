@@ -1,4 +1,4 @@
-${r' <#if rating??><#if rating <= 0.5 ><#assign img_name="0_5"><#elseif rating <= 1 ><#assign img_name="1_0"><#elseif rating <= 1.5 ><#assign img_name="1_5"><#elseif rating <= 2 ><#assign img_name="2_0"><#elseif rating <= 2.5 ><#assign img_name="2_5"><#elseif rating <= 3 ><#assign img_name="3_0"><#elseif rating <= 3.5 ><#assign img_name="3_5"><#elseif rating <= 4 ><#assign img_name="4_0"><#elseif rating <= 4.5 ><#assign img_name="4_5"><#elseif rating <= 5 ><#assign img_name="5_0"></#if></#if> '}
+${r' <!-- <#if rating??><#if rating <= 0.5 ><#assign img_name="0_5"><#elseif rating <= 1 ><#assign img_name="1_0"><#elseif rating <= 1.5 ><#assign img_name="1_5"><#elseif rating <= 2 ><#assign img_name="2_0"><#elseif rating <= 2.5 ><#assign img_name="2_5"><#elseif rating <= 3 ><#assign img_name="3_0"><#elseif rating <= 3.5 ><#assign img_name="3_5"><#elseif rating <= 4 ><#assign img_name="4_0"><#elseif rating <= 4.5 ><#assign img_name="4_5"><#elseif rating <= 5 ><#assign img_name="5_0"></#if></#if> --> '}
 
 <!-- SENDER_NAME: Team Pratilipi -->
 <!-- SENDER_EMAIL: contact@pratilipi.com -->
