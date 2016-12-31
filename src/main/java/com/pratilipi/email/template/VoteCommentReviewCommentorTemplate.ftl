@@ -1,6 +1,7 @@
 <!-- SENDER_NAME: Team Pratilipi -->
 <!-- SENDER_EMAIL: contact@pratilipi.com -->
-<!-- SUBJECT: Pratilipi.com | Your comment was liked by ${"$"}{ vote_name } -->
+
+<div subject data-key="email_vote_comment_review_commentor_subject" style="display: none;">Pratilipi.com | Your comment was liked by ${"$"}{ vote_name }</div>
 
 <hr style="border: 1px solid #eeeeee;">
 <table align="left" table-layout="fixed;" style="width: 100%; height: 100%;">

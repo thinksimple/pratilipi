@@ -1,6 +1,7 @@
 <!-- SENDER_NAME: Team Pratilipi -->
 <!-- SENDER_EMAIL: contact@pratilipi.com -->
-<!-- SUBJECT: New reply to your review on story ${"$"}{ pratilipi_title } -->
+
+<div subject data-key="email_comment_review_author_subject" style="display: none;">New reply to your review on story ${"$"}{ pratilipi_title }</div>
 
 <hr style="border: 1px solid #eeeeee;">
 <table align="left" table-layout="fixed;" style="width: 100%; height: 100%;">

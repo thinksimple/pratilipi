@@ -1,6 +1,7 @@
 <!-- SENDER_NAME: Team Pratilipi -->
 <!-- SENDER_EMAIL: contact@pratilipi.com -->
-<!-- SUBJECT: ${"$"}{ author_name } has a story to tell! -->
+
+<div subject data-key="email_pratilipi_published_follower_subject" style="display: none;">${"$"}{ author_name } has a story to tell!</div>
 
 <hr style="border: 1px solid #eeeeee;">
 <table align="left" table-layout="fixed;" style="width: 100%; height: 100%;">

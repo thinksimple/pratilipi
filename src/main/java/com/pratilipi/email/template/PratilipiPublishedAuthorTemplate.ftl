@@ -1,6 +1,7 @@
 <!-- SENDER_NAME: Team Pratilipi -->
 <!-- SENDER_EMAIL: contact@pratilipi.com -->
-<!-- SUBJECT: Congratulations! Your story is published. -->
+
+<div subject data-key="email_pratilipi_published_author_subject" style="display: none;">Congratulations! Your story is published.</div>
 
 <hr style="border: 1px solid #eeeeee;">
 <table align="left" table-layout="fixed;" style="width: 100%; height: 100%;">

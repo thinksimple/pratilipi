@@ -136,7 +136,7 @@ public class EmailDataUtil {
 
 		Pattern senderNamePattern = Pattern.compile( "<!-- SENDER_NAME:(.+?) -->" );
 		Pattern senderEmailPattern = Pattern.compile( "<!-- SENDER_EMAIL:(.+?) -->" );
-		Pattern subjectPattern = Pattern.compile( "<!-- SUBJECT:(.+?) -->" );
+		Pattern subjectPattern = Pattern.compile( "<div subject .+?>(.+?)<\\/div>" );
 
 		String senderName = null;
 		String senderEmail = null;
