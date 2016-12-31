@@ -35,15 +35,7 @@
 		<script>
 			function roundOffRating(n) {
 			    return (Math.round(n*2)/2).toFixed(1);
-			};
-			
-			function gotoShare( pageUrl, utmParent, utmLocation ) {
-			
-				var language = "${ language }".toLowerCase();
-				var url = "http://" + language + ".pratilipi.com" + pageUrl +  "?utm_language=" + "${ language }" + "&utm_version=lite" + "&utm_device=mobile" + "&utm_parent=" + utmParent  +"&utm_location=" + utmLocation + "&utm_action=share";
-				
-				window.location.href = ( "/share?url=" + encodeURIComponent(url) );
-			}		
+			};		
 			
 			function FollowUnfollowPostRequest(follow){
 			    $.ajax({type: "POST",

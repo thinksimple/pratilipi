@@ -89,14 +89,19 @@
 	<#if pratilipi.author?? >
 		<a href="${ pratilipi.author.pageUrl }"><h4>${ pratilipi.author.name }</h4></a>
 	</#if>
-	
-	<div style="width: 150px; height: 225px; margin: 15px auto; position: relative;" class="pratilipi-shadow">
-		<img src="${ pratilipi.getCoverImageUrl( 150 ) }" alt="${ pratilipi.title!pratilipi.titleEn }" title="${ pratilipi.titleEn!pratilipi.title }" />
+	<div style="position: relative;">
 		<#if pratilipi.hasAccessToUpdate()==true >
-			<div class="pratilipi-file-upload" style="margin-bottom: -2px;">
-				<div class="sprites-icon book-camera-icon"></div>
-			</div>
+			<a href="?action=edit_content" style="position: absolute;right: 56px;top: 0;"><div class="sprites-icon settings-icon"></div></a>
 		</#if>
+		<a onclick="gotoShare( '${ pratilipi.getPageUrl() }', 'pratilipi', 'menu' )" style="position: absolute;right: 20px;top: 0;"><div class="sprites-icon share-icon"></div></a>
+		<div style="width: 150px; height: 225px; margin: 15px auto; position: relative;" class="pratilipi-shadow">
+			<img src="${ pratilipi.getCoverImageUrl( 150 ) }" alt="${ pratilipi.title!pratilipi.titleEn }" title="${ pratilipi.titleEn!pratilipi.title }" />
+			<#if pratilipi.hasAccessToUpdate()==true >
+				<div class="pratilipi-file-upload" style="margin-bottom: -2px;">
+					<div class="sprites-icon book-camera-icon"></div>
+				</div>
+			</#if>
+		</div>
 	</div>
 	<#-- <div style="display: block;" class="fb-like" data-href="http://www.pratilipi.com/pratilipi/${ pratilipi.getId() }" data-layout="button" data-action="like" data-size="small" data-show-faces="false" data-share="false"></div> -->
 	<#if pratilipi.ratingCount gt 0 >
