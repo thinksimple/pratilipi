@@ -1518,7 +1518,7 @@ public class PratilipiSite extends HttpServlet {
 			throw new InsufficientAccessException();
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put( "title", "Test" );
+		dataModel.put( "title", "Email Templates - Admin Access" );
 
 		String body = new String();
 		for( EmailType eT : EmailType.values() )
