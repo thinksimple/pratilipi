@@ -1522,7 +1522,7 @@ public class PratilipiSite extends HttpServlet {
 
 		String body = new String();
 		for( EmailType eT : EmailType.values() ) {
-			body = body + "<h2>" + eT.getDescription() + "</h2>";
+			body = body + "<h4>" + eT.getDescription() + "</h4>";
 			body = body + EmailTemplateUtil.getEmailTemplate( eT, language );
 			body = body + "<br>";
 		}

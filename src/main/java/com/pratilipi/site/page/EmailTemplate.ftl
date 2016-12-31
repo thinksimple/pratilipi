@@ -23,6 +23,10 @@
 				$( '[data-key]' ).each( function( index ) {
 					$(this).attr( 'contenteditable','true' );
 				});
+				$( '[subject]' ).each( function( index ) {
+					$(this).css( 'display', 'block' );
+					$(this).before( "<span>Subject</span>" );
+				});
 				$( "a" ).click( function() { return false; } );
 			});
 			function saveChanges() {
