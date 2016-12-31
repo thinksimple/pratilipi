@@ -40,7 +40,7 @@
 <#include "Font.ftl">
 
 <#-- Custom Stylesheet -->
-<link type="text/css" rel="stylesheet" href="/resources/css/style-basic.css?1">
+<link type="text/css" rel="stylesheet" href="/resources/css/style-basic.css?2">
 
 <#-- Firebase Script -->
 <#include "Firebase.ftl">

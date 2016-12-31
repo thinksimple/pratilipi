@@ -27,6 +27,11 @@
 				url += encodeURIComponent( "&utm_source=gplus" );				
 				window.open( "https://plus.google.com/share?url=" + url, "share", "width=500,height=600,left=70px,top=60px" );
 			}
+			function shareOnWhatsapp() {
+				var url = encodeURIComponent( getUrlParameter( "url" ) );
+				url += encodeURIComponent( "&utm_source=whatsapp" );				
+				window.location.href = ( "whatsapp://send?text=" + url);	
+			}
 		</script>
 		<div class="secondary-500 pratilipi-shadow" style="display: block; padding: 5px; height: 64px;">
 			<a style="cursor: pointer; position: absolute; right: 16px; top: 20px;" onClick="history.back();return false;">
@@ -48,6 +53,9 @@
 						<div class="sprites-icon reader-setting-icon gplus-black-icon"></div>
 						<span>${ _strings.share_on_gplus }</span>
 					</a>
+					<a style="cursor: pointer;" onclick="shareOnGplus()" href="whatsapp://send?text=http%3A%2F%2F${ language?lower_case }.pratilipi.com${ pratilipi.getPageUrl()?url('UTF-8') }%3Futm_language%3D${ language?lower_case }%26utm_version%3Dlite%26utm_device%3Dmobile%26utm_parent%3Dreader%26utm_location%3Dmenu%26utm_action%3Dshare%26utm_source%3Dwhatsapp">
+						<div class="sprites-icon reader-footer-icon whatsapp-black-icon"></div>
+					</a>					
 				</div>	
 			</div>
 		</div>
