@@ -80,6 +80,9 @@
 						<a style="cursor: pointer;" onCLick="shareOnGplus( 'container' )">
 							<div class="sprites-icon reader-footer-icon gplus-black-icon"></div>
 						</a>
+						<a style="cursor: pointer;" href="whatsapp://send?text=http://${ language?lower_case }.pratilipi.com${ pratilipi.getPageUrl() }?utm_language=${ language?lower_case }&utm_version=lite&utm_device=mobile&utm_parent=reader&utm_location=container&utm_action=share&utm_source=whatsapp">
+							<div class="sprites-icon reader-footer-icon whatsapp-black-icon"></div>
+						</a>
 					</div>
 				</div>
 		</div>

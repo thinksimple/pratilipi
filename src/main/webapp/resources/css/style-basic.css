@@ -676,6 +676,12 @@ a:hover {
 .linked-in-icon{
     background-position: -48px -120px;
 }
+.whatsapp-icon {
+    background-position: -96px -120px;	
+}
+.whatsapp-black-icon {
+    background-position: -96px -96px;	
+}
 .search-icon {
 	display: inline-block;
     background-position: -120px -24px;
