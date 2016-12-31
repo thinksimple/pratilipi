@@ -41,6 +41,9 @@ public class EmailEntity implements Email {
 	private Date CREATION_DATE;
 
 	@Index
+	private Date SCHEDULED_DATE;
+
+	@Index
 	private Date LAST_UPDATED;
 
 
@@ -144,7 +147,16 @@ public class EmailEntity implements Email {
 	@Override
 	public void setCreationDate( Date date ) {
 		this.CREATION_DATE = date;
-		
+	}
+
+	@Override
+	public Date getScheduledDate() {
+		return SCHEDULED_DATE;
+	}
+
+	@Override
+	public void setScheduledDate( Date date ) {
+		this.SCHEDULED_DATE = date;		
 	}
 
 	@Override
@@ -155,7 +167,6 @@ public class EmailEntity implements Email {
 	@Override
 	public void setLastUpdated( Date date ) {
 		this.LAST_UPDATED = date;
-		
 	}
 
 }

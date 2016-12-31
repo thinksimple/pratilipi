@@ -40,6 +40,10 @@ public interface Email extends GenericOfyType {
 
 	void setCreationDate( Date date );
 
+	Date getScheduledDate();
+
+	void setScheduledDate( Date date );
+
 	Date getLastUpdated();
 
 	void setLastUpdated( Date date );
