@@ -88,9 +88,9 @@
 	</#if>
 	<div style="position: relative;">
 		<#if pratilipi.hasAccessToUpdate()==true >
-			<a href="?action=edit_content" style="position: absolute;right: 56px;top: 0;"><div class="sprites-icon settings-icon"></div></a>
+			<a href="?action=edit_content" style="position: absolute;right: 36px;top: 0;"><div class="sprites-icon settings-icon"></div></a>
 		</#if>
-		<a onclick="gotoShare( '${ pratilipi.getPageUrl() }', 'pratilipi', 'menu' )" style="position: absolute;right: 20px;top: 0;"><div class="sprites-icon share-icon"></div></a>
+		<a onclick="gotoShare( '${ pratilipi.getPageUrl() }', 'pratilipi', 'menu' )" style="position: absolute;right: 0;top: 0;"><div class="sprites-icon share-icon"></div></a>
 		<div style="width: 150px; height: 225px; margin: 15px auto; position: relative;" class="pratilipi-shadow">
 			<img src="${ pratilipi.getCoverImageUrl( 150 ) }" alt="${ pratilipi.title!pratilipi.titleEn }" title="${ pratilipi.titleEn!pratilipi.title }" />
 			<#if pratilipi.hasAccessToUpdate()==true >
