@@ -23,6 +23,8 @@ public enum I18nGroup {
 			"email_pratilipi_published_author_heading",
 			"email_pratilipi_published_follower_button",
 			"email_pratilipi_published_follower_heading",
+			"email_userpratilipi_rating_button",
+			"email_userpratilipi_rating_heading",
 			"email_userpratilipi_review_button",
 			"email_userpratilipi_review_heading",
 			"email_vote_comment_review_commentor_button",
