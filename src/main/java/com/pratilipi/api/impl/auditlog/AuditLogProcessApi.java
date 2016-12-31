@@ -150,6 +150,7 @@ public class AuditLogProcessApi extends GenericApi {
 		Map<Long, Author> authors = dataAccessor.getAuthors( authorIds );
 
 
+		List<Email> totalEmailList = new ArrayList<>();
 
 		// auditLog.getAccessType() == AccessType.PRATILIPI_UPDATE
 		for( Long pratilipiId : pratilipiUpdateIds ) {
@@ -166,10 +167,12 @@ public class AuditLogProcessApi extends GenericApi {
 					null,
 					null ).getDataList();
 
-			_createPratilipiPublishedEmail( pratilipi, authors.get( pratilipi.getAuthorId() ) );
-			_createPratilipiPublishedEmails( pratilipi, followerUserIdList );
+			Email email = _createPratilipiPublishedEmail( pratilipi, authors.get( pratilipi.getAuthorId() ) );
+			if( email != null )
+				totalEmailList.add( email );
+			totalEmailList.addAll( _createPratilipiPublishedEmails( pratilipi, followerUserIdList ) );
 
-			// Send notification to all AEEs all well
+			// Send notification to all AEEs as well
 			followerUserIdList.addAll( _getAeeUserIdList( pratilipi.getLanguage() ) );
 
 			_createPratilipiPublishedNotification( pratilipi, authors.get( pratilipi.getAuthorId() ) );
@@ -188,7 +191,9 @@ public class AuditLogProcessApi extends GenericApi {
 				continue;
 
 			Long pratilipiId = userPratilipi.getPratilipiId();
-			_createUserPratilipiReviewEmail( userPratilipi, authors.get( pratilipis.get( pratilipiId ).getAuthorId() ) );
+			Email email = _createUserPratilipiReviewEmail( userPratilipi, authors.get( pratilipis.get( pratilipiId ).getAuthorId() ) );
+			if( email != null )
+				totalEmailList.add( email );
 
 		}
 		
@@ -203,7 +208,9 @@ public class AuditLogProcessApi extends GenericApi {
 				continue;
 
 			_createUserAuthorFollowingNotifications( userAuthor, authors.get( userAuthor.getAuthorId() ) );
-			_createUserAuthorFollowingEmails( userAuthor, authors.get( userAuthor.getAuthorId() ) );
+			Email email = _createUserAuthorFollowingEmail( userAuthor, authors.get( userAuthor.getAuthorId() ) );
+			if( email != null )
+				totalEmailList.add( email );
 
 		}
 
@@ -223,8 +230,13 @@ public class AuditLogProcessApi extends GenericApi {
 			Pratilipi pratilipi = pratilipis.get( userPratilipi.getPratilipiId() );
 			Author author = authors.get( pratilipi.getAuthorId() );
 
-			_createCommentAddedReviewerEmail( userPratilipi, comment );
-			_createCommentAddedAuthorEmail( author, comment );
+			Email email = _createCommentAddedReviewerEmail( userPratilipi, comment );
+			if( email != null )
+				totalEmailList.add( email );
+
+			email = _createCommentAddedAuthorEmail( author, comment );
+			if( email != null )
+				totalEmailList.add( email );
 
 		}
 
@@ -241,24 +253,32 @@ public class AuditLogProcessApi extends GenericApi {
 			if( vote.getParentType() == VoteParentType.REVIEW ) {
 
 				UserPratilipi userPratilipi = userPratilipis.get( vote.getParentId() );
-				
+
 				// To the reviewer
-				_createVoteOnReviewReviewerEmail( userPratilipi, vote );
+				Email email = _createVoteOnReviewReviewerEmail( userPratilipi, vote );
+				if( email != null )
+					totalEmailList.add( email );
 				
 				// To the author
 				Pratilipi pratilipi = pratilipis.get( userPratilipi.getPratilipiId() );
 				Author author = authors.get( pratilipi.getAuthorId() );
-				_createVoteOnReviewAuthorEmail( author, vote );
+				email = _createVoteOnReviewAuthorEmail( author, vote );
+				if( email != null )
+					totalEmailList.add( email );
 
 			} else if( vote.getParentType() == VoteParentType.COMMENT ) {
 
 				// To the commentor
-				_createVoteOnCommentCommentorEmail( comments.get( vote.getParentIdLong() ), vote );
+				Email email = _createVoteOnCommentCommentorEmail( comments.get( vote.getParentIdLong() ), vote );
+				if( email != null )
+					totalEmailList.add( email );
 
 			}
 
 		}
 
+		// Updating Email Table
+		totalEmailList = dataAccessor.createOrUpdateEmailList( totalEmailList );
 
 		// Updating AppProperty.
 		if( auditLogDataListCursorTuple.getDataList().size() > 0 ) {
@@ -363,18 +383,18 @@ public class AuditLogProcessApi extends GenericApi {
 	}
 	
 
-	private void _createPratilipiPublishedEmail( Pratilipi pratilipi, Author author ) {
-		
+	private Email _createPratilipiPublishedEmail( Pratilipi pratilipi, Author author ) {
+
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-	
+
 		if( author.getUserId() == null )
-			return;
+			return null;
 
 		// TODO: Remove it ASAP
 		if( ! UserAccessUtil.hasUserAccess( author.getUserId(), null, AccessType.USER_ADD ) )
-			return;
+			return null;
 
-		
+
 		Email email = dataAccessor.getEmail(
 				author.getUserId(),
 				EmailType.PRATILIPI_PUBLISHED_AUTHOR, 
@@ -389,20 +409,19 @@ public class AuditLogProcessApi extends GenericApi {
 			email.setState( EmailState.PENDING );
 			email.setLastUpdated( new Date() );
 		} else {
-			return; // Do nothing
+			return null; // Do nothing
 		}
-		
 
-		email = dataAccessor.createOrUpdateEmail( email );
+		return email;
 
 	}
-	
-	private void _createPratilipiPublishedEmails( Pratilipi pratilipi, List<Long> followers ) {
-		
+
+	private List<Email> _createPratilipiPublishedEmails( Pratilipi pratilipi, List<Long> followers ) {
+
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		
+
 		followers = new ArrayList<Long>( followers );
-		
+
 		List<Email> existingEmailList = dataAccessor.getEmailList(
 				null,
 				EmailType.PRATILIPI_PUBLISHED_FOLLOWER,
@@ -410,7 +429,7 @@ public class AuditLogProcessApi extends GenericApi {
 				null,
 				null );
 
-		
+
 		List<Email> emailList = new LinkedList<>();
 
 		for( Email email : existingEmailList ) {
@@ -431,29 +450,29 @@ public class AuditLogProcessApi extends GenericApi {
 					EmailType.PRATILIPI_PUBLISHED_FOLLOWER,
 					pratilipi.getId() ) );
 		}
-		
-		emailList = dataAccessor.createOrUpdateEmailList( emailList );
-		
+
+		return emailList;
+
 	}
 
-	private void _createUserPratilipiReviewEmail( UserPratilipi userPratilipi, Author author ) {
+	private Email _createUserPratilipiReviewEmail( UserPratilipi userPratilipi, Author author ) {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
 		if( author.getUserId() == null )
-			return;
-		
+			return null;
+
 		// TODO: Remove it ASAP
 		if( ! UserAccessUtil.hasUserAccess( author.getUserId(), null, AccessType.USER_ADD ) )
-			return;
+			return null;
 
-		
+
 		Email email = dataAccessor.getEmail(
 				author.getUserId(),
 				EmailType.USER_PRATILIPI_REVIEW, 
 				userPratilipi.getId() );
 
-		
+
 		if( email == null ) {
 			email = dataAccessor.newEmail(
 					author.getUserId(),
@@ -463,26 +482,26 @@ public class AuditLogProcessApi extends GenericApi {
 			email.setState( EmailState.PENDING );
 			email.setLastUpdated( new Date() );
 		} else {
-			return; // Do nothing
+			return null; // Do nothing
 		}
 
 
-		email = dataAccessor.createOrUpdateEmail( email );
+		return email;
 
 	}
 	
-	private void _createUserAuthorFollowingEmails( UserAuthor userAuthor, Author author ) {
+	private Email _createUserAuthorFollowingEmail( UserAuthor userAuthor, Author author ) {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
 		if( author.getUserId() == null ) // Followed
-			return;
-		
+			return null;
+
 		// TODO: Remove it ASAP
 		if( ! UserAccessUtil.hasUserAccess( author.getUserId(), null, AccessType.USER_ADD ) )
-			return;
+			return null;
 
-		
+
 		Email email = dataAccessor.getEmail(
 				author.getUserId(),
 				EmailType.AUTHOR_FOLLOW, 
@@ -498,21 +517,21 @@ public class AuditLogProcessApi extends GenericApi {
 			email.setState( EmailState.PENDING );
 			email.setLastUpdated( new Date() );
 		} else {
-			return; // Do nothing
+			return null; // Do nothing
 		}
 
 
-		email = dataAccessor.createOrUpdateEmail( email );
+		return email;
 
 	}
 	
-	private void _createCommentAddedReviewerEmail( UserPratilipi userPratilipi, Comment comment ) {
+	private Email _createCommentAddedReviewerEmail( UserPratilipi userPratilipi, Comment comment ) {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
 		// TODO: Remove it ASAP
 		if( ! UserAccessUtil.hasUserAccess( userPratilipi.getUserId(), null, AccessType.USER_ADD ) )
-			return;
+			return null;
 
 
 		Email email = dataAccessor.getEmail(
@@ -530,25 +549,25 @@ public class AuditLogProcessApi extends GenericApi {
 			email.setState( EmailState.PENDING );
 			email.setLastUpdated( new Date() );
 		} else {
-			return; // Do nothing
+			return null; // Do nothing
 		}
 
 
-		email = dataAccessor.createOrUpdateEmail( email );
+		return email;
 
 	}
+
 	
-	
-	private void _createCommentAddedAuthorEmail( Author author, Comment comment ) {
+	private Email _createCommentAddedAuthorEmail( Author author, Comment comment ) {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
 		if( author.getUserId() == null )
-			return;
+			return null;
 		
 		// TODO: Remove it ASAP
 		if( ! UserAccessUtil.hasUserAccess( author.getUserId(), null, AccessType.USER_ADD ) )
-			return;
+			return null;
 
 
 		Email email = dataAccessor.getEmail(
@@ -566,22 +585,22 @@ public class AuditLogProcessApi extends GenericApi {
 			email.setState( EmailState.PENDING );
 			email.setLastUpdated( new Date() );
 		} else {
-			return; // Do nothing
+			return null; // Do nothing
 		}
 
 
-		email = dataAccessor.createOrUpdateEmail( email );
+		return email;
 
 	}
 	
 	
-	private void _createVoteOnReviewReviewerEmail( UserPratilipi userPratilipi, Vote vote ) {
+	private Email _createVoteOnReviewReviewerEmail( UserPratilipi userPratilipi, Vote vote ) {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
 		// TODO: Remove it ASAP
 		if( ! UserAccessUtil.hasUserAccess( userPratilipi.getUserId(), null, AccessType.USER_ADD ) )
-			return;
+			return null;
 
 		Email email = dataAccessor.getEmail(
 				userPratilipi.getUserId(),
@@ -598,23 +617,23 @@ public class AuditLogProcessApi extends GenericApi {
 			email.setState( EmailState.PENDING );
 			email.setLastUpdated( new Date() );
 		} else {
-			return; // Do nothing
+			return null; // Do nothing
 		}
 
-		email = dataAccessor.createOrUpdateEmail( email );
+		return email;
 
 	}
 	
-	private void _createVoteOnReviewAuthorEmail( Author author, Vote vote ) {
+	private Email _createVoteOnReviewAuthorEmail( Author author, Vote vote ) {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
 		if( author.getUserId() == null )
-			return;
+			return null;
 
 		// TODO: Remove it ASAP
 		if( ! UserAccessUtil.hasUserAccess( author.getUserId(), null, AccessType.USER_ADD ) )
-			return;
+			return null;
 
 		Email email = dataAccessor.getEmail(
 				author.getUserId(),
@@ -631,21 +650,21 @@ public class AuditLogProcessApi extends GenericApi {
 			email.setState( EmailState.PENDING );
 			email.setLastUpdated( new Date() );
 		} else {
-			return; // Do nothing
+			return null; // Do nothing
 		}
 
 
-		email = dataAccessor.createOrUpdateEmail( email );
+		return email;
 
 	}
 
-	private void _createVoteOnCommentCommentorEmail( Comment comment, Vote vote ) {
+	private Email _createVoteOnCommentCommentorEmail( Comment comment, Vote vote ) {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
 		// TODO: Remove it ASAP
 		if( ! UserAccessUtil.hasUserAccess( comment.getUserId(), null, AccessType.USER_ADD ) )
-			return;
+			return null;
 
 		Email email = dataAccessor.getEmail(
 				comment.getUserId(),
@@ -662,11 +681,11 @@ public class AuditLogProcessApi extends GenericApi {
 			email.setState( EmailState.PENDING );
 			email.setLastUpdated( new Date() );
 		} else {
-			return; // Do nothing
+			return null; // Do nothing
 		}
 
 
-		email = dataAccessor.createOrUpdateEmail( email );
+		return email;
 
 	}
 	
