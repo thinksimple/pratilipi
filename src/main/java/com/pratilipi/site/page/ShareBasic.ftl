@@ -12,25 +12,26 @@
 		<script>
 			function shareOnFacebook() {
 				var url = encodeURIComponent( getUrlParameter( "url" ) );
-				url += encodeURIComponent( "&utm_source=facebook" )
-				var fbUrl = ( "http://www.facebook.com/sharer.php?u=" + url );
-				window.open( fbUrl, "share", "width=600,height=500,left=70px,top=60px" );
+				url += encodeURIComponent( "&utm_source=facebook" );
+				window.open( "http://www.facebook.com/sharer.php?u=" + url, 
+				"share", "width=600,height=500,left=70px,top=60px" );
 			}
 			function shareOnTwitter() {
 				var url = encodeURIComponent( getUrlParameter( "url" ) );
-				url += encodeURIComponent( "&utm_source=twitter" );		
+				url += encodeURIComponent( "&utm_source=twitter" );	
 				window.open( "http://twitter.com/share?url=" + url ,
 				"share", "width=500,height=600,left=70px,top=60px" );
 			}
 			function shareOnGplus() {
 				var url = encodeURIComponent( getUrlParameter( "url" ) );
-				url += encodeURIComponent( "&utm_source=gplus" );				
-				window.open( "https://plus.google.com/share?url=" + url, "share", "width=500,height=600,left=70px,top=60px" );
+				url += encodeURIComponent( "&utm_source=gplus" );
+				window.open( "https://plus.google.com/share?url=" + url, 
+				"share", "width=500,height=600,left=70px,top=60px" );
 			}
 			function shareOnWhatsapp() {
 				var url = encodeURIComponent( getUrlParameter( "url" ) );
-				url += encodeURIComponent( "&utm_source=whatsapp" );				
-				window.location.href = ( "whatsapp://send?text=" + url);	
+				url += encodeURIComponent( "&utm_source=whatsapp" );
+				window.location.href = ( "whatsapp://send?text=" + url );
 			}
 		</script>
 		<div class="secondary-500 pratilipi-shadow" style="display: block; padding: 5px; height: 64px;">
@@ -53,10 +54,12 @@
 						<div class="sprites-icon reader-setting-icon gplus-black-icon"></div>
 						<span>${ _strings.share_on_gplus }</span>
 					</a>
+					<#--
 					<a class="menu-item" style="cursor: pointer;" onclick="shareOnWhatsapp()" >
 						<div class="sprites-icon reader-setting-icon whatsapp-black-icon"></div>
 						<span>${ _strings.share_on_whatsapp }</span>
-					</a>					
+					</a>
+					-->					
 				</div>	
 			</div>
 		</div>
