@@ -140,11 +140,11 @@
 						"share", "width=1100,height=500,left=70px,top=60px" );
 				}
 				function shareOnTwitter( utm_location ) {
-					window.open( "http://www.facebook.com/sharer.php?u=" + getShareUrl( utm_location, "twitter" ),
+					window.open( "http://twitter.com/share?url=" + getShareUrl( utm_location, "twitter" ),
 						"share", "width=1100,height=500,left=70px,top=60px" );
 				}
 				function shareOnGplus( utm_location ) {
-					window.open( "http://www.facebook.com/sharer.php?u=" + getShareUrl( utm_location, "gplus" ),
+					window.open( "https://plus.google.com/share?url=" + getShareUrl( utm_location, "gplus" ),
 						"share", "width=1100,height=500,left=70px,top=60px" );
 				}
 			</#if>
