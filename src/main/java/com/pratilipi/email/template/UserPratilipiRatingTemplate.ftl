@@ -19,8 +19,8 @@ ${r' <!-- <#if rating??><#if rating <= 0.5 ><#assign img_name="0_5"><#elseif rat
 			<table align="left" style="border-collapse: collapse;" cellspacing="0" cellpadding="0">
 				<tr>
 					<td>
-						<a href="${"$"}{ user_pratilipi_page_url }" target="_blank">
-							<img src="${"$"}{ user_pratilipi_image_url }" style="border:0; width: 60px; height: 60px; border-radius: 50%;" />
+						<a href="${"$"}{ reviewer_page_url }" target="_blank">
+							<img src="${"$"}{ reviewer_image_url }" style="border:0; width: 60px; height: 60px; border-radius: 50%;" />
 						</a>
 					</td>
 					<td width="10">
@@ -30,8 +30,8 @@ ${r' <!-- <#if rating??><#if rating <= 0.5 ><#assign img_name="0_5"><#elseif rat
 						<table style="border-collapse: collapse;">
 							<tr>
 								<td>
-									<a href="${"$"}{ user_pratilipi_page_url }" style="color: #000; text-decoration: none; font-size: 14px; line-height: 19px; font-weight: bold;" target="_blank">
-										${"$"}{ user_pratilipi_name }
+									<a href="${"$"}{ reviewer_page_url }" style="color: #000; text-decoration: none; font-size: 14px; line-height: 19px; font-weight: bold;" target="_blank">
+										${"$"}{ reviewer_name }
 									</a>
 								</td>
 							</tr>
@@ -44,7 +44,7 @@ ${r' <!-- <#if rating??><#if rating <= 0.5 ><#assign img_name="0_5"><#elseif rat
 							</#if>
 							<tr>
 								<td>
-									<span style="font-size: 14px; line-height: 19px; color: #c7c7c7;">${"$"}{ user_pratilipi_creation_date }</span>
+									<span style="font-size: 14px; line-height: 19px; color: #c7c7c7;">${"$"}{ review_creation_date }</span>
 								</td>
 							</tr>
 						</table>

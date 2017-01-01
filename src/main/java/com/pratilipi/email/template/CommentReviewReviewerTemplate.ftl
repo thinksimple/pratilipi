@@ -14,8 +14,8 @@
 <table style="border: solid 1px #eeeeee; border-radius: 2px; padding: 10px; border-collapse: collapse;" cellspacing="0" cellpadding="0">
 	<tr>
 		<td>
-			<a href="${"$"}{ review_page_url }" target="_blank">
-				<img src="${"$"}{ review_image_url }" style="border: 0; border-radius: 50%; width: 64px;" width="64" />
+			<a href="${"$"}{ reviewer_page_url }" target="_blank">
+				<img src="${"$"}{ reviewer_image_url }" style="border: 0; border-radius: 50%; width: 64px;" width="64" />
 			</a>
 		</td>
 		<td width="10">
@@ -25,8 +25,8 @@
 			<table style="border-collapse:collapse" cellspacing="0" cellpadding="0">
 				<tr>
 					<td>
-						<a href="${"$"}{ review_page_url }" style="color:#000000; text-decoration: none; font-size: 16px; line-height: 21px;" target="_blank">
-							${"$"}{ review_name }
+						<a href="${"$"}{ reviewer_page_url }" style="color:#000000; text-decoration: none; font-size: 16px; line-height: 21px;" target="_blank">
+							${"$"}{ reviewer_name }
 						</a>
 					</td>
 				</tr>
@@ -58,8 +58,8 @@
 						&nbsp;&nbsp;&nbsp;
 					</td>
 					<td>
-						<a href="${"$"}{ comment_page_url }" target="_blank">
-							<img src="${"$"}{ comment_image_url }" style="border: 0; border-radius: 50%; width: 50px;" width="50" />
+						<a href="${"$"}{ commentor_page_url }" target="_blank">
+							<img src="${"$"}{ commentor_image_url }" style="border: 0; border-radius: 50%; width: 50px;" width="50" />
 						</a>
 					</td>
 					<td style="width: 10px;" width="10">
@@ -69,8 +69,8 @@
 						<table style="border-collapse: collapse;" cellspacing="0" cellpadding="0">
 							<tr>
 								<td>
-									<a href="${"$"}{ comment_page_url }" style="color: #000000; text-decoration: none; font-size: 16px; line-height: 21px;" target="_blank">
-										${"$"}{ comment_name }
+									<a href="${"$"}{ commentor_page_url }" style="color: #000000; text-decoration: none; font-size: 16px; line-height: 21px;" target="_blank">
+										${"$"}{ commentor_name }
 									</a>
 								</td>
 							</tr>
@@ -88,7 +88,7 @@
 					</td>
 					<td colspan="3">
 						<div style="font-size: 16px; line-height: 21px; color: #000000; margin: 10px 4px;">
-							${"$"}{ comment_content }
+							${"$"}{ comment_comment }
 						</div>
 					</td>
 				</tr>
