@@ -801,11 +801,20 @@ public class AuditLogProcessApi extends GenericApi {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		RtdbAccessor rtdbAccessor = DataAccessorFactory.getRtdbAccessor();
 
+		Map<Long,UserPreferenceRtdb> userPreferenceMap = new HashMap<>();
 		List<Email> immediateEmails = new ArrayList<>();
 		for( Email email : emailList ) {
-			UserPreferenceRtdb preference = rtdbAccessor.getUserPreference( email.getUserId() );
-			if( preference.getEmailFrequency() == null || preference.getEmailFrequency() == EmailFrequency.IMMEDIATELY )
+			UserPreferenceRtdb preference;
+			if( userPreferenceMap.containsKey( email.getUserId() ) ) {
+				preference = userPreferenceMap.get( email.getUserId() );
+			} else {
+				preference = rtdbAccessor.getUserPreference( email.getUserId() );
+				userPreferenceMap.put( email.getUserId(), preference );
+			}
+			if( preference.getEmailFrequency() == null || preference.getEmailFrequency() == EmailFrequency.IMMEDIATELY ) {
+				email.setScheduledDate( new Date() );
 				immediateEmails.add( email );
+			}
 		}
 
 		immediateEmails = dataAccessor.createOrUpdateEmailList( immediateEmails );
@@ -813,10 +822,16 @@ public class AuditLogProcessApi extends GenericApi {
 		/*
 		Set<Long> userIds = new HashSet<>();
 
-		Map<Long,UserPreferenceRtdb> userPreferenceMap = new HashMap<>( emailList.size() );
+		Map<Long,UserPreferenceRtdb> userPreferenceMap = new HashMap<>();
 		for( Email email : emailList ) {
-			UserPreferenceRtdb preference = rtdbAccessor.getUserPreference( email.getUserId() );
-			userPreferenceMap.put( email.getUserId(), preference );
+			UserPreferenceRtdb preference;
+			if( userPreferenceMap.containsKey( email.getUserId() ) ) {
+				preference = userPreferenceMap.get( email.getUserId() );
+			} else {
+				preference = rtdbAccessor.getUserPreference( email.getUserId() );
+				userPreferenceMap.put( email.getUserId(), preference );
+			}
+
 			if( preference.getEmailFrequency() != null && preference.getEmailFrequency() != EmailFrequency.IMMEDIATELY ) // Consolidated
 				userIds.add( email.getUserId() );
 		}
