@@ -421,10 +421,9 @@ public class PratilipiDocUtil {
 							page.addPagelet( PageletType.IMAGE, imgData );
 						
 					} else {
-						
-						AlignmentType alignment = _getAlignmentType( node );
-						page.addPagelet( PageletType.HTML, ( (Element) node ).html(), alignment );
-					
+
+						page.addPagelet( PageletType.HTML, ( (Element) node ).html(), _getAlignmentType( node ) );
+
 					}
 					
 				} else if( node.nodeName().equals( "img" ) ) {
@@ -783,11 +782,7 @@ public class PratilipiDocUtil {
 				if( pList.size() == 0 ) {
 					pageletList.add( new Object[] { PratilipiContentDoc.PageletType.HTML, "<br/>", null } );
 				} else {
-					AlignmentType alignment = null;
-					if( childNode.hasAttr( "style" ) && ! childNode.attr( "style" ).trim().isEmpty() )
-						for( String style : childNode.attr( "style" ).split( ";" ) )
-							if( style.substring( 0, style.indexOf( ":" ) ).trim().equals( "text-align" ) )
-								alignment = AlignmentType.valueOf( style.substring( style.indexOf( ":" ) + 1 ).trim().toUpperCase() );
+					AlignmentType alignment = _getAlignmentType( childNode );
 					if( alignment != null )
 						for( Object[] pagelet : pList )
 							if( pagelet[2] == null && ( pagelet[0] == PratilipiContentDoc.PageletType.TEXT || pagelet[0] == PratilipiContentDoc.PageletType.HTML ) )
