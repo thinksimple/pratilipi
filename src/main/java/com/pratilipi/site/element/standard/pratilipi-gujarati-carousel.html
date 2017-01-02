@@ -1,3 +1,4 @@
+<#assign android_banner_link="https://play.google.com/store/apps/details?id=com.pratilipi.mobile.android&referrer=utm_source%3Dpratilipi_main_web%26utm_medium%3Dweb_main_banner%26utm_campaign%3Dapp_download">
 <dom-module id="pratilipi-gujarati-carousel">
 
 	<style>
@@ -32,19 +33,19 @@
 				<!-- Items -->
 				<div class="carousel-inner">
 					<div class="item active">
-						<a href="/november-hits" target="_blank"><img src="{{ image1 }}" /></a>
+						<a target="_blank" href="${ android_banner_link }"><img src="{{ image1 }}" ></a>
 					</div>
 					<div class="item">
-						<a href="/rahasyamay-ane-romanchak" target="_blank"><img src="{{ image2 }}" /></a>
+						<a href="/2016-ki-superhit" target="_blank"><img src="{{ image2 }}" /></a>
 					</div>
 					<div class="item">
-						<a href="/romance" target="_blank"><img src="{{ image3 }}" /></a>
+						<a href="/rahasyamay-ane-romanchak" target="_blank"><img src="{{ image3 }}" /></a>
 					</div>
 					<div class="item">
-						<a href="/five-minutes-story" target="_blank"><img src="{{ image4 }}" /></a>
+						<a on-click="write"><img src="{{ image4 }}" /></a>
 					</div>
 					<div class="item">
-						<a href="/film-and-music" target="_blank"><img src="{{ image5 }}" /></a>
+						<a href="/romance" target="_blank"><img src="{{ image5 }}" /></a>
 					</div>
 				</div> 
 				<a href="#carousel" class="left carousel-control" data-slide="prev">
@@ -84,17 +85,17 @@
 			var windowsize = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 
 			if( windowsize > 560 ) {
-				this.image1 = "http://0.ptlp.co/resource-gu/home-page-banner/pratilipi-gujarati-carousel-41.jpg";
-				this.image2 = "http://1.ptlp.co/resource-gu/home-page-banner/pratilipi-gujarati-carousel-37.jpg";
-				this.image3 = "http://2.ptlp.co/resource-gu/home-page-banner/pratilipi-gujarati-carousel-38.jpg";
-				this.image4 = "http://3.ptlp.co/resource-gu/home-page-banner/pratilipi-gujarati-carousel-39.jpg";
-				this.image5 = "http://4.ptlp.co/resource-gu/home-page-banner/pratilipi-gujarati-carousel-40.jpg";
+				this.image1 = "http://0.ptlp.co/resource-gu/home-page-banner/pratilipi-gujarati-carousel-42.jpg";
+				this.image2 = "http://1.ptlp.co/resource-gu/home-page-banner/pratilipi-gujarati-carousel-43.jpg";
+				this.image3 = "http://2.ptlp.co/resource-gu/home-page-banner/pratilipi-gujarati-carousel-44.jpg";
+				this.image4 = "http://3.ptlp.co/resource-gu/home-page-banner/pratilipi-gujarati-carousel-45.jpg";
+				this.image5 = "http://4.ptlp.co/resource-gu/home-page-banner/pratilipi-gujarati-carousel-46.jpg";
 			} else {
-				this.image1 = "http://0.ptlp.co/resource-gu/home-page-banner/pratilipi-gujarati-carousel-41-small.jpg";
-				this.image2 = "http://1.ptlp.co/resource-gu/home-page-banner/pratilipi-gujarati-carousel-37-small.jpg";
-				this.image3 = "http://2.ptlp.co/resource-gu/home-page-banner/pratilipi-gujarati-carousel-38-small.jpg";
-				this.image4 = "http://3.ptlp.co/resource-gu/home-page-banner/pratilipi-gujarati-carousel-39-small.jpg";
-				this.image5 = "http://4.ptlp.co/resource-gu/home-page-banner/pratilipi-gujarati-carousel-40-small.jpg";
+				this.image1 = "http://0.ptlp.co/resource-gu/home-page-banner/pratilipi-gujarati-carousel-42-small.jpg";
+				this.image2 = "http://1.ptlp.co/resource-gu/home-page-banner/pratilipi-gujarati-carousel-43-small.jpg";
+				this.image3 = "http://2.ptlp.co/resource-gu/home-page-banner/pratilipi-gujarati-carousel-44-small.jpg";
+				this.image4 = "http://3.ptlp.co/resource-gu/home-page-banner/pratilipi-gujarati-carousel-45-small.jpg";
+				this.image5 = "http://4.ptlp.co/resource-gu/home-page-banner/pratilipi-gujarati-carousel-46-small.jpg";
 			}
 		},
 		
