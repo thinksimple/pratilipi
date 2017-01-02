@@ -72,9 +72,7 @@
 
   <!-- Uncomment the line below when ready to test with fake data -->
   <script>
-  alert("When i am not ready");
   $(function(){
-    alert("i am ready");
     var reqProperties = ['title', 'titleEn', 'language', 'summary', 'state', 'listingDateMillis', 'ratingCount', 'readCount'];
     var ViewModel = {
         title: ko.observable(),
@@ -97,7 +95,6 @@
       };  
       
       ko.applyBindings( ViewModel );
-      alert("going to make ajax req");
       $.ajax({
         type: 'get',
         url: '/api/pratilipi?_apiVer=2&pratilipiId=5639631493136384',
@@ -106,12 +103,10 @@
         },
         success: function( response ) {
           var res = jQuery.parseJSON( response );
-          alert("ajax succeeded");
           ViewModel.pushToViewModel( res );
         },
         error: function( response ) {
           console.log( response );
-          alert("ajax failed");
           console.log( typeof(response) );
         }
     });
