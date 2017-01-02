@@ -6,7 +6,10 @@
 		</button>
 		<div style="padding: 4px 1px; width: 95%; width: calc(100% - 23px); display: flex;" onclick="ga( 'send', 'event', 'app_download_banner', 'banner_click', 'android_app_download' ); window.open('https://play.google.com/store/apps/details?id=com.pratilipi.mobile.android&utm_source=pratilipi_mini_${language?lower_case}&utm_medium=bottom_strip&utm_campaign=app_download');">
 			<img style="max-width: 40px; max-height: 40px; margin-right: 12px; align-self: center;" src="http://0.ptlp.co/resource-all/home-page/google_playstore_40.png"/>
-			<span style="font-size: 13px; font-weight: 400; align-self: center;">${ _strings.pratilipi_app_launched_website_strip } <br> ${ _strings.pratilipi_app_click_download }</span>
+			<span style="font-weight: 400; align-self: center;">
+				<div style="font-size: 15px;line-height: 19px;"> ${ _strings.pratilipi_app_launched_website_strip } </div> 
+				<div style="font-size: 13px;"> ${ _strings.pratilipi_app_click_download } </div>
+			</span>
 		</div>
 	</div>
 </#if>

@@ -425,4 +425,4 @@ android_banner_profile_3 = നിങ്ങളുടെ രചനകളും ന
 
 # Android App launched promotion
 pratilipi_app_launched_website_strip = പ്രതിലിപി ആപ്പ് പുറത്തിറങ്ങിയിരിക്കുന്നു: ഒട്ടേറെ രചനകള്‍ ഡൌണ്‍ലോഡ് ചെയ്യൂ. 
-pratilipi_app_click_download = ഡൌണ്‍ലോഡ് ചെയ്യാന്‍ ഇവിടെ ക്ലിക്ക് ചെയ്യൂ 
+pratilipi_app_click_download = ഡൌണ്‍ലോഡ് ചെയ്യാന്‍ ക്ലിക്ക് ചെയ്യൂ 
