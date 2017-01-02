@@ -14,9 +14,9 @@
 <#include "GoogleTransliterate.ftl">
 
 <#-- Android App launch -->
-<#assign cookieName = "USER_NOTIFIED">
+<#assign cookieName = "USER_NOTIFIED_APP_LAUNCHED">
 <script>
-<#--
+
 HTMLImports.whenReady(function () {
 	$( document ).ready( function() {
 		if( getCookie( "${ cookieName }" ) != "true" )
@@ -24,7 +24,7 @@ HTMLImports.whenReady(function () {
 				document.getElementById( 'androidSubsribeAlert' ).style.display = "block";
 	});
 });
--->
+
 function subscribeAndroid( email, phone ) {
 	document.getElementById( 'success-androidSubsribeModal' ).style.display = 'none';
 	document.getElementById( 'failure-androidSubsribeModal' ).style.display = 'none';
