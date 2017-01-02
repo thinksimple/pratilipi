@@ -5,9 +5,9 @@
 
 <script>
 	var showBanner = getCookie( "${ cookie_show_banner }" ) == null || getCookie( "${ cookie_show_banner }" ) == "true";
-	var clicked = getCookie( "${ cookie_banner_clicked }" ) != null && getCookie( "${ cookie_banner_clicked }" ) == "true";
+	var click_count = getCookie( "${ cookie_banner_clicked }" ) == null ? 0 : parseInt( getCookie( "${ cookie_banner_clicked }" ) );
 	var cross_count = getCookie( "${ cookie_banner_crossed }" ) == null ? 0 : parseInt( getCookie( "${ cookie_banner_crossed }" ) );
-	
+
 	function initAndroidBanner() {
 		$( document ).ready( function() {
 			if( showBanner )
@@ -25,7 +25,11 @@
 	}
 
 	function showOrHideAndroidBanner() {
-		if( clicked ) {
+		if( click_count >= 3 ) {
+			setCookie( "${ cookie_show_banner }", false, 365, "/" );
+			return;
+		}
+		if( click_count > 0 ) {
 			if( cross_count == 0 )
 				setCookie( "${ cookie_show_banner }", false, 3, "/" );
 			if( cross_count == 1 )
@@ -41,19 +45,17 @@
 				setCookie( "${ cookie_show_banner }", false, null, "/" );
 			if( cross_count == 2 )
 				setCookie( "${ cookie_show_banner }", false, null, "/" );
-			if( cross_count >= 3 ) {
+			if( cross_count >= 3 )
 				setCookie( "${ cookie_show_banner }", false, 14, "/" );
-				cross_count = 0;
-			}
 		}
-		setCookie( "${ cookie_banner_clicked }", clicked, 365, "/" );
+		setCookie( "${ cookie_banner_clicked }", click_count, 365, "/" );
 		setCookie( "${ cookie_banner_crossed }", cross_count, 365, "/" );
 
 	}
 	function androidBannerClicked() {
-		clicked = true;
+		click_count++;
 		showOrHideAndroidBanner();
-		ga( 'send', 'event', 'app_download_strip', 'app_strip_click', 'android_app_download' )
+		ga( 'send', 'event', 'app_download_strip', 'app_strip_click', 'android_app_download' );
 	}
 	function androidBannerCrossed() {
 		cross_count++;
