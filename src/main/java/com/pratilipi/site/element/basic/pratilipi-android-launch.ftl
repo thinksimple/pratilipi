@@ -4,9 +4,9 @@
 		<button style="outline: none; right: 0px; margin-top: 16px; opacity: 1; color: #fff !important;margin-right: 10px;" type="button" class="close pull-right" data-dismiss="alert" aria-label="Close" onclick="setCookie( '${ cookieName }', 'true', undefined, '/' ); ga( 'send', 'event', 'app_download_banner', 'banner_close', 'android_app_download' );">
 			<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 		</button>
-		<div style="padding: 8px 1px; width: 95%; width: calc(100% - 23px); display: flex;" onclick="ga( 'send', 'event', 'app_download_banner', 'banner_click', 'android_app_download' ); window.open('https://play.google.com/store/apps/details?id=com.pratilipi.mobile.android&utm_source=pratilipi_mini_${language?lower_case}&utm_medium=bottom_strip&utm_campaign=app_download');">
+		<div style="padding: 4px 1px; width: 95%; width: calc(100% - 23px); display: flex;" onclick="ga( 'send', 'event', 'app_download_banner', 'banner_click', 'android_app_download' ); window.open('https://play.google.com/store/apps/details?id=com.pratilipi.mobile.android&utm_source=pratilipi_mini_${language?lower_case}&utm_medium=bottom_strip&utm_campaign=app_download');">
 			<img style="max-width: 40px; max-height: 40px; margin-right: 12px; align-self: center;" src="http://0.ptlp.co/resource-all/home-page/google_playstore_40.png"/>
-			<span style="font-size: 13px; font-weight: 400; align-self: center;">${ _strings.pratilipi_app_launched_website_strip } ${ _strings.pratilipi_app_click_download }</span>
+			<span style="font-size: 13px; font-weight: 400; align-self: center;">${ _strings.pratilipi_app_launched_website_strip } <br> ${ _strings.pratilipi_app_click_download }</span>
 		</div>
 	</div>
 </#if>
