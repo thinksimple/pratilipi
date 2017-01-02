@@ -78,6 +78,7 @@
   <script src="https://d3cwrmdwk8nw1j.cloudfront.net/third-party/compress/jquery.knockout.boostrap.js"></script>
   <script>
   $(function(){
+    alert("i am ready");
     var reqProperties = ['title', 'titleEn', 'language', 'summary', 'state', 'listingDateMillis', 'ratingCount', 'readCount'];
     var ViewModel = {
         title: ko.observable(),
@@ -89,18 +90,23 @@
         ratingCount: ko.observable(),
         readCount: ko.observable(),
         pushToViewModel: function( data ){
+          alert("inside push to view model");
           var self = this;
           $.each( data, function( key, value ) {
+            alert("inside jquery each");
             if( reqProperties.includes( key ) ) {
+              alert(key);
+              alert(value);
               self[key]( value );
             }
-            //self.ViewModel[ key ] = ko.observable( value );
+            alert( "outiside each function" );
+            /*self.ViewModel[ key ] = ko.observable( value ); */
           });
         }
       };  
       
       ko.applyBindings( ViewModel );
-      
+      alert("going to make ajax req");
       $.ajax({
         type: 'get',
         url: '/api/pratilipi?_apiVer=2&pratilipiId=5639631493136384',
@@ -109,10 +115,12 @@
         },
         success: function( response ) {
           var res = jQuery.parseJSON( response );
+          alert("ajax succeeded");
           ViewModel.pushToViewModel( res );
         },
         error: function( response ) {
           console.log( response );
+          alert("ajax failed");
           console.log( typeof(response) );
         }
     });
