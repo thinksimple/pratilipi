@@ -1,13 +1,36 @@
 <#assign cookieName = "USER_NOTIFIED_APP_LAUNCHED">
-<div id="androidSubsribeAlert" style="margin-bottom: 4px; border-radius: 0; cursor: pointer; padding: 0; display: none; color: #fff; background-color: #D0021B; border-color: #D0021B;" class="alert alert-dismissible fade in" role="alert">
-	<button style="outline: none; right: 6px; margin-top: 10px; opacity: 1; color: #fff!important;" type="button" class="close pull-right" data-dismiss="alert" aria-label="Close" onclick="setCookie( '${ cookieName }', 'true', undefined, '/' ); ga( 'send', 'event', 'app_download_strip', 'app_strip_close', 'android_app_download' );">
+<style>
+	.android-banner {
+		border-radius: 1px;
+		cursor: pointer;
+		padding: 0;
+		display: none;
+		color: #fff;
+		background-color: #D0021B;
+		border-color: #D0021B;
+		margin-bottom: 4px;
+	}
+	@media only screen and (max-width: 991px) {
+		.android-banner {
+			position: fixed;
+			z-index: 65535;
+			bottom: 0;
+			left: 0;
+			width: 98%;
+			margin-left: 1%;
+			margin-bottom: 0;
+		}
+	}
+</style>
+<div id="androidSubsribeAlert" class="alert alert-dismissible fade in android-banner" role="alert">
+	<button style="outline: none; right: 6px; margin-top: 12px; opacity: 1; color: #fff!important;" type="button" class="close pull-right" data-dismiss="alert" aria-label="Close" onclick="setCookie( '${ cookieName }', 'true', undefined, '/' ); ga( 'send', 'event', 'app_download_strip', 'app_strip_close', 'android_app_download' );">
 		<iron-icon style="color: #fff;" icon="icons:close"></iron-icon>
 	</button>
-	<div style="padding: 4px 1px; width: 95%; width: calc(100% - 23px); display: flex;" onclick="setCookie( '${ cookieName }', 'true', 3, '/' );ga( 'send', 'event', 'app_download_strip', 'app_strip_click', 'android_app_download' );window.open('https://play.google.com/store/apps/details?id=com.pratilipi.mobile.android&referrer=utm_source%3Dpratilipi_main_web%26utm_medium%3Dweb_bottom_strip%26utm_campaign%3Dapp_download');">
+	<div style="padding: 4px 2px; width: 95%; width: calc(100% - 32px); display: flex;" onclick="setCookie( '${ cookieName }', 'true', 3, '/' );ga( 'send', 'event', 'app_download_strip', 'app_strip_click', 'android_app_download' );window.open('https://play.google.com/store/apps/details?id=com.pratilipi.mobile.android&referrer=utm_source%3Dpratilipi_main_web%26utm_medium%3Dweb_bottom_strip%26utm_campaign%3Dapp_download');">
 		<img style="width: 40px; height: 40px; margin-right: 12px; align-self: center;" src="http://0.ptlp.co/resource-all/home-page/google_playstore_40.png"/>
 		<span style="font-size: 13px; font-weight: 400; align-self: center;">
-			<div style="font-size: 15px;line-height: 19px;"> ${ _strings.pratilipi_app_launched_website_strip } </div> 
-			<div style="font-size: 13px;"> ${ _strings.pratilipi_app_click_download } </div>
+			<span style="font-size: 15px; line-height: 19px;">${ _strings.pratilipi_app_launched_website_strip }</span> 
+			<span style="font-size: 13px;">${ _strings.pratilipi_app_click_download }</span>
 		</span>
 	</div>
 </div>
