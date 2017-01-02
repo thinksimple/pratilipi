@@ -1,3 +1,4 @@
+<#assign android_banner_link="https://play.google.com/store/apps/details?id=com.pratilipi.mobile.android&referrer=utm_source%3Dpratilipi_main_web%26utm_medium%3Dweb_main_banner%26utm_campaign%3Dapp_download">
 <dom-module id="pratilipi-kannada-carousel">
 
 	<style>
@@ -31,16 +32,19 @@
 				<!-- Items -->
 				<div class="carousel-inner">
 					<div class="item active">
-						<a href="/newyear2017" target="_blank"><img src="{{ image1 }}" /></a>
+						<a href="${ android_banner_link }" target="_blank"><img src="{{ image1 }}" /></a>
 					</div>
 					<div class="item">
-						<a href="/love" target="_blank"><img src="{{ image2 }}" /></a>
+						<a href="/newyear2017" target="_blank"><img src="{{ image2 }}" /></a>
 					</div>
 					<div class="item">
-						<a href="/inspirational" target="_blank"><img src="{{ image3 }}" /></a>
+						<a href="/love" target="_blank"><img src="{{ image3 }}" /></a>
 					</div>
 					<div class="item">
-						<a on-click="write"><img src="{{ image4 }}" /></a>
+						<a href="/inspirational" target="_blank"><img src="{{ image4 }}" /></a>
+					</div>
+					<div class="item">
+						<a on-click="write"><img src="{{ image5 }}" /></a>
 					</div>
 				</div> 
 				<a href="#carousel" class="left carousel-control" data-slide="prev">
@@ -71,7 +75,8 @@
 			image1: { type: Image },
 			image2: { type: Image },
 			image3: { type: Image },
-			image4: { type: Image }
+			image4: { type: Image },
+			image5: { type: Image }
 		},
 		
 		_onIronResize: function() {
@@ -79,15 +84,17 @@
 			var windowsize = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 
 			if( windowsize > 560 ) {
-				this.image1 = "http://0.ptlp.co/resource-kn/home-page-banner/pratilipi-kannada-carousel-16.jpg";
-				this.image2 = "http://3.ptlp.co/resource-kn/home-page-banner/pratilipi-kannada-carousel-13.jpg";
-				this.image3 = "http://4.ptlp.co/resource-kn/home-page-banner/pratilipi-kannada-carousel-15.jpg";
-				this.image4 = "http://4.ptlp.co/resource-kn/home-page-banner/pratilipi-kannada-carousel-17.jpg";
+				this.image1 = "http://0.ptlp.co/resource-kn/home-page-banner/pratilipi-kannada-carousel-18.jpg";
+				this.image2 = "http://0.ptlp.co/resource-kn/home-page-banner/pratilipi-kannada-carousel-16.jpg";
+				this.image3 = "http://3.ptlp.co/resource-kn/home-page-banner/pratilipi-kannada-carousel-13.jpg";
+				this.image4 = "http://4.ptlp.co/resource-kn/home-page-banner/pratilipi-kannada-carousel-15.jpg";
+				this.image5 = "http://4.ptlp.co/resource-kn/home-page-banner/pratilipi-kannada-carousel-17.jpg";
 			} else {
-				this.image1 = "http://0.ptlp.co/resource-kn/home-page-banner/pratilipi-kannada-carousel-16-small.jpg";
-				this.image2 = "http://3.ptlp.co/resource-kn/home-page-banner/pratilipi-kannada-carousel-13-small.jpg";
-				this.image3 = "http://4.ptlp.co/resource-kn/home-page-banner/pratilipi-kannada-carousel-15-small.jpg";
-				this.image4 = "http://4.ptlp.co/resource-kn/home-page-banner/pratilipi-kannada-carousel-17-small.jpg";
+				this.image1 = "http://0.ptlp.co/resource-kn/home-page-banner/pratilipi-kannada-carousel-18-small.jpg";
+				this.image2 = "http://0.ptlp.co/resource-kn/home-page-banner/pratilipi-kannada-carousel-16-small.jpg";
+				this.image3 = "http://3.ptlp.co/resource-kn/home-page-banner/pratilipi-kannada-carousel-13-small.jpg";
+				this.image4 = "http://4.ptlp.co/resource-kn/home-page-banner/pratilipi-kannada-carousel-15-small.jpg";
+				this.image5 = "http://4.ptlp.co/resource-kn/home-page-banner/pratilipi-kannada-carousel-17-small.jpg";
 			}
 		},
 		
