@@ -32,7 +32,7 @@
 			function saveChanges() {
 				var data = {};
 				$( '[data-key]' ).each( function( index ) {
-					data[ $( this ).attr( "data-key" ) ] = $( this ).text().trim();
+					data[ $( this ).attr( "data-key" ) ] = $( this ).text().replace( /<!--.+?-->/g, "" ).trim();
 				});
 
 				$.ajax({
