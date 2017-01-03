@@ -5,6 +5,14 @@
 		:host {
 			display: block;
 		}
+
+		.pratilipi-logo {
+			width: 64px;
+			height: 64px;
+			display: block;
+			margin: auto;
+			margin-bottom: 12px;
+		}
 		
 		paper-dropdown-menu.pratilipi-blue {
 			width: 100%;
@@ -52,11 +60,11 @@
 			white-space: nowrap;
 		}
 		
-		paper-checkbox.pratilipi-red {
+		paper-checkbox.pratilipi-blue {
 			align-self: center;
 			--paper-checkbox-checked-color: #107fe5;
 			--paper-checkbox-checked-ink-color: #333;
-			--paper-checkbox-unchecked-color: #333;
+			--paper-checkbox-unchecked-color: #107fe5;
 			--paper-checkbox-unchecked-ink-color: #333;
 			--paper-checkbox-label-color: #333;
 			--paper-checkbox-label-spacing: 0;
@@ -87,69 +95,75 @@
 		.modal-body{padding-bottom: 0;}
 		.modal-content {border-radius: 0;}
 		.pull-center {display:block;margin-left:auto;margin-right:auto;text-align:center;}
+		.modal-fullscreen .modal-dialog .modal-content {max-width: 768px;padding-top:16px;}
 
 	</style>
 
 	<template>
-		<div class="modal fade" id="pratilipiNotificationSettings" role="dialog" tabindex="-1">
+		<div class="modal modal-fullscreen fade" id="pratilipiNotificationSettings" role="dialog" tabindex="-1">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
-					<div class="modal-header">
-						<button style="opacity: 1; outline: none;" type="button" class="close" data-dismiss="modal" aria-label="Close"><iron-icon style="color: #333;" icon="icons:close"></iron-icon></button>
-						<h6 style="min-height: 20px; line-height: 20px;" class="modal-title">
-							${ _strings.notification_settings }
-						</h6>
+
+					<div class="modal-fullscreen-close-button">
+						<paper-icon-button noink icon="close" data-dismiss="modal"></paper-icon-button>
 					</div>
-					<div class="modal-body">
-							<paper-spinner class="new-spinner" active="{{ spinnerActive }}"></paper-spinner>
-							<paper-dropdown-menu id="selectEmailFrequency" noink label="${ _strings.email_frequency }" vertical-align="top" horizontal-align="right" class="pratilipi-blue">
-								<paper-menu selected="{{ selectedEmailFrequency }}"  noink class="dropdown-content" style="white-space: nowrap; width: auto;">
-									<paper-item value="IMMEDIATELY">${ _strings.email_frequency_immediate }</paper-item>
-									<paper-item value="DAILY">${ _strings.email_frequency_daily }</paper-item>
-									<paper-item value="WEEKLY">${ _strings.email_frequency_weekly }</paper-item>
-									<paper-item value="MONTHLY">${ _strings.email_frequency_monthly }</paper-item>
-									<paper-item value="NEVER">${ _strings.email_frequency_never }</paper-item>
-								</paper-menu>
-							</paper-dropdown-menu>
-							<div class="settings-group">
-								<h6>${ _strings.notification_group_content }</h6>
-								<div class="row">
-									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-										<paper-checkbox value="USER_PRATILIPI_REVIEW" class="pratilipi-red" noink>${ _strings.option_new_review }</paper-checkbox>
-									</div>
-									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-										<paper-checkbox value="COMMENT_REVIEW_REVIEWER" class="pratilipi-red" noink>${ _strings.option_new_comment }</paper-checkbox>
-									</div>
-									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-										<paper-checkbox value="VOTE_REVIEW_REVIEWER" class="pratilipi-red" noink>${ _strings.option_like_review }</paper-checkbox>
-									</div>
-									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-										<paper-checkbox value="VOTE_COMMENT_REVIEW_COMMENTOR" class="pratilipi-red" noink>${ _strings.option_like_comment }</paper-checkbox>
-									</div>
-								</div>
+
+					<iron-image class="pratilipi-logo" 
+										style="background-color: #f5f5f5" 
+										fade preload
+										sizing="cover" 
+										src="http://public.pratilipi.com/pratilipi-logo/png/Logo-2C-RGB-80px.png"  
+										alt="${ _strings.pratilipi }"  
+										title="${ _strings.pratilipi }"></iron-image>
+
+					<h6 class="text-center">${ _strings.notification_settings }</h6>
+
+					<paper-spinner class="new-spinner" active="{{ spinnerActive }}"></paper-spinner>
+						<paper-dropdown-menu id="selectEmailFrequency" noink label="${ _strings.email_frequency }" vertical-align="top" horizontal-align="right" class="pratilipi-blue">
+							<paper-menu selected="{{ selectedEmailFrequency }}"  noink class="dropdown-content" style="white-space: nowrap; width: auto;">
+								<paper-item value="IMMEDIATELY">${ _strings.email_frequency_immediate }</paper-item>
+								<paper-item value="DAILY">${ _strings.email_frequency_daily }</paper-item>
+								<paper-item value="WEEKLY">${ _strings.email_frequency_weekly }</paper-item>
+								<paper-item value="MONTHLY">${ _strings.email_frequency_monthly }</paper-item>
+								<paper-item value="NEVER">${ _strings.email_frequency_never }</paper-item>
+							</paper-menu>
+						</paper-dropdown-menu>
+					<div class="settings-group">
+						<h6>${ _strings.notification_group_content }</h6>
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+								<paper-checkbox value="USER_PRATILIPI_REVIEW" class="pratilipi-blue" noink>${ _strings.option_new_review }</paper-checkbox>
 							</div>
-							<div class="settings-group">
-								<h6>${ _strings.notification_group_network }</h6>
-								<div class="row">
-									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-										<paper-checkbox value="AUTHOR_FOLLOW" class="pratilipi-red" noink>${ _strings.option_new_follower }</paper-checkbox>
-									</div>
-									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-										<paper-checkbox value="PRATILIPI_PUBLISHED_FOLLOWER" class="pratilipi-red" noink>${ _strings.option_pratilipi_published_follower }</paper-checkbox>
-									</div>
-									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-										<paper-checkbox value="GENERIC" class="pratilipi-red" noink>${ _strings.option_pratilipi_updates }</paper-checkbox>
-									</div>
-								</div>
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+								<paper-checkbox value="COMMENT_REVIEW_REVIEWER" class="pratilipi-blue" noink>${ _strings.option_new_comment }</paper-checkbox>
 							</div>
-						<div class="display-message-div pratilipi-red"><p>{{ message }}</p></div>
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+								<paper-checkbox value="VOTE_REVIEW_REVIEWER" class="pratilipi-blue" noink>${ _strings.option_like_review }</paper-checkbox>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+								<paper-checkbox value="VOTE_COMMENT_REVIEW_COMMENTOR" class="pratilipi-blue" noink>${ _strings.option_like_comment }</paper-checkbox>
+							</div>
+						</div>
 					</div>
-					<div class="modal-footer" style="border: none; padding-top: 0px;">
-						<button disabled="{{ !canSaveChanges }}" id="notificationSettingsButton" class="pratilipi-dark-blue-button" type="button" on-click="onSubmit">
-							${ _strings.notification_settings_save_changes }
-						</button>
+					<div class="settings-group">
+						<h6>${ _strings.notification_group_network }</h6>
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+								<paper-checkbox value="AUTHOR_FOLLOW" class="pratilipi-blue" noink>${ _strings.option_new_follower }</paper-checkbox>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+								<paper-checkbox value="PRATILIPI_PUBLISHED_FOLLOWER" class="pratilipi-blue" noink>${ _strings.option_pratilipi_published_follower }</paper-checkbox>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+								<paper-checkbox value="GENERIC" class="pratilipi-blue" noink>${ _strings.option_pratilipi_updates }</paper-checkbox>
+							</div>
+						</div>
 					</div>
 				</div>
+			</div>
+			<div class="modal-footer">
+				<div class="display-message-div"><p>{{ message }}</p></div>
+				<button disabled="{{ !canSaveChanges }}" style="position: fixed; bottom: 15px; right: 15px;" class="pratilipi-dark-blue-button" type="button" on-click="onSubmit">${ _strings.notification_settings_save_changes }</button>
 			</div>
 		</div>
 	</template>
