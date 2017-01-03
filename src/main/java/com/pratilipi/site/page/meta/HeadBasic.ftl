@@ -64,3 +64,6 @@ src="https://www.facebook.com/tr?id=1569748966613739&ev=PageView&noscript=1"
 /></noscript>
 </#if>
 <script>function trackPixelEvents(eventName){if(typeof(fbq)!='undefined')fbq('trackCustom',eventName);}</script>
+
+<#-- Android Alerts on Website -->
+<#include "AndroidAlertScript.ftl">
