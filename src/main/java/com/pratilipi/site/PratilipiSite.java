@@ -1506,7 +1506,7 @@ public class PratilipiSite extends HttpServlet {
 	public Map<String, Object> createDataModelForEmailTemplatesPage( Language language ) 
 			throws UnexpectedServerException, InsufficientAccessException {
 
-		if( ! UserAccessUtil.hasUserAccess( AccessTokenFilter.getAccessToken().getUserId(), null, AccessType.I18N_UPDATE ) )
+		if( ! UserAccessUtil.hasUserAccess( AccessTokenFilter.getAccessToken().getUserId(), language, AccessType.I18N_UPDATE ) )
 			throw new InsufficientAccessException();
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
