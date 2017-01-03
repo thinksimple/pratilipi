@@ -426,3 +426,22 @@ android_banner_profile_3 = നിങ്ങളുടെ രചനകളും ന
 # Android App launched promotion
 pratilipi_app_launched_website_strip = പ്രതിലിപി ആപ്പ് പുറത്തിറങ്ങിയിരിക്കുന്നു: ഒട്ടേറെ രചനകള്‍ ഡൌണ്‍ലോഡ് ചെയ്യൂ. 
 pratilipi_app_click_download = ഡൌണ്‍ലോഡ് ചെയ്യാന്‍ ക്ലിക്ക് ചെയ്യൂ 
+
+# Notification Settings
+notification_settings = Notification Settings
+email_frequency = Email Frequency
+email_frequency_immediate = Immediately
+email_frequency_daily = Daily
+email_frequency_weekly = Weekly
+email_frequency_monthly = Monthly
+email_frequency_never = Never
+notification_group_content = Content
+option_new_review =  New Review 
+option_new_comment =  New Comment 
+option_like_review =  Like on review 
+option_like_comment =  New Like on Comment 
+notification_group_network = Network
+option_new_follower = New Follower
+option_pratilipi_published_follower =  New Content by people you follow 
+option_pratilipi_updates =  Pratilipi Updates and Offers 
+notification_settings_save_changes = Save Changes

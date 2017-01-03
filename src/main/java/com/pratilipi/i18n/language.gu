@@ -426,3 +426,22 @@ android_banner_profile_3 = આપની વાંચન સામગ્રી �
 # Android App launched promotion
 pratilipi_app_launched_website_strip = પ્રતિલિપિની મોબાઈલ એપ ઉપલબ્ધ છે :  હવે અગણિત પુસ્તકો નિ:શુલ્ક ડાઉનલોડ કરો. 
 pratilipi_app_click_download = ડાઉનલોડ કરવા માટે ક્લિક કરો.
+
+# Notification Settings
+notification_settings = Notification Settings
+email_frequency = Email Frequency
+email_frequency_immediate = Immediately
+email_frequency_daily = Daily
+email_frequency_weekly = Weekly
+email_frequency_monthly = Monthly
+email_frequency_never = Never
+notification_group_content = Content
+option_new_review =  New Review 
+option_new_comment =  New Comment 
+option_like_review =  Like on review 
+option_like_comment =  New Like on Comment 
+notification_group_network = Network
+option_new_follower = New Follower
+option_pratilipi_published_follower =  New Content by people you follow 
+option_pratilipi_updates =  Pratilipi Updates and Offers 
+notification_settings_save_changes = Save Changes

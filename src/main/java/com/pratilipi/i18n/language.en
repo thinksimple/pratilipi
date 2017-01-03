@@ -423,6 +423,9 @@ android_banner_profile_1 = Your Profile, your way
 android_banner_profile_2 = Create profile which defines you
 android_banner_profile_3 = Manage your contents and network
 
+# Android App launched promotion
+pratilipi_app_launched_website_strip = Pratilipi App Launched : Download unlimited books.
+pratilipi_app_click_download = Click to download
 
 # Notification Settings
 notification_settings = Notification Settings
@@ -442,7 +445,3 @@ option_new_follower = New Follower
 option_pratilipi_published_follower =  New Content by people you follow 
 option_pratilipi_updates =  Pratilipi Updates and Offers 
 notification_settings_save_changes = Save Changes
-
-# Android App launched promotion
-pratilipi_app_launched_website_strip = Pratilipi App Launched : Download unlimited books.
-pratilipi_app_click_download = Click to download
