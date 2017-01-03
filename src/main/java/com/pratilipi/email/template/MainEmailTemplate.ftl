@@ -15,8 +15,8 @@
 									<td>
 										<span style="color: #000; font-size: 20px; font-weight: bold;">pratilipi</span>
 									</td>
-									<td width="40" align="right" style="width: 40px; text-align: right;">
-										<img width="40" height="40" style="width: 40px; height: 40px;" src="http://public.pratilipi.com/resource-all/home-page/google_playstore_40.png" />
+									<td width="128" align="right" style="width: 128px; text-align: right;">
+										<img width="128" style="width: 128px;" src="http://public.pratilipi.com/resource-all/image/google-play-badge.png" />
 									</td>
 								</tr>
 							</table>
