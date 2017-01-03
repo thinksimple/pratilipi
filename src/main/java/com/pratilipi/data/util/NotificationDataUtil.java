@@ -131,7 +131,7 @@ public class NotificationDataUtil {
 			notificationData.setUserId( notification.getUserId() );
 			
 			Language notificationLanguage = language == null
-					? users.get( notification.getUserId() ).getAuthor().getLanguage()
+					? users.get( notification.getUserId() ).getLanguage()
 					: language;
 			if( notificationLanguage == null )
 				notificationLanguage = Language.ENGLISH;
