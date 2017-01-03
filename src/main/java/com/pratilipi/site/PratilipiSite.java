@@ -541,6 +541,7 @@ public class PratilipiSite extends HttpServlet {
 		dataModel.put( "pratilipiTypesJson", gson.toJson( pratilipiTypes ) );
 		dataModel.put( "navigationListJson", gson.toJson( navigationList ) );
 		dataModel.put( "stage", SystemProperty.STAGE );
+		dataModel.put( "basicMode", basicMode );
 
 		// Android App Registration
 		if( AccessTokenFilter.getCookieValue( "USER_NOTIFIED_APP_LAUNCHED", request ) != null ) {

@@ -16,13 +16,13 @@
 		});
 	}
 
-	if( HTMLImports ) {
+	<#if basicMode>
+		initAndroidBanner();
+	<#else>
 		HTMLImports.whenReady(function () {
 			initAndroidBanner();
 		});
-	} else {
-		initAndroidBanner();
-	}
+	</#if>
 
 	function showOrHideAndroidBanner() {
 		if( click_count >= 3 ) {
