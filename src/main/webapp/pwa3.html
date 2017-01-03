@@ -40,11 +40,11 @@
         readCount: ko.observable(),
         pushToViewModel: function( data ){
           var self = this;
-          $.each( data, function( key, value ) {
-            if( reqProperties.includes( key ) ) {
-              self[key]( value );
+          for (var key in data) {
+            if (data.hasOwnProperty(key) && reqProperties.includes( key )) {
+              self[key]( data[key] );
             }
-          });
+          }
         }
       };  
       
