@@ -2,7 +2,8 @@
 	<div class="container">
 		<div class="pratilipi-shadow secondary-500 box" style="margin: 12px auto;">
 			<div class="text-center" style="padding: 10px;">
-				<img style="width: 50px; height: 50px;" src="http://0.ptlp.co/resource-${ lang }/logo/pratilipi_logo.png">
+				<button style="padding:7px;" class="pull-left pratilipi-grey-button pratilipi-without-margin" onclick="redirectToPreviousPage()" ><div class="sprites-icon black-cross-icon"></div></button>
+				<button style="padding:7px;" class="pull-right pratilipi-red-button pratilipi-without-margin" onclick="submitNotificationsForm()"><div class="sprites-icon red-check-icon"></div></button>			
 				<h3 class="text-center pratilipi-red" style="margin-top: 10px;">${ _strings.notification_settings }</h3>
 			</div>
 
@@ -61,18 +62,21 @@
 						</label>
 					</div>							
 				</div>
-
-				<button class="pratilipi-dark-blue-button" type="submit">${ _strings.notification_settings_save_changes }</button>
-
 			</form>
 		</div>
 	</div>
 </div>
 <script>
-	$( "#notification_settings_form" ).on( "submit" , function( e ) {
-
-		e.preventDefault();
-
+	function redirectToPreviousPage() {
+		var retUrl = getUrlParameters().ret;
+		if(  retUrl != null )
+			window.location.href = retUrl;
+		else
+			window.location.href = "/notifications"; 		
+	}
+	
+	function submitNotificationsForm( ) {	
+		addSpinner();
 		var notification_preferences = {};
 		notification_preferences[ "emailFrequency" ] = $( "#email_frequency" ).val();
 		notification_preferences[ "notificationSubscriptions" ] = {};
@@ -82,6 +86,7 @@
 		});
 
 		setNotificationPreferences( notification_preferences );
+		redirectToPreviousPage();
 
 	});
 
