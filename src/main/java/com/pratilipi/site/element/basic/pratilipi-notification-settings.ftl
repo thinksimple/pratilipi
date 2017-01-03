@@ -86,19 +86,31 @@
 	});
 
 	$( document ).ready( function() {
+	    addSpinner();
 		getNotificationPreferences( getNotifPreferencesCallback );
 	});
 
 	function getNotifPreferencesCallback( notification_preferences ) {
 
 		var notification_subscriptions = notification_preferences[ "notificationSubscriptions" ];
-
-		$( "#email_frequency" ).val( notification_preferences[ "emailFrequency" ] != null ? 
+		var email_frequency_val = ( notification_preferences[ "emailFrequency" ] != null ? 
 				notification_preferences[ "emailFrequency" ] : "IMMEDIATELY" );
+		$( "#email_frequency" ).val( email_frequency_val );
 
 		$( "input:checkbox" ).each( function() {
 			$( this ).prop( 'checked', notification_subscriptions != null && notification_subscriptions[ $( this ).val() ] != null ?
 				notification_subscriptions[ $( this ).val() ] : true );
 		});
+		
+		removeSpinner();
 	}
+	
+	function addSpinner() {
+		var $spinner = $("<div>").addClass("spinner");
+		$( ".box" ).append( $spinner );
+	}
+	
+	function removeSpinner() {
+		$(".spinner").remove();
+	};
 </script>
