@@ -217,7 +217,7 @@
 			padding: 64px 0px; 
 		}
 		.landing-page .pratilipi-banner .content-wrapper .description {
-			margin: 10px auto;
+			margin: 12px auto;
 			font-family: Montserrat, Helvetica;
 		}
 		.landing-page .pratilipi-banner .content-wrapper .description .bg-white {
@@ -642,14 +642,14 @@
 			z-index: 64456;
 			opacity: 1;
 		}
-		@media only screen and (max-width: 512px) {
+		@media only screen and (max-width: 768px) {
 			.android-logo {
 				position: absolute;
 				margin-top: -40px;
 				margin-left: 20px;
 			}
 		}
-		@media only screen and (min-width: 512px) {
+		@media only screen and (min-width: 769px) {
 			.android-logo {
 				float: right;
 				margin-top: 32px;
