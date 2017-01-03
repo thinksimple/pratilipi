@@ -82,7 +82,7 @@ public class AuditLogProcessApi extends GenericApi {
 		DataListCursorTuple<AuditLog> auditLogDataListCursorTuple = dataAccessor.getAuditLogList(
 				new Date( 1469989800000L ), // Mon Aug 01 00:00:00 IST 2016
 				(String) appProperty.getValue(),
-				10000 );
+				5000 );
 
 
 		// Make sets of PrimaryContent ids
