@@ -9,5 +9,7 @@
 <#elseif action == "five">
 	<#include "/pwa5.html">	
 <#elseif action == "six">
-	<#include "/pwa6.html">				
+	<#include "/pwa6.html">	
+<#elseif action == "seven">
+	<#include "/pwa7.html">					
 </#if>
