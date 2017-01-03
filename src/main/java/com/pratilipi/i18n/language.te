@@ -445,3 +445,8 @@ option_new_follower = New Follower
 option_pratilipi_published_follower =  New Content by people you follow 
 option_pratilipi_updates =  Pratilipi Updates and Offers 
 notification_settings_save_changes = Save Changes
+
+#Whatsapp share messages
+whatsapp_read_unlimited_stories = ప్రతిలిపిలో మరెన్నో కథలు, కవితలు, వ్యాసాలను ఉచితంగా చదవండి
+whatsapp_read_story = , ప్రతిలిపిలో చదవండి: 
+whatsapp_follow_author = , ప్రతిలిపిలో అనుసరించండి: 

@@ -445,3 +445,8 @@ option_new_follower = New Follower
 option_pratilipi_published_follower =  New Content by people you follow 
 option_pratilipi_updates =  Pratilipi Updates and Offers 
 notification_settings_save_changes = Save Changes
+
+#Whatsapp Share Messages 
+whatsapp_read_unlimited_stories = ഇന്ത്യന്‍ ഭാഷകളിലുള്ള ഏറെ കഥകളും കവിതകളും ലേഖനങ്ങളുമെല്ലാം സൗജന്യമായി വായിക്കൂ !
+whatsapp_read_story = , എന്ന  രചന പ്രതിലിപിയില്‍ വായിക്കൂ: 
+whatsapp_follow_author = , നെ പ്രതിലിപിയില്‍  ഫോളോ ചെയ്യൂ:
