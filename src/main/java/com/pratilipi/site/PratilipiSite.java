@@ -453,10 +453,6 @@ public class PratilipiSite extends HttpServlet {
 
 				templateName = "BlogEdit.ftl";
 
-			} else if( uri.equals( "/android-app-registration" ) ) {
-				dataModel = new HashMap<String, Object>();
-				dataModel.put( "title", "Registration for Android App!" );
-				templateName = "AppRegistration.ftl";
 
 			} else if( uri.matches( "^/[a-z0-9-]+$" ) && ( dataModel = createDataModelForListPage( uri.substring( 1 ), basicMode, displayLanguage, filterLanguage, request ) ) != null ) {
 				templateName = ( basicMode ? "ListBasic.ftl" : "List.ftl" );
@@ -542,11 +538,6 @@ public class PratilipiSite extends HttpServlet {
 		dataModel.put( "navigationListJson", gson.toJson( navigationList ) );
 		dataModel.put( "stage", SystemProperty.STAGE );
 		dataModel.put( "basicMode", basicMode );
-
-		// Android App Registration
-		if( AccessTokenFilter.getCookieValue( "USER_NOTIFIED_APP_LAUNCHED", request ) != null ) {
-			dataModel.put( "userNotifed", true );
-		}
 
 		if( basicMode ) {
 			StringBuffer requestUrl = new StringBuffer( request.getRequestURI() );
