@@ -52,8 +52,6 @@ public class AuthorDataUtil {
 	
 	private static final Logger logger =
 			Logger.getLogger( AuthorDataUtil.class.getName() );
-	
-	private static final String IMAGE_FOLDER = "author-image/original";
 
 	
 	public static boolean hasAccessToListAuthorData( Language language ) {
@@ -731,58 +729,49 @@ public class AuthorDataUtil {
 		
 	}
 
-	public static DataListCursorTuple<AuthorData> getRecommendedAuthorList( 
-			Long userId, Language language, String startAfter, Integer resultCount ) 
+	public static DataListCursorTuple<AuthorData> getRecommendedAuthorList(
+			Long userId, Language language, String cursorStr, Integer resultCount )
 			throws UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-
-		// Get the user followings
 		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
+
 		UserFollowsDoc followsDoc = docAccessor.getUserFollowsDoc( userId );
-		List<Long> userFollowedauthorIds = new ArrayList<Long>();
-		if( followsDoc != null ) {
-			List<UserAuthorDoc> followingAuthors = followsDoc.getFollows( UserFollowState.FOLLOWING );
-			List<UserAuthorDoc> ignoredAuthors = followsDoc.getFollows( UserFollowState.IGNORED );
-			for( UserAuthorDoc doc : followingAuthors )
-				userFollowedauthorIds.add( doc.getAuthorId() );
-			for( UserAuthorDoc doc : ignoredAuthors )
-				if( new Date().getTime() - doc.getFollowDate().getTime() >= TimeUnit.DAYS.toMillis( 30 ) )
-					userFollowedauthorIds.add( doc.getAuthorId() );
-		}
 
-		// Get the total list of recommended authors
-		List<Long> recommendedList = new ArrayList<>();
+		
+		// Authors to ignore = Authors Following + Authors Ignored
+		List<Long> authorIdsToIgnore = new ArrayList<Long>();
+		for( UserAuthorDoc userAuthorDoc : followsDoc.getFollows( UserFollowState.FOLLOWING ) )
+			authorIdsToIgnore.add( userAuthorDoc.getAuthorId() );
+		for( UserAuthorDoc userAuthorDoc : followsDoc.getFollows( UserFollowState.IGNORED ) )
+			if( new Date().getTime() - userAuthorDoc.getFollowDate().getTime() >= TimeUnit.DAYS.toMillis( 30 ) )
+				authorIdsToIgnore.add( userAuthorDoc.getAuthorId() );
 
-		List<Long> idList = _getRecommendAuthorList( language );
+		
+		// Get global list of recommended authors
+		List<Long> recommendedList = _getRecommendAuthorGlobalList( language );
 
-		// startAfter cursor passed from front-end
-		Long startAfterLong = startAfter == null ? null : Long.parseLong( startAfter );
-		if( startAfterLong != null && idList.contains( startAfterLong ) ) {
-			int beginIndex = Math.min( idList.indexOf( startAfterLong ) + 1,
-					idList.size() ); // Edge case
-			recommendedList.addAll( idList.subList( 
-					beginIndex, 
-					idList.size() ) );
-		} else {
-			recommendedList.addAll( idList );
-		}
+		
+		// If cursor is passed, drop all items up till cursor
+		Long cursor = cursorStr == null ? null : Long.parseLong( cursorStr );
+		if( cursor != null && recommendedList.contains( cursor ) )
+			while( recommendedList.remove( 0 ) != cursor )
+				continue;
 
-		// Filter all user followings
-		recommendedList.removeAll( userFollowedauthorIds );
+		// Remove Author ids to be ignored
+		recommendedList.removeAll( authorIdsToIgnore );
 
-
-		// Edge case - result-count exceeding the size of list
-		resultCount = Math.min( resultCount, recommendedList.size() );
-		recommendedList = recommendedList.subList( 0, resultCount );
-
-		// Setting new cursor
-		if( ! recommendedList.isEmpty() )
-			startAfter = recommendedList.get( recommendedList.size() - 1 ).toString(); 
-
-		// Randomization on the subset of AuthorList
+		// Drop items if recommendedList size is requested count
+		if( resultCount != null )
+			while( recommendedList.size() > resultCount )
+				recommendedList.remove( resultCount );
+		
+		
+		
+		// Shuffle the list
 		Collections.shuffle( recommendedList );
 
+		
 		Map<Long, Author> authors = dataAccessor.getAuthors( recommendedList );
 		Map<Long, Page> authorPages = dataAccessor.getPages( PageType.AUTHOR, recommendedList );
 
@@ -790,17 +779,18 @@ public class AuthorDataUtil {
 		for( Long authorId : recommendedList )
 			recommendAuthorData.add( createAuthorData( authors.get( authorId ), authorPages.get( authorId ) ) );
 
-		return new DataListCursorTuple<AuthorData>( recommendAuthorData, startAfter );
+		return new DataListCursorTuple<AuthorData>(
+				recommendAuthorData,
+				recommendedList.isEmpty() ? null : recommendedList.get( recommendedList.size() - 1 ).toString() );
 
 	}
 
-
-	private static List<Long> _getRecommendAuthorList( Language language ) {
+	private static List<Long> _getRecommendAuthorGlobalList( Language language ) {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Memcache memcache = DataAccessorFactory.getL2CacheAccessor();
 
-		String memcacheId = "Recommend.AuthorList-" + language.getCode();
+		String memcacheId = "AuthorDataUtil.RecommendAuthorGlobalList-" + language.getCode();
 
 		List<Long> authorList = memcache.get( memcacheId );
 
@@ -841,14 +831,14 @@ public class AuthorDataUtil {
 
 		for( int i = 0; i < order.length; i++ ) {
 			int beginIndex = ( order[i] - 1 ) * chunkSize;
-			List<Long> idList = authorList.subList( beginIndex, beginIndex + chunkSize );
-			Collections.shuffle( idList );
-			resultList.addAll( idList );
+			List<Long> subList = authorList.subList( beginIndex, beginIndex + chunkSize );
+			Collections.shuffle( subList );
+			resultList.addAll( subList );
 		}
 
-		resultList.addAll( authorList.subList(  
-				authorList.size() - ( authorList.size() % orderSize ), authorList.size() ) );
+		resultList.addAll( authorList.subList( authorList.size() - ( authorList.size() % orderSize ), authorList.size() ) );
 
+		// Caching the result in memcache for 2 hours
 		memcache.put( memcacheId, resultList, 180 );
 
 		return resultList;
