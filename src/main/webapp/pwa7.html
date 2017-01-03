@@ -244,19 +244,16 @@
             ko.applyBindings( ViewModel );
             $( '.carousel' ).carousel();
             $.ajax({
-                type: 'get',
-                url: 'https://prod-pratilipi.appspot.com/api/init?_apiVer=2&language=HINDI',
-                data: { 
-                    // 'language': "${ language }"
-                },
-                success: function( response ) {
-                  var res = jQuery.parseJSON( response );
-          ViewModel.pushToSectionList(res["sections"]);
-                },
-                error: function( response ) {
-                    console.log( response );
-                  console.log( typeof(response) );
-                }
+              type: 'get',
+              url: '/api/init?_apiVer=2&language=HINDI',
+              success: function( response ) {
+              	var res = jQuery.parseJSON( response );
+				ViewModel.pushToSectionList(res["sections"]);
+              },
+              error: function( response ) {
+                  console.log( response );
+              	console.log( typeof(response) );
+              }
             });
         });
     </script>
