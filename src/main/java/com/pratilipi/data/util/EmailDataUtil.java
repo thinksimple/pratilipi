@@ -49,6 +49,10 @@ public class EmailDataUtil {
 	}
 
 
+	private static String _getContentSnippet( Email email ) throws UnexpectedServerException {
+		return _getContentSnippet( email, null );
+	}
+
 	private static String _getContentSnippet( Email email, Language language ) throws UnexpectedServerException {
 
 		Map<String, Object> dataModel = null;
@@ -71,6 +75,9 @@ public class EmailDataUtil {
 
 		else if( email.getType() == EmailType.VOTE_COMMENT_REVIEW_COMMENTOR )
 			dataModel = _createDataModelForVoteCommentEmail( email.getPrimaryContentId() );
+
+		if( language == null )
+			language = (Language) dataModel.get( "language" );
 
 		String template = EmailTemplateUtil.getEmailTemplate( email.getType(), language );
 		return FreeMarkerUtil.processString( dataModel, template );
@@ -130,7 +137,7 @@ public class EmailDataUtil {
 			return;
 		}
 
-		String content = _getContentSnippet( email, user.getLanguage() );
+		String content = _getContentSnippet( email );
 
 
 		Pattern senderNamePattern = Pattern.compile( "<!-- SENDER_NAME:(.+?) -->" );
@@ -175,6 +182,9 @@ public class EmailDataUtil {
 		dataModel.put( "pratilipi_page_url", _getDomainName( pratilipi.getLanguage() ) + pratilipi.getPageUrl() );
 		dataModel.put( "author_name", pratilipi.getAuthor().getName() != null ? pratilipi.getAuthor().getName() : pratilipi.getAuthor().getNameEn() );
 		dataModel.put( "author_page_url", _getDomainName( pratilipi.getLanguage() ) + pratilipi.getAuthor().getPageUrl() );
+
+		dataModel.put( "language", pratilipi.getLanguage() );
+
 		return dataModel;
 
 	}
@@ -191,8 +201,11 @@ public class EmailDataUtil {
 		dataModel.put( "follower_name", follower.getName() != null ?  follower.getName() : follower.getNameEn() );
 		dataModel.put( "follower_page_url", _getDomainName( follower.getLanguage() ) + follower.getPageUrl() );
 		dataModel.put( "follower_profile_image_url", follower.getProfileImageUrl( 50 ) );
+
 		if( follower.getFollowCount() > 0 )
 			dataModel.put( "follower_followers_count", follower.getFollowCount() );
+
+		dataModel.put( "language", follower.getLanguage() );
 
 		return dataModel;
 
@@ -229,6 +242,8 @@ public class EmailDataUtil {
 		if( userPratilipi.getCommentCount() != null )
 			dataModel.put( "review_comment_count", userPratilipi.getCommentCount().toString() );
 
+		dataModel.put( "language", pratilipi.getLanguage() );
+
 		return dataModel;
 
 	}
@@ -263,6 +278,8 @@ public class EmailDataUtil {
 		dataModel.put( "comment_date", _getDateFormat( comment.getCreationDate() ) );
 		dataModel.put( "comment_comment", HtmlUtil.truncateText( comment.getContent(), 200 ) );
 
+		dataModel.put( "language", pratilipi.getLanguage() );
+
 		return dataModel;
 
 	}
@@ -295,6 +312,8 @@ public class EmailDataUtil {
 		dataModel.put( "voter_name", voter.getAuthor().getName() != null
 				? voter.getAuthor().getName()
 				: voter.getAuthor().getNameEn() );
+
+		dataModel.put( "language", pratilipi.getLanguage() );
 
 		return dataModel;
 
@@ -333,6 +352,8 @@ public class EmailDataUtil {
 		dataModel.put( "commentor_image_url", comment.getUser().getAuthor().getProfileImageUrl( 50 ) );
 		dataModel.put( "comment_date", _getDateFormat( comment.getCreationDate() ) );
 		dataModel.put( "comment_comment", HtmlUtil.truncateText( comment.getContent(), 200 ) );
+
+		dataModel.put( "language", pratilipi.getLanguage() );
 
 		return dataModel;
 
