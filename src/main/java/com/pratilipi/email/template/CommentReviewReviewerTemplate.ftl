@@ -15,7 +15,7 @@
 	<tr>
 		<td>
 			<a href="${"$"}{ reviewer_page_url }" target="_blank">
-				<img src="${"$"}{ reviewer_image_url }" style="border: 0; border-radius: 50%; width: 64px;" width="64" />
+				<img width="64" src="${"$"}{ reviewer_image_url }" style="border: 0; border-radius: 50%; width: 64px; margin-left: 12px; margin-top: 12px;" />
 			</a>
 		</td>
 		<td width="10">
@@ -40,7 +40,7 @@
 	</tr>
 	<tr>
 		<td colspan="3">
-			<div style="font-size: 16px; line-height: 21px; color: #000000; margin: 10px 4px;">
+			<div style="font-size: 16px; line-height: 21px; color: #000000; margin: 10px 12px;">
 				${"$"}{ review_review }
 			</div>
 		</td>
@@ -83,11 +83,11 @@
 					</td>
 				</tr>
 				<tr>
-					<td style="width: 10px;" width="10">
+					<td style="width: 12px;" width="12">
 						&nbsp;&nbsp;&nbsp;
 					</td>
 					<td colspan="3">
-						<div style="font-size: 16px; line-height: 21px; color: #000000; margin: 10px 4px;">
+						<div style="font-size: 15px; line-height: 21px; color: #000000; margin: 10px 12px;">
 							${"$"}{ comment_comment }
 						</div>
 					</td>

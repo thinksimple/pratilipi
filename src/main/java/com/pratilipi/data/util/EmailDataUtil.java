@@ -43,7 +43,7 @@ public class EmailDataUtil {
 	}
 
 	private static String _getDateFormat( Date date ) {
-		DateFormat dateFormat = new SimpleDateFormat( "dd/mm/yyyy" );
+		DateFormat dateFormat = new SimpleDateFormat( "dd/MM/yyyy" );
 		dateFormat.setTimeZone( TimeZone.getTimeZone( "IST" ) );
 		return dateFormat.format( date );
 	}

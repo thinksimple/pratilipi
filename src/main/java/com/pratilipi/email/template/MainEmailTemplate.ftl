@@ -12,11 +12,10 @@
 									<td width="60">
 										<img width="60" height="60" style="width: 60px; height: 60px;" src="http://public.pratilipi.com/pratilipi-logo/png/Logo-2C-RGB-80px.png" />
 									</td>
-									<td>
-										<span style="color: #000; font-size: 20px; font-weight: bold;">pratilipi</span>
-									</td>
 									<td width="128" align="right" style="width: 128px; text-align: right;">
-										<img width="128" style="width: 128px;" src="http://public.pratilipi.com/resource-all/image/google-play-badge.png" />
+										<a href="https://play.google.com/store/apps/details?id=com.pratilipi.mobile.android&referrer=utm_source%3Demail-notification%26utm_medium%3Dtransactional-email%26utm_campaign%3Dapp-download-email">
+											<img width="128" style="width: 128px;" src="http://public.pratilipi.com/resource-all/image/google-play-badge.png" />
+										</a>
 									</td>
 								</tr>
 							</table>
