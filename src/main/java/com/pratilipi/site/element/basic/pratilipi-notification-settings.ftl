@@ -6,8 +6,9 @@
 				<button style="padding:7px;" class="pull-right pratilipi-red-button pratilipi-without-margin" onclick="submitNotificationsForm()"><div class="sprites-icon red-check-icon"></div></button>			
 				<h3 class="text-center pratilipi-red" style="margin-top: 10px;">${ _strings.notification_settings }</h3>
 			</div>
-
-			<form id="notification_settings_form" style="text-align: left;">
+		</div>
+		<div class="pratilipi-shadow secondary-500 box">
+			<form id="notification_settings_form" style="text-align: left;padding: 10px;">
 
 				<div class="form-group">
 					<label for="frequency">${ _strings.email_frequency }</label>
@@ -75,7 +76,7 @@
 			window.location.href = "/notifications"; 		
 	}
 	
-	function submitNotificationsForm( ) {	
+	function submitNotificationsForm() {	
 		addSpinner();
 		var notification_preferences = {};
 		notification_preferences[ "emailFrequency" ] = $( "#email_frequency" ).val();
@@ -88,7 +89,7 @@
 		setNotificationPreferences( notification_preferences );
 		redirectToPreviousPage();
 
-	});
+	};
 
 	$( document ).ready( function() {
 	    addSpinner();
