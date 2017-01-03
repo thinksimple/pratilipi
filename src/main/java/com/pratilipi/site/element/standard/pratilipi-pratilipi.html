@@ -163,28 +163,30 @@
 					</div>
 				</div>
 				<div id="pratilipi-col-right" style="padding: 20px;">
-					<h5 style="margin-top: 0px; display: inline-block;" class="pratilipi-red">{{ title }}</h5>
-					<span hidden$="{{ !hasAccessToUpdate }}" style="position: absolute;" class="dropdown">
-						<paper-icon-button style="color: #333; height: 34px; width: 34px; margin-top: -12px;" class="dropdown-trigger" icon="icons:create" noink type="button" data-toggle="dropdown"></paper-icon-button>
-						<ul class="dropdown-menu pull-right">
-							<li>
-								<a style="padding: 0; margin: 0;" on-click="openPratilipiEdit">
-									<paper-item>
-										<paper-icon-item><iron-icon style="margin-right: 4px; width: 22px;" icon="editor:mode-edit"></iron-icon></paper-icon-item>
-										<paper-item-body>${ _strings.pratilipi_edit_info }</paper-item-body>
-									</paper-item>
-								</a>
-							</li>
-							<li>
-								<a style="padding: 0; margin: 0;" on-click="openWriterPanel">
-									<paper-item>
-										<paper-icon-item><iron-icon style="margin-right: 4px; width: 22px;" icon="icons:description"></iron-icon></paper-icon-item>
-										<paper-item-body>${ _strings.pratilipi_edit_content }</paper-item-body>
-									</paper-item>
-								</a>
-							</li>
-						</ul>
-					</span>
+					<h5 style="margin-top: 0px; display: inline-block; line-height: 24px;" class="pratilipi-red">
+						{{ title }}
+						<span hidden$="{{ !hasAccessToUpdate }}" class="dropdown">
+							<paper-icon-button style="color: #333; height: 34px; width: 34px; margin-top: -12px;" class="dropdown-trigger" icon="icons:create" noink type="button" data-toggle="dropdown"></paper-icon-button>
+							<ul class="dropdown-menu pull-right">
+								<li>
+									<a style="padding: 0; margin: 0;" on-click="openPratilipiEdit">
+										<paper-item>
+											<paper-icon-item><iron-icon style="margin-right: 4px; width: 22px;" icon="editor:mode-edit"></iron-icon></paper-icon-item>
+											<paper-item-body>${ _strings.pratilipi_edit_info }</paper-item-body>
+										</paper-item>
+									</a>
+								</li>
+								<li>
+									<a style="padding: 0; margin: 0;" on-click="openWriterPanel">
+										<paper-item>
+											<paper-icon-item><iron-icon style="margin-right: 4px; width: 22px;" icon="icons:description"></iron-icon></paper-icon-item>
+											<paper-item-body>${ _strings.pratilipi_edit_content }</paper-item-body>
+										</paper-item>
+									</a>
+								</li>
+							</ul>
+						</span>
+					</h5>
 					<template is="dom-if" if="{{ pratilipi.author }}">
 						<div style="display: block;">
 							<a style="display: inline-block; color: #333;" href="{{ pratilipi.author.pageUrl }}" target="_blank">

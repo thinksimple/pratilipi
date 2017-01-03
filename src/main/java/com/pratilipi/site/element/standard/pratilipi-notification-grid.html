@@ -51,16 +51,16 @@
 			height: 48px;
 			margin-bottom: 12px;
 		}
-		paper-fab.settings-icon {
-			margin-top: -40px;
-			--paper-fab-background: #d0021b;
+		paper-icon-button.settings-icon {
+			--paper-fab-background: #333;
+			margin-top: -38px;
 		}
 	</style>
 
 	<template>
 		<paper-card class="notifications-heading">
 			<h5 class="pratilipi-red">${ _strings.notification_notifications }</h5>
-			<paper-fab mini noink icon="icons:settings" class="settings-icon pull-right" on-click="openNotificationSettings"></paper-fab>
+			<paper-icon-button hidden$="{{ isGuest }}" noink icon="icons:settings" class="settings-icon pull-right" on-click="openNotificationSettings"></paper-icon-button>
 		</paper-card>
 		<template is="dom-if" if="{{ isGuest }}">
 			<paper-card class="alert-message">
