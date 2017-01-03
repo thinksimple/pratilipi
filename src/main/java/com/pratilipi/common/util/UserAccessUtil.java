@@ -18,14 +18,14 @@ public class UserAccessUtil {
 			AccessType.PRATILIPI_READ_META, AccessType.PRATILIPI_READ_CONTENT,
 			AccessType.AUTHOR_LIST, AccessType.AUTHOR_ADD, AccessType.AUTHOR_UPDATE,
 			AccessType.EVENT_ADD, AccessType.EVENT_UPDATE,
-			AccessType.BLOG_POST_LIST, AccessType.BLOG_POST_ADD, AccessType.BLOG_POST_UPDATE };
+			AccessType.BLOG_POST_LIST, AccessType.BLOG_POST_ADD, AccessType.BLOG_POST_UPDATE, AccessType.I18N_UPDATE };
 
 	private enum Role {
 
 		GUEST			( null ),
 		MEMBER			( null,					MEMBER_ACCESS ),
 
-		ADMIN			( null,					AccessType.USER_ADD, AccessType.USER_UPDATE, AccessType.PRATILIPI_LIST, AccessType.BATCH_PROCESS_ADD, AccessType.BATCH_PROCESS_LIST, AccessType.I18N_UPDATE ),
+		ADMIN			( null,					AccessType.USER_ADD, AccessType.USER_UPDATE, AccessType.PRATILIPI_LIST, AccessType.BATCH_PROCESS_ADD, AccessType.BATCH_PROCESS_LIST ),
 		ADMIN_BENGALI	( Language.BENGALI,		ADMIN_ACCESS ),
 		ADMIN_GUJARATI	( Language.GUJARATI,	ADMIN_ACCESS ),
 		ADMIN_HINDI		( Language.HINDI,		ADMIN_ACCESS ),
