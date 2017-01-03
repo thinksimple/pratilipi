@@ -64,24 +64,21 @@ public class PageApi extends GenericApi {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
 		if( request.uri.startsWith( "/read?id=" ) ) { // TODO: Remove this as soon as READ uri(s) are added to Page table.
-
 			String pratilipiId = request.uri.substring( "/read?id=".length() );
 			if( pratilipiId.indexOf( '&' ) != -1 )
 				pratilipiId = pratilipiId.substring( 0, pratilipiId.indexOf( '&' ) );
 			return new Response( PageType.READ, Long.parseLong( pratilipiId ) );
-
 		} 
 
-		Page page = dataAccessor.getPage( request.uri.contains( "?" )
-										? request.uri.substring( 0, request.uri.indexOf( "?" ) )
-										: request.uri );
-
+		
+		Page page = dataAccessor.getPage( request.uri );
+		if( page == null && request.uri.contains( "?" ) )
+			page = dataAccessor.getPage( request.uri.substring( 0, request.uri.indexOf( "?" ) ) );
 		if( page != null )
 			return new Response( page.getType(), page.getPrimaryContentId() );
 
 
 		if( request.uri.matches( "^/[a-z0-9-]+$" ) ) { // TODO: Remove this as soon as CATEGORY_LIST uri(s) are added to Page table.
-
 			try {
 				String folder = DataAccessor.class.getResource( "curated/" ).toURI().getPath();
 				for( String fileName : new File( folder ).list() )
@@ -91,9 +88,9 @@ public class PageApi extends GenericApi {
 				logger.log( Level.SEVERE, "Failed to list category list files.", e );
 				throw new UnexpectedServerException();
 			}
-
 		}
 
+		
 		JsonObject errorMessages = new JsonObject();
 		errorMessages.addProperty( "uri", "Invalid uri !" );
 		throw new InvalidArgumentException( errorMessages );
