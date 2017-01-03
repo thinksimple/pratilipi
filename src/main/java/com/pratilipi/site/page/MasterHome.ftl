@@ -675,7 +675,12 @@
 						<div class="pratilipi"></div>
 						<h1>
 							pratilipi
-							<a class="android-logo" target="_blank" href="https://play.google.com/store/apps/details?id=com.pratilipi.mobile.android&utm_source=pratilipi_homepage&utm_campaign=app_download&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
+							<#if basicMode>
+								<#assign playstore_url = "https://play.google.com/store/apps/details?id=com.pratilipi.mobile.android&referrer=utm_source%3Dpratilipi_mini_web%26utm_medium%3Dweb_app_badge%26utm_campaign%3Dapp_download">
+							<#else>
+								<#assign playstore_url = "https://play.google.com/store/apps/details?id=com.pratilipi.mobile.android&referrer=utm_source%3Dpratilipi_main_web%26utm_medium%3Dweb_app_badge%26utm_campaign%3Dapp_download">
+							</#if>
+							<a class="android-logo" target="_blank" href="${ playstore_url }">
 								<img src="http://0.ptlp.co/resource-all/image/google-play-badge.png" />
 							</a>
 						</h1>
