@@ -66,8 +66,7 @@ public class EmailDataUtil {
 					|| email.getType() == EmailType.COMMENT_REVIEW_AUTHOR )
 			dataModel = _createDataModelForCommentReviewEmail( email.getPrimaryContentIdLong() );
 
-		else if( email.getType() == EmailType.VOTE_REVIEW_REVIEWER 
-					|| email.getType() == EmailType.VOTE_REVIEW_AUTHOR )
+		else if( email.getType() == EmailType.VOTE_REVIEW_REVIEWER )
 			dataModel = _createDataModelForVoteReviewEmail( email.getPrimaryContentId() );
 
 		else if( email.getType() == EmailType.VOTE_COMMENT_REVIEW_COMMENTOR )

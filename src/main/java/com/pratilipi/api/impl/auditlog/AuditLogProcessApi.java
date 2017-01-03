@@ -290,13 +290,6 @@ public class AuditLogProcessApi extends GenericApi {
 				Email email = _createVoteOnReviewReviewerEmail( userPratilipi, vote );
 				if( email != null )
 					totalEmailList.add( email );
-				
-				// To the author
-				Pratilipi pratilipi = pratilipis.get( userPratilipi.getPratilipiId() );
-				Author author = authors.get( pratilipi.getAuthorId() );
-				email = _createVoteOnReviewAuthorEmail( author, vote );
-				if( email != null )
-					totalEmailList.add( email );
 
 			} else if( vote.getParentType() == VoteParentType.COMMENT ) {
 
@@ -650,40 +643,6 @@ public class AuditLogProcessApi extends GenericApi {
 		} else {
 			return null; // Do nothing
 		}
-
-		return email;
-
-	}
-	
-	private Email _createVoteOnReviewAuthorEmail( Author author, Vote vote ) {
-
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-
-		if( author.getUserId() == null )
-			return null;
-
-		// TODO: Remove it ASAP
-		if( ! UserAccessUtil.hasUserAccess( author.getUserId(), null, AccessType.USER_ADD ) )
-			return null;
-
-		Email email = dataAccessor.getEmail(
-				author.getUserId(),
-				EmailType.VOTE_REVIEW_AUTHOR, 
-				vote.getId() );
-
-
-		if( email == null ) {
-			email = dataAccessor.newEmail(
-					author.getUserId(),
-					EmailType.VOTE_REVIEW_AUTHOR, 
-					vote.getId() );
-		} else if( email.getState() == EmailState.DEFERRED ) {
-			email.setState( EmailState.PENDING );
-			email.setLastUpdated( new Date() );
-		} else {
-			return null; // Do nothing
-		}
-
 
 		return email;
 

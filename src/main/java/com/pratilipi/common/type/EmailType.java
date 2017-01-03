@@ -14,8 +14,6 @@ public enum EmailType {
 	COMMENT_REVIEW_AUTHOR		( "CommentReviewAuthorTemplate.ftl",			"Email sent to Author when someone comments on any review." ),
 
 	VOTE_REVIEW_REVIEWER 		( "VoteReviewReviewerTemplate.ftl",				"Email sent to the reviewer when someone likes his/her comment." ),
-	VOTE_REVIEW_AUTHOR 			( "VoteReviewAuthorTemplate.ftl",				"Email sent to the author when someone likes on review of his/her content." ),
-
 	VOTE_COMMENT_REVIEW_COMMENTOR 		( "VoteCommentReviewCommentorTemplate.ftl",		"Email sent to the commentor when someone likes his/her comment on a review on a content." ),
 
 	;
