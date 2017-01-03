@@ -471,6 +471,7 @@ public class PratilipiSite extends HttpServlet {
 				resourceList.add( ThirdPartyResource.JQUERY_KNOCKOUT_BOOTSTRAP.getTag() );
 				resourceList.add( ThirdPartyResource.BOOTSTRAP_CSS.getTag() );
 				dataModel = createDataModelForHomePage( basicMode, filterLanguage );
+				dataModel.put( "action", request.getParameter( "action" ) );
 				templateName = "Knockout.ftl";
 				
 			} else {
