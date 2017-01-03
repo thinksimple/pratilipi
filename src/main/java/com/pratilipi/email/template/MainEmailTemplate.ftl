@@ -16,7 +16,7 @@
 										<span style="color: #000; font-size: 20px; font-weight: bold;">pratilipi</span>
 									</td>
 									<td width="40" align="right" style="width: 40px; text-align: right;">
-										<img width="40" height="40" style="width: 40px; height: 40px;" src="http://0.ptlp.co/resource-all/home-page/google_playstore_40.png" />
+										<img width="40" height="40" style="width: 40px; height: 40px;" src="http://public.pratilipi.com/resource-all/home-page/google_playstore_40.png" />
 									</td>
 								</tr>
 							</table>
@@ -40,7 +40,7 @@
 						<br/>
 						<p>
 							This email was sent to you by Pratilipi, if you don't want to receive such emails, unsubscribe 
-							<a href="#" style="color: #646464;" target="_blank">here</a>.
+							<a href="http://${ language?lower_case }.pratilipi.com/notifications?action=settings" style="color: #646464;" target="_blank">here</a>.
 						</p>
 						<p>
 							Contact us at
@@ -51,11 +51,9 @@
 						<br/>
 						<p>Jai Plaza Elite, House 1064, 1st Floor, 7th A main, 3rd block,<br/>Koramangala, Bengaluru, Karnataka 560076, India</p>
 						<p>
-							<a href="#" style="color: #646464;" target="_blank">Terms of Service</a>
+							<a href="http://${ language?lower_case }.pratilipi.com/terms-of-service" style="color: #646464;" target="_blank">Terms of Service</a>
 							|
-							<a href="#" style="color: #646464;" target="_blank">Privacy Policy</a>
-							|
-							<a href="#" style="color: #646464;" target="_blank">Settings</a>
+							<a href="http://${ language?lower_case }.pratilipi.com/privacy-policy" style="color: #646464;" target="_blank">Privacy Policy</a>
 						</p>
 					</div>
 				</center>
