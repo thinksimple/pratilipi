@@ -4,7 +4,7 @@
 	<table width="100%" align="center" table-layout="fixed;" style="width: 100%; table-layout: fixed; margin: auto; max-width: 600px;">
 		<tr>
 			<td>
-				<table align="center" width="100%" style="margin: auto; padding: 20px; border: 1px solid #c3c3c3; background-color: #ffffff; width: 100%;">
+				<table align="center" width="100%" style="margin: auto; padding: 20px; padding-top: 8px; border: 1px solid #c3c3c3; background-color: #ffffff; width: 100%;">
 					<tr>
 						<td>
 							<table style="margin: 0 auto; width: 100%; text-align: left;" width="100%">
