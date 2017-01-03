@@ -1,3 +1,4 @@
+<#include "pratilipi-notification-settings.html">
 <#include "pratilipi-notification-grid.html">
 
 <dom-module id="pratilipi-notification-page">
@@ -24,6 +25,7 @@
 		<pratilipi-edit-account user='[[ user ]]'></pratilipi-edit-account>
 		<pratilipi-write language-map="[[ languageMap ]]" pratilipi-types='[[ pratilipiTypes ]]'></pratilipi-write>
 		<pratilipi-alert></pratilipi-alert>
+		<pratilipi-notification-settings></pratilipi-notification-settings>
 
 		<div class="header-pos">
    			<pratilipi-header language-map="[[ languageMap ]]" user='[[ user ]]'></pratilipi-header>
@@ -76,6 +78,30 @@
 					return;
 				}
 				window.location.reload();
+			},
+
+			_login: function() {
+				document.querySelector( 'pratilipi-user' ).logIn( true, "${ _strings.user_login_to_view_notifications }" );
+			},
+
+			openNotificationSettings: function() {
+				if( this.guestUser ) {
+					this._login();
+					return;
+				}
+				this.querySelector( "pratilipi-notification-settings" ).open();
+			},
+
+			attached: function() {
+				if( this.guestUser ) {
+					this._login();
+					return;
+				}
+				var action = getUrlParameter( "action" );
+				if( action == "settings" ) {
+					this.openNotificationSettings();
+					return;
+				}
 			},
 
 			scrollHandler: function( st ) {

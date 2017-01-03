@@ -51,10 +51,17 @@
 			height: 48px;
 			margin-bottom: 12px;
 		}
+		paper-fab.settings-icon {
+			margin-top: -40px;
+			--paper-fab-background: #d0021b;
+		}
 	</style>
 
 	<template>
-		<paper-card class="notifications-heading"><h5 class="pratilipi-red">${ _strings.notification_notifications }</h5></paper-card>
+		<paper-card class="notifications-heading">
+			<h5 class="pratilipi-red">${ _strings.notification_notifications }</h5>
+			<paper-fab mini noink icon="icons:settings" class="settings-icon pull-right" on-click="openNotificationSettings"></paper-fab>
+		</paper-card>
 		<template is="dom-if" if="{{ isGuest }}">
 			<paper-card class="alert-message">
 				<iron-icon icon="icons:info-outline"></iron-icon>
@@ -140,7 +147,11 @@
 			},
 
 			_login: function() {
-				document.querySelector( 'pratilipi-user' ).logIn();
+				document.querySelector( 'pratilipi-user' ).logIn( true, "${ _strings.user_login_to_view_notifications }" );
+			},
+
+			openNotificationSettings: function() {
+				this.domHost.openNotificationSettings();
 			}
 
 		});
