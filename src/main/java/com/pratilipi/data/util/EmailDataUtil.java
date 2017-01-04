@@ -103,6 +103,9 @@ public class EmailDataUtil {
 
 		for( Email email : emailList ) {
 
+			if( email.getState() == EmailState.SENT )
+				continue;
+
 			consolidatedContent = consolidatedContent + _getContentSnippet( email, user.getLanguage() );
 
 			email.setState( EmailState.SENT );
@@ -128,6 +131,9 @@ public class EmailDataUtil {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Email email = dataAccessor.getEmail( emailId );
+
+		if( email.getState() == EmailState.SENT )
+			return;
 
 		UserData user = UserDataUtil.createUserData( dataAccessor.getUser( email.getUserId() ) );
 		if( user.getEmail() == null ) {
