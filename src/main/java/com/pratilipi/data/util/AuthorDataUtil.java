@@ -755,9 +755,8 @@ public class AuthorDataUtil {
 		// If cursor is passed, drop all items up till cursor
 		Long cursor = cursorStr == null ? null : Long.parseLong( cursorStr );
 		if( cursor != null && recommendedList.contains( cursor ) )
-			recommendedList = recommendedList.subList( 
-					Math.min( recommendedList.indexOf( cursor ) + 1, recommendedList.size() ), 
-					recommendedList.size() );
+			while( ! recommendedList.remove( 0 ).equals( cursor ) )
+				continue;
 
 		// Remove Author ids to be ignored
 		recommendedList.removeAll( authorIdsToIgnore );
