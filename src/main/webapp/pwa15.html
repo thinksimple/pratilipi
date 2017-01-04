@@ -182,12 +182,7 @@
 	    this.ratingCount = ko.observable();
 	    this.readCount = ko.observable(); 
 	    this.pushToViewModel = function( data ){
-	      var self = this;
-	      $.each( data, function( key, value ) {
-	        if( reqProperties.includes( key ) ) {
-	          self[key]( value );
-	        }
-	      });
+		  this.title("yo").titleEn("yoo").language("lang").summary("summ").state("sta").listingDateMillis("LDM").ratingCount("rate").readCount("rc");
 	    }
 	  }
 	  var viewModel = new AppViewModel()
