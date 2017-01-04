@@ -415,7 +415,9 @@ public class AuditLogProcessApi extends GenericApi {
 			return null;
 
 		// TODO: Remove it ASAP
-		if( ! UserAccessUtil.hasUserAccess( author.getUserId(), null, AccessType.USER_ADD ) )
+		if( pratilipi.getLanguage() != Language.TAMIL && 
+				pratilipi.getLanguage() != Language.TELUGU && 
+				pratilipi.getLanguage() != Language.MALAYALAM )
 			return null;
 
 
@@ -468,11 +470,14 @@ public class AuditLogProcessApi extends GenericApi {
 		// Creating new emails
 		for( Long follower : followers ) {
 			// TODO: Remove check ASAP
-			if( UserAccessUtil.hasUserAccess( follower, null, AccessType.USER_ADD ) )
-				emailList.add( dataAccessor.newEmail(
-					follower,
-					EmailType.PRATILIPI_PUBLISHED_FOLLOWER,
-					pratilipi.getId() ) );
+			if( pratilipi.getLanguage() != Language.TAMIL && 
+					pratilipi.getLanguage() != Language.TELUGU && 
+					pratilipi.getLanguage() != Language.MALAYALAM )
+				continue;
+			emailList.add( dataAccessor.newEmail(
+				follower,
+				EmailType.PRATILIPI_PUBLISHED_FOLLOWER,
+				pratilipi.getId() ) );
 		}
 
 		return emailList;
