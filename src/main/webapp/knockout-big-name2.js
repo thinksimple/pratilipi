@@ -1,4 +1,5 @@
 $(function(){
+  alert('Document Ready');
 var reqProperties = ['title', 'titleEn', 'language', 'summary', 'state', 'listingDateMillis', 'ratingCount', 'readCount'];
 var ViewModel = {
     title: ko.observable(),
@@ -22,17 +23,19 @@ var ViewModel = {
   ko.applyBindings( ViewModel );
   $.ajax({
     type: 'get',
-    url: '/api/pratilipi?_apiVer=2&pratilipiId=5639631493136384',
+//    url: '/api/pratilipi?_apiVer=2&pratilipiId=5639631493136384',
+    url: '/dummy.json',
     data: { 
         // 'language': "${ language }"
     },
     success: function( response ) {
-      var res = jQuery.parseJSON( response );
-      ViewModel.pushToViewModel( res );
+      alert('Ajax success')
+      ViewModel.pushToViewModel( response );
     },
     error: function( response ) {
+      alert('Ajax error')
       console.log( response );
-        console.log( typeof(response) );
-      }
+      console.log( typeof(response) );
+    }
   });
 });
