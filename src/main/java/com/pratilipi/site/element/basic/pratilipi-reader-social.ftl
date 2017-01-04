@@ -29,5 +29,6 @@
 	</a>
 	<a class="menu-item" style="cursor: pointer;" href="whatsapp://send?text=%22${ pratilipi.getTitle()?url('UTF-8') }%22${ _strings.whatsapp_read_story?url('UTF-8') }%20http%3A%2F%2F${ language?lower_case }.pratilipi.com${ pratilipi.getPageUrl()?url('UTF-8') }%3Futm_source%3Dweb_mini%26utm_campaign%3Dcontent_share%0A${ _strings.whatsapp_read_unlimited_stories }">
 		<div class="sprites-icon reader-footer-icon whatsapp-black-icon"></div>
+		<span>${ _strings.share_on_whatsapp }</span>
 	</a>	
 </div>
