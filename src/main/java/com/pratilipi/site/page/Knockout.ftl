@@ -1,9 +1,9 @@
 <#if action == "one" >
-	<#include "/pwa1.html"> 
+	<#include "/pwa1.html"> <#-- https cdn,alerts,object  -->
 <#elseif action == "two">
-	<#include "/pwa2.html">
+	<#include "/pwa2.html"> <#-- https cdn,no alerts,object  -->
 <#elseif action == "three">
-	<#include "/pwa3.html">
+	<#include "/pwa3.html"> <#-- https cdn,no alerts,object  -->
 <#elseif action == "four">
 	<#include "/pwa4.html">	
 <#elseif action == "five">
