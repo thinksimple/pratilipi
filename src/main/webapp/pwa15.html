@@ -189,8 +189,9 @@
 	        }
 	      });
 	    }
-		}
-	  ko.applyBindings( new AppViewModel() );
+	  }
+	  var viewModel = new AppViewModel()
+	  ko.applyBindings( viewModel );
 	
 	  $.ajax({
 	    type: 'get',
@@ -200,7 +201,7 @@
 	    },
 	    success: function( response ) {
 	      var res = jQuery.parseJSON( response );
-	      ViewModel.pushToViewModel( res );
+	      viewModel.pushToViewModel( res );
 	    },
 	    error: function( response ) {
 	      console.log( response );
