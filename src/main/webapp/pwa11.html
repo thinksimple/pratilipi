@@ -7,6 +7,150 @@
   <meta name="description" content="A platform to discover, read and share your favorite stories, poems and books in a language, device and format of your choice.">  
   <title>Pratilipi Summary Page</title>
   <script src="https://d3cwrmdwk8nw1j.cloudfront.net/third-party/compress/jquery.knockout.boostrap.js" type="text/javascript"></script>  
+  <link rel='stylesheet' href='http://1.ptlp.co/third-party/bootstrap-3.3.4/css/bootstrap.min.css'>
+    <style>
+    html,
+    body {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+    }
+    
+    .header {
+        height: 60px;
+        min-height: 60px;
+        width: 100%;
+        position: fixed;
+        background: #f5f5f5;
+        border-bottom: 1px solid #d3d3d3;
+        z-index: 1;
+    }
+    
+    .pratilipi-icon {
+        width: 48px;
+        height: 48px;
+        margin-left: 4px;
+        margin-top: 8px;
+        float: left;
+    }
+    
+    .container {
+        width: 100%;
+        padding-top: 68px;
+        margin-bottom: 10px;
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+    
+    .navigation-bar {
+        margin-right: 12px;
+        background: #f5f5f5;
+        padding: 20px 32px;
+        margin-bottom: 12px;
+        border: 1px solid #d3d3d3;
+    }
+    
+    .navigation-title {
+        color: #d0021b;
+        font-weight: 700;
+        font-size: 18px;
+    }
+    
+    .navigation-link {
+        display: block;
+        color: #333;
+        line-height: 24px;
+        text-decoration: none;
+    }
+    
+    .main-content {
+        overflow: hidden;
+        padding: 0 24px;
+        background: #f5f5f5;
+        border: 1px solid #d3d3d3;
+    }
+    
+    .section-title {
+        border-bottom: 1px solid #333;
+    }
+    
+    .section-title a {
+        color: #d0021b;
+        text-decoration: none;
+    }
+    
+    .footer {
+        clear: both;
+        width: 100%;
+        background: #f5f5f5;
+        padding: 20px 0;
+        border-top: 1px solid #d3d3d3;
+    }
+    
+    .pratilipi-card {
+        margin-bottom: 20px;
+    }
+    
+    .pratilipi-card .image-holder {
+        float: left;
+        width: 100px;
+        height: 150px;
+    }
+    
+    .pratilipi-card .info-holder {
+        margin-left: 8px;
+        float: left;
+        width: calc( 100% - 120px);
+        overflow: hidden;
+    }
+    
+    .pratilipi-card .info-holder .pratilipi-title {
+        margin: 0;
+        margin-top: 8px;
+    }
+    
+    .pratilipi-card .info-holder .pratilipi-title a {
+        text-decoration: none;
+        color: #333;
+    }
+    
+    .pratilipi-card .info-holder .author-name {
+        margin: 0;
+        margin-top: 8px;
+    }
+    
+    .pratilipi-card .info-holder .author-name a {
+        text-decoration: none;
+        color: #333;
+    }
+    
+    .pratilipi-card .info-holder .meta-info {
+        margin-top: 4px;
+        margin-bottom: 16px;
+    }
+    
+    .pratilipi-card .info-holder .read-button {
+        background: #F1F8FB;
+        border: 1px solid #0C68BD;
+        box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.50);
+        border-radius: 2px;
+        font-size: 13px;
+        color: #0C68BD;
+        letter-spacing: 0.3px;
+        line-height: 16px;
+        text-shadow: 0px 1px 2px #FFFFFF;
+        display: inline-block;
+        padding: 10px 15px 10px 15px;
+        margin-right: 10px;
+        outline: none;
+        text-decoration: none;
+    }
+    
+    .carousel {
+        max-width: 1000px;
+        margin: 12px auto;
+    }
+    </style>
 </head>
 <body>
 	<div>
@@ -47,6 +191,7 @@
 	    type: 'get',
 	    url: '/api/init?_apiVer=2&language=HINDI',
 	    success: function( response ) {
+	      alert("succeded 1");
 	    	var res = jQuery.parseJSON( response );
 			alert("succeded");
 			ViewModel.pushToSectionList(res["sections"]);
