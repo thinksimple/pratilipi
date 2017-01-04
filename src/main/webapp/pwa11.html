@@ -43,16 +43,17 @@
 	  };
 	  
 	  ko.applyBindings( ViewModel );
-	  $( '.carousel' ).carousel();
 	  $.ajax({
 	    type: 'get',
 	    url: '/api/init?_apiVer=2&language=HINDI',
 	    success: function( response ) {
 	    	var res = jQuery.parseJSON( response );
+			alert("succeded");
 			ViewModel.pushToSectionList(res["sections"]);
 	    },
 	    error: function( response ) {
 	        console.log( response );
+	        alert("failed");
 	    	console.log( typeof(response) );
 	    }
 	  });
