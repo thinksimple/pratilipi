@@ -191,14 +191,11 @@
 	    type: 'get',
 	    url: '/api/init?_apiVer=2&language=HINDI',
 	    success: function( response ) {
-	      alert("succeded 1");
 	    	var res = jQuery.parseJSON( response );
-			alert("succeded");
 			ViewModel.pushToSectionList(res["sections"]);
 	    },
 	    error: function( response ) {
 	        console.log( response );
-	        alert("failed");
 	    	console.log( typeof(response) );
 	    }
 	  });
