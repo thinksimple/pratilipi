@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="${ lang }">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="description" content="A platform to discover, read and share your favorite stories, poems and books in a language, device and format of your choice.">  
+  <title>Pratilipi Summary Page</title>
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <style>
+    html,
+    body {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+    }
+    
+    .header {
+        height: 60px;
+        min-height: 60px;
+        width: 100%;
+        position: fixed;
+        background: #f5f5f5;
+        border-bottom: 1px solid #d3d3d3;
+        z-index: 1;
+    }
+    
+    .pratilipi-icon {
+        width: 48px;
+        height: 48px;
+        margin-left: 4px;
+        margin-top: 8px;
+        float: left;
+    }
+    
+    .container {
+        width: 100%;
+        padding-top: 68px;
+        margin-bottom: 10px;
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+    
+    .navigation-bar {
+        margin-right: 12px;
+        background: #f5f5f5;
+        padding: 20px 32px;
+        margin-bottom: 12px;
+        border: 1px solid #d3d3d3;
+    }
+    
+    .navigation-title {
+        color: #d0021b;
+        font-weight: 700;
+        font-size: 18px;
+    }
+    
+    .navigation-link {
+        display: block;
+        color: #333;
+        line-height: 24px;
+        text-decoration: none;
+    }
+    
+    .main-content {
+        overflow: hidden;
+        padding: 0 24px;
+        background: #f5f5f5;
+        border: 1px solid #d3d3d3;
+    }
+    
+    .section-title {
+        border-bottom: 1px solid #333;
+    }
+    
+    .section-title a {
+        color: #d0021b;
+        text-decoration: none;
+    }
+    
+    .footer {
+        clear: both;
+        width: 100%;
+        background: #f5f5f5;
+        padding: 20px 0;
+        border-top: 1px solid #d3d3d3;
+    }
+    
+    .pratilipi-card {
+        margin-bottom: 20px;
+    }
+    
+    .pratilipi-card .image-holder {
+        float: left;
+        width: 100px;
+        height: 150px;
+    }
+    
+    .pratilipi-card .info-holder {
+        margin-left: 8px;
+        float: left;
+        width: calc( 100% - 120px);
+        overflow: hidden;
+    }
+    
+    .pratilipi-card .info-holder .pratilipi-title {
+        margin: 0;
+        margin-top: 8px;
+    }
+    
+    .pratilipi-card .info-holder .pratilipi-title a {
+        text-decoration: none;
+        color: #333;
+    }
+    
+    .pratilipi-card .info-holder .author-name {
+        margin: 0;
+        margin-top: 8px;
+    }
+    
+    .pratilipi-card .info-holder .author-name a {
+        text-decoration: none;
+        color: #333;
+    }
+    
+    .pratilipi-card .info-holder .meta-info {
+        margin-top: 4px;
+        margin-bottom: 16px;
+    }
+    
+    .pratilipi-card .info-holder .read-button {
+        background: #F1F8FB;
+        border: 1px solid #0C68BD;
+        box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.50);
+        border-radius: 2px;
+        font-size: 13px;
+        color: #0C68BD;
+        letter-spacing: 0.3px;
+        line-height: 16px;
+        text-shadow: 0px 1px 2px #FFFFFF;
+        display: inline-block;
+        padding: 10px 15px 10px 15px;
+        margin-right: 10px;
+        outline: none;
+        text-decoration: none;
+    }
+    
+    .carousel {
+        max-width: 1000px;
+        margin: 12px auto;
+    }
+    </style>
+</head>
+<body>
+  <div>
+    <h1>Summary Knockout PWA</h1>
+  </div>
+
+  <div >
+      <p class="title" data-bind="text: title"></p>
+      <p class="titleEn" data-bind="text: titleEn"></p>
+      <p class="language" data-bind="text: language"><p>
+      <p class="state" data-bind="text: state"></p>
+      <p class="publish-date" data-bind="text: listingDateMillis"></p>
+      <p class="rating" data-bind="text: ratingCount"></p>
+      <p class="read-count" data-bind="text: readCount"></p>
+  </div>
+
+  <script type="application/javascript">
+  $(function(){
+    var reqProperties = ['title', 'titleEn', 'language', 'summary', 'state', 'listingDateMillis', 'ratingCount', 'readCount'];
+    var ViewModel = {
+        title: ko.observable(),
+        titleEn: ko.observable(),
+        language: ko.observable(),
+        summary: ko.observable(),
+        state: ko.observable(),
+        listingDateMillis: ko.observable(),
+        ratingCount: ko.observable(),
+        readCount: ko.observable(),
+        pushToViewModel: function( data ){
+          var self = this;
+          $.each( data, function( key, value ) {
+            if( reqProperties.includes( key ) ) {
+              self[key]( value );
+            }
+          });
+        }
+      };  
+      
+      ko.applyBindings( ViewModel );
+      $.ajax({
+        type: 'get',
+        url: '/api/pratilipi?_apiVer=2&pratilipiId=5639631493136384',
+        data: { 
+            // 'language': "${ language }"
+        },
+        success: function( response ) {
+          var res = jQuery.parseJSON( response );
+          ViewModel.pushToViewModel( res );
+        },
+        error: function( response ) {
+          console.log( response );
+          console.log( typeof(response) );
+        }
+    });
+  });
+  </script>
+
+</body>
+</html>
