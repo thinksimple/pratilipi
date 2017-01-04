@@ -37,12 +37,7 @@
         ratingCount: ko.observable(),
         readCount: ko.observable(),
         pushToViewModel: function( data ){
-          var self = this;
-          $.each( data, function( key, value ) {
-            if( reqProperties.includes( key ) ) {
-              self[key]( value );
-            }
-          });
+          this.title(data["title"]).titleEn(data["titleEn"]).language(data["language"]).summary(data["summary"]).state(data["state"]).listingDateMillis(data["listingDateMillis"]).ratingCount(data["ratingCount"]).readCount(data["readCount"]);
         }
       };  
       
