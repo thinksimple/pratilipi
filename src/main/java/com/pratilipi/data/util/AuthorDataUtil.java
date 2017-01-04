@@ -755,19 +755,17 @@ public class AuthorDataUtil {
 		// If cursor is passed, drop all items up till cursor
 		Long cursor = cursorStr == null ? null : Long.parseLong( cursorStr );
 		if( cursor != null && recommendedList.contains( cursor ) )
-			while( recommendedList.remove( 0 ) != cursor )
-				continue;
+			recommendedList = recommendedList.subList( 
+					Math.min( recommendedList.indexOf( cursor ) + 1, recommendedList.size() ), 
+					recommendedList.size() );
 
 		// Remove Author ids to be ignored
 		recommendedList.removeAll( authorIdsToIgnore );
 
 		// Drop items if recommendedList size is requested count
 		if( resultCount != null )
-			while( recommendedList.size() > resultCount )
-				recommendedList.remove( resultCount );
-		
-		
-		
+			recommendedList = recommendedList.subList( 0, Math.min( resultCount, recommendedList.size() ) );
+
 		// Shuffle the list
 		Collections.shuffle( recommendedList );
 
