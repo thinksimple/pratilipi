@@ -61,9 +61,9 @@ public class FreeMarkerUtil {
 			Template t = new Template( "templateName", new StringReader( template ), cfg );
 			Writer out = new StringWriter();
 			t.process( model, out );
-			String transformedTemplate = out.toString();
-			return transformedTemplate;
+			return out.toString();
 		} catch( TemplateException | IOException e ) {
+			logger.log( Level.SEVERE, "Template processing failed.", e );
 			throw new UnexpectedServerException();
 		}
 
