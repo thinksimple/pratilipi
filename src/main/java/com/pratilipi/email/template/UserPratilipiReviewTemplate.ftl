@@ -35,13 +35,13 @@ ${r' <!-- <#if rating??><#if rating <= 0.5 ><#assign img_name="0_5"><#elseif rat
 									</a>
 								</td>
 							</tr>
-							<#if rating??>
+							${r' <#if rating??> '}
 								<tr>
 									<td>
 										<img src="http://public.pratilipi.com/email/images/stars_${"$"}{ img_name }.png" style="height: 16px; max-height: 16px;" height="16" />
 									</td>
 								</tr>
-							</#if>
+							${r' </#if> '}
 							<tr>
 								<td>
 									<span style="font-size: 14px; line-height: 19px; color: #c7c7c7;">${"$"}{ review_creation_date }</span>
