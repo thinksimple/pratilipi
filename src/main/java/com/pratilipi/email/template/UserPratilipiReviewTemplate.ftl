@@ -70,7 +70,7 @@ ${r' <!-- <#if rating??><#if rating <= 0.5 ><#assign img_name="0_5"><#elseif rat
 		</td>
 	</tr>
 	<tr>
-		<td align="center" height="40" bgcolor="#D0021B" style="-webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; color: #ffffff; display: block; width: 100%; margin: auto;">
+		<td align="center" bgcolor="#D0021B" style="-webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; color: #ffffff; display: block; width: 100%; margin: auto;">
 			<a href="${"$"}{ pratilipi_page_url }" target="_blank" style="font-size: 18px; text-decoration: none; line-height: 40px; width: 100%; display: inline-block;">
 				<span data-key="email_userpratilipi_review_button" style="color: #ffffff; padding-left: 15px; padding-right: 15px;">
 					${ email_userpratilipi_review_button }
