@@ -30,8 +30,14 @@
 			}
 			function shareOnWhatsapp() {
 				var url = encodeURIComponent( getUrlParameter( "url" ) );
-				url += encodeURIComponent( "&utm_source=whatsapp" );
-				window.location.href = ( "whatsapp://send?text=" + url );
+				var type = getParameterByName( "utm_campaign", getUrlParameter( "url" ) );
+				var text = "";
+				if( type == "content_share" ) {
+					text = "%22${ pratilipi.getTitle()?url('UTF-8') }%22${ _strings.whatsapp_read_story?url('UTF-8') }%20" + url +"%0A${ _strings.whatsapp_read_unlimited_stories }";
+				} else {
+					text = "%22${ author.getName()!author.getNameEn()?url('UTF-8') }%22${ _strings.whatsapp_follow_author?url('UTF-8') }%20" + url +"%0A${ _strings.whatsapp_read_unlimited_stories }";
+				}
+				window.location.href = ( "whatsapp://send?text=" + text );
 			}
 		</script>
 		<div class="secondary-500 pratilipi-shadow" style="display: block; padding: 5px; height: 64px;">

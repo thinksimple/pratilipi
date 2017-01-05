@@ -64,6 +64,18 @@
 	      return decodeURIComponent( key[1] );
 		return null;
 	}
+
+	function getParameterByName(name, url) {
+	    if (!url) {
+	      url = window.location.href;
+	    }
+	    name = name.replace(/[\[\]]/g, "\\$&");
+	    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+	        results = regex.exec(url);
+	    if (!results) return null;
+	    if (!results[2]) return '';
+	    return decodeURIComponent(results[2].replace(/\+/g, " "));
+	}
 	function getUrlParameters() {
 		var str = decodeURI( location.search.substring(1) ), 
 			res = str.split("&"), 
@@ -86,11 +98,10 @@
 	function commaSeparatedNumber(x) {
 	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	}
-	function gotoShare( pageUrl, utmParent, utmLocation ) {
+	function gotoShare( pageUrl, utmSource, utmCampaign ) {
 	
 		var language = "${ language }".toLowerCase();
-		var url = "http://" + language + ".pratilipi.com" + pageUrl +  "?utm_language=" + "${ language }" + "&utm_version=lite" + "&utm_device=mobile" + "&utm_parent=" + utmParent  +"&utm_location=" + utmLocation + "&utm_action=share";
-		
+		var url = "http://" + language + ".pratilipi.com" + pageUrl +  "?utm_source=" + utmSource + "&utm_campaign=" + utmCampaign;		
 		window.location.href = ( "/share?url=" + encodeURIComponent(url) );
 	}	
 </script>
