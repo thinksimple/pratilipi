@@ -784,7 +784,7 @@ public class AuthorDataUtil {
 
 	}
 
-	public static List<Long> _getRecommendAuthorGlobalList( Language language ) {
+	private static List<Long> _getRecommendAuthorGlobalList( Language language ) {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Memcache memcache = DataAccessorFactory.getL2CacheAccessor();
