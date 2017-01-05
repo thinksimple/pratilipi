@@ -148,7 +148,7 @@ write_type	=  প্রকার
 write_language	 =  ভাষা
 write_summary	 =  সংক্ষিপ্ত সারাংশ লিখুন
 write_create_new_content	=  নতুন রচনা সৃষ্টি
-write_on_desktop_only		= ডেস্কটপ ওয়েবসাইটে লেখার জন্য দয়াকরে লগ-ইন করুন
+write_on_desktop_only		= প্রতিলিপিতে লেখা প্রকাশ করতে হলে অনুগ্রহ করে ডেস্কটপ/ল্যাপটপে লগ-ইন করুন।
 write_fill_title			= শীর্ষক
 write_select_type			= শ্রেণী
 
