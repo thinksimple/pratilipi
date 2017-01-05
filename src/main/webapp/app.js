@@ -72,7 +72,7 @@ pratilipiSummaryController.prototype.pushToViewModel = function( data ) {
 pratilipiSummaryController.prototype.registerServiceWorker = function() {
   if ('serviceWorker' in navigator) {
       navigator.serviceWorker
-             .register('service-worker.js?4')
+             .register('service-worker.js?5')
              .then(function() { console.log('Service Worker Registered'); });
   }    
 }; 
