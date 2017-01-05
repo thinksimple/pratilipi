@@ -2,8 +2,10 @@ var dataCacheName = 'data-v1';
 var cacheName = 'appshell-v1';
 var filesToCache = [
                     '/poc',
-                    '/app.js?3',
-                    'https://d3cwrmdwk8nw1j.cloudfront.net/third-party/compress/jquery.knockout.boostrap.js'
+                    '/app.js?6',
+                    'https://code.jquery.com/jquery-3.1.1.min.js',
+                    'https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js',
+                    'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'
                    ];
 
 self.addEventListener('install', function(e) {
