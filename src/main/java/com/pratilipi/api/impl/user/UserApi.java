@@ -39,52 +39,23 @@ public class UserApi extends GenericApi {
 
 		@Validate( minLong = 0L )
 		private Long userId; // userId == 0L, for adding new user
-		
+
 		private String name;
 		private boolean hasName;
-		
+
 		@Validate( regEx = REGEX_EMAIL, regExErrMsg = ERR_EMAIL_INVALID )
 		private String email;
 		private boolean hasEmail;
-		
+
 		@Validate( regEx = REGEX_PHONE, regExErrMsg = ERR_PHONE_INVALID )
 		private String phone;
 		private boolean hasPhone;
-		
+
 		private Language language;
 		private boolean hasLanguage;
-		
-		
-		public Long getId() {
-			return userId;
-		}
-		
-		public String getName() {
-			return name;
-		}
-		
-		public boolean hasName() {
-			return hasName;
-		}
 
-		public String getEmail() {
-			return email;
-		}
-		
-		public boolean hasEmail() {
-			return hasEmail;
-		}
-		
-		public String getPhone() {
-			return phone;
-		}
-		
-		public boolean hasPhone() {
-			return hasPhone;
-		}
-		
 	}
-	
+
 	@SuppressWarnings("unused")
 	public static class Response extends GenericResponse {
 		
@@ -240,7 +211,7 @@ public class UserApi extends GenericApi {
 		
 	}
 
-	
+
 	@Post
 	public Response post( PostRequest request )
 			throws InvalidArgumentException, InsufficientAccessException {
@@ -248,33 +219,32 @@ public class UserApi extends GenericApi {
 		UserData userData = request.userId == null
 				? new UserData( AccessTokenFilter.getAccessToken().getUserId() )
 				: new UserData( request.userId.equals( 0L ) ? null : request.userId );
-		
-		if( request.hasEmail() )
-			userData.setEmail( request.getEmail() );
-		if( request.hasPhone() )
-			userData.setPhone( request.getPhone() );
+
+		if( request.hasEmail )
+			userData.setEmail( request.email );
+		if( request.hasPhone )
+			userData.setPhone( request.phone );
 		if( request.hasLanguage )
 			userData.setLanguage( request.language );
-		
-		// Save UserData.
-		userData = UserDataUtil.saveUserData( userData );
-		
-		
-		List<Task> taskList = new LinkedList<>();
-		Long authorId = null;
-		
-		
-		if( request.getId() != null && request.getId().equals( 0L ) ) { // New user
-			
-			String firstName = request.getName().trim();
+		if( request.hasName ) {
+			String firstName = request.name.trim();
 			String lastName = null;
 			if( firstName.lastIndexOf( ' ' ) != -1 ) {
 				lastName = firstName.substring( firstName.lastIndexOf( ' ' ) + 1 );
 				firstName = firstName.substring( 0, firstName.lastIndexOf( ' ' ) );
 			}
-			
 			userData.setFirstName( firstName );
 			userData.setLastName( lastName );
+		}
+
+		// Save UserData.
+		userData = UserDataUtil.saveUserData( userData );
+
+		List<Task> taskList = new LinkedList<>();
+		Long authorId = null;
+
+
+		if( request.userId != null && request.userId.equals( 0L ) ) { // New user added by AEMs
 			
 			// Create Author profile for the User.
 			authorId = AuthorDataUtil.createAuthorProfile(

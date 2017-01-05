@@ -272,7 +272,11 @@ public class UserDataUtil {
 			if( user != null && ! user.getId().equals( userData.getId() ) )
 				errorMessages.addProperty( "email", GenericRequest.ERR_EMAIL_REGISTERED_ALREADY );
 		}
-		
+
+		// New user profile must have name.
+		if( isNew && userData.getFirstName() == null )
+			errorMessages.addProperty( "name", GenericRequest.ERR_NAME_REQUIRED );
+
 		if( errorMessages.entrySet().size() > 0 )
 			throw new InvalidArgumentException( errorMessages );
 
