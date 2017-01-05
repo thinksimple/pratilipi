@@ -43,7 +43,7 @@ public class EmailTemplateUtil {
 
 		Map<String, Object> dataModel = new HashMap<>();
 		dataModel.put( "language", language );
-		dataModel.put( "contact_email", language == null || language == Language.ENGLISH ? 
+		dataModel.put( "contact_email", language == Language.ENGLISH ? 
 				"contact@pratilipi.com" : language.name().toLowerCase() + "@pratilipi.com" );
 		dataModel.put( "emailBody", content );
 

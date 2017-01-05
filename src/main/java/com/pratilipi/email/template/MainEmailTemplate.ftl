@@ -43,8 +43,8 @@
 						</p>
 						<p>
 							Contact us at
-							<a href="mailto:contact@pratilipi.com" style="color: #646464;" target="_blank">
-								contact@pratilipi.com
+							<a href="mailto:${ contact_email }" style="color: #646464;" target="_blank">
+								${ contact_email }
 							</a>
 						</p>
 						<br/>
