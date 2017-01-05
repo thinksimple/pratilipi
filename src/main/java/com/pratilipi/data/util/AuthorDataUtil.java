@@ -741,13 +741,15 @@ public class AuthorDataUtil {
 		
 		// Authors to ignore = Authors Following + Authors Ignored
 		List<Long> authorIdsToIgnore = new ArrayList<Long>();
-		for( UserAuthorDoc userAuthorDoc : followsDoc.getFollows( UserFollowState.FOLLOWING ) )
-			authorIdsToIgnore.add( userAuthorDoc.getAuthorId() );
-		for( UserAuthorDoc userAuthorDoc : followsDoc.getFollows( UserFollowState.IGNORED ) )
-			if( new Date().getTime() - userAuthorDoc.getFollowDate().getTime() >= TimeUnit.DAYS.toMillis( 30 ) )
+		if( followsDoc != null ) {
+			for( UserAuthorDoc userAuthorDoc : followsDoc.getFollows( UserFollowState.FOLLOWING ) )
 				authorIdsToIgnore.add( userAuthorDoc.getAuthorId() );
+			for( UserAuthorDoc userAuthorDoc : followsDoc.getFollows( UserFollowState.IGNORED ) )
+				if( new Date().getTime() - userAuthorDoc.getFollowDate().getTime() >= TimeUnit.DAYS.toMillis( 30 ) )
+					authorIdsToIgnore.add( userAuthorDoc.getAuthorId() );
+		}
 
-		
+
 		// Get global list of recommended authors
 		List<Long> recommendedList = _getRecommendAuthorGlobalList( language );
 
@@ -782,7 +784,7 @@ public class AuthorDataUtil {
 
 	}
 
-	private static List<Long> _getRecommendAuthorGlobalList( Language language ) {
+	public static List<Long> _getRecommendAuthorGlobalList( Language language ) {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Memcache memcache = DataAccessorFactory.getL2CacheAccessor();
@@ -816,7 +818,7 @@ public class AuthorDataUtil {
 				minReadCount = 2000L;
 		}
 
-		authorList = dataAccessor.getAuthorIdListWithMaxReadCount( language, minReadCount );
+		authorList = dataAccessor.getAuthorIdListWithMaxReadCount( language, minReadCount, 1000 );
 
 		// Algorithm - Shuffling the list in order
 		int[] order = { 1, 3, 2, 4, 6, 5, 7, 9, 8, 10, 12, 11, 13, 15, 14, 16, 18, 17, 19, 21, 20, 22, 24, 23 };
@@ -835,7 +837,7 @@ public class AuthorDataUtil {
 
 		resultList.addAll( authorList.subList( authorList.size() - ( authorList.size() % orderSize ), authorList.size() ) );
 
-		// Caching the result in memcache for 2 hours
+		// Caching the result in memcache for 3 hours
 		memcache.put( memcacheId, resultList, 180 );
 
 		return resultList;

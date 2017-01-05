@@ -968,33 +968,39 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 
 	@Override
-	public List<Long> getAuthorIdListWithMaxReadCount( Language language, Long minReadCount ) {
+	public List<Long> getAuthorIdListWithMaxReadCount( Language language, Long minReadCount, Integer resultCount ) {
 
-		List<Key<AuthorEntity>> readCountKeyList = ObjectifyService.ofy().load()
+		QueryResultIterator<Key<AuthorEntity>> readCountIterator = ObjectifyService.ofy().load()
 									.type( AuthorEntity.class )
 									.filter( "LANGUAGE", language )
 									.filter( "STATE", AuthorState.ACTIVE )
 									.filter( "TOTAL_READ_COUNT >=", minReadCount )
 									.order( "-TOTAL_READ_COUNT" )
+									.chunk( 1000 )
+									.limit( resultCount )
 									.keys()
-									.list();
+									.iterator();
 
-		List<Key<AuthorEntity>> followCountKeyList = ObjectifyService.ofy().load()
+		QueryResultIterator<Key<AuthorEntity>> followCountIterator = ObjectifyService.ofy().load()
 									.type( AuthorEntity.class )
 									.filter( "LANGUAGE", language )
 									.filter( "STATE", AuthorState.ACTIVE )
 									.filter( "FOLLOW_COUNT >=", 1 )
 									.order( "-FOLLOW_COUNT" )
+									.chunk( 1000 )
 									.keys()
-									.list();
+									.iterator();
 
-		List<Long> authorIdReadCount = new ArrayList<>( readCountKeyList.size() );
-		for( Key<AuthorEntity> key : readCountKeyList )
-			authorIdReadCount.add( key.getId() );
+		List<Long> authorIdReadCount = new ArrayList<>();
+		while( readCountIterator.hasNext() )
+			authorIdReadCount.add( readCountIterator.next().getId() );
 
-		List<Long> authorIdList = new ArrayList<>( readCountKeyList.size() );
-		for( Key<AuthorEntity> key : followCountKeyList ) {
-			Long authorId = key.getId();
+		List<Long> authorIdFollowCount = new ArrayList<>();
+		while( followCountIterator.hasNext() )
+			authorIdFollowCount.add( followCountIterator.next().getId() );
+
+		List<Long> authorIdList = new ArrayList<>( authorIdReadCount.size() );
+		for( Long authorId : authorIdFollowCount ) {
 			if( authorIdReadCount.contains( authorId ) ) {
 				authorIdList.add( authorId );
 				authorIdReadCount.remove( authorId );
