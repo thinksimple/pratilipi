@@ -165,7 +165,8 @@ public class EmailDataUtil {
 		EmailUtil.sendMail( senderName, senderEmail, 
 				user.getDisplayName(), user.getEmail(), 
 				subject, 
-				EmailTemplateUtil.getEmailBody( content, user.getLanguage() ) );
+				EmailTemplateUtil.getEmailBody( content, 
+									user.getLanguage() != null ? user.getLanguage() : Language.ENGLISH ) );
 
 		email.setState( EmailState.SENT );
 		dataAccessor.createOrUpdateEmail( email );
