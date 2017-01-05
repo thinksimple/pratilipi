@@ -86,6 +86,17 @@
 			--paper-spinner-layer-3-color: #D0021B;
 			--paper-spinner-layer-4-color: #107FE5;
 		}
+		
+		paper-spinner.pratilipi-spinner-absolute {
+			display: block;
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			--paper-spinner-layer-1-color: #D0021B;
+			--paper-spinner-layer-2-color: #107FE5;
+			--paper-spinner-layer-3-color: #D0021B;
+			--paper-spinner-layer-4-color: #107FE5;
+		}
 
 		.summary-container {
 			padding: 10px 20px 20px 20px;
@@ -163,7 +174,7 @@
 					</div>
 				</div>
 				<div id="pratilipi-col-right" style="padding: 20px;">
-					<h5 style="margin-top: 0px; display: inline-block; line-height: 24px;" class="pratilipi-red">
+					<h5 style="margin: 0px; display: inline-block; line-height: 24px;" class="pratilipi-red">
 						{{ title }}
 						<span hidden$="{{ !hasAccessToUpdate }}" class="dropdown">
 							<paper-icon-button style="color: #333; height: 34px; width: 34px; margin-top: -12px;" class="dropdown-trigger" icon="icons:create" noink type="button" data-toggle="dropdown"></paper-icon-button>
@@ -221,13 +232,13 @@
 					<div style="position: relative; display: inline-block;">
 						<button on-click="redirectToReader" style="margin-bottom: 4px;" class="pratilipi-light-blue-button">${ _strings.read }</button>
 						<template is="dom-if" if="{{ canMoveToDrafts }}">
-							<button on-click="moveToDrafts" class="pratilipi-grey-button">${ _strings.pratilipi_move_to_drafts }</button>
+							<button disabled="{{ requestOnFlight }}" on-click="moveToDrafts" class="pratilipi-grey-button">${ _strings.pratilipi_move_to_drafts }</button>
 						</template>
 						<template is="dom-if" if="{{ canPublish }}">
-							<button on-click="publishPratilipi" class="pratilipi-light-blue-button">${ _strings.pratilipi_publish_it }</button>
+							<button disabled="{{ requestOnFlight }}" on-click="publishPratilipi" class="pratilipi-light-blue-button">${ _strings.pratilipi_publish_it }</button>
 						</template>
 						<template is="dom-if" if="{{ canDelete }}">
-							<button on-click="deleteContent" class="pratilipi-grey-button">${ _strings.pratilipi_delete_content }</button>
+							<button disabled="{{ requestOnFlight }}" on-click="deleteContent" class="pratilipi-grey-button">${ _strings.pratilipi_delete_content }</button>
 						</template>
 						<template is="dom-if" if="{{ !userpratilipi.addedToLib }}">
 							<button on-click="addToLibrary" class="pratilipi-light-blue-button">${ _strings.add_to_library }</button>
@@ -259,8 +270,8 @@
 						</div>
 						<div hidden$="{{ !toggleSummaryBoolean }}" style="height: 200px;" class="input-summary">
 							<textarea id="summaryTextbox" value="{{ summary::input }}" style="line-height: 1.5em; font-family: inherit !important; font-size: 14px; width: 100%; height: 150px;"></textarea>
-							<button class="pratilipi-light-blue-button pull-right" on-click="updateSummary">${ _strings.save_changes }</button>
-							<button style="margin-top: 0;" class="pratilipi-grey-button pull-right" on-click="closeSummaryEdit">${ _strings.cancel }</button>
+							<button disabled="{{ requestOnFlight }}" class="pratilipi-light-blue-button pull-right" on-click="updateSummary">${ _strings.save_changes }</button>
+							<button disabled="{{ requestOnFlight }}" style="margin-top: 0;" class="pratilipi-grey-button pull-right" on-click="closeSummaryEdit">${ _strings.cancel }</button>
 						</div>
 					</div>
 
@@ -276,6 +287,8 @@
 			<br class="pratilipi-break" />
 		</div>
 		
+		<paper-spinner class="pratilipi-spinner-absolute" active="{{ requestOnFlight }}"></paper-spinner>
+
 		<pratilipi-alert></pratilipi-alert>
 		
 		<pratilipi-confirm-action
@@ -335,7 +348,8 @@
 
 				summary: { type: String, observer: "_summaryObserver" },
 				hasSummary: { type: Boolean },
-				toggleSummaryBoolean: { type: Boolean, value: false }
+				toggleSummaryBoolean: { type: Boolean, value: false },
+				requestOnFlight: { type: Boolean, value: false }
 
 			},
 			
@@ -525,17 +539,20 @@
 			
 			publishPratilipi: function() {
 				this.$.AjaxPost.body = jQuery.param( { "pratilipiId": this.pratilipi.pratilipiId, "state": "PUBLISHED" } );
+				this.set( 'requestOnFlight', true );
 				this.$.AjaxPost.generateRequest();
 			},
 
 			deleteContent: function() {
 				this.$.AjaxPost.body = jQuery.param( { "pratilipiId": this.pratilipi.pratilipiId, "state": "DELETED" } );
+				this.set( 'requestOnFlight', true );
 				this.$.AjaxPost.generateRequest();
 			},
 
 			_moveToDrafts: function() {
 				if( !this.moveToDraftsBoolean ) return;
 				this.$.AjaxPost.body = jQuery.param( { "pratilipiId": this.pratilipi.pratilipiId, "state": "DRAFTED" } );
+				this.set( 'requestOnFlight', true );
 				this.$.AjaxPost.generateRequest();
 			},
 			
@@ -547,14 +564,16 @@
 
 			updateSummary: function() {
 				this.$.AjaxPost.body = jQuery.param( { "pratilipiId": this.pratilipi.pratilipiId, "summary": this.summary } );
+				this.set( 'requestOnFlight', true );
 				this.$.AjaxPost.generateRequest();
 			},
-			
+
 			_handleAjaxPostResponse: function( event ) {
 				var pratilipi = event.detail.response;
 				this.updatePratilipi( pratilipi );
 				document.querySelector( 'pratilipi-alert' ).alert( "${ _strings.updated_pratilipi_info_success }", true, 1500 );
 				this.closeSummaryEdit();
+				this.set( 'requestOnFlight', false );
 			},
 			
 			_handleAjaxPostError: function( event ) {
@@ -562,6 +581,7 @@
 					alert( event.detail.request.xhr.response.message );
 				else
 					alert( "${ _strings.server_error_message }" );
+				this.set( 'requestOnFlight', false );
 			},
 			
 			_chooseFile: function() {
