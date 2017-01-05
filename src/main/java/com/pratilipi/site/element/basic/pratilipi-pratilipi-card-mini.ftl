@@ -21,7 +21,7 @@
 		    </div>
 		 </div>
 		 <div class="col-xs-1 pratilipi-no-padding" >
-		 	<a onclick="gotoShare( '${ pratilipi.getPageUrl() }', 'web_mini', 'content_share' )" >
+		 	<a onclick="gotoShare( '${ pratilipi.getPageUrl() }', '${ pratilipi.getTitle()!pratilipi.getTitleEn() }', 'web_mini', 'content_share' )" >
 		 		<div class="sprites-icon share-small-icon"></div> 
 		 	</a> 
 		 </div> 

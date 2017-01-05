@@ -98,10 +98,10 @@
 	function commaSeparatedNumber(x) {
 	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	}
-	function gotoShare( pageUrl, utmSource, utmCampaign ) {
+	function gotoShare( pageUrl, name, utmSource, utmCampaign ) {
 	
 		var language = "${ language }".toLowerCase();
 		var url = "http://" + language + ".pratilipi.com" + pageUrl +  "?utm_source=" + utmSource + "&utm_campaign=" + utmCampaign;		
-		window.location.href = ( "/share?url=" + encodeURIComponent(url) );
+		window.location.href = ( "/share?url=" + encodeURIComponent(url) + "&name=" + name );
 	}	
 </script>

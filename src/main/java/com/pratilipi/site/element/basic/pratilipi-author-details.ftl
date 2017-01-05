@@ -47,7 +47,7 @@
 		</div>
 	</#if>			
 		<div class="share-author pull-right" <#if ( user.isGuest()==true ) >style="right:10px;"</#if> >
-			<a onclick="gotoShare( '${ author.getPageUrl() }', 'web_mini', 'authorprofile_share' )" class="icon">
+			<a onclick="gotoShare( '${ author.getPageUrl() }', '${ author.getName()!author.getNameEn() }', 'web_mini', 'authorprofile_share' )" class="icon">
 				<div class="sprites-icon share-circle-icon"></div>
 			</a>
 		</div>

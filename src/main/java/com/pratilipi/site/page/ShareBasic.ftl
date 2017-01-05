@@ -31,11 +31,12 @@
 			function shareOnWhatsapp() {
 				var url = encodeURIComponent( getUrlParameter( "url" ) );
 				var type = getParameterByName( "utm_campaign", getUrlParameter( "url" ) );
+				var name = encodeURIComponent( getUrlParameter( "name" ) );
 				var text = "";
 				if( type == "content_share" ) {
-					text = "%22${ pratilipi.getTitle()?url('UTF-8') }%22${ _strings.whatsapp_read_story?url('UTF-8') }%20" + url +"%0A${ _strings.whatsapp_read_unlimited_stories }";
+					text = "%22" + name + "%22${ _strings.whatsapp_read_story?url('UTF-8') }%20" + url +"%0A${ _strings.whatsapp_read_unlimited_stories }";
 				} else {
-					text = "%22${ author.getName()!author.getNameEn()?url('UTF-8') }%22${ _strings.whatsapp_follow_author?url('UTF-8') }%20" + url +"%0A${ _strings.whatsapp_read_unlimited_stories }";
+					text = "%22" + name + "%22${ _strings.whatsapp_follow_author?url('UTF-8') }%20" + url +"%0A${ _strings.whatsapp_read_unlimited_stories }";
 				}
 				window.location.href = ( "whatsapp://send?text=" + text );
 			}
