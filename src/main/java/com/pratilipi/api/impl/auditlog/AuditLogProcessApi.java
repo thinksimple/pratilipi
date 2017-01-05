@@ -188,10 +188,6 @@ public class AuditLogProcessApi extends GenericApi {
 		for( Long pratilipiId : pratilipiUpdateIds ) {
 
 			Pratilipi pratilipi = pratilipis.get( pratilipiId );
-
-			if( pratilipi.getState() != PratilipiState.PUBLISHED )
-				continue;
-
 			List<Long> followerUserIdList = dataAccessor.getUserAuthorFollowList(
 					null,
 					pratilipi.getAuthorId(),
@@ -236,9 +232,6 @@ public class AuditLogProcessApi extends GenericApi {
 
 			UserAuthor userAuthor = userAuthors.get( userAuthorId );
 
-			if( userAuthor.getFollowState()  != UserFollowState.FOLLOWING )
-				continue;
-
 			_createUserAuthorFollowingNotifications( userAuthor, authors.get( userAuthor.getAuthorId() ) );
 			Email email = _createUserAuthorFollowingEmail( userAuthor, authors.get( userAuthor.getAuthorId() ) );
 			if( email != null )
@@ -251,9 +244,6 @@ public class AuditLogProcessApi extends GenericApi {
 		for( Long commentId : commentUpdateIds ) {
 
 			Comment comment = comments.get( commentId );
-
-			if( comment.getState() != CommentState.ACTIVE )
-				continue;
 
 			if( comment.getParentType() != CommentParentType.REVIEW )
 				continue;
@@ -278,9 +268,6 @@ public class AuditLogProcessApi extends GenericApi {
 		for( String voteId : voteUpdateIds ) {
 
 			Vote vote = votes.get( voteId );
-
-			if( vote.getType() != VoteType.LIKE )
-				continue;
 
 			if( vote.getParentType() == VoteParentType.REVIEW ) {
 
@@ -414,13 +401,6 @@ public class AuditLogProcessApi extends GenericApi {
 		if( author.getUserId() == null )
 			return null;
 
-		// TODO: Remove it ASAP
-		if( pratilipi.getLanguage() != Language.TAMIL && 
-				pratilipi.getLanguage() != Language.TELUGU && 
-				pratilipi.getLanguage() != Language.MALAYALAM )
-			return null;
-
-
 		Email email = dataAccessor.getEmail(
 				author.getUserId(),
 				EmailType.PRATILIPI_PUBLISHED_AUTHOR, 
@@ -467,13 +447,8 @@ public class AuditLogProcessApi extends GenericApi {
 			}
 		}
 
-		// Creating new emails
+		// Creating new e-mails
 		for( Long follower : followers ) {
-			// TODO: Remove check ASAP
-			if( pratilipi.getLanguage() != Language.TAMIL && 
-					pratilipi.getLanguage() != Language.TELUGU && 
-					pratilipi.getLanguage() != Language.MALAYALAM )
-				continue;
 			emailList.add( dataAccessor.newEmail(
 				follower,
 				EmailType.PRATILIPI_PUBLISHED_FOLLOWER,
@@ -490,11 +465,6 @@ public class AuditLogProcessApi extends GenericApi {
 
 		if( author.getUserId() == null )
 			return null;
-
-		// TODO: Remove it ASAP
-		if( ! UserAccessUtil.hasUserAccess( author.getUserId(), null, AccessType.USER_ADD ) )
-			return null;
-
 
 		Email email = dataAccessor.getEmail(
 				author.getUserId(),
@@ -526,11 +496,6 @@ public class AuditLogProcessApi extends GenericApi {
 		if( author.getUserId() == null ) // Followed
 			return null;
 
-		// TODO: Remove it ASAP
-		if( ! UserAccessUtil.hasUserAccess( author.getUserId(), null, AccessType.USER_ADD ) )
-			return null;
-
-
 		Email email = dataAccessor.getEmail(
 				author.getUserId(),
 				EmailType.AUTHOR_FOLLOW, 
@@ -557,11 +522,6 @@ public class AuditLogProcessApi extends GenericApi {
 	private Email _createCommentAddedReviewerEmail( UserPratilipi userPratilipi, Comment comment ) {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-
-		// TODO: Remove it ASAP
-		if( ! UserAccessUtil.hasUserAccess( userPratilipi.getUserId(), null, AccessType.USER_ADD ) )
-			return null;
-
 
 		Email email = dataAccessor.getEmail(
 				userPratilipi.getUserId(),
@@ -594,11 +554,6 @@ public class AuditLogProcessApi extends GenericApi {
 		if( author.getUserId() == null )
 			return null;
 		
-		// TODO: Remove it ASAP
-		if( ! UserAccessUtil.hasUserAccess( author.getUserId(), null, AccessType.USER_ADD ) )
-			return null;
-
-
 		Email email = dataAccessor.getEmail(
 				author.getUserId(),
 				EmailType.COMMENT_REVIEW_AUTHOR, 
@@ -627,10 +582,6 @@ public class AuditLogProcessApi extends GenericApi {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
-		// TODO: Remove it ASAP
-		if( ! UserAccessUtil.hasUserAccess( userPratilipi.getUserId(), null, AccessType.USER_ADD ) )
-			return null;
-
 		Email email = dataAccessor.getEmail(
 				userPratilipi.getUserId(),
 				EmailType.VOTE_REVIEW_REVIEWER, 
@@ -656,10 +607,6 @@ public class AuditLogProcessApi extends GenericApi {
 	private Email _createVoteOnCommentCommentorEmail( Comment comment, Vote vote ) {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-
-		// TODO: Remove it ASAP
-		if( ! UserAccessUtil.hasUserAccess( comment.getUserId(), null, AccessType.USER_ADD ) )
-			return null;
 
 		Email email = dataAccessor.getEmail(
 				comment.getUserId(),
