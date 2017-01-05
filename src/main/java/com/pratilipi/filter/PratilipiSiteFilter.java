@@ -56,7 +56,9 @@ public class PratilipiSiteFilter implements Filter {
 	{
 		redirections.put( "/theme.pratilipi/logo.png", "/logo.png" );
 		redirections.put( "/apple-touch-icon.png", "/favicon.ico" );
+		redirections.put( "/apple-touch-icon-120x120.png", "/favicon.ico" );
 		redirections.put( "/apple-touch-icon-precomposed.png", "/favicon.ico" );
+		redirections.put( "/apple-touch-icon-120x120-precomposed.png", "/favicon.ico" );
 
 //		redirections.put( "/robots.txt", "/service.robots" );
 
@@ -115,7 +117,7 @@ public class PratilipiSiteFilter implements Filter {
 			response.setStatus( HttpServletResponse.SC_NO_CONTENT );
 	
 			
-		} else if( userAgent != null && userAgent.startsWith( "libwww-perl" ) ) {
+		} else if( userAgent != null && ( userAgent.startsWith( "libwww-perl" ) || userAgent.startsWith( "WhatsApp/" ) ) ) {
 			response.setStatus( HttpServletResponse.SC_NO_CONTENT );
 	
 		
