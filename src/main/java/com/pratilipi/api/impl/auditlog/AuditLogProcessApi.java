@@ -23,7 +23,6 @@ import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.CommentParentType;
-import com.pratilipi.common.type.CommentState;
 import com.pratilipi.common.type.EmailFrequency;
 import com.pratilipi.common.type.EmailState;
 import com.pratilipi.common.type.EmailType;
@@ -37,7 +36,6 @@ import com.pratilipi.common.type.VoteParentType;
 import com.pratilipi.common.type.VoteType;
 import com.pratilipi.common.util.GsonLongDateAdapter;
 import com.pratilipi.common.util.SystemProperty;
-import com.pratilipi.common.util.UserAccessUtil;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
@@ -86,7 +84,7 @@ public class AuditLogProcessApi extends GenericApi {
 
 
 		// Make sets of PrimaryContent ids
-		Set<Long> pratilipiUpdateIds = new HashSet<>();
+		Map<Long, Set<Long>> pratilipiUpdateIds = new HashMap<>();
 		Set<String> userPratilipiUpdateIds = new HashSet<>();
 		Set<String> userAuthorUpdateIds = new HashSet<>();
 		Set<Long> commentUpdateIds = new HashSet<>();
@@ -107,8 +105,14 @@ public class AuditLogProcessApi extends GenericApi {
 			if( auditLog.getAccessType() == AccessType.PRATILIPI_UPDATE ) {
 				Pratilipi oldPratilipi = gson.fromJson( auditLog.getEventDataOld(), PratilipiEntity.class );
 				Pratilipi newPratilipi = gson.fromJson( auditLog.getEventDataNew(), PratilipiEntity.class );
-				if( oldPratilipi.getState() == PratilipiState.DRAFTED && newPratilipi.getState() == PratilipiState.PUBLISHED )
-					pratilipiUpdateIds.add( auditLog.getPrimaryContentIdLong() );
+				if( oldPratilipi.getState() == PratilipiState.DRAFTED && newPratilipi.getState() == PratilipiState.PUBLISHED ) {
+					Set<Long> userIdSet = pratilipiUpdateIds.get( auditLog.getPrimaryContentIdLong() );
+					if( userIdSet == null ) {
+						userIdSet = new HashSet<>();
+						pratilipiUpdateIds.put( auditLog.getPrimaryContentIdLong(), userIdSet );
+					}
+					userIdSet.add( auditLog.getUserId() );
+				}
 			}
 			else if( auditLog.getAccessType()  == AccessType.USER_PRATILIPI_REVIEW ) {
 				UserPratilipi oldUserPratilipi = gson.fromJson( auditLog.getEventDataOld(), UserPratilipiEntity.class );
@@ -161,7 +165,7 @@ public class AuditLogProcessApi extends GenericApi {
 
 
 		// Batch get Pratilipi entities
-		Set<Long> pratilipiIds = new HashSet<>( pratilipiUpdateIds );
+		Set<Long> pratilipiIds = new HashSet<>( pratilipiUpdateIds.keySet() );
 		for( UserPratilipi userPratilipi : userPratilipis.values() )
 			pratilipiIds.add( userPratilipi.getPratilipiId() );
 		logger.log( Level.INFO, "Fetching " + pratilipiIds.size() + " Pratilipi Entities." );
@@ -185,7 +189,7 @@ public class AuditLogProcessApi extends GenericApi {
 		List<Email> totalEmailList = new ArrayList<>();
 
 		// auditLog.getAccessType() == AccessType.PRATILIPI_UPDATE
-		for( Long pratilipiId : pratilipiUpdateIds ) {
+		for( Long pratilipiId : pratilipiUpdateIds.keySet() ) {
 
 			Pratilipi pratilipi = pratilipis.get( pratilipiId );
 			List<Long> followerUserIdList = dataAccessor.getUserAuthorFollowList(
@@ -201,7 +205,15 @@ public class AuditLogProcessApi extends GenericApi {
 			totalEmailList.addAll( _createPratilipiPublishedEmails( pratilipi, followerUserIdList ) );
 
 			// Send notification to all AEEs as well
-			followerUserIdList.addAll( _getAeeUserIdList( pratilipi.getLanguage() ) );
+			// only if the content is self-published
+			List<Long> aeeUserIdList = _getAeeUserIdList( pratilipi.getLanguage() );
+			Set<Long> userIdSet = pratilipiUpdateIds.get( pratilipiId );
+			for( Long userId : userIdSet ) {
+				if( ! aeeUserIdList.contains( userId ) ) {
+					followerUserIdList.addAll( aeeUserIdList );
+					break;
+				}
+			}
 
 			_createPratilipiPublishedNotification( pratilipi, authors.get( pratilipi.getAuthorId() ) );
 			_createPratilipiPublishedNotifications( pratilipi, followerUserIdList );
