@@ -767,10 +767,13 @@ public class AuthorDataUtil {
 		if( resultCount != null )
 			recommendedList = recommendedList.subList( 0, Math.min( resultCount, recommendedList.size() ) );
 
+		// Setting the cursor before shuffling the list
+		cursorStr = recommendedList.isEmpty() ? null : recommendedList.get( recommendedList.size() - 1 ).toString(); 
+
 		// Shuffle the list
 		Collections.shuffle( recommendedList );
 
-		
+
 		Map<Long, Author> authors = dataAccessor.getAuthors( recommendedList );
 		Map<Long, Page> authorPages = dataAccessor.getPages( PageType.AUTHOR, recommendedList );
 
@@ -780,7 +783,7 @@ public class AuthorDataUtil {
 
 		return new DataListCursorTuple<AuthorData>(
 				recommendAuthorData,
-				recommendedList.isEmpty() ? null : recommendedList.get( recommendedList.size() - 1 ).toString() );
+				cursorStr );
 
 	}
 
