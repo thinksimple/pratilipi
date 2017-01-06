@@ -332,7 +332,9 @@ public class EmailDataUtil {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
 		VoteData vote = VoteDataUtil.createVoteData( dataAccessor.getVote( voteId ) );
+		vote.setUser( UserDataUtil.createUserData( dataAccessor.getUser( vote.getUserId() ) ) );
 		CommentData comment = CommentDataUtil.createCommentData( dataAccessor.getComment( vote.getParentIdLong() ) );
+		comment.setUser( UserDataUtil.createUserData( dataAccessor.getUser( comment.getUserId() ) ) );
 		UserPratilipiData review = UserPratilipiDataUtil.createUserPratilipiData( dataAccessor.getUserPratilipi( comment.getParentId() ) );
 		PratilipiData pratilipi = PratilipiDataUtil.createPratilipiData( dataAccessor.getPratilipi( review.getPratilipiId() ) );
 
