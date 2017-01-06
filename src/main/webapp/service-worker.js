@@ -5,7 +5,8 @@ var filesToCache = [
                     '/app.js?9',
                     'https://code.jquery.com/jquery-3.1.1.min.js',
                     'https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js',
-                    'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'
+                    'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js',
+                    'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'
                    ];
 
 self.addEventListener('install', function(e) {
