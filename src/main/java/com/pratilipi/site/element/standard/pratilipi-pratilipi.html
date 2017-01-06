@@ -124,7 +124,7 @@
 					<paper-item on-click="sharePratilipiOnFacebook"><span class="icon icon-facebook"></span></paper-item>
 					<paper-item on-click="sharePratilipiOnTwitter"><span class="icon icon-twitter"></span></paper-item>
 					<paper-item on-click="sharePratilipiOnGplus"><span class="icon icon-google-plus"></span></paper-item>
-					<!-- <paper-item on-click="sharePratilipiOnWhatsapp"><span class="icon icon-whatsapp"></span></paper-item> -->
+					<paper-item on-click="sharePratilipiOnWhatsapp"><span class="icon icon-whatsapp"></span></paper-item>
 				</paper-menu>
 			</paper-menu-button>
 			
@@ -600,6 +600,13 @@
 
 			_getShareUrl: function( utm_source ) {
 				if( utm_source == null ) return;
+				if( utm_source == "whatsapp" ) {
+				  return encodeURIComponent( 
+			      		"http://${ domain }" + this.pratilipi.pageUrl 
+						+ ( this.pratilipi.pageUrl.indexOf( '?' ) == -1 ? "?" : "&" )
+						+ "utm_source=web_standard"
+						+ "&utm_component=content_share";
+				}
 				var width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 				return encodeURIComponent( 
 						"http://${ domain }" + this.pratilipi.pageUrl 
@@ -630,7 +637,8 @@
 			},
 			
 			sharePratilipiOnWhatsapp: function() {
-			  	window.open( "whatsapp://send?text=I+Loved+this+Book%0A" + this._getShareUrl( "whatsapp" ) );
+			    var text = "%22" + this.pratilipi.title + "%22${ _strings.whatsapp_read_story?url('UTF-8') }%20" + this._getShareUrl( "whatsapp" ) +"%0A${ _strings.whatsapp_read_unlimited_stories }";
+			  	window.open( "whatsapp://send?text=" + text );
 			}
 			
 		});
