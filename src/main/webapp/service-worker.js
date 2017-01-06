@@ -2,7 +2,7 @@ var dataCacheName = 'data-v1';
 var cacheName = 'appshell-v1';
 var filesToCache = [
                     '/poc?action=sixteen',
-                    '/app.js?7',
+                    '/app.js?8',
                     'https://code.jquery.com/jquery-3.1.1.min.js',
                     'https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js',
                     'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'

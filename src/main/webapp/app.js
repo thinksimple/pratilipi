@@ -26,7 +26,7 @@ pratilipiSummaryController.prototype.init = function() {
 };
 
 pratilipiSummaryController.prototype.getData = function() {
-  //this.requestFromCache();
+  this.requestFromCache();
   var self = this;
   $.ajax({
       type: 'get',
@@ -72,7 +72,7 @@ pratilipiSummaryController.prototype.pushToViewModel = function( data ) {
 pratilipiSummaryController.prototype.registerServiceWorker = function() {
   if ('serviceWorker' in navigator) {
       navigator.serviceWorker
-             .register('service-worker.js?5')
+             .register('service-worker.js?6')
              .then(function() { console.log('Service Worker Registered'); });
   }    
 }; 
