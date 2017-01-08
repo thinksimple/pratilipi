@@ -242,11 +242,14 @@ public class UserDataUtil {
 		
 		user.setLastUpdated( new Date() );
 
-		
 		user = dataAccessor.createOrUpdateUser( user, auditLog );
-		
-		return createUserData( user );
-		
+
+		UserData updatedUserData = createUserData( user );
+		updatedUserData.setFirstName( userData.getFirstName() );
+		updatedUserData.setLastName( userData.getLastName() );
+
+		return updatedUserData;
+
 	}
 	
 	private static void _validateUserDataForSave( UserData userData )
