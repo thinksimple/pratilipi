@@ -1,6 +1,7 @@
 <#if userpratilipi?? && userpratilipi.isAddedtoLib()?? >
 	<script>
 		function addToOrRemoveFromLibrary() {
+			tapClevertapEvent();
 			$.ajax({
 					
 				type: 'post',
