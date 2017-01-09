@@ -1,5 +1,6 @@
 പ്രസിദ്ധമായവ 
 /event/tellastory  ഒരു കഥ പറയാം		  Analytics#categoryName::event-tell-a-story        App#imageName::event_children.jpg        App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "eventId":4557681508483072 }
+/event/memory  ഓര്‍മ്മകള്‍ മരിക്കുമോ 	Analytics#categoryName::event-memory        App#imageName::event_experiences.jpg        App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "eventId":5735460574855168 }
 /most-read     നിര്‍ദ്ദേശിക്കപ്പെട്ടവ        Analytics#categoryName::most-read        App#imageName::mostpopular.jpg       App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"most-read" }
 /fiveminute    5 മിനിറ്റ് കഥകള്‍         Analytics#categoryName::short-stories        App#imageName::5minread.jpg        App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"fiveminute" } 
 /new           പുതിയവ                Analytics#categoryName::newly-published        App#imageName::newpublished.jpg       App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"new" } 
