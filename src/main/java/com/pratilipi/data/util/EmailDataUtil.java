@@ -39,7 +39,7 @@ public class EmailDataUtil {
 
 	@SuppressWarnings("deprecation")
 	private static String _getDomainName( Language language ) {
-		return "http://" + language.getHostName();
+		return "http://" + language == null ? Language.ENGLISH.getHostName() : language.getHostName();
 	}
 
 	private static String _getDateFormat( Date date ) {
