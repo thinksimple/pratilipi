@@ -11,8 +11,9 @@
 			<div class="container">
 				<#include "../element/basic/pratilipi-android-launch.ftl">
 				<#if pratilipiList?has_content>
+					<#include "../element/basic/pratilipi-pratilipi-card.ftl">
 					<#list pratilipiList as pratilipi>
-						<#include "../element/basic/pratilipi-pratilipi-card.ftl">
+						<@pratilipi_card from="search"/>
 					</#list>
 				<#else>
 					<div style="padding: 25px 10px;" class="secondary-500 pratilipi-shadow box">
