@@ -272,9 +272,8 @@ public class UserApi extends GenericApi {
 		}
 
 
-		// Send verification mail if user is new or user sate is REGISTERED
-		if( ( request.userId != null && request.userId.equals( 0L ) )
-				|| ( request.hasEmail && userData.getState() == UserState.REGISTERED ) ) {
+		// Send verification mail if user sate is REGISTERED
+		if( request.hasEmail && userData.getState() == UserState.REGISTERED ) {
 			Task task = TaskQueueFactory.newTask()
 					.setUrl( "/user/email" )
 					.addParam( "userId", userData.getId().toString() )
