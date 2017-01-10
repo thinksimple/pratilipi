@@ -1,7 +1,7 @@
 <div class="secondary-500 pratilipi-shadow box" style="padding:10px">
 	<div class="media">
 		<div class="media-left">
-			<div style="width: 100px; height: 150px; margin-left: 5px;" class="pratilipi-shadow" onclick="triggerCleverTapContentClickEvent( ${ pratilipi.getId() }, "${ pratilipi.title }", ${ pratilipi.author.pageUrl }, "${ pratilipi.author.name }" )">
+			<div style="width: 100px; height: 150px; margin-left: 5px;" class="pratilipi-shadow" onclick="triggerCleverTapContentClickEvent( ${ pratilipi.getId()?c }, "${ pratilipi.title }", ${ pratilipi.author.getId()?c }, "${ pratilipi.author.name }" )">
 				<a href="${ pratilipi.pageUrl }">
 					<img src="${ pratilipi.getCoverImageUrl( 100 ) }" alt="${ pratilipi.title }" title="${ pratilipi.title }" />
 				</a>
