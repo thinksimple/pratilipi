@@ -20,8 +20,9 @@
 					</div>				
 				<#else>
 					<#if pratilipiList?has_content>
-						<#list pratilipiList as pratilipi>
-							<#include "../element/basic/pratilipi-pratilipi-card.ftl">
+						<#include "../element/basic/pratilipi-pratilipi-card.ftl">
+						<#list pratilipiList as local_pratilipi>
+							<@pratilipi_card from="library" pratilipi=local_pratilipi />
 						</#list>
 					<#else>
 						<div style="padding: 25px 10px;" class="secondary-500 pratilipi-shadow box">

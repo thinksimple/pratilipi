@@ -1,3 +1,4 @@
+<#include "pratilipi-pratilipi-card.ftl">
 <div class="pratilipi-shadow secondary-500 box">
 	<div class="align-text-center">
 		<h2 class="pratilipi-red pratilipi-no-margin">
@@ -6,8 +7,8 @@
 	</div>
 </div>
 
-<#list pratilipiList as pratilipi>
-	<#include "pratilipi-pratilipi-card.ftl">
+<#list pratilipiList as local_pratilipi>
+	<@pratilipi_card from="event_list" pratilipi=local_pratilipi />
 </#list>
 
 <#-- Add page navigation -->

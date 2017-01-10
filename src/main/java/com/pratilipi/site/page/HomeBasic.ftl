@@ -13,6 +13,7 @@
 		<div class="parent-container">
 			<div class="container">
 				<#include "../element/basic/pratilipi-android-launch.ftl">
+				<#include "../element/basic/pratilipi-pratilipi-card.ftl">
 				<#list sections as section>
 					<div class="secondary-500 pratilipi-shadow box" style="padding: 12px 10px;">
 						<h2 class="pratilipi-red" style="display: inline-block;">${ section.getTitle() }</h2>
@@ -20,8 +21,8 @@
 							<a href="${ section.getListPageUrl() }" class="link pull-right pratilipi-blue" style="font-size: 13px;">${ _strings.view_more }...</a>
 						</#if>
 					</div>
-					<#list section.getPratilipiList() as pratilipi>
-						<#include "../element/basic/pratilipi-pratilipi-card.ftl">
+					<#list section.getPratilipiList() as local_pratilipi>
+						<@pratilipi_card from="home" pratilipi=local_pratilipi />
 					</#list>
 					<div style="min-height: 10px;"></div>
 				</#list>

@@ -1,6 +1,6 @@
 <script>
 	function test( from ) {
-		alert.log( from );
+		alert( from );
 	}
 </script>
 <#macro pratilipi_card from pratilipi>
