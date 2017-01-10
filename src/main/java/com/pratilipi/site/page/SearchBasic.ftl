@@ -12,8 +12,13 @@
 				<#include "../element/basic/pratilipi-android-launch.ftl">
 				<#if pratilipiList?has_content>
 					<#include "../element/basic/pratilipi-pratilipi-card.ftl">
+					<#assign clevertap_params = {
+					    "Screen Name": "Search",
+					    "Location": "Content Results",
+					    "Value": pratilipiListSearchQuery
+					} >
 					<#list pratilipiList as local_pratilipi>
-						<@pratilipi_card from="search" pratilipi=local_pratilipi />
+						<@pratilipi_card clevertap_params=clevertap_params pratilipi=local_pratilipi />
 					</#list>
 				<#else>
 					<div style="padding: 25px 10px;" class="secondary-500 pratilipi-shadow box">

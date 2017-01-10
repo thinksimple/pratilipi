@@ -1,13 +1,25 @@
-<script>
-	function test( from ) {
-		alert( from );
-	}
-</script>
-<#macro pratilipi_card from pratilipi>
+<#macro pratilipi_card clevertap_params pratilipi>
+	<script>
+		function triggerCleverTapEvent() {
+			var clevertap_params_js = {};
+			<#if clevertap_params?? >
+				<#list clevertap_params?keys as prop>
+					console.log(" ${clevertap_params[prop]} ");
+				    clevertap_params_js[ "${prop}" ] = "${clevertap_params[prop]}"; 
+				</#list> 
+				clevertap_params_js["Content ID"] = ${ pratilipi.getId() };
+				clevertap_params_js["Content Name"] = "${ pratilipi.title }";
+				clevertap_params_js["Author ID"] = ${ pratilipi.author.getId() };
+				clevertap_params_js["Author Name"] = "${ pratilipi.author.name }";	
+				console.log( clevertap_params_js ); 
+				debugger
+			</#if>				
+		}
+	</script>
 	<div class="secondary-500 pratilipi-shadow box" style="padding:10px">
 		<div class="media">
 			<div class="media-left">
-				<div style="width: 100px; height: 150px; margin-left: 5px;" class="pratilipi-shadow" onclick="test( '${ from }' )">
+				<div style="width: 100px; height: 150px; margin-left: 5px;" class="pratilipi-shadow" onclick="triggerCleverTapEvent()">
 					<a href="${ pratilipi.pageUrl }">
 						<img src="${ pratilipi.getCoverImageUrl( 100 ) }" alt="${ pratilipi.title }" title="${ pratilipi.title }" />
 					</a>
