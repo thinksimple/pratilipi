@@ -17,7 +17,6 @@
 		    "Author ID": author_id,
 		    "Author Name": author_name
 		};		
-		debugger
 	}
 	</script>
 
