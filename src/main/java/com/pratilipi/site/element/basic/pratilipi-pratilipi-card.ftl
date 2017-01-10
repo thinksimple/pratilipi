@@ -1,9 +1,9 @@
 <script>
 	function test( from ) {
-		console.log( from );
+		alert.log( from );
 	}
 </script>
-<#macro pratilipi_card from>
+<#macro pratilipi_card from pratilipi>
 	<div class="secondary-500 pratilipi-shadow box" style="padding:10px">
 		<div class="media">
 			<div class="media-left">
