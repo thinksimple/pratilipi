@@ -13,7 +13,7 @@
 										<img width="60" height="60" style="width: 60px; height: 60px;" src="http://public.pratilipi.com/pratilipi-logo/png/Logo-2C-RGB-80px.png" />
 									</td>
 									<td width="128" align="right" style="width: 128px; text-align: right;">
-										<a href="https://play.google.com/store/apps/details?id=com.pratilipi.mobile.android&referrer=utm_source%3Demail-notification%26utm_medium%3Dtransactional-email%26utm_campaign%3Dapp-download-email">
+										<a href="https://play.google.com/store/apps/details?id=com.pratilipi.mobile.android&referrer=utm_source%3Dpratilipi_email%26utm_medium%3Dtransactional_email%26utm_campaign%3Dapp_download">
 											<img width="128" style="width: 128px;" src="http://public.pratilipi.com/resource-all/image/google-play-badge.png" />
 										</a>
 									</td>
