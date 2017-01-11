@@ -158,6 +158,13 @@ public class InitDataUtil {
 		
 		initBannerDocs = new InitBannerDoc[] {
 
+				docAccessor.newInitBannerDoc( "ഓര്‍മ്മകള്‍ മരിക്കുമോ ?", 
+						"pratilipi-malayalam-carousel-24.jpg", 
+						"pratilipi-malayalam-carousel-24-small.jpg", 
+						"/event/memory",
+						"PratilipiListApi",
+						gson.fromJson( "{ \"language\":\"MALAYALAM\", \"state\":\"PUBLISHED\", \"eventId\":5735460574855168 }", JsonElement.class ).getAsJsonObject() ),
+
 				docAccessor.newInitBannerDoc( "2016 Most Read", 
 						"pratilipi-malayalam-carousel-20.jpg", 
 						"pratilipi-malayalam-carousel-20-small.jpg", 
