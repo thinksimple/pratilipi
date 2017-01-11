@@ -25,7 +25,7 @@
 							<#-- Navigation & Search bar for extra-small & small screens. -->
 							<pratilipi-navigation-drawer with-backdrop navigation-list='${ navigationListJson }'></pratilipi-navigation-drawer>
 							<div class='secondary-500' style='padding:20px; overflow:hidden'>
-								Hello
+								<img src="{{ image }}" style="width: 100%;" />
 							</div>
 						</div>
 					</div>
@@ -41,9 +41,26 @@
 				HTMLImports.whenReady(function () {
 					Polymer({
 						is: 'pratilipi-2016-page',
-						
+
+						behaviors: [
+							Polymer.IronResizableBehavior
+						],
+
+						listeners: {
+							'iron-resize': '_onIronResize'
+						},
+
 						properties: {
-							lastScrollTop: { type: Number, value: 0 }
+							lastScrollTop: { type: Number, value: 0 },
+							image: { type: Image }
+						},
+
+						_onIronResize: function() {
+							var windowsize = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+							if( windowsize > 560 )
+								this.image = "http://public.pratilipi.com/year-in-review-2016/high-res/YearInReview-${lang}.jpg";
+							else
+								this.image = "http://public.pratilipi.com/year-in-review-2016/low-res/YearInReview-${lang}.jpg";
 						},
 						
 						scrollToTop: function() {

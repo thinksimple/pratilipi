@@ -237,7 +237,7 @@ public class PratilipiSite extends HttpServlet {
 
 				dataModel = new HashMap<String, Object>();
 				dataModel.put( "title", "Pratilipi in 2016" );
-				templateName = ( basicMode ? "Pratilipi2016.ftl" : "Pratilipi2016Basic.ftl" );
+				templateName = ( basicMode ? "Pratilipi2016Basic.ftl" : "Pratilipi2016.ftl" );
 
 			} else if( page != null && page.getType() == PageType.PRATILIPI ) {
 				resourceList.addAll( createFbOpenGraphTags( page.getPrimaryContentId() ) );
