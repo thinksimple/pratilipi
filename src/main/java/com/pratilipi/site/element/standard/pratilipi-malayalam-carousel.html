@@ -28,6 +28,7 @@
 					<li data-target="#carousel" data-slide-to="2"></li>
 					<li data-target="#carousel" data-slide-to="3"></li>
 					<li data-target="#carousel" data-slide-to="4"></li>
+					<li data-target="#carousel" data-slide-to="5"></li>
 				</ol>
 				
 				<!-- Items -->
@@ -36,17 +37,19 @@
 						<a href="${ android_banner_link }" target="_blank"><img src="{{ image1 }}" /></a>
 					</div>
 					<div class="item">
-						<a href="/2016mostread" target="_blank"><img src="{{ image2 }}" /></a>
+						<a href="/event/memory" target="_blank"><img src="{{ image2 }}" /></a>
 					</div>
 					<div class="item">
-						<a href="/mystery" target="_blank"><img src="{{ image3 }}" /></a>
+						<a href="/2016mostread" target="_blank"><img src="{{ image3 }}" /></a>
 					</div>
 					<div class="item">
-						<a href="/fiveminute" target="_blank"><img src="{{ image4 }}" /></a>
+						<a href="/mystery" target="_blank"><img src="{{ image4 }}" /></a>
 					</div>
-					
 					<div class="item">
-						<a on-click="write"><img src="{{ image5 }}" /></a>
+						<a href="/fiveminute" target="_blank"><img src="{{ image5 }}" /></a>
+					</div>
+					<div class="item">
+						<a on-click="write"><img src="{{ image6 }}" /></a>
 					</div>
 				</div> 
 				<a href="#carousel" class="left carousel-control" data-slide="prev">
@@ -78,7 +81,8 @@
 			image2: { type: Image },
 			image3: { type: Image },
 			image4: { type: Image },
-			image5: { type: Image }
+			image5: { type: Image },
+			image6: { type: Image }
 		},
 		
 		_onIronResize: function() {
@@ -86,17 +90,19 @@
 			var windowsize = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 
 			if( windowsize > 560 ) {
-				this.image1 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-23.jpg"
-				this.image2 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-20.jpg"
-				this.image3 = "http://1.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-21.jpg"
-				this.image4 = "http://2.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-19.jpg"
-				this.image5 = "http://3.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-22.jpg";
+				this.image1 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-23.jpg";
+				this.image1 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-24.jpg";
+				this.image3 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-20.jpg";
+				this.image4 = "http://1.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-21.jpg";
+				this.image5 = "http://2.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-19.jpg";
+				this.image6 = "http://3.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-22.jpg";
 			} else {
-				this.image1 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-23-small.jpg"
-				this.image2 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-20-small.jpg"
-				this.image3 = "http://1.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-21-small.jpg"
-				this.image4 = "http://2.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-19-small.jpg" 
-				this.image5 = "http://3.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-22-small.jpg";
+				this.image1 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-23-small.jpg";
+				this.image2 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-24-small.jpg";
+				this.image3 = "http://0.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-20-small.jpg";
+				this.image4 = "http://1.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-21-small.jpg";
+				this.image5 = "http://2.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-19-small.jpg";
+				this.image6 = "http://3.ptlp.co/resource-ml/home-page-banner/pratilipi-malayalam-carousel-22-small.jpg";
 			}
 		},
 		
