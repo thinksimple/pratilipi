@@ -273,32 +273,32 @@ public class NotificationDataUtil {
 				List<String> fcmTokenList = dataAccessor.getFcmTokenList( notifData.getUserId() );
 				if( fcmTokenList.size() != 0 ) {
 					
-					// TODO: Remove this as soon as users have migrated to newer version of app
-					String fcmResponse = FirebaseApi.sendCloudMessage(
-							fcmTokenList,
-							notifData.getMessage(),
-							notifData.getId().toString(),
-							notifData.getNotificationType().getAndroidHandler(),
-							notifData.getSourceId(),
-							notifData.getSourceImageUrl(),
-							notifData.getDisplayImageUrl() );
-						
+					String fcmResponse = null;
+					if( notifData.getUserId() == 5694768648552448L || notifData.getUserId() == 5073076857339904L || notifData.getUserId() == 5736292437458944L ) {
+						fcmResponse = FirebaseApi.sendCloudMessage2(
+								fcmTokenList,
+								notifData.getMessage(),
+								notifData.getId().toString(),
+								notifData.getNotificationType().getAndroidHandler(),
+								notifData.getSourceId(),
+								notifData.getSourceImageUrl(),
+								notifData.getDisplayImageUrl() );
+					} else {
+						// TODO: Remove this as soon as users have migrated to newer version of app
+						fcmResponse = FirebaseApi.sendCloudMessage(
+								fcmTokenList,
+								notifData.getMessage(),
+								notifData.getId().toString(),
+								notifData.getNotificationType().getAndroidHandler(),
+								notifData.getSourceId(),
+								notifData.getSourceImageUrl(),
+								notifData.getDisplayImageUrl() );
+					}
+					
 					if( notif.getFcmResponse() == null )
 						notif.setFcmResponse( fcmResponse );
 					else
 						notif.setFcmResponse( notif.getFcmResponse() + "\n" + fcmResponse );
-					
-					
-/*					fcmResponse = FirebaseApi.sendCloudMessage2(
-							fcmTokenList,
-							notifData.getMessage(),
-							notifData.getId().toString(),
-							notifData.getNotificationType().getAndroidHandler(),
-							notifData.getSourceId(),
-							notifData.getSourceImageUrl(),
-							notifData.getDisplayImageUrl() );
-					
-					notif.setFcmResponse( notif.getFcmResponse() + "\n" + fcmResponse );*/
 					
 				}
 				
