@@ -202,6 +202,7 @@ public class EmailDataUtil {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
 		UserAuthor userAuthor = dataAccessor.getUserAuthor( userAuthorId );
+		AuthorData author = AuthorDataUtil.createAuthorData( dataAccessor.getAuthor( userAuthor.getAuthorId() ) );
 		AuthorData follower = AuthorDataUtil.createAuthorData( dataAccessor.getAuthorByUserId( userAuthor.getUserId() ) );
 
 		Map<String, Object> dataModel = new HashMap<>();
@@ -212,7 +213,7 @@ public class EmailDataUtil {
 		if( follower.getFollowCount() > 0 )
 			dataModel.put( "follower_followers_count", follower.getFollowCount() );
 
-		dataModel.put( "language", follower.getLanguage() );
+		dataModel.put( "language", author.getLanguage() );
 
 		return dataModel;
 

@@ -261,16 +261,18 @@ public class AuditLogProcessApi extends GenericApi {
 				continue;
 
 			UserPratilipi userPratilipi = userPratilipis.get( comment.getParentId() );
-			Pratilipi pratilipi = pratilipis.get( userPratilipi.getPratilipiId() );
-			Author author = authors.get( pratilipi.getAuthorId() );
 
 			Email email = _createCommentAddedReviewerEmail( userPratilipi, comment );
 			if( email != null )
 				totalEmailList.add( email );
 
+			/*	// Business call - Not to send CommentAddedAuthorEmail.
+			Pratilipi pratilipi = pratilipis.get( userPratilipi.getPratilipiId() );
+			Author author = authors.get( pratilipi.getAuthorId() );
 			email = _createCommentAddedAuthorEmail( author, comment );
 			if( email != null )
 				totalEmailList.add( email );
+			*/
 
 		}
 
