@@ -29,5 +29,7 @@
 <#elseif action == "fifteen">
 	<#include "/pwa15.html">		<#-- changing view model style of defining-->	
 <#elseif action == "sixteen">
-	<#include "/pwa16.html">													
+	<#include "/pwa16.html">
+<#elseif action == "seventeen">
+	<#include "/pwa17.html">															
 </#if>
