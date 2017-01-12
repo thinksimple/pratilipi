@@ -38,7 +38,7 @@ public class InitDataUtil {
 
 		InitBannerDoc[] initBannerDocs = new InitBannerDoc[] {
 
-				docAccessor.newInitBannerDoc( "2016 ki superhit kahaniya", 
+				docAccessor.newInitBannerDoc( "पढ़िए २०१६ की सुपरहीट कहानियाँ...", 
 						"pratilipi-hindi-carousel-44.jpg", 
 						"pratilipi-hindi-carousel-44-small.jpg", 
 						"/2016-ki-superhit-kahaniya",
@@ -68,7 +68,7 @@ public class InitDataUtil {
 		
 		initBannerDocs = new InitBannerDoc[] {
 
-				docAccessor.newInitBannerDoc( "2016 ki superhit", 
+				docAccessor.newInitBannerDoc( "વાંચો ૨૦૧૬ની સુપરહિટ વાર્તાઓ...", 
 						"pratilipi-gujarati-carousel-43.jpg", 
 						"pratilipi-gujarati-carousel-43-small.jpg", 
 						"/2016-ki-superhit",
@@ -98,7 +98,7 @@ public class InitDataUtil {
 		
 		initBannerDocs = new InitBannerDoc[] {
 
-				docAccessor.newInitBannerDoc( "New Year", 
+				docAccessor.newInitBannerDoc( "2016 சிறந்த கதைகள்", 
 						"pratilipi-tamil-carousel-22.jpg", 
 						"pratilipi-tamil-carousel-22-small.jpg", 
 						"/newyear",
@@ -128,7 +128,7 @@ public class InitDataUtil {
 		
 		initBannerDocs = new InitBannerDoc[] {
 
-				docAccessor.newInitBannerDoc( "2016 superhit katha", 
+				docAccessor.newInitBannerDoc( "२०१६ च्या सुपरहिट कथा...", 
 						"pratilipi-marathi-carousel-39.jpg", 
 						"pratilipi-marathi-carousel-39-small.jpg", 
 						"/2016-superhit-katha",
@@ -165,7 +165,7 @@ public class InitDataUtil {
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"MALAYALAM\", \"state\":\"PUBLISHED\", \"eventId\":5735460574855168 }", JsonElement.class ).getAsJsonObject() ),
 
-				docAccessor.newInitBannerDoc( "2016 Most Read", 
+				docAccessor.newInitBannerDoc( "2016 ലെ ഏറെ വായിക്കപ്പെട്ട കഥകള്‍", 
 						"pratilipi-malayalam-carousel-20.jpg", 
 						"pratilipi-malayalam-carousel-20-small.jpg", 
 						"/2016mostread",
@@ -195,7 +195,7 @@ public class InitDataUtil {
 		
 		initBannerDocs = new InitBannerDoc[] {
 
-				docAccessor.newInitBannerDoc( "2016 superhit stories", 
+				docAccessor.newInitBannerDoc( "পড়ুন ২০১৬র জনপ্রিয় সব কাহিনী", 
 						"pratilipi-bengali-carousel-40.jpg", 
 						"pratilipi-bengali-carousel-40-small.jpg", 
 						"/2016-superhit-stories",
@@ -225,7 +225,7 @@ public class InitDataUtil {
 		
 		initBannerDocs = new InitBannerDoc[] {
 
-				docAccessor.newInitBannerDoc( "New Year 2017", 
+				docAccessor.newInitBannerDoc( "2016 - ఉత్తమ కథలు", 
 						"pratilipi-telugu-carousel-24.jpg", 
 						"pratilipi-telugu-carousel-24-small.jpg", 
 						"/newyear2017",
@@ -255,7 +255,7 @@ public class InitDataUtil {
 		
 		initBannerDocs = new InitBannerDoc[] {
 
-				docAccessor.newInitBannerDoc( "New Year 2017", 
+				docAccessor.newInitBannerDoc( "2016ರ ವಿಶೇಷ ಕಥೆಗಳು", 
 						"pratilipi-kannada-carousel-16.jpg", 
 						"pratilipi-kannada-carousel-16-small.jpg", 
 						"/newyear2017",
