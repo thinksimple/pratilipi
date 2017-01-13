@@ -122,6 +122,7 @@ public class FirebaseApi {
 		JsonObject dataJson = new JsonObject();
 		dataJson.addProperty( "body", message );
 		dataJson.addProperty( "tag", tag );
+		dataJson.addProperty( "sound", "default" );
 		dataJson.addProperty( "click_action", androidHandler );
 		dataJson.addProperty( "sourceId", sourceId );
 		dataJson.addProperty( "sourceImageUrl", sourceImageUrl );
