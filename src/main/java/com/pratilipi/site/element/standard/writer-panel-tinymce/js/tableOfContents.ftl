@@ -63,6 +63,7 @@ TableOfContents.prototype.attachNewChapterListener = function() {
 	var _this = this;
 	this.$new_chapter_button.on( 'click', function(e) {
 		e.preventDefault();
+		_this.triggerGoogleAnalyticsEvent('new_chapter');
 		_this.parent_object.addNewChapter( parseInt( _this.parent_object.currChapter ) + 1 );
 	});
 };
@@ -80,6 +81,7 @@ TableOfContents.prototype.delegateDeleteChapterListeners = function() {
 	var _this = this;
 	this.$dropdown_menu_list.on( "click", "div[data-behaviour=delete-chapter]", function(e) {
 		e.stopPropagation();
+		_this.triggerGoogleAnalyticsEvent('delete_chapter');
 		var chapter_object = $(this).data( "relatedObject" );
 		var chapterNum = chapter_object.chapterNo;
 		if( _this.parent_object.hasUnsavedChanges() && ( _this.parent_object.currChapter >= chapterNum ) && _this.parent_object.currChapter != 1) {
@@ -118,6 +120,7 @@ TableOfContents.prototype.removeEventListenersOnDeleteModalHide = function () {
 TableOfContents.prototype.attachEditTitleListener = function() {
 	var _this = this;
 	this.$edit_title.on( "click", function() {
+		_this.triggerGoogleAnalyticsEvent('edit_title');
 		_this.$titleChangeModal.find( "#title-vernacular" ).val( _this.pratilipi_data.title );
 		_this.$titleChangeModal.find( "#title-english" ).val( _this.pratilipi_data.titleEn );
 		_this.$titleChangeModal.modal( 'show' );
@@ -200,4 +203,8 @@ TableOfContents.prototype.addNewChapterButton = function() {
 
 	this.$dropdown_menu_list.append( $divider ).append( $liNewChapter );
 
+};
+
+TableOfContents.prototype.triggerGoogleAnalyticsEvent = function( event_label ) {
+	ga('send', 'event', 'editor', 'click', event_label, 1);
 };
