@@ -326,7 +326,7 @@ Editor.prototype.uploadOnServer = function() {
 
 Editor.prototype.attachGAClickEventListener = function() {
 	var _this = this;
-	$(".mce-toolbar .mce-btn").on("click", function() {
+	$("body").on("click", ".mce-toolbar .mce-btn", function() {
 		_this.triggerGoogleAnalyticsEvent( $(this).attr("aria-label") );
 	});
 };
