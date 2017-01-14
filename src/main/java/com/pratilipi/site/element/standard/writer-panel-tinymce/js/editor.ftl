@@ -325,8 +325,9 @@ Editor.prototype.uploadOnServer = function() {
 };
 
 Editor.prototype.attachGAClickEventListener = function() {
+	var _this = this;
 	$(".mce-toolbar .mce-btn").on("click", function() {
-	    console.log( $(this).attr("aria-label") );
+		_this.triggerGoogleAnalyticsEvent( $(this).attr("aria-label") );
 	});
 };
 
