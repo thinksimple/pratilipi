@@ -336,6 +336,6 @@ Editor.prototype.getGAEventVal = function( key ) {
 };
 
 Editor.prototype.triggerGoogleAnalyticsEvent = function( event_label ) {
-	var event_label_val = getGAEventVal( event_label );
+	var event_label_val = this.getGAEventVal( event_label );
 	ga('send', 'event', 'editor', 'click', event_label_val, 1);
 };
