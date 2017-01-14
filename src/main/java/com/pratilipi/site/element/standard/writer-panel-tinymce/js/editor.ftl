@@ -1,11 +1,25 @@
 var Editor = function( parent_object ) {
 	this.$image_input = $( "#image_input" );
 	this.parent_object = parent_object;
+	this.google_analytics_event_value_hash = {
+		"Bold": "bold", 
+	   	"Italic": "italic",
+	 	"Underline": "underline",
+	 	"Align left": "align_left",
+	 	"Align center": "align_center",
+	 	"Align right": "align right",
+	 	"Blockquote": "blockquote",
+	 	"Insert/edit link": "link",
+	 	"Insert/edit image": "image",
+	 	"Bullet list": "unordered_list",
+	 	"Numbered list": "ordered_list"	 
+	};
 };
 
 Editor.prototype.init = function() {
 	var _this = this;
 	this.attachImageInputListener();
+	this.attachGAClickEventListener();
 
 	tinymce.init({
 		selector: '#chapter-content',
@@ -308,4 +322,19 @@ Editor.prototype.uploadOnServer = function() {
 			$parent_div.removeClass( "small-spinner" );
 		}
 	});
+};
+
+Editor.prototype.attachGAClickEventListener = function() {
+	$(".mce-toolbar .mce-btn").on("click", function() {
+	    console.log( $(this).attr("aria-label") );
+	});
+};
+
+Editor.prototype.getGAEventVal = function( key ) {
+	return this.google_analytics_event_value_hash[ key ];
+};
+
+Editor.prototype.triggerGoogleAnalyticsEvent = function( event_label ) {
+	var event_label_val = getGAEventVal( event_label );
+	ga('send', 'event', 'editor', 'click', event_label_val, 1);
 };
