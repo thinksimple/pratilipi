@@ -1,6 +1,7 @@
 package com.pratilipi.api.impl.email;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.pratilipi.api.GenericApi;
@@ -11,8 +12,10 @@ import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.EmailState;
+import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
-import com.pratilipi.data.DataIdListIterator;
+import com.pratilipi.data.DataListIterator;
 import com.pratilipi.data.type.Email;
 import com.pratilipi.data.util.EmailDataUtil;
 import com.pratilipi.taskqueue.Task;
@@ -36,22 +39,34 @@ public class EmailProcessApi extends GenericApi {
 	@Get
 	public GenericResponse get( GenericRequest request ) throws UnexpectedServerException {
 
-		DataIdListIterator<Email> itr = DataAccessorFactory.getDataAccessor()
-				.getEmailIdIteratorWithStatePending();
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+
+		DataListIterator<Email> itr = dataAccessor.getEmailIteratorWithStatePending();
 
 		List<Task> taskList = new ArrayList<>( 1000 );
+		List<Email> emailList = new ArrayList<>( 1000 );
+
 		while( itr.hasNext() ) {
-			
+
+			Email email = itr.next();
+			email.setState( EmailState.IN_PROGRESS );
+			email.setLastUpdated( new Date() );
+			emailList.add( email );
+
 			Task task = TaskQueueFactory.newTask()
 					.setUrl( "/email/process" )
-					.addParam( "emailId", itr.next().toString() );
+					.addParam( "emailId", email.getId().toString() );
 			taskList.add( task );
-			
+
 			if( taskList.size() == 1000 || ! itr.hasNext() ) {
 				TaskQueueFactory.getEmailOfflineTaskQueue().addAll( taskList );
 				taskList.clear();
+
+				dataAccessor.createOrUpdateEmailList( emailList );
+				emailList.clear();
+
 			}
-			
+
 		}
 
 		return new GenericResponse();

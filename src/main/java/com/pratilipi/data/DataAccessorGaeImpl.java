@@ -2079,17 +2079,17 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 
 	@Override
-	public DataIdListIterator<Email> getEmailIdIteratorWithStatePending() {
-	
-		QueryKeys<EmailEntity> query = ObjectifyService.ofy().load()
+	public DataListIterator<Email> getEmailIteratorWithStatePending() {
+
+		Query<EmailEntity> query = ObjectifyService.ofy().load()
 				.type( EmailEntity.class )
 				.filter( "STATE", EmailState.PENDING )
-				.keys();
-		
-		return new DataIdListIterator<Email>( query.iterator() );
-		
+				.chunk( 1000 );
+
+		return new DataListIterator<Email>( query.iterator() );
+
 	}
-	
+
 	@Override
 	public List<Email> getEmailList( Long userId, EmailType type, Long primaryContentId, EmailState state, Integer resultCount ) {
 		return getEmailList( userId, type, primaryContentId.toString(), state, resultCount );
