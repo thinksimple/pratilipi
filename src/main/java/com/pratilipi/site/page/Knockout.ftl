@@ -31,5 +31,7 @@
 <#elseif action == "sixteen">
 	<#include "/pwa16.html">
 <#elseif action == "seventeen">
-	<#include "/mdl-poc.html">															
+	<#include "/mdl-poc.html">		
+<#elseif action == "eighteen">
+	<#include "/summary1.html">															
 </#if>
