@@ -48,5 +48,5 @@ pratilipiSummaryController.prototype.getData = function() {
 
 
 pratilipiSummaryController.prototype.pushToViewModel = function( data ) {
-  this.ViewModel.title(data["title"]).titleEn(data["titleEn"]).coverImageUrl("https://d3cwrmdwk8nw1j.cloudfront.net/pratilipi/cover?pratilipiId=5713444722442240&version=1454565632964").author_name(data.author.name).language(data["language"]).summary(data["summary"]).state(data["state"]).publish_date(data["listingDateMillis"]).averageRating(data["averageRating"]).ratingCount(data["ratingCount"]).readCount(data["readCount"]).type(data["type"]);  
+  this.ViewModel.title(data["title"]).titleEn(data["titleEn"]).coverImageUrl("https://d3cwrmdwk8nw1j.cloudfront.net/pratilipi/cover?pratilipiId=5713444722442240&version=1454565632964&width=150").author_name(data.author.name).language(data["language"]).summary(data["summary"]).state(data["state"]).publish_date(data["listingDateMillis"]).averageRating(data["averageRating"]).ratingCount(data["ratingCount"]).readCount(data["readCount"]).type(data["type"]);  
 };
