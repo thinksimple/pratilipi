@@ -20,16 +20,19 @@ public enum EmailFrequency {
 	}
 
 	
-	public Date getNextSchedule( Date lastMailDate ) {
-		
+	public Date getNextSchedule( Date lastEmailDate ) {
+
 		if( this == NEVER )
 			return null;
 
-		while( lastMailDate.before( new Date() ) )
-			lastMailDate = new Date( lastMailDate.getTime() + delayMillis );
-		
-		return lastMailDate;
-	
+		if( lastEmailDate == null )
+			return new Date();
+
+		while( lastEmailDate.before( new Date() ) )
+			lastEmailDate = new Date( lastEmailDate.getTime() + delayMillis );
+
+		return lastEmailDate;
+
 	}
-	
+
 }
