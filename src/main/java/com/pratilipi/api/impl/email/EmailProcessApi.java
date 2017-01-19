@@ -22,14 +22,11 @@ import com.pratilipi.taskqueue.TaskQueueFactory;
 @SuppressWarnings("serial")
 @Bind( uri = "/email/process" )
 public class EmailProcessApi extends GenericApi {
-	
+
 	public static class PostRequest extends GenericRequest {
 
 		@Validate( minLong = 1L )
 		private Long emailId;
-
-		@Validate( minLong = 1L )
-		private Long userId;
 
 	}
 
@@ -39,7 +36,7 @@ public class EmailProcessApi extends GenericApi {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
-		DataIdListIterator<Email> itr = dataAccessor.getEmailIdListIteratorWithStatePending();
+		DataIdListIterator<Email> itr = dataAccessor.getIdListIteratorForPendingEmails();
 
 		List<Task> taskList = new ArrayList<>( 1000 );
 		while( itr.hasNext() ) {
@@ -63,11 +60,7 @@ public class EmailProcessApi extends GenericApi {
 	@Post
 	public GenericResponse post( PostRequest request ) throws UnexpectedServerException {
 
-		if( request.emailId != null )
-			EmailDataUtil.sendEmail( request.emailId );
-
-		if( request.userId != null )
-			EmailDataUtil.sendConsolidatedEmail( request.userId );
+		EmailDataUtil.sendEmail( request.emailId );
 
 		return new GenericResponse();
 
