@@ -39,7 +39,6 @@ import com.pratilipi.common.util.GoogleAnalyticsApi;
 import com.pratilipi.common.util.HtmlUtil;
 import com.pratilipi.common.util.HttpUtil;
 import com.pratilipi.common.util.ImageUtil;
-import com.pratilipi.common.util.SvgUtil;
 import com.pratilipi.data.BlobAccessor;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
@@ -70,41 +69,6 @@ public class PratilipiDocUtil {
 			Logger.getLogger( PratilipiDocUtil.class.getName() );
 	
 	private static final String nonKeywordsPattern = "&nbsp;|&lt;|&gt;|&amp;|&cent;|&pound;|&yen;|&euro;|&copy;|&reg;|<[^>]*>|[!-/:-@\\[-`{-~]|।";
-
-
-	public static String getImageTag( Long pratilipiId, JsonObject jsonObject ) {
-
-		double widthSet = jsonObject.has( "ratio" ) 
-				? jsonObject.get( "ratio" ).getAsDouble() * jsonObject.get( "width" ).getAsDouble()
-				: jsonObject.get( "width" ).getAsDouble();
-		double heightSet = jsonObject.has( "ratio" ) 
-				? jsonObject.get( "ratio" ).getAsDouble() * jsonObject.get( "height" ).getAsDouble()
-				: jsonObject.get( "height" ).getAsDouble();
-
-		return "<img" + " " + "style=\"width: " + (int)widthSet + "px; height: " + (int)heightSet + "px;\"" + " " + 
-				"src=\"/api/pratilipi/content/image?pratilipiId=" + pratilipiId + 
-				"&name=" + jsonObject.get( "name" ).getAsString() + "&width=" + (int)widthSet +"\"/>";
-
-	}
-
-
-	private static AlignmentType _getAlignmentType( Node node ) {
-		if( node.hasAttr( "style" ) && ! node.attr( "style" ).trim().isEmpty() ) {
-			for( String style : node.attr( "style" ).split( ";" ) ) {
-				if( ! style.trim().isEmpty() && style.substring( 0, style.indexOf( ":" ) ).trim().equals( "text-align" ) ) {
-					String val = style.substring( style.indexOf( ":" ) + 1 ).trim(); 
-					for( AlignmentType aT : AlignmentType.values() ) {
-						if( val.equalsIgnoreCase( aT.name() ) ) {
-							return aT;
-						}
-					}
-				}
-			}
-		}
-
-		return null;
-
-	}
 
 	
 	// Content doc
@@ -194,7 +158,7 @@ public class PratilipiDocUtil {
 				else if( pageletDoc.getType() == PageletType.BLOCK_QUOTE )
 					html += "<blockquote>" + pageletDoc.getDataAsString() + "</blockquote>";
 				else if( pageletDoc.getType() == PageletType.IMAGE )
-					html += "<img src=\"/api/pratilipi/content/image?pratilipiId=" + pratilipi.getId() + "&name=" + pageletDoc.getData().get( "name" ).getAsString() + "\"/>";
+					html += _processImagePagelet( pratilipi.getId(), pageletDoc.getData() );
 			}
 			pageDoc.setHtml( html );
 			pageDoc.deleteAllPagelets();
@@ -280,7 +244,7 @@ public class PratilipiDocUtil {
 				else if( pageletDoc.getType() == PageletType.BLOCK_QUOTE )
 					html += "<blockquote>" + pageletDoc.getDataAsString() + "</blockquote>";
 				else if( pageletDoc.getType() == PageletType.IMAGE )
-					html += getImageTag( pratilipi.getId(), pageletDoc.getData() );
+					html += _processImagePagelet( pratilipi.getId(), pageletDoc.getData() );
 				else if( pageletDoc.getType() == PageletType.LIST_ORDERED )
 					html += "<ol>" + pageletDoc.getDataAsString() + "</ol>";
 				else if( pageletDoc.getType() == PageletType.LIST_UNORDERED )
@@ -291,6 +255,21 @@ public class PratilipiDocUtil {
 			
 		}
 		return pageDoc;
+	}
+
+	public static String _processImagePagelet( Long pratilipiId, JsonObject jsonObject ) {
+
+		double widthSet = jsonObject.has( "ratio" )
+				? jsonObject.get( "ratio" ).getAsDouble() * jsonObject.get( "width" ).getAsDouble()
+				: jsonObject.get( "width" ).getAsDouble();
+		double heightSet = jsonObject.has( "ratio" )
+				? jsonObject.get( "ratio" ).getAsDouble() * jsonObject.get( "height" ).getAsDouble()
+				: jsonObject.get( "height" ).getAsDouble();
+
+		return "<img style=\"width: " + (int) widthSet + "px; height: " + (int) heightSet + "px;\" " +
+				"src=\"/api/pratilipi/content/image?pratilipiId=" + pratilipiId +
+				"&name=" + jsonObject.get( "name" ).getAsString() + "&width=" + (int) widthSet +"\"/>";
+
 	}
 	
 	public static BlobEntry getContentImage( long pratilipiId, String name, Integer width )
@@ -304,12 +283,8 @@ public class PratilipiDocUtil {
 		BlobEntry blobEntry = DataAccessorFactory.getBlobAccessor()
 				.getBlob( "pratilipi/" + pratilipiId + "/images/" + name );
 	
-		if( width != null ) {
-			if( blobEntry.getMimeType().equalsIgnoreCase( "image/svg+xml" ) )
-				blobEntry.setData( SvgUtil.resizeSvg( blobEntry.getData(), width ) );
-			else
-				blobEntry.setData( ImageUtil.resize( blobEntry.getData(), width ) );
-		}
+		if( width != null )
+			blobEntry.setData( ImageUtil.resize( blobEntry.getData(), width ) );
 
 		return blobEntry;
 
@@ -422,7 +397,7 @@ public class PratilipiDocUtil {
 						
 					} else {
 
-						page.addPagelet( PageletType.HTML, ( (Element) node ).html(), _getAlignmentType( node ) );
+						page.addPagelet( PageletType.HTML, ( (Element) node ).html(), _getAlignment( node ) );
 
 					}
 					
@@ -629,6 +604,25 @@ public class PratilipiDocUtil {
 	
 	}
 
+	private static AlignmentType _getAlignment( Node node ) {
+		
+		if( node.hasAttr( "style" ) && ! node.attr( "style" ).trim().isEmpty() ) {
+			for( String style : node.attr( "style" ).split( ";" ) ) {
+				if( ! style.trim().isEmpty() && style.substring( 0, style.indexOf( ":" ) ).trim().equals( "text-align" ) ) {
+					String val = style.substring( style.indexOf( ":" ) + 1 ).trim(); 
+					for( AlignmentType at : AlignmentType.values() ) {
+						if( val.equalsIgnoreCase( at.name() ) ) {
+							return at;
+						}
+					}
+				}
+			}
+		}
+
+		return null;
+
+	}
+	
 	private static JsonObject _createImageData( Long pratilipiId, Node imageNode ) throws UnexpectedServerException {
 		
 		BlobAccessor blobAccessor = DataAccessorFactory.getBlobAccessor();
@@ -654,37 +648,28 @@ public class PratilipiDocUtil {
 			imageName = imageUrl.substring( imageUrl.indexOf( "name=" ) + 5 );
 			if( imageName.indexOf( '&' ) != -1 )
 				imageName = imageName.substring( 0, imageName.indexOf( '&' ) );
-			blobEntry = blobAccessor.getBlob( _createImageFullName( pratilipiId, imageName ) );
 			imageName = imageName.replace( "%20", " " );
+			blobEntry = blobAccessor.getBlob( _createImageFullName( pratilipiId, imageName ) );
 		}
 
-		boolean isSvg = blobEntry.getMimeType().equalsIgnoreCase( "image/svg+xml" );
-
-		Integer width = isSvg ? SvgUtil.getWidth( blobEntry.getData() ) : ImageUtil.getWidth( blobEntry.getData() );
-		Integer height = isSvg ? SvgUtil.getHeight( blobEntry.getData() ) : ImageUtil.getHeight( blobEntry.getData() );
-		Integer widthSet = null;
-
-		if( imageNode.hasAttr( "width" ) && ! imageNode.attr( "width" ).trim().isEmpty() ) {
-			widthSet = Integer.parseInt( imageNode.attr( "width" ) );
-		} else if( imageUrl.contains( "width=" ) ) {
-			String widthString = imageUrl.substring( imageUrl.indexOf( "width=" ) + 6 );
-			if( widthString.indexOf( '&' ) != -1 )
-				widthString = widthString.substring( 0, widthString.indexOf( '&' ) );
-			widthSet = Integer.parseInt( widthString );
-		} else {
-			widthSet = width;
-		}
-
+		
+		int width = ImageUtil.getWidth( blobEntry );
+		int height = ImageUtil.getHeight( blobEntry );
+		
+		int setWidth = width;
+		if( imageNode.hasAttr( "width" ) && ! imageNode.attr( "width" ).trim().isEmpty() )
+			setWidth = Integer.parseInt( imageNode.attr( "width" ).trim() );
+		
 		JsonObject imgData = new JsonObject();
 		imgData.addProperty( "name", imageName );
 		imgData.addProperty( "width", width );
 		imgData.addProperty( "height", height );
-		imgData.addProperty( "ratio", (double)widthSet/width );
+		imgData.addProperty( "ratio", (double) setWidth/width );
 
 		return imgData;
 
 	}
-	
+
 	
 	public static void updatePratilipiContent( Long pratilipiId ) throws UnexpectedServerException {
 		
@@ -745,8 +730,8 @@ public class PratilipiDocUtil {
 				
 				JsonObject imgData = new JsonObject();
 				imgData.addProperty( "name", i + "" );
-				imgData.addProperty( "height", ImageUtil.getHeight( blobEntry.getData() ) );
-				imgData.addProperty( "width", ImageUtil.getWidth( blobEntry.getData() ) );
+				imgData.addProperty( "height", ImageUtil.getHeight( blobEntry ) );
+				imgData.addProperty( "width", ImageUtil.getWidth( blobEntry ) );
 				
 				pcDoc.addChapter( null )
 					.addPage()
@@ -782,7 +767,7 @@ public class PratilipiDocUtil {
 				if( pList.size() == 0 ) {
 					pageletList.add( new Object[] { PratilipiContentDoc.PageletType.HTML, "<br/>", null } );
 				} else {
-					AlignmentType alignment = _getAlignmentType( childNode );
+					AlignmentType alignment = _getAlignment( childNode );
 					if( alignment != null )
 						for( Object[] pagelet : pList )
 							if( pagelet[2] == null && ( pagelet[0] == PratilipiContentDoc.PageletType.TEXT || pagelet[0] == PratilipiContentDoc.PageletType.HTML ) )
@@ -863,8 +848,8 @@ public class PratilipiDocUtil {
 				
 				JsonObject imgData = new JsonObject();
 				imgData.addProperty( "name", imageName );
-				imgData.addProperty( "height", ImageUtil.getHeight( blobEntry.getData() ) );
-				imgData.addProperty( "width", ImageUtil.getWidth( blobEntry.getData() ) );
+				imgData.addProperty( "height", ImageUtil.getHeight( blobEntry ) );
+				imgData.addProperty( "width", ImageUtil.getWidth( blobEntry ) );
 				
 				pageletList.add( new Object[] { PratilipiContentDoc.PageletType.IMAGE, imgData, null } );
 				
