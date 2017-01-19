@@ -107,10 +107,9 @@ public class EmailDataUtil {
 
 	}
 
-	public static void sendConsolidatedEmail( Long userId ) throws UnexpectedServerException {
+	public static void sendConsolidatedEmail( Long userId, List<Email> emailList ) throws UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		List<Email> emailList = dataAccessor.getEmailList( userId, null, (String) null, EmailState.PENDING, null );
 
 		UserData user = UserDataUtil.createUserData( dataAccessor.getUser( userId ) );
 		String consolidatedContent = new String();
@@ -177,6 +176,18 @@ public class EmailDataUtil {
 		email.setState( EmailState.SENT );
 		email.setLastUpdated( new Date() );
 		dataAccessor.createOrUpdateEmail( email );
+
+	}
+	
+	public static void sendEmails( Long emailId ) throws UnexpectedServerException {
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Email email = dataAccessor.getEmail( emailId );
+
+		if( email.getState() == EmailState.SENT )
+			return;
+
+		sendConsolidatedEmail( email.getUserId(), dataAccessor.getPendingEmailsForUser( email.getUserId() ) );
 
 	}
 
