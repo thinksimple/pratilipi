@@ -43,10 +43,11 @@ public class ImageUtil {
 		return imagesService.applyTransform( resize, image, OutputEncoding.JPEG ).getImageData();
 	}
 	
+	
 	public static int getHeight( BlobEntry blobEntry ) throws UnexpectedServerException {
 		
 		if( blobEntry.getMimeType().equalsIgnoreCase( "image/svg+xml" ) )
-			return SvgUtil.getHeight( blobEntry.getData() );
+			return ImageSvgUtil.getHeight( blobEntry.getData() );
 		
 		return ImagesServiceFactory.makeImage( blobEntry.getData() ).getHeight();
 		
@@ -55,7 +56,7 @@ public class ImageUtil {
 	public static int getWidth( BlobEntry blobEntry ) throws UnexpectedServerException {
 		
 		if( blobEntry.getMimeType().equalsIgnoreCase( "image/svg+xml" ) )
-			return SvgUtil.getWidth( blobEntry.getData() );
+			return ImageSvgUtil.getWidth( blobEntry.getData() );
 		
 		return ImagesServiceFactory.makeImage( blobEntry.getData() ).getWidth();
 		
@@ -68,7 +69,7 @@ public class ImageUtil {
 	public static BlobEntry resize( BlobEntry blobEntry, int width, int height ) throws UnexpectedServerException {
 		
 		if( blobEntry.getMimeType().equalsIgnoreCase( "image/svg+xml" ) ) {
-			blobEntry.setData( SvgUtil.resizeSvg( blobEntry.getData(), width ) );
+			blobEntry.setData( ImageSvgUtil.resizeSvg( blobEntry.getData(), width ) );
 			return blobEntry;
 		}
 		
