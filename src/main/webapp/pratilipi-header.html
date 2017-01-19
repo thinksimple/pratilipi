@@ -1,0 +1,94 @@
+<header class="mdl-layout__header mdl-layout__header--transparent">
+    <div class="secondary-500" id="header-card">
+        <div class="parent-container">
+            <div class="vertical-align container">
+                <div class="pratilipi-logo">
+                    <a href="/">
+                        <div class="sprites-icon pratilipi-logo-icon"></div>
+                    </a>
+                </div>
+                <div class="pratilipi-text">
+                    <select class="form-control focus-outline-none" id="select-language" style="box-shadow:none;padding:0px;border:none;color: #d0021b;height:30px;font-size: 18px;width: auto;">
+                        <option selected="" disabled="">Pratilipi</option>
+                        <option value="tamil">Pratilipi</option>
+                        <option value="malayalam">Pratilipi</option>
+                        <option value="marathi">Pratilipi</option>
+                        <option value="bengali">Pratilipi</option>
+                        <option value="hindi">Pratilipi</option>
+                        <option value="gujarati">Pratilipi</option>
+                        <option value="telugu">Pratilipi</option>
+                        <option value="kannada">Pratilipi</option>
+                    </select>
+                </div>
+                <div class="search-bar  ">
+                    <form action="javascript:void(0);" on-keyup="onSubmit" style="margin-bottom: 0;">
+                        <div class="sprites-icon header-sprite-icon search-sprite-icon" style="position: absolute;top: 15%;right: 0;z-index: 1;"></div>
+                        <div class="sprites-icon header-sprite-icon menu-search-sprite-icon" style="position: absolute;top: 15%;z-index: 1;"></div>
+                        <input class="form-control horizontal-form-input focus-outline-none" id="title-vernacular" placeholder="Search for stories">
+                    </form>
+                </div>
+                <div class="button-holder menu-icon">
+                    <a on-click="_openMenuNavigation">
+                        <div class="sprites-icon header-sprite-icon menu-sprite-icon"></div>
+                    </a>
+                </div>
+                <div class="button-holder">
+                    <a href="/">
+                        <div class="sprites-icon header-sprite-icon edit-icon"></div>
+                    </a>
+                </div>
+                <div class="button-holder">
+                    <a href="/">
+                        <div class="sprites-icon header-sprite-icon library-books-icon"></div>
+                    </a>
+                </div>
+                <div class="button-holder">
+                    <a href="/">
+                        <div class="sprites-icon header-sprite-icon notifications-icon"></div>
+                    </a>
+                </div>
+                <div class="sign-in-button button-inside-container">
+                    <button class="btn btn-primary">
+                        <!-- <iron-icon icon="social:person"></iron-icon> -->
+                        <div class="sprites-icon header-sprite-icon account-circle-icon"></div>
+                        <span>Sign in kijiye</span>
+                    </button>
+                </div>
+                <div class="button-holder sign-in-text">
+                    <!-- <template is="dom-if" if="{{ isGuest }}"> -->
+                    <a on-click="_logIn">
+                        <div class="sprites-icon header-sprite-icon account-circle-icon"></div>
+                    </a>
+                </div>
+            </div>
+            <div class="sign-in-button button-outside-container" style="margin: 7px auto;">
+                <button class="btn btn-primary">
+                    <!-- <iron-icon icon="social:person"></iron-icon> -->
+                    <div class="sprites-icon header-sprite-icon account-circle-icon"></div>
+                    <span>Sign in kijiye</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="pratilipi-search-bar visible-xs">
+        <div class="flex-container">
+            <div class="" style="cursor: pointer;padding-top: 0;align-self: center;position: relative;">
+                <select class="form-control focus-outline-none" id="select-language" style="box-shadow:none;padding:0px;border:none;color: #d0021b;height:30px;font-size: 18px;">
+                    <option selected="" disabled="">Pratilipi</option>
+                    <option value="tamil">Pratilipi</option>
+                    <option value="malayalam">Pratilipi</option>
+                    <option value="marathi">Pratilipi</option>
+                    <option value="bengali">Pratilipi</option>
+                    <option value="hindi">Pratilipi</option>
+                    <option value="gujarati">Pratilipi</option>
+                    <option value="telugu">Pratilipi</option>
+                    <option value="kannada">Pratilipi</option>
+                </select>
+            </div>
+            <form action="javascript:void(0);" on-keyup="onSubmit" style="position: relative;margin-bottom: 8px;flex-grow: 1;margin-left: 4px;margin-right: 8px;">
+                <div class="sprites-icon header-sprite-icon search-sprite-icon" style="position: absolute;top: 15%;right: 0;z-index: 1;"></div>
+                <input class="form-control horizontal-form-input focus-outline-none" id="title-vernacular" placeholder="Search for stories">
+            </form>
+        </div>
+    </div>
+</header>

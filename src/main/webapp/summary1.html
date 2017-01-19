@@ -8,23 +8,23 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js"></script>
     <!-- Latest compiled and minified CSS -->
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">  -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.red-teal.min.css" />
+    <link rel="stylesheet" href="pwa-stylesheets/css-minified/styles.css" />
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <style>
-    .css-full-width {
-        width: 100%;
-    }
-    </style>
+	<script>   
+    	<#include "summary-components.ftl">
+    </script>	
 </head>
 
 <body>
     <!-- http://10.ptlp.co/pratilipi/cover?width=150 -->
     <div class="demo-layout-transparent mdl-layout mdl-js-layout">
+    	<pratilipi-header></pratilipi-header>
         <main class="mdl-layout__content">
             <div class="mdl-grid">
                 <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--8-col-tablet mdl-cell--7-col">
@@ -73,7 +73,8 @@
                 </div>
             </div>
         </main>
+        <pratilipi-footer></pratilipi-footer>
     </div>
+    <script src="summary.js?1"></script>
 </body>
-<script src="summary.js?1"></script>
 </html>
