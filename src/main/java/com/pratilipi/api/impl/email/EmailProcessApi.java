@@ -13,7 +13,7 @@ import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
-import com.pratilipi.data.DataListIterator;
+import com.pratilipi.data.DataIdListIterator;
 import com.pratilipi.data.type.Email;
 import com.pratilipi.data.util.EmailDataUtil;
 import com.pratilipi.taskqueue.Task;
@@ -35,18 +35,18 @@ public class EmailProcessApi extends GenericApi {
 
 
 	@Get
-	public GenericResponse get( GenericRequest request ) throws UnexpectedServerException {
+	public GenericResponse get( GenericRequest request ) {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
-		DataListIterator<Email> itr = dataAccessor.getEmailIteratorWithStatePending();
+		DataIdListIterator<Email> itr = dataAccessor.getEmailIdListIteratorWithStatePending();
 
 		List<Task> taskList = new ArrayList<>( 1000 );
 		while( itr.hasNext() ) {
 
 			Task task = TaskQueueFactory.newTask()
 					.setUrl( "/email/process" )
-					.addParam( "emailId", itr.next().getId().toString() );
+					.addParam( "emailId", itr.next().toString() );
 			taskList.add( task );
 
 			if( taskList.size() == 1000 || ! itr.hasNext() ) {
@@ -60,10 +60,8 @@ public class EmailProcessApi extends GenericApi {
 
 	}
 
-	
 	@Post
-	public GenericResponse post( PostRequest request )
-			throws UnexpectedServerException {
+	public GenericResponse post( PostRequest request ) throws UnexpectedServerException {
 
 		if( request.emailId != null )
 			EmailDataUtil.sendEmail( request.emailId );
@@ -73,6 +71,6 @@ public class EmailProcessApi extends GenericApi {
 
 		return new GenericResponse();
 
-	}		
+	}
 
 }
