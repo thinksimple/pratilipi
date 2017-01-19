@@ -15,6 +15,7 @@ import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.EmailState;
 import com.pratilipi.common.type.EmailType;
 import com.pratilipi.common.type.Language;
+import com.pratilipi.common.util.EmailUtil;
 import com.pratilipi.common.util.FreeMarkerUtil;
 import com.pratilipi.common.util.HtmlUtil;
 import com.pratilipi.data.DataAccessor;
@@ -29,7 +30,6 @@ import com.pratilipi.data.type.Email;
 import com.pratilipi.data.type.UserAuthor;
 import com.pratilipi.data.type.Vote;
 import com.pratilipi.email.EmailTemplateUtil;
-import com.pratilipi.email.EmailUtil;
 
 
 public class EmailDataUtil {
@@ -113,15 +113,6 @@ public class EmailDataUtil {
 		List<Email> emailList = dataAccessor.getEmailList( userId, null, (String) null, EmailState.PENDING, null );
 
 		UserData user = UserDataUtil.createUserData( dataAccessor.getUser( userId ) );
-		if( user.getEmail() == null ) {
-			for( Email email : emailList ) {
-				email.setState( EmailState.INVALID_EMAIL );
-				email.setLastUpdated( new Date() );
-			}
-			dataAccessor.createOrUpdateEmailList( emailList );
-			return;
-		}
-
 		String consolidatedContent = new String();
 
 		for( Email email : emailList ) {
@@ -159,15 +150,7 @@ public class EmailDataUtil {
 			return;
 
 		UserData user = UserDataUtil.createUserData( dataAccessor.getUser( email.getUserId() ) );
-		if( user.getEmail() == null ) {
-			email.setState( EmailState.INVALID_EMAIL );
-			email.setLastUpdated( new Date() );
-			dataAccessor.createOrUpdateEmail( email );
-			return;
-		}
-
 		String content = _getContentSnippet( email );
-
 
 		Pattern senderNamePattern = Pattern.compile( "<!-- SENDER_NAME:(.+?) -->" );
 		Pattern senderEmailPattern = Pattern.compile( "<!-- SENDER_EMAIL:(.+?) -->" );
