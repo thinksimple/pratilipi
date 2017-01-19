@@ -726,16 +726,21 @@ public class AuditLogProcessApi extends GenericApi {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		RtdbAccessor rtdbAccessor = DataAccessorFactory.getRtdbAccessor();
 
+		Set<Long> userIds = new HashSet<>( emailList.size() );
 		Map<Long,UserPreferenceRtdb> userPreferenceMap = new HashMap<>();
-		List<Email> immediateEmails = new ArrayList<>();
+
 		for( Email email : emailList ) {
-			UserPreferenceRtdb preference;
-			if( userPreferenceMap.containsKey( email.getUserId() ) ) {
-				preference = userPreferenceMap.get( email.getUserId() );
-			} else {
-				preference = rtdbAccessor.getUserPreference( email.getUserId() );
-				userPreferenceMap.put( email.getUserId(), preference );
-			}
+			userPreferenceMap.put( email.getUserId(), rtdbAccessor.getUserPreference( email.getUserId() ) );
+			userIds.add( email.getUserId() );
+		}
+
+		Map<Long,User> users = dataAccessor.getUsers( userIds );
+		List<Email> immediateEmails = new ArrayList<>();
+
+		for( Email email : emailList ) {
+			UserPreferenceRtdb preference = userPreferenceMap.get( email.getUserId() );
+			if( users.get( email.getUserId() ).getEmail() == null )
+				continue;
 			if( preference.getEmailFrequency() == null || preference.getEmailFrequency() == EmailFrequency.IMMEDIATELY ) {
 				email.setScheduledDate( new Date() );
 				immediateEmails.add( email );
@@ -762,12 +767,15 @@ public class AuditLogProcessApi extends GenericApi {
 		Map<Long,User> users = dataAccessor.getUsers( userIds );
 		for( Email email : emailList ) {
 			UserPreferenceRtdb preference = userPreferenceMap.get( email.getUserId() );
+			User user = users.get( email.getUserId() );
+			if( user.getEmail() == null )
+				continue;
 			if( preference.getEmailFrequency() == null || preference.getEmailFrequency() == EmailFrequency.IMMEDIATELY )
 				email.setScheduledDate( new Date() );
 			else if( preference.getEmailFrequency() == EmailFrequency.NEVER )
 				emailList.remove( email );
 			else
-				email.setScheduledDate( preference.getEmailFrequency().getNextSchedule( users.get( email.getUserId() ).getLastEmailedDate() ) );
+				email.setScheduledDate( preference.getEmailFrequency().getNextSchedule( user.getLastEmailedDate() ) );
 		}
 
 		emailList = dataAccessor.createOrUpdateEmailList( emailList );
