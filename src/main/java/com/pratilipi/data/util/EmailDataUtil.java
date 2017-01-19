@@ -305,8 +305,8 @@ public class EmailDataUtil {
 
 		Map<String, Object> dataModel = new HashMap<>();
 		dataModel.put( "pratilipi_title", pratilipi.getTitle() != null ? pratilipi.getTitle() : pratilipi.getTitleEn() );
-		dataModel.put( "pratilipi_page_url", pratilipi.getPageUrl() );
-		dataModel.put( "reviewer_page_url", userPratilipi.getUser().getProfilePageUrl() );
+		dataModel.put( "pratilipi_page_url", _getDomainName( pratilipi.getLanguage() ) + pratilipi.getPageUrl() );
+		dataModel.put( "reviewer_page_url", _getDomainName( userPratilipi.getUser().getLanguage() ) + userPratilipi.getUser().getProfilePageUrl() );
 		dataModel.put( "reviewer_image_url", userPratilipi.getUser().getAuthor().getProfileImageUrl( 64 ) );
 		dataModel.put( "reviewer_name", userPratilipi.getUser().getAuthor().getName() != null
 												? userPratilipi.getUser().getAuthor().getName() 
