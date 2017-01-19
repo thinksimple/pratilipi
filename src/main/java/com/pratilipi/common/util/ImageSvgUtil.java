@@ -19,7 +19,7 @@ public class ImageSvgUtil {
 			
 			String svg = new String( svgData, "UTF-8" );
 			
-			Pattern pattern = Pattern.compile( heightPattern );
+			Pattern pattern = Pattern.compile( heightPattern, Pattern.DOTALL );
 			Matcher mHeight = pattern.matcher( svg );
 			mHeight.find();
 			
@@ -38,7 +38,7 @@ public class ImageSvgUtil {
 			
 			String svgStr = new String( svgData, "UTF-8" );
 			
-			Pattern pattern = Pattern.compile( widthPattern );
+			Pattern pattern = Pattern.compile( widthPattern, Pattern.DOTALL );
 			Matcher mWidth = pattern.matcher( svgStr );
 			mWidth.find();
 			
@@ -61,12 +61,12 @@ public class ImageSvgUtil {
 		
 			String svgStr = new String( svgData, "UTF-8" );
 			
-			Pattern pWidth = Pattern.compile( widthPattern );
+			Pattern pWidth = Pattern.compile( widthPattern, Pattern.DOTALL );
 			Matcher mWidth = pWidth.matcher( svgStr );
 			mWidth.find();
 			String widthStr = mWidth.group( 1 ).trim();
 			
-			Pattern pHeight = Pattern.compile( heightPattern );
+			Pattern pHeight = Pattern.compile( heightPattern, Pattern.DOTALL );
 			Matcher mHeight = pHeight.matcher( svgStr );
 			mHeight.find();
 			String heightStr = mHeight.group( 1 ).trim();
@@ -76,10 +76,9 @@ public class ImageSvgUtil {
 						* Integer.parseInt( heightStr.substring( heightStr.indexOf( "\"" ) + 1, heightStr.lastIndexOf( "\"" ) ) )
 						/ Integer.parseInt( widthStr.substring( widthStr.indexOf( "\"" ) + 1, widthStr.lastIndexOf( "\"" ) ) );
 			
-			svgStr.replace( widthStr, "width=\"" + width + "\"" );
-			svgStr.replace( heightStr, "height=\"" + height + "\"" );
-			
-			return svgStr.getBytes( "UTF-8" );
+			return svgStr.replace( widthStr, "width=\"" + width + "\"" )
+					.replace( heightStr, "height=\"" + height + "\"" )
+					.getBytes( "UTF-8" );
 			
 		} catch( UnsupportedEncodingException e ) {
 			throw new UnexpectedServerException();
