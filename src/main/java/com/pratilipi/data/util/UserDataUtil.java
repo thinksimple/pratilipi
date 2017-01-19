@@ -242,13 +242,18 @@ public class UserDataUtil {
 		
 		user.setLastUpdated( new Date() );
 
+		
 		user = dataAccessor.createOrUpdateUser( user, auditLog );
 
-		UserData updatedUserData = createUserData( user );
-		updatedUserData.setFirstName( userData.getFirstName() );
-		updatedUserData.setLastName( userData.getLastName() );
-
-		return updatedUserData;
+		
+		if( isNew ) {
+			userData = createUserData( user, null );
+			userData.setFirstName( userData.getFirstName() );
+			userData.setLastName( userData.getLastName() );
+		} else {
+			userData = createUserData( user );
+		}
+		return userData;
 
 	}
 	
@@ -258,6 +263,10 @@ public class UserDataUtil {
 		boolean isNew = userData.getId() == null;
 		
 		JsonObject errorMessages = new JsonObject();
+
+		// New user profile must have name.
+		if( isNew && userData.getFirstName() == null )
+			errorMessages.addProperty( "name", GenericRequest.ERR_NAME_REQUIRED );
 
 		// New user profile must have email.
 		if( isNew && ( ! userData.hasEmail() || userData.getEmail() == null ) )
@@ -275,10 +284,6 @@ public class UserDataUtil {
 			if( user != null && ! user.getId().equals( userData.getId() ) )
 				errorMessages.addProperty( "email", GenericRequest.ERR_EMAIL_REGISTERED_ALREADY );
 		}
-
-		// New user profile must have name.
-		if( isNew && userData.getFirstName() == null )
-			errorMessages.addProperty( "name", GenericRequest.ERR_NAME_REQUIRED );
 
 		if( errorMessages.entrySet().size() > 0 )
 			throw new InvalidArgumentException( errorMessages );

@@ -1,8 +1,5 @@
 package com.pratilipi.api.impl.user;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Post;
@@ -21,8 +18,6 @@ import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.UserState;
-import com.pratilipi.data.DataAccessorFactory;
-import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.util.AuthorDataUtil;
 import com.pratilipi.data.util.UserDataUtil;
@@ -36,9 +31,12 @@ import com.pratilipi.taskqueue.TaskQueueFactory;
 public class UserApi extends GenericApi {
 
 	public static class PostRequest extends GenericRequest {
-
+		
+		// userId == null, User updating his/her own data
+		// userId == 0L, AEE adding new User
+		// userId > 0L, AEE updating data on User's behalf
 		@Validate( minLong = 0L )
-		private Long userId; // userId == 0L, for adding new user
+		private Long userId;
 
 		private String name;
 		private boolean hasName;
@@ -220,12 +218,6 @@ public class UserApi extends GenericApi {
 				? new UserData( AccessTokenFilter.getAccessToken().getUserId() )
 				: new UserData( request.userId.equals( 0L ) ? null : request.userId );
 
-		if( request.hasEmail )
-			userData.setEmail( request.email );
-		if( request.hasPhone )
-			userData.setPhone( request.phone );
-		if( request.hasLanguage )
-			userData.setLanguage( request.language );
 		if( request.hasName ) {
 			String firstName = request.name.trim();
 			String lastName = null;
@@ -236,24 +228,26 @@ public class UserApi extends GenericApi {
 			userData.setFirstName( firstName );
 			userData.setLastName( lastName );
 		}
-
-		// Save UserData.
+		if( request.hasEmail )
+			userData.setEmail( request.email );
+		if( request.hasPhone )
+			userData.setPhone( request.phone );
+		if( request.hasLanguage )
+			userData.setLanguage( request.language );
+		
+		// Save UserData
 		userData = UserDataUtil.saveUserData( userData );
 
-		List<Task> taskList = new LinkedList<>();
-		Long authorId = null;
-
-
-		if( request.userId != null && request.userId.equals( 0L ) ) { // New user added by AEMs
+		
+		// New User (added by AEE)
+		if( request.userId != null && request.userId.equals( 0L ) ) {
 			
-			// Create Author profile for the User.
-			authorId = AuthorDataUtil.createAuthorProfile(
+			// Create Author profile for the User
+			AuthorDataUtil.createAuthorProfile(
 					userData,
 					request.language == null ? UxModeFilter.getFilterLanguage() : request.language );
 			
-			userData.setAuthor( new AuthorData( authorId ) );
-			userData.setProfilePageUrl( "/author/" + authorId );
-			
+			userData = UserDataUtil.getCurrentUser(); // Fetching updated UserData
 			
 			// Send welcome mail to the user
 			Task task = TaskQueueFactory.newTask()
@@ -261,35 +255,26 @@ public class UserApi extends GenericApi {
 					.addParam( "userId", userData.getId().toString() )
 					.addParam( "language", request.language == null ? UxModeFilter.getDisplayLanguage().toString() : request.language.toString() )
 					.addParam( "sendWelcomeMail", "true" );
-			taskList.add( task );
-			
-		} else {
-			
-			authorId = DataAccessorFactory.getDataAccessor()
-					.getAuthorByUserId( userData.getId() )
-					.getId();
+			TaskQueueFactory.getUserTaskQueue().add( task );
 			
 		}
 
 
-		// Send verification mail if user sate is REGISTERED
+		// Send verification mail if user updates his email and state is REGISTERED
 		if( request.hasEmail && userData.getState() == UserState.REGISTERED ) {
 			Task task = TaskQueueFactory.newTask()
 					.setUrl( "/user/email" )
 					.addParam( "userId", userData.getId().toString() )
 					.addParam( "language", ( userData.getLanguage() == null ? Language.ENGLISH : userData.getLanguage() ).toString() )
 					.addParam( "sendEmailVerificationMail", "true" );
-			taskList.add( task );
+			TaskQueueFactory.getUserTaskQueue().add( task );
 		}
-		
-		
-		TaskQueueFactory.getUserTaskQueue().addAll( taskList );
 		
 		
 		// Process Author data
 		Task task = TaskQueueFactory.newTask()
 				.setUrl( "/author/process" )
-				.addParam( "authorId", authorId.toString() )
+				.addParam( "authorId", userData.getAuthor().getId().toString() )
 				.addParam( "processData", "true" );
 		TaskQueueFactory.getAuthorTaskQueue().add( task );
 		
