@@ -7,6 +7,7 @@ import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.condition.IfNotNull;
 import com.pratilipi.common.type.EmailState;
 import com.pratilipi.common.type.EmailType;
 import com.pratilipi.data.type.Email;
@@ -40,7 +41,7 @@ public class EmailEntity implements Email {
 	@Index
 	private Date CREATION_DATE;
 
-	@Index
+	@Index( IfNotNull.class )
 	private Date SCHEDULED_DATE;
 
 	@Index
