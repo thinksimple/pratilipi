@@ -1537,11 +1537,6 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return createOrUpdateEntity( userAuthor, auditLog );
 	}
 
-	@Override
-	public List<UserAuthor> createOrUpdateUserAuthorList( List<UserAuthor> userAuthorList ) {
-		return createOrUpdateEntityList( userAuthorList );
-	}
-	
 	
 	// curated/home.<lang>
 	
