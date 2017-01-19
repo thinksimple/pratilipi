@@ -129,7 +129,8 @@ public class DataStoreCleanupUtil {
 		System.out.println(
 				"User id: " + user.getId()
 				+ ", state: " + user.getState()
-				+ ", signUpDate:" + user.getSignUpDate() );
+				+ ", signUpDate:" + user.getSignUpDate()
+				+ ", signUpSource:" + user.getSignUpSource() );
 
 
 		if( ! preview && user.getState() != UserState.DELETED && user.getState() != UserState.BLOCKED ) {
