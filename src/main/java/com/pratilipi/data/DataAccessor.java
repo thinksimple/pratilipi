@@ -233,8 +233,8 @@ public interface DataAccessor {
 	Email getEmail( Long emailId );
 	Email getEmail( Long userId, EmailType type, Long primaryContentId );
 	Email getEmail( Long userId, EmailType type, String primaryContentId );
-	DataIdListIterator<Email> getIdListIteratorForPendingEmails();
-	List<Email> getPendingEmailsForUser( Long userId );
+	DataIdListIterator<Email> getEmailIdListIteratorForStatePending();
+	List<Email> getEmailListWithStatePending( Long userId );
 	List<Email> getEmailList( Long userId, EmailType type, Long primaryContentId, EmailState state, Integer resultCount );
 	List<Email> getEmailList( Long userId, EmailType type, String primaryContentId, EmailState state, Integer resultCount );
 	Email createOrUpdateEmail( Email email );

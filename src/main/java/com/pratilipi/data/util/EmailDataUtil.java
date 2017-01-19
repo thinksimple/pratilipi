@@ -187,7 +187,7 @@ public class EmailDataUtil {
 		if( email.getState() == EmailState.SENT )
 			return;
 
-		sendConsolidatedEmail( email.getUserId(), dataAccessor.getPendingEmailsForUser( email.getUserId() ) );
+		sendConsolidatedEmail( email.getUserId(), dataAccessor.getEmailListWithStatePending( email.getUserId() ) );
 
 	}
 
