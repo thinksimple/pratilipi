@@ -1296,7 +1296,7 @@ public class DataAccessorMockImpl implements DataAccessor {
 
 
 	@Override
-	public DataListIterator<Email> getEmailIteratorWithStatePending() {
+	public DataIdListIterator<Email> getEmailIdListIteratorWithStatePending() {
 		// TODO Auto-generated method stub
 		return null;
 	}
