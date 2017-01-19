@@ -284,7 +284,7 @@ public class PratilipiDocUtil {
 				.getBlob( "pratilipi/" + pratilipiId + "/images/" + name );
 	
 		if( width != null )
-			blobEntry.setData( ImageUtil.resize( blobEntry.getData(), width ) );
+			blobEntry = ImageUtil.resize( blobEntry, width );
 
 		return blobEntry;
 
