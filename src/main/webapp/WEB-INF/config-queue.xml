@@ -135,7 +135,7 @@
 	<!-- EMAIL Table -->
 
 	<queue>
-		<name>be-email</name>
+		<name>hp-email</name>
 		<target>queues</target>
 		<rate>500/s</rate>
 		<bucket-size>10</bucket-size>

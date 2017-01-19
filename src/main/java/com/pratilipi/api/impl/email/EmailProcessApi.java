@@ -50,7 +50,7 @@ public class EmailProcessApi extends GenericApi {
 			taskList.add( task );
 
 			if( taskList.size() == 1000 || ! itr.hasNext() ) {
-				TaskQueueFactory.getEmailOfflineTaskQueue().addAll( taskList );
+				TaskQueueFactory.getEmailHpTaskQueue().addAll( taskList );
 				taskList.clear();
 			}
 
