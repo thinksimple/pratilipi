@@ -67,6 +67,11 @@ public interface User extends GenericOfyType, Serializable {
 	
 	void setLastUpdated( Date lastUpdated );
 
+
+	Date getLastEmailedDate();
+	
+	void setLastEmailedDate( Date lastEmailed );
+
 	
 	Long getFollowCount();
 	

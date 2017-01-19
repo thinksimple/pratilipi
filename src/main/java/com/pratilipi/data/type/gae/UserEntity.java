@@ -69,6 +69,10 @@ public class UserEntity implements User {
 	@Index
 	private Date LAST_UPDATED;
 	
+
+	@Index( IfNotNull.class )
+	private Date LAST_EMAILED;
+	
 	
 	@Index
 	private Long FOLLOW_COUNT;
@@ -262,6 +266,17 @@ public class UserEntity implements User {
 	@Override
 	public void setLastUpdated( Date lastUpdated ) {
 		this.LAST_UPDATED = lastUpdated;
+	}
+	
+
+	@Override
+	public Date getLastEmailedDate() {
+		return LAST_EMAILED;
+	}
+	
+	@Override
+	public void setLastEmailedDate( Date lastEmailed ) {
+		this.LAST_EMAILED = lastEmailed;
 	}
 
 	
