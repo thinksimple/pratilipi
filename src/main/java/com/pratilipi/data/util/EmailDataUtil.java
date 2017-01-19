@@ -31,6 +31,7 @@ import com.pratilipi.data.type.Vote;
 import com.pratilipi.email.EmailTemplateUtil;
 import com.pratilipi.email.EmailUtil;
 
+
 public class EmailDataUtil {
 
 	private static class EmailData {
