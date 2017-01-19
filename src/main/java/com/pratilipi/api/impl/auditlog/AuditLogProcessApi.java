@@ -756,9 +756,7 @@ public class AuditLogProcessApi extends GenericApi {
 				preference = rtdbAccessor.getUserPreference( email.getUserId() );
 				userPreferenceMap.put( email.getUserId(), preference );
 			}
-
-			if( preference.getEmailFrequency() != null && preference.getEmailFrequency() != EmailFrequency.IMMEDIATELY ) // Consolidated
-				userIds.add( email.getUserId() );
+			userIds.add( email.getUserId() );
 		}
 
 		Map<Long,User> users = dataAccessor.getUsers( userIds );
@@ -769,42 +767,11 @@ public class AuditLogProcessApi extends GenericApi {
 			else if( preference.getEmailFrequency() == EmailFrequency.NEVER )
 				emailList.remove( email );
 			else
-				email.setScheduledDate( _getScheduleDate( users.get( email.getUserId() ), preference.getEmailFrequency() ) );
+				email.setScheduledDate( preference.getEmailFrequency().getNextSchedule( users.get( email.getUserId() ).getLastEmailedDate() ) );
 		}
 
 		emailList = dataAccessor.createOrUpdateEmailList( emailList );
 		*/
-
-	}
-
-	private Date _getScheduleDate( User user, EmailFrequency preference ) {
-
-		// Date lastSentDate = user.getLastEmailedDate();
-		Date lastSentDate = new Date();
-
-		if( lastSentDate == null )
-			return new Date();
-
-		Integer days = null;
-		switch( preference ) {
-			case DAILY:
-				days = 1;
-				break;
-			case WEEKLY:
-				days = 7;
-				break;
-			case MONTHLY:
-				days = 30;
-				break;
-			default:
-				break;
-		}
-
-		Date date = new Date();
-		if( date.getTime() > ( lastSentDate.getTime() + TimeUnit.DAYS.toMillis( days ) ) )
-			return date;
-
-		return new Date( lastSentDate.getTime() + TimeUnit.DAYS.toMillis( days ) );
 
 	}
 
