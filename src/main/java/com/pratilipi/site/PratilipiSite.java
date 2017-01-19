@@ -1281,7 +1281,7 @@ public class PratilipiSite extends HttpServlet {
 					}
 				}
 
-				content = PratilipiDocUtil.getImageTag( pratilipiId, jsonObject );
+				content = PratilipiDocUtil._processImagePagelet( pratilipiId, jsonObject );
 
 			} else {
 				content = new Gson().toJson( res.getContent() );
