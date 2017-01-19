@@ -2096,6 +2096,20 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 
 	@Override
+	public List<Email> getPendingEmailsForUser( Long userId ) {
+
+		List<EmailEntity> emailList = ObjectifyService.ofy().load().type( EmailEntity.class )
+				.filter( "USER_ID", userId )
+				.filter( "STATE", EmailState.PENDING )
+				.filter( "SCHEDULED_DATE <", new Date() )
+				.order( "SCHEDULED_DATE" )
+				.list();
+
+		return new ArrayList<Email>( emailList );
+
+	}
+
+	@Override
 	public List<Email> getEmailList( Long userId, EmailType type, Long primaryContentId, EmailState state, Integer resultCount ) {
 		return getEmailList( userId, type, primaryContentId.toString(), state, resultCount );
 	}

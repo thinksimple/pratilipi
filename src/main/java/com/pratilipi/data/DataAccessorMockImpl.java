@@ -1300,5 +1300,11 @@ public class DataAccessorMockImpl implements DataAccessor {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public List<Email> getPendingEmailsForUser( Long userId ) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
