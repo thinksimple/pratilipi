@@ -11,7 +11,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,7 +24,6 @@ import com.google.gson.Gson;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.cmd.Query;
-import com.googlecode.objectify.cmd.QueryKeys;
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.BatchProcessState;
@@ -970,45 +968,48 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	@Override
 	public List<Long> getAuthorIdListWithMaxReadCount( Language language, Long minReadCount, Integer resultCount ) {
 
+		if( resultCount == null )
+			resultCount = 1000;
+		
+		
 		QueryResultIterator<Key<AuthorEntity>> readCountIterator = ObjectifyService.ofy().load()
-									.type( AuthorEntity.class )
-									.filter( "LANGUAGE", language )
-									.filter( "STATE", AuthorState.ACTIVE )
-									.filter( "TOTAL_READ_COUNT >=", minReadCount )
-									.order( "-TOTAL_READ_COUNT" )
-									.chunk( 1000 )
-									.limit( resultCount )
-									.keys()
-									.iterator();
+				.type( AuthorEntity.class )
+				.filter( "LANGUAGE", language )
+				.filter( "STATE", AuthorState.ACTIVE )
+				.filter( "TOTAL_READ_COUNT >=", minReadCount )
+				.order( "-TOTAL_READ_COUNT" )
+				.chunk( resultCount < 1000 ? resultCount : 1000 )
+//				.limit( resultCount ) // .limit(int) is not honored in case of .list() / .iterator() for .keys()
+				.keys()
+				.iterator();
 
+		List<Long> tempAuthorIdList = new ArrayList<>( resultCount );
+		while( readCountIterator.hasNext() && tempAuthorIdList.size() < resultCount )
+			tempAuthorIdList.add( readCountIterator.next().getId() );
+
+		
 		QueryResultIterator<Key<AuthorEntity>> followCountIterator = ObjectifyService.ofy().load()
-									.type( AuthorEntity.class )
-									.filter( "LANGUAGE", language )
-									.filter( "STATE", AuthorState.ACTIVE )
-									.filter( "FOLLOW_COUNT >=", 1 )
-									.order( "-FOLLOW_COUNT" )
-									.chunk( 1000 )
-									.keys()
-									.iterator();
+				.type( AuthorEntity.class )
+				.filter( "LANGUAGE", language )
+				.filter( "STATE", AuthorState.ACTIVE )
+				.filter( "FOLLOW_COUNT >=", 1 )
+				.order( "-FOLLOW_COUNT" )
+				.chunk( 1000 )
+				.keys()
+				.iterator();
 
-		List<Long> authorIdReadCount = new ArrayList<>();
-		while( readCountIterator.hasNext() )
-			authorIdReadCount.add( readCountIterator.next().getId() );
-
-		List<Long> authorIdFollowCount = new ArrayList<>();
-		while( followCountIterator.hasNext() )
-			authorIdFollowCount.add( followCountIterator.next().getId() );
-
-		List<Long> authorIdList = new ArrayList<>( authorIdReadCount.size() );
-		for( Long authorId : authorIdFollowCount ) {
-			if( authorIdReadCount.contains( authorId ) ) {
-				authorIdList.add( authorId );
-				authorIdReadCount.remove( authorId );
-			}
+		List<Long> authorIdList = new ArrayList<>( resultCount );
+		while( ! tempAuthorIdList.isEmpty() && followCountIterator.hasNext() ) {
+			Long authorId = followCountIterator.next().getId();
+			if( ! tempAuthorIdList.contains( authorId ) )
+				continue;
+			authorIdList.add( authorId );
+			tempAuthorIdList.remove( authorId );
 		}
 
-		authorIdList.addAll( authorIdReadCount );
-
+		
+		authorIdList.addAll( tempAuthorIdList );
+		
 		return authorIdList;
 
 	}
