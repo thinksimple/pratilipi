@@ -175,6 +175,7 @@ public class EmailDataUtil {
 									user.getLanguage() != null ? user.getLanguage() : Language.ENGLISH ) );
 
 		email.setState( EmailState.SENT );
+		email.setLastUpdated( new Date() );
 		dataAccessor.createOrUpdateEmail( email );
 
 	}
