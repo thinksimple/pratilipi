@@ -34,7 +34,7 @@ pratilipiSummaryController.prototype.getData = function() {
   var self = this;
   $.ajax({
       type: 'get',
-      url: '/api/pratilipi?_apiVer=2&pratilipiId=1',
+      url: '/api/pratilipi?_apiVer=2&pratilipiId=5713444722442240',
       data: { 
           // 'language': "${ language }"
       },
