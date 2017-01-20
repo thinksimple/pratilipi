@@ -56,6 +56,7 @@ public class HttpUtil {
 			String mimeType = urlConn.getContentType();
 			byte[] data = IOUtils.toByteArray( urlConn );
 			logger.log( Level.INFO, "Http GET Response Type: " + mimeType + " & Length: "  + data.length );
+			logger.log( Level.INFO, "Http GET Response: " + new String( data, "UTF-8" ) );
 			return DataAccessorFactory.getBlobAccessor().newBlob( null, data, mimeType );
 		} catch( IOException e ) {
 			logger.log( Level.SEVERE, "Failed to execute Http Get call.", e );
