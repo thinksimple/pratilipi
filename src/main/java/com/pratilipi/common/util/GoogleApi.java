@@ -1,14 +1,11 @@
 package com.pratilipi.common.util;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.apache.commons.io.IOUtils;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
@@ -41,14 +38,10 @@ public class GoogleApi {
 	// Using "App Engine default Service Account", implementation will change for systems other than Google App Engine
 	public static GoogleCredential getGoogleCredential( Collection<String> scopes ) throws UnexpectedServerException {
 		try {
-			String serviceAccountKey = DataAccessorFactory.getDataAccessor()
-					.getAppProperty( AppProperty.SERVICE_ACCOUNT_FIREBASE )
-					.getValue();
-			GoogleCredential googleCredential = GoogleCredential
-					.fromStream( IOUtils.toInputStream( serviceAccountKey, StandardCharsets.UTF_8  ) );
+			GoogleCredential googleCredential = GoogleCredential.getApplicationDefault();
 			if( scopes != null && scopes.size() != 0 )
-				googleCredential = googleCredential.createScoped( scopes );
-			googleCredential.refreshToken();
+				googleCredential = GoogleCredential.getApplicationDefault().createScoped( scopes );
+//			googleCredential.refreshToken();
 			return googleCredential;
 		} catch( IOException e ) {
 			logger.log( Level.SEVERE, "Failed to create GoogleCredential.", e );
