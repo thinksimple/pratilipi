@@ -39,6 +39,7 @@ import com.pratilipi.api.impl.pratilipi.PratilipiContentV3Api;
 import com.pratilipi.api.impl.pratilipi.PratilipiCoverApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiListV1Api;
 import com.pratilipi.api.impl.pratilipi.PratilipiListV2Api;
+import com.pratilipi.api.impl.pratilipi.PratilipiStatsApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiV1Api;
 import com.pratilipi.api.impl.pratilipi.PratilipiV2Api;
 import com.pratilipi.api.impl.test.TestApi;
@@ -96,6 +97,7 @@ public class ApiService extends GenericService {
 		ApiRegistry.register( PratilipiContentImageApi.class );			// *.pratilipi.com
 		ApiRegistry.register( PratilipiContentChapterAddApi.class );	// *.pratilipi.com
 		ApiRegistry.register( PratilipiContentChapterDeleteApi.class );	// *.pratilipi.com
+		ApiRegistry.register( PratilipiStatsApi.class );				// *.pratilipi.com
 		
 		ApiRegistry.register( AuthorApi.class );					// *.pratilipi.com
 		ApiRegistry.register( AuthorListApi.class );				// *.pratilipi.com
