@@ -44,9 +44,10 @@ public class GoogleApi {
 			String serviceAccountKey = DataAccessorFactory.getDataAccessor()
 					.getAppProperty( AppProperty.SERVICE_ACCOUNT_FIREBASE )
 					.getValue();
-			GoogleCredential googleCredential = GoogleCredential.fromStream( IOUtils.toInputStream( serviceAccountKey, StandardCharsets.UTF_8  ) );
+			GoogleCredential googleCredential = GoogleCredential
+					.fromStream( IOUtils.toInputStream( serviceAccountKey, StandardCharsets.UTF_8  ) );
 			if( scopes != null && scopes.size() != 0 )
-				googleCredential = GoogleCredential.getApplicationDefault().createScoped( scopes );
+				googleCredential = googleCredential.createScoped( scopes );
 			googleCredential.refreshToken();
 			return googleCredential;
 		} catch( IOException e ) {
