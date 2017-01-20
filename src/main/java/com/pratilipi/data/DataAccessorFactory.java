@@ -50,7 +50,7 @@ public class DataAccessorFactory {
 		RtdbAccessor rtdbAccessor = threadLocalRtdbAccessor.get();
 		if( rtdbAccessor == null ) {
 			rtdbAccessor = new RtdbAccessorFirebaseImpl(
-					GoogleApi.getGoogleCredential( Arrays.asList(
+					GoogleApi.getAccessToken( Arrays.asList(
 							"https://www.googleapis.com/auth/firebase.database",
 							"https://www.googleapis.com/auth/userinfo.email" ) ),
 					new MemcacheWrapper( cacheL1, cacheL2 ) );

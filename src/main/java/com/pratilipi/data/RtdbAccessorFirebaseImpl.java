@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -28,9 +27,9 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 	private final Memcache memcache;
 	
 	
-	public RtdbAccessorFirebaseImpl( GoogleCredential googleCredential, Memcache memcache ) {
+	public RtdbAccessorFirebaseImpl( String googleApiAccessToken, Memcache memcache ) {
 		this.headersMap = new HashMap<>();
-		this.headersMap.put( "Authorization", "Bearer " + googleCredential.getAccessToken() );
+		this.headersMap.put( "Authorization", "Bearer " + googleApiAccessToken );
 		this.memcache = memcache;
 	}
 

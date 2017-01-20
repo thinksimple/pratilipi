@@ -7,7 +7,6 @@ import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
@@ -17,6 +16,7 @@ import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.analytics.Analytics;
+import com.google.appengine.api.appidentity.AppIdentityServiceFactory;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.pratilipi.common.exception.InvalidArgumentException;
@@ -36,22 +36,13 @@ public class GoogleApi {
 
 
 	// Using "App Engine default Service Account", implementation will change for systems other than Google App Engine
-	public static GoogleCredential getGoogleCredential( Collection<String> scopes ) throws UnexpectedServerException {
-		try {
-			GoogleCredential googleCredential = GoogleCredential.getApplicationDefault();
-			if( scopes != null && scopes.size() != 0 )
-				googleCredential = GoogleCredential.getApplicationDefault().createScoped( scopes );
-//			googleCredential.refreshToken();
-			return googleCredential;
-		} catch( IOException e ) {
-			logger.log( Level.SEVERE, "Failed to create GoogleCredential.", e );
-			throw new UnexpectedServerException();
-		}
-	}
-	
-	@Deprecated
 	private static HttpRequestInitializer getCredential( Collection<String> scopes ) {
 		return new AppIdentityCredential( scopes ); // Works only on Google AppEngine
+	}
+
+	// Using "App Engine default Service Account", implementation will change for systems other than Google App Engine
+	public static String getAccessToken( Collection<String> scopes ) {
+		return AppIdentityServiceFactory.getAppIdentityService().getAccessToken( scopes ).getAccessToken();
 	}
 
 	
