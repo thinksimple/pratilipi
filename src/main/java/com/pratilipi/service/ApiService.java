@@ -41,6 +41,7 @@ import com.pratilipi.api.impl.pratilipi.PratilipiListV1Api;
 import com.pratilipi.api.impl.pratilipi.PratilipiListV2Api;
 import com.pratilipi.api.impl.pratilipi.PratilipiV1Api;
 import com.pratilipi.api.impl.pratilipi.PratilipiV2Api;
+import com.pratilipi.api.impl.test.TestApi;
 import com.pratilipi.api.impl.user.UserApi;
 import com.pratilipi.api.impl.user.UserEmailApi;
 import com.pratilipi.api.impl.user.UserLoginApi;
@@ -140,6 +141,8 @@ public class ApiService extends GenericService {
 		ApiRegistry.register( BatchProcessListApi.class );			// *.pratilipi.com
 
 		ApiRegistry.register( I18nApi.class );						// *.pratilipi.com
+		
+		ApiRegistry.register( TestApi.class );
 
 	}
 	
