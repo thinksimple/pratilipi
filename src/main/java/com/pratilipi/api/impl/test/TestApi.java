@@ -11,6 +11,7 @@ import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.NotificationType;
+import com.pratilipi.common.util.HttpUtil;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.RtdbAccessor;
 import com.pratilipi.data.type.UserPreferenceRtdb;
@@ -38,6 +39,8 @@ public class TestApi extends GenericApi {
 		logger.log( Level.INFO, "EmailFrequency: " + preference.getEmailFrequency() );
 		logger.log( Level.INFO, "EmailFrequency: " + preference.isNotificationSubscribed( NotificationType.AUTHOR_FOLLOW ) );
 
+		logger.log( Level.INFO, new String( HttpUtil.doGet( "https://prod-pratilipi.firebaseio.com/PREFERENCE/5629499534213120.json" ).getData() ) );
+		
 		return new GenericResponse();
 
 	}
