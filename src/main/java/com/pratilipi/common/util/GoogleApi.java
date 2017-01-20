@@ -41,7 +41,7 @@ public class GoogleApi {
 			GoogleCredential googleCredential = GoogleCredential.getApplicationDefault();
 			if( scopes != null && scopes.size() != 0 )
 				googleCredential = GoogleCredential.getApplicationDefault().createScoped( scopes );
-//			googleCredential.refreshToken();
+			googleCredential.refreshToken();
 			return googleCredential;
 		} catch( IOException e ) {
 			logger.log( Level.SEVERE, "Failed to create GoogleCredential.", e );
