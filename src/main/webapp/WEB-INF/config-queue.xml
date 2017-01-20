@@ -142,8 +142,8 @@
 		<max-concurrent-requests>100</max-concurrent-requests>
 		<retry-parameters>
 			<task-age-limit>90d</task-age-limit>
-			<min-backoff-seconds>60</min-backoff-seconds>
-			<max-backoff-seconds>10800</max-backoff-seconds>
+			<min-backoff-seconds>5</min-backoff-seconds>
+			<max-backoff-seconds>300</max-backoff-seconds>
 			<max-doublings>2</max-doublings>
 		</retry-parameters>
 	</queue>
