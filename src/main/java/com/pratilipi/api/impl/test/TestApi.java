@@ -1,6 +1,8 @@
 package com.pratilipi.api.impl.test;
 
-import com.google.gson.Gson;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -8,11 +10,16 @@ import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.NotificationType;
 import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.RtdbAccessor;
+import com.pratilipi.data.type.UserPreferenceRtdb;
 
 @SuppressWarnings( "serial" )
 @Bind( uri = "/test" )
 public class TestApi extends GenericApi {
+	
+	private static final Logger logger = Logger.getLogger( TestApi.class.getName() );
 
 	public static class GetRequest extends GenericRequest {
 
@@ -21,19 +28,18 @@ public class TestApi extends GenericApi {
 
 	}
 
-	public static class Response extends GenericResponse {
-
-		private String content;
-
-		public Response( String content ) {
-			this.content = content;
-		}
-
-	}
-
 	@Get
-	public Response get( GetRequest request ) throws UnexpectedServerException {
-		return new Response( new Gson().toJson( DataAccessorFactory.getRtdbAccessor().getUserPreference( request.userId ) ) );
+	public GenericResponse get( GetRequest request ) throws UnexpectedServerException {
+
+		RtdbAccessor rtDbAccessor = DataAccessorFactory.getRtdbAccessor();
+		UserPreferenceRtdb preference = rtDbAccessor.getUserPreference( request.userId );
+
+		logger.log( Level.INFO, "UserId: " + request.userId );
+		logger.log( Level.INFO, "EmailFrequency: " + preference.getEmailFrequency() );
+		logger.log( Level.INFO, "EmailFrequency: " + preference.isNotificationSubscribed( NotificationType.AUTHOR_FOLLOW ) );
+
+		return new GenericResponse();
+
 	}
 
 }
