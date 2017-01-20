@@ -166,6 +166,11 @@
 
 	
 	<datastore-index kind="EMAIL" ancestor="false" source="manual">
+		<property name="STATE" direction="asc"/>
+		<property name="SCHEDULED_DATE" direction="asc"/>
+	</datastore-index>
+
+	<datastore-index kind="EMAIL" ancestor="false" source="manual">
 		<property name="USER_ID" direction="asc"/>
 		<property name="TYPE" direction="asc"/>
 		<property name="PRIMARY_CONTENT_ID" direction="asc"/>
