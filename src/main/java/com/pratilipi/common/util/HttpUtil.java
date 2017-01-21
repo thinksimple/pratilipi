@@ -60,7 +60,7 @@ public class HttpUtil {
 			logger.log( Level.INFO, "Type: " + mimeType );
 			logger.log( Level.INFO, "Length: "  + data.length );
 			if( status != 200 ) {
-				logger.log( Level.INFO, "Response: " + new String( data, "UTF-8" ) );
+				logger.log( Level.SEVERE, "Response: " + new String( data, "UTF-8" ) );
 				throw new UnexpectedServerException();
 			}
 			return DataAccessorFactory.getBlobAccessor().newBlob( null, data, mimeType );
