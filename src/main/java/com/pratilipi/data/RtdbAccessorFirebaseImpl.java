@@ -47,7 +47,7 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 				if( json.equals( "null" ) )
 					json = "{}";
 				memcache.put( memcacheId, json, 5 );
-			} catch( UnsupportedEncodingException | JsonSyntaxException | UnexpectedServerException e ) {
+			} catch( UnsupportedEncodingException | JsonSyntaxException e ) {
 				logger.log( Level.SEVERE, e.getMessage() );
 				throw new UnexpectedServerException();
 			}

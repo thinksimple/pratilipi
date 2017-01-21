@@ -54,9 +54,15 @@ public class HttpUtil {
 				for( Entry<String, String> entry : headersMap.entrySet() )
 					urlConn.setRequestProperty( entry.getKey(), entry.getValue() );
 			String mimeType = urlConn.getContentType();
+			int status = ( (HttpURLConnection) urlConn ).getResponseCode();
 			byte[] data = IOUtils.toByteArray( urlConn );
-			logger.log( Level.INFO, "Http GET Response Type: " + mimeType + " & Length: "  + data.length );
-			logger.log( Level.INFO, "Http GET Response: " + new String( data, "UTF-8" ) );
+			logger.log( Level.INFO, "Status: " + status );
+			logger.log( Level.INFO, "Type: " + mimeType );
+			logger.log( Level.INFO, "Length: "  + data.length );
+			if( status != 200 ) {
+				logger.log( Level.INFO, "Response: " + new String( data, "UTF-8" ) );
+				throw new UnexpectedServerException();
+			}
 			return DataAccessorFactory.getBlobAccessor().newBlob( null, data, mimeType );
 		} catch( IOException e ) {
 			logger.log( Level.SEVERE, "Failed to execute Http Get call.", e );
