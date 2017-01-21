@@ -18,6 +18,7 @@ import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.UserState;
+import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.util.AuthorDataUtil;
 import com.pratilipi.data.util.UserDataUtil;
@@ -243,12 +244,13 @@ public class UserApi extends GenericApi {
 		if( request.userId != null && request.userId.equals( 0L ) ) {
 			
 			// Create Author profile for the User
-			AuthorDataUtil.createAuthorProfile(
+			Long authorId = AuthorDataUtil.createAuthorProfile(
 					userData,
 					request.language == null ? UxModeFilter.getFilterLanguage() : request.language );
 			
-			userData = UserDataUtil.getCurrentUser(); // Fetching updated UserData
-			
+			userData.setAuthor( new AuthorData( authorId ) );
+			userData.setProfilePageUrl( "/author/" + authorId );
+
 			// Send welcome mail to the user
 			Task task = TaskQueueFactory.newTask()
 					.setUrl( "/user/email" )
