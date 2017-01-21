@@ -225,12 +225,12 @@ public class InitDataUtil {
 		
 		initBannerDocs = new InitBannerDoc[] {
 
-				docAccessor.newInitBannerDoc( "2016 - ఉత్తమ కథలు", 
-						"pratilipi-telugu-carousel-24.jpg", 
-						"pratilipi-telugu-carousel-24-small.jpg", 
-						"/newyear2017",
+				docAccessor.newInitBannerDoc( "కథా మహోత్సవం - 2017", 
+						"pratilipi-telugu-carousel-27.jpg", 
+						"pratilipi-telugu-carousel-27-small.jpg", 
+						"/event/km2017",
 						"PratilipiListApi",
-						gson.fromJson( "{ \"language\":\"TELUGU\", \"state\":\"PUBLISHED\", \"listName\":\"newyear2017\" }", JsonElement.class ).getAsJsonObject() ),
+						gson.fromJson( "{ \"language\":\"TELUGU\", \"state\":\"PUBLISHED\", \"eventId\":4660127616466944 }", JsonElement.class ).getAsJsonObject() ),
 
 				docAccessor.newInitBannerDoc( "అయిదు నిమిషాల కథలు", 
 						"pratilipi-telugu-carousel-23.jpg", 
