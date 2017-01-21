@@ -247,9 +247,11 @@ public class UserDataUtil {
 
 		
 		if( isNew ) {
+			String firstName = userData.getFirstName();
+			String lastName = userData.getLastName();
 			userData = createUserData( user, null );
-			userData.setFirstName( userData.getFirstName() );
-			userData.setLastName( userData.getLastName() );
+			userData.setFirstName( firstName );
+			userData.setLastName( lastName );
 		} else {
 			userData = createUserData( user );
 		}
