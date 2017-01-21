@@ -1,11 +1,8 @@
 package com.pratilipi.api.impl.pratilipi;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -93,7 +90,7 @@ public class PratilipiProcessApi extends GenericApi {
 		// START: Creating UpdateStats Tasks
 		
 		
-		appPropertyId = "Api.PratilipiProcess.UpdateStats";
+/*		appPropertyId = "Api.PratilipiProcess.UpdateStats";
 		appProperty = dataAccessor.getAppProperty( appPropertyId );
 		if( appProperty == null ) {
 			appProperty = dataAccessor.newAppProperty( appPropertyId );
@@ -130,7 +127,7 @@ public class PratilipiProcessApi extends GenericApi {
 		appProperty.setValue( date.getTime() + TimeUnit.DAYS.toMillis( 1 ) > new Date().getTime()
 				? new Date()
 				: new Date( date.getTime() + TimeUnit.DAYS.toMillis( 1 ) ) );
-		appProperty = dataAccessor.createOrUpdateAppProperty( appProperty );
+		appProperty = dataAccessor.createOrUpdateAppProperty( appProperty );*/
 		
 		
 		// END: Creating UpdateStats Tasks

@@ -9,13 +9,6 @@
 		<timezone>Asia/Calcutta</timezone>
 	</cron>
 	
-	<cron>
-		<url>/user/backup?generateCsv=true&amp;cron</url>
-		<target>worker</target>
-		<schedule>every 1 hours from 8:00 to 20:00</schedule>
-		<timezone>Asia/Calcutta</timezone>
-	</cron>
-	
 	
 
 	<!-- ACCESS_TOKEN Table -->
@@ -49,13 +42,6 @@
 		<timezone>Asia/Calcutta</timezone>
 	</cron>
 
-	<cron>
-		<url>/pratilipi/backup?cron</url>
-		<target>worker</target>
-		<schedule>every 1 hours</schedule>
-		<timezone>Asia/Calcutta</timezone>
-	</cron>
-
 
 
 	<!-- AUTHOR Table -->
@@ -64,13 +50,6 @@
 		<url>/author/process?cron</url>
 		<target>worker</target>
 		<schedule>every 5 minutes</schedule>
-		<timezone>Asia/Calcutta</timezone>
-	</cron>
-	
-	<cron>
-		<url>/author/backup?generateCsv=true&amp;cron</url>
-		<target>worker</target>
-		<schedule>every 1 hours from 8:00 to 20:00</schedule>
 		<timezone>Asia/Calcutta</timezone>
 	</cron>
 	
