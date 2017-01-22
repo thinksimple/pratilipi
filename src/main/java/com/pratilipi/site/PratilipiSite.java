@@ -65,6 +65,7 @@ import com.pratilipi.common.type.Website;
 import com.pratilipi.common.util.FacebookApi;
 import com.pratilipi.common.util.FreeMarkerUtil;
 import com.pratilipi.common.util.PratilipiFilter;
+import com.pratilipi.common.util.SiteMapUtil;
 import com.pratilipi.common.util.SystemProperty;
 import com.pratilipi.common.util.ThirdPartyResource;
 import com.pratilipi.common.util.UserAccessUtil;
@@ -105,7 +106,15 @@ public class PratilipiSite extends HttpServlet {
 	
 	public void doGet( HttpServletRequest request, HttpServletResponse response )
 			throws IOException {
-		
+
+		String uri = request.getRequestURI();
+		System.out.println( uri );
+		if( uri.startsWith( "/sitemap-" ) ) {
+			String content = SiteMapUtil.getSiteMapString( uri, UxModeFilter.getWebsite() );
+			_dispatchResponse( content, "application/xml", "UTF-8", response );
+			return;
+		}
+
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
 		// Setting user's author profile's default language, if not set already
@@ -119,7 +128,6 @@ public class PratilipiSite extends HttpServlet {
 		
 		
 		// Page Entity
-		String uri = request.getRequestURI();
 		Page page = dataAccessor.getPage( uri );
 		
 		// BasicMode
@@ -566,17 +574,19 @@ public class PratilipiSite extends HttpServlet {
 				templateName = ( basicMode ? "error/ServerErrorBasic.ftl" : "error/ServerError.ftl" );
 			}
 		}
-		
-		
-		// Dispatching response
-		response.setContentType( "text/html" );
-		response.setCharacterEncoding( "UTF-8" );
-		response.getWriter().write( html );
-		response.getWriter().close();
-		
-	}
-	
 
+		// Dispatching response
+		_dispatchResponse( html, "text/html", "UTF-8", response );
+
+	}
+
+	private void _dispatchResponse( String content, String contentType, String characterEncoding, HttpServletResponse response ) 
+			throws IOException {
+		response.setContentType( contentType );
+		response.setCharacterEncoding( characterEncoding );
+		response.getWriter().write( content );
+		response.getWriter().close();
+	}
 
 	private Set<String> getResourceList( Boolean basicMode ) {
 		Set<String> resourceList = new HashSet<>();

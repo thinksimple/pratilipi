@@ -14,7 +14,6 @@ import java.util.TimeZone;
 
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
-import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.BlogPostState;
 import com.pratilipi.common.type.Language;
@@ -394,10 +393,9 @@ public class SiteMapUtil {
 		return siteMap.toString();
 	}
 
-	public static String getSiteMapString( String fileName, Website website ) 
-			throws InvalidArgumentException {
+	public static String getSiteMapString( String fileName, Website website ) {
 
-		String loc = fileName.substring( "sitemap-".length(), fileName.lastIndexOf( "." ) );
+		String loc = fileName.substring( "/sitemap-".length(), fileName.lastIndexOf( "." ) );
 
 		if( loc.equals( "INDEX" ) )
 			return _getSiteMapForTypeIndex( website );
@@ -409,7 +407,7 @@ public class SiteMapUtil {
 			return _getSiteMapForTypeOther( website );
 
 		else 
-			throw new InvalidArgumentException( "Invalid File Name" );
+			return null;
 
 	}
 
