@@ -14,6 +14,7 @@ import java.util.TimeZone;
 
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
+import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.BlogPostState;
 import com.pratilipi.common.type.Language;
@@ -36,6 +37,43 @@ public class SiteMapUtil {
 	private static final String LINE_SEPARATOR = "\n";
 	private static final Long PAGE_COUNT = 1000000000000L;
 	private static final String SITEMAP_NAMESPACE = "http://www.sitemaps.org/schemas/sitemap/0.9";
+
+	public enum PageTypeSiteMapValues {
+
+//		Change Frequency Values: always, hourly, daily, weekly, monthly, yearly, never
+//		priority: ranges from 0-1, Default - 0.5
+
+		PRATILIPI( "daily", "0.7" ),
+		READ( "daily", "0.7" ),
+		AUTHOR( "daily", "0.6" ),
+		EVENT_LIST( "weekly", null ),
+		EVENT( "weekly", "0.6" ),
+		BLOG( "weekly", null ),
+		BLOG_POST( "weekly", "0.6" ),
+		CATEGORY_LIST( "hourly", "0.8" ),
+		HOME( "hourly", "0.8" ),
+		STATIC( "monthly", null )
+		;
+
+		private String changeFrequency;
+
+		private String priority;
+
+
+		private PageTypeSiteMapValues( String changeFrequency, String priority ) {
+			this.changeFrequency = changeFrequency;
+			this.priority = priority;
+		}
+
+		public String getChangeFrequency() {
+			return changeFrequency;
+		}
+
+		public String getPriority() {
+			return priority;
+		}
+
+	}
 
 	private static String _getEntityEscapedUrl( String url ) {
 		return 	url.replace( "&", "&amp;" )
@@ -65,7 +103,7 @@ public class SiteMapUtil {
 
 	}
 
-	private static String _getUrlSnippet( String loc, Date lastMod, String changeFreq, String priority ) {
+	private static String _getUrlSnippet( String loc, Date lastMod, PageTypeSiteMapValues sitemapValue ) {
 
 //		<url>
 //			<loc>http://www.example.com/</loc>
@@ -81,28 +119,28 @@ public class SiteMapUtil {
 		url.append( "<loc>" ).append( _getEntityEscapedUrl( loc ) ).append( "</loc>" ).append( LINE_SEPARATOR );
 		if( lastMod != null )
 			url.append( "<lastmod>" ).append( dateFormat.format( lastMod ) ).append( "</lastmod>" ).append( LINE_SEPARATOR );
-		if( changeFreq != null )
-			url.append( "<changefreq>" ).append( changeFreq ).append( "</changefreq>" ).append( LINE_SEPARATOR );
-		if( priority != null )
-			url.append( "<priority>" ).append( priority ).append( "</priority>" ).append( LINE_SEPARATOR );
+		if( sitemapValue.getChangeFrequency() != null )
+			url.append( "<changefreq>" ).append( sitemapValue.getChangeFrequency() ).append( "</changefreq>" ).append( LINE_SEPARATOR );
+		if( sitemapValue.getPriority() != null )
+			url.append( "<priority>" ).append( sitemapValue.getPriority() ).append( "</priority>" ).append( LINE_SEPARATOR );
 		url.append( "</url>" ).append( LINE_SEPARATOR );
 
 		return url.toString();
 
 	}
 
-	private static String _getSiteMapIndex( Website website ) {
 
-//		<?xml version="1.0" encoding="UTF-8"?>
-//		<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-//			<sitemap>
-//				<loc>http://www.example.com/sitemap1.xml.gz</loc>
-//				<lastmod>2004-10-01T18:23:17+00:00</lastmod>
-//			</sitemap>
-//			<sitemap>
-//				<loc>http://www.example.com/sitemap2.xml.gz</loc>
-//			</sitemap>
-//		</sitemapindex>
+//	<?xml version="1.0" encoding="UTF-8"?>
+//	<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+//		<sitemap>
+//			<loc>http://www.example.com/sitemap1.xml.gz</loc>
+//			<lastmod>2004-10-01T18:23:17+00:00</lastmod>
+//		</sitemap>
+//		<sitemap>
+//			<loc>http://www.example.com/sitemap2.xml.gz</loc>
+//		</sitemap>
+//	</sitemapindex>
+	private static String _getSiteMapForTypeIndex( Website website ) {
 
 		Long startIndex = ObjectifyService.ofy().load()
 				.type( PageEntity.class )
@@ -124,14 +162,10 @@ public class SiteMapUtil {
 		for( Long i = startIndex; i <= endIndex; i += PAGE_COUNT ) {
 			String sitemapLoc = "sitemap-" + "PAGE-" + "startAt_" + i + "-" + "count_" + PAGE_COUNT + ".xml";
 			siteMapIndex.append( _getSiteMapSnippet( "http://" + website.getHostName() + "/" + sitemapLoc, null ) );
-			break;
 		}
 
-		// Adding LIST sitemap
-		siteMapIndex.append( _getSiteMapSnippet( "http://" + website.getHostName() + "/" + "LIST.xml", null ) );
-
-		// Adding STATIC sitemap
-		siteMapIndex.append( _getSiteMapSnippet( "http://" + website.getHostName() + "/" + "STATIC.xml", null ) );
+		// Adding sitemap to index pages without PAGE entites
+		siteMapIndex.append( _getSiteMapSnippet( "http://" + website.getHostName() + "/" + "OTHER.xml", null ) );
 
 		siteMapIndex.append( "</sitemapindex>" );
 		return siteMapIndex.toString();
@@ -148,7 +182,7 @@ public class SiteMapUtil {
 //		</url>
 //	</urlset>
 
-	private static String _getSiteMapPage( String url, Website website ) {
+	private static String _getSiteMapForTypePage( String url, Website website ) {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
@@ -216,14 +250,12 @@ public class SiteMapUtil {
 			siteMap.append( _getUrlSnippet( 
 					"http://" + website.getHostName() + ( page.getUriAlias() != null ? page.getUriAlias() : page.getUri() ), 
 					pratilipi.getLastUpdated(), 
-					"weekly", 
-					"0.6" 
+					PageTypeSiteMapValues.PRATILIPI 
 			));
 			siteMap.append( _getUrlSnippet(
 					"http://" + website.getHostName() + "/read?id=" + pratilipiId,
 					pratilipi.getLastUpdated(), 
-					"weekly", 
-					"0.6" 
+					PageTypeSiteMapValues.READ 
 			));
 		}
 
@@ -237,8 +269,7 @@ public class SiteMapUtil {
 			siteMap.append( _getUrlSnippet( 
 					"http://" + website.getHostName() + ( page.getUriAlias() != null ? page.getUriAlias() : page.getUri() ), 
 					author.getLastUpdated(), 
-					"weekly", 
-					"0.6" 
+					PageTypeSiteMapValues.AUTHOR 
 			));
 		}
 
@@ -247,8 +278,7 @@ public class SiteMapUtil {
 			siteMap.append( _getUrlSnippet( 
 					"http://" + website.getHostName() + ( page.getUriAlias() != null ? page.getUriAlias() : page.getUri() ), 
 					null, 
-					"weekly", 
-					null 
+					PageTypeSiteMapValues.BLOG 
 			));
 		}
 
@@ -262,8 +292,7 @@ public class SiteMapUtil {
 			siteMap.append( _getUrlSnippet( 
 					"http://" + website.getHostName() + ( page.getUriAlias() != null ? page.getUriAlias() : page.getUri() ), 
 					blogPost.getLastUpdated(), 
-					"weekly", 
-					"0.6" 
+					PageTypeSiteMapValues.BLOG_POST 
 			));
 		}
 
@@ -277,8 +306,7 @@ public class SiteMapUtil {
 			siteMap.append( _getUrlSnippet( 
 					"http://" + website.getHostName() + ( page.getUriAlias() != null ? page.getUriAlias() : page.getUri() ), 
 					event.getLastUpdated(), 
-					"weekly", 
-					"0.6" 
+					PageTypeSiteMapValues.EVENT 
 			));
 		}
 
@@ -287,14 +315,12 @@ public class SiteMapUtil {
 
 	}
 
-	private static String _getSiteMapList( Website website ) {
+	private static String _getUrlSetForTypeCategoryList( Website website ) {
 
 		File folder = new File( DataAccessor.class.getResource( DataAccessorGaeImpl.CURATED_DATA_FOLDER ).getFile() );
 		File[] listOfFiles = folder.listFiles();
 
-		StringBuilder siteMap = new StringBuilder( "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + LINE_SEPARATOR );
-		siteMap.append( "<urlset xmlns=\"" + SITEMAP_NAMESPACE + "\">" + LINE_SEPARATOR );
-
+		StringBuilder siteMap = new StringBuilder();
 		String fileNamePrefix = "list." + website.getFilterLanguage().getCode();
 		for( int i = 0; i < listOfFiles.length; i++ ) {
 			File file = listOfFiles[i];
@@ -307,17 +333,15 @@ public class SiteMapUtil {
 			siteMap.append( _getUrlSnippet(
 					"http://" + website.getHostName() + "/" + file.getName().substring( fileNamePrefix.length() + 1 ),
 					null,
-					"daily",
-					"0.9"
+					PageTypeSiteMapValues.CATEGORY_LIST
 			));
 		}
 
-		siteMap.append( "</urlset>" );
 		return siteMap.toString();
 
 	}
 
-	private static String _getSiteMapStatic( Website website ) {
+	private static String _getUrlSetForTypeStatic( Website website ) {
 
 		File folder = new File( PratilipiSite.class.getResource( PratilipiSite.dataFilePrefix ).getFile() );
 		File[] listOfFiles = folder.listFiles();
@@ -333,40 +357,59 @@ public class SiteMapUtil {
 				fileNames.add( file.getName().substring( file.getName().lastIndexOf( "." ) + 1 ) );
 		}
 
-		StringBuilder siteMap = new StringBuilder( "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + LINE_SEPARATOR );
-		siteMap.append( "<urlset xmlns=\"" + SITEMAP_NAMESPACE + "\">" + LINE_SEPARATOR );
+		StringBuilder siteMapUrlList = new StringBuilder();
 		for( String fileName : fileNames ) {
-			siteMap.append( _getUrlSnippet(
+			siteMapUrlList.append( _getUrlSnippet(
 					"http://" + website.getHostName() + "/" + fileName.replace( "_", "/" ),
 					null,
-					"monthly",
-					"0.4"
+					PageTypeSiteMapValues.STATIC
 			));
 		}
 
-		siteMap.append( "</urlset>" );
-		return siteMap.toString();
+		return siteMapUrlList.toString();
 
 	}
 
-	public static String getSiteMapString( String fileName, Website website ) {
+	private static String _getSiteMapForTypeOther( Website website ) {
+		StringBuilder siteMap = new StringBuilder( "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + LINE_SEPARATOR );
+		siteMap.append( "<urlset xmlns=\"" + SITEMAP_NAMESPACE + "\">" + LINE_SEPARATOR );
+		// Home Page
+		siteMap.append( _getUrlSnippet(
+				"http://" + website.getHostName(),
+				null,
+				PageTypeSiteMapValues.HOME
+		));
+		// /events page
+		siteMap.append( _getUrlSnippet(
+				"http://" + website.getHostName() + "/events",
+				null,
+				PageTypeSiteMapValues.EVENT_LIST
+		));
+		// Category List pages
+		siteMap.append( _getUrlSetForTypeCategoryList( website ) );
+		// Static pages
+		siteMap.append( _getUrlSetForTypeStatic( website ) );
+
+		siteMap.append( "</urlset>" );
+		return siteMap.toString();
+	}
+
+	public static String getSiteMapString( String fileName, Website website ) 
+			throws InvalidArgumentException {
 
 		String loc = fileName.substring( "sitemap-".length(), fileName.lastIndexOf( "." ) );
 
 		if( loc.equals( "INDEX" ) )
-			return _getSiteMapIndex( website );
-
-		else if( loc.equals( "LIST" ) )
-			return _getSiteMapList( website );
-
-		else if( loc.equals( "STATIC" ) )
-			return _getSiteMapStatic( website );
+			return _getSiteMapForTypeIndex( website );
 
 		else if( loc.startsWith( "PAGE-" ) )
-			return _getSiteMapPage( loc, website );
+			return _getSiteMapForTypePage( loc, website );
 
+		else if( loc.equals( "OTHER" ) )
+			return _getSiteMapForTypeOther( website );
 
-		return null;
+		else 
+			throw new InvalidArgumentException( "Invalid File Name" );
 
 	}
 
