@@ -120,6 +120,7 @@ public interface DataAccessor {
 	Event newEvent();
 	Event getEvent( Long id );
 	List<Event> getEventList( Language language );
+	Map<Long, Event> getEvents( Collection<Long> eventIdList );	
 	Event createOrUpdateEvent( Event event, AuditLog auditLog );
 	Event createOrUpdateEvent( Event event, Page page, AuditLog auditLog );
 
@@ -133,6 +134,7 @@ public interface DataAccessor {
 	BlogPost newBlogPost();
 	BlogPost getBlogPost( Long id );
 	DataListCursorTuple<BlogPost> getBlogPostList( BlogPostFilter blogPostFilter, String cursor, Integer offset, Integer resultCount );
+	Map<Long, BlogPost> getBlogPosts( Collection<Long> blogPostIdList );
 	BlogPost createOrUpdateBlogPost( BlogPost blogPost, AuditLog auditLog );
 	BlogPost createOrUpdateBlogPost( BlogPost blogPost, Page page, AuditLog auditLog );
 	

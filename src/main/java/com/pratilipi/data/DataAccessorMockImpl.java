@@ -608,6 +608,12 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 	
 	@Override
+	public Map<Long, BlogPost> getBlogPosts(Collection<Long> blogPostIdList) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
 	public BlogPost createOrUpdateBlogPost( BlogPost blogPost, AuditLog auditLog ) {
 		return blogPost; // TODO: Implementation
 	}
@@ -656,6 +662,12 @@ public class DataAccessorMockImpl implements DataAccessor {
 		return new ArrayList<>( 0 );
 	}
 	
+	@Override
+	public Map<Long, Event> getEvents(Collection<Long> eventIdList) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 	// USER_PRATILIPI Table
 	

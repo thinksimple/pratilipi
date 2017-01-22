@@ -102,7 +102,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	private static final Logger logger =
 			Logger.getLogger( DataAccessorGaeImpl.class.getName() );
 	
-	private static final String CURATED_DATA_FOLDER = "curated";
+	public static final String CURATED_DATA_FOLDER = "curated";
 	
 	private final Memcache memcache;
 	
@@ -1123,7 +1123,12 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		return new ArrayList<Event>( query.list() );
 		
 	}
-	
+
+	@Override
+	public Map<Long, Event> getEvents( Collection<Long> eventIds ) {
+		return getEntities( EventEntity.class, eventIds );
+	}
+
 	@Override
 	public Event createOrUpdateEvent( Event event, AuditLog auditLog ) {
 		return createOrUpdateEvent( event, null, auditLog );
@@ -1213,7 +1218,12 @@ public class DataAccessorGaeImpl implements DataAccessor {
 				cursor == null ? null : cursor.toWebSafeString() );
 		
 	}
-	
+
+	@Override
+	public Map<Long, BlogPost> getBlogPosts( Collection<Long> blogPostIds ) {
+		return getEntities( BlogPostEntity.class, blogPostIds );
+	}
+
 	@Override
 	public BlogPost createOrUpdateBlogPost( BlogPost blogPost, AuditLog auditLog ) {
 		return createOrUpdateBlogPost( blogPost, null, auditLog );
