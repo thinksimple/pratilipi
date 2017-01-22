@@ -100,7 +100,7 @@ public class PratilipiSite extends HttpServlet {
 			Logger.getLogger( PratilipiSite.class.getName() );
 
 	private static final String templateFilePrefix = "com/pratilipi/site/page/";
-	private static final String dataFilePrefix = "page/data/";
+	public static final String dataFilePrefix = "page/data/";
 	
 	
 	public void doGet( HttpServletRequest request, HttpServletResponse response )
