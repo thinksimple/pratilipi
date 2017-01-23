@@ -1,14 +1,21 @@
 package com.pratilipi.data;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.EmailFrequency;
+import com.pratilipi.common.type.NotificationType;
 import com.pratilipi.common.util.HttpUtil;
 import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.UserPreferenceRtdb;
@@ -25,8 +32,48 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 	
 	private final Map<String, String> headersMap;
 	private final Memcache memcache;
-	
-	
+
+	private UserPreferenceRtdb _getUserPreferenceRtdb( String json ) {
+
+		Gson gson = new Gson();
+		JsonObject preference = gson.fromJson( json, JsonElement.class ).getAsJsonObject();
+
+		if( preference.has( "emailFrequency" ) ) {
+			String emailFrequency = preference.get( "emailFrequency" ).getAsString();
+			if( emailFrequency.equals( "ONCE A DAY" ) ) {
+				preference.remove( "emailFrequency" );
+				preference.addProperty( "emailFrequency", EmailFrequency.DAILY.name() );
+			} else if( emailFrequency.equals( "ONCE A WEEK" ) ) {
+				preference.remove( "emailFrequency" );
+				preference.addProperty( "emailFrequency", EmailFrequency.WEEKLY.name() );
+			} else if( emailFrequency.equals( "ONCE A MONTH" ) ) {
+				preference.remove( "emailFrequency" );
+				preference.addProperty( "emailFrequency", EmailFrequency.MONTHLY.name() );
+			}
+		}
+
+		if( preference.has( "notificationSubscriptions" ) ) {
+			JsonObject notificationSubscriptions = preference.get( "notificationSubscriptions" ).getAsJsonObject();
+			List<String> invalidTypes = new ArrayList<>();
+			for( Entry<String, JsonElement> type : notificationSubscriptions.entrySet() ) {
+				boolean isValid = false;
+				for( NotificationType nt : NotificationType.values() ) {
+					if( type.getKey().equals( nt.name() ) ) {
+						isValid = true;
+						break;
+					}
+				}
+				if( ! isValid )
+					invalidTypes.add( type.getKey() );
+			}
+			for( String invalidType : invalidTypes )
+				notificationSubscriptions.remove( invalidType );
+		}
+
+		return gson.fromJson( preference, UserPreferenceRtdbImpl.class );
+
+	}
+
 	public RtdbAccessorFirebaseImpl( String googleApiAccessToken, Memcache memcache ) {
 		this.headersMap = new HashMap<>();
 		this.headersMap.put( "Authorization", "Bearer " + googleApiAccessToken );
@@ -52,7 +99,7 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 				throw new UnexpectedServerException();
 			}
 		}
-		return new Gson().fromJson( json, UserPreferenceRtdbImpl.class );
+		return _getUserPreferenceRtdb( json );
 	}
 
 }
