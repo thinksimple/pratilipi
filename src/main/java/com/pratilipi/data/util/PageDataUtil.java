@@ -93,7 +93,7 @@ public class PageDataUtil {
 					break;
 				case CATEGORY_LIST:
 					this.changeFrequency = "hourly";
-					this.priority = "0.8";
+					this.priority = "0.9";
 					break;
 				case EVENT_LIST:
 					this.changeFrequency = "weekly";
@@ -104,7 +104,7 @@ public class PageDataUtil {
 					break;
 				case HOME:
 					this.changeFrequency = "hourly";
-					this.priority = "0.8";
+					this.priority = "0.9";
 					break;
 				case PRATILIPI:
 					this.changeFrequency = "daily";
