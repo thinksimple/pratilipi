@@ -65,7 +65,6 @@ import com.pratilipi.common.type.Website;
 import com.pratilipi.common.util.FacebookApi;
 import com.pratilipi.common.util.FreeMarkerUtil;
 import com.pratilipi.common.util.PratilipiFilter;
-import com.pratilipi.common.util.SitemapUtil;
 import com.pratilipi.common.util.SystemProperty;
 import com.pratilipi.common.util.ThirdPartyResource;
 import com.pratilipi.common.util.UserAccessUtil;
@@ -87,6 +86,7 @@ import com.pratilipi.data.util.BlogPostDataUtil;
 import com.pratilipi.data.util.EventDataUtil;
 import com.pratilipi.data.util.PratilipiDataUtil;
 import com.pratilipi.data.util.PratilipiDocUtil;
+import com.pratilipi.data.util.PageDataUtil;
 import com.pratilipi.data.util.UserDataUtil;
 import com.pratilipi.data.util.UserPratilipiDataUtil;
 import com.pratilipi.email.EmailTemplateUtil;
@@ -110,7 +110,7 @@ public class PratilipiSite extends HttpServlet {
 		String uri = request.getRequestURI();
 		System.out.println( uri );
 		if( uri.equals( "/sitemap" ) ) {
-			String content = SitemapUtil.getSitemap( 
+			String content = PageDataUtil.getSitemap( 
 					request.getParameter( RequestParameter.SITEMAP_TYPE.getName() ), 
 					request.getParameter( RequestParameter.SITEMAP_CURSOR.getName() ), 
 					UxModeFilter.getWebsite() );

@@ -1,4 +1,4 @@
-package com.pratilipi.common.util;
+package com.pratilipi.data.util;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -33,7 +33,7 @@ import com.pratilipi.data.type.gae.PageEntity;
 import com.pratilipi.site.PratilipiSite;
 
 
-public class SitemapUtil {
+public class PageDataUtil {
 
 	private static final String LINE_SEPARATOR = "\n";
 	private static final Long SITEMAP_PAGE_COUNT = 1000000000000L;
