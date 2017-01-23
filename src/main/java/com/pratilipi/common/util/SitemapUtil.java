@@ -19,6 +19,7 @@ import com.pratilipi.common.type.BlogPostState;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.PratilipiState;
+import com.pratilipi.common.type.RequestParameter;
 import com.pratilipi.common.type.Website;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
@@ -376,7 +377,7 @@ public class SitemapUtil {
 
 	}
 
-	private static String _getSitemapSnippet( String loc, Date lastMod ) {	
+	private static String _getSitemapSnippet( Website website, String type, String cursor, Date lastMod ) {	
 
 //		<sitemap>
 //			<loc>http://www.example.com/sitemap1.xml.gz</loc>
@@ -384,6 +385,13 @@ public class SitemapUtil {
 //		</sitemap>
 
 		StringBuilder sitemap = new StringBuilder( "<sitemap>" + LINE_SEPARATOR );
+
+		String loc = "http://" + website.getHostName() + "/sitemap";
+		if( type != null ) {
+			loc = loc + "?" + RequestParameter.SITEMAP_TYPE.getName() + "=" + type;
+			if( cursor != null )
+				loc = loc + "&" + RequestParameter.SITEMAP_CURSOR.getName() + "=" + cursor;
+		}
 
 		sitemap.append( "<loc>" ).append( _getEntityEscapedUrl( loc ) ).append( "</loc>" ).append( LINE_SEPARATOR );
 
@@ -430,12 +438,10 @@ public class SitemapUtil {
 		sitemapIndex.append( "<sitemapindex xmlns=\"" + SITEMAP_NAMESPACE + "\">" + LINE_SEPARATOR );
 
 		// Adding sitemap to index pages without PAGE entites
-		sitemapIndex.append( _getSitemapSnippet( "http://" + website.getHostName() + "/" + "sitemap?type=other", null ) );
+		sitemapIndex.append( _getSitemapSnippet( website, "other", null, null ) );
 
-		for( Long i = startIndex; i <= endIndex; i += SITEMAP_PAGE_COUNT ) {
-			String sitemapLoc = "sitemap?type=page&cursor=" + i;
-			sitemapIndex.append( _getSitemapSnippet( "http://" + website.getHostName() + "/" + sitemapLoc, null ) );
-		}		
+		for( Long i = startIndex; i <= endIndex; i += SITEMAP_PAGE_COUNT )
+			sitemapIndex.append( _getSitemapSnippet( website, "page", i + "", null ) );
 
 		sitemapIndex.append( "</sitemapindex>" );
 		return sitemapIndex.toString();
@@ -445,8 +451,6 @@ public class SitemapUtil {
 
 	public static String getSitemap( String type, String cursor, Website website ) {
 
-		System.out.println( "type = " + type );
-		System.out.println( "cursor = " + cursor );
 		if( type == null ) // Sitemap Index file
 			return _getSitemapIndex( website );
 
