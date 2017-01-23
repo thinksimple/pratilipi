@@ -20,6 +20,8 @@ public enum RequestParameter {
 	PRATILIPI_STATE( "state" ),
 	RESULT_COUNT( "count" ),
 	NOTIFICATION_ID( "notifId" ),
+	SITEMAP_TYPE( "type" ),
+	SITEMAP_CURSOR( "cursor" )
 	;
 	
 	
