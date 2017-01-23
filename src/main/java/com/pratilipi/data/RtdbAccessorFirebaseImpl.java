@@ -27,7 +27,7 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 			Logger.getLogger( RtdbAccessorFirebaseImpl.class.getName() );
 	
 	private static final String DATABASE_URL = "https://prod-pratilipi.firebaseio.com/";
-	private static final String DATABASE_PREFERENCE_TABLE = "PREFERENCE/";
+	private static final String DATABASE_PREFERENCE_TABLE = "PREFERENCE";
 	private static final String DATABASE_PREFERENCE_EMAIL_FREQUENCY = "emailFrequency";
 	private static final String DATABASE_PREFERENCE_NOTIFICATION_SUBSCRIPTIONS = "notificationSubscriptions";
 
@@ -36,9 +36,10 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 	private final Memcache memcache;
 
 	private UserPreferenceRtdb _getUserPreferenceRtdb( String json ) {
+		return _getUserPreferenceRtdb( new Gson().fromJson( json, JsonElement.class ).getAsJsonObject() );
+	}
 
-		Gson gson = new Gson();
-		JsonObject preference = gson.fromJson( json, JsonElement.class ).getAsJsonObject();
+	private UserPreferenceRtdb _getUserPreferenceRtdb( JsonObject preference ) {
 
 		if( preference.has( DATABASE_PREFERENCE_EMAIL_FREQUENCY ) ) {
 			String emailFrequency = preference.get( DATABASE_PREFERENCE_EMAIL_FREQUENCY ).getAsString();
@@ -69,7 +70,7 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 				notificationSubscriptions.remove( invalidType );
 		}
 
-		return gson.fromJson( preference, UserPreferenceRtdbImpl.class );
+		return new Gson().fromJson( preference, UserPreferenceRtdbImpl.class );
 
 	}
 
@@ -79,16 +80,16 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 		this.memcache = memcache;
 	}
 
-	
+
 	// PREFERENCE Table
-	
+
 	@Override
 	public UserPreferenceRtdb getUserPreference( Long userId ) throws UnexpectedServerException {
 		String memcacheId = "Firebase.PREFERENCE." + userId;
 		String json = memcache.get( memcacheId );
 		if( json == null ) {
 			try {
-				BlobEntry blobEntry = HttpUtil.doGet( DATABASE_URL + DATABASE_PREFERENCE_TABLE + userId + ".json", headersMap, null );
+				BlobEntry blobEntry = HttpUtil.doGet( DATABASE_URL + DATABASE_PREFERENCE_TABLE + "/" + userId + ".json", headersMap, null );
 				json = new String( blobEntry.getData(), "UTF-8" );
 				if( json.equals( "null" ) )
 					json = "{}";
@@ -99,6 +100,25 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 			}
 		}
 		return _getUserPreferenceRtdb( json );
+	}
+
+	@Override
+	public Map<Long,UserPreferenceRtdb> getAllUserPreferences() throws UnexpectedServerException {
+
+		Map<Long, UserPreferenceRtdb> userPreferenceMap = new HashMap<>();
+		try {
+			BlobEntry blobEntry = HttpUtil.doGet( DATABASE_URL + DATABASE_PREFERENCE_TABLE + ".json", headersMap, null );
+			String json = new String( blobEntry.getData(), "UTF-8" );
+			JsonObject usersPreferences = new Gson().fromJson( json, JsonElement.class ).getAsJsonObject();
+			for( Entry<String, JsonElement> it : usersPreferences.entrySet() )
+				userPreferenceMap.put( Long.parseLong( it.getKey() ), _getUserPreferenceRtdb( it.getValue().getAsJsonObject() ) );
+		} catch( UnsupportedEncodingException | JsonSyntaxException e ) {
+			logger.log( Level.SEVERE, e.getMessage() );
+			throw new UnexpectedServerException();
+		}
+
+		return userPreferenceMap;
+
 	}
 
 }
