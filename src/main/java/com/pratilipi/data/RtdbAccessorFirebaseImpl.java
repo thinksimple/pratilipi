@@ -28,6 +28,8 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 	
 	private static final String DATABASE_URL = "https://prod-pratilipi.firebaseio.com/";
 	private static final String DATABASE_PREFERENCE_TABLE = "PREFERENCE/";
+	private static final String DATABASE_PREFERENCE_EMAIL_FREQUENCY = "emailFrequency";
+	private static final String DATABASE_PREFERENCE_NOTIFICATION_SUBSCRIPTIONS = "notificationSubscriptions";
 
 	
 	private final Map<String, String> headersMap;
@@ -38,22 +40,19 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 		Gson gson = new Gson();
 		JsonObject preference = gson.fromJson( json, JsonElement.class ).getAsJsonObject();
 
-		if( preference.has( "emailFrequency" ) ) {
-			String emailFrequency = preference.get( "emailFrequency" ).getAsString();
+		if( preference.has( DATABASE_PREFERENCE_EMAIL_FREQUENCY ) ) {
+			String emailFrequency = preference.get( DATABASE_PREFERENCE_EMAIL_FREQUENCY ).getAsString();
 			if( emailFrequency.equals( "ONCE A DAY" ) ) {
 				preference.remove( "emailFrequency" );
 				preference.addProperty( "emailFrequency", EmailFrequency.DAILY.name() );
 			} else if( emailFrequency.equals( "ONCE A WEEK" ) ) {
 				preference.remove( "emailFrequency" );
 				preference.addProperty( "emailFrequency", EmailFrequency.WEEKLY.name() );
-			} else if( emailFrequency.equals( "ONCE A MONTH" ) ) {
-				preference.remove( "emailFrequency" );
-				preference.addProperty( "emailFrequency", EmailFrequency.MONTHLY.name() );
 			}
 		}
 
-		if( preference.has( "notificationSubscriptions" ) ) {
-			JsonObject notificationSubscriptions = preference.get( "notificationSubscriptions" ).getAsJsonObject();
+		if( preference.has( DATABASE_PREFERENCE_NOTIFICATION_SUBSCRIPTIONS ) ) {
+			JsonObject notificationSubscriptions = preference.get( DATABASE_PREFERENCE_NOTIFICATION_SUBSCRIPTIONS ).getAsJsonObject();
 			List<String> invalidTypes = new ArrayList<>();
 			for( Entry<String, JsonElement> type : notificationSubscriptions.entrySet() ) {
 				boolean isValid = false;
