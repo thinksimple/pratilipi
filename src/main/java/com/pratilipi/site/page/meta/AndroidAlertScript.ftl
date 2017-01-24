@@ -4,11 +4,11 @@
 <#assign cookie_banner_crossed = "APP_LAUNCHED_CROSSED">
 
 <script>
-	var showBanner = getCookie( "${ cookie_show_banner }" ) == null || getCookie( "${ cookie_show_banner }" ) == "false";
+	var showBanner = getCookie( "${ cookie_show_banner }" ) == null || getCookie( "${ cookie_show_banner }" ) == "true";
 	var click_count = getCookie( "${ cookie_banner_clicked }" ) == null ? 0 : parseInt( getCookie( "${ cookie_banner_clicked }" ) );
 	var cross_count = getCookie( "${ cookie_banner_crossed }" ) == null ? 0 : parseInt( getCookie( "${ cookie_banner_crossed }" ) );
 
-	function initAndroidBanner() {
+	<#if basicMode>
 		$( document ).ready( function() {
 			if( showBanner ) {
 				if( document.getElementById( 'androidSubsribeAlert' ) != null ) {
@@ -17,13 +17,24 @@
 				}
 			}
 		});
-	}
-
-	<#if basicMode>
-		initAndroidBanner();
-	<#else>
-		HTMLImports.whenReady(function () {
-			initAndroidBanner();
+		function setPaddingForAndroidBannerBottom() {
+			var androidLaunchBottom = document.getElementById( "androidLaunchBottom" );
+			var androidSubscribeAlert = document.getElementById( "androidSubsribeAlert" );
+			if( $( androidSubscribeAlert ).css( "display" ) == "none" )
+				$( androidLaunchBottom ).css( "padding-top", 0 );
+			else
+				$( androidLaunchBottom ).css( "padding-top", $( androidSubscribeAlert ).height() + 8 );
+		}
+		function hideAndroidBanner() {
+			if( document.getElementById( 'androidSubsribeAlert' ) != null )
+				document.getElementById( 'androidSubsribeAlert' ).style.display = "none";
+			setPaddingForAndroidBannerBottom();
+		}
+		$( document ).ready( function() {
+			setPaddingForAndroidBannerBottom();
+		});
+		$( window ).resize(function() {
+			setPaddingForAndroidBannerBottom();
 		});
 	</#if>
 
@@ -41,12 +52,6 @@
 				setCookie( "${ cookie_show_banner }", false, 7, "/" );
 			if( cross_count == 2 )
 				setCookie( "${ cookie_show_banner }", false, 30, "/" );
-
-			if( document.getElementById( 'androidSubsribeAlert' ) != null ) /* Basic */
-					document.getElementById( 'androidSubsribeAlert' ).style.display = "none";
-			if( document.querySelector( 'pratilipi-android-launch' ) != null ) /* Polymer */
-				document.querySelector( 'pratilipi-android-launch' ).hide();
-
 		} 
 		else {
 			if( cross_count < 3 )
@@ -58,6 +63,13 @@
 		}
 		setCookie( "${ cookie_banner_clicked }", click_count, 365, "/" );
 		setCookie( "${ cookie_banner_crossed }", cross_count, 365, "/" );
+		
+		<#if basicMode>
+			hideAndroidBanner();
+		<#else>
+			if( document.querySelector( 'pratilipi-android-launch' ) != null )
+				document.querySelector( 'pratilipi-android-launch' ).hide();
+		</#if>
 
 	}
 	function androidBannerClicked() {

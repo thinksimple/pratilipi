@@ -27,18 +27,20 @@
 		<div class="parent-container">
 			<div class="container">
 				<#include "../element/basic/pratilipi-android-launch.ftl">
-				<#list sections as section>
-					<div class="secondary-500 pratilipi-shadow box" style="padding: 12px 10px;">
-						<h2 class="pratilipi-red" style="display: inline-block;">${ section.getTitle() }</h2>
-						<#if section["listPageUrl"]??>
-							<a href="${ section.getListPageUrl() }" class="link pull-right pratilipi-blue" style="font-size: 13px;">${ _strings.view_more }...</a>
-						</#if>
-					</div>
-					<#list section.getPratilipiList() as pratilipi>
-						<#include "../element/basic/pratilipi-pratilipi-card.ftl">
+				<div id="androidLaunchBottom">
+					<#list sections as section>
+						<div class="secondary-500 pratilipi-shadow box" style="padding: 12px 10px;">
+							<h2 class="pratilipi-red" style="display: inline-block;">${ section.getTitle() }</h2>
+							<#if section["listPageUrl"]??>
+								<a href="${ section.getListPageUrl() }" class="link pull-right pratilipi-blue" style="font-size: 13px;">${ _strings.view_more }...</a>
+							</#if>
+						</div>
+						<#list section.getPratilipiList() as pratilipi>
+							<#include "../element/basic/pratilipi-pratilipi-card.ftl">
+						</#list>
+						<div style="min-height: 10px;"></div>
 					</#list>
-					<div style="min-height: 10px;"></div>
-				</#list>
+				</div>
 			</div>
 		</div>
 		<#include "../element/basic/pratilipi-footer.ftl">
