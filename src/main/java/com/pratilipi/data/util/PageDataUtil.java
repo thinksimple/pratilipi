@@ -64,11 +64,11 @@ public class PageDataUtil {
 
 		private String priority;
 
-		public SitemapUrl( Page page, Date lastMod, Website website ) {
+		public SitemapUrl( Page page, Date lastMod, Website website, boolean basicMode ) {
 
 			this.location = _getEntityEscapedUrl( 
-					"http://" + website.getHostName() + 
-					( page.getUriAlias() != null ? page.getUriAlias() : page.getUri() ) );
+					"http://" + ( basicMode ? website.getMobileHostName() : website.getHostName() )
+					+  ( page.getUriAlias() != null ? page.getUriAlias() : page.getUri() ) );
 
 			if( lastMod != null ) {
 				DateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd" );
@@ -179,7 +179,7 @@ public class PageDataUtil {
 	}
 
 
-	private static List<SitemapUrl> _getSitemapForTypePage( Long startAt, Website website ) {
+	private static List<SitemapUrl> _getSitemapForTypePage( Long startAt, Website website, boolean basicMode ) {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		List<PageEntity> pageEntityList = ObjectifyService.ofy().load()
@@ -242,8 +242,8 @@ public class PageDataUtil {
 			readerPage.setType( PageType.READ );
 			readerPage.setUri( "/read?id=" + pratilipiId );
 
-			sitemapUrlList.add( new SitemapUrl( pratilipiPage, pratilipi.getLastUpdated(), website ) );
-			sitemapUrlList.add( new SitemapUrl( readerPage, pratilipi.getLastUpdated(), website ) );
+			sitemapUrlList.add( new SitemapUrl( pratilipiPage, pratilipi.getLastUpdated(), website, basicMode ) );
+			sitemapUrlList.add( new SitemapUrl( readerPage, pratilipi.getLastUpdated(), website, basicMode ) );
 
 		}
 
@@ -256,13 +256,13 @@ public class PageDataUtil {
 				continue;
 
 			Page page = pages.get( authorId );
-			sitemapUrlList.add( new SitemapUrl( page, author.getLastUpdated(), website ) );
+			sitemapUrlList.add( new SitemapUrl( page, author.getLastUpdated(), website, basicMode ) );
 
 		}
 
 		for( Long blogId : blogIdList ) {
 			Page page = pages.get( blogId );
-			sitemapUrlList.add( new SitemapUrl( page, null, website ) );
+			sitemapUrlList.add( new SitemapUrl( page, null, website, basicMode ) );
 		}
 
 		for( Long blogPostId : blogPostIdList ) {
@@ -274,7 +274,7 @@ public class PageDataUtil {
 				continue;
 
 			Page page = pages.get( blogPostId );
-			sitemapUrlList.add( new SitemapUrl( page, blogPost.getLastUpdated(), website ) );
+			sitemapUrlList.add( new SitemapUrl( page, blogPost.getLastUpdated(), website, basicMode ) );
 
 		}
 
@@ -285,7 +285,7 @@ public class PageDataUtil {
 				continue;
 
 			Page page = pages.get( eventId );
-			sitemapUrlList.add( new SitemapUrl( page, event.getLastUpdated(), website ) );
+			sitemapUrlList.add( new SitemapUrl( page, event.getLastUpdated(), website, basicMode ) );
 
 		}
 
@@ -293,7 +293,7 @@ public class PageDataUtil {
 
 	}
 
-	private static List<SitemapUrl> _getUrlSetForTypeCategoryList( Website website ) {
+	private static List<SitemapUrl> _getUrlSetForTypeCategoryList( Website website, boolean basicMode ) {
 
 		List<SitemapUrl> sitemapUrlList = new ArrayList<>();
 
@@ -313,14 +313,14 @@ public class PageDataUtil {
 			Page page = DataAccessorFactory.getDataAccessor().newPage();
 			page.setType( PageType.CATEGORY_LIST );
 			page.setUri( "/" + file.getName().substring( fileNamePrefix.length() + 1 ) );
-			sitemapUrlList.add( new SitemapUrl( page, null, website ) );
+			sitemapUrlList.add( new SitemapUrl( page, null, website, basicMode ) );
 		}
 
 		return sitemapUrlList;
 
 	}
 
-	private static List<SitemapUrl> _getUrlSetForTypeStatic( Website website ) {
+	private static List<SitemapUrl> _getUrlSetForTypeStatic( Website website, boolean basicMode ) {
 
 		List<SitemapUrl> sitemapUrlList = new ArrayList<>();
 
@@ -343,14 +343,14 @@ public class PageDataUtil {
 			Page page = DataAccessorFactory.getDataAccessor().newPage();
 			page.setType( PageType.STATIC );
 			page.setUri( "/" + fileName.replace( "_", "/" ) );
-			sitemapUrlList.add( new SitemapUrl( page, null, website ) );
+			sitemapUrlList.add( new SitemapUrl( page, null, website, basicMode ) );
 		}
 
 		return sitemapUrlList;
 
 	}
 
-	private static List<SitemapUrl> _getSitemapForTypeOther( Website website ) {
+	private static List<SitemapUrl> _getSitemapForTypeOther( Website website, boolean basicMode ) {
 
 		List<SitemapUrl> sitemapUrlList = new ArrayList<>();
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -359,25 +359,25 @@ public class PageDataUtil {
 		Page homePage = dataAccessor.newPage();
 		homePage.setType( PageType.HOME );
 		homePage.setUri( "/" );
-		sitemapUrlList.add( new SitemapUrl( homePage, null, website ) );
+		sitemapUrlList.add( new SitemapUrl( homePage, null, website, basicMode ) );
 
 		// /events page
 		Page eventListPage = dataAccessor.newPage();
 		eventListPage.setType( PageType.EVENT_LIST );
 		eventListPage.setUri( "/events" );
-		sitemapUrlList.add( new SitemapUrl( eventListPage, null, website ) );
+		sitemapUrlList.add( new SitemapUrl( eventListPage, null, website, basicMode ) );
 
 		// Category List pages
-		sitemapUrlList.addAll( _getUrlSetForTypeCategoryList( website ) );
+		sitemapUrlList.addAll( _getUrlSetForTypeCategoryList( website, basicMode ) );
 
 		// Static pages
-		sitemapUrlList.addAll( _getUrlSetForTypeStatic( website ) );
+		sitemapUrlList.addAll( _getUrlSetForTypeStatic( website, basicMode ) );
 
 		return sitemapUrlList;
 
 	}
 
-	private static String _getSitemapSnippet( Website website, String type, String cursor, Date lastMod ) {	
+	private static String _getSitemapSnippet( String hostName, String type, String cursor, Date lastMod ) {	
 
 //		<sitemap>
 //			<loc>http://www.example.com/sitemap1.xml.gz</loc>
@@ -386,7 +386,7 @@ public class PageDataUtil {
 
 		StringBuilder sitemap = new StringBuilder( "<sitemap>" + LINE_SEPARATOR );
 
-		String loc = "http://" + website.getHostName() + "/sitemap";
+		String loc = "http://" + hostName + "/sitemap";
 		if( type != null ) {
 			loc = loc + "?" + RequestParameter.SITEMAP_TYPE.getName() + "=" + type;
 			if( cursor != null )
@@ -407,7 +407,7 @@ public class PageDataUtil {
 
 	}
 
-	private static String _getSitemapIndex( Website website ) {
+	private static String _getSitemapIndex( Website website, boolean basicMode ) {
 
 		//	<?xml version="1.0" encoding="UTF-8"?>
 		//	<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -438,10 +438,18 @@ public class PageDataUtil {
 		sitemapIndex.append( "<sitemapindex xmlns=\"" + SITEMAP_NAMESPACE + "\">" + LINE_SEPARATOR );
 
 		// Adding sitemap to index pages without PAGE entites
-		sitemapIndex.append( _getSitemapSnippet( website, "other", null, null ) );
+		sitemapIndex.append( _getSitemapSnippet( 
+				basicMode ? website.getMobileHostName() : website.getHostName(), 
+				"other", 
+				null, 
+				null ) );
 
 		for( Long i = startIndex; i <= endIndex; i += SITEMAP_PAGE_COUNT )
-			sitemapIndex.append( _getSitemapSnippet( website, "page", i + "", null ) );
+			sitemapIndex.append( _getSitemapSnippet( 
+				basicMode ? website.getMobileHostName() : website.getHostName(),
+				"page", 
+				i + "", 
+				null ) );
 
 		sitemapIndex.append( "</sitemapindex>" );
 		return sitemapIndex.toString();
@@ -449,16 +457,16 @@ public class PageDataUtil {
 	}
 
 
-	public static String getSitemap( String type, String cursor, Website website ) {
+	public static String getSitemap( String type, String cursor, Website website, boolean basicMode ) {
 
 		if( type == null ) // Sitemap Index file
-			return _getSitemapIndex( website );
+			return _getSitemapIndex( website, basicMode );
 
 		if( type.equals( "other" ) )
-			return _getSitemapString( _getSitemapForTypeOther( website ) );
+			return _getSitemapString( _getSitemapForTypeOther( website, basicMode ) );
 
 		if( type.equals( "page" ) )
-			return _getSitemapString( _getSitemapForTypePage( Long.parseLong( cursor ), website ) );
+			return _getSitemapString( _getSitemapForTypePage( Long.parseLong( cursor ), website, basicMode ) );
 
 		return null;
 
