@@ -57,58 +57,60 @@
 					<!-- Navigation & Search bar for extra-small & small screens. -->
 					<pratilipi-navigation-drawer with-backdrop navigation-list='[[ navigationList ]]'></pratilipi-navigation-drawer>
 					<div style="overflow:hidden; padding: 0 2px;">
-						<#include "app-launch/pratilipi-android-launch.html">
-						<div class="secondary-500 pratilipi-shadow pratilipi-card-grid-heading pratilipi-red">
-							{{ event.name }}
-							<template is="dom-if" if="{{ event.hasAccessToUpdate }}">
-								<paper-icon-button on-click="editEvent" icon="create" noink></paper-icon-button>
-							</template>
-						</div>
-
-						<paper-card class="event-banner">
-							<template is="dom-if" if="{{ !event.hasAccessToUpdate }}">
-								<img style="width: 100%;" src="{{ eventBannerImageUrl }}" alt="{{ event.name }}" />
-							</template>
-							
-							<template is="dom-if" if="{{ event.hasAccessToUpdate }}">
-								<div style="position: absolute; top: -1000px;">
-									<form id="uploadImage" method="post" enctype="multipart/form-data" action="/api/event/banner?eventId={{ event.eventId }}" target="upload_target">
-										<input id="uploadImageInput" type="file" on-change="uploadImage" name="{{ event.eventId }}" accept="image/*">
-									</form>
-									<iframe id="upload_target" name="upload_target" style="display: none;" on-load="_onchangeiframe"></iframe>
-								</div>
-								<div class="pratilipi-file-upload">
-									<img style="width: 100%;" src="{{ eventBannerImageUrl }}" alt="{{ event.name }}"/>
-									<iron-icon icon="icons:cloud-upload"></iron-icon>
-									<div class="pratilipi-file-upload-caption" on-click="_chooseFile">
-										<iron-icon icon="icons:cloud-upload"></iron-icon>
-										<strong>Upload Photo</strong>
-									</div>
-								</div>
-							</template>
-						</paper-card>
-
-						<paper-card class="event-description">
-							<div id="pratilipi-event-description"></div>
-						</paper-card>
-
-						<template is="dom-if" if="{{ showPratilipiList }}">
+						<pratilipi-android-launch></pratilipi-android-launch>
+						<div id="androidLaunchBottom">
 							<div class="secondary-500 pratilipi-shadow pratilipi-card-grid-heading pratilipi-red">
-								${ _strings.event_entries }
-							</div>
-							<div id="event-entries" class="secondary-500 pratilipi-shadow">
-								<div class="row text-center">
-									<template is="dom-repeat" items="{{ pratilipiList }}" as="pratilipi">
-										<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
-											<pratilipi-card-mini state="PUBLISHED" pratilipi="{{ pratilipi }}"></pratilipi-card-mini>
-										</div>
-									</template>
-								</div>
-								<template is="dom-if" if="{{ isLoading }}">
-									<paper-spinner active></paper-spinner>
+								{{ event.name }}
+								<template is="dom-if" if="{{ event.hasAccessToUpdate }}">
+									<paper-icon-button on-click="editEvent" icon="create" noink></paper-icon-button>
 								</template>
 							</div>
-						</template>
+	
+							<paper-card class="event-banner">
+								<template is="dom-if" if="{{ !event.hasAccessToUpdate }}">
+									<img style="width: 100%;" src="{{ eventBannerImageUrl }}" alt="{{ event.name }}" />
+								</template>
+								
+								<template is="dom-if" if="{{ event.hasAccessToUpdate }}">
+									<div style="position: absolute; top: -1000px;">
+										<form id="uploadImage" method="post" enctype="multipart/form-data" action="/api/event/banner?eventId={{ event.eventId }}" target="upload_target">
+											<input id="uploadImageInput" type="file" on-change="uploadImage" name="{{ event.eventId }}" accept="image/*">
+										</form>
+										<iframe id="upload_target" name="upload_target" style="display: none;" on-load="_onchangeiframe"></iframe>
+									</div>
+									<div class="pratilipi-file-upload">
+										<img style="width: 100%;" src="{{ eventBannerImageUrl }}" alt="{{ event.name }}"/>
+										<iron-icon icon="icons:cloud-upload"></iron-icon>
+										<div class="pratilipi-file-upload-caption" on-click="_chooseFile">
+											<iron-icon icon="icons:cloud-upload"></iron-icon>
+											<strong>Upload Photo</strong>
+										</div>
+									</div>
+								</template>
+							</paper-card>
+	
+							<paper-card class="event-description">
+								<div id="pratilipi-event-description"></div>
+							</paper-card>
+	
+							<template is="dom-if" if="{{ showPratilipiList }}">
+								<div class="secondary-500 pratilipi-shadow pratilipi-card-grid-heading pratilipi-red">
+									${ _strings.event_entries }
+								</div>
+								<div id="event-entries" class="secondary-500 pratilipi-shadow">
+									<div class="row text-center">
+										<template is="dom-repeat" items="{{ pratilipiList }}" as="pratilipi">
+											<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+												<pratilipi-card-mini state="PUBLISHED" pratilipi="{{ pratilipi }}"></pratilipi-card-mini>
+											</div>
+										</template>
+									</div>
+									<template is="dom-if" if="{{ isLoading }}">
+										<paper-spinner active></paper-spinner>
+									</template>
+								</div>
+							</template>
+						</div>
 					</div>
 				</div>
 			</div>

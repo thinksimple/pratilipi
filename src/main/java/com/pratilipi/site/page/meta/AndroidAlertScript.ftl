@@ -4,17 +4,18 @@
 <#assign cookie_banner_crossed = "APP_LAUNCHED_CROSSED">
 
 <script>
-	var showBanner = getCookie( "${ cookie_show_banner }" ) == null || getCookie( "${ cookie_show_banner }" ) == "true";
+	var showBanner = getCookie( "${ cookie_show_banner }" ) == null || getCookie( "${ cookie_show_banner }" ) == "false";
 	var click_count = getCookie( "${ cookie_banner_clicked }" ) == null ? 0 : parseInt( getCookie( "${ cookie_banner_clicked }" ) );
 	var cross_count = getCookie( "${ cookie_banner_crossed }" ) == null ? 0 : parseInt( getCookie( "${ cookie_banner_crossed }" ) );
 
 	function initAndroidBanner() {
 		$( document ).ready( function() {
-			if( showBanner )
+			if( showBanner ) {
 				if( document.getElementById( 'androidSubsribeAlert' ) != null ) {
 					document.getElementById( 'androidSubsribeAlert' ).style.display = "block";
 					ga( 'send', 'event', 'app_download_strip', 'app_strip_show', 'android_app_download' );
-				}	
+				}
+			}
 		});
 	}
 
@@ -41,8 +42,10 @@
 			if( cross_count == 2 )
 				setCookie( "${ cookie_show_banner }", false, 30, "/" );
 
-			if( document.getElementById( 'androidSubsribeAlert' ) != null )
+			if( document.getElementById( 'androidSubsribeAlert' ) != null ) /* Basic */
 					document.getElementById( 'androidSubsribeAlert' ).style.display = "none";
+			if( document.querySelector( 'pratilipi-android-launch' ) != null ) /* Polymer */
+				document.querySelector( 'pratilipi-android-launch' ).hide();
 
 		} 
 		else {

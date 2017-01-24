@@ -19,9 +19,11 @@
 					<!-- Navigation & Search bar for extra-small & small screens. -->
 					<pratilipi-navigation-drawer with-backdrop navigation-list='[[ navigationList ]]'></pratilipi-navigation-drawer>
 					<div style="overflow: hidden; padding: 0 2px;">
-						<#include "app-launch/pratilipi-android-launch.html">
-						<pratilipi-author-library-contents pratilipi-list="[[ pratilipiList ]]" cursor="[[ cursor ]]">
-						</pratilipi-author-library-contents>
+						<pratilipi-android-launch></pratilipi-android-launch>
+						<div id="androidLaunchBottom">
+							<pratilipi-author-library-contents pratilipi-list="[[ pratilipiList ]]" cursor="[[ cursor ]]">
+							</pratilipi-author-library-contents>
+						</div>
 					</div>
 				</div>
 			</div>

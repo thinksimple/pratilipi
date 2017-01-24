@@ -30,14 +30,16 @@
 					<#-- Navigation & Search bar for extra-small & small screens. -->
 					<pratilipi-navigation-drawer with-backdrop navigation-list='[[ navigationList ]]'></pratilipi-navigation-drawer>
 					<div style="overflow:hidden; padding: 0 2px;">
-						<#include "app-launch/pratilipi-android-launch.html">
-						<pratilipi-author-details
-								author='[[ author ]]'
-								user-author='[[ userAuthor ]]'></pratilipi-author-details>
-						<pratilipi-author-tabs 
-								user="[[ user ]]"
-								author="[[ author ]]"></pratilipi-author-tabs>
-						<pratilipi-author-settings author="[[ author ]]" user="[[ user ]]"></pratilipi-author-settings>
+						<pratilipi-android-launch></pratilipi-android-launch>
+						<div id="androidLaunchBottom">
+							<pratilipi-author-details
+									author='[[ author ]]'
+									user-author='[[ userAuthor ]]'></pratilipi-author-details>
+							<pratilipi-author-tabs 
+									user="[[ user ]]"
+									author="[[ author ]]"></pratilipi-author-tabs>
+							<pratilipi-author-settings author="[[ author ]]" user="[[ user ]]"></pratilipi-author-settings>
+						</div>
 					</div>
 				</div>
 			</div>

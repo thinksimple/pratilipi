@@ -81,45 +81,47 @@
 					<#-- Navigation & Search bar for extra-small & small screens. -->
 					<pratilipi-navigation-drawer with-backdrop navigation-list='[[ navigationList ]]'></pratilipi-navigation-drawer>
 					<div style="overflow:hidden; padding: 0 2px;">
-						<#include "app-launch/pratilipi-android-launch.html">
-						<pratilipi-author-following no-display></pratilipi-author-following>
-						<div class="secondary-500 pratilipi-shadow card-heading">
-							<h6 class="pratilipi-red">${ _strings.author_following_heading }</h6>
-							<template is="dom-if" if="{{ hasFollowing }}">
-								<div>{{ numberFound }} ${ _strings.author_follow_members }</div>
+						<pratilipi-android-launch></pratilipi-android-launch>
+						<div id="androidLaunchBottom">
+							<pratilipi-author-following no-display></pratilipi-author-following>
+							<div class="secondary-500 pratilipi-shadow card-heading">
+								<h6 class="pratilipi-red">${ _strings.author_following_heading }</h6>
+								<template is="dom-if" if="{{ hasFollowing }}">
+									<div>{{ numberFound }} ${ _strings.author_follow_members }</div>
+								</template>
+							</div>
+							<template is="dom-if" if="{{ noFollowing }}">
+								<paper-card class="follow-grid">
+									<div class="alert-message">
+										<iron-icon icon="icons:info-outline"></iron-icon>
+										<div>${ _strings.user_no_following }</div>
+									</div>
+								</paper-card>
+							</template>
+							<template is="dom-if" if="{{ guestUser }}">
+								<paper-card class="follow-grid">
+									<div class="alert-message">
+										<iron-icon icon="icons:info-outline"></iron-icon>
+										<div><a class="pratilipi-blue" on-click="_login">${ _strings.user_login_to_view_following }</a></div>
+									</div>
+								</paper-card>
+							</template>
+							<paper-card class="row follow-grid secondary-500 pratilipi-shadow">
+								<template is="dom-repeat" items="{{ followList }}">
+									<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+										<pratilipi-follow-author follow-object="{{ item }}"></pratilipi-follow-author>
+									</div>
+								</template>
+							</paper-card>
+							<template is="dom-if" if="{{ hasMore }}">
+								<template is="dom-if" if="{{ !isLoading }}">
+									<div class="load-more-button" on-click="_loadMore">${ _strings.load_more_contents }...</div>
+								</template>
+							</template>
+							<template is="dom-if" if="{{ isLoading }}">
+								<paper-spinner class="pratilipi-spinner pratilipi-spinner-center" active></paper-spinner>
 							</template>
 						</div>
-						<template is="dom-if" if="{{ noFollowing }}">
-							<paper-card class="follow-grid">
-								<div class="alert-message">
-									<iron-icon icon="icons:info-outline"></iron-icon>
-									<div>${ _strings.user_no_following }</div>
-								</div>
-							</paper-card>
-						</template>
-						<template is="dom-if" if="{{ guestUser }}">
-							<paper-card class="follow-grid">
-								<div class="alert-message">
-									<iron-icon icon="icons:info-outline"></iron-icon>
-									<div><a class="pratilipi-blue" on-click="_login">${ _strings.user_login_to_view_following }</a></div>
-								</div>
-							</paper-card>
-						</template>
-						<paper-card class="row follow-grid secondary-500 pratilipi-shadow">
-							<template is="dom-repeat" items="{{ followList }}">
-								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-									<pratilipi-follow-author follow-object="{{ item }}"></pratilipi-follow-author>
-								</div>
-							</template>
-						</paper-card>
-						<template is="dom-if" if="{{ hasMore }}">
-							<template is="dom-if" if="{{ !isLoading }}">
-								<div class="load-more-button" on-click="_loadMore">${ _strings.load_more_contents }...</div>
-							</template>
-						</template>
-						<template is="dom-if" if="{{ isLoading }}">
-							<paper-spinner class="pratilipi-spinner pratilipi-spinner-center" active></paper-spinner>
-						</template>
 					</div>
 				</div>
 			</div>

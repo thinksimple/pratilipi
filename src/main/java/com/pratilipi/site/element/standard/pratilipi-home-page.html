@@ -28,17 +28,19 @@
 					<!-- Navigation & Search bar for extra-small & small screens. -->
 					<pratilipi-navigation-drawer with-backdrop navigation-list='[[ navigationList ]]'></pratilipi-navigation-drawer>
 					<div style="overflow:hidden; padding: 0 2px;">
-						<#include "app-launch/pratilipi-android-launch.html">
-						<pratilipi-${ language?lower_case }-carousel style="text-align: center;"></pratilipi-${ language?lower_case }-carousel>
-						<br class="pratilipi-break"/>
-						<paper-spinner class="pratilipi-spinner pratilipi-spinner-center" active="{{ loadingSections }}" hidden$="{{ !loadingSections }}"></paper-spinner>
-						<template is="dom-repeat" items="[[ sectionsList ]]">
-							<pratilipi-card-grid
-								heading='[[ item.title ]]'
-								pratilipi-list='[[ item.pratilipiList ]]'
-								heading-url='[[ item.listPageUrl ]]'
-								></pratilipi-card-grid>
+						<pratilipi-android-launch></pratilipi-android-launch>
+						<div id="androidLaunchBottom">
+							<pratilipi-${ language?lower_case }-carousel style="text-align: center;"></pratilipi-${ language?lower_case }-carousel>
 							<br class="pratilipi-break"/>
+							<paper-spinner class="pratilipi-spinner pratilipi-spinner-center" active="{{ loadingSections }}" hidden$="{{ !loadingSections }}"></paper-spinner>
+							<template is="dom-repeat" items="[[ sectionsList ]]">
+								<pratilipi-card-grid
+									heading='[[ item.title ]]'
+									pratilipi-list='[[ item.pratilipiList ]]'
+									heading-url='[[ item.listPageUrl ]]'
+									></pratilipi-card-grid>
+								<br class="pratilipi-break"/>
+						</div>
 						</template>
 					</div>
 				</div>

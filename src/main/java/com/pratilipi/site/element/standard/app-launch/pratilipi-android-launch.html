@@ -1,35 +1,77 @@
-<style>
-	.android-banner {
-		border-radius: 1px;
-		cursor: pointer;
-		padding: 0;
-		display: none;
-		color: #fff;
-		background-color: #D0021B;
-		border-color: #D0021B;
-		margin-bottom: 4px;
-	}
-	@media only screen and (max-width: 991px) {
+<#assign cookie_show_banner = "USER_NOTIFIED_APP_LAUNCHED">
+<dom-module id="pratilipi-android-launch">
+	<style>
 		.android-banner {
-			position: fixed;
-			z-index: 65535;
-			left: 0;
-			width: 98%;
-			margin-left: 1%;
-			margin-bottom: 0;
+			border-radius: 1px;
+			cursor: pointer;
+			padding: 0;
+			display: none;
+			color: #fff;
+			background-color: #D0021B;
+			border-color: #D0021B;
+			margin-bottom: 4px;
 		}
-	}
-</style>
-<div id="androidSubsribeAlert" class="alert alert-dismissible fade in android-banner" role="alert">
-	<button style="outline: none; right: 6px; margin-top: 12px; opacity: 1; color: #fff!important;" type="button" class="close pull-right" data-dismiss="alert" aria-label="Close" onclick="androidBannerCrossed();">
-		<iron-icon style="color: #fff;" icon="icons:close"></iron-icon>
-	</button>
-	<div style="padding: 4px 2px; width: 95%; width: calc(100% - 32px); display: flex;" onclick="androidBannerClicked(); window.open( 'https://play.google.com/store/apps/details?id=com.pratilipi.mobile.android&referrer=utm_source%3Dpratilipi_main_web%26utm_medium%3Dweb_bottom_strip%26utm_campaign%3Dapp_download' );">
-		<img style="width: 40px; height: 40px; margin-right: 12px; align-self: center;" src="http://0.ptlp.co/resource-all/home-page/google_playstore_40.png"/>
-		<span style="font-size: 13px; font-weight: 400; align-self: center;">
-			<span style="font-size: 15px; line-height: 19px;">${ _strings.pratilipi_app_launched_website_strip }</span>
-			<br /> 
-			<span style="font-size: 13px;">${ _strings.pratilipi_app_click_download }</span>
-		</span>
-	</div>
-</div>
+		@media only screen and (max-width: 991px) {
+			.android-banner {
+				position: fixed;
+				z-index: 65535;
+				left: 0;
+				width: 98%;
+				margin-left: 1%;
+				margin-bottom: 0;
+			}
+		}
+	</style>
+	<template>
+		<div id="androidAlert" class="alert alert-dismissible fade in android-banner" role="alert">
+			<button style="outline: none; right: 6px; margin-top: 12px; opacity: 1; color: #fff!important;" type="button" class="close pull-right" data-dismiss="alert" aria-label="Close" onclick="androidBannerCrossed();">
+				<iron-icon style="color: #fff;" icon="icons:close"></iron-icon>
+			</button>
+			<div style="padding: 4px 2px; width: 95%; width: calc(100% - 32px); display: flex;" onclick="androidBannerClicked(); window.open( 'https://play.google.com/store/apps/details?id=com.pratilipi.mobile.android&referrer=utm_source%3Dpratilipi_main_web%26utm_medium%3Dweb_bottom_strip%26utm_campaign%3Dapp_download' );">
+				<img style="width: 40px; height: 40px; margin-right: 12px; align-self: center;" src="http://0.ptlp.co/resource-all/home-page/google_playstore_40.png"/>
+				<span style="font-size: 13px; font-weight: 400; align-self: center;">
+					<span style="font-size: 15px; line-height: 19px;">${ _strings.pratilipi_app_launched_website_strip }</span>
+					<br /> 
+					<span style="font-size: 13px;">${ _strings.pratilipi_app_click_download }</span>
+				</span>
+			</div>
+		</div>
+	</template>
+	<script>
+	Polymer({
+
+		is: 'pratilipi-android-launch',
+		
+		behaviors: [		
+			Polymer.IronResizableBehavior		
+		],
+		
+		listeners: {
+			'iron-resize': '_onIronResize'
+		},
+
+		ready: function() {
+			var showBanner = getCookie( "${ cookie_show_banner }" ) == null || getCookie( "${ cookie_show_banner }" ) == "false";
+			if( showBanner ) {
+				$( this.querySelector( '#androidAlert' ) ).css( "display", "block" );
+			}
+		},
+
+		_onIronResize: function() {
+			var windowsize = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+			var d = document.getElementById( "androidLaunchBottom" );
+			if( windowsize > 991 )
+				$( d ).css( "padding-top", 0 );
+			else
+				$( d ).css( "padding-top", $( this.querySelector( '#androidAlert' ) ).height() + 8 );
+		},
+
+		hide: function() {
+			$( this.querySelector( '#androidAlert' ) ).css( "display", "block" );
+			var d = document.getElementById( "androidLaunchBottom" );
+			$( d ).css( "padding-top", 0 );
+		}
+
+	});
+	</script>
+</dom-module>

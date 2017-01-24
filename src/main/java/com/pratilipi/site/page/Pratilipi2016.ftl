@@ -25,9 +25,11 @@
 							<#-- Navigation & Search bar for extra-small & small screens. -->
 							<pratilipi-navigation-drawer with-backdrop navigation-list='${ navigationListJson }'></pratilipi-navigation-drawer>
 							<div style='padding: 2px; overflow: hidden'>
-								<#include "../element/standard/app-launch/pratilipi-android-launch.html">
-								<div class='secondary-500' style="padding: 20px;">
-									<img src="{{ image }}" style="width: 100%;" />
+								<pratilipi-android-launch></pratilipi-android-launch>
+								<div id="androidLaunchBottom">
+									<div class='secondary-500' style="padding: 20px;">
+										<img src="{{ image }}" style="width: 100%;" />
+									</div>
 								</div>
 							</div>
 						</div>

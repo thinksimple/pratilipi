@@ -18,45 +18,47 @@
 					<!-- Navigation & Search bar for extra-small & small screens. -->
 					<pratilipi-navigation-drawer with-backdrop navigation-list='[[ navigationList ]]'></pratilipi-navigation-drawer>
 					<div style="overflow:hidden; padding: 0 2px;">
-						<#include "app-launch/pratilipi-android-launch.html">
-						<template is="dom-if" if="{{ hasAccessToAdd }}">
-							<div class="secondary-500 pratilipi-shadow pratilipi-card-grid-heading pratilipi-red">
-								Drafted Entries
-							</div>
-							<br class="pratilipi-break">
-							<paper-card style="display: block; padding: 45px 20px; margin: 0 auto; text-align: center;">
-								<div style="text-align: center;">
-									<a on-click="createNewBlog">
-										<iron-icon style="width: 64px; height: 64px;" icon="add-circle"></iron-icon>
-									</a>
-									<a on-click="createNewBlog">
-										<h6 style="margin-top: 10px;">Add a new blog</h6>
-									</a>
+						<pratilipi-android-launch></pratilipi-android-launch>
+						<div id="androidLaunchBottom">
+							<template is="dom-if" if="{{ hasAccessToAdd }}">
+								<div class="secondary-500 pratilipi-shadow pratilipi-card-grid-heading pratilipi-red">
+									Drafted Entries
 								</div>
-							</paper-card>
-							<br class="pratilipi-break">
-							<template is="dom-repeat" items="[[ draftedBlogpostList ]]">
+								<br class="pratilipi-break">
+								<paper-card style="display: block; padding: 45px 20px; margin: 0 auto; text-align: center;">
+									<div style="text-align: center;">
+										<a on-click="createNewBlog">
+											<iron-icon style="width: 64px; height: 64px;" icon="add-circle"></iron-icon>
+										</a>
+										<a on-click="createNewBlog">
+											<h6 style="margin-top: 10px;">Add a new blog</h6>
+										</a>
+									</div>
+								</paper-card>
+								<br class="pratilipi-break">
+								<template is="dom-repeat" items="[[ draftedBlogpostList ]]">
+									<pratilipi-bloglist-snippet blogpost="{{ item }}"></pratilipi-bloglist-snippet>
+								</template>
+								<br>
+								<div class="secondary-500 pratilipi-shadow pratilipi-card-grid-heading pratilipi-red">
+									Published Entries
+								</div>
+								<br class="pratilipi-break">
+							</template>
+							<template is="dom-repeat" items="[[ blogpostList ]]">
 								<pratilipi-bloglist-snippet blogpost="{{ item }}"></pratilipi-bloglist-snippet>
 							</template>
-							<br>
-							<div class="secondary-500 pratilipi-shadow pratilipi-card-grid-heading pratilipi-red">
-								Published Entries
-							</div>
-							<br class="pratilipi-break">
-						</template>
-						<template is="dom-repeat" items="[[ blogpostList ]]">
-							<pratilipi-bloglist-snippet blogpost="{{ item }}"></pratilipi-bloglist-snippet>
-						</template>
-
-						<!-- Spinner when Loading more books -->
-						<template is="dom-if" if="{{ isLoading }}">
-							<paper-spinner class="pratilipi-spinner pratilipi-spinner-center" active></paper-spinner>
-						</template>
-						
-						<!-- Show More Button in case of network call failure -->
-						<template is="dom-if" if="{{ includeShowMoreButton }}">
-							<button style="width: 100%;" class="pratilipi-new-blue-button" on-click="loadMore">${ _strings.view_more }</button>
-						</template>
+	
+							<!-- Spinner when Loading more books -->
+							<template is="dom-if" if="{{ isLoading }}">
+								<paper-spinner class="pratilipi-spinner pratilipi-spinner-center" active></paper-spinner>
+							</template>
+							
+							<!-- Show More Button in case of network call failure -->
+							<template is="dom-if" if="{{ includeShowMoreButton }}">
+								<button style="width: 100%;" class="pratilipi-new-blue-button" on-click="loadMore">${ _strings.view_more }</button>
+							</template>
+						</div>
 					</div>
 				</div>
 			</div>

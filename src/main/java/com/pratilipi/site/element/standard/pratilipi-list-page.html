@@ -18,15 +18,17 @@
 					<!-- Navigation & Search bar for extra-small & small screens. -->
 					<pratilipi-navigation-drawer with-backdrop navigation-list='[[ navigationList ]]'></pratilipi-navigation-drawer>
 					<div style="overflow: hidden; padding: 0 2px;">
-						<#include "app-launch/pratilipi-android-launch.html">
-						<pratilipi-card-grid
-							heading='[[ heading ]]'
-							search-query='[[ searchQuery ]]'
-							pratilipi-list='[[ pratilipiList ]]'
-							filter='[[ filter ]]'
-							cursor='[[ cursor ]]'
-							></pratilipi-card-grid>
-						<br class="pratilipi-break"/>
+						<pratilipi-android-launch></pratilipi-android-launch>
+						<div id="androidLaunchBottom">
+							<pratilipi-card-grid
+								heading='[[ heading ]]'
+								search-query='[[ searchQuery ]]'
+								pratilipi-list='[[ pratilipiList ]]'
+								filter='[[ filter ]]'
+								cursor='[[ cursor ]]'
+								></pratilipi-card-grid>
+							<br class="pratilipi-break"/>
+						</div>
 					</div>
 				</div>
 			</div>

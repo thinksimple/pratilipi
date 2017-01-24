@@ -17,24 +17,26 @@
 					<!-- Navigation & Search bar for extra-small & small screens. -->
 					<pratilipi-navigation-drawer with-backdrop navigation-list='[[ navigationList ]]'></pratilipi-navigation-drawer>
 					<div style="overflow:hidden; padding: 0 2px;">
-						<#include "app-launch/pratilipi-android-launch.html">
-						<template is="dom-if" if="{{ hasAccessToAdd }}">
-							<paper-card style="display: block; padding: 45px 20px; margin: 0 auto; text-align: center;">
-								<div style="text-align: center;">
-									<a on-click="createNewEvent">
-										<iron-icon style="width: 64px; height: 64px;" icon="add-circle"></iron-icon>
-									</a>
-									<a on-click="createNewEvent">
-										<h6 style="margin-top: 10px;">Create New Event</h6>
-									</a>
-								</div>
-							</paper-card>
-							<br class="pratilipi-break">
-						</template>
-						<template is="dom-repeat" items="[[ eventList ]]">
-							<pratilipi-event-snippet event="[[ item ]]"></pratilipi-event-snippet>
-							<br class="pratilipi-break">
-						</template>
+						<pratilipi-android-launch></pratilipi-android-launch>
+						<div id="androidLaunchBottom">
+							<template is="dom-if" if="{{ hasAccessToAdd }}">
+								<paper-card style="display: block; padding: 45px 20px; margin: 0 auto; text-align: center;">
+									<div style="text-align: center;">
+										<a on-click="createNewEvent">
+											<iron-icon style="width: 64px; height: 64px;" icon="add-circle"></iron-icon>
+										</a>
+										<a on-click="createNewEvent">
+											<h6 style="margin-top: 10px;">Create New Event</h6>
+										</a>
+									</div>
+								</paper-card>
+								<br class="pratilipi-break">
+							</template>
+							<template is="dom-repeat" items="[[ eventList ]]">
+								<pratilipi-event-snippet event="[[ item ]]"></pratilipi-event-snippet>
+								<br class="pratilipi-break">
+							</template>
+						</div>
 					</div>
 				</div>
 			</div>
