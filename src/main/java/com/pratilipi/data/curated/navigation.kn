@@ -5,6 +5,7 @@
 /events       ಸ್ಪರ್ಧೆಗಳು              Analytics#categoryName::online-events        App#imageName::events.jpg     App#EventList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"events" }
 
 ಪ್ರಭೇದಗಳು 
+/friendship ಸ್ನೇಹ           Analytics#categoryName::friendship    App#imageName::event_friendship.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"friendship" }
 /love       ಪ್ರೀತಿ            Analytics#categoryName::romance        App#imageName::romance.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"love" }
 /women      ಮಹಿಳೆ          Analytics#categoryName::women        App#imageName::event_women.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"women" }
 /cinema     ಸಿನಿಮಾ         Analytics#categoryName::cinema        App#imageName::movies.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"cinema" }
