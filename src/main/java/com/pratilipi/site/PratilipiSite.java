@@ -109,7 +109,7 @@ public class PratilipiSite extends HttpServlet {
 
 		String uri = request.getRequestURI();
 		System.out.println( uri );
-		if( uri.equals( "/sitemap" ) ) {
+		if( uri.equals( "/sitemap" ) && SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) ) {
 			String content = PageDataUtil.getSitemap( 
 					request.getParameter( RequestParameter.SITEMAP_TYPE.getName() ), 
 					request.getParameter( RequestParameter.SITEMAP_CURSOR.getName() ), 
