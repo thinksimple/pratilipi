@@ -12,12 +12,13 @@
 		<#include "../element/basic/pratilipi-header.ftl">
 		<div class="parent-container">
 			<div class="container">
-				<#include "../element/basic/pratilipi-android-launch.ftl">	
-				<div class="secondary-500 pratilipi-shadow box" style="padding: 20px; overflow: hidden;">
-					<h3>${ title }</h3>
-					<div style="text-align: justify;">${ content }</div>
-				</div>
-				
+				<#include "../element/basic/pratilipi-android-launch.ftl">
+				<div id="androidLaunchBottom">
+					<div class="secondary-500 pratilipi-shadow box" style="padding: 20px; overflow: hidden;">
+						<h3>${ title }</h3>
+						<div style="text-align: justify;">${ content }</div>
+					</div>
+				</div>	
 			</div>
 		</div>
 		<#include "../element/basic/pratilipi-footer.ftl">

@@ -37,15 +37,17 @@
 			<div class="parent-container">
 				<div class="container">
 					<#include "../element/basic/pratilipi-android-launch.ftl">
-					<#list blogPostList as blogPost>
-						<div class="secondary-500 pratilipi-shadow box" style="padding: 12px 16px;">
-							<div class="title-holder">
-								<a class="pratilipi-red blog-title" href="${ blogPost.getPageUrl() }">${  blogPost.getTitle() }</a>
-								<a class="view-more" href="${ blogPost.getPageUrl() }">${ _strings.view_more }...</a>
+					<div id="androidLaunchBottom">
+						<#list blogPostList as blogPost>
+							<div class="secondary-500 pratilipi-shadow box" style="padding: 12px 16px;">
+								<div class="title-holder">
+									<a class="pratilipi-red blog-title" href="${ blogPost.getPageUrl() }">${  blogPost.getTitle() }</a>
+									<a class="view-more" href="${ blogPost.getPageUrl() }">${ _strings.view_more }...</a>
+								</div>
+								<div class="text-muted content-summary">${ blogPost.getContent() }</div>
 							</div>
-							<div class="text-muted content-summary">${ blogPost.getContent() }</div>
-						</div>
-					</#list>
+						</#list>
+					</div>
 				</div>
 			</div>		
 			<#include "../element/basic/pratilipi-footer.ftl">

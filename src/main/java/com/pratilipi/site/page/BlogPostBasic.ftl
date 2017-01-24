@@ -20,12 +20,14 @@
 			<div class="parent-container">
 				<div class="container">
 					<#include "../element/basic/pratilipi-android-launch.ftl">
-					<div class="secondary-500 pratilipi-shadow box" style="padding: 12px 10px;">
-						<h2 class="pratilipi-red">${ blogPost.getTitle() }</h2>
-					</div>
-					
-					<div class="secondary-500 pratilipi-shadow box" style="width: 100%; padding: 15px 20px; margin-bottom: 10px;">
-						<div>${ blogPost.getContent() }</div>
+					<div id="androidLaunchBottom">
+						<div class="secondary-500 pratilipi-shadow box" style="padding: 12px 10px;">
+							<h2 class="pratilipi-red">${ blogPost.getTitle() }</h2>
+						</div>
+						
+						<div class="secondary-500 pratilipi-shadow box" style="width: 100%; padding: 15px 20px; margin-bottom: 10px;">
+							<div>${ blogPost.getContent() }</div>
+						</div>
 					</div>
 				</div>
 			</div>		

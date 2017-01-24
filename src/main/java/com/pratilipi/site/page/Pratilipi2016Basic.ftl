@@ -12,8 +12,10 @@
 		<div class="parent-container">
 			<div class="container">
 				<#include "../element/basic/pratilipi-android-launch.ftl">
-				<div class='secondary-500' style='padding:20px; overflow:hidden'>
-					<img src="http://public.pratilipi.com/year-in-review-2016/low-res/YearInReview-${lang}.jpg" style="width: 100%;" />
+				<div id="androidLaunchBottom">
+					<div class='secondary-500' style='padding:20px; overflow:hidden'>
+						<img src="http://public.pratilipi.com/year-in-review-2016/low-res/YearInReview-${lang}.jpg" style="width: 100%;" />
+					</div>
 				</div>
 			</div>
 		</div>

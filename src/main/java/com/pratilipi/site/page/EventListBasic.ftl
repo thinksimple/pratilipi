@@ -33,15 +33,17 @@
 			<div class="parent-container">
 				<div class="container">
 					<#include "../element/basic/pratilipi-android-launch.ftl">
-					<#list eventList as event>
-						<div class="secondary-500 pratilipi-shadow box" style="padding: 12px 16px;">
-							<div class="title-holder">
-								<a class="pratilipi-red event-title" href="${ event.pageUrl }">${ event.name }</a>
-								<a class="view-more" href="${ event.pageUrl }"><div class="sprites-icon arrow-right-red-icon"></div></a>
+					<div id="androidLaunchBottom">
+						<#list eventList as event>
+							<div class="secondary-500 pratilipi-shadow box" style="padding: 12px 16px;">
+								<div class="title-holder">
+									<a class="pratilipi-red event-title" href="${ event.pageUrl }">${ event.name }</a>
+									<a class="view-more" href="${ event.pageUrl }"><div class="sprites-icon arrow-right-red-icon"></div></a>
+								</div>
+								<div class="text-muted description-summary">${ event.getDescription()! }</div>
 							</div>
-							<div class="text-muted description-summary">${ event.getDescription()! }</div>
-						</div>
-					</#list>
+						</#list>
+					</div>
 				</div>
 			</div>		
 			<#include "../element/basic/pratilipi-footer.ftl">

@@ -13,22 +13,24 @@
 		<div class="parent-container" style="">
 			<div class="container">
 				<#include "../element/basic/pratilipi-android-launch.ftl">
-				<#if ( ( action == "edit_profile") && author.hasAccessToUpdate() )>
-					<#include "../element/basic/pratilipi-author-settings.ftl">
-				<#elseif action == "list_contents">
-				<div class="pratilipi-shadow secondary-500 box">
-					<#if state == "PUBLISHED">
-						<#include "../element/basic/pratilipi-published-list.ftl">
-					<#elseif state == "DRAFTED">
-						<#include "../element/basic/pratilipi-drafted-list.ftl">						
+				<div id="androidLaunchBottom">
+					<#if ( ( action == "edit_profile") && author.hasAccessToUpdate() )>
+						<#include "../element/basic/pratilipi-author-settings.ftl">
+					<#elseif action == "list_contents">
+					<div class="pratilipi-shadow secondary-500 box">
+						<#if state == "PUBLISHED">
+							<#include "../element/basic/pratilipi-published-list.ftl">
+						<#elseif state == "DRAFTED">
+							<#include "../element/basic/pratilipi-drafted-list.ftl">						
+						</#if>
+					</div>
+					<#elseif ( action=="account" && !user.isGuest() )>
+						<#include "../element/basic/pratilipi-my-account.ftl">	
+					<#else>
+						<#include "../element/basic/pratilipi-author-details.ftl">
+						<#include "../element/basic/pratilipi-author-tabs.ftl">
 					</#if>
 				</div>
-				<#elseif ( action=="account" && !user.isGuest() )>
-					<#include "../element/basic/pratilipi-my-account.ftl">	
-				<#else>
-					<#include "../element/basic/pratilipi-author-details.ftl">
-					<#include "../element/basic/pratilipi-author-tabs.ftl">
-				</#if>	
 			</div>
 		</div>
 		<#include "../element/basic/pratilipi-footer.ftl">
