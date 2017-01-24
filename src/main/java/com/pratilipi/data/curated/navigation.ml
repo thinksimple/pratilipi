@@ -10,7 +10,7 @@
 /blog          ബ്ലോഗുകള്‍              Analytics#categoryName::blogs        App#imageName::blog.jpg              App#BlogPostList::{ "language":"MALAYALAM", "blogId":5683739602452480 } 
 
 വിഭാഗങ്ങൾ 
-/humour        നര്‍മം                  Analytics#categoryName::humour         App#imageName::comedy.jpg          App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"humour" }
+/humour        നര്‍മം                 Analytics#categoryName::humour         App#imageName::comedy.jpg          App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"humour" }
 /friendship    സൗഹൃദം             Analytics#categoryName::friendship      App#imageName::event_friendship.jpg          App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"friendship" }
 /love          പ്രണയം                  Analytics#categoryName::romance         App#imageName::romance.jpg          App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"love" }
 /mystery       ദുരൂഹം                 Analytics#categoryName::mystery   App#imageName::suspence.jpg         App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"mystery" }
