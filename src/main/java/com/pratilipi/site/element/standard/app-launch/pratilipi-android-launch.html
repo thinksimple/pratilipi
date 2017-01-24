@@ -51,9 +51,10 @@
 		},
 
 		ready: function() {
-			var showBanner = getCookie( "${ cookie_show_banner }" ) == null || getCookie( "${ cookie_show_banner }" ) == "false";
+			var showBanner = getCookie( "${ cookie_show_banner }" ) == null || getCookie( "${ cookie_show_banner }" ) == "true";
 			if( showBanner ) {
 				$( this.querySelector( '#androidAlert' ) ).css( "display", "block" );
+				ga( 'send', 'event', 'app_download_strip', 'app_strip_show', 'android_app_download' );
 			}
 		},
 
