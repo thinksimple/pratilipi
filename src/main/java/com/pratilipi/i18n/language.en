@@ -446,7 +446,35 @@ option_pratilipi_published_follower =  New Content by people you follow
 option_pratilipi_updates =  Pratilipi Updates and Offers 
 notification_settings_save_changes = Save Changes
 
-#Whatsapp share messages
+# Whatsapp share messages
 whatsapp_read_unlimited_stories = Read unlimited stories, poems, articles in Indian languages for FREE!
 whatsapp_read_story = , read it on Pratilipi : 
 whatsapp_follow_author = , Follow on Pratilipi : 
+
+# SEO Titles
+seo_root_domain					= Pratilipi - Read, Write and Share Stories in your own mother tongue
+seo_home_page					= Read $language Stories, Poems and Books on Pratilipi
+seo_library_page				= Your Saved Stories, Poems and Books - Pratilipi $language
+seo_account_page				= $nameEn - Pratilipi $language
+seo_navigation_page				= Categories - Pratilipi $language
+seo_update_password_page		= Update Password - Pratilipi $language
+seo_followers_page				= Followers of $nameEn on Pratilipi
+seo_following_page				= You are following these people on Pratilipi
+seo_pratilipi_page				= $nameEn's $language Story Summary - Pratilipi
+seo_author_page					= $nameEn - Pratilipi $language
+seo_events_page					= Online Competitions - Pratilipi $language
+seo_event_page					= $titleEn - Pratilipi $language
+seo_blog_page					= Pratilipi $language Blog and Editorial
+seo_author_interview			= Interviews with Popular Writers on Pratilipi $language
+seo_blogpost_page				= $titleEn - Pratilipi $language
+seo_author_interview_post_page	= $titleEn - Pratilipi $language
+seo_reader_panel				= Read $nameEn's $language content $titleEn on Pratilipi
+seo_writer_panel				= $titleEn by $nameEn - Pratilipi $language
+seo_search_page					= Search for your favorite Stories, Writers and a lot more on Pratilipi
+seo_share_page					= Share your favourite Stories and Writers
+seo_notifications_page			= Your notifications on Pratilipi
+seo_register_page				= Make your account on Pratilipi
+seo_login_page					= Login to Pratilipi
+seo_reset_password_page			= Reset Your Password - Pratilipi
+seo_category_list_page			= $titleEn - Pratilipi $language
+seo_static_page					= $titleEn - Pratilipi $language
