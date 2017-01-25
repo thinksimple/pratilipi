@@ -117,12 +117,13 @@ public class PratilipiSite extends HttpServlet {
 				dataAccessor.createOrUpdateAuthor( author );
 			}
 		}
-		
+
 		String uri = request.getRequestURI();
-		
+		String canonicalUrl = "http://" + UxModeFilter.getWebsite().getHostName() + uri; 
+
 		// BasicMode
 		boolean basicMode = UxModeFilter.isBasicMode();
-		
+
 		// Language
 		Language displayLanguage = UxModeFilter.getDisplayLanguage();
 		Language filterLanguage = UxModeFilter.getFilterLanguage();
@@ -149,6 +150,7 @@ public class PratilipiSite extends HttpServlet {
 		
 		try {
 
+			// Search Engine Crawlers
 			if( uri.equals( "/sitemap" ) && SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) ) {
 				String content = PageDataUtil.getSitemap( 
 						request.getParameter( RequestParameter.SITEMAP_TYPE.getName() ), 
@@ -158,11 +160,11 @@ public class PratilipiSite extends HttpServlet {
 				_dispatchResponse( content, "application/xml", "UTF-8", response );
 				return;
 			}
-			
 
 			// Page Entity
 			Page page = dataAccessor.getPage( uri );
 
+			// Hard-coded links
 			if( uri.equals( "/" ) ) {
 				if( UxModeFilter.getWebsite() == Website.ALL_LANGUAGE || UxModeFilter.getWebsite() == Website.GAMMA_ALL_LANGUAGE ) {
 					dataModel = createDataModelForMasterHomePage( filterLanguage );
@@ -171,37 +173,30 @@ public class PratilipiSite extends HttpServlet {
 					dataModel = createDataModelForHomePage( basicMode, filterLanguage );
 					templateName = ( basicMode ? "HomeBasic.ftl" : "Home.ftl" );
 				}
-				
+
 			} else if( uri.equals( "/library" ) ) {
 				dataModel = createDataModelForLibraryPage( basicMode, filterLanguage );
 				templateName = ( basicMode ? "LibraryBasic.ftl" : "Library.ftl" );
 
-			} else if( basicMode && uri.equals( "/account" ) ) { // BasicMode only
-				dataModel = new HashMap<String, Object>();
-				dataModel.put( "title", "My Account" );
-				templateName = "AccountBasic.ftl";
-			
-			} else if( basicMode && uri.equals( "/navigation" ) ) { // BasicMode only
-				dataModel = new HashMap<String, Object>();
-				dataModel.put( "title", "Menu" );
-				dataModel.put( "navigationList", navigationList );
-				templateName = "NavigationBasic.ftl";
-			
-			} else if( basicMode && uri.equals( "/updatepassword" ) ) { // BasicMode only
-				dataModel = new HashMap<String, Object>();
-				if( request.getParameter( RequestParameter.PASSWORD_RESET_EMAIL_EMAIL.getName() ) != null 
-						&& request.getParameter( RequestParameter.PASSWORD_RESET_EMAIL_TOKEN.getName() ) != null ) {
-					dataModel.put( "passwordResetFromMail", true );
-					dataModel.put( "email", request.getParameter( RequestParameter.PASSWORD_RESET_EMAIL_EMAIL.getName() ) );
-					dataModel.put( "verificationToken", request.getParameter( RequestParameter.PASSWORD_RESET_EMAIL_TOKEN.getName() ) );
-				}
-				dataModel.put( "title", "Update Password" );
-				templateName = "PasswordUpdateBasic.ftl";
+			} else if( uri.equals( "/notifications" ) ) {
+				dataModel = createDataModelForNotificationsPage( filterLanguage, basicMode );
+				if( request.getParameter( "action" ) != null )
+					dataModel.put( "action", request.getParameter( "action" ) );
+				templateName = ( basicMode ? "NotificationBasic.ftl" : "Notification.ftl" );
+
+			} else if( uri.equals( "/search" ) ) {
+				if( request.getQueryString() != null )
+					canonicalUrl = canonicalUrl + "?" + request.getQueryString();
+				dataModel = createDataModelForSearchPage( basicMode, filterLanguage, request );
+				templateName = ( basicMode ? "SearchBasic.ftl" : "Search.ftl" );
+
+			} else if( uri.equals( "/events" ) ) {
+				dataModel = createDataModelForEventsPage( filterLanguage, basicMode );
+				templateName = ( basicMode ? "EventListBasic.ftl" : "EventList.ftl" );
 
 			} else if( uri.equals( "/followers" ) ) {
 
 				Long authorId = null;
-
 				if( request.getParameter( RequestParameter.AUTHOR_ID.getName() ) != null ) {
 					authorId = Long.parseLong( request.getParameter( RequestParameter.AUTHOR_ID.getName() ) );
 				} else {
@@ -226,7 +221,6 @@ public class PratilipiSite extends HttpServlet {
 			} else if( uri.equals( "/following" ) ) {
 
 				Long userId = null;
-
 				if( request.getParameter( RequestParameter.USER_ID.getName() ) != null )
 					userId = Long.parseLong( request.getParameter( RequestParameter.USER_ID.getName() ) ); 
 				else
@@ -246,76 +240,12 @@ public class PratilipiSite extends HttpServlet {
 				templateName = ( basicMode ? "FollowingListBasic.ftl" : "FollowingList.ftl" );
 
 			} else if( uri.equals( "/pratilipi-2016" ) ) {
-
 				dataModel = new HashMap<String, Object>();
 				dataModel.put( "title", "Pratilipi in 2016" );
 				templateName = ( basicMode ? "Pratilipi2016Basic.ftl" : "Pratilipi2016.ftl" );
 
-			} else if( page != null && page.getType() == PageType.PRATILIPI ) {
-				resourceList.addAll( createFbOpenGraphTags( page.getPrimaryContentId() ) );
-				dataModel = createDataModelForPratilipiPage( page.getPrimaryContentId(), basicMode, request );
-				templateName = ( basicMode ? "PratilipiBasic.ftl" : "Pratilipi.ftl" );
-				
-			} else if( page != null && page.getType() == PageType.AUTHOR ) {
-				dataModel = createDataModelForAuthorPage( page.getPrimaryContentId(), basicMode, request );
-				templateName = ( basicMode ? "AuthorBasic.ftl" : "Author.ftl" );
 
-			} else if( page != null && page.getType() == PageType.EVENT ) {
-				dataModel = createDataModelForEventPage( page.getPrimaryContentId(), basicMode, request );
-				templateName = ( basicMode ? "EventBasic.ftl" : "Event.ftl" );
-			
-			} else if( page != null && page.getType() == PageType.BLOG ) {
-				dataModel = createDataModelForBlogPage( page.getPrimaryContentId(), filterLanguage, basicMode );
-				templateName = ( basicMode ? "BlogPostListBasic.ftl" : "BlogPostList.ftl" );
-			
-			} else if( page != null && page.getType() == PageType.BLOG_POST ) {
-				dataModel = createDataModelForBlogPostPage( page.getPrimaryContentId(), basicMode );
-				templateName = ( basicMode ? "BlogPostBasic.ftl" : "BlogPost.ftl" );
-			
-			} else if( page != null && page.getType() == PageType.READ ) {
-
-				Long pratilipiId = Long.parseLong( request.getParameter( RequestParameter.CONTENT_ID.getName() ) );
-				String fontSize = AccessTokenFilter.getCookieValue( RequestCookie.FONT_SIZE.getName(), request );
-				String imageSize = AccessTokenFilter.getCookieValue( RequestCookie.IMAGE_SIZE.getName(), request );
-				String action = request.getParameter( "action" ) != null ? request.getParameter( "action" ) : "read";
-				String pageNoPattern = "reader_page_number_" + pratilipiId;
-
-				Integer pageNo = null;
-				if( request.getParameter( RequestParameter.READER_PAGE_NUMBER.getName() ) != null )
-					pageNo = Integer.parseInt( request.getParameter( RequestParameter.READER_PAGE_NUMBER.getName() ) );
-				else if( AccessTokenFilter.getCookieValue( pageNoPattern, request ) != null )
-					pageNo = Integer.parseInt( AccessTokenFilter.getCookieValue( pageNoPattern, request ) );
-				else
-					pageNo = 1;
-
-				dataModel = createDataModelForReadPage( pratilipiId, 
-														pageNo, 
-														request.getParameter( RequestParameter.API_VERSION.getName() ), 
-														basicMode );
-
-				dataModel.put( "fontSize", fontSize != null ? Integer.parseInt( fontSize ) : 14 );
-				dataModel.put( "imageSize", imageSize != null ? Integer.parseInt( imageSize ) : 636 );
-				dataModel.put( "action", action );
-
-				templateName = ( basicMode ? "ReadBasic.ftl" : "Read.ftl" );
-
-			} else if( uri.equals( "/search" ) ) {
-				dataModel = createDataModelForSearchPage( basicMode, filterLanguage, request );
-				templateName = ( basicMode ? "SearchBasic.ftl" : "Search.ftl" );
-
-			} else if( uri.equals( "/share" ) && basicMode ) {
-				dataModel = new HashMap<String, Object>();
-				dataModel.put( "title", "Share" );
-				templateName = "ShareBasic.ftl";
-
-			} else if( uri.equals( "/notifications" ) ) {
-				dataModel = createDataModelForNotificationsPage( filterLanguage, basicMode );
-				if( request.getParameter( "action" ) != null )
-					dataModel.put( "action", request.getParameter( "action" ) );
-				templateName = ( basicMode ? "NotificationBasic.ftl" : "Notification.ftl" );
-
-				// Master website specific links
-			
+			// Master website specific links
 			} else if( filterLanguage == null && uri.equals( "/books" ) ) {
 				dataModel = createDataModelForListPage( PratilipiType.BOOK, basicMode, displayLanguage, filterLanguage, request );
 				templateName = ( basicMode ? "ListBasic.ftl" : "List.ftl" );
@@ -336,9 +266,7 @@ public class PratilipiSite extends HttpServlet {
 				dataModel = createDataModelForListPage( PratilipiType.MAGAZINE, basicMode, displayLanguage, filterLanguage, request );
 				templateName = ( basicMode ? "ListBasic.ftl" : "List.ftl" );
 
-			
 			// Gujarati website specific links
-			
 			} else if( filterLanguage == Language.GUJARATI && uri.equals( "/short-stories" ) ) {
 				dataModel = createDataModelForListPage( PratilipiType.STORY, basicMode, displayLanguage, filterLanguage, request );
 				templateName = ( basicMode ? "ListBasic.ftl" : "List.ftl" );
@@ -350,24 +278,14 @@ public class PratilipiSite extends HttpServlet {
 			} else if( filterLanguage == Language.GUJARATI && uri.equals( "/non-fiction" ) ) {
 				dataModel = createDataModelForListPage( PratilipiType.ARTICLE, basicMode, displayLanguage, filterLanguage, request );
 				templateName = ( basicMode ? "ListBasic.ftl" : "List.ftl" );
-			
-			
-			} else if( uri.equals( "/register" ) ) {
-				dataModel = new HashMap<String, Object>();
-				dataModel.put( "title", "Register" );
-				templateName = ( basicMode ? "RegisterBasic.ftl" : "Register.ftl" );
-				
-			} else if( uri.equals( "/login" ) ) {
-				dataModel = new HashMap<String, Object>();
-				dataModel.put( "title", "Login" );
-				templateName = ( basicMode ? "LoginBasic.ftl" : "Login.ftl" );
-				
-			} else if( uri.equals( "/resetpassword" ) ) {
-				dataModel = new HashMap<String, Object>();
-				dataModel.put( "title", "Reset Password" );
-				templateName = ( basicMode ? "PasswordResetBasic.ftl" : "PasswordReset.ftl" );
-				
-			} else if( uri.equals( "/pratilipi-write" ) ) {
+
+
+
+			// Standard Mode links only
+			} else if( ! basicMode && uri.equals( "/pratilipi-write" ) ) {
+
+				if( request.getQueryString() != null )
+					canonicalUrl = canonicalUrl + "?" + request.getQueryString();
 
 				resourceList.remove( ThirdPartyResource.POLYMER_ELEMENTS.getTag() );
 				resourceList.add( ThirdPartyResource.BOOTSTRAP_CSS.getTag() );
@@ -410,26 +328,74 @@ public class PratilipiSite extends HttpServlet {
 
 				templateName = "WriterV2.ftl";
 
-			// Internal link
+
+
+			// Basic Mode links only
+			} else if( basicMode && uri.equals( "/account" ) ) {
+				canonicalUrl = "http://" + UxModeFilter.getWebsite().getMobileHostName() + uri;
+				dataModel = new HashMap<String, Object>();
+				dataModel.put( "title", "My Account" );
+				templateName = "AccountBasic.ftl";
+
+			} else if( basicMode && uri.equals( "/navigation" ) ) {
+				canonicalUrl = "http://" + UxModeFilter.getWebsite().getMobileHostName() + uri;
+				dataModel = new HashMap<String, Object>();
+				dataModel.put( "title", "Menu" );
+				dataModel.put( "navigationList", navigationList );
+				templateName = "NavigationBasic.ftl";
+
+			} else if( basicMode && uri.equals( "/updatepassword" ) ) {
+				canonicalUrl = "http://" + UxModeFilter.getWebsite().getMobileHostName() + uri;
+				dataModel = new HashMap<String, Object>();
+				if( request.getParameter( RequestParameter.PASSWORD_RESET_EMAIL_EMAIL.getName() ) != null 
+						&& request.getParameter( RequestParameter.PASSWORD_RESET_EMAIL_TOKEN.getName() ) != null ) {
+					dataModel.put( "passwordResetFromMail", true );
+					dataModel.put( "email", request.getParameter( RequestParameter.PASSWORD_RESET_EMAIL_EMAIL.getName() ) );
+					dataModel.put( "verificationToken", request.getParameter( RequestParameter.PASSWORD_RESET_EMAIL_TOKEN.getName() ) );
+				}
+				dataModel.put( "title", "Update Password" );
+				templateName = "PasswordUpdateBasic.ftl";
+
+			} else if( basicMode && uri.equals( "/share" ) ) {
+				canonicalUrl = "http://" + UxModeFilter.getWebsite().getMobileHostName() + uri;
+				dataModel = new HashMap<String, Object>();
+				dataModel.put( "title", "Share" );
+				templateName = "ShareBasic.ftl";
+
+			} else if( basicMode && uri.equals( "/register" ) ) {
+				canonicalUrl = "http://" + UxModeFilter.getWebsite().getMobileHostName() + uri;
+				dataModel = new HashMap<String, Object>();
+				dataModel.put( "title", "Register" );
+				templateName = "RegisterBasic.ftl";
+
+			} else if( basicMode && uri.equals( "/login" ) ) {
+				canonicalUrl = "http://" + UxModeFilter.getWebsite().getMobileHostName() + uri;
+				dataModel = new HashMap<String, Object>();
+				dataModel.put( "title", "Login" );
+				templateName = "LoginBasic.ftl";
+
+			} else if( basicMode && uri.equals( "/resetpassword" ) ) {
+				canonicalUrl = "http://" + UxModeFilter.getWebsite().getMobileHostName() + uri;
+				dataModel = new HashMap<String, Object>();
+				dataModel.put( "title", "Reset Password" );
+				templateName = "PasswordResetBasic.ftl";
+
+
+
+			// Internal links - Standard Version only
 			} else if( ! basicMode && uri.equals( "/authors" ) ) {
 				dataModel = createDataModelForAuthorsPage( filterLanguage );
 				templateName = "AuthorList.ftl";
-			
-			// Internal link
+
 			} else if( ! basicMode && uri.equals( "/batch-process" ) ) {
 				dataModel = createDataModelForBatchProcessListPage();
 				templateName = "BatchProcessList.ftl";
 
-			// Internal link
-			} else if( uri.equals( "/email-templates" ) ) {
+			} else if( ! basicMode && uri.equals( "/email-templates" ) ) {
 				dataModel = createDataModelForEmailTemplatesPage( filterLanguage );
 				templateName = "EmailTemplate.ftl";
 
-			} else if( uri.equals( "/events" ) ) {
-				dataModel = createDataModelForEventsPage( filterLanguage, basicMode );
-				templateName = ( basicMode ? "EventListBasic.ftl" : "EventList.ftl" );
-			
-			} else if( uri.equals( "/edit-event" ) ){
+			} else if( ! basicMode && uri.equals( "/edit-event" ) ){
 
 				resourceList.add( ThirdPartyResource.CKEDITOR.getTag() );
 				Long eventId = request.getParameter( RequestParameter.CONTENT_ID.getName() ) != null ? 
@@ -448,7 +414,7 @@ public class PratilipiSite extends HttpServlet {
 
 				templateName = "EventEdit.ftl";
 
-			} else if( uri.equals( "/edit-blog" ) ) {
+			} else if( ! basicMode && uri.equals( "/edit-blog" ) ) {
 
 				resourceList.add( ThirdPartyResource.CKEDITOR.getTag() );
 				Long blogPostId = request.getParameter( RequestParameter.CONTENT_ID.getName() ) != null ? 
@@ -472,14 +438,6 @@ public class PratilipiSite extends HttpServlet {
 				templateName = "BlogEdit.ftl";
 
 
-			} else if( uri.matches( "^/[a-z0-9-]+$" ) && ( dataModel = createDataModelForListPage( uri.substring( 1 ), basicMode, displayLanguage, filterLanguage, request ) ) != null ) {
-				templateName = ( basicMode ? "ListBasic.ftl" : "List.ftl" );
-				
-			} else if( uri.matches( "^/[a-z0-9-/]+$" ) && ( dataModel = createDataModelForStaticPage( uri.substring( 1 ).replaceAll( "/", "_" ), displayLanguage ) ) != null ) {
-				templateName = ( basicMode ? "StaticBasic.ftl" : "Static.ftl" );
-				
-			} else if( uri.matches( "^/[a-z0-9-/]+$" ) && ( dataModel = createDataModelForStaticPage( uri.substring( 1 ).replaceAll( "/", "_" ), Language.ENGLISH ) ) != null ) {
-				templateName = ( basicMode ? "StaticBasic.ftl" : "Static.ftl" );
 
 			// Testing Links on gamma
 			} else if( uri.equals( "/poc" ) && SystemProperty.STAGE.equals( SystemProperty.STAGE_GAMMA ) ) {
@@ -491,7 +449,70 @@ public class PratilipiSite extends HttpServlet {
 				dataModel = createDataModelForHomePage( basicMode, filterLanguage );
 				dataModel.put( "action", request.getParameter( "action" ) );
 				templateName = "Knockout.ftl";
-				
+
+
+
+			// Non - hardcoded links
+			} else if( page != null && page.getType() == PageType.PRATILIPI ) {
+				resourceList.addAll( createFbOpenGraphTags( page.getPrimaryContentId() ) );
+				dataModel = createDataModelForPratilipiPage( page.getPrimaryContentId(), basicMode, request );
+				templateName = ( basicMode ? "PratilipiBasic.ftl" : "Pratilipi.ftl" );
+
+			} else if( page != null && page.getType() == PageType.AUTHOR ) {
+				dataModel = createDataModelForAuthorPage( page.getPrimaryContentId(), basicMode, request );
+				templateName = ( basicMode ? "AuthorBasic.ftl" : "Author.ftl" );
+
+			} else if( page != null && page.getType() == PageType.EVENT ) {
+				dataModel = createDataModelForEventPage( page.getPrimaryContentId(), basicMode, request );
+				templateName = ( basicMode ? "EventBasic.ftl" : "Event.ftl" );
+
+			} else if( page != null && page.getType() == PageType.BLOG ) {
+				dataModel = createDataModelForBlogPage( page.getPrimaryContentId(), filterLanguage, basicMode );
+				templateName = ( basicMode ? "BlogPostListBasic.ftl" : "BlogPostList.ftl" );
+
+			} else if( page != null && page.getType() == PageType.BLOG_POST ) {
+				dataModel = createDataModelForBlogPostPage( page.getPrimaryContentId(), basicMode );
+				templateName = ( basicMode ? "BlogPostBasic.ftl" : "BlogPost.ftl" );
+
+			} else if( page != null && page.getType() == PageType.READ ) {
+
+				if( request.getQueryString() != null )
+					canonicalUrl = canonicalUrl + "?" + request.getQueryString();
+
+				Long pratilipiId = Long.parseLong( request.getParameter( RequestParameter.CONTENT_ID.getName() ) );
+				String fontSize = AccessTokenFilter.getCookieValue( RequestCookie.FONT_SIZE.getName(), request );
+				String imageSize = AccessTokenFilter.getCookieValue( RequestCookie.IMAGE_SIZE.getName(), request );
+				String action = request.getParameter( "action" ) != null ? request.getParameter( "action" ) : "read";
+				String pageNoPattern = "reader_page_number_" + pratilipiId;
+
+				Integer pageNo = null;
+				if( request.getParameter( RequestParameter.READER_PAGE_NUMBER.getName() ) != null )
+					pageNo = Integer.parseInt( request.getParameter( RequestParameter.READER_PAGE_NUMBER.getName() ) );
+				else if( AccessTokenFilter.getCookieValue( pageNoPattern, request ) != null )
+					pageNo = Integer.parseInt( AccessTokenFilter.getCookieValue( pageNoPattern, request ) );
+				else
+					pageNo = 1;
+
+				dataModel = createDataModelForReadPage( pratilipiId, 
+														pageNo, 
+														request.getParameter( RequestParameter.API_VERSION.getName() ), 
+														basicMode );
+
+				dataModel.put( "fontSize", fontSize != null ? Integer.parseInt( fontSize ) : 14 );
+				dataModel.put( "imageSize", imageSize != null ? Integer.parseInt( imageSize ) : 636 );
+				dataModel.put( "action", action );
+
+				templateName = ( basicMode ? "ReadBasic.ftl" : "Read.ftl" );
+
+			} else if( uri.matches( "^/[a-z0-9-]+$" ) && ( dataModel = createDataModelForListPage( uri.substring( 1 ), basicMode, displayLanguage, filterLanguage, request ) ) != null ) {
+				templateName = ( basicMode ? "ListBasic.ftl" : "List.ftl" );
+
+			} else if( uri.matches( "^/[a-z0-9-/]+$" ) && ( dataModel = createDataModelForStaticPage( uri.substring( 1 ).replaceAll( "/", "_" ), displayLanguage ) ) != null ) {
+				templateName = ( basicMode ? "StaticBasic.ftl" : "Static.ftl" );
+
+			} else if( uri.matches( "^/[a-z0-9-/]+$" ) && ( dataModel = createDataModelForStaticPage( uri.substring( 1 ).replaceAll( "/", "_" ), Language.ENGLISH ) ) != null ) {
+				templateName = ( basicMode ? "StaticBasic.ftl" : "Static.ftl" );
+
 			} else {
 				dataModel = new HashMap<String, Object>();
 				dataModel.put( "title", "Page Not Found !" );
@@ -547,6 +568,7 @@ public class PratilipiSite extends HttpServlet {
 		dataModel.put( "language", displayLanguage );
 		dataModel.put( "website_host", UxModeFilter.getWebsite().getHostName() );
 		dataModel.put( "website_mobile_host", UxModeFilter.getWebsite().getMobileHostName() );
+		dataModel.put( "canonical_url", canonicalUrl );
 		dataModel.put( "languageMap", gson.toJson( languageMap ) );
 		dataModel.put( "_strings", I18n.getStrings( displayLanguage ) );
 		dataModel.put( "resourceList", resourceList );
