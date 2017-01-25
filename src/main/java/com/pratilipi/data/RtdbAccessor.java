@@ -1,5 +1,6 @@
 package com.pratilipi.data;
 
+import java.util.Date;
 import java.util.Map;
 
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -10,6 +11,8 @@ public interface RtdbAccessor {
 	// PREFERENCE Table
 	UserPreferenceRtdb getUserPreference( Long userId ) throws UnexpectedServerException;
 
-	Map<Long, UserPreferenceRtdb> getAllUserPreferences() throws UnexpectedServerException;
-	
+	Map<Long, UserPreferenceRtdb> getUserPreferences( Date minLastUpdated ) throws UnexpectedServerException;
+
+	Map<Long, UserPreferenceRtdb> getUserPreferences( String minAndroidVersion ) throws UnexpectedServerException;
+
 }

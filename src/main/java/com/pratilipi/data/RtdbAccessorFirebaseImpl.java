@@ -2,6 +2,7 @@ package com.pratilipi.data;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,8 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 	private static final String DATABASE_URL = "https://prod-pratilipi.firebaseio.com/";
 	private static final String DATABASE_PREFERENCE_TABLE = "PREFERENCE";
 	private static final String DATABASE_PREFERENCE_EMAIL_FREQUENCY = "emailFrequency";
+	private static final String DATABASE_PREFERENCE_LAST_UPDATED = "lastUpdated";
+	private static final String DATABASE_PREFERENCE_ANDROID_VERSION = "androidVersion";
 	private static final String DATABASE_PREFERENCE_NOTIFICATION_SUBSCRIPTIONS = "notificationSubscriptions";
 
 	
@@ -102,12 +105,11 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 		return _getUserPreferenceRtdb( json );
 	}
 
-	@Override
-	public Map<Long,UserPreferenceRtdb> getAllUserPreferences() throws UnexpectedServerException {
+	private Map<Long,UserPreferenceRtdb> getUserPreferences( Map<String, String> paramsMap ) throws UnexpectedServerException {
 
 		Map<Long, UserPreferenceRtdb> userPreferenceMap = new HashMap<>();
 		try {
-			BlobEntry blobEntry = HttpUtil.doGet( DATABASE_URL + DATABASE_PREFERENCE_TABLE + ".json", headersMap, null );
+			BlobEntry blobEntry = HttpUtil.doGet( DATABASE_URL + DATABASE_PREFERENCE_TABLE + ".json", headersMap, paramsMap );
 			String json = new String( blobEntry.getData(), "UTF-8" );
 			JsonObject usersPreferences = new Gson().fromJson( json, JsonElement.class ).getAsJsonObject();
 			for( Entry<String, JsonElement> it : usersPreferences.entrySet() )
@@ -118,6 +120,26 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 		}
 
 		return userPreferenceMap;
+
+	}
+
+	@Override
+	public Map<Long,UserPreferenceRtdb> getUserPreferences( Date minLastUpdated ) throws UnexpectedServerException {
+
+		Map<String,String> paramsMap = new HashMap<>();
+		paramsMap.put( "orderBy", "\"" + DATABASE_PREFERENCE_LAST_UPDATED + "\"" );
+		paramsMap.put( "startAt", "\"" + minLastUpdated.getTime() + "\"" );
+		return getUserPreferences( paramsMap );
+
+	}
+
+	@Override
+	public Map<Long,UserPreferenceRtdb> getUserPreferences( String minAndroidVersion ) throws UnexpectedServerException {
+
+		Map<String,String> paramsMap = new HashMap<>();
+		paramsMap.put( "orderBy", "\"" + DATABASE_PREFERENCE_ANDROID_VERSION + "\"" );
+		paramsMap.put( "startAt", "\"" + minAndroidVersion + "\"" );
+		return getUserPreferences( paramsMap );
 
 	}
 
