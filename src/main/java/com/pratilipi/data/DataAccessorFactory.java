@@ -52,8 +52,7 @@ public class DataAccessorFactory {
 			rtdbAccessor = new RtdbAccessorFirebaseImpl(
 					GoogleApi.getAccessToken( Arrays.asList(
 							"https://www.googleapis.com/auth/firebase.database",
-							"https://www.googleapis.com/auth/userinfo.email" ) ),
-					new MemcacheWrapper( cacheL1, cacheL2 ) );
+							"https://www.googleapis.com/auth/userinfo.email" ) ) );
 			threadLocalRtdbAccessor.set( rtdbAccessor );
 		}
 		return rtdbAccessor;
