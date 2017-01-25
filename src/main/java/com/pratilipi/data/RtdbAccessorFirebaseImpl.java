@@ -4,9 +4,11 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,6 +16,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.EmailFrequency;
 import com.pratilipi.common.type.NotificationType;
@@ -120,50 +123,64 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 	}
 
 	@Override
-	public Map<Long,UserPreferenceRtdb> getUserPreferences( Date minLastUpdated, String operator ) throws UnexpectedServerException {
+	public Map<Long,UserPreferenceRtdb> getUserPreferences( Date lastUpdated, String operator ) 
+			throws UnexpectedServerException, InvalidArgumentException {
 
 		Map<String,String> paramsMap = new HashMap<>();
 		paramsMap.put( "orderBy", "\"" + "lastUpdated" + "\"" );
 
+		if( operator == null ) {
+			paramsMap.put( "startAt", "0" );
+			return getUserPreferences( paramsMap );
+		}
+
 		if( operator.isEmpty() || operator.equals( "=" ) ) {
-			paramsMap.put( "equalTo", "\"" + minLastUpdated.getTime() + "\"" );
+			paramsMap.put( "equalTo", lastUpdated.getTime() + "" );
 			return getUserPreferences( paramsMap );
 
 		} else if( operator.equals( ">=" ) ) {
-			paramsMap.put( "startAt", "\"" + minLastUpdated.getTime() + "\"" );
+			paramsMap.put( "startAt", lastUpdated.getTime() + "" );
 			return getUserPreferences( paramsMap );
 
 		} else if( operator.equals( ">" ) ) {
-			paramsMap.put( "startAt", "\"" + ( minLastUpdated.getTime() + 1 )  + "\"" );
+			paramsMap.put( "startAt", ( lastUpdated.getTime() + 1 )  + "" );
 			return getUserPreferences( paramsMap );
 
 		} else if( operator.equals( "<=" ) ) {
-			paramsMap.put( "endAt", "\"" + minLastUpdated.getTime() + "\"" );
+			paramsMap.put( "endAt", lastUpdated.getTime() + "" );
 			return getUserPreferences( paramsMap );
 
 		} else if( operator.equals( "<" ) ) {
-			paramsMap.put( "endAt", "\"" + ( minLastUpdated.getTime() - 1 )  + "\"" );
+			paramsMap.put( "endAt", ( lastUpdated.getTime() - 1 )  + "" );
 			return getUserPreferences( paramsMap );
 
 		} else if( operator.equals( "!=" ) ) {
-			Map<Long,UserPreferenceRtdb> userPreferenceMap = getUserPreferences( paramsMap );
-			for( Map.Entry<Long, UserPreferenceRtdb> entry : userPreferenceMap.entrySet() ) {
+			Map<Long,UserPreferenceRtdb> userPreferences = getUserPreferences( paramsMap );
+			Set<Long> excludeUserIds = new HashSet<>();
+			for( Map.Entry<Long, UserPreferenceRtdb> entry : userPreferences.entrySet() )
 				if( entry.getValue().getLastUpdated() != null && 
-						entry.getValue().getLastUpdated().equals( minLastUpdated.getTime() ) )
-					userPreferenceMap.remove( entry );
-			}
-			return userPreferenceMap;
+						entry.getValue().getLastUpdated().equals( lastUpdated ) )
+					excludeUserIds.add( entry.getKey() );
+			userPreferences.keySet().removeAll( excludeUserIds );
+			return userPreferences;
+
 		}
 
-		return getUserPreferences( paramsMap );
+		throw new InvalidArgumentException( "Invalid operator : " + operator );
 
 	}
 
 	@Override
-	public Map<Long,UserPreferenceRtdb> getUserPreferences( String androidVersion, String operator ) throws UnexpectedServerException {
+	public Map<Long,UserPreferenceRtdb> getUserPreferences( String androidVersion, String operator ) 
+			throws UnexpectedServerException, InvalidArgumentException {
 
 		Map<String,String> paramsMap = new HashMap<>();
 		paramsMap.put( "orderBy", "\"" + "androidVersion" + "\"" );
+
+		if( operator == null ) {
+			paramsMap.put( "startAt", "\"\"" );
+			return getUserPreferences( paramsMap );
+		}
 
 		if( operator.isEmpty() || operator.equals( "=" ) ) {
 			paramsMap.put( "equalTo", "\"" + androidVersion + "\"" );
@@ -188,16 +205,18 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 			return userPreferences;
 
 		} else if( operator.equals( "!=" ) ) {
-			Map<Long,UserPreferenceRtdb> userPreferenceMap = getUserPreferences( paramsMap );
-			for( Map.Entry<Long, UserPreferenceRtdb> entry : userPreferenceMap.entrySet() ) {
+			Map<Long,UserPreferenceRtdb> userPreferences = getUserPreferences( paramsMap );
+			Set<Long> excludeUserIds = new HashSet<>();
+			for( Map.Entry<Long, UserPreferenceRtdb> entry : userPreferences.entrySet() )
 				if( entry.getValue().getAndroidVersion() != null && 
 						entry.getValue().getAndroidVersion().equals( androidVersion ) )
-					userPreferenceMap.remove( entry );
-			}
-			return userPreferenceMap;
+					excludeUserIds.add( entry.getKey() );
+			userPreferences.keySet().removeAll( excludeUserIds );
+			return userPreferences;
+
 		}
 
-		return getUserPreferences( paramsMap );
+		throw new InvalidArgumentException( "Invalid operator : " + operator );
 
 	}
 
