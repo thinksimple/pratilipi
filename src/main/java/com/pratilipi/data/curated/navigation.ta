@@ -11,7 +11,7 @@
 /cinema                      சினிமா                  Analytics#categoryName::cinema               App#imageName::movies.jpg             App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"cinema" }         
 /horror                      மர்மம் / திகில்          Analytics#categoryName::horror                App#imageName::horror.jpg            App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"horror" }
 /family                      இல்லறம்  / உறவு       Analytics#categoryName::family               App#imageName::family.jpg             App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"family" }
-/book-review                 புத்தக விமர்சனம்      Analytics#categoryName::bookreview          App#imageName::event_generic4.jpg      App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"bookreview" }
+/bookreview                 புத்தக விமர்சனம்      Analytics#categoryName::bookreview          App#imageName::event_generic4.jpg      App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"bookreview" }
 /stories                     மற்ற கதைகள்          Analytics#categoryName::other-stories        App#imageName::event_generic3.jpg    App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"stories" }
 /politics                    அரசியல்                Analytics#categoryName::politics           App#imageName::politics.jpg          App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"politics" }
 /poems                       கவிதைகள்                Analytics#categoryName::poetry               App#imageName::poems.jpg             App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"poems" }
