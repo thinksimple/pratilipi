@@ -19,5 +19,9 @@ public interface UserPreferenceRtdb {
 	Date getLastUpdated();
 	
 	void setLastUpdated( Date lastUpdated );
-		
+
+	String getAndroidVersion();
+
+	void setAndroidVersion( String androidVersion );
+
 }

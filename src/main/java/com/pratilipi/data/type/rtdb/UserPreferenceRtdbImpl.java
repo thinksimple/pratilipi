@@ -14,7 +14,9 @@ public class UserPreferenceRtdbImpl implements UserPreferenceRtdb {
 	
 	private Map<NotificationType, Boolean> notificationSubscriptions;
 	
-	private Date lastUpdated;
+	private String lastUpdated;
+
+	private String androidVersion;
 
 	
 	@Override
@@ -43,12 +45,22 @@ public class UserPreferenceRtdbImpl implements UserPreferenceRtdb {
 	
 	@Override
 	public Date getLastUpdated() {
-		return lastUpdated;
+		return lastUpdated != null ? new Date( Long.parseLong( lastUpdated ) ) : null;
 	}
 	
 	@Override
 	public void setLastUpdated( Date lastUpdated ) {
-		this.lastUpdated = lastUpdated;
+		this.lastUpdated = lastUpdated.getTime() + "";
+	}
+
+	@Override
+	public String getAndroidVersion() {
+		return androidVersion;
+	}
+
+	@Override
+	public void setAndroidVersion( String androidVersion ) {
+		this.androidVersion = androidVersion;
 	}
 
 }
