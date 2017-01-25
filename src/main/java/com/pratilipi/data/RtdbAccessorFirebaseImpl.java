@@ -26,15 +26,11 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 
 	private static final Logger logger =
 			Logger.getLogger( RtdbAccessorFirebaseImpl.class.getName() );
-	
+
 	private static final String DATABASE_URL = "https://prod-pratilipi.firebaseio.com/";
 	private static final String DATABASE_PREFERENCE_TABLE = "PREFERENCE";
-	private static final String DATABASE_PREFERENCE_EMAIL_FREQUENCY = "emailFrequency";
-	private static final String DATABASE_PREFERENCE_LAST_UPDATED = "lastUpdated";
-	private static final String DATABASE_PREFERENCE_ANDROID_VERSION = "androidVersion";
-	private static final String DATABASE_PREFERENCE_NOTIFICATION_SUBSCRIPTIONS = "notificationSubscriptions";
 
-	
+
 	private final Map<String, String> headersMap;
 	private final Memcache memcache;
 
@@ -44,8 +40,8 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 
 	private UserPreferenceRtdb _getUserPreferenceRtdb( JsonObject preference ) {
 
-		if( preference.has( DATABASE_PREFERENCE_EMAIL_FREQUENCY ) ) {
-			String emailFrequency = preference.get( DATABASE_PREFERENCE_EMAIL_FREQUENCY ).getAsString();
+		if( preference.has( "emailFrequency" ) ) {
+			String emailFrequency = preference.get( "emailFrequency" ).getAsString();
 			if( emailFrequency.equals( "ONCE A DAY" ) ) {
 				preference.remove( "emailFrequency" );
 				preference.addProperty( "emailFrequency", EmailFrequency.DAILY.name() );
@@ -55,8 +51,8 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 			}
 		}
 
-		if( preference.has( DATABASE_PREFERENCE_NOTIFICATION_SUBSCRIPTIONS ) ) {
-			JsonObject notificationSubscriptions = preference.get( DATABASE_PREFERENCE_NOTIFICATION_SUBSCRIPTIONS ).getAsJsonObject();
+		if( preference.has( "notificationSubscriptions" ) ) {
+			JsonObject notificationSubscriptions = preference.get( "notificationSubscriptions" ).getAsJsonObject();
 			List<String> invalidTypes = new ArrayList<>();
 			for( Entry<String, JsonElement> type : notificationSubscriptions.entrySet() ) {
 				boolean isValid = false;
@@ -86,25 +82,6 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 
 	// PREFERENCE Table
 
-	@Override
-	public UserPreferenceRtdb getUserPreference( Long userId ) throws UnexpectedServerException {
-		String memcacheId = "Firebase.PREFERENCE." + userId;
-		String json = memcache.get( memcacheId );
-		if( json == null ) {
-			try {
-				BlobEntry blobEntry = HttpUtil.doGet( DATABASE_URL + DATABASE_PREFERENCE_TABLE + "/" + userId + ".json", headersMap, null );
-				json = new String( blobEntry.getData(), "UTF-8" );
-				if( json.equals( "null" ) )
-					json = "{}";
-				memcache.put( memcacheId, json, 5 );
-			} catch( UnsupportedEncodingException | JsonSyntaxException e ) {
-				logger.log( Level.SEVERE, e.getMessage() );
-				throw new UnexpectedServerException();
-			}
-		}
-		return _getUserPreferenceRtdb( json );
-	}
-
 	private Map<Long,UserPreferenceRtdb> getUserPreferences( Map<String, String> paramsMap ) throws UnexpectedServerException {
 
 		Map<Long, UserPreferenceRtdb> userPreferenceMap = new HashMap<>();
@@ -124,21 +101,102 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 	}
 
 	@Override
-	public Map<Long,UserPreferenceRtdb> getUserPreferences( Date minLastUpdated ) throws UnexpectedServerException {
+	public UserPreferenceRtdb getUserPreference( Long userId ) throws UnexpectedServerException {
+		String memcacheId = "Firebase.PREFERENCE." + userId;
+		String json = memcache.get( memcacheId );
+		if( json == null ) {
+			try {
+				BlobEntry blobEntry = HttpUtil.doGet( DATABASE_URL + DATABASE_PREFERENCE_TABLE + "/" + userId + ".json", headersMap, null );
+				json = new String( blobEntry.getData(), "UTF-8" );
+				if( json.equals( "null" ) )
+					json = "{}";
+				memcache.put( memcacheId, json, 5 );
+			} catch( UnsupportedEncodingException | JsonSyntaxException e ) {
+				logger.log( Level.SEVERE, e.getMessage() );
+				throw new UnexpectedServerException();
+			}
+		}
+		return _getUserPreferenceRtdb( json );
+	}
+
+	@Override
+	public Map<Long,UserPreferenceRtdb> getUserPreferences( Date minLastUpdated, String operator ) throws UnexpectedServerException {
 
 		Map<String,String> paramsMap = new HashMap<>();
-		paramsMap.put( "orderBy", "\"" + DATABASE_PREFERENCE_LAST_UPDATED + "\"" );
-		paramsMap.put( "startAt", "\"" + minLastUpdated.getTime() + "\"" );
+		paramsMap.put( "orderBy", "\"" + "lastUpdated" + "\"" );
+
+		if( operator.isEmpty() || operator.equals( "=" ) ) {
+			paramsMap.put( "equalTo", "\"" + minLastUpdated.getTime() + "\"" );
+			return getUserPreferences( paramsMap );
+
+		} else if( operator.equals( ">=" ) ) {
+			paramsMap.put( "startAt", "\"" + minLastUpdated.getTime() + "\"" );
+			return getUserPreferences( paramsMap );
+
+		} else if( operator.equals( ">" ) ) {
+			paramsMap.put( "startAt", "\"" + ( minLastUpdated.getTime() + 1 )  + "\"" );
+			return getUserPreferences( paramsMap );
+
+		} else if( operator.equals( "<=" ) ) {
+			paramsMap.put( "endAt", "\"" + minLastUpdated.getTime() + "\"" );
+			return getUserPreferences( paramsMap );
+
+		} else if( operator.equals( "<" ) ) {
+			paramsMap.put( "endAt", "\"" + ( minLastUpdated.getTime() - 1 )  + "\"" );
+			return getUserPreferences( paramsMap );
+
+		} else if( operator.equals( "!=" ) ) {
+			Map<Long,UserPreferenceRtdb> userPreferenceMap = getUserPreferences( paramsMap );
+			for( Map.Entry<Long, UserPreferenceRtdb> entry : userPreferenceMap.entrySet() ) {
+				if( entry.getValue().getLastUpdated() != null && 
+						entry.getValue().getLastUpdated().equals( minLastUpdated.getTime() ) )
+					userPreferenceMap.remove( entry );
+			}
+			return userPreferenceMap;
+		}
+
 		return getUserPreferences( paramsMap );
 
 	}
 
 	@Override
-	public Map<Long,UserPreferenceRtdb> getUserPreferences( String minAndroidVersion ) throws UnexpectedServerException {
+	public Map<Long,UserPreferenceRtdb> getUserPreferences( String androidVersion, String operator ) throws UnexpectedServerException {
 
 		Map<String,String> paramsMap = new HashMap<>();
-		paramsMap.put( "orderBy", "\"" + DATABASE_PREFERENCE_ANDROID_VERSION + "\"" );
-		paramsMap.put( "startAt", "\"" + minAndroidVersion + "\"" );
+		paramsMap.put( "orderBy", "\"" + "androidVersion" + "\"" );
+
+		if( operator.isEmpty() || operator.equals( "=" ) ) {
+			paramsMap.put( "equalTo", "\"" + androidVersion + "\"" );
+			return getUserPreferences( paramsMap );
+
+		} else if( operator.equals( ">=" ) ) {
+			paramsMap.put( "startAt", "\"" + androidVersion + "\"" );
+			return getUserPreferences( paramsMap );
+
+		} else if( operator.equals( ">" ) ) {
+			Map<Long,UserPreferenceRtdb> userPreferences = getUserPreferences( androidVersion, ">=" );
+			userPreferences.keySet().removeAll( getUserPreferences( androidVersion, "=" ).keySet() );
+			return userPreferences;
+
+		} else if( operator.equals( "<=" ) ) {
+			paramsMap.put( "endAt", "\"" + androidVersion + "\"" );
+			return getUserPreferences( paramsMap );
+
+		} else if( operator.equals( "<" ) ) {
+			Map<Long,UserPreferenceRtdb> userPreferences = getUserPreferences( androidVersion, "<=" );
+			userPreferences.keySet().removeAll( getUserPreferences( androidVersion, "=" ).keySet() );
+			return userPreferences;
+
+		} else if( operator.equals( "!=" ) ) {
+			Map<Long,UserPreferenceRtdb> userPreferenceMap = getUserPreferences( paramsMap );
+			for( Map.Entry<Long, UserPreferenceRtdb> entry : userPreferenceMap.entrySet() ) {
+				if( entry.getValue().getAndroidVersion() != null && 
+						entry.getValue().getAndroidVersion().equals( androidVersion ) )
+					userPreferenceMap.remove( entry );
+			}
+			return userPreferenceMap;
+		}
+
 		return getUserPreferences( paramsMap );
 
 	}
