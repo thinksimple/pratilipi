@@ -61,16 +61,19 @@
 		_onIronResize: function() {
 			var windowsize = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 			var elem = document.getElementById( "androidLaunchBottom" );
-			if( windowsize > 991 )
+			if( windowsize > 991 ) {
 				$( elem ).css( "padding-top", 0 );
-			else
-				$( elem ).css( "padding-top", $( this.querySelector( '#androidAlert' ) ).height() + 8 );
+			} else {
+				if( $( this.querySelector( '#androidAlert' ) ).css( "display" ) == none )
+					$( elem ).css( "padding-top", 0 );
+				else
+					$( elem ).css( "padding-top", $( this.querySelector( '#androidAlert' ) ).height() + 8 );
+			}
 		},
 
 		hide: function() {
-			$( this.querySelector( '#androidAlert' ) ).css( "display", "block" );
-			var elem = document.getElementById( "androidLaunchBottom" );
-			$( elem ).css( "padding-top", 0 );
+			$( this.querySelector( '#androidAlert' ) ).css( "display", "none" );
+			$( document.getElementById( "androidLaunchBottom" ) ).css( "padding-top", 0 );
 		}
 
 	});

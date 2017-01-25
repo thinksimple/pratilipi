@@ -1,2 +1,2 @@
 <#-- Custom Pratilipi elements -->
-<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?242'>
+<link rel='import' href='/elements.${lang}/pratilipi-custom-elements.html?243'>
