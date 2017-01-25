@@ -15,7 +15,7 @@ public class UserAccessUtil {
 	private static final AccessType[] ADMIN_ACCESS = {
 			AccessType.INIT_UPDATE,
 			AccessType.PRATILIPI_LIST, AccessType.PRATILIPI_ADD, AccessType.PRATILIPI_UPDATE,
-			AccessType.PRATILIPI_READ_META, AccessType.PRATILIPI_READ_CONTENT,
+			AccessType.PRATILIPI_READ_META, AccessType.PRATILIPI_UPDATE_META, AccessType.PRATILIPI_READ_CONTENT,
 			AccessType.AUTHOR_LIST, AccessType.AUTHOR_ADD, AccessType.AUTHOR_UPDATE,
 			AccessType.EVENT_ADD, AccessType.EVENT_UPDATE,
 			AccessType.BLOG_POST_LIST, AccessType.BLOG_POST_ADD, AccessType.BLOG_POST_UPDATE, AccessType.I18N_UPDATE };
