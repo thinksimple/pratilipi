@@ -20,7 +20,6 @@ import org.apache.commons.io.LineIterator;
 
 import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.api.datastore.QueryResultIterator;
-import com.google.gson.Gson;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.cmd.Query;
@@ -53,7 +52,6 @@ import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.BatchProcess;
 import com.pratilipi.data.type.Blog;
 import com.pratilipi.data.type.BlogPost;
-import com.pratilipi.data.type.Category;
 import com.pratilipi.data.type.Comment;
 import com.pratilipi.data.type.Conversation;
 import com.pratilipi.data.type.ConversationMessage;
@@ -78,7 +76,6 @@ import com.pratilipi.data.type.gae.AuthorEntity;
 import com.pratilipi.data.type.gae.BatchProcessEntity;
 import com.pratilipi.data.type.gae.BlogEntity;
 import com.pratilipi.data.type.gae.BlogPostEntity;
-import com.pratilipi.data.type.gae.CategoryEntity;
 import com.pratilipi.data.type.gae.CommentEntity;
 import com.pratilipi.data.type.gae.ConversationEntity;
 import com.pratilipi.data.type.gae.ConversationMessageEntity;
@@ -102,7 +99,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	private static final Logger logger =
 			Logger.getLogger( DataAccessorGaeImpl.class.getName() );
 	
-	public static final String CURATED_DATA_FOLDER = "curated";
+	private static final String CURATED_DATA_FOLDER = "curated";
 	
 	private final Memcache memcache;
 	
@@ -1683,52 +1680,6 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 
 
-	// curated/category.<lang>
-	
-	@Override
-	public List<Category> getCategoryList( Language language ) {
-		
-		String memcacheId = "CuratedData.CategoryList-" + language.getCode()
-				+ "?" + ( new Date().getTime() / TimeUnit.MINUTES.toMillis( 15 ) )
-				+ "/" + SystemProperty.STAGE;
-
-		ArrayList<Category> categoryList = memcache.get( memcacheId );
-		if( categoryList != null )
-			return categoryList;
-		
-		
-		List<String> lines = null;
-		try {
-			String fileName = CURATED_DATA_FOLDER + "/category." + language.getCode();
-			InputStream inputStream = DataAccessor.class.getResource( fileName ).openStream();
-			lines = IOUtils.readLines( inputStream, "UTF-8" );
-			inputStream.close();
-		} catch( NullPointerException | IOException e ) {
-			logger.log( Level.SEVERE, "Failed to fetch " + language.getNameEn() + " navigation list.", e );
-			lines = new ArrayList<>( 0 );
-		}
-
-		
-		Gson gson = new Gson();
-		
-		categoryList = new ArrayList<Category>( lines.size() );
-		for( String categoryStr : lines ) {
-			if( categoryStr.trim().isEmpty() )
-				continue;
-			String categoryName = categoryStr.substring( 0, categoryStr.indexOf( '{' ) ).trim();
-			String pratilipiFilterJson = categoryStr.substring( categoryStr.indexOf( '{' ) ).trim();
-			PratilipiFilter pratilipiFilter = gson.fromJson( pratilipiFilterJson, PratilipiFilter.class );
-			categoryList.add( new CategoryEntity( categoryName, pratilipiFilter ) );
-		}
-
-		
-		memcache.put( memcacheId, categoryList );
-
-		return categoryList;
-	
-	}
-	
-	
 	// COMMENT Table
 	
 	@Override

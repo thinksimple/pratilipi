@@ -170,9 +170,6 @@ public interface DataAccessor {
 	
 	// curated/navigation.<lang>
 	List<Navigation> getNavigationList( Language language );
-	
-	// curated/category.<lang>
-	List<Category> getCategoryList( Language language );
 
 	
 	// COMMENT Table
