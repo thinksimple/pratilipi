@@ -5,6 +5,7 @@
 
 <#-- Page Title & Favicon -->
 <title>${ title }</title>
+<link rel="canonical" href="${ canonical_url }">
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 
 <#-- DNS Prefetch -->
