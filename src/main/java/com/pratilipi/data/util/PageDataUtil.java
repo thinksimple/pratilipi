@@ -11,15 +11,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import com.google.gson.JsonObject;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
-import com.pratilipi.common.exception.InvalidArgumentException;
+import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.BlogPostState;
 import com.pratilipi.common.type.Language;
-import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.PratilipiState;
 import com.pratilipi.common.type.RequestParameter;
 import com.pratilipi.common.type.Website;
@@ -36,12 +36,16 @@ import com.pratilipi.site.PratilipiSite;
 
 public class PageDataUtil {
 
+	private static final Logger logger = 
+			Logger.getLogger( PageDataUtil.class.getName() );
+
 	private static final String LINE_SEPARATOR = "\n";
 	private static final Long SITEMAP_PAGE_COUNT = 1000000000000L;
 	private static final String SITEMAP_NAMESPACE = "http://www.sitemaps.org/schemas/sitemap/0.9";
 
 
-	public static String getSitemap( String type, String cursor, Website website, boolean basicMode ) throws InvalidArgumentException {
+	public static String getSitemap( String type, String cursor, Website website, boolean basicMode ) 
+			throws UnexpectedServerException {
 
 		if( type == null ) // Sitemap Index
 			return _getSitemapIndex( basicMode ? website.getMobileHostName() : website.getHostName() );
@@ -57,9 +61,9 @@ public class PageDataUtil {
 					basicMode ? website.getMobileHostName() : website.getHostName(),
 					website.getFilterLanguage() );
 
-		JsonObject errMessage = new JsonObject();
-		errMessage.addProperty( "location", "Invalid Location" );
-		throw new InvalidArgumentException( errMessage );
+		logger.log( Level.SEVERE, "Sitemap type not supported : " + type );
+
+		throw new UnexpectedServerException();
 
 	}
 
@@ -150,82 +154,81 @@ public class PageDataUtil {
 				.filterKey( "<", Key.create( PageEntity.class, cursor + SITEMAP_PAGE_COUNT ) )
 				.list();
 
-		Map<String, String> pageUrlMap = new HashMap<>( pageEntityList.size() );
-		List<Long> pratilipiIdList = new ArrayList<>();
-		List<Long> authorIdList = new ArrayList<>();
-		List<Long> blogIdList = new ArrayList<>();
-		List<Long> blogPostIdList = new ArrayList<>();
-		List<Long> eventIdList = new ArrayList<>();
+		Map<Long,String> pratilipiPageMap = new HashMap<>();
+		Map<Long,String> authorPageMap = new HashMap<>();
+		Map<Long,String> blogPageMap = new HashMap<>();
+		Map<Long,String> blogPostPageMap = new HashMap<>();
+		Map<Long,String> eventPageMap = new HashMap<>();
 
 		for( Page page : pageEntityList ) {
+			String pageUri = page.getUriAlias() != null ? page.getUriAlias() : page.getUri();
 			switch( page.getType() ) {
 				case PRATILIPI:
-					pratilipiIdList.add( page.getPrimaryContentId() );
+					pratilipiPageMap.put( page.getPrimaryContentId(), pageUri );
 					break;
 				case AUTHOR:
-					authorIdList.add( page.getPrimaryContentId() );
+					authorPageMap.put( page.getPrimaryContentId(), pageUri );
 					break;
 				case BLOG:
-					blogIdList.add( page.getPrimaryContentId() );
+					blogPageMap.put( page.getPrimaryContentId(), pageUri );
 					break;
 				case BLOG_POST:
-					blogPostIdList.add( page.getPrimaryContentId() );
+					blogPostPageMap.put( page.getPrimaryContentId(), pageUri );
 					break;
 				case EVENT:
-					eventIdList.add( page.getPrimaryContentId() );
+					eventPageMap.put( page.getPrimaryContentId(), pageUri );
 					break;
 				default:
 					break;
 			}
-			pageUrlMap.put( page.getType().name() + page.getPrimaryContentId(), page.getUriAlias() != null ? page.getUriAlias() : page.getUri() );
 		}
 
 
-		Map<Long, Pratilipi> pratilipis = dataAccessor.getPratilipis( pratilipiIdList );
-		Map<Long, Author> authors = dataAccessor.getAuthors( authorIdList );
-		Map<Long, BlogPost> blogPosts = dataAccessor.getBlogPosts( blogPostIdList );
-		Map<Long, Event> events = dataAccessor.getEvents( eventIdList );
+		Map<Long, Pratilipi> pratilipis = dataAccessor.getPratilipis( pratilipiPageMap.keySet() );
+		Map<Long, Author> authors = dataAccessor.getAuthors( authorPageMap.keySet() );
+		Map<Long, BlogPost> blogPosts = dataAccessor.getBlogPosts( blogPostPageMap.keySet() );
+		Map<Long, Event> events = dataAccessor.getEvents( eventPageMap.keySet() );
 
 
 		StringBuilder sitemap = new StringBuilder( "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + LINE_SEPARATOR );
 		sitemap.append( "<urlset xmlns=\"" + SITEMAP_NAMESPACE + "\">" + LINE_SEPARATOR );
 
-		for( Long pratilipiId : pratilipiIdList ) {
+		for( Long pratilipiId : pratilipiPageMap.keySet() ) {
 			Pratilipi pratilipi = pratilipis.get( pratilipiId );
 			if( pratilipi.getLanguage() != language )
 				continue;
 			if( pratilipi.getState() != PratilipiState.PUBLISHED )
 				continue;
-			sitemap.append( _getSitemapEntry( hostName, pageUrlMap.get( PageType.PRATILIPI.name() + pratilipiId ), pratilipi.getLastUpdated(), "daily", "0.7" ) );
+			sitemap.append( _getSitemapEntry( hostName, pratilipiPageMap.get( pratilipiId ), pratilipi.getLastUpdated(), "daily", "0.7" ) );
 			sitemap.append( _getSitemapEntry( hostName, "/read?pratilipiId=" + pratilipiId, pratilipi.getLastUpdated(), "daily", "0.7" ) );
 		}
 
-		for( Long authorId : authorIdList ) {
+		for( Long authorId : authorPageMap.keySet() ) {
 			Author author = authors.get( authorId );
 			if( author.getLanguage() != language )
 				continue;
 			if( author.getState() != AuthorState.ACTIVE )
 				continue;
-			sitemap.append( _getSitemapEntry( hostName, pageUrlMap.get( PageType.AUTHOR.name() + authorId ), author.getLastUpdated(), "daily", "0.6" ) );
+			sitemap.append( _getSitemapEntry( hostName, authorPageMap.get( authorId ), author.getLastUpdated(), "daily", "0.6" ) );
 		}
 
-		for( Long blogId : blogIdList )
-			sitemap.append( _getSitemapEntry( hostName, pageUrlMap.get( PageType.BLOG.name() + blogId ), null, "weekly", null ) );
+		for( Long blogId : blogPageMap.keySet() )
+			sitemap.append( _getSitemapEntry( hostName, blogPageMap.get( blogId ), null, "weekly", null ) );
 
-		for( Long blogPostId : blogPostIdList ) {
+		for( Long blogPostId : blogPostPageMap.keySet() ) {
 			BlogPost blogPost = blogPosts.get( blogPostId );
 			if( blogPost.getLanguage() != language )
 				continue;
 			if( blogPost.getState() != BlogPostState.PUBLISHED )
 				continue;
-			sitemap.append( _getSitemapEntry( hostName, pageUrlMap.get( PageType.BLOG_POST.name() + blogPostId ), blogPost.getLastUpdated(), "weekly", "0.6" ) );
+			sitemap.append( _getSitemapEntry( hostName, blogPostPageMap.get( blogPostId ), blogPost.getLastUpdated(), "weekly", "0.6" ) );
 		}
 
-		for( Long eventId : eventIdList ) {
+		for( Long eventId : eventPageMap.keySet() ) {
 			Event event = events.get( eventId );
 			if( event.getLanguage() != language )
 				continue;
-			sitemap.append( _getSitemapEntry( hostName, pageUrlMap.get( PageType.EVENT.name() + eventId ), event.getLastUpdated(), "weekly", "0.6" ) );
+			sitemap.append( _getSitemapEntry( hostName, eventPageMap.get( eventId ), event.getLastUpdated(), "weekly", "0.6" ) );
 		}
 
 		sitemap.append( "</urlset>" );
