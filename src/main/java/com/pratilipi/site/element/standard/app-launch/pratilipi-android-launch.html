@@ -64,7 +64,7 @@
 			if( windowsize > 991 ) {
 				$( elem ).css( "padding-top", 0 );
 			} else {
-				if( $( this.querySelector( '#androidAlert' ) ).css( "display" ) == none )
+				if( $( this.querySelector( '#androidAlert' ) ).css( "display" ) == "none" )
 					$( elem ).css( "padding-top", 0 );
 				else
 					$( elem ).css( "padding-top", $( this.querySelector( '#androidAlert' ) ).height() + 8 );
