@@ -11,14 +11,14 @@ import com.pratilipi.data.type.UserPreferenceRtdb;
 public class UserPreferenceRtdbImpl implements UserPreferenceRtdb {
 
 	private EmailFrequency emailFrequency;
-	
+
 	private Map<NotificationType, Boolean> notificationSubscriptions;
-	
+
 	private Long lastUpdated;
 
-	private String androidVersion;
+	private Integer androidVersionCode;
 
-	
+
 	@Override
 	public EmailFrequency getEmailFrequency() {
 		return emailFrequency == null ? EmailFrequency.IMMEDIATELY : emailFrequency;
@@ -54,13 +54,13 @@ public class UserPreferenceRtdbImpl implements UserPreferenceRtdb {
 	}
 
 	@Override
-	public String getAndroidVersion() {
-		return androidVersion;
+	public Integer getAndroidVersionCode() {
+		return androidVersionCode;
 	}
 
 	@Override
-	public void setAndroidVersion( String androidVersion ) {
-		this.androidVersion = androidVersion;
+	public void setAndroidVersionCode( Integer androidVersionCode ) {
+		this.androidVersionCode = androidVersionCode;
 	}
 
 }

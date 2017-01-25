@@ -11,17 +11,17 @@ public interface UserPreferenceRtdb {
 	EmailFrequency getEmailFrequency();
 
 	void setEmailFrequency( EmailFrequency emailFrequency );
-	
+
 	boolean isNotificationSubscribed( NotificationType notificationType );
 
 	void setNotificationSubscription( NotificationType notificationType, boolean subscribed );
-	
+
 	Date getLastUpdated();
-	
+
 	void setLastUpdated( Date lastUpdated );
 
-	String getAndroidVersion();
+	Integer getAndroidVersionCode();
 
-	void setAndroidVersion( String androidVersion );
+	void setAndroidVersionCode( Integer androidVersion );
 
 }
