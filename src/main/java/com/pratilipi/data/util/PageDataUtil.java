@@ -25,7 +25,6 @@ import com.pratilipi.common.type.RequestParameter;
 import com.pratilipi.common.type.Website;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
-import com.pratilipi.data.DataAccessorGaeImpl;
 import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.BlogPost;
 import com.pratilipi.data.type.Event;
@@ -41,7 +40,7 @@ public class PageDataUtil {
 	private static final Long SITEMAP_PAGE_COUNT = 1000000000000L;
 	private static final String SITEMAP_NAMESPACE = "http://www.sitemaps.org/schemas/sitemap/0.9";
 
-	
+
 	public static String getSitemap( String type, String cursor, Website website, boolean basicMode ) throws InvalidArgumentException {
 
 		if( type == null ) // Sitemap Index
@@ -58,7 +57,9 @@ public class PageDataUtil {
 					basicMode ? website.getMobileHostName() : website.getHostName(),
 					website.getFilterLanguage() );
 
-		throw new InvalidArgumentException( (JsonObject) null ); // TODO
+		JsonObject errMessage = new JsonObject();
+		errMessage.addProperty( "location", "Invalid Location" );
+		throw new InvalidArgumentException( errMessage );
 
 	}
 
@@ -76,14 +77,14 @@ public class PageDataUtil {
 			</sitemap>
 		</sitemapindex> */
 
-		
+
 		Long pageIdFirst = ObjectifyService.ofy().load()
 				.type( PageEntity.class )
 				.keys()
 				.first()
 				.now()
 				.getId();
-		
+
 		Long pageIdLast = ObjectifyService.ofy().load()
 				.type( PageEntity.class )
 				.order( "-__key__" )
@@ -92,10 +93,10 @@ public class PageDataUtil {
 				.now()
 				.getId();
 
-		
+
 		StringBuilder sitemapIndex = new StringBuilder( "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + LINE_SEPARATOR );
 		sitemapIndex.append( "<sitemapindex xmlns=\"" + SITEMAP_NAMESPACE + "\">" + LINE_SEPARATOR );
-		
+
 		// Pages without PAGE entity
 		sitemapIndex.append( _getSitemapIndexEntry( hostName, "other", null, null ) );
 
@@ -104,7 +105,7 @@ public class PageDataUtil {
 			sitemapIndex.append( _getSitemapIndexEntry( hostName, "page", i, null ) );
 
 		sitemapIndex.append( "</sitemapindex>" );
-		
+
 		return sitemapIndex.toString();
 
 	}
@@ -141,7 +142,7 @@ public class PageDataUtil {
 	private static String _getSitemapForTypePage( Long cursor, String hostName, Language language ) {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		
+
 		List<PageEntity> pageEntityList = ObjectifyService.ofy()
 				.load()
 				.type( PageEntity.class )
@@ -149,8 +150,7 @@ public class PageDataUtil {
 				.filterKey( "<", Key.create( PageEntity.class, cursor + SITEMAP_PAGE_COUNT ) )
 				.list();
 
-		
-		Map<Long, Page> pages = new HashMap<>( pageEntityList.size() );
+		Map<String, String> pageUrlMap = new HashMap<>( pageEntityList.size() );
 		List<Long> pratilipiIdList = new ArrayList<>();
 		List<Long> authorIdList = new ArrayList<>();
 		List<Long> blogIdList = new ArrayList<>();
@@ -177,16 +177,16 @@ public class PageDataUtil {
 				default:
 					break;
 			}
-			pages.put( page.getPrimaryContentId(), page ); // FIX: Global uniqueness of primaryContentId is not yet gauranteed
+			pageUrlMap.put( page.getType().name() + page.getPrimaryContentId(), page.getUriAlias() != null ? page.getUriAlias() : page.getUri() );
 		}
 
-		
+
 		Map<Long, Pratilipi> pratilipis = dataAccessor.getPratilipis( pratilipiIdList );
 		Map<Long, Author> authors = dataAccessor.getAuthors( authorIdList );
 		Map<Long, BlogPost> blogPosts = dataAccessor.getBlogPosts( blogPostIdList );
 		Map<Long, Event> events = dataAccessor.getEvents( eventIdList );
 
-		
+
 		StringBuilder sitemap = new StringBuilder( "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + LINE_SEPARATOR );
 		sitemap.append( "<urlset xmlns=\"" + SITEMAP_NAMESPACE + "\">" + LINE_SEPARATOR );
 
@@ -196,8 +196,8 @@ public class PageDataUtil {
 				continue;
 			if( pratilipi.getState() != PratilipiState.PUBLISHED )
 				continue;
-			sitemap.append( _getSitemapEntry( hostName, pages.get( pratilipiId ), pratilipi.getLastUpdated(), null, null ) ); // TODO
-			sitemap.append( _getSitemapEntry( hostName, "/read?pratilipiId=" + pratilipiId, pratilipi.getLastUpdated(), null, null ) ); // TODO
+			sitemap.append( _getSitemapEntry( hostName, pageUrlMap.get( PageType.PRATILIPI.name() + pratilipiId ), pratilipi.getLastUpdated(), "daily", "0.7" ) );
+			sitemap.append( _getSitemapEntry( hostName, "/read?pratilipiId=" + pratilipiId, pratilipi.getLastUpdated(), "daily", "0.7" ) );
 		}
 
 		for( Long authorId : authorIdList ) {
@@ -206,11 +206,11 @@ public class PageDataUtil {
 				continue;
 			if( author.getState() != AuthorState.ACTIVE )
 				continue;
-			sitemap.append( _getSitemapEntry( hostName, pages.get( authorId ), author.getLastUpdated(), null, null ) ); // TODO
+			sitemap.append( _getSitemapEntry( hostName, pageUrlMap.get( PageType.AUTHOR.name() + authorId ), author.getLastUpdated(), "daily", "0.6" ) );
 		}
 
 		for( Long blogId : blogIdList )
-			sitemap.append( _getSitemapEntry( hostName, pages.get( blogId ), null, null, null ) ); // TODO
+			sitemap.append( _getSitemapEntry( hostName, pageUrlMap.get( PageType.BLOG.name() + blogId ), null, "weekly", null ) );
 
 		for( Long blogPostId : blogPostIdList ) {
 			BlogPost blogPost = blogPosts.get( blogPostId );
@@ -218,16 +218,17 @@ public class PageDataUtil {
 				continue;
 			if( blogPost.getState() != BlogPostState.PUBLISHED )
 				continue;
-			sitemap.append( _getSitemapEntry( hostName, pages.get( blogPostId ), blogPost.getLastUpdated(), null, null ) ); // TODO
+			sitemap.append( _getSitemapEntry( hostName, pageUrlMap.get( PageType.BLOG_POST.name() + blogPostId ), blogPost.getLastUpdated(), "weekly", "0.6" ) );
 		}
 
 		for( Long eventId : eventIdList ) {
 			Event event = events.get( eventId );
 			if( event.getLanguage() != language )
 				continue;
-			sitemap.append( _getSitemapEntry( hostName, pages.get( eventId ), event.getLastUpdated(), null, null ) ); // TODO
+			sitemap.append( _getSitemapEntry( hostName, pageUrlMap.get( PageType.EVENT.name() + eventId ), event.getLastUpdated(), "weekly", "0.6" ) );
 		}
 
+		sitemap.append( "</urlset>" );
 		return sitemap.toString();
 
 	}
@@ -238,19 +239,19 @@ public class PageDataUtil {
 		sitemap.append( "<urlset xmlns=\"" + SITEMAP_NAMESPACE + "\">" + LINE_SEPARATOR );
 
 		// Home page
-		sitemap.append( _getSitemapEntry( hostName, "/", null, "hourly", "0.9" ) ); // TODO
+		sitemap.append( _getSitemapEntry( hostName, "/", null, "hourly", "0.9" ) );
 
 		// Event list page
-		sitemap.append( _getSitemapEntry( hostName, "/events", null, "weekly", null ) ); // TODO
+		sitemap.append( _getSitemapEntry( hostName, "/events", null, "weekly", null ) );
 
 		// Category pages
 		for( String categoryName : _getCategoryNameList( language ) )
-			sitemap.append( _getSitemapEntry( hostName, "/" + categoryName, null, null, null ) ); // TODO
+			sitemap.append( _getSitemapEntry( hostName, "/" + categoryName, null, "hourly", "0.9" ) );
 
 		// Static pages
-		for( String categoryName : _getStaticPageList( language ) )
-			sitemap.append( _getSitemapEntry( hostName, "/" + categoryName, null, null, null ) ); // TODO
-		
+		for( String staticPage : _getStaticPageList( language ) )
+			sitemap.append( _getSitemapEntry( hostName, "/" + staticPage.replace( "_", "/" ), null, "monthly", null ) );
+
 		sitemap.append( "</urlset>" );
 
 		return sitemap.toString();
@@ -259,90 +260,12 @@ public class PageDataUtil {
 
 	
 	private static List<String> _getCategoryNameList( Language language ) {
-		return null; // TODO
-	}
-	
-	private static List<String> _getStaticPageList( Language language ) {
-		return null; // TODO
-	}
-	
-	
-	private static String _getSitemapEntry( String hostName, Page page, Date lastUpdated, String changeFrequency, String priority ) {
-		return _getSitemapEntry(
-				hostName,
-				page.getUriAlias() == null ? page.getUri() : page.getUriAlias(),
-				lastUpdated,
-				changeFrequency,
-				priority );
-	}
-	
-	private static String _getSitemapEntry( String hostName, String uri, Date lastUpdated, String changeFrequency, String priority ) {
-		return null; // TODO
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	private static String _getEntityEscapedUrl( String url ) {
-		return 	url.replace( "&", "&amp;" )
-					.replace( "'", "&apos;" )
-					.replace( "\"", "&quot;" )
-					.replace( ">", "&gt;" )
-					.replace( "<", "&lt;" );
-	}
-	
-	private static String _getSitemapString( List<SitemapUrl> sitemapUrlList ) {
 
-		//	<?xml version="1.0" encoding="UTF-8"?>
-		//	<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-		//		<url>
-		//			<loc>http://www.example.com/</loc>
-		//			<lastmod>2005-01-01</lastmod>
-		//			<changefreq>monthly</changefreq>
-		//			<priority>0.8</priority>
-		//		</url>
-		//	</urlset>
-
-		StringBuilder sitemap = new StringBuilder( "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + LINE_SEPARATOR );
-		sitemap.append( "<urlset xmlns=\"" + SITEMAP_NAMESPACE + "\">" + LINE_SEPARATOR );
-
-		for( SitemapUrl sitemapUrl : sitemapUrlList ) {
-
-			StringBuilder url = new StringBuilder( "<url>" + LINE_SEPARATOR );
-			url.append( "<loc>" ).append( sitemapUrl.getLoc() ).append( "</loc>" ).append( LINE_SEPARATOR );
-			if( sitemapUrl.getLastMod() != null )
-				url.append( "<lastmod>" ).append( sitemapUrl.getLastMod() ).append( "</lastmod>" ).append( LINE_SEPARATOR );
-			if( sitemapUrl.getChangeFreq() != null )
-				url.append( "<changefreq>" ).append( sitemapUrl.getChangeFreq() ).append( "</changefreq>" ).append( LINE_SEPARATOR );
-			if( sitemapUrl.getPriority() != null )
-				url.append( "<priority>" ).append( sitemapUrl.getPriority() ).append( "</priority>" ).append( LINE_SEPARATOR );
-			url.append( "</url>" ).append( LINE_SEPARATOR );
-
-			sitemap.append( url );
-
-		}
-
-		sitemap.append( "</urlset>" );
-
-		return sitemap.toString();
-
-	}
-
-	private static List<SitemapUrl> _getUrlSetForTypeCategoryList( Website website, boolean basicMode ) {
-
-		List<SitemapUrl> sitemapUrlList = new ArrayList<>();
-
-		File folder = new File( DataAccessor.class.getResource( DataAccessorGaeImpl.CURATED_DATA_FOLDER ).getFile() );
+		File folder = new File( DataAccessor.class.getResource( "curated" ).getFile() );
 		File[] listOfFiles = folder.listFiles();
 
-		String fileNamePrefix = "list." + website.getFilterLanguage().getCode();
+		List<String> fileNameList = new ArrayList<>();
+		String fileNamePrefix = "list." + language.getCode();
 		for( int i = 0; i < listOfFiles.length; i++ ) {
 
 			File file = listOfFiles[i];
@@ -352,24 +275,19 @@ public class PageDataUtil {
 			if( ! file.getName().startsWith( fileNamePrefix ) )
 				continue;
 
-			Page page = DataAccessorFactory.getDataAccessor().newPage();
-			page.setType( PageType.CATEGORY_LIST );
-			page.setUri( "/" + file.getName().substring( fileNamePrefix.length() + 1 ) );
-			sitemapUrlList.add( new SitemapUrl( page, null, website, basicMode ) );
+			fileNameList.add( file.getName().substring( fileNamePrefix.length() + 1 ) );
+
 		}
 
-		return sitemapUrlList;
-
+		return fileNameList;
 	}
-
-	private static List<SitemapUrl> _getUrlSetForTypeStatic( Website website, boolean basicMode ) {
-
-		List<SitemapUrl> sitemapUrlList = new ArrayList<>();
+	
+	private static List<String> _getStaticPageList( Language language ) {
 
 		File folder = new File( PratilipiSite.class.getResource( PratilipiSite.dataFilePrefix ).getFile() );
 		File[] listOfFiles = folder.listFiles();
 
-		String fileNamePrefix = "static." + website.getFilterLanguage().getCode();
+		String fileNamePrefix = "static." + language.getCode();
 		String fileNameEnPrefix = "static." + Language.ENGLISH.getCode();
 
 		Set<String> fileNames = new HashSet<>();
@@ -381,15 +299,43 @@ public class PageDataUtil {
 				fileNames.add( file.getName().substring( file.getName().lastIndexOf( "." ) + 1 ) );
 		}
 
-		for( String fileName : fileNames ) {
-			Page page = DataAccessorFactory.getDataAccessor().newPage();
-			page.setType( PageType.STATIC );
-			page.setUri( "/" + fileName.replace( "_", "/" ) );
-			sitemapUrlList.add( new SitemapUrl( page, null, website, basicMode ) );
+		return new ArrayList<String>( fileNames );
+
+	}
+
+	private static String _getSitemapEntry( String hostName, String uri, Date lastUpdated, String changeFrequency, String priority ) {
+/*		<url>
+			<loc>http://www.example.com/</loc>
+			<lastmod>2005-01-01</lastmod>
+			<changefreq>monthly</changefreq>
+			<priority>0.8</priority>
+		</url>
+*/
+		String loc = "http://" + hostName + uri;
+		StringBuilder sitemapUrl = new StringBuilder( "<url>" + LINE_SEPARATOR );
+		sitemapUrl.append( "<loc>" ).append( _getEntityEscapedUrl( loc ) ).append( "</loc>" ).append( LINE_SEPARATOR );
+		if( lastUpdated != null ) {
+			DateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd" );
+			dateFormat.setTimeZone( TimeZone.getTimeZone( "Asia/Kolkata" ) );
+			sitemapUrl.append( "<lastmod>" ).append( dateFormat.format( lastUpdated ) ).append( "</lastmod>" ).append( LINE_SEPARATOR );
 		}
+		if( changeFrequency != null )
+			sitemapUrl.append( "<changefreq>" ).append( changeFrequency ).append( "</changefreq>" ).append( LINE_SEPARATOR );
+		if( priority != null )
+			sitemapUrl.append( "<priority>" ).append( priority ).append( "</priority>" ).append( LINE_SEPARATOR );
 
-		return sitemapUrlList;
+		sitemapUrl.append( "</url>" ).append( LINE_SEPARATOR );
 
+		return sitemapUrl.toString();
+
+	}
+
+	private static String _getEntityEscapedUrl( String url ) {
+		return 	url.replace( "&", "&amp;" )
+					.replace( "'", "&apos;" )
+					.replace( "\"", "&quot;" )
+					.replace( ">", "&gt;" )
+					.replace( "<", "&lt;" );
 	}
 
 }
