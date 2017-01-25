@@ -107,20 +107,6 @@ public class PratilipiSite extends HttpServlet {
 	public void doGet( HttpServletRequest request, HttpServletResponse response )
 			throws IOException {
 
-		String uri = request.getRequestURI();
-		// BasicMode
-		boolean basicMode = UxModeFilter.isBasicMode();
-
-		if( uri.equals( "/sitemap" ) && SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) ) {
-			String content = PageDataUtil.getSitemap( 
-					request.getParameter( RequestParameter.SITEMAP_TYPE.getName() ), 
-					request.getParameter( RequestParameter.SITEMAP_CURSOR.getName() ), 
-					UxModeFilter.getWebsite(),
-					basicMode );
-			_dispatchResponse( content, "application/xml", "UTF-8", response );
-			return;
-		}
-
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
 		// Setting user's author profile's default language, if not set already
@@ -132,9 +118,10 @@ public class PratilipiSite extends HttpServlet {
 			}
 		}
 		
+		String uri = request.getRequestURI();
 		
-		// Page Entity
-		Page page = dataAccessor.getPage( uri );
+		// BasicMode
+		boolean basicMode = UxModeFilter.isBasicMode();
 		
 		// Language
 		Language displayLanguage = UxModeFilter.getDisplayLanguage();
@@ -161,7 +148,21 @@ public class PratilipiSite extends HttpServlet {
 		String templateName = null;
 		
 		try {
+
+			if( uri.equals( "/sitemap" ) && SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) ) {
+				String content = PageDataUtil.getSitemap( 
+						request.getParameter( RequestParameter.SITEMAP_TYPE.getName() ), 
+						request.getParameter( RequestParameter.SITEMAP_CURSOR.getName() ), 
+						UxModeFilter.getWebsite(),
+						basicMode );
+				_dispatchResponse( content, "application/xml", "UTF-8", response );
+				return;
+			}
 			
+
+			// Page Entity
+			Page page = dataAccessor.getPage( uri );
+
 			if( uri.equals( "/" ) ) {
 				if( UxModeFilter.getWebsite() == Website.ALL_LANGUAGE || UxModeFilter.getWebsite() == Website.GAMMA_ALL_LANGUAGE ) {
 					dataModel = createDataModelForMasterHomePage( filterLanguage );
