@@ -119,7 +119,7 @@ public class GoogleApi {
 
 			if( payload.get( "given_name" ) == null
 					|| ( (String) payload.get( "given_name" ) ).isEmpty() ) {
-				logger.log( Level.SEVERE, "Google first_name is missing for GoogleUser: " + payload.getSubject() );
+				logger.log( Level.SEVERE, "Google given_name is missing for GoogleUser: " + payload.getSubject() );
 				throw new UnexpectedServerException();
 			}
 
