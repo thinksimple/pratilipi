@@ -218,7 +218,7 @@ public class EmailDataUtil {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
 		UserAuthor userAuthor = dataAccessor.getUserAuthor( userAuthorId );
-		AuthorData author = AuthorDataUtil.createAuthorData( dataAccessor.getAuthor( userAuthor.getAuthorId() ) );
+		UserData user = UserDataUtil.createUserData( dataAccessor.getUser( userAuthor.getUserId() ) );
 		AuthorData follower = AuthorDataUtil.createAuthorData( dataAccessor.getAuthorByUserId( userAuthor.getUserId() ) );
 
 		Map<String, Object> dataModel = new HashMap<>();
@@ -229,7 +229,7 @@ public class EmailDataUtil {
 		if( follower.getFollowCount() > 0 )
 			dataModel.put( "follower_followers_count", follower.getFollowCount() );
 
-		return new EmailData( dataModel, author.getLanguage() );
+		return new EmailData( dataModel, user.getLanguage() );
 
 	}
 
