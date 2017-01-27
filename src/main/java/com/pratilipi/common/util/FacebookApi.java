@@ -71,6 +71,14 @@ public class FacebookApi {
 			else
 				throw new UnexpectedServerException();
 		} else {
+
+			if( responseJson.get( "first_name" ) == null || 
+					responseJson.get( "first_name" ).getAsString().isEmpty() ) {
+				logger.log( Level.INFO, "HTTP Response : " + responseJson );
+				logger.log( Level.SEVERE, "Facebook first_name is missing for FacebookUser: " + responseJson.get( "id" ).getAsString() );
+				throw new UnexpectedServerException();
+			}
+
 			UserData userData = new UserData();
 			userData.setFacebookId( responseJson.get( "id" ).getAsString() );
 			userData.setFirstName( responseJson.get( "first_name" ).getAsString() );

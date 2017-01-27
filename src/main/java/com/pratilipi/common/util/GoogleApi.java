@@ -117,6 +117,12 @@ public class GoogleApi {
 			Payload payload = idToken.getPayload();
 			logger.log( Level.INFO, "GoogleApi Payload : " + new Gson().toJson( payload ) );
 
+			if( payload.get( "given_name" ) == null
+					|| ( (String) payload.get( "given_name" ) ).isEmpty() ) {
+				logger.log( Level.SEVERE, "Google first_name is missing for GoogleUser: " + payload.getSubject() );
+				throw new UnexpectedServerException();
+			}
+
 			UserData userData = new UserData();
 			userData.setGoogleId( payload.getSubject() );
 			userData.setFirstName( (String) payload.get( "given_name" ) );
