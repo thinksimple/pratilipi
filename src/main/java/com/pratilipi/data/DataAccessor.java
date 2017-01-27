@@ -29,7 +29,6 @@ import com.pratilipi.data.type.Author;
 import com.pratilipi.data.type.BatchProcess;
 import com.pratilipi.data.type.Blog;
 import com.pratilipi.data.type.BlogPost;
-import com.pratilipi.data.type.Category;
 import com.pratilipi.data.type.Comment;
 import com.pratilipi.data.type.Conversation;
 import com.pratilipi.data.type.ConversationMessage;
