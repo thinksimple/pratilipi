@@ -103,17 +103,5 @@
 		var language = "${ language }".toLowerCase();
 		var url = "http://" + language + ".pratilipi.com" + pageUrl +  "?utm_source=" + utmSource + "&utm_campaign=" + utmCampaign;		
 		window.location.href = ( "/share?url=" + encodeURIComponent(url) + "&name=" + name );
-	}
-	
-	function tapClevertapEvent() {
-		clevertap.event.push("Library Action", {
-		    "Screen Name":"Content Page",
-			"Location":"Library Button",
-			"Type": "Add",
-			"Content ID":123 ,
-			"Content Name": "yo",
-			"Author ID":456 ,
-			"Author Name": "yoyo honeysingh"
-		});
 	}	
 </script>

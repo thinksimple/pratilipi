@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.red-teal.min.css" />
     <link rel="stylesheet" href="pwa-stylesheets/css-minified/styles.css" />
+    <link href="svg-sprite-av.css" rel="stylesheet">    
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -54,12 +55,12 @@
                             <div class="mdl-card__supporting-text" style="text-align: center;">
                                 <!--ko text: averageRating -->
                                 <!--/ko-->
-                                <i class="material-icons" style="vertical-align: middle;width: 24px;">star rate</i> (
+                                <div class="svg-ic_radio_24px svg-ic_radio_24px-dims" style="vertical-align: middle;display: inline-block;"> </div> (
                                 <!--ko text: ratingCount -->
                                 <!--/ko-->
                                 ) &nbsp;
                                 <!--ko text: readCount -->
-                                <!--/ko--><i class="material-icons" style="vertical-align: middle;">visibility</i>
+                                <!--/ko--><div class="svg-ic_recent_actors_24px svg-ic_recent_actors_24px-dims" style="vertical-align: middle;display: inline-block;"> </div>
                             </div>
                             <div class="mdl-card__actions" style="text-align: center;">
                                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
@@ -69,7 +70,7 @@
                                     + Library
                                 </button>
                                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
-                                    <i class="material-icons">share</i>
+                                    <div class="svg-ic_play_circle_outline_24px svg-ic_play_circle_outline_24px-dims"> </div>
                                 </button>
                             </div>
                             <div class="mdl-card__supporting-text">
@@ -84,8 +85,8 @@
                     </div>
                 </div>
             </div>
+            <pratilipi-footer></pratilipi-footer>
         </main>
-        <pratilipi-footer></pratilipi-footer>
     </div>
     <script src="summary.js?2"></script>
 </body>
