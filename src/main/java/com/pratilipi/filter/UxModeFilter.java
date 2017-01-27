@@ -223,6 +223,9 @@ public class UxModeFilter implements Filter {
 					int version = Integer.parseInt( userAgentSubStr.substring( 0, userAgentSubStr.indexOf( "." ) ) );
 					basicBrowser = version < 28;
 
+				} else if( userAgent.contains( "Googlebot/2.1;" ) ) { // Google Bot
+					basicBrowser = false;
+
 				} else if( userAgent.startsWith( "facebookexternalhit/1.1" ) ) { // Facebook Scraping requests
 					basicBrowser = false;
 
@@ -233,7 +236,7 @@ public class UxModeFilter implements Filter {
 					basicBrowser = true;
 
 				}
-				
+
 			}
 			
 
