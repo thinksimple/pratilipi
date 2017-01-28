@@ -449,4 +449,31 @@ notification_settings_save_changes = Save Changes
 #Whatsapp share messages
 whatsapp_read_unlimited_stories = எண்ணிலடங்கா கதைகள், கவிதைகள், கட்டுரைகளை இந்திய மொழிகளில் இலவசமாக படியுங்கள்.
 whatsapp_read_story = , பிரதிலிபியில் படிக்க:
-whatsapp_follow_author = , பிரதிலிபியில் இவரை ஃபாலோ செய்ய : 
+whatsapp_follow_author = , பிரதிலிபியில் இவரை ஃபாலோ செய்ய :
+
+# SEO Titles
+seo_root_domain					= Pratilipi - Read, Write and Share Stories in your own mother tongue
+seo_pratilipi_page				= ${ authorName } எழுதிய ${ pratilipiTitle } படைப்பின் குறிப்பு
+seo_author_page					= ${ authorName }
+seo_home_page					= தமிழ் கதைகள், கவிதைகள், புத்தகங்களை பிரதிலிபியில் படியுங்கள்
+seo_events_page					= இணையப் போட்டிகள்
+seo_library_page				= பிரதிலிபியில் சேமித்துவைக்கப்பட்ட உங்களது கதைகள், கவிதைகள் மற்றும் புத்தகங்கள்
+seo_event_page					= ${ eventName }
+seo_reader_panel				= ${ authorName } எழுதிய ${ pratilipiTitle } படைப்பை பிரதிலிபியில் படியுங்கள்
+seo_blogpost_page				= ${ blogTitle }
+seo_search_page					= உங்களுக்கு விருப்பமான படைப்புகள், எழுத்தாளர்கள் மற்றும் பலவற்றை பிரதிலிபியில் தேடுங்கள்
+seo_writer_panel				= ${ authorName } எழுதிய ${ pratilipiTitle }
+seo_notifications_page			= பிரதிலிபியில் உங்களுக்கான அறிவிப்புகள்
+seo_blog_page					= வலைப்பதிவுகள் மற்றும் தலையங்கங்கள்
+seo_author_interview			= தமிழின் முன்னணி எழுத்தாளர்களுடன் பேட்டிகள்
+seo_followers_page				= பிரதிலிபியில் ${ authorName } அவர்களின் ஃபாலோவர்ஸ்
+seo_following_page				= ${ authorName } பிரதிலிபியில் இவர்களை ஃபாலோ செய்கிறீர்கள்
+seo_list_page					= ${ listTitle }
+seo_static_page					= ${ staticTitle }
+seo_account_page				= ${ authorName } 
+seo_navigation_page				= வகைகள்
+seo_update_password_page		= கடவுச்சொல்லை மாற்ற 
+seo_share_page					= உங்கள் நண்பர்களோடு பகிருங்கள்
+seo_register_page				= பிரதிலிபியில் உங்களுக்கான கணக்கை தொடங்குங்கள்
+seo_login_page					= பிரதிலிபியில் உள்நுழையுங்கள்
+seo_reset_password_page			= கடவுச்சொல்லை மாற்றியமைக்க - பிரதிலிபி

@@ -466,7 +466,6 @@ seo_writer_panel				= ${ pratilipiTitleEn } by ${ authorNameEn }
 seo_notifications_page			= Your notifications on Pratilipi
 seo_blog_page					= Blog and Editorial
 seo_author_interview			= Interviews with Popular Writers
-seo_static_page					= ${ titleEn }
 seo_followers_page				= Followers of ${ authorNameEn } on Pratilipi
 seo_following_page				= ${ authorNameEn } is following these people on Pratilipi
 seo_list_page					= ${ listTitleEn }
