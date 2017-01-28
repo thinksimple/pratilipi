@@ -14,8 +14,6 @@ import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.googlecode.objectify.Key;
-import com.googlecode.objectify.ObjectifyService;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AuthorState;
 import com.pratilipi.common.type.BlogPostState;
@@ -30,7 +28,6 @@ import com.pratilipi.data.type.BlogPost;
 import com.pratilipi.data.type.Event;
 import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
-import com.pratilipi.data.type.gae.PageEntity;
 import com.pratilipi.site.PratilipiSite;
 
 
@@ -81,22 +78,10 @@ public class PageDataUtil {
 			</sitemap>
 		</sitemapindex> */
 
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
-		Long pageIdFirst = ObjectifyService.ofy().load()
-				.type( PageEntity.class )
-				.keys()
-				.first()
-				.now()
-				.getId();
-
-		Long pageIdLast = ObjectifyService.ofy().load()
-				.type( PageEntity.class )
-				.order( "-__key__" )
-				.keys()
-				.first()
-				.now()
-				.getId();
-
+		Long pageIdFirst = dataAccessor.getPageIdFirst();
+		Long pageIdLast = dataAccessor.getPageIdLast();
 
 		StringBuilder sitemapIndex = new StringBuilder( "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + LINE_SEPARATOR );
 		sitemapIndex.append( "<sitemapindex xmlns=\"" + SITEMAP_NAMESPACE + "\">" + LINE_SEPARATOR );
@@ -147,12 +132,7 @@ public class PageDataUtil {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
-		List<PageEntity> pageEntityList = ObjectifyService.ofy()
-				.load()
-				.type( PageEntity.class )
-				.filterKey( ">=", Key.create( PageEntity.class, cursor ) )
-				.filterKey( "<", Key.create( PageEntity.class, cursor + SITEMAP_PAGE_COUNT ) )
-				.list();
+		List<Page> pageList = dataAccessor.getPageEntityList( cursor, cursor + SITEMAP_PAGE_COUNT );
 
 		Map<Long,String> pratilipiPageMap = new HashMap<>();
 		Map<Long,String> authorPageMap = new HashMap<>();
@@ -160,7 +140,7 @@ public class PageDataUtil {
 		Map<Long,String> blogPostPageMap = new HashMap<>();
 		Map<Long,String> eventPageMap = new HashMap<>();
 
-		for( Page page : pageEntityList ) {
+		for( Page page : pageList ) {
 			String pageUri = page.getUriAlias() != null ? page.getUriAlias() : page.getUri();
 			switch( page.getType() ) {
 				case PRATILIPI:
