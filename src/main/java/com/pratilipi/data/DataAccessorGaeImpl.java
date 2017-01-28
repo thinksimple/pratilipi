@@ -896,7 +896,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 				
 				// Shuffling and saving in Memcache
 				Collections.shuffle( pratilipiIdList );
-				memcache.put( "key", (ArrayList<Long>) pratilipiIdList, 60 );
+				memcache.put( memcacheId, (ArrayList<Long>) pratilipiIdList, 60 );
 				
 			}			
 
