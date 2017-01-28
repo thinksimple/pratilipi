@@ -559,7 +559,28 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	public Page newPage() {
 		return new PageEntity();
 	}
-	
+
+	@Override
+	public Long getPageIdFirst() {
+		return ObjectifyService.ofy().load()
+					.type( PageEntity.class )
+					.keys()
+					.first()
+					.now()
+					.getId();
+	}
+
+	@Override
+	public Long getPageIdLast() {
+		return ObjectifyService.ofy().load()
+					.type( PageEntity.class )
+					.order( "-__key__" )
+					.keys()
+					.first()
+					.now()
+					.getId();
+	}
+
 	@Override
 	public Page getPage( Long id ) {
 		return getEntity( PageEntity.class, id );
@@ -624,6 +645,17 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		
 	}
 	
+	@Override
+	public List<Page> getPageEntityList( Long startIndex, Long endIndex ) {
+		return new ArrayList<Page>( 
+				ObjectifyService.ofy()
+					.load()
+					.type( PageEntity.class )
+					.filterKey( ">=", Key.create( PageEntity.class, startIndex ) )
+					.filterKey( "<", Key.create( PageEntity.class, endIndex ) )
+					.list() );
+	}
+
 	@Override
 	public Map<String, Page> getPages( List<String> uriList ) {
 		

@@ -322,6 +322,18 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 	
 	@Override
+	public Long getPageIdFirst() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public Long getPageIdLast() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
 	public Page getPage( Long id ) {
 		for( Page page : PAGE_TABLE )
 			if( page.getId().equals( id ) )
@@ -349,6 +361,12 @@ public class DataAccessorMockImpl implements DataAccessor {
 			if( page.getType().equals( pageType ) && page.getPrimaryContentId().equals( primaryContentId ) )
 				return page;
 
+		return null;
+	}
+	
+	@Override
+	public List<Page> getPageEntityList( Long startIndex, Long endIndex ) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 

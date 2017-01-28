@@ -81,9 +81,12 @@ public interface DataAccessor {
 	
 	// PAGE Table
 	Page newPage();
+	Long getPageIdFirst();
+	Long getPageIdLast();
 	Page getPage( Long id );
 	Page getPage( String uri );
 	Page getPage( PageType pageType, Long primaryContentId );
+	List<Page> getPageEntityList( Long startIndex, Long endIndex );
 	Map<String, Page> getPages( List<String> uriList );
 	Map<Long, Page> getPages( PageType pageType, List<Long> primaryContentIdList );
 	Page createOrUpdatePage( Page page );
