@@ -25,7 +25,7 @@ public class PratilipiSiteFilter implements Filter {
 	private final String subDomainPrefix = "(www|hindi|gujarati|tamil|marathi|malayalam|bengali|telugu|kannada)";
 	private final String mobileSubDomainPrefix = "(m|hi|gu|ta|mr|ml|bn|te|kn)";
 	private final Pattern validHostSubdomainRegEx = Pattern.compile(
-			"www\\." + subDomainPrefix + "\\.pratilipi\\.com" );
+			"www\\.(" + subDomainPrefix + "|" + mobileSubDomainPrefix + ")\\.pratilipi\\.com" );
 	private final Pattern validHostRegEx = Pattern.compile(
 			subDomainPrefix + "\\.pratilipi\\.com" // Prod (Standard)
 			+ "|"
