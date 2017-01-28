@@ -234,13 +234,14 @@ public class PratilipiContentUtil {
 	}
 	
 	private String _getEscapedString( String title ) {
-		return title.replaceAll( "&nbsp;|<[/]?strong>", " " )
-					.replaceAll( "&hellip;", "…" )
-					.replaceAll( "&ndash;", "-" )
-					.replaceAll( "&rsquo", "’" )
-					.replaceAll( "&lsquo;", "‘" )
-					.replaceAll( "&quot;", "\"" )
-					.trim();
+		return title.replaceAll( "&nbsp;", " " )
+				.replaceAll( "<[/]?strong>", "" )
+				.replaceAll( "&hellip;", "…" )
+				.replaceAll( "&ndash;", "-" )
+				.replaceAll( "&rsquo", "’" )
+				.replaceAll( "&lsquo;", "‘" )
+				.replaceAll( "&quot;", "\"" )
+				.trim();
 	}
 
 }
