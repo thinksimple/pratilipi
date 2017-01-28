@@ -245,37 +245,32 @@ public class PageDataUtil {
 	private static List<String> _getCategoryNameList( Language language ) {
 
 		File folder = new File( DataAccessor.class.getResource( "curated" ).getFile() );
-		File[] listOfFiles = folder.listFiles();
+		File[] files = folder.listFiles();
 
-		List<String> fileNameList = new ArrayList<>();
+		List<String> categoryNameList = new ArrayList<>();
 		String fileNamePrefix = "list." + language.getCode();
-		for( int i = 0; i < listOfFiles.length; i++ ) {
-
-			File file = listOfFiles[i];
+		for( File file : files ) {
 			if( ! file.isFile() )
 				continue;
-
 			if( ! file.getName().startsWith( fileNamePrefix ) )
 				continue;
-
-			fileNameList.add( file.getName().substring( fileNamePrefix.length() + 1 ) );
-
+			categoryNameList.add( file.getName().substring( fileNamePrefix.length() + 1 ) );
 		}
 
-		return fileNameList;
+		return categoryNameList;
+		
 	}
 	
 	private static List<String> _getStaticPageList( Language language ) {
 
 		File folder = new File( PratilipiSite.class.getResource( PratilipiSite.dataFilePrefix ).getFile() );
-		File[] listOfFiles = folder.listFiles();
+		File[] files = folder.listFiles();
 
 		String fileNamePrefix = "static." + language.getCode();
 		String fileNameEnPrefix = "static." + Language.ENGLISH.getCode();
 
 		Set<String> fileNames = new HashSet<>();
-		for( int i = 0; i < listOfFiles.length; i++ ) {
-			File file = listOfFiles[i];
+		for( File file : files ) {
 			if( ! file.isFile() )
 				continue;
 			if( file.getName().startsWith( fileNamePrefix ) || file.getName().startsWith( fileNameEnPrefix ) )
