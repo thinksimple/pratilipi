@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -850,42 +851,54 @@ public class DataAccessorGaeImpl implements DataAccessor {
 			
 		} else {
 			
-			List<String> uriList = null;
-			try {
-				String fileName = CURATED_DATA_FOLDER + "/list." + pratilipiFilter.getLanguage().getCode() + "." + pratilipiFilter.getListName();
-				InputStream inputStream = DataAccessor.class.getResource( fileName ).openStream();
-				uriList = IOUtils.readLines( inputStream, "UTF-8" );
-				inputStream.close();
-			} catch( NullPointerException | IOException e ) {
-				logger.log( Level.SEVERE, "Failed to fetch " + pratilipiFilter.getListName() + " list for " + pratilipiFilter.getLanguage() + ".", e );
-				return new DataListCursorTuple<T>( new ArrayList<T>( 0 ), "0", 0L );
-			}
+			String memcacheId = "DataStore.Pratilipi-list." + pratilipiFilter.getLanguage().getCode() + "." + pratilipiFilter.getListName();
+			ArrayList<Long> pratilipiIdList = memcache.get( memcacheId );
 
-			// Removing the first line having title.
-			uriList.remove( 0 );
-			
-			// Removing empty lines.
-			for( int i = 0; i < uriList.size(); i++ ) {
-				String uri = uriList.get( i ).trim();
-				if( uri.isEmpty() ) {
-					uriList.remove( i );
-					i--;
-					continue;
-				} else {
-					uriList.set( i, uri );
+			if( pratilipiIdList == null ) {
+				
+				List<String> uriList = null;
+				try {
+					String fileName = CURATED_DATA_FOLDER + "/list." + pratilipiFilter.getLanguage().getCode() + "." + pratilipiFilter.getListName();
+					InputStream inputStream = DataAccessor.class.getResource( fileName ).openStream();
+					uriList = IOUtils.readLines( inputStream, "UTF-8" );
+					inputStream.close();
+				} catch( NullPointerException | IOException e ) {
+					logger.log( Level.SEVERE, "Failed to fetch " + pratilipiFilter.getListName() + " list for " + pratilipiFilter.getLanguage() + ".", e );
+					return new DataListCursorTuple<T>( new ArrayList<T>( 0 ), "0", 0L );
 				}
-			}
-
-			// Fetching Pratilipi pages.
-			Map<String, Page> pratilipiPages = getPages( uriList );
-			
-			// Pratilipi id list.
-			List<Long> pratilipiIdList = new ArrayList<>( uriList.size() );
-			for( int i = 0; i < uriList.size(); i++ ) {
-				Page page = pratilipiPages.get( uriList.get( i ) );
-				if( page != null && page.getType() == PageType.PRATILIPI && ! pratilipiIdList.contains( page.getPrimaryContentId() ) )
-					pratilipiIdList.add( page.getPrimaryContentId() );
-			}
+	
+				// Removing the first line having title.
+				uriList.remove( 0 );
+				
+				// Removing empty lines.
+				for( int i = 0; i < uriList.size(); i++ ) {
+					String uri = uriList.get( i ).trim();
+					if( uri.isEmpty() ) {
+						uriList.remove( i );
+						i--;
+						continue;
+					} else {
+						uriList.set( i, uri );
+					}
+				}
+	
+				// Fetching Pratilipi pages.
+				Map<String, Page> pratilipiPages = getPages( uriList );
+				
+				// Pratilipi id list.
+				pratilipiIdList = new ArrayList<>( uriList.size() );
+				for( int i = 0; i < uriList.size(); i++ ) {
+					Page page = pratilipiPages.get( uriList.get( i ) );
+					if( page != null && page.getType() == PageType.PRATILIPI && ! pratilipiIdList.contains( page.getPrimaryContentId() ) )
+						pratilipiIdList.add( page.getPrimaryContentId() );
+				}
+	
+				
+				// Shuffling and saving in Memcache
+				Collections.shuffle( pratilipiIdList );
+				memcache.put( "key", (ArrayList<Long>) pratilipiIdList, 60 );
+				
+			}			
 
 			
 			offset = ( cursorStr == null ? 0 : Integer.parseInt( cursorStr ) )
