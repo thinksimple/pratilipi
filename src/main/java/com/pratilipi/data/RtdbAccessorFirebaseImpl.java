@@ -42,50 +42,41 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 		this.headersMap.put( "Authorization", "Bearer " + googleApiAccessToken );
 	}
 
-
 	
-	
-	private UserPreferenceRtdb _getUserPreferenceRtdb( String json ) {
-		return _getUserPreferenceRtdb( new Gson().fromJson( json, JsonElement.class ).getAsJsonObject() );
+	private UserPreferenceRtdb _getUserPreferenceRtdb( String jsonStr ) {
+		return _getUserPreferenceRtdb( new Gson().fromJson( jsonStr, JsonElement.class ).getAsJsonObject() );
 	}
 
-	private UserPreferenceRtdb _getUserPreferenceRtdb( JsonObject preference ) {
+	private UserPreferenceRtdb _getUserPreferenceRtdb( JsonObject json ) {
 
-		if( preference.has( "emailFrequency" ) ) {
-			String emailFrequency = preference.get( "emailFrequency" ).getAsString();
+		if( json.has( "emailFrequency" ) ) {
+			String emailFrequency = json.get( "emailFrequency" ).getAsString();
 			if( emailFrequency.equals( "ONCE A DAY" ) ) {
-				preference.remove( "emailFrequency" );
-				preference.addProperty( "emailFrequency", EmailFrequency.DAILY.name() );
+				json.remove( "emailFrequency" );
+				json.addProperty( "emailFrequency", EmailFrequency.DAILY.name() );
 			} else if( emailFrequency.equals( "ONCE A WEEK" ) ) {
-				preference.remove( "emailFrequency" );
-				preference.addProperty( "emailFrequency", EmailFrequency.WEEKLY.name() );
+				json.remove( "emailFrequency" );
+				json.addProperty( "emailFrequency", EmailFrequency.WEEKLY.name() );
 			}
 		}
 
-		if( preference.has( "notificationSubscriptions" ) ) {
-			JsonObject notificationSubscriptions = preference.get( "notificationSubscriptions" ).getAsJsonObject();
+		if( json.has( "notificationSubscriptions" ) ) {
+			JsonObject notifSubscriptionsJson = json.get( "notificationSubscriptions" ).getAsJsonObject();
 			List<String> invalidTypes = new ArrayList<>();
-			for( Entry<String, JsonElement> type : notificationSubscriptions.entrySet() ) {
-				boolean isValid = false;
-				for( NotificationType nt : NotificationType.values() ) {
-					if( type.getKey().equals( nt.name() ) ) {
-						isValid = true;
-						break;
-					}
+			for( Entry<String, JsonElement> entry : notifSubscriptionsJson.entrySet() ) {
+				try {
+					NotificationType.valueOf( entry.getKey() );
+				} catch( IllegalArgumentException ex ) {
+					invalidTypes.add( entry.getKey() );
 				}
-				if( ! isValid )
-					invalidTypes.add( type.getKey() );
 			}
 			for( String invalidType : invalidTypes )
-				notificationSubscriptions.remove( invalidType );
+				notifSubscriptionsJson.remove( invalidType );
 		}
 
-		return new Gson().fromJson( preference, UserPreferenceRtdbImpl.class );
+		return new Gson().fromJson( json, UserPreferenceRtdbImpl.class );
 
 	}
-
-	
-	
 	
 	
 	// PREFERENCE Table
@@ -112,7 +103,7 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 			throws UnexpectedServerException {
 
 		// TODO for Raghu: Using this approach you might end up pulling complete
-		// database. Using memache with async UrlFetch instead.
+		// database. Using memache and/or async UrlFetch instead.
 		// https://cloud.google.com/appengine/docs/java/javadoc/com/google/appengine/api/urlfetch/URLFetchService
 		
 		if( userIdList == null || userIdList.isEmpty() )
