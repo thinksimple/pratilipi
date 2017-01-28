@@ -10,9 +10,10 @@ import com.pratilipi.data.type.UserPreferenceRtdb;
 public interface RtdbAccessor {
 
 	// PREFERENCE Table
+	
 	UserPreferenceRtdb getUserPreference( Long userId ) throws UnexpectedServerException;
 
-	Map<Long, UserPreferenceRtdb> getUserPreferences( Collection<Long> userIdList ) throws UnexpectedServerException;
+	Map<Long, UserPreferenceRtdb> getUserPreferences( Collection<Long> userIds ) throws UnexpectedServerException;
 
 	Map<Long, UserPreferenceRtdb> getUserPreferences( Date minLastUpdated ) throws UnexpectedServerException;
 

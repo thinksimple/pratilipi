@@ -26,14 +26,25 @@ import com.pratilipi.data.type.rtdb.UserPreferenceRtdbImpl;
 
 public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 
+	
 	private static final Logger logger =
 			Logger.getLogger( RtdbAccessorFirebaseImpl.class.getName() );
 
+	
 	private static final String DATABASE_URL = "https://prod-pratilipi.firebaseio.com/";
 	private static final String DATABASE_PREFERENCE_TABLE = "PREFERENCE";
 
+	
 	private final Map<String, String> headersMap;
+	
+	public RtdbAccessorFirebaseImpl( String googleApiAccessToken ) {
+		this.headersMap = new HashMap<>();
+		this.headersMap.put( "Authorization", "Bearer " + googleApiAccessToken );
+	}
 
+
+	
+	
 	private UserPreferenceRtdb _getUserPreferenceRtdb( String json ) {
 		return _getUserPreferenceRtdb( new Gson().fromJson( json, JsonElement.class ).getAsJsonObject() );
 	}
@@ -73,52 +84,37 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 
 	}
 
-	public RtdbAccessorFirebaseImpl( String googleApiAccessToken ) {
-		this.headersMap = new HashMap<>();
-		this.headersMap.put( "Authorization", "Bearer " + googleApiAccessToken );
-	}
-
-
+	
+	
+	
+	
 	// PREFERENCE Table
 
-	private Map<Long,UserPreferenceRtdb> getUserPreferences( Map<String, String> paramsMap ) throws UnexpectedServerException {
-
-		Map<Long, UserPreferenceRtdb> userPreferenceMap = new HashMap<>();
-		try {
-			BlobEntry blobEntry = HttpUtil.doGet( DATABASE_URL + DATABASE_PREFERENCE_TABLE + ".json", headersMap, paramsMap );
-			String json = new String( blobEntry.getData(), "UTF-8" );
-			JsonObject usersPreferences = new Gson().fromJson( json, JsonElement.class ).getAsJsonObject();
-			for( Entry<String, JsonElement> it : usersPreferences.entrySet() )
-				userPreferenceMap.put( Long.parseLong( it.getKey() ), _getUserPreferenceRtdb( it.getValue().getAsJsonObject() ) );
-		} catch( UnsupportedEncodingException | JsonSyntaxException e ) {
-			logger.log( Level.SEVERE, e.getMessage() );
-			throw new UnexpectedServerException();
-		}
-
-		return userPreferenceMap;
-
-	}
-
 	@Override
-	public UserPreferenceRtdb getUserPreference( Long userId ) 
+	public UserPreferenceRtdb getUserPreference( Long userId )
 			throws UnexpectedServerException {
-		String json = null;
+		
 		try {
 			BlobEntry blobEntry = HttpUtil.doGet( DATABASE_URL + DATABASE_PREFERENCE_TABLE + "/" + userId + ".json", headersMap, null );
-			json = new String( blobEntry.getData(), "UTF-8" );
-			if( json.equals( "null" ) )
-				json = "{}";
+			String jsonStr = new String( blobEntry.getData(), "UTF-8" );
+			if( jsonStr.equals( "null" ) )
+				jsonStr = "{}";
+			return _getUserPreferenceRtdb( jsonStr );
 		} catch( UnsupportedEncodingException | JsonSyntaxException e ) {
 			logger.log( Level.SEVERE, e.getMessage() );
 			throw new UnexpectedServerException();
 		}
-		return _getUserPreferenceRtdb( json );
+		
 	}
 
 	@Override
-	public Map<Long,UserPreferenceRtdb> getUserPreferences( Collection<Long> userIdList ) 
+	public Map<Long, UserPreferenceRtdb> getUserPreferences( Collection<Long> userIdList )
 			throws UnexpectedServerException {
 
+		// TODO for Raghu: Using this approach you might end up pulling complete
+		// database. Using memache with async UrlFetch instead.
+		// https://cloud.google.com/appengine/docs/java/javadoc/com/google/appengine/api/urlfetch/URLFetchService
+		
 		if( userIdList == null || userIdList.isEmpty() )
 			return new HashMap<>();
 
@@ -129,7 +125,8 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 		paramsMap.put( "orderBy", "\"" + "$key" + "\"" );
 		paramsMap.put( "startAt", "\"" + startAt + "\"" );
 		paramsMap.put( "endAt", "\"" + endAt + "\"" );
-		Map<Long,UserPreferenceRtdb> userPreferences = getUserPreferences( paramsMap );
+		
+		Map<Long,UserPreferenceRtdb> userPreferences = _getUserPreferences( paramsMap );
 		userPreferences.keySet().retainAll( userIdList );
 
 		return userPreferences;
@@ -137,25 +134,43 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 	}
 
 	@Override
-	public Map<Long,UserPreferenceRtdb> getUserPreferences( Date minLastUpdated ) 
+	public Map<Long, UserPreferenceRtdb> getUserPreferences( Date minLastUpdated ) 
 			throws UnexpectedServerException {
 
 		Map<String,String> paramsMap = new HashMap<>();
 		paramsMap.put( "orderBy", "\"" + "lastUpdated" + "\"" );
 		paramsMap.put( "startAt", minLastUpdated.getTime() + "" );
-		return getUserPreferences( paramsMap );
+		return _getUserPreferences( paramsMap );
 
 	}
 
 	@Override
-	public Map<Long,UserPreferenceRtdb> getUserPreferences( Integer maxAndroidVersionCode ) 
+	public Map<Long, UserPreferenceRtdb> getUserPreferences( Integer maxAndroidVersionCode ) 
 			throws UnexpectedServerException {
 
 		Map<String,String> paramsMap = new HashMap<>();
 		paramsMap.put( "orderBy", "\"" + "androidVersionCode" + "\"" );
 		paramsMap.put( "endAt", maxAndroidVersionCode + "" );
-		return getUserPreferences( paramsMap );
+		return _getUserPreferences( paramsMap );
 
+	}
+
+	private Map<Long, UserPreferenceRtdb> _getUserPreferences( Map<String, String> paramsMap )
+			throws UnexpectedServerException {
+		
+		try {
+			BlobEntry blobEntry = HttpUtil.doGet( DATABASE_URL + DATABASE_PREFERENCE_TABLE + ".json", headersMap, paramsMap );
+			String jsonStr = new String( blobEntry.getData(), "UTF-8" );
+			JsonObject json = new Gson().fromJson( jsonStr, JsonElement.class ).getAsJsonObject();
+			Map<Long, UserPreferenceRtdb> userPreferenceMap = new HashMap<>();
+			for( Entry<String, JsonElement> entry : json.entrySet() )
+				userPreferenceMap.put( Long.parseLong( entry.getKey() ), _getUserPreferenceRtdb( entry.getValue().getAsJsonObject() ) );
+			return userPreferenceMap;
+		} catch( UnsupportedEncodingException | JsonSyntaxException e ) {
+			logger.log( Level.SEVERE, e.getMessage() );
+			throw new UnexpectedServerException();
+		}
+	
 	}
 
 }
