@@ -161,6 +161,16 @@ public class PratilipiSite extends HttpServlet {
 				return;
 			}
 
+			// Robots.txt
+			if( uri.equals( "/robots.txt" ) ) {
+				dataModel = new HashMap<>();
+				dataModel.put( "stage", SystemProperty.STAGE );
+				templateName = templateFilePrefix + "RobotsTxt.ftl";
+				String robotsTxt = FreeMarkerUtil.processTemplate( dataModel, templateName );
+				_dispatchResponse( robotsTxt, "text/plain", "UTF-8", response );
+				return;
+			}
+
 			// Page Entity
 			Page page = dataAccessor.getPage( uri );
 
