@@ -365,7 +365,7 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 	
 	@Override
-	public List<Page> getPageEntityList( Long startIndex, Long endIndex ) {
+	public List<Page> getPageList( Long startIndex, Long endIndex ) {
 		// TODO Auto-generated method stub
 		return null;
 	}

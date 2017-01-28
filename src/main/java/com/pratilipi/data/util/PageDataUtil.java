@@ -132,7 +132,7 @@ public class PageDataUtil {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
-		List<Page> pageList = dataAccessor.getPageEntityList( cursor, cursor + SITEMAP_PAGE_COUNT );
+		List<Page> pageList = dataAccessor.getPageList( cursor, cursor + SITEMAP_PAGE_COUNT );
 
 		Map<Long,String> pratilipiPageMap = new HashMap<>();
 		Map<Long,String> authorPageMap = new HashMap<>();

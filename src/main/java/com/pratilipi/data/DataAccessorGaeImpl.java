@@ -646,7 +646,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 	
 	@Override
-	public List<Page> getPageEntityList( Long startIndex, Long endIndex ) {
+	public List<Page> getPageList( Long startIndex, Long endIndex ) {
 		return new ArrayList<Page>( 
 				ObjectifyService.ofy()
 					.load()
