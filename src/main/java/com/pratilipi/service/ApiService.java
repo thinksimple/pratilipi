@@ -25,6 +25,7 @@ import com.pratilipi.api.impl.init.InitBannerApi;
 import com.pratilipi.api.impl.init.InitBannerListApi;
 import com.pratilipi.api.impl.init.InitV2Api;
 import com.pratilipi.api.impl.mailinglist.MailingListSubscribeApi;
+import com.pratilipi.api.impl.navigation.NavigationListApi;
 import com.pratilipi.api.impl.notification.NotificationApi;
 import com.pratilipi.api.impl.notification.NotificationListApi;
 import com.pratilipi.api.impl.page.PageApi;
@@ -143,6 +144,7 @@ public class ApiService extends GenericService {
 		ApiRegistry.register( BatchProcessListApi.class );			// *.pratilipi.com
 
 		ApiRegistry.register( I18nApi.class );						// *.pratilipi.com
+		ApiRegistry.register( NavigationListApi.class );			// *.pratilipi.com
 		
 		ApiRegistry.register( TestApi.class );
 
