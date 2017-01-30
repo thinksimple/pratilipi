@@ -1,26 +1,16 @@
 package com.pratilipi.data;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.appengine.api.urlfetch.HTTPHeader;
-import com.google.appengine.api.urlfetch.HTTPRequest;
-import com.google.appengine.api.urlfetch.HTTPResponse;
-import com.google.appengine.api.urlfetch.URLFetchService;
-import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -43,16 +33,18 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 	private static final String DATABASE_URL = "https://prod-pratilipi.firebaseio.com/";
 	private static final String DATABASE_PREFERENCE_TABLE = "PREFERENCE";
 
-	
+
 	private final Map<String, String> headersMap;
-	
+
 	public RtdbAccessorFirebaseImpl( String googleApiAccessToken ) {
 		this.headersMap = new HashMap<>();
 		this.headersMap.put( "Authorization", "Bearer " + googleApiAccessToken );
 	}
 
-	
+
 	private UserPreferenceRtdb _getUserPreferenceRtdb( String jsonStr ) {
+		if( jsonStr.equals( "null" ) )
+			jsonStr = "{}";
 		return _getUserPreferenceRtdb( new Gson().fromJson( jsonStr, JsonElement.class ).getAsJsonObject() );
 	}
 
@@ -86,48 +78,40 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 		return new Gson().fromJson( json, UserPreferenceRtdbImpl.class );
 
 	}
-	
-	
+
+
 	// PREFERENCE Table
 
 	@Override
 	public UserPreferenceRtdb getUserPreference( Long userId )
 			throws UnexpectedServerException {
-		
+
 		try {
 			BlobEntry blobEntry = HttpUtil.doGet( DATABASE_URL + DATABASE_PREFERENCE_TABLE + "/" + userId + ".json", headersMap, null );
-			String jsonStr = new String( blobEntry.getData(), "UTF-8" );
-			if( jsonStr.equals( "null" ) )
-				jsonStr = "{}";
-			return _getUserPreferenceRtdb( jsonStr );
+			return _getUserPreferenceRtdb( new String( blobEntry.getData(), "UTF-8" ) );
 		} catch( UnsupportedEncodingException | JsonSyntaxException e ) {
 			logger.log( Level.SEVERE, e.getMessage() );
 			throw new UnexpectedServerException();
 		}
-		
+
 	}
 
 	@Override
 	public Map<Long, UserPreferenceRtdb> getUserPreferences( Collection<Long> userIdList )
 			throws UnexpectedServerException {
 
-		// TODO for Raghu: Using this approach you might end up pulling complete
-		// database. Using memache and/or async UrlFetch instead.
-		// https://cloud.google.com/appengine/docs/java/javadoc/com/google/appengine/api/urlfetch/URLFetchService
-		
 		if( userIdList == null || userIdList.isEmpty() )
 			return new HashMap<>();
 
-		Long startAt = Collections.min( userIdList );
-		Long endAt = Collections.max( userIdList );
+		Map<Long, String> userIdUrlMap = new HashMap<>( userIdList.size() );
+		for( Long userId : userIdList )
+			userIdUrlMap.put( userId, DATABASE_URL + DATABASE_PREFERENCE_TABLE + "/" + userId + ".json" );
 
-		Map<String,String> paramsMap = new HashMap<>();
-		paramsMap.put( "orderBy", "\"" + "$key" + "\"" );
-		paramsMap.put( "startAt", "\"" + startAt + "\"" );
-		paramsMap.put( "endAt", "\"" + endAt + "\"" );
-		
-		Map<Long,UserPreferenceRtdb> userPreferences = _getUserPreferences( paramsMap );
-		userPreferences.keySet().retainAll( userIdList );
+		Map<String, String> responses = HttpUtil.doGet( userIdUrlMap.values(), this.headersMap, null );
+
+		Map<Long, UserPreferenceRtdb> userPreferences = new HashMap<>( userIdList.size() );
+		for( Long userId : userIdList )
+			userPreferences.put( userId, _getUserPreferenceRtdb( responses.get( userIdUrlMap.get( userId ) ) ) );
 
 		return userPreferences;
 
@@ -154,67 +138,10 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 		return _getUserPreferences( paramsMap );
 
 	}
-	
-	// TODO: Remove it asap
-	@SuppressWarnings("unused")
-	@Override
-	public Map<Long, UserPreferenceRtdb> getUserPreferences( String method, Integer limitTo ) 
-			throws UnexpectedServerException {
-
-		List<Long> userIds = new ArrayList<>( _getUserPreferences( null ).keySet() );
-		if( limitTo != null )
-			userIds = userIds.subList( 0, limitTo );
-
-		if( method.equals( "1" ) ) {
-			Long x = new Date().getTime();
-			for( Long userId : userIds ) {
-				BlobEntry blobEntry = HttpUtil.doGet( DATABASE_URL + DATABASE_PREFERENCE_TABLE + "/" + userId + ".json", headersMap, null );
-			}
-			Long y = new Date().getTime();
-			logger.log( Level.INFO, "Old sequential method = " + ( y-x ) + " ms." );
-		}
-		if( method.equals( "2" ) ) {
-			URLFetchService urlFetch = URLFetchServiceFactory.getURLFetchService();
-			Long x = new Date().getTime();
-			for( Long userId : userIds ) {
-				HTTPResponse response;
-				try {
-					HTTPRequest req = new HTTPRequest( new URL( DATABASE_URL + DATABASE_PREFERENCE_TABLE + "/" + userId + ".json" ) );
-					req.setHeader( new HTTPHeader( "Authorization", this.headersMap.get( "Authorization" ) ) );
-					response = urlFetch.fetch( req );
-					String resString = new String( response.getContent(), "UTF-8" );
-				} catch( IOException e ) {
-					logger.log( Level.SEVERE, "Failed fetching UserId: " + userId );
-				}
-			}
-			Long y = new Date().getTime();
-			logger.log( Level.INFO, "New sequential method = " + ( y-x ) + " ms." );
-		}
-		if( method.equals( "3" ) ) {
-			URLFetchService urlFetch = URLFetchServiceFactory.getURLFetchService();
-			Long x = new Date().getTime();
-			try {
-				List<Future<HTTPResponse>> responses = new ArrayList<>();
-				for( Long userId : userIds ) {
-					HTTPRequest req = new HTTPRequest( new URL( DATABASE_URL + DATABASE_PREFERENCE_TABLE + "/" + userId + ".json" ) );
-					req.setHeader( new HTTPHeader( "Authorization", this.headersMap.get( "Authorization" ) ) );
-					responses.add( urlFetch.fetchAsync( req ) );
-				}
-				for( Future<HTTPResponse> response : responses ) {
-					String resString = new String( response.get().getContent(), "UTF-8" );
-				}
-			} catch ( IOException | InterruptedException | ExecutionException e ) {
-				e.printStackTrace();
-			}
-			Long y = new Date().getTime();
-			logger.log( Level.INFO, "New async method = " + ( y-x ) + " ms." );
-		}
-		return null;
-	}
 
 	private Map<Long, UserPreferenceRtdb> _getUserPreferences( Map<String, String> paramsMap )
 			throws UnexpectedServerException {
-		
+
 		try {
 			BlobEntry blobEntry = HttpUtil.doGet( DATABASE_URL + DATABASE_PREFERENCE_TABLE + ".json", headersMap, paramsMap );
 			String jsonStr = new String( blobEntry.getData(), "UTF-8" );
@@ -227,7 +154,7 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 			logger.log( Level.SEVERE, e.getMessage() );
 			throw new UnexpectedServerException();
 		}
-	
+
 	}
 
 }

@@ -19,7 +19,4 @@ public interface RtdbAccessor {
 
 	Map<Long, UserPreferenceRtdb> getUserPreferences( Integer maxAndroidVersionCode ) throws UnexpectedServerException;
 
-	// TODO: Remove the function after POC
-	Map<Long, UserPreferenceRtdb> getUserPreferences( String method, Integer limitTo ) throws UnexpectedServerException;
-
 }
