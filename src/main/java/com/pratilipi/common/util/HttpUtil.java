@@ -10,8 +10,8 @@ import java.net.URLConnection;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
-import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
@@ -32,7 +32,41 @@ import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.type.BlobEntry;
 
 public class HttpUtil {
-	
+
+	public static class HttpUtilRequest {
+
+		private String targetUrl;
+
+		private Map<String, String> headersMap;
+
+		private Map<String, String> paramsMap;
+
+
+		public HttpUtilRequest( String targetUrl ) {
+			this.targetUrl = targetUrl;
+		}
+
+		public HttpUtilRequest( String targetUrl, Map<String, String> headersMap, Map<String, String> paramsMap ) {
+			this.targetUrl = targetUrl;
+			this.headersMap = headersMap;
+			this.paramsMap = paramsMap;
+		}
+
+
+		public String getTargetUrl() {
+			return targetUrl;
+		}
+
+		public Map<String, String> getHeadersMap() {
+			return headersMap;
+		}
+
+		public Map<String, String> getParamsMap() {
+			return paramsMap;
+		}
+
+	}
+
 	private static final Logger logger = Logger.getLogger( HttpUtil.class.getName() );
 	
 	
@@ -80,7 +114,7 @@ public class HttpUtil {
 
 	}
 
-	public static Map<String, String> doGet( Collection<String> targetUrlList, Map<String, String> headersMap, Map<String, String> paramsMap ) 
+	public static Map<String, String> doGet( List<HttpUtilRequest> requests ) 
 			throws UnexpectedServerException {
 
 		Map<String, String> urlResponseMap = new HashMap<>();
@@ -88,18 +122,19 @@ public class HttpUtil {
 
 		try {
 
-			Map<String, Future<HTTPResponse>> responses = new HashMap<>( targetUrlList.size() );
+			Map<String, Future<HTTPResponse>> responses = new HashMap<>( requests.size() );
 
-			for( String targetUrl : targetUrlList ) {
+			for( HttpUtilRequest req : requests ) {
 
-				HTTPRequest request = new HTTPRequest( paramsMap != null ?
-						new URL( targetUrl + "?" + createQueryString( paramsMap ) ) : new URL( targetUrl ) );
+				HTTPRequest httpRequest = new HTTPRequest( req.getParamsMap() != null ?
+						new URL( req.getTargetUrl() + "?" + createQueryString( req.getParamsMap() ) ) : new URL( req.getTargetUrl() ) );
 
-				if( headersMap != null )
-					for( Entry<String, String> entry : headersMap.entrySet() )
-						request.setHeader( new HTTPHeader( entry.getKey(), entry.getValue() ) );
+				if( req.getHeadersMap() != null )
+					for( Entry<String, String> entry : req.getHeadersMap().entrySet() )
+						httpRequest.setHeader( new HTTPHeader( entry.getKey(), entry.getValue() ) );
 
-				responses.put( targetUrl, urlFetch.fetchAsync( request ) );
+				logger.log( Level.INFO, "Http GET Request: " + req.getTargetUrl() );
+				responses.put( req.getTargetUrl(), urlFetch.fetchAsync( httpRequest ) );
 
 			}
 
