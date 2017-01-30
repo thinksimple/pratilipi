@@ -34,13 +34,16 @@
     </script>	
 </head>
 
-<body>
+<body>dk
     <!-- http://10.ptlp.co/pratilipi/cover?width=150 -->
-    <div class="demo-layout-transparent mdl-layout mdl-js-layout">
+    <div class="demo-layout-transparent mdl-layout mdl-js-layout mdl-layout--fixed-drawer
+            mdl-layout--fixed-header">
     	<pratilipi-header></pratilipi-header>
+    	<!-- ko component: "pratilipi-navigation" -->
+		<!-- /ko -->
         <main class="mdl-layout__content">
             <div class="mdl-grid">
-                <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--8-col-tablet mdl-cell--7-col">
+                <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--8-col-tablet mdl-cell--10-col">
                     <div class="mdl-grid" style="width: 100%;">
                         <div class="mdl-card__media mdl-cell mdl-cell--4-col-phone mdl-cell--3-col-tablet mdl-cell--4-col-desktop">
                             <img data-bind="attr: { src: coverImageUrl }" border="0" alt="" style="padding:10px;display:block;margin:auto;">

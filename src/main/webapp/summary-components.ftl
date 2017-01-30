@@ -11,3 +11,8 @@ ko.components.register('pratilipi-header', {
 ko.components.register('pratilipi-footer', {
     template: <@add_backslashes><#include "pratilipi-footer.html"></@add_backslashes>
 });
+
+ko.components.register('pratilipi-navigation', {
+	viewModel: <#include "pratilipi-navigation.js">,
+    template: <@add_backslashes><#include "pratilipi-navigation.html"></@add_backslashes>
+});
