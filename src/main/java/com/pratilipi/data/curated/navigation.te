@@ -1,10 +1,9 @@
 విషయసూచిక
-/event/km2017     కథా మహోత్సవం - 2017    Analytics#categoryName::event-km-2017         App#imageName::event_generic3.jpg        App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "eventId":4660127616466944 } 
-/mostread         పాఠకులకు ప్రత్యేకం       Analytics#categoryName::most-read          App#imageName::mostpopular.jpg          App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"mostread" }
-/new              కొత్త రచనలు             Analytics#categoryName::newly-published     App#imageName::newpublished.jpg          App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"new" }
-/fivemin          అయిదు నిమిషాల కథలు  Analytics#categoryName::short-stories          App#imageName::5minread.jpg            App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"fivemin" }
-/event/frday      ఫ్రెండ్ షిప్ డే కంటెస్ట్    Analytics#categoryName::event-frday     App#imageName::event_experiences.jpg    App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "eventId":6004824194678784 }
-/event/lb         లేఖారచన పోటీ           Analytics#categoryName::event-lb          App#imageName::events.jpg                App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "eventId":5659096691769344 }
+/event/km2017     కథా మహోత్సవం - 2017    Analytics#categoryName::event-km-2017   App#imageName::event_generic3.jpg        App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "eventId":4660127616466944 } 
+/mostread         పాఠకులకు ప్రత్యేకం       Analytics#categoryName::most-read        App#imageName::mostpopular.jpg          App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"mostread" }
+/new              కొత్త రచనలు             Analytics#categoryName::newly-published  App#imageName::newpublished.jpg          App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"new" }
+/fivemin          అయిదు నిమిషాల కథలు  Analytics#categoryName::short-stories   App#imageName::5minread.jpg            App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"fivemin" }
+/events           పోటీలు                 Analytics#categoryName::online-events     App#imageName::events.jpg               App#EventList::{ "language":"TELUGU" }
 /blog             బ్లాగు                   Analytics#categoryName::blogs     App#imageName::blog.jpg                   App#BlogPostList::{ "language":"TELUGU", "blogId":5683739602452480 }
 
 విభాగాలు
