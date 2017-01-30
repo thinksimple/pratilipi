@@ -480,7 +480,7 @@ public class PratilipiSite extends HttpServlet {
 
 
 			// Testing Links on gamma
-			} else if( uri.equals( "/poc" ) && SystemProperty.STAGE.equals( SystemProperty.STAGE_GAMMA ) ) {
+			} else if( uri.equals( "/poc" ) && ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) ) {
 				resourceList.remove( ThirdPartyResource.JQUERY_BOOTSTRAP_POLYMER_JS.getTag() );
 				resourceList.remove( ThirdPartyResource.POLYMER_ELEMENTS.getTag() );
 				resourceList.remove( ThirdPartyResource.FIREBASE.getTag() );
