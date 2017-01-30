@@ -1,4 +1,5 @@
 విషయసూచిక
+/event/km2017     కథా మహోత్సవం - 2017    Analytics#categoryName::event-km-2017         App#imageName::event_generic3.jpg        App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "eventId":4660127616466944 } 
 /mostread         పాఠకులకు ప్రత్యేకం       Analytics#categoryName::most-read          App#imageName::mostpopular.jpg          App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"mostread" }
 /new              కొత్త రచనలు             Analytics#categoryName::newly-published     App#imageName::newpublished.jpg          App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"new" }
 /fivemin          అయిదు నిమిషాల కథలు  Analytics#categoryName::short-stories          App#imageName::5minread.jpg            App#PratilipiList::{ "language":"TELUGU", "state":"PUBLISHED", "listName":"fivemin" }
