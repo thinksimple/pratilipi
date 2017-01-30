@@ -8,7 +8,6 @@ import java.util.Map;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
 
-import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.data.DataAccessor;
@@ -169,11 +168,11 @@ public class SEOTitleUtil {
 		return _getPageTitle( "seo_author_interview", null, language );
 	}
 	
-	public static String getBlogPostPageTitle( Long blogId, Language language ) 
+	public static String getBlogPostPageTitle( Long blogPostId, Language language ) 
 			throws UnexpectedServerException {
 
 		return getBlogPostPageTitle( 
-				BlogPostDataUtil.createBlogPostData( DataAccessorFactory.getDataAccessor().getBlogPost( blogId ) ),
+				BlogPostDataUtil.createBlogPostData( DataAccessorFactory.getDataAccessor().getBlogPost( blogPostId ) ),
 				language );
 	}
 
@@ -273,15 +272,12 @@ public class SEOTitleUtil {
 
 	}
 
-	public static String getStaticPageTitle( String fileName, Language language ) 
-			throws InvalidArgumentException, UnexpectedServerException {
+	public static String getStaticPageTitle( String pageName, Language language ) 
+			throws UnexpectedServerException {
 
-		Map<String, String> dataModel = _getStaticPageDataModel( fileName, language );
+		Map<String, String> dataModel = _getStaticPageDataModel( pageName, language );
 		if( dataModel == null )
-			dataModel = _getStaticPageDataModel( fileName, Language.ENGLISH );
-
-		if( dataModel == null )
-			throw new InvalidArgumentException( "Invalid static file name :" + fileName );
+			dataModel = _getStaticPageDataModel( pageName, Language.ENGLISH );
 
 		return _getPageTitle( "seo_static_page", dataModel, language );
 
@@ -290,11 +286,11 @@ public class SEOTitleUtil {
 
 
 	// TYPE: FOLLOW
-	public static String getFollowersPageTitle( Long authorId, Language language ) 
+	public static String getFollowersPageTitle( Long userId, Language language ) 
 			throws UnexpectedServerException {
 
 		return getFollowersPageTitle(
-				AuthorDataUtil.createAuthorData( DataAccessorFactory.getDataAccessor().getAuthor( authorId ) ),
+				AuthorDataUtil.createAuthorData( DataAccessorFactory.getDataAccessor().getAuthorByUserId( userId ) ),
 				language );
 	}
 

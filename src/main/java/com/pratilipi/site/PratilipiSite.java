@@ -65,6 +65,7 @@ import com.pratilipi.common.type.Website;
 import com.pratilipi.common.util.FacebookApi;
 import com.pratilipi.common.util.FreeMarkerUtil;
 import com.pratilipi.common.util.PratilipiFilter;
+import com.pratilipi.common.util.SEOTitleUtil;
 import com.pratilipi.common.util.SystemProperty;
 import com.pratilipi.common.util.ThirdPartyResource;
 import com.pratilipi.common.util.UserAccessUtil;
@@ -178,30 +179,48 @@ public class PratilipiSite extends HttpServlet {
 			if( uri.equals( "/" ) ) {
 				if( UxModeFilter.getWebsite() == Website.ALL_LANGUAGE || UxModeFilter.getWebsite() == Website.GAMMA_ALL_LANGUAGE ) {
 					dataModel = createDataModelForMasterHomePage( filterLanguage );
+					// TODO: Remove check asap
+					if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) )
+						dataModel.put( "title", SEOTitleUtil.getMasterHomePageTitle() );
 					templateName = "MasterHome.ftl";
 				} else {
 					dataModel = createDataModelForHomePage( basicMode, filterLanguage );
+					// TODO: Remove check asap
+					if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) )
+						dataModel.put( "title", SEOTitleUtil.getHomePageTitle( filterLanguage ) );
 					templateName = ( basicMode ? "HomeBasic.ftl" : "Home.ftl" );
 				}
 
 			} else if( uri.equals( "/library" ) ) {
 				dataModel = createDataModelForLibraryPage( basicMode, filterLanguage );
+				// TODO: Remove check asap
+				if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) )
+					dataModel.put( "title", SEOTitleUtil.getLibraryPageTitle( filterLanguage ) );
 				templateName = ( basicMode ? "LibraryBasic.ftl" : "Library.ftl" );
 
 			} else if( uri.equals( "/notifications" ) ) {
 				dataModel = createDataModelForNotificationsPage( filterLanguage, basicMode );
 				if( request.getParameter( "action" ) != null )
 					dataModel.put( "action", request.getParameter( "action" ) );
+				// TODO: Remove check asap
+				if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) )
+					dataModel.put( "title", SEOTitleUtil.getNotificationsPageTitle( filterLanguage ) );
 				templateName = ( basicMode ? "NotificationBasic.ftl" : "Notification.ftl" );
 
 			} else if( uri.equals( "/search" ) ) {
 				if( request.getQueryString() != null )
 					canonicalUrl = canonicalUrl + "?" + request.getQueryString();
 				dataModel = createDataModelForSearchPage( basicMode, filterLanguage, request );
+				// TODO: Remove check asap
+				if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) )
+					dataModel.put( "title", SEOTitleUtil.getSearchPageTitle( filterLanguage ) );
 				templateName = ( basicMode ? "SearchBasic.ftl" : "Search.ftl" );
 
 			} else if( uri.equals( "/events" ) ) {
 				dataModel = createDataModelForEventsPage( filterLanguage, basicMode );
+				// TODO: Remove check asap
+				if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) )
+					dataModel.put( "title", SEOTitleUtil.getEventsPageTitle( filterLanguage ) );
 				templateName = ( basicMode ? "EventListBasic.ftl" : "EventList.ftl" );
 
 			} else if( uri.equals( "/followers" ) ) {
@@ -226,6 +245,9 @@ public class PratilipiSite extends HttpServlet {
 					dataModel = createDataModelForFollowersPage( authorId, currentPage, filterLanguage, basicMode );
 				}
 
+				// TODO: Remove check asap
+				if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) )
+					dataModel.put( "title", SEOTitleUtil.getFollowersPageTitle( authorId, filterLanguage ) );
 				templateName = ( basicMode ? "FollowersListBasic.ftl" : "FollowersList.ftl" );
 
 			} else if( uri.equals( "/following" ) ) {
@@ -246,6 +268,10 @@ public class PratilipiSite extends HttpServlet {
 				} else {
 					dataModel = createDataModelForFollowingPage( userId, currentPage, filterLanguage, basicMode );
 				}
+
+				// TODO: Remove check asap
+				if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) )
+					dataModel.put( "title", SEOTitleUtil.getFollowersPageTitle( userId, filterLanguage ) );
 
 				templateName = ( basicMode ? "FollowingListBasic.ftl" : "FollowingList.ftl" );
 
@@ -335,6 +361,10 @@ public class PratilipiSite extends HttpServlet {
 				String action = request.getParameter( "action" );
 				if( action != null )
 					dataModel.put( "action", action );
+
+				// TODO: Remove check asap
+				if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) )
+					dataModel.put( "title", SEOTitleUtil.getWritePageTitle( pratilipiId, filterLanguage ) );
 
 				templateName = "WriterV2.ftl";
 
@@ -466,14 +496,23 @@ public class PratilipiSite extends HttpServlet {
 			} else if( page != null && page.getType() == PageType.PRATILIPI ) {
 				resourceList.addAll( createFbOpenGraphTags( page.getPrimaryContentId() ) );
 				dataModel = createDataModelForPratilipiPage( page.getPrimaryContentId(), basicMode, request );
+				// TODO: Remove check asap
+				if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) )
+					dataModel.put( "title", SEOTitleUtil.getPratilipiPageTitle( page.getPrimaryContentId(), filterLanguage ) );
 				templateName = ( basicMode ? "PratilipiBasic.ftl" : "Pratilipi.ftl" );
 
 			} else if( page != null && page.getType() == PageType.AUTHOR ) {
 				dataModel = createDataModelForAuthorPage( page.getPrimaryContentId(), basicMode, request );
+				// TODO: Remove check asap
+				if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) )
+					dataModel.put( "title", SEOTitleUtil.getAuthorPageTitle( page.getPrimaryContentId(), filterLanguage ) );
 				templateName = ( basicMode ? "AuthorBasic.ftl" : "Author.ftl" );
 
 			} else if( page != null && page.getType() == PageType.EVENT ) {
 				dataModel = createDataModelForEventPage( page.getPrimaryContentId(), basicMode, request );
+				// TODO: Remove check asap
+				if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) )
+					dataModel.put( "title", SEOTitleUtil.getEventPageTitle( page.getPrimaryContentId(), filterLanguage ) );
 				templateName = ( basicMode ? "EventBasic.ftl" : "Event.ftl" );
 
 			} else if( page != null && page.getType() == PageType.BLOG ) {
@@ -482,6 +521,9 @@ public class PratilipiSite extends HttpServlet {
 
 			} else if( page != null && page.getType() == PageType.BLOG_POST ) {
 				dataModel = createDataModelForBlogPostPage( page.getPrimaryContentId(), basicMode );
+				// TODO: Remove check asap
+				if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) )
+					dataModel.put( "title", SEOTitleUtil.getBlogPostPageTitle( page.getPrimaryContentId(), filterLanguage ) );
 				templateName = ( basicMode ? "BlogPostBasic.ftl" : "BlogPost.ftl" );
 
 			} else if( page != null && page.getType() == PageType.READ ) {
@@ -511,6 +553,10 @@ public class PratilipiSite extends HttpServlet {
 				dataModel.put( "fontSize", fontSize != null ? Integer.parseInt( fontSize ) : 14 );
 				dataModel.put( "imageSize", imageSize != null ? Integer.parseInt( imageSize ) : 636 );
 				dataModel.put( "action", action );
+
+				// TODO: Remove check asap
+				if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) )
+					dataModel.put( "title", SEOTitleUtil.getReadPageTitle( page.getPrimaryContentId(), filterLanguage ) );
 
 				templateName = ( basicMode ? "ReadBasic.ftl" : "Read.ftl" );
 
@@ -1524,6 +1570,11 @@ public class PratilipiSite extends HttpServlet {
 			dataModel.put( "pratilipiListFilterJson", gson.toJson( pratilipiFilter ) );
 			dataModel.put( "pratilipiListCursor", pratilipiListResponse.getCursor() );
 		}
+
+		// TODO: Remove check asap
+		if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) )
+			dataModel.put( "title", SEOTitleUtil.getListPageTitle( listName, filterLanguage ) );
+
 		return dataModel;
 		
 	}
@@ -1553,6 +1604,11 @@ public class PratilipiSite extends HttpServlet {
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", title );
 		dataModel.put( "content", content.toString() );
+		
+		// TODO: Remove check asap
+		if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) )
+			dataModel.put( "title", SEOTitleUtil.getStaticPageTitle( pageName, lang ) );
+
 		return dataModel;
 	}
 	
