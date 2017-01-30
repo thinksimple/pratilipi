@@ -556,7 +556,7 @@ public class PratilipiSite extends HttpServlet {
 
 				// TODO: Remove check asap
 				if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) )
-					dataModel.put( "title", SEOTitleUtil.getReadPageTitle( page.getPrimaryContentId(), filterLanguage ) );
+					dataModel.put( "title", SEOTitleUtil.getReadPageTitle( pratilipiId, filterLanguage ) );
 
 				templateName = ( basicMode ? "ReadBasic.ftl" : "Read.ftl" );
 
