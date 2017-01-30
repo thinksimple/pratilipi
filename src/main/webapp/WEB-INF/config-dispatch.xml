@@ -31,7 +31,11 @@
 		<url>*.gamma.pratilipi.com/*</url>
 		<module>gamma</module>
 	</dispatch>
-	
+
+	<dispatch>
+		<url>gamma-dot-prod-pratilipi.appspot.com/*</url>
+		<module>gamma</module>
+	</dispatch>
 
 	<dispatch>
 		<url>api.pratilipi.com/*</url>
