@@ -10,13 +10,22 @@ import java.net.URLConnection;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.commons.io.IOUtils;
 
+import com.google.appengine.api.urlfetch.HTTPHeader;
+import com.google.appengine.api.urlfetch.HTTPRequest;
+import com.google.appengine.api.urlfetch.HTTPResponse;
+import com.google.appengine.api.urlfetch.URLFetchService;
+import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
 import com.google.gson.JsonObject;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.data.DataAccessorFactory;
@@ -68,6 +77,53 @@ public class HttpUtil {
 			logger.log( Level.SEVERE, "Failed to execute Http Get call.", e );
 			throw new UnexpectedServerException();
 		}
+
+	}
+
+	public static Map<String, String> doGet( Collection<String> targetUrlList, Map<String, String> headersMap, Map<String, String> paramsMap ) 
+			throws UnexpectedServerException {
+
+		Map<String, String> urlResponseMap = new HashMap<>();
+		URLFetchService urlFetch = URLFetchServiceFactory.getURLFetchService();
+
+		try {
+
+			Map<String, Future<HTTPResponse>> responses = new HashMap<>( targetUrlList.size() );
+
+			for( String targetUrl : targetUrlList ) {
+
+				HTTPRequest request = new HTTPRequest( paramsMap != null ?
+						new URL( targetUrl + "?" + createQueryString( paramsMap ) ) : new URL( targetUrl ) );
+
+				if( headersMap != null )
+					for( Entry<String, String> entry : headersMap.entrySet() )
+						request.setHeader( new HTTPHeader( entry.getKey(), entry.getValue() ) );
+
+				responses.put( targetUrl, urlFetch.fetchAsync( request ) );
+
+			}
+
+			for( Entry<String, Future<HTTPResponse>> entry : responses.entrySet() ) {
+
+				HTTPResponse response = entry.getValue().get();
+
+				if( response.getResponseCode() != 200 ) {
+					logger.log( Level.SEVERE, "Failed to execute Http Get call: " + entry.getKey() );
+					logger.log( Level.SEVERE, "Response: " + new String( response.getContent(), "UTF-8" ) );
+					logger.log( Level.SEVERE, "Response Code: " + response.getResponseCode() );
+					throw new UnexpectedServerException();
+				}
+
+				urlResponseMap.put( entry.getKey(), new String( response.getContent(), "UTF-8" ) );
+
+			}
+
+		} catch ( IOException | InterruptedException | ExecutionException e ) {
+			logger.log( Level.SEVERE, "Failed to execute Http Get call.", e );
+			throw new UnexpectedServerException();
+		}
+
+		return urlResponseMap;
 
 	}
 
