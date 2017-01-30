@@ -36,7 +36,7 @@ public class EmailProcessApi extends GenericApi {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
-		DataIdListIterator<Email> itr = dataAccessor.getEmailIdListIteratorForStatePending();
+		DataIdListIterator<Email> itr = dataAccessor.getEmailIdListIteratorForStatePendingAndScheduled();
 
 		List<Task> taskList = new ArrayList<>( 1000 );
 		while( itr.hasNext() ) {
