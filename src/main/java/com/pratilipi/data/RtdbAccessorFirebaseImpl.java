@@ -1,6 +1,8 @@
 package com.pratilipi.data;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -9,9 +11,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.google.appengine.api.urlfetch.HTTPHeader;
+import com.google.appengine.api.urlfetch.HTTPRequest;
+import com.google.appengine.api.urlfetch.HTTPResponse;
+import com.google.appengine.api.urlfetch.URLFetchService;
+import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -144,6 +153,63 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 		paramsMap.put( "endAt", maxAndroidVersionCode + "" );
 		return _getUserPreferences( paramsMap );
 
+	}
+	
+	// TODO: Remove it asap
+	@SuppressWarnings("unused")
+	@Override
+	public Map<Long, UserPreferenceRtdb> getUserPreferences( String method, Integer limitTo ) 
+			throws UnexpectedServerException {
+
+		List<Long> userIds = new ArrayList<>( _getUserPreferences( null ).keySet() );
+		if( limitTo != null )
+			userIds = userIds.subList( 0, limitTo );
+
+		if( method.equals( "1" ) ) {
+			Long x = new Date().getTime();
+			for( Long userId : userIds ) {
+				BlobEntry blobEntry = HttpUtil.doGet( DATABASE_URL + DATABASE_PREFERENCE_TABLE + "/" + userId + ".json", headersMap, null );
+			}
+			Long y = new Date().getTime();
+			logger.log( Level.INFO, "Old sequential method = " + ( y-x ) + " ms." );
+		}
+		if( method.equals( "2" ) ) {
+			URLFetchService urlFetch = URLFetchServiceFactory.getURLFetchService();
+			Long x = new Date().getTime();
+			for( Long userId : userIds ) {
+				HTTPResponse response;
+				try {
+					HTTPRequest req = new HTTPRequest( new URL( DATABASE_URL + DATABASE_PREFERENCE_TABLE + "/" + userId + ".json" ) );
+					req.setHeader( new HTTPHeader( "Authorization", this.headersMap.get( "Authorization" ) ) );
+					response = urlFetch.fetch( req );
+					String resString = new String( response.getContent(), "UTF-8" );
+				} catch( IOException e ) {
+					logger.log( Level.SEVERE, "Failed fetching UserId: " + userId );
+				}
+			}
+			Long y = new Date().getTime();
+			logger.log( Level.INFO, "New sequential method = " + ( y-x ) + " ms." );
+		}
+		if( method.equals( "3" ) ) {
+			URLFetchService urlFetch = URLFetchServiceFactory.getURLFetchService();
+			Long x = new Date().getTime();
+			try {
+				List<Future<HTTPResponse>> responses = new ArrayList<>();
+				for( Long userId : userIds ) {
+					HTTPRequest req = new HTTPRequest( new URL( DATABASE_URL + DATABASE_PREFERENCE_TABLE + "/" + userId + ".json" ) );
+					req.setHeader( new HTTPHeader( "Authorization", this.headersMap.get( "Authorization" ) ) );
+					responses.add( urlFetch.fetchAsync( req ) );
+				}
+				for( Future<HTTPResponse> response : responses ) {
+					String resString = new String( response.get().getContent(), "UTF-8" );
+				}
+			} catch ( IOException | InterruptedException | ExecutionException e ) {
+				e.printStackTrace();
+			}
+			Long y = new Date().getTime();
+			logger.log( Level.INFO, "New async method = " + ( y-x ) + " ms." );
+		}
+		return null;
 	}
 
 	private Map<Long, UserPreferenceRtdb> _getUserPreferences( Map<String, String> paramsMap )
