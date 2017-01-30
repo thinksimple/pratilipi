@@ -40,10 +40,10 @@ public class TestApi extends GenericApi {
 		Long x = new Date().getTime();
 		Map<Long, UserPreferenceRtdb> preferences = rtdbAccessor.getUserPreferences( userIds );
 		Long y = new Date().getTime();
-		
-		System.out.println( "Size: " + preferences.size() );
 
+		logger.log( Level.INFO, "Size: " + preferences.size() );
 		logger.log( Level.INFO, "Total Time : " + (y-x) + " ms." );
+
 		return new GenericResponse();
 
 	}
