@@ -540,6 +540,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		if( resultCount != null )
 			query = query.limit( resultCount );
 	
+		query = query.chunk( resultCount != null && resultCount < 1000 ? resultCount : 1000 );
 		
 		List<AuditLog> responseList = resultCount == null ? new ArrayList<AuditLog>() : new ArrayList<AuditLog>( resultCount );
 		QueryResultIterator <AuditLogEntity> iterator = query.iterator();
@@ -1021,7 +1022,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 				.filter( "TOTAL_READ_COUNT >=", minReadCount )
 				.order( "-TOTAL_READ_COUNT" )
 				.chunk( resultCount < 1000 ? resultCount : 1000 )
-//				.limit( resultCount ) // .limit(int) is not honored in case of .list() / .iterator() for .keys()
+				.limit( resultCount ) // .limit(int) is not honored in case of .list() / .iterator() for .keys() - but still setting limit improves the execution time
 				.keys()
 				.iterator();
 
