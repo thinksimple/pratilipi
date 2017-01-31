@@ -44,6 +44,9 @@ public class PageDataUtil {
 	public static String getSitemap( String type, String cursor, Website website, boolean basicMode ) 
 			throws UnexpectedServerException {
 
+		if( website == Website.ALL_LANGUAGE )
+			return _getSiteMapForRootDomain( website.getHostName() );
+
 		if( type == null ) // Sitemap Index
 			return _getSitemapIndex( basicMode ? website.getMobileHostName() : website.getHostName() );
 
@@ -64,6 +67,16 @@ public class PageDataUtil {
 
 	}
 
+
+	private static String _getSiteMapForRootDomain( String hostName ) {
+
+		StringBuilder sitemap = new StringBuilder( "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + LINE_SEPARATOR );
+		sitemap.append( "<urlset xmlns=\"" + SITEMAP_NAMESPACE + "\">" + LINE_SEPARATOR );
+		sitemap.append( _getSitemapEntry( hostName, "/", null, null, null ) );
+		sitemap.append( "</urlset>" );
+		return sitemap.toString();
+
+	}
 
 	private static String _getSitemapIndex( String hostName ) {
 
