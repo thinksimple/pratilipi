@@ -855,7 +855,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 			
 		} else {
 			
-			String memcacheId = "DataStore.Pratilipi-list." + pratilipiFilter.getLanguage().getCode() + "." + pratilipiFilter.getListName();
+			String memcacheId = "DataStore.Pratilipi-list." + pratilipiFilter.getLanguage().getCode() + "." + pratilipiFilter.getListName() + "?" + SystemProperty.STAGE;
 			ArrayList<Long> pratilipiIdList = memcache.get( memcacheId );
 
 			if( pratilipiIdList == null ) {
