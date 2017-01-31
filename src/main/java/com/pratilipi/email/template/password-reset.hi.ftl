@@ -3,7 +3,7 @@
 <#-- SUBJECT: Pratilipi - Update password -->
 
 <!DOCTYPE html>
-<html>
+<html lang="hi">
 <body>
 	<table style="background-color: #f3f3f3; width: 100%;">
 		<tr>
@@ -22,9 +22,9 @@
 													<center>
 														<img src="http://public.pratilipi.com/email/pratilipi-logo-400x400.png" style="max-width: 100px; display: block; margin: 0 auto;" />
 														<div>
-															<p style="margin: 0.75em 0 1.5em 0; font-size: 16px;">Hi ${ user_display_name },</h2>
-															<p style="margin: 0; font-size: 16px;">You requested a new password for your Pratilipi account.</p>
-															<p style="margin-top: 0.5em; font-size: 16px;">Please click below to reset your password.</p>
+															<p style="margin: 0.75em 0 1.5em 0; font-size: 16px;">हेल्लो ${ user_display_name }</h2>
+															<p style="margin: 0; font-size: 16px;">आपने अपने प्रतिलिपि अकाउंट के लिए एक नए पासवर्ड का अनुरोध किया है </p>
+															<p style="margin-top: 0.5em; font-size: 16px;">अपना पासवर्ड बदलने के लिए कृपया नीचे क्लिक करें</p>
 														</div>
 													</center>
 												</td>
@@ -38,7 +38,7 @@
 												<td align="center" width="auto" height="40" bgcolor="#FF0000" style="-webkit-border-radius: 5px; -moz-border-radius: 5px;border-radius: 5px; color: #ffffff; display: block;">
 													<a href="http://hindi.pratilipi.com${ passwordResetUrl }" target="_blank" style="font-size: 18px; text-decoration: none; line-height: 40px; width: 100%; display: inline-block;">
 														<span style="color: #ffffff; padding-left: 15px; padding-right: 15px; ">
-															Reset Password
+															पासवर्ड बदलें
 														</span>
 													</a>
 												</td>
@@ -53,7 +53,7 @@
 												<td>
 													<center>
 														<div>
-															<small style="margin: 0.75em 0 0.75em 0;">Click the link below or copy - paste it on your browser if the button doesn't work.</small>
+															<small style="margin: 0.75em 0 0.75em 0;">अगर बटन काम नहीं कर रहा है तो नीचे दिए हुए लिंक को अपने ब्राउज़र में कॉपी पेस्ट करें</small>
 															<a href="http://hindi.pratilipi.com${ passwordResetUrl }" target="_blank" style="color: #4a4a4a; text-decoration: underline;">
 																<br/>
 																<small>
@@ -69,10 +69,12 @@
 										<center>
 											<small>
 												<br/>
-												If you face any problems, please reach out to us at 
-												<a href="mailto:contact@pratilipi.com" style="color: #4a4a4a; text-decoration: underline;" target="_blank">
-													contact@pratilipi.com
+												<br/>
+												अगर आपको कोई समस्या आती है तो कृपया हमें  
+												<a href="mailto:hindi@pratilipi.com" style="color: #4a4a4a;" target="_blank">
+													hindi@pratilipi.com
 												</a>
+												पर ईमेल करें
 												<br/>
 												<br/>
 											</small>

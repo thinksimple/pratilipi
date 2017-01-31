@@ -3,7 +3,7 @@
 <#-- SUBJECT: Welcome to Pratilipi.com -->
 
 <!DOCTYPE html>
-<html>
+<html lang="hi">
 <body>
 	<table style="background-color: #f3f3f3; width: 100%;">
 		<tr>
@@ -22,8 +22,8 @@
 													<center>
 														<img src="http://public.pratilipi.com/email/pratilipi-logo-400x400.png" style="max-width: 100px; display: block; margin: 0 auto;" />
 														<div>
-															<h2 style="margin: 0.75em 0 0.75em 0; color: #FF0000;">Welcome to Pratilipi !</h2>
-															<p style="margin: 0; font-size: 16px;">Hi ${ user_display_name }, Welcome to a world of stories !</p>
+															<h2 style="margin: 0.75em 0 0.75em 0; color: #FF0000;">प्रतिलिपि परिवार में आपका स्वागत है!</h2>
+															<p style="margin: 0; font-size: 16px;">हेल्लो ${ user_display_name }, कहानियों की दुनिया में आपका स्वागत है</p>
 														</div>
 													</center>
 												</td>
@@ -37,21 +37,21 @@
 												<td>
 													<div>
 														<img src="http://public.pratilipi.com/email/welcome/read.png" style="width: 24px; height: 24px; margin: 0px 10px 0 0; float: left;"/>
-														<p style="color: #FF0000; margin: 0px; display: inline-block; font-size: 20px; position: relative;">Read</p>
-														<p style="font-size: 16px; margin: 5px 0 20px 35px;">Read thousands of books, stories, poems and more. Anytime, anywhere, in your own language!</p>
+														<p style="color: #FF0000; margin: 0px; display: inline-block; font-size: 20px; position: relative;">पढ़ें</p>
+														<p style="font-size: 16px; margin: 5px 0 20px 35px;">पढ़ें हज़ारों कहानियाँ, कवितायें, उपन्यास और बहुत कुछ. कभी भी, कहीं भी, आपकी खुद की भाषा में</p>
 													</div>
 													<div>
 														<img src="http://public.pratilipi.com/email/welcome/write.png" style="width: 24px; height: 24px; margin: 0px 10px 0 0; float: left;"/>
-														<p style="color: #FF0000; margin: 0px; display: inline-block; font-size: 20px; position: relative;">Write</p>
-														<p style="font-size: 16px; margin: 5px 0 20px 35px;">Join our community of more than 3,000 writers who are read by over 4.5 Lac readers every month!</p>
+														<p style="color: #FF0000; margin: 0px; display: inline-block; font-size: 20px; position: relative;">लिखें</p>
+														<p style="font-size: 16px; margin: 5px 0 20px 35px;">प्रतिलिपि पर लिखने वाले उन ७००० से भी अधिक रचनाकारों में शामिल हों, जिनकी रचनायें हर महीने २२ लाख से भी ज्यादा बार पढ़ी जाती हैं </p>
 													</div>
 													<div>
 														<img src="http://public.pratilipi.com/email/welcome/connect.png" style="width: 24px; height: 24px; margin: 0px 10px 0 0; float: left;"/>
-														<p style="color: #FF0000; margin: 0px; display: inline-block; font-size: 20px; position: relative;">Connect</p>
-														<p style="font-size: 16px; margin: 5px 0 20px 35px;">Connect with us on 
-															<a href="https://www.facebook.com/Pratilipidotcom" style="color: #4a4a4a; text-decoration: underline;" target="_blank">Facebook</a>, 
-															<a href="https://twitter.com/TeamPratilipi" style="color: #4a4a4a; text-decoration: underline;" target="_blank">Twitter</a>, or 
-															<a href="https://plus.google.com/u/0/+PratilipiTeam" style="color: #4a4a4a; text-decoration: underline;" target="_blank">Google+</a> to get our latest updates!</p>
+														<p style="color: #FF0000; margin: 0px; display: inline-block; font-size: 20px; position: relative;">जुड़ें</p>
+														<p style="font-size: 16px; margin: 5px 0 20px 35px;">जुड़ें हमारे साथ  
+															<a href="https://www.facebook.com/Pratilipidotcom" style="color: #4a4a4a; text-decoration: underline;" target="_blank">फेसबुक</a>, 
+															<a href="https://twitter.com/TeamPratilipi" style="color: #4a4a4a; text-decoration: underline;" target="_blank">ट्विटर</a>, या 
+															<a href="https://plus.google.com/u/0/+PratilipiTeam" style="color: #4a4a4a; text-decoration: underline;" target="_blank">गूगल प्लस</a> पर</p>
 													</div>		
 												</td>
 											</tr>
@@ -64,7 +64,7 @@
 												<td align="center" width="auto" height="40" bgcolor="#FF0000" style="-webkit-border-radius: 5px; -moz-border-radius: 5px;border-radius: 5px; color: #ffffff; display: block;">
 													<a href="http://hindi.pratilipi.com" target="_blank" style="font-size: 18px; text-decoration: none; line-height: 40px; width: 100%; display: inline-block;">
 														<span style="color: #ffffff; padding-left: 15px; padding-right: 15px; ">
-															Begin Exploring
+															कहानियों की दुनिया में चलें
 														</span>
 													</a>
 												</td>
@@ -75,10 +75,11 @@
 											<small>
 												<br/>
 												<br/>
-												If you face any problems, please reach out to us at 
-												<a href="mailto:contact@pratilipi.com" style="color: #4a4a4a;" target="_blank">
-													contact@pratilipi.com
+												अगर आपको कोई समस्या आती है तो कृपया हमें  
+												<a href="mailto:hindi@pratilipi.com" style="color: #4a4a4a;" target="_blank">
+													hindi@pratilipi.com
 												</a>
+												पर ईमेल करें
 												<br/>
 												<br/>
 											</small>
