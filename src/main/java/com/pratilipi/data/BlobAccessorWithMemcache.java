@@ -21,7 +21,6 @@ public class BlobAccessorWithMemcache implements BlobAccessor {
 
 	
 	private final static String PREFIX = "BlobEntry-";
-	private final static String PREFIX_LIST = "BlobEntryNameList-";
 
 	private final static int SEGMENT_SIZE = 1000 * 1024; // bytes
 
@@ -79,6 +78,7 @@ public class BlobAccessorWithMemcache implements BlobAccessor {
 		
 		
 		return blobEntry;
+		
 	}
 	
 	private void memcachePut( BlobEntry blobEntry ) {
@@ -111,6 +111,7 @@ public class BlobAccessorWithMemcache implements BlobAccessor {
 		memcache.putAll( keySegmentMap );
 
 		blobEntry.setData( blobData );
+		
 	}
 	
 	
@@ -125,17 +126,6 @@ public class BlobAccessorWithMemcache implements BlobAccessor {
 	}
 
 	@Override
-	public List<String> getNameList( String prefix ) throws IOException {
-		List<String> fileNameList = memcache.get( PREFIX_LIST + prefix );
-		if( fileNameList == null ) {
-			fileNameList = blobAccessor.getNameList( prefix );
-			if( fileNameList != null )
-				memcache.put( PREFIX_LIST + prefix, new ArrayList<>( fileNameList  ) );
-		}
-		return fileNameList;
-	}
-
-	@Override
 	public BlobEntry getBlob( String fileName ) throws UnexpectedServerException {
 		BlobEntry blobEntry = memcacheGet( fileName );
 		if( blobEntry == null ) {
@@ -146,23 +136,21 @@ public class BlobAccessorWithMemcache implements BlobAccessor {
 	}
 	
 	@Override
-	public void createOrUpdateBlob( BlobEntry blobEntry ) throws UnexpectedServerException {
-
-		blobAccessor.createOrUpdateBlob( blobEntry );
-		
+	public BlobEntry createOrUpdateBlob( BlobEntry blobEntry ) throws UnexpectedServerException {
 		String fileName = blobEntry.getName();
-		memcache.remove( PREFIX + fileName );
-		memcache.remove( PREFIX_LIST + fileName.substring( 0, fileName.lastIndexOf( '/' ) + 1 ) );
+		blobEntry = blobAccessor.createOrUpdateBlob( blobEntry );
+		if( blobEntry == null ) // TODO: Remove this as soon as older impl of GcsImpl is removed
+			memcache.remove( PREFIX + fileName );
+		else
+			memcachePut( blobEntry );
+		return blobEntry;
 	}
 
 	@Override
-	public void deleteBlob( BlobEntry blobEntry ) throws UnexpectedServerException {
-
-		blobAccessor.deleteBlob( blobEntry );
-		
-		String fileName = blobEntry.getName();
-		memcache.remove( PREFIX + fileName );
-		memcache.remove( PREFIX_LIST + fileName.substring( 0, fileName.lastIndexOf( '/' ) + 1 ) );
+	public boolean deleteBlob( BlobEntry blobEntry ) {
+		boolean deleted = blobAccessor.deleteBlob( blobEntry );
+		memcache.remove( PREFIX + blobEntry.getName() );
+		return deleted;
 	}
 
 }

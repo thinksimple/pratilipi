@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.google.appengine.tools.cloudstorage.GcsFileMetadata;
+import com.google.cloud.storage.Blob;
 import com.pratilipi.data.type.BlobEntry;
 
 @SuppressWarnings("serial")
@@ -43,6 +44,17 @@ public class BlobEntryGcsImpl implements BlobEntry {
 		this.metaData = gcsFileMetadata.getOptions().getUserMetadata();
 	}
 
+	public BlobEntryGcsImpl( Blob blob ) {
+		this.fileName	  = blob.getName();
+		this.data		  = blob.getContent();
+		this.length		  = blob.getSize();
+		this.mimeType	  = blob.getContentType();
+		this.cacheControl = blob.getCacheControl();
+		this.eTag		  = blob.getEtag();
+		this.lastModified = new Date( blob.getUpdateTime() );
+		this.metaData	  = blob.getMetadata();
+	}
+	
 	
 	
 	@Override
