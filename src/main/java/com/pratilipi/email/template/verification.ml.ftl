@@ -22,8 +22,8 @@
 													<center>
 														<img src="http://public.pratilipi.com/email/pratilipi-logo-400x400.png" style="max-width: 100px; display: block; margin: 0 auto;" />
 														<div>
-															<p style="margin: 0.75em 0 0.75em 0; font-size: 16px;">Hi ${ user_display_name },</h2>
-															<p style="margin: 0; font-size: 16px;">Thanks for joining Pratilipi. Please click below to activate your account.</p>
+															<p style="margin: 0.75em 0 0.75em 0; font-size: 16px;">ഹലോ ${ user_display_name }</h2>
+															<p style="margin: 0; font-size: 16px;">പ്രതിലിപിയുടെ ഭാഗമായതിന് നന്ദി. താങ്കളുടെ അക്കൗണ്ട് ആക്ടിവേറ്റ് ചെയ്യാന്‍ താഴെ ക്ലിക്ക് ചെയ്യൂ </p>
 														</div>
 													</center>
 												</td>
@@ -37,7 +37,7 @@
 												<td align="center" width="auto" height="40" bgcolor="#FF0000" style="-webkit-border-radius: 5px; -moz-border-radius: 5px;border-radius: 5px; color: #ffffff; display: block;">
 													<a href="http://malayalam.pratilipi.com${ emailVerificationUrl }" target="_blank" style="font-size: 18px; text-decoration: none; line-height: 40px; width: 100%; display: inline-block;">
 														<span style="color: #ffffff; padding-left: 15px; padding-right: 15px; ">
-															Verify Account
+															അക്കൗണ്ട് വെരിഫൈ ചെയ്യൂ 
 														</span>
 													</a>
 												</td>
@@ -52,7 +52,7 @@
 												<td>
 													<center>
 														<div>
-															<small style="margin: 0.75em 0 0.75em 0;">Click the link below or copy - paste it on your browser if the button doesn't work.</small>
+															<small style="margin: 0.75em 0 0.75em 0;">താഴെ ഉള്ള ലിങ്കില്‍ ക്ലിക്ക് ചെയ്യൂ - അത് പ്രവര്‍ത്തിക്കുന്നില്ലെങ്കില്‍ ലിങ്ക് കോപ്പി ചെയ്ത് താങ്കളുടെ ബ്രൗസറില്‍ പേസ്റ്റ് ചെയ്യൂ</small>
 															<a href="http://malayalam.pratilipi.com${ emailVerificationUrl }" target="_blank" style="color: #4a4a4a; text-decoration: underline;">
 																<br/>
 																<small>
@@ -68,10 +68,12 @@
 										<center>
 											<small>
 												<br/>
-												If you face any problems, please reach out to us at 
-												<a href="mailto:contact@pratilipi.com" style="color: #4a4a4a; text-decoration: underline;" target="_blank">
-													contact@pratilipi.com
+												<br/>
+												എന്തെങ്കിലും ബുദ്ധിമുട്ടുണ്ടെങ്കില്‍  
+												<a href="mailto:malayalam@pratilipi.com" style="color: #4a4a4a;" target="_blank">
+													malayalam@pratilipi.com
 												</a>
+												എന്ന മെയില്‍ ലേക്ക് ഞങ്ങള്‍ക്ക് എഴുതൂ
 												<br/>
 												<br/>
 											</small>

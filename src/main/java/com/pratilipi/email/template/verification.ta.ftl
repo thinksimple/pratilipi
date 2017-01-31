@@ -3,7 +3,7 @@
 <#-- SUBJECT: Please verify your e-mail address -->
 
 <!DOCTYPE html>
-<html>
+<html lang="ta">
 <body>
 	<table style="background-color: #f3f3f3; width: 100%;">
 		<tr>
@@ -22,8 +22,8 @@
 													<center>
 														<img src="http://public.pratilipi.com/email/pratilipi-logo-400x400.png" style="max-width: 100px; display: block; margin: 0 auto;" />
 														<div>
-															<p style="margin: 0.75em 0 0.75em 0; font-size: 16px;">Hi ${ user_display_name },</h2>
-															<p style="margin: 0; font-size: 16px;">Thanks for joining Pratilipi. Please click below to activate your account.</p>
+															<p style="margin: 0.75em 0 0.75em 0; font-size: 16px;">வணக்கம் ${ user_display_name }</h2>
+															<p style="margin: 0; font-size: 16px;">பிரதிலிபியில் இணைந்ததற்கு மிக்க நன்றி. உங்கள் கணக்கை ஆக்டிவேட் செய்ய கீழே சொடுக்கவும் </p>
 														</div>
 													</center>
 												</td>
@@ -37,7 +37,7 @@
 												<td align="center" width="auto" height="40" bgcolor="#FF0000" style="-webkit-border-radius: 5px; -moz-border-radius: 5px;border-radius: 5px; color: #ffffff; display: block;">
 													<a href="http://tamil.pratilipi.com${ emailVerificationUrl }" target="_blank" style="font-size: 18px; text-decoration: none; line-height: 40px; width: 100%; display: inline-block;">
 														<span style="color: #ffffff; padding-left: 15px; padding-right: 15px; ">
-															Verify Account
+															கணக்கை உறுதிசெய்ய
 														</span>
 													</a>
 												</td>
@@ -52,7 +52,7 @@
 												<td>
 													<center>
 														<div>
-															<small style="margin: 0.75em 0 0.75em 0;">Click the link below or copy - paste it on your browser if the button doesn't work.</small>
+															<small style="margin: 0.75em 0 0.75em 0;">பட்டன் வேலை செய்யவில்லையென்றால் கீழே உள்ள சுட்டியை சொடுக்கவும் அல்லது சுட்டியை உங்களது ப்ரவுஸரில் காப்பி - பேஸ்ட் செய்யவும்</small>
 															<a href="http://tamil.pratilipi.com${ emailVerificationUrl }" target="_blank" style="color: #4a4a4a; text-decoration: underline;">
 																<br/>
 																<small>
@@ -68,10 +68,12 @@
 										<center>
 											<small>
 												<br/>
-												If you face any problems, please reach out to us at 
-												<a href="mailto:contact@pratilipi.com" style="color: #4a4a4a; text-decoration: underline;" target="_blank">
-													contact@pratilipi.com
+												<br/>
+												உங்களுக்கு ஏதேனும் இடையூறு இருந்தால்   
+												<a href="mailto:tamil@pratilipi.com" style="color: #4a4a4a;" target="_blank">
+													tamil@pratilipi.com
 												</a>
+												என்ற மின்னஞ்சலில் எங்களை தொடர்பு கொள்ளவும்
 												<br/>
 												<br/>
 											</small>
