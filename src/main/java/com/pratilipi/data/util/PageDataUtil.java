@@ -44,17 +44,14 @@ public class PageDataUtil {
 	public static String getSitemap( String type, String cursor, Website website, boolean basicMode ) 
 			throws UnexpectedServerException {
 
+		/* Only include canonical URLs. A common mistake is to include URLs of
+		 * duplicate pages. This increases the load on your server without
+		 * improving indexing. */
+		
 		if( website == Website.ALL_LANGUAGE )
-			return _getSiteMapForRootDomain( website.getHostName() );
+			return _getSiteMapForMainWebsite( website.getHostName(), basicMode );
 
-		// Only include canonical URLs. 
-		// A common mistake is to include URLs of duplicate pages. 
-		// This increases the load on your server without improving indexing.
-		if( basicMode )
-			return _getSiteMapForBasicMode( website.getMobileHostName() );
-
-		// Sitemap Index
-		if( type == null ) 
+		if( type == null ) // Sitemap Index
 			return _getSitemapIndex( website.getHostName() );
 
 		if( type.equals( "page" ) )
@@ -75,31 +72,23 @@ public class PageDataUtil {
 	}
 
 
-	private static String _getSiteMapForRootDomain( String hostName ) {
-
+	private static String _getSiteMapForMainWebsite( String hostName, boolean basicMode ) {
 		StringBuilder sitemap = new StringBuilder( "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + LINE_SEPARATOR );
 		sitemap.append( "<urlset xmlns=\"" + SITEMAP_NAMESPACE + "\">" + LINE_SEPARATOR );
+		
 		sitemap.append( _getSitemapEntry( hostName, "/", null, null, null ) );
+		if( basicMode ) {
+			// Links specific to basic Mode
+			sitemap.append( _getSitemapEntry( hostName, "/login", null, null, null ) );
+			sitemap.append( _getSitemapEntry( hostName, "/register", null, null, null ) );
+			sitemap.append( _getSitemapEntry( hostName, "/account", null, null, null ) );
+			sitemap.append( _getSitemapEntry( hostName, "/resetpassword", null, null, null ) );
+			sitemap.append( _getSitemapEntry( hostName, "/updatepassword", null, null, null ) );
+			sitemap.append( _getSitemapEntry( hostName, "/navigation", null, null, null ) );
+		}
+		
 		sitemap.append( "</urlset>" );
 		return sitemap.toString();
-
-	}
-
-	private static String _getSiteMapForBasicMode( String hostName ) {
-		StringBuilder sitemap = new StringBuilder( "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + LINE_SEPARATOR );
-		sitemap.append( "<urlset xmlns=\"" + SITEMAP_NAMESPACE + "\">" + LINE_SEPARATOR );
-
-		// Links specific to basic Mode
-		sitemap.append( _getSitemapEntry( hostName, "/login", null, null, null ) );
-		sitemap.append( _getSitemapEntry( hostName, "/register", null, null, null ) );
-		sitemap.append( _getSitemapEntry( hostName, "/account", null, null, null ) );
-		sitemap.append( _getSitemapEntry( hostName, "/resetpassword", null, null, null ) );
-		sitemap.append( _getSitemapEntry( hostName, "/updatepassword", null, null, null ) );
-		sitemap.append( _getSitemapEntry( hostName, "/navigation", null, null, null ) );
-
-		sitemap.append( "</urlset>" );
-		return sitemap.toString();
-
 	}
 
 	private static String _getSitemapIndex( String hostName ) {
@@ -200,19 +189,6 @@ public class PageDataUtil {
 			}
 		}
 
-		// HACK: Very rare case - sitemap empty - add homepage url for this case
-		if( pratilipiPageMap.isEmpty() 
-				&& authorPageMap.isEmpty() 
-				&& blogPageMap.isEmpty() 
-				&& blogPostPageMap.isEmpty() 
-				&& eventPageMap.isEmpty() ) {
-			StringBuilder sitemap = new StringBuilder( "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + LINE_SEPARATOR );
-			sitemap.append( "<urlset xmlns=\"" + SITEMAP_NAMESPACE + "\">" + LINE_SEPARATOR );
-			sitemap.append( _getSitemapEntry( hostName, "/", null, "hourly", "0.9" ) );
-			sitemap.append( "</urlset>" );
-			return sitemap.toString();
-		}
-
 
 		Map<Long, Pratilipi> pratilipis = dataAccessor.getPratilipis( pratilipiPageMap.keySet() );
 		Map<Long, Author> authors = dataAccessor.getAuthors( authorPageMap.keySet() );
@@ -222,6 +198,15 @@ public class PageDataUtil {
 
 		StringBuilder sitemap = new StringBuilder( "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + LINE_SEPARATOR );
 		sitemap.append( "<urlset xmlns=\"" + SITEMAP_NAMESPACE + "\">" + LINE_SEPARATOR );
+
+		// For a few cases when sitemap is empty, add an entry to avoid error on crawler
+		if( pratilipiPageMap.isEmpty() 
+				&& authorPageMap.isEmpty() 
+				&& blogPageMap.isEmpty() 
+				&& blogPostPageMap.isEmpty() 
+				&& eventPageMap.isEmpty() ) {
+			sitemap.append( _getSitemapEntry( hostName, "/", null, "hourly", "0.9" ) );
+		}
 
 		for( Long pratilipiId : pratilipiPageMap.keySet() ) {
 			Pratilipi pratilipi = pratilipis.get( pratilipiId );
