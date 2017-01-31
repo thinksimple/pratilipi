@@ -110,7 +110,9 @@
 			<#include "pratilipi-rating.ftl" ><small>(${ pratilipi.ratingCount })</small>
 		</a>
 	<#else>
-		<a <#if user.isGuest() == true>href="/login?ret=${ pratilipi.getPageUrl() }?review=write"<#else>href="?review=write"</#if> class="link" style="text-decoration: underline;">${ _strings.rating_be_first_one }</a>
+		<#if pratilipi.getState() == "PUBLISHED" && userpratilipi?? && userpratilipi.hasAccessToReview()?? && userpratilipi.hasAccessToReview() == true>
+			<a <#if user.isGuest() == true>href="/login?ret=${ pratilipi.getPageUrl() }?review=write"<#else>href="?review=write"</#if> class="link" style="text-decoration: underline;">${ _strings.rating_be_first_one }</a>
+		</#if>
 	</#if>
 	
 	<h6 style="margin-top: 10px;" id="pratilipiType-${ pratilipi.getId()?c }"></h6>
