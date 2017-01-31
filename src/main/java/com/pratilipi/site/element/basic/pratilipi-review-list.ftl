@@ -1,16 +1,18 @@
 
 <div class="secondary-500 pratilipi-shadow box" style="padding: 12px 10px;">
 	<h2 style="display: inline-block; margin-right: 10px;" class="pratilipi-red">${ _strings.review_heading }</h2>
-	<#if userpratilipi?? && userpratilipi.hasAccessToReview()?? && userpratilipi.hasAccessToReview() == true>
-			<a href="?review=write" style="display: inline-block" class="pratilipi-grey-button">
-			<#if userpratilipi.review?? >
-				${ _strings.review_edit_review }
-			<#else>
-				${ _strings.review_write_a_review }
-			</#if></a>
-	<#elseif user.isGuest() == true>
-		<a href="/login?ret=${ pratilipi.getPageUrl() }?review=write" style="display: inline-block" class="pratilipi-grey-button">${ _strings.review_write_a_review }</a>
-	</#if>				
+	<#if pratilipi.getState == "PUBLISHED">
+		<#if userpratilipi?? && userpratilipi.hasAccessToReview()?? && userpratilipi.hasAccessToReview() == true>
+				<a href="?review=write" style="display: inline-block" class="pratilipi-grey-button">
+				<#if userpratilipi.review?? >
+					${ _strings.review_edit_review }
+				<#else>
+					${ _strings.review_write_a_review }
+				</#if></a>
+		<#elseif user.isGuest() == true>
+			<a href="/login?ret=${ pratilipi.getPageUrl() }?review=write" style="display: inline-block" class="pratilipi-grey-button">${ _strings.review_write_a_review }</a>
+		</#if>	
+	</#if>			
 </div>
 
 <#assign hasReview = false >

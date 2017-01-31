@@ -61,7 +61,7 @@
 	</div>
 	<#if pageNo == pageCount && pratilipi.getState() == "PUBLISHED" >
 		<div class="alert alert-success" role="alert">
-			<#if user.isGuest() != true && pratilipi.getAuthor().getId() != user.getAuthor().getId() >
+			<#if user.isGuest() || pratilipi.getAuthor().getId() != user.getAuthor().getId() >
 				<h3 class="text-center" style="margin-top: 24px;">${ _strings.reader_enjoyed_reading_part1 }</h3>
 				<div class="text-center div-center">
 					<a <#if user.isGuest() == true>href="/login?ret=${ pratilipi.getPageUrl() }?review=write%26ret=/${ pageUrl }?id=${ pratilipi.getId()?c }%26pageNo=${ pageNo }"<#else>href="${ pratilipi.getPageUrl() }?review=write&ret=/${ pageUrl }?id=${ pratilipi.getId()?c }%26pageNo=${ pageNo }"</#if> >

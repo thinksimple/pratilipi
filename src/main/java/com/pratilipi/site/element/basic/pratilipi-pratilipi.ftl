@@ -104,15 +104,13 @@
 		</div>
 	</div>
 	<#-- <div style="display: block;" class="fb-like" data-href="http://www.pratilipi.com/pratilipi/${ pratilipi.getId() }" data-layout="button" data-action="like" data-size="small" data-show-faces="false" data-share="false"></div> -->
-	<#if pratilipi.getState() == "PUBLISHED" && user.isGuest() != true && pratilipi.getAuthor().getId() != user.getAuthor().getId() >
-		<#if pratilipi.ratingCount gt 0 >
-			<a <#if user.isGuest() == true>href="/login?ret=${ pratilipi.getPageUrl() }?review=write"<#else>href="?review=write"</#if> >
-				<#assign rating=pratilipi.averageRating >
-				<#include "pratilipi-rating.ftl" ><small>(${ pratilipi.ratingCount })</small>
-			</a>
-		<#else>
-			<a <#if user.isGuest() == true>href="/login?ret=${ pratilipi.getPageUrl() }?review=write"<#else>href="?review=write"</#if> class="link" style="text-decoration: underline;">${ _strings.rating_be_first_one }</a>
-		</#if>
+	<#if pratilipi.ratingCount gt 0 >
+		<a <#if user.isGuest() == true>href="/login?ret=${ pratilipi.getPageUrl() }?review=write"<#else>href="?review=write"</#if> >
+			<#assign rating=pratilipi.averageRating >
+			<#include "pratilipi-rating.ftl" ><small>(${ pratilipi.ratingCount })</small>
+		</a>
+	<#else>
+		<a <#if user.isGuest() == true>href="/login?ret=${ pratilipi.getPageUrl() }?review=write"<#else>href="?review=write"</#if> class="link" style="text-decoration: underline;">${ _strings.rating_be_first_one }</a>
 	</#if>
 	
 	<h6 style="margin-top: 10px;" id="pratilipiType-${ pratilipi.getId()?c }"></h6>

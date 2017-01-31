@@ -26,9 +26,11 @@
 					<div class="sprites-icon reader-sprite-icon edit-icon"></div>
 				</a>
 				<#-- Share buttons -->
-				<a onClick="gotoShare()" style="cursor: pointer;">
-					<div class="sprites-icon reader-sprite-icon share-icon"></div>
-				</a>
+				<#if pratilipi.getState() == "PUBLISHED" >
+					<a onClick="gotoShare()" style="cursor: pointer;">
+						<div class="sprites-icon reader-sprite-icon share-icon"></div>
+					</a>
+				</#if>	
 				<#-- Menu button -->
 				<a onClick="gotoSetting()" style="cursor: pointer;">
 					<div class="sprites-icon reader-sprite-icon settings-icon"></div>
