@@ -138,7 +138,7 @@
 				this.set( 'hasLocation', this.author.location != null );
 				this.set( 'location', this.author.location );
 				this.set( 'hasDateOfBirth', this.author.dateOfBirth != null );
-				this.set( 'dateOfBirth', this.author.dateOfBirth );
+				this.set( 'dateOfBirth', this.author.dateOfBirth == null ? null : convertDate( this.author.dateOfBirth ) );
 			},
 
 			attached: function() {

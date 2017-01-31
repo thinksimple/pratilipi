@@ -2,3 +2,6 @@
 /src/main/webapp/WEB-INF/classes
 /target/
 /PrivateKey.p12
+/node_modules
+/src/main/webapp/pwa-stylesheets/scss
+/src/main/webapp/pwa-stylesheets/css
