@@ -206,7 +206,7 @@ public class PageDataUtil {
 			if( pratilipi.getState() != PratilipiState.PUBLISHED )
 				continue;
 			sitemap.append( _getSitemapEntry( hostName, pratilipiPageMap.get( pratilipiId ), pratilipi.getLastUpdated(), "daily", "0.7" ) );
-			sitemap.append( _getSitemapEntry( hostName, "/read?pratilipiId=" + pratilipiId, pratilipi.getLastUpdated(), "daily", "0.7" ) );
+			sitemap.append( _getSitemapEntry( hostName, "/read?" + RequestParameter.CONTENT_ID.getName() + "=" + pratilipiId, pratilipi.getLastUpdated(), "daily", "0.7" ) );
 		}
 
 		for( Long authorId : authorPageMap.keySet() ) {
