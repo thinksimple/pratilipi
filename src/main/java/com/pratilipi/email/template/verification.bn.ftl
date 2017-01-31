@@ -22,8 +22,8 @@
 													<center>
 														<img src="http://public.pratilipi.com/email/pratilipi-logo-400x400.png" style="max-width: 100px; display: block; margin: 0 auto;" />
 														<div>
-															<p style="margin: 0.75em 0 0.75em 0; font-size: 16px;">Hi ${ user_display_name },</h2>
-															<p style="margin: 0; font-size: 16px;">Thanks for joining Pratilipi. Please click below to activate your account.</p>
+															<p style="margin: 0.75em 0 0.75em 0; font-size: 16px;">হ্যালো ${ user_display_name }</h2>
+															<p style="margin: 0; font-size: 16px;">প্রতিলিপি পরিবারে আপনাকে স্বাগত, আপনার অ্যাকাউন্ট সক্রিয় করতে অনুগ্রহ করে এখানে ক্লিক করুন</p>
 														</div>
 													</center>
 												</td>
@@ -37,7 +37,7 @@
 												<td align="center" width="auto" height="40" bgcolor="#FF0000" style="-webkit-border-radius: 5px; -moz-border-radius: 5px;border-radius: 5px; color: #ffffff; display: block;">
 													<a href="http://bengali.pratilipi.com${ emailVerificationUrl }" target="_blank" style="font-size: 18px; text-decoration: none; line-height: 40px; width: 100%; display: inline-block;">
 														<span style="color: #ffffff; padding-left: 15px; padding-right: 15px; ">
-															Verify Account
+															অ্যাকাউন্ট সক্রিয় করুন
 														</span>
 													</a>
 												</td>
@@ -52,7 +52,7 @@
 												<td>
 													<center>
 														<div>
-															<small style="margin: 0.75em 0 0.75em 0;">Click the link below or copy - paste it on your browser if the button doesn't work.</small>
+															<small style="margin: 0.75em 0 0.75em 0;">যদি বাটন কাজ না করে তাহলে নীচে দেওয়া লিঙ্কটিকে আপনার ব্রাউজারে কপি পেস্ট করুন</small>
 															<a href="http://bengali.pratilipi.com${ emailVerificationUrl }" target="_blank" style="color: #4a4a4a; text-decoration: underline;">
 																<br/>
 																<small>
@@ -68,10 +68,12 @@
 										<center>
 											<small>
 												<br/>
-												If you face any problems, please reach out to us at 
-												<a href="mailto:contact@pratilipi.com" style="color: #4a4a4a; text-decoration: underline;" target="_blank">
-													contact@pratilipi.com
+												<br/>
+												যদি আপনি কোন সমস্যায় পড়েন তাহলে অনুগ্রহ করে   
+												<a href="mailto:bengali@pratilipi.com" style="color: #4a4a4a;" target="_blank">
+													bengali@pratilipi.com
 												</a>
+												- এ আমাদের মেল করুন
 												<br/>
 												<br/>
 											</small>
