@@ -544,8 +544,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		
 		List<AuditLog> responseList = resultCount == null ? new ArrayList<AuditLog>() : new ArrayList<AuditLog>( resultCount );
 		QueryResultIterator <AuditLogEntity> iterator = query.iterator();
-		while( iterator.hasNext() )
+		while( iterator.hasNext() ) {
 			responseList.add( iterator.next() );
+			if( resultCount != null && responseList.size() == resultCount )
+				break;
+		}
 		Cursor cursor = iterator.getCursor();
 
 		return new DataListCursorTuple<AuditLog>(
