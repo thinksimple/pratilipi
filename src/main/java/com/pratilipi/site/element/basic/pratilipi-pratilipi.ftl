@@ -91,7 +91,9 @@
 		<#if pratilipi.hasAccessToUpdate()==true >
 			<a href="?action=edit_content" style="position: absolute;right: 36px;top: 0;"><div class="sprites-icon settings-icon"></div></a>
 		</#if>
-		<a onclick="gotoShare( '${ pratilipi.getPageUrl() }', '${ pratilipi.title!pratilipi.titleEn }', 'web_mini', 'content_share' )" style="position: absolute;right: 0;top: 0;"><div class="sprites-icon share-icon"></div></a>
+		<#if pratilipi.getState() == "PUBLISHED" >
+			<a onclick="gotoShare( '${ pratilipi.getPageUrl() }', '${ pratilipi.title!pratilipi.titleEn }', 'web_mini', 'content_share' )" style="position: absolute;right: 0;top: 0;"><div class="sprites-icon share-icon"></div></a>
+		</#if>
 		<div style="width: 150px; height: 225px; margin: 15px auto; position: relative;" class="pratilipi-shadow">
 			<img src="${ pratilipi.getCoverImageUrl( 150 ) }" alt="${ pratilipi.title!pratilipi.titleEn }" title="${ pratilipi.titleEn!pratilipi.title }" />
 			<#if pratilipi.hasAccessToUpdate()==true >
@@ -102,15 +104,16 @@
 		</div>
 	</div>
 	<#-- <div style="display: block;" class="fb-like" data-href="http://www.pratilipi.com/pratilipi/${ pratilipi.getId() }" data-layout="button" data-action="like" data-size="small" data-show-faces="false" data-share="false"></div> -->
-	<#if pratilipi.ratingCount gt 0 >
-		<a <#if user.isGuest() == true>href="/login?ret=${ pratilipi.getPageUrl() }?review=write"<#else>href="?review=write"</#if> >
-			<#assign rating=pratilipi.averageRating >
-			<#include "pratilipi-rating.ftl" ><small>(${ pratilipi.ratingCount })</small>
-		</a>
-	<#else>
-		<a <#if user.isGuest() == true>href="/login?ret=${ pratilipi.getPageUrl() }?review=write"<#else>href="?review=write"</#if> class="link" style="text-decoration: underline;">${ _strings.rating_be_first_one }</a>
+	<#if user.isGuest() != true && pratilipi.getAuthor().getId() != user.getAuthor().getId() >
+		<#if pratilipi.ratingCount gt 0 >
+			<a <#if user.isGuest() == true>href="/login?ret=${ pratilipi.getPageUrl() }?review=write"<#else>href="?review=write"</#if> >
+				<#assign rating=pratilipi.averageRating >
+				<#include "pratilipi-rating.ftl" ><small>(${ pratilipi.ratingCount })</small>
+			</a>
+		<#else>
+			<a <#if user.isGuest() == true>href="/login?ret=${ pratilipi.getPageUrl() }?review=write"<#else>href="?review=write"</#if> class="link" style="text-decoration: underline;">${ _strings.rating_be_first_one }</a>
+		</#if>
 	</#if>
-
 	
 	<h6 style="margin-top: 10px;" id="pratilipiType-${ pratilipi.getId()?c }"></h6>
 	
