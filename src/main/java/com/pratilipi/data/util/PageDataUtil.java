@@ -163,6 +163,19 @@ public class PageDataUtil {
 			}
 		}
 
+		// HACK: Very rare case - sitemap empty - add homepage url for this case
+		if( pratilipiPageMap.isEmpty() 
+				&& authorPageMap.isEmpty() 
+				&& blogPageMap.isEmpty() 
+				&& blogPostPageMap.isEmpty() 
+				&& eventPageMap.isEmpty() ) {
+			StringBuilder sitemap = new StringBuilder( "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + LINE_SEPARATOR );
+			sitemap.append( "<urlset xmlns=\"" + SITEMAP_NAMESPACE + "\">" + LINE_SEPARATOR );
+			sitemap.append( _getSitemapEntry( hostName, "/", null, "hourly", "0.9" ) );
+			sitemap.append( "</urlset>" );
+			return sitemap.toString();
+		}
+
 
 		Map<Long, Pratilipi> pratilipis = dataAccessor.getPratilipis( pratilipiPageMap.keySet() );
 		Map<Long, Author> authors = dataAccessor.getAuthors( authorPageMap.keySet() );
