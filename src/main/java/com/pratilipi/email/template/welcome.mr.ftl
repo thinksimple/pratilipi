@@ -48,9 +48,9 @@
 													<div>
 														<img src="http://public.pratilipi.com/email/welcome/connect.png" style="width: 24px; height: 24px; margin: 0px 10px 0 0; float: left;"/>
 														<p style="color: #FF0000; margin: 0px; display: inline-block; font-size: 20px; position: relative;">सामील व्हा</p>
-														<p style="font-size: 16px; margin: 5px 0 20px 35px;">सामील व्हा आमच्या सोबत   
+														<p style="font-size: 16px; margin: 5px 0 20px 35px;">सामील व्हा आमच्या सोबत     
 															<a href="https://www.facebook.com/Pratilipidotcom" style="color: #4a4a4a; text-decoration: underline;" target="_blank">फेसबुक</a>, 
-															<a href="https://twitter.com/TeamPratilipi" style="color: #4a4a4a; text-decoration: underline;" target="_blank">ट्विटर</a>, या 
+															<a href="https://twitter.com/TeamPratilipi" style="color: #4a4a4a; text-decoration: underline;" target="_blank">ट्विटर</a> या 
 															<a href="https://plus.google.com/u/0/+PratilipiTeam" style="color: #4a4a4a; text-decoration: underline;" target="_blank">गूगल प्लस</a> पर</p>
 													</div>		
 												</td>

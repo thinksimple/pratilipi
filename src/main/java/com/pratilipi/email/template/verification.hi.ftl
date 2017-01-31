@@ -22,7 +22,7 @@
 													<center>
 														<img src="http://public.pratilipi.com/email/pratilipi-logo-400x400.png" style="max-width: 100px; display: block; margin: 0 auto;" />
 														<div>
-															<p style="margin: 0.75em 0 0.75em 0; font-size: 16px;">हेल्लो ${ user_display_name }</h2>
+															<p style="margin: 0.75em 0 0.75em 0; font-size: 16px;">हलो ${ user_display_name }</h2>
 															<p style="margin: 0; font-size: 16px;">प्रतिलिपि परिवार में आपका स्वागत है, अपना अकाउंट सक्रिय करने के लिए कृपया यहाँ क्लिक करें</p>
 														</div>
 													</center>

@@ -75,11 +75,11 @@
 											<small>
 												<br/>
 												<br/>
-												എന്തെങ്കിലും ബുദ്ധിമുട്ടുണ്ടെങ്കില്‍  
+												എന്തെങ്കിലും ബുദ്ധിമുട്ടുണ്ടെങ്കില്‍ 
 												<a href="mailto:malayalam@pratilipi.com" style="color: #4a4a4a;" target="_blank">
 													malayalam@pratilipi.com
 												</a>
-												എന്ന മെയില്‍ ലേക്ക് ഞങ്ങള്‍ക്ക് എഴുതൂ
+												 എന്ന മെയിലിലേക്ക് ഞങ്ങള്‍ക്ക് എഴുതൂ
 												<br/>
 												<br/>
 											</small>

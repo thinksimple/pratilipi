@@ -22,7 +22,7 @@
 													<center>
 														<img src="http://public.pratilipi.com/email/pratilipi-logo-400x400.png" style="max-width: 100px; display: block; margin: 0 auto;" />
 														<div>
-															<p style="margin: 0.75em 0 1.5em 0; font-size: 16px;">हेल्लो ${ user_display_name }</h2>
+															<p style="margin: 0.75em 0 1.5em 0; font-size: 16px;">हलो ${ user_display_name }</h2>
 															<p style="margin: 0; font-size: 16px;">आपने अपने प्रतिलिपि अकाउंट के लिए एक नए पासवर्ड का अनुरोध किया है </p>
 															<p style="margin-top: 0.5em; font-size: 16px;">अपना पासवर्ड बदलने के लिए कृपया नीचे क्लिक करें</p>
 														</div>

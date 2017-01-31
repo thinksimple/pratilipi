@@ -22,7 +22,7 @@
 													<center>
 														<img src="http://public.pratilipi.com/email/pratilipi-logo-400x400.png" style="max-width: 100px; display: block; margin: 0 auto;" />
 														<div>
-															<p style="margin: 0.75em 0 1.5em 0; font-size: 16px;">હલ્લો ${ user_display_name }</h2>
+															<p style="margin: 0.75em 0 1.5em 0; font-size: 16px;">હેલ્લો ${ user_display_name }</h2>
 															<p style="margin: 0; font-size: 16px;">તમે તમારા પ્રતિલિપિનાં એકાઉન્ટ માટે એક નવા પાસવર્ડની વિનંતી કરી છે.</p>
 															<p style="margin-top: 0.5em; font-size: 16px;">તમારો પાસવર્ડ બદલવા માટે નીચે ક્લિક કરો</p>
 														</div>

@@ -22,8 +22,8 @@
 													<center>
 														<img src="http://public.pratilipi.com/email/pratilipi-logo-400x400.png" style="max-width: 100px; display: block; margin: 0 auto;" />
 														<div>
-															<h2 style="margin: 0.75em 0 0.75em 0; color: #FF0000;">प्रतिलिपि परिवार में आपका स्वागत है!</h2>
-															<p style="margin: 0; font-size: 16px;">हेल्लो ${ user_display_name }, कहानियों की दुनिया में आपका स्वागत है</p>
+															<h2 style="margin: 0.75em 0 0.75em 0; color: #FF0000;">प्रतिलिपि परिवार में आपका स्वागत है !</h2>
+															<p style="margin: 0; font-size: 16px;">हलो ${ user_display_name }, कहानियों की दुनिया में आपका स्वागत है !</p>
 														</div>
 													</center>
 												</td>
@@ -38,12 +38,12 @@
 													<div>
 														<img src="http://public.pratilipi.com/email/welcome/read.png" style="width: 24px; height: 24px; margin: 0px 10px 0 0; float: left;"/>
 														<p style="color: #FF0000; margin: 0px; display: inline-block; font-size: 20px; position: relative;">पढ़ें</p>
-														<p style="font-size: 16px; margin: 5px 0 20px 35px;">पढ़ें हज़ारों कहानियाँ, कवितायें, उपन्यास और बहुत कुछ. कभी भी, कहीं भी, आपकी खुद की भाषा में</p>
+														<p style="font-size: 16px; margin: 5px 0 20px 35px;">पढ़ें हज़ारों कहानियाँ, कवितायें, उपन्यास और बहुत कुछ। कभी भी, कहीं भी, अपनी भाषा में।</p>
 													</div>
 													<div>
 														<img src="http://public.pratilipi.com/email/welcome/write.png" style="width: 24px; height: 24px; margin: 0px 10px 0 0; float: left;"/>
 														<p style="color: #FF0000; margin: 0px; display: inline-block; font-size: 20px; position: relative;">लिखें</p>
-														<p style="font-size: 16px; margin: 5px 0 20px 35px;">प्रतिलिपि पर लिखने वाले उन ७००० से भी अधिक रचनाकारों में शामिल हों, जिनकी रचनायें हर महीने २२ लाख से भी ज्यादा बार पढ़ी जाती हैं </p>
+														<p style="font-size: 16px; margin: 5px 0 20px 35px;">प्रतिलिपि पर लिखने वाले उन ७००० से भी अधिक रचनाकारों में शामिल हों, जिनकी रचनायें हर महीने २२ लाख से भी ज्यादा बार पढ़ी जाती हैं। </p>
 													</div>
 													<div>
 														<img src="http://public.pratilipi.com/email/welcome/connect.png" style="width: 24px; height: 24px; margin: 0px 10px 0 0; float: left;"/>

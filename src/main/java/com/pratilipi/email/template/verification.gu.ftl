@@ -22,8 +22,8 @@
 													<center>
 														<img src="http://public.pratilipi.com/email/pratilipi-logo-400x400.png" style="max-width: 100px; display: block; margin: 0 auto;" />
 														<div>
-															<p style="margin: 0.75em 0 0.75em 0; font-size: 16px;">હલ્લો ${ user_display_name }</h2>
-															<p style="margin: 0; font-size: 16px;">પ્રતિલિપિના પરિવારમાં આપનું સ્વાગત છે, તમારું એકાઉન્ટ બનાવવા માટે અહીં ક્લિક કરો</p>
+															<p style="margin: 0.75em 0 0.75em 0; font-size: 16px;">હેલ્લો ${ user_display_name }</h2>
+															<p style="margin: 0; font-size: 16px;">પ્રતિલિપિ પરિવારમાં આપનું સ્વાગત છે!  પ્રતિલિપિ પર તમારું એકાઉન્ટ બનાવવા માટે અહીં ક્લિક કરો</p>
 														</div>
 													</center>
 												</td>

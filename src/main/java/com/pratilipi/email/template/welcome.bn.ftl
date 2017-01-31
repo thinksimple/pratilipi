@@ -22,7 +22,7 @@
 													<center>
 														<img src="http://public.pratilipi.com/email/pratilipi-logo-400x400.png" style="max-width: 100px; display: block; margin: 0 auto;" />
 														<div>
-															<h2 style="margin: 0.75em 0 0.75em 0; color: #FF0000;">প্রতিলিপি পরিবারে আপনাকে স্বাগত জানাই।</h2>
+															<h2 style="margin: 0.75em 0 0.75em 0; color: #FF0000;">প্রতিলিপি পরিবারে আপনাকে স্বাগত জানাই !</h2>
 															<p style="margin: 0; font-size: 16px;">হ্যালো ${ user_display_name }, কাহিনীর জগতে আপনাকে স্বাগত জানাই !</p>
 														</div>
 													</center>
@@ -38,12 +38,12 @@
 													<div>
 														<img src="http://public.pratilipi.com/email/welcome/read.png" style="width: 24px; height: 24px; margin: 0px 10px 0 0; float: left;"/>
 														<p style="color: #FF0000; margin: 0px; display: inline-block; font-size: 20px; position: relative;">পড়ুন</p>
-														<p style="font-size: 16px; margin: 5px 0 20px 35px;">পড়ুুন হাজার হাজার কাহিনী, কবিতা , উপন্যাস এবং আরও অনেক কিছু  যে কোন সময়ে, যেকোন জায়গায়, আপনার নিজের ভাষায়</p>
+														<p style="font-size: 16px; margin: 5px 0 20px 35px;">পড়ুুন হাজার হাজার কাহিনী, কবিতা , উপন্যাস এবং আরও অনেক কিছু । যে কোন সময়ে, যেকোন জায়গায়, আপনার নিজের ভাষায় ।</p>
 													</div>
 													<div>
 														<img src="http://public.pratilipi.com/email/welcome/write.png" style="width: 24px; height: 24px; margin: 0px 10px 0 0; float: left;"/>
 														<p style="color: #FF0000; margin: 0px; display: inline-block; font-size: 20px; position: relative;">লিখুন</p>
-														<p style="font-size: 16px; margin: 5px 0 20px 35px;">প্রতিলিপিতে লিখছেন এমন ৭০০০ -এরও অধিক রচনাকারদের সাথে সামিল হন, যাদের লেখা প্রতি মাসে ২২লাখেরও বেশি বার পড়া হয়ে থাকে</p>
+														<p style="font-size: 16px; margin: 5px 0 20px 35px;">প্রতিলিপিতে লিখছেন এমন ৭০০০ -এরও অধিক রচনাকারদের সাথে সামিল হন, যাদের লেখা প্রতি মাসে ২২ লাখেরও বেশি বার পড়া হয়ে থাকে ।</p>
 													</div>
 													<div>
 														<img src="http://public.pratilipi.com/email/welcome/connect.png" style="width: 24px; height: 24px; margin: 0px 10px 0 0; float: left;"/>

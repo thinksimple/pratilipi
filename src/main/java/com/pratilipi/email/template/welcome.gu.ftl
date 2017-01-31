@@ -22,8 +22,8 @@
 													<center>
 														<img src="http://public.pratilipi.com/email/pratilipi-logo-400x400.png" style="max-width: 100px; display: block; margin: 0 auto;" />
 														<div>
-															<h2 style="margin: 0.75em 0 0.75em 0; color: #FF0000;">પ્રતિલિપિના પરિવારમાં આપનું સ્વાગત છે</h2>
-															<p style="margin: 0; font-size: 16px;">હલ્લો ${ user_display_name }, कहानियों की दुनिया में आपका स्वागत है</p>
+															<h2 style="margin: 0.75em 0 0.75em 0; color: #FF0000;">પ્રતિલિપિ પરિવારમાં આપનું સ્વાગત છે</h2>
+															<p style="margin: 0; font-size: 16px;">હેલ્લો ${ user_display_name }, વાર્તાઓની દુનિયામાં આપનું સ્વાગત છે!</p>
 														</div>
 													</center>
 												</td>
@@ -38,12 +38,12 @@
 													<div>
 														<img src="http://public.pratilipi.com/email/welcome/read.png" style="width: 24px; height: 24px; margin: 0px 10px 0 0; float: left;"/>
 														<p style="color: #FF0000; margin: 0px; display: inline-block; font-size: 20px; position: relative;">વાંચો</p>
-														<p style="font-size: 16px; margin: 5px 0 20px 35px;">તમારી માતૃભાષામાં ગમે ત્યારે, ગમે ત્યાં, વાંચો હજારો વાર્તાઓ, કવિતાઓ, નવલકથા અને બીજું ઘણું.</p>
+														<p style="font-size: 16px; margin: 5px 0 20px 35px;">વાંચો હજારો વાર્તાઓ, કવિતાઓ, પુસ્તકો અને બીજું ઘણું. ગમે ત્યારે. ગમે ત્યાં. આપણી માતૃભાષામાં!</p>
 													</div>
 													<div>
 														<img src="http://public.pratilipi.com/email/welcome/write.png" style="width: 24px; height: 24px; margin: 0px 10px 0 0; float: left;"/>
 														<p style="color: #FF0000; margin: 0px; display: inline-block; font-size: 20px; position: relative;">લખો</p>
-														<p style="font-size: 16px; margin: 5px 0 20px 35px;">પ્રતિલિપિ પર લખવાવાળા ૭૦૦૦થી વધુ રચનાકારોમાં સામેલ થાઓ, જેમની રચનાઓ દર મહીને ૨૨લાખથી વધુ વાર વાંચવામાં આવી રહી છે.</p>
+														<p style="font-size: 16px; margin: 5px 0 20px 35px;">પ્રતિલિપિ પર લખનાર એ ૭૦૦૦થી વધુ રચનાકારોમાં સામેલ થાઓ, જેમની રચનાઓ દર મહીને ૨૨ લાખથી વધુ વાર વાંચવામાં આવી રહી છે.</p>
 													</div>
 													<div>
 														<img src="http://public.pratilipi.com/email/welcome/connect.png" style="width: 24px; height: 24px; margin: 0px 10px 0 0; float: left;"/>
@@ -64,7 +64,7 @@
 												<td align="center" width="auto" height="40" bgcolor="#FF0000" style="-webkit-border-radius: 5px; -moz-border-radius: 5px;border-radius: 5px; color: #ffffff; display: block;">
 													<a href="http://gujarati.pratilipi.com" target="_blank" style="font-size: 18px; text-decoration: none; line-height: 40px; width: 100%; display: inline-block;">
 														<span style="color: #ffffff; padding-left: 15px; padding-right: 15px; ">
-															વાર્તાઓની દુનિયામાં ચાલો
+															આવો જઈએ વાર્તાઓની દુનિયામાં... 
 														</span>
 													</a>
 												</td>
