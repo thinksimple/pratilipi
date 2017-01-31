@@ -727,21 +727,19 @@ public class AuditLogProcessApi extends GenericApi {
 		RtdbAccessor rtdbAccessor = DataAccessorFactory.getRtdbAccessor();
 
 		Set<Long> userIds = new HashSet<>( emailList.size() );
-		Map<Long,UserPreferenceRtdb> userPreferenceMap = new HashMap<>();
-
-		for( Email email : emailList ) {
-			userPreferenceMap.put( email.getUserId(), rtdbAccessor.getUserPreference( email.getUserId() ) );
+		for( Email email : emailList )
 			userIds.add( email.getUserId() );
-		}
 
+		Map<Long,UserPreferenceRtdb> userPreferenceMap = rtdbAccessor.getUserPreferences( userIds );
 		Map<Long,User> users = dataAccessor.getUsers( userIds );
+
 		List<Email> immediateEmails = new ArrayList<>();
 
 		for( Email email : emailList ) {
-			UserPreferenceRtdb preference = userPreferenceMap.get( email.getUserId() );
 			if( users.get( email.getUserId() ).getEmail() == null )
 				continue;
-			if( preference.getEmailFrequency() == null || preference.getEmailFrequency() == EmailFrequency.IMMEDIATELY ) {
+			UserPreferenceRtdb preference = userPreferenceMap.get( email.getUserId() );
+			if( preference.getEmailFrequency() == EmailFrequency.IMMEDIATELY ) {
 				email.setScheduledDate( new Date() );
 				immediateEmails.add( email );
 			}
