@@ -542,13 +542,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 		query = query.chunk( resultCount != null && resultCount < 1000 ? resultCount : 1000 );
 		
+		
 		List<AuditLog> responseList = resultCount == null ? new ArrayList<AuditLog>() : new ArrayList<AuditLog>( resultCount );
 		QueryResultIterator <AuditLogEntity> iterator = query.iterator();
-		while( iterator.hasNext() ) {
+		while( iterator.hasNext() && ( resultCount == null || responseList.size() != resultCount ) )
 			responseList.add( iterator.next() );
-			if( resultCount != null && responseList.size() == resultCount )
-				break;
-		}
 		Cursor cursor = iterator.getCursor();
 
 		return new DataListCursorTuple<AuditLog>(
@@ -1025,7 +1023,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 				.filter( "TOTAL_READ_COUNT >=", minReadCount )
 				.order( "-TOTAL_READ_COUNT" )
 				.chunk( resultCount < 1000 ? resultCount : 1000 )
-				.limit( resultCount ) // .limit(int) is not honored in case of .list() / .iterator() for .keys() - but still setting limit improves the execution time
+				.limit( resultCount ) // .limit(int) is not honored due to some bug but it does improve the execution time
 				.keys()
 				.iterator();
 
