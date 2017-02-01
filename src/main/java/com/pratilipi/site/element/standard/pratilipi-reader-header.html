@@ -212,7 +212,7 @@
 						</div>
 						
 						<!-- Share widget -->
-						<div class="dropdown social-share" style="display: inline-block;">
+						<div hidden$="{{ ! canShare }}" class="dropdown social-share" style="display: inline-block;">
 							<paper-icon-button noink icon="social:share" data-toggle="dropdown"></paper-icon-button>
 							<ul class="dropdown-menu pull-right" style="right: -49px;">
 								<li>
@@ -254,7 +254,7 @@
 										<h6 class="pratilipi-red text-center" style="text-align: center; white-space: normal; line-height: 1.6em;">{{ title }}</h6>
 									</paper-item>
 								</li>
-								<template is="dom-if" if="{{ !hasAccessToUpdate }}">
+								<template is="dom-if" if="{{ canReview }}">
 									<li>
 										<a style="padding: 5px; margin: 0;">
 											<paper-item on-click=writeReview>
@@ -265,7 +265,7 @@
 										</a>
 									</li>
 								</template>
-								<template is="dom-if" if="{{ showEditContent }}">
+								<template is="dom-if" if="{{ canEditContent }}">
 									<li>
 										<a style="padding: 5px; margin: 0;">
 											<paper-item on-click="redirectToWriterPanel">
@@ -359,12 +359,15 @@
 				hasAccessToUpdate: { type: Boolean },
 				addedToLib: { type: Boolean, value: false },
 				hideIndexButton: { type: Boolean },
-				showEditContent: { type: Boolean, value: false },
+				canEditContent: { type: Boolean, value: false },
 				index: { type: Array },
 				pageNo: { type: Number },
 				contentType: { type: String },
 				stage: { type: String },
-				version: { type: String }
+				version: { type: String },
+
+				canReview: { type: Boolean },
+				canShare: { type: Boolean, value: true }
 			},
 			
 			_entryClicked: function( event ) {
@@ -378,13 +381,18 @@
 
 				this.pratilipiContentType = this.contentType == "PRATILIPI";
 				this.imageContentType = this.contentType == "IMAGE";
+
+				if( this.pratilipi.state != "PUBLISHED" )
+					this.set( "canShare", false );
+					
 			},
 			
 			attached: function() {
 				// Hide Edit Content button in Mobile
 				var width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 				var height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-				this.set( 'showEditContent', ! isMobile() && this.hasAccessToUpdate && this.pratilipiContentType );
+				this.set( 'canEditContent', ! isMobile() && this.hasAccessToUpdate && this.pratilipiContentType );
+				
 
 				jQuery( "#navigationdropdown" ).css( 'max-height', Math.min( 500, height - 75 ) + "px", "important" );
 				jQuery( "#navigationdropdown" ).css( 'min-width', Math.min( 300, width - 20 ) + "px", "important" );
@@ -394,6 +402,15 @@
 				this.set( "switchReaderOptions", this.stage == "gamma" && this.pratilipi.oldContent );
 				this.set( "isVersion1", this.version == "1" );
 				this.set( "isVersion2", this.version == "2" );
+
+				this.async( function() {
+					this.set( "canReview", this.domHost.getUser().isGuest || this.domHost.getUserPratilipi().hasAccessToReview );
+				});
+				
+				// Hack
+				if( this.pratilipi.state != "PUBLISHED" )
+					$( "pratilipi-reader-header .dropdown-menu" ).css( "right", 0 );
+
 			},
 			
 			shareOnFacebook: function() {

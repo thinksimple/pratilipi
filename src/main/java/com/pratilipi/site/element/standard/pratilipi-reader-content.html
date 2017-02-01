@@ -88,15 +88,17 @@
 	
 		<paper-card id="pager">
 			<div id="reader-content"></div>
-			<template is="dom-if" if="{{ lastPage }}">
+			<template is="dom-if" if="{{ showContainer }}">
 				<div id="reader-alert-box" class="alert alert-success hvr-bounce-in" role="alert">
-					<h3 class="text-center" style="margin-top: 24px;">${ _strings.reader_enjoyed_reading_part1 }</h3>
-					<div class="text-center" style="margin: 0 auto;">
-						<a class="alert-link" on-click="writeReview">
-							<h6 style="margin: 15px 0px; display: inline-block;">${ _strings.reader_enjoyed_review_book }</h6>
-							<iron-icon icon="icons:create" style="margin-left: 0px; display: inline-block; width: 20px;"></iron-icon>
-						</a>
-					</div>
+					<template is="dom-if" if="{{ canReview }}">
+						<h3 class="text-center" style="margin-top: 24px;">${ _strings.reader_enjoyed_reading_part1 }</h3>
+						<div class="text-center" style="margin: 0 auto;">
+							<a class="alert-link" on-click="writeReview">
+								<h6 style="margin: 15px 0px; display: inline-block;">${ _strings.reader_enjoyed_review_book }</h6>
+								<iron-icon icon="icons:create" style="margin-left: 0px; display: inline-block; width: 20px;"></iron-icon>
+							</a>
+						</div>
+					</template>
 					<div id="social-icons" class="social-icons text-center" style="margin: 0 auto;">
 						<h6 style="margin: 15px 0px; display: inline-block;">${ _strings.reader_enjoyed_reading_part2 } : </h6>
 						<div class="icons-holder">
@@ -131,6 +133,7 @@
 				contentMap: { type: Object, value: {} },
 
 				pratilipiId: { type: Number },
+				pratilipiState: { type: String },
 				fontSize: { type: Number, observer: "_onFontSizeChange" },
 				imageSize: { type: Number, observer: "_onImageSizeChange" },
 
@@ -138,7 +141,8 @@
 				pageCount: { type: Number },
 				version: { type: String },
 
-				lastPage: { type: Boolean }
+				showContainer: { type: Boolean },
+				canReview: { type: Boolean }
 
 			},
 			
@@ -147,7 +151,8 @@
 			attached: function() {
 
 				jQuery( "#pager" ).css( 'min-height', window.innerHeight + "px" );
-				this.set( 'lastPage', this.pageNo == this.pageCount );
+				this.set( "canReview", this.domHost.getUser().isGuest || this.domHost.getUserPratilipi().hasAccessToReview );
+				this.set( 'showContainer', this.pageNo == this.pageCount && this.pratilipiState == "PUBLISHED" );
 
 				if( this.contentType == "PRATILIPI" ) {
 					this.contentMap[ this.pageNo ] = this.content;					
@@ -288,11 +293,8 @@
 				} else if( this.contentType == "IMAGE" ) {
 					this.set( 'content', this.getImageUrl( this.pageNo ) );
 				}
-				
-				if( !this.lastPage && this.pageNo == this.pageCount )
-					this.set( 'lastPage', true );
-				else if( this.lastPage && this.pageNo != this.pageCount )
-					this.set( 'lastPage', false );
+
+				this.set( 'showContainer', this.pageNo == this.pageCount && this.pratilipiState == "PUBLISHED" );
 
 				this._precache();								// Load Previous and next pages
 

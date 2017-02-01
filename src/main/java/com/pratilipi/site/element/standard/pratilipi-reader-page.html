@@ -31,6 +31,7 @@
 							page-no="{{ pageNo }}"
 							page-count="{{ pageCount }}"
 							pratilipi-id="{{ pratilipi.pratilipiId }}"
+							pratilipi-state="{{ pratilipi.state }}"
 							version="{{ version }}"></pratilipi-reader-content>
 					</div>
 				</div>
@@ -318,6 +319,14 @@
 				this.querySelector( 'pratilipi-reader-footer' ).readingMode( 'sepia-mode' );
 				/* Setting cookie */
 				setCookie( "PREFERRED_READING_MODE", "SEPIA_MODE", 30, "/read" );
+			},
+
+			getUser: function() {
+				return this.user;
+			},
+
+			getUserPratilipi: function() {
+				return this.userpratilipi;
 			}
 			
 		});
