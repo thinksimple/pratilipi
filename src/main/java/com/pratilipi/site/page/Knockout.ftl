@@ -1,15 +1,15 @@
 <#if action == "one" >
-	<#include "/summary4.html"> <#-- https cdn,alerts,object  -->
+	<#include "/summary1.html"> <#-- with unnecessary links  -->
 <#elseif action == "two">
-	<#include "/pwa2.html"> <#-- https cdn,no alerts,object  -->
+	<#include "/summary2.html"> <#-- w/o unnecessary links -->
 <#elseif action == "three">
-	<#include "/pwa3.html"> <#-- https cdn,no alerts,object  -->
+	<#include "/summary3"> <#-- no shadow doms  -->
 <#elseif action == "four">
-	<#include "/pwa4.html">	
+	<#include "/summary4.html"> <#-- no shadow doms & no material js -->
 <#elseif action == "five">
-	<#include "/pwa5.html">	
+	<#include "/summary5.html">	
 <#elseif action == "six">
-	<#include "/pwa6.html">	
+	<#include "/summary6.html">	
 <#elseif action == "seven">
 	<#include "/pwa7.html">	
 <#elseif action == "eight">
