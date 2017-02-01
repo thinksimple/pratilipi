@@ -177,27 +177,29 @@
 						<div class="dropdown" style="display: inline-block;">
 							<paper-icon-button noink icon="av:library-books" data-toggle="dropdown"></paper-icon-button>
 							<ul class="dropdown-menu pull-right" style="right: -98px;">
-								<template is="dom-if" if="{{ !addedToLib }}">
-									<li>
-										<a style="padding: 5px; margin: 0;">
-											<paper-item on-click="addToLibrary">
-												<paper-icon-item><iron-icon icon="av:library-add"></iron-icon></paper-icon-item>
-												&nbsp;&nbsp;
-												<paper-item-body>${ _strings.add_to_library }</paper-item-body>
-											</paper-item>
-										</a>
-									</li>
-								</template>
-								<template is="dom-if" if="{{ addedToLib }}">
-									<li>
-										<a style="padding: 5px; margin: 0;">
-											<paper-item on-click="removeFromLibrary">
-												<paper-icon-item><iron-icon icon="icons:remove-circle"></iron-icon></paper-icon-item>
-												&nbsp;&nbsp;
-												<paper-item-body>${ _strings.remove_from_library }</paper-item-body>
-											</paper-item>
-										</a>
-									</li>
+								<template is="dom-if" if="{{ canAddToLibrary }}">
+									<template is="dom-if" if="{{ !addedToLib }}">
+										<li>
+											<a style="padding: 5px; margin: 0;">
+												<paper-item on-click="addToLibrary">
+													<paper-icon-item><iron-icon icon="av:library-add"></iron-icon></paper-icon-item>
+													&nbsp;&nbsp;
+													<paper-item-body>${ _strings.add_to_library }</paper-item-body>
+												</paper-item>
+											</a>
+										</li>
+									</template>
+									<template is="dom-if" if="{{ addedToLib }}">
+										<li>
+											<a style="padding: 5px; margin: 0;">
+												<paper-item on-click="removeFromLibrary">
+													<paper-icon-item><iron-icon icon="icons:remove-circle"></iron-icon></paper-icon-item>
+													&nbsp;&nbsp;
+													<paper-item-body>${ _strings.remove_from_library }</paper-item-body>
+												</paper-item>
+											</a>
+										</li>
+									</template>
 								</template>
 								<li>
 									<a style="padding: 5px; margin: 0;">
@@ -367,7 +369,9 @@
 				version: { type: String },
 
 				canReview: { type: Boolean },
-				canShare: { type: Boolean, value: true }
+				canShare: { type: Boolean, value: true },
+				canAddToLibrary: { type: Boolean, value: true }
+
 			},
 			
 			_entryClicked: function( event ) {
@@ -382,8 +386,10 @@
 				this.pratilipiContentType = this.contentType == "PRATILIPI";
 				this.imageContentType = this.contentType == "IMAGE";
 
-				if( this.pratilipi.state != "PUBLISHED" )
+				if( this.pratilipi.state != "PUBLISHED" ) {
 					this.set( "canShare", false );
+					this.set( "canAddToLibrary", false );
+				}
 					
 			},
 			
