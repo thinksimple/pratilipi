@@ -256,7 +256,7 @@
 		<div class="secondary-500" id="header-card">
 			<div class="parent-container">
 				<div class="vertical-align container">
-					<div class="pratilipi-logo">
+					<div class="pratilipi-logo" onclick="triggerGlobalGAEvent( 'header_standard', 'click', 'logo', 1 )">
 						<a href="/">
 							<iron-image sizing="contain" style="width: 46px; height: 46px; margin-top: 6px;" 
 										title="${ _strings.pratilipi }" alt="${ _strings.pratilipi }" 
@@ -284,32 +284,32 @@
 						</paper-menu-button>
 					</div>
 					<div class="button-holder menu-icon">
-						<a on-click="_openMenuNavigation">
+						<a on-click="_openMenuNavigation" onclick="triggerGlobalGAEvent( 'header_standard', 'click', 'navigation', 1 )">
 							<iron-icon icon="icons:menu"></iron-icon>
 						</a>
 					</div>
 					<div class="search-bar">
 						<form id="search-form" class="search-form" action="javascript:void(0);" on-keyup="onSubmit">
 							<paper-input id="search-input" class="search-input" name="q" type="search" placeholder="${ _strings.search_bar_help }" onfocus="this.placeholder = ''" onblur="this.placeholder = '${ _strings.search_bar_help }'" value="{{ query::input }}">
-								<paper-icon-button suffix icon="icons:search" noink on-click="onSubmit"></paper-icon-button>
+								<paper-icon-button suffix icon="icons:search" noink on-click="onSubmit" onclick="triggerGlobalGAEvent( 'header_standard', 'click', 'search', 1 )"></paper-icon-button>
 								<paper-icon-button prefix class="menu-icon-search-bar" icon="icons:menu" noink on-click="_openMenuNavigation"></paper-icon-button>
 							</paper-input>
 						</form>
 					</div>
 					<div class="button-holder">
-						<a on-click="write">
+						<a on-click="write" onclick="triggerGlobalGAEvent( 'header_standard', 'click', 'write', 1 )">
 							<iron-icon icon="icons:create"></iron-icon>
 						</a>
 					</div>
 					<div class="button-holder">
-						<a on-click="_gotoLibrary">
+						<a on-click="_gotoLibrary" onclick="triggerGlobalGAEvent( 'header_standard', 'click', 'library', 1 )">
 							<iron-icon icon="av:library-books"></iron-icon>
 						</a>
 					</div>
 					<div class="button-holder dropdown">
 						<div style="display: inline-block" class="dropdown">
 							<template is="dom-if" if="{{ isGuest }}">
-								<a on-click="_logInToViewNotifications">
+								<a on-click="_logInToViewNotifications" onclick="triggerGlobalGAEvent( 'header_standard', 'click', 'notification', 1 )">
 									<iron-icon icon="social:notifications"></iron-icon>
 								</a>
 							</template>
@@ -335,12 +335,12 @@
 					</div>
 					<div class="button-holder sign-in-text">
 						<template is="dom-if" if="{{ isGuest }}">
-							<a on-click="_logIn">
+							<a on-click="_logIn" onclick="triggerGlobalGAEvent( 'header_standard', 'click', 'login', 1 )">
 								<iron-icon icon="social:person"></iron-icon>
 							</a>
 						</template>
 						<template is="dom-if" if="{{ !isGuest }}">
-							<a href="{{ profilePageUrl }}">
+							<a href="{{ profilePageUrl }}" onclick="triggerGlobalGAEvent( 'header_standard', 'click', 'profile', 1 )">
 								<img class="img-circle pratilipi-shadow" style="width: 32px; height: 32px;"
 									alt="{{ displayName }}" src="{{ profileImageUrl }}" />
 							</a>
@@ -348,13 +348,13 @@
 					</div>
 					<div class="sign-in-button button-inside-container">
 						<template is="dom-if" if="{{ isGuest }}">
-							<button class="btn btn-primary" on-click="_logIn">
+							<button class="btn btn-primary" on-click="_logIn" onclick="triggerGlobalGAEvent( 'header_standard', 'click', 'login', 1 )">
 								<iron-icon icon="social:person"></iron-icon>
 								<span>${ _strings.user_sign_in }</span>
 							</button>
 						</template>
 						<template is="dom-if" if="{{ !isGuest }}">
-							<a href="{{ profilePageUrl }}">
+							<a href="{{ profilePageUrl }}" onclick="triggerGlobalGAEvent( 'header_standard', 'click', 'profile', 1 )">
 								<img class="img-circle pratilipi-shadow" style="width: 32px; height: 32px;"
 									alt="{{ displayName }}" src="{{ profileImageUrl }}" />
 								<span>{{ displayName }}</span>
@@ -364,13 +364,13 @@
 				</div>
 				<div class="sign-in-button button-outside-container">
 					<template is="dom-if" if="{{ isGuest }}">
-						<button class="btn btn-primary" on-click="_logIn">
+						<button class="btn btn-primary" on-click="_logIn" onclick="triggerGlobalGAEvent( 'header_standard', 'click', 'login', 1 )">
 							<iron-icon icon="social:person"></iron-icon>
 							<span>${ _strings.user_sign_in }</span>
 						</button>
 					</template>
 					<template is="dom-if" if="{{ !isGuest }}">
-						<a href="{{ profilePageUrl }}">
+						<a href="{{ profilePageUrl }}" onclick="triggerGlobalGAEvent( 'header_standard', 'click', 'profile', 1 )">
 							<img class="img-circle pratilipi-shadow" style="width: 32px; height: 32px;"
 								alt="{{ displayName }}" src="{{ profileImageUrl }}" />
 							<span>{{ displayName }}</span>

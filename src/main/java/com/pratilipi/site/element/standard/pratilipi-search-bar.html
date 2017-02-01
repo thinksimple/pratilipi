@@ -95,7 +95,7 @@
 			</paper-menu-button>
 			<form id="searchBarForm" action="javascript:void(0);" on-keyup="onSubmit">
 				<paper-input id="searchBarInput" name="q" class="search" type="search" placeholder="${ _strings.search_bar_help }" onfocus="this.placeholder = ''" onblur="this.placeholder = '${ _strings.search_bar_help }'" value="{{ query::input }}">
-					<paper-icon-button style="width: 32px; height: 32px; padding: 4px;" suffix icon="icons:search" noink="true" on-click="onSubmit"></paper-icon-button>
+					<paper-icon-button style="width: 32px; height: 32px; padding: 4px;" suffix icon="icons:search" noink="true" on-click="onSubmit" onclick="triggerGlobalGAEvent( 'header_standard', 'click', 'search', 1 )"></paper-icon-button>
 				</paper-input>
 			</form>
 		</div>

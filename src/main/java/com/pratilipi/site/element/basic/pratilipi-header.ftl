@@ -86,6 +86,6 @@
 	}
 	
 	function triggerGAEvent( event_label_val ) {
-		ga('send', 'event', 'header_mini', 'click', event_label_val, 1);
+		triggerGlobalGAEvent( 'header_mini', 'click', event_label_val, 1 );
 	}
 </script>
