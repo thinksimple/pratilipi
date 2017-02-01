@@ -1,5 +1,5 @@
 <#if action == "one" >
-	<#include "/pwa1.html"> <#-- https cdn,alerts,object  -->
+	<#include "/summary4.html"> <#-- https cdn,alerts,object  -->
 <#elseif action == "two">
 	<#include "/pwa2.html"> <#-- https cdn,no alerts,object  -->
 <#elseif action == "three">
@@ -17,7 +17,7 @@
 <#elseif action == "nine">
 	<#include "/pwa9.html">	
 <#elseif action == "ten">
-	<#include "/pwa10.html">
+	<#include "/.html">
 <#elseif action == "eleven">
 	<#include "/pwa11.html">	
 <#elseif action == "twelve">
