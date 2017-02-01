@@ -118,13 +118,15 @@
 
 	<template>
 		<paper-card>
-			<paper-menu-button vertical-offset=38 style="position: absolute; right: 2px;" horizontal-align="right" vertical-align="top">
+			<paper-menu-button hidden$="{{ !canShare }}" vertical-offset=38 style="position: absolute; right: 2px;" horizontal-align="right" vertical-align="top">
 				<iron-icon icon="social:share" class="dropdown-trigger"></iron-icon>
 				<paper-menu class="dropdown-content share-menu">
 					<paper-item on-click="sharePratilipiOnFacebook"><span class="icon icon-facebook"></span></paper-item>
 					<paper-item on-click="sharePratilipiOnTwitter"><span class="icon icon-twitter"></span></paper-item>
 					<paper-item on-click="sharePratilipiOnGplus"><span class="icon icon-google-plus"></span></paper-item>
-					<paper-item on-click="sharePratilipiOnWhatsapp"><span class="icon icon-whatsapp"></span></paper-item>
+					<template is="dom-if" if="{{ isMobile() }}">
+						<paper-item on-click="sharePratilipiOnWhatsapp"><span class="icon icon-whatsapp"></span></paper-item>
+					</template>
 				</paper-menu>
 			</paper-menu-button>
 			
@@ -353,6 +355,10 @@
 
 			},
 			
+			isMobile: function() {
+				return isMobile() && this.mobile;
+			},
+			
 			updateUserRating: function( userpratilipi ) {
 
 				if( userpratilipi.reviewState == "DELETED" || userpratilipi.reviewState == "BLOCKED" 
@@ -456,6 +462,7 @@
 				this.set( 'canPublish', pratilipi.state != null && pratilipi.state != "PUBLISHED" && pratilipi.hasAccessToUpdate );
 				this.set( 'canDelete', pratilipi.state != null && pratilipi.state != "DELETED" && this.state != "PUBLISHED" && false && pratilipi.hasAccessToUpdate );
 				this.set( 'summary', pratilipi.summary != null && pratilipi.summary.trim() != "" ? pratilipi.summary : null );
+				this.set( 'canShare', pratilipi.state == "PUBLISHED" );
 				if( pratilipi.type != null )
 					this.set( 'type', this.pratilipiTypes[ pratilipi.type.toUpperCase() ].name );
 				<#-- Explicitly setting canDelete to false - awaiting business call -->
