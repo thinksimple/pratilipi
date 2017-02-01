@@ -3,7 +3,7 @@
 <#-- SUBJECT: Pratilipi - Update password -->
 
 <!DOCTYPE html>
-<html>
+<html lang="te">
 <body>
 	<table style="background-color: #f3f3f3; width: 100%;">
 		<tr>
@@ -22,9 +22,9 @@
 													<center>
 														<img src="http://public.pratilipi.com/email/pratilipi-logo-400x400.png" style="max-width: 100px; display: block; margin: 0 auto;" />
 														<div>
-															<p style="margin: 0.75em 0 1.5em 0; font-size: 16px;">Hi ${ user_display_name },</h2>
-															<p style="margin: 0; font-size: 16px;">You requested a new password for your Pratilipi account.</p>
-															<p style="margin-top: 0.5em; font-size: 16px;">Please click below to reset your password.</p>
+															<p style="margin: 0.75em 0 1.5em 0; font-size: 16px;">నమస్తే ${ user_display_name }</h2>
+															<p style="margin: 0; font-size: 16px;">మీరు మీ ప్రతిలిపి ఖాతాకి కొత్త పాస్వర్డ్  కోసం అభ్యర్థించారు.</p>
+															<p style="margin-top: 0.5em; font-size: 16px;">మీ పాస్వర్డ్ ను  రీసెట్ చేయడానికి దిగువ క్లిక్ చేయండి.</p>
 														</div>
 													</center>
 												</td>
@@ -38,7 +38,7 @@
 												<td align="center" width="auto" height="40" bgcolor="#FF0000" style="-webkit-border-radius: 5px; -moz-border-radius: 5px;border-radius: 5px; color: #ffffff; display: block;">
 													<a href="http://telugu.pratilipi.com${ passwordResetUrl }" target="_blank" style="font-size: 18px; text-decoration: none; line-height: 40px; width: 100%; display: inline-block;">
 														<span style="color: #ffffff; padding-left: 15px; padding-right: 15px; ">
-															Reset Password
+															రీసెట్ పాస్వర్డ్ 
 														</span>
 													</a>
 												</td>
@@ -53,7 +53,7 @@
 												<td>
 													<center>
 														<div>
-															<small style="margin: 0.75em 0 0.75em 0;">Click the link below or copy - paste it on your browser if the button doesn't work.</small>
+															<small style="margin: 0.75em 0 0.75em 0;">క్రింది లింక్ పై క్లిక్ చేయండి లేదా బటన్ పని చేయకపోతే కాపీ చేసి మీ బ్రౌసర్ లో పేస్ట్ చేయండి</small>
 															<a href="http://telugu.pratilipi.com${ passwordResetUrl }" target="_blank" style="color: #4a4a4a; text-decoration: underline;">
 																<br/>
 																<small>
@@ -69,10 +69,12 @@
 										<center>
 											<small>
 												<br/>
-												If you face any problems, please reach out to us at 
-												<a href="mailto:contact@pratilipi.com" style="color: #4a4a4a; text-decoration: underline;" target="_blank">
-													contact@pratilipi.com
+												<br/>
+												మీరు సమస్యను ఎదుర్కొంటున్నార,దయచేసి  
+												<a href="mailto:telugu@pratilipi.com" style="color: #4a4a4a;" target="_blank">
+													telugu@pratilipi.com
 												</a>
+												 కి సంప్రదించండి.
 												<br/>
 												<br/>
 											</small>

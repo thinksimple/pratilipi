@@ -3,7 +3,7 @@
 <#-- SUBJECT: Pratilipi - Update password -->
 
 <!DOCTYPE html>
-<html>
+<html lang="kn">
 <body>
 	<table style="background-color: #f3f3f3; width: 100%;">
 		<tr>
@@ -22,9 +22,9 @@
 													<center>
 														<img src="http://public.pratilipi.com/email/pratilipi-logo-400x400.png" style="max-width: 100px; display: block; margin: 0 auto;" />
 														<div>
-															<p style="margin: 0.75em 0 1.5em 0; font-size: 16px;">Hi ${ user_display_name },</h2>
-															<p style="margin: 0; font-size: 16px;">You requested a new password for your Pratilipi account.</p>
-															<p style="margin-top: 0.5em; font-size: 16px;">Please click below to reset your password.</p>
+															<p style="margin: 0.75em 0 1.5em 0; font-size: 16px;">ನಮಸ್ತೆ ${ user_display_name }</h2>
+															<p style="margin: 0; font-size: 16px;">ನೀವು ನಿಮ್ಮ ಪ್ರತಿಲಿಪಿ ಖಾತೆಗಾಗಿ ಹೊಸ ಪಾಸ್ವರ್ಡ್'ಗೆ ಮನವಿ ಮಾಡಿದ್ದೀರಿ</p>
+															<p style="margin-top: 0.5em; font-size: 16px;">ನಿಮ್ಮ ಪಾಸ್ವರ್ಡ್ ಬದಲಾಯಿಸಲು ದಯವಿಟ್ಟು ಕೆಳಗೆ ಕ್ಲಿಕ್ ಮಾಡಿ </p>
 														</div>
 													</center>
 												</td>
@@ -38,7 +38,7 @@
 												<td align="center" width="auto" height="40" bgcolor="#FF0000" style="-webkit-border-radius: 5px; -moz-border-radius: 5px;border-radius: 5px; color: #ffffff; display: block;">
 													<a href="http://kannada.pratilipi.com${ passwordResetUrl }" target="_blank" style="font-size: 18px; text-decoration: none; line-height: 40px; width: 100%; display: inline-block;">
 														<span style="color: #ffffff; padding-left: 15px; padding-right: 15px; ">
-															Reset Password
+															ಪಾಸ್ವರ್ಡ್ ಬದಲಾಯಿಸಿ
 														</span>
 													</a>
 												</td>
@@ -53,7 +53,7 @@
 												<td>
 													<center>
 														<div>
-															<small style="margin: 0.75em 0 0.75em 0;">Click the link below or copy - paste it on your browser if the button doesn't work.</small>
+															<small style="margin: 0.75em 0 0.75em 0;">ಕೆಳಗಿನ ಲಿಂಕ್ ಮೇಲೆ ಕ್ಲಿಕ್ ಮಾಡಿ. ಒಂದು ವೇಳೆ ಲಿಂಕ್ ಕಾರ್ಯನಿರ್ವಹಿಸದಿದ್ದಲ್ಲಿ ಅದನ್ನು ನಿಮ್ಮ ಬ್ರೌಸರ್'ಗೆ ಕಾಪಿ - ಪೇಸ್ಟ್ ಮಾಡಿ. </small>
 															<a href="http://kannada.pratilipi.com${ passwordResetUrl }" target="_blank" style="color: #4a4a4a; text-decoration: underline;">
 																<br/>
 																<small>
@@ -69,10 +69,12 @@
 										<center>
 											<small>
 												<br/>
-												If you face any problems, please reach out to us at 
-												<a href="mailto:contact@pratilipi.com" style="color: #4a4a4a; text-decoration: underline;" target="_blank">
-													contact@pratilipi.com
+												<br/>
+												ಏನಾದರೂ ಸಮಸ್ಯೆ ಎದುರಾದಲ್ಲಿ ದಯವಿಟ್ಟು    
+												<a href="mailto:kannada@pratilipi.com" style="color: #4a4a4a;" target="_blank">
+													kannada@pratilipi.com
 												</a>
+												ಗೆ ಮೇಲ್ ಮಾಡಿ
 												<br/>
 												<br/>
 											</small>
