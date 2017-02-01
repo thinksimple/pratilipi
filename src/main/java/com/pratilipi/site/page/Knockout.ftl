@@ -33,5 +33,9 @@
 <#elseif action == "seventeen">
 	<#include "/mdl-poc.html">		
 <#elseif action == "eighteen">
-	<#include "/summary1.html">															
+	<#include "/summary1.html">		
+<#elseif action == "nineteen">
+	<#include "/summary2.html">	
+<#elseif action == "twenty">
+	<#include "/summary3.html">															
 </#if>
