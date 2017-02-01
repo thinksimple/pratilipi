@@ -3,15 +3,15 @@
 <#elseif action == "two">
 	<#include "/summary2.html"> <#-- w/o unnecessary links -->
 <#elseif action == "three">
-	<#include "/summary3"> <#-- no shadow doms  -->
+	<#include "/summary3.html"> <#-- no shadow doms  -->
 <#elseif action == "four">
 	<#include "/summary4.html"> <#-- no shadow doms & no material js -->
 <#elseif action == "five">
-	<#include "/summary5.html">	
+	<#include "/summary5.html">	<#-- w/o defer -->
 <#elseif action == "six">
-	<#include "/summary6.html">	
+	<#include "/summary6.html">	<#-- w/o defer and w/o navigation -->
 <#elseif action == "seven">
-	<#include "/pwa7.html">	
+	<#include "/summary7.html">	<#-- w/o defer and w/o navigation with js-layout-->
 <#elseif action == "eight">
 	<#include "/pwa8.html">
 <#elseif action == "nine">
