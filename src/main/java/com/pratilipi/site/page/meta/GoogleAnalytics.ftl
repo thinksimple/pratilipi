@@ -23,7 +23,7 @@
 	
 	ga('send', 'pageview');
 	
-	triggerGlobalGAEvent: function(  eventCategory, eventAction, eventLabel, eventValue ) {
+	function triggerGlobalGAEvent(  eventCategory, eventAction, eventLabel, eventValue ) {
 		ga('send', 'event', eventCategory, eventAction, eventLabel, eventValue);
 	}	
 	
