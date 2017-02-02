@@ -64,6 +64,9 @@
 <#-- Basic functions -->
 <#include "Scripts.ftl">
 
+<#-- Basic functions -->
+<#include "ScriptsMini.ftl">
+
 <#if lang=="hi" && stage=="prod">
 <#-- Facebook Pixel Code only on hindi pratilipi -->
 <script>
