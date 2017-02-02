@@ -24,6 +24,7 @@ import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.UserPreferenceRtdb;
 import com.pratilipi.data.type.rtdb.UserPreferenceRtdbImpl;
 
+
 public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 
 	private static final Logger logger =
@@ -48,6 +49,7 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 		return "Firebase.PREFERENCE." + userId;
 	}
 
+	
 	private UserPreferenceRtdb _getUserPreferenceRtdb( String jsonStr ) {
 		if( jsonStr.equals( "null" ) )
 			jsonStr = "{}";
@@ -93,19 +95,19 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 			throws UnexpectedServerException {
 
 		String memcacheId = _getMemcacheId( userId );
-		String json = memcache.get( memcacheId );
-		if( json == null ) {
+		String jsonStr = memcache.get( memcacheId );
+		if( jsonStr == null ) {
 			try {
 				BlobEntry blobEntry = HttpUtil.doGet( DATABASE_URL + DATABASE_PREFERENCE_TABLE + "/" + userId + ".json", headersMap, null );
-				json = new String( blobEntry.getData(), "UTF-8" );
-				memcache.put( memcacheId, json, 5 );
+				jsonStr = new String( blobEntry.getData(), "UTF-8" );
+				memcache.put( memcacheId, jsonStr, 5 );
 			} catch( UnsupportedEncodingException | JsonSyntaxException e ) {
 				logger.log( Level.SEVERE, e.getMessage() );
 				throw new UnexpectedServerException();
 			}
 		}
 
-		return _getUserPreferenceRtdb( json );
+		return _getUserPreferenceRtdb( jsonStr );
 
 	}
 
