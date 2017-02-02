@@ -2,6 +2,7 @@ package com.pratilipi.data.util;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +21,7 @@ import com.pratilipi.common.util.FreeMarkerUtil;
 import com.pratilipi.common.util.HtmlUtil;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.DataListIterator;
 import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.client.CommentData;
 import com.pratilipi.data.client.PratilipiData;
@@ -179,15 +181,16 @@ public class EmailDataUtil {
 
 	}
 	
-	public static void sendEmails( Long emailId ) throws UnexpectedServerException {
+	public static void sendEmailsToUser( Long userId ) throws UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Email email = dataAccessor.getEmail( emailId );
 
-		if( email.getState() == EmailState.SENT )
-			return;
+		DataListIterator<Email> it = dataAccessor.getEmailListIteratorForStatePending( userId, true );
+		List<Email> emailList = new ArrayList<>();
+		while( it.hasNext() )
+			emailList.add( it.next() );
 
-		sendConsolidatedEmail( email.getUserId(), dataAccessor.getEmailListWithStatePending( email.getUserId() ) );
+		sendConsolidatedEmail( userId, emailList );
 
 	}
 
