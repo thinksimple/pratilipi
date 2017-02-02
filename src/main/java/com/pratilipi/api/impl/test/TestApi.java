@@ -1,18 +1,21 @@
 package com.pratilipi.api.impl.test;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.googlecode.objectify.ObjectifyService;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
+import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
-import com.pratilipi.common.type.EmailState;
-import com.pratilipi.data.type.gae.EmailEntity;
+import com.pratilipi.data.DataAccessor;
+import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.DataListIterator;
+import com.pratilipi.data.type.Email;
 
 @SuppressWarnings( "serial" )
 @Bind( uri = "/test" )
@@ -22,10 +25,11 @@ public class TestApi extends GenericApi {
 	
 	public static class Request extends GenericRequest {
 
-		private Integer limit;
-
-		public void setLimit( Integer limit ) {
-			this.limit = limit;
+		@Validate( required = true )
+		private Long userId;
+		
+		public void setUserId( Long userId ) {
+			this.userId = userId;
 		}
 
 	}
@@ -33,20 +37,14 @@ public class TestApi extends GenericApi {
 	@Get
 	public static GenericResponse get( Request request ) throws UnexpectedServerException {
 
-		if( request.limit == null )
-			request.setLimit( 2000 );
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
-		Long x = new Date().getTime();
-		// Finding out count
-		int count = ObjectifyService.ofy().load()
-						.type( EmailEntity.class )
-						.filter( "STATE", EmailState.SENT )
-						.limit( request.limit )
-						.count();
-		Long y = new Date().getTime();
+		DataListIterator<Email> it = dataAccessor.getEmailListIteratorForStatePending( request.userId, true );
+		List<Email> emailList = new ArrayList<>();
+		while( it.hasNext() )
+			emailList.add( it.next() );
 
-		logger.log( Level.INFO, "count = " + count + " ms." );
-		logger.log( Level.INFO, "Time taken for finding count = " + ( y-x ) + " ms." );
+		logger.log( Level.INFO, "Found " + emailList.size() + " emails for the user." );
 
 		return new GenericResponse();
 
