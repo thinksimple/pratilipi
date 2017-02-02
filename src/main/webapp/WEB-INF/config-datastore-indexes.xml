@@ -171,6 +171,7 @@
 	
 	<datastore-index kind="EMAIL" ancestor="false" source="manual">
 		<property name="STATE" direction="asc"/>
+		<property name="USER_ID" direction="asc"/>
 		<property name="SCHEDULED_DATE" direction="asc"/>
 	</datastore-index>
 
