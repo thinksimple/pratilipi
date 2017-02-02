@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.EmailState;
 import com.pratilipi.common.type.EmailType;
+import com.pratilipi.common.type.I18nGroup;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.util.EmailUtil;
 import com.pratilipi.common.util.FreeMarkerUtil;
@@ -109,7 +110,7 @@ public class EmailDataUtil {
 
 	}
 
-	public static void sendConsolidatedEmail( Long userId, List<Email> emailList ) throws UnexpectedServerException {
+	private static void _sendConsolidatedEmail( Long userId, List<Email> emailList ) throws UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
@@ -128,15 +129,25 @@ public class EmailDataUtil {
 
 		}
 
-		// TODO: Implementation - Set fields
+		String content = EmailTemplateUtil.getEmailBody( consolidatedContent, user.getLanguage() );
+
+		Pattern senderNamePattern = Pattern.compile( "<!-- SENDER_NAME:(.+?) -->" );
+		Pattern senderEmailPattern = Pattern.compile( "<!-- SENDER_EMAIL:(.+?) -->" );
+
 		String senderName = null;
 		String senderEmail = null;
-		String subject = null;
+		String subject = dataAccessor.getI18nStrings( I18nGroup.EMAIL, user.getLanguage() ).get( "email_consolidated_subject" );
+
+		Matcher m = null;
+		if( ( m = senderNamePattern.matcher( content ) ).find() )
+			senderName = m.group( 1 ).trim();
+		if( ( m = senderEmailPattern.matcher( content ) ).find() )
+			senderEmail = m.group( 1 ).trim();
 
 		EmailUtil.sendMail( senderName, senderEmail, 
 				user.getDisplayName(), user.getEmail(), 
 				subject, 
-				EmailTemplateUtil.getEmailBody( consolidatedContent, user.getLanguage() ) );
+				content );
 
 		dataAccessor.createOrUpdateEmailList( emailList );
 
@@ -190,7 +201,7 @@ public class EmailDataUtil {
 		while( it.hasNext() )
 			emailList.add( it.next() );
 
-		sendConsolidatedEmail( userId, emailList );
+		_sendConsolidatedEmail( userId, emailList );
 
 	}
 

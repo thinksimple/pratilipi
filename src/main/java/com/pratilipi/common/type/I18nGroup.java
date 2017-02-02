@@ -42,7 +42,8 @@ public enum I18nGroup {
 			"email_vote_review_author_subject",
 			"email_vote_review_reviewer_button",
 			"email_vote_review_reviewer_heading",
-			"email_vote_review_reviewer_subject"
+			"email_vote_review_reviewer_subject",
+			"email_consolidated_subject"
 			)
 	;
 	

@@ -1,3 +1,6 @@
+<!-- SENDER_NAME: Team Pratilipi -->
+<!-- SENDER_EMAIL: contact@pratilipi.com -->
+
 <!DOCTYPE html>
 <html>
 <body style="padding: 0; margin: 0;">
