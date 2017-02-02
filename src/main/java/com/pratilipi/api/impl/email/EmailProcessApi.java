@@ -67,15 +67,6 @@ public class EmailProcessApi extends GenericApi {
 		 *  
 		 */
 
-		// AppProperty will keep on updating regardless of any approach
-		String appPropertyId = "Api.EmailProcess";
-		AppProperty appProperty = dataAccessor.getAppProperty( appPropertyId );
-		if( appProperty == null ) {
-			appProperty = dataAccessor.newAppProperty( appPropertyId );
-			appProperty.setValue( new Date( 1L ) );
-		}
-
-
 		boolean pendingEmailsThresholdExceeded = 
 				dataAccessor.getEmailCount( null, null, EmailState.PENDING, PENDING_EMAIL_THRESHOLD ) == PENDING_EMAIL_THRESHOLD;
 
@@ -98,17 +89,24 @@ public class EmailProcessApi extends GenericApi {
 
 		} else { // Get all users from firebase android version code less than 25
 
+			String appPropertyId = "Api.EmailProcess";
+			AppProperty appProperty = dataAccessor.getAppProperty( appPropertyId );
+			if( appProperty == null ) {
+				appProperty = dataAccessor.newAppProperty( appPropertyId );
+				appProperty.setValue( new Date( 1L ) );
+			}
+
 			userPreferences = rtdbAccessor.getUserPreferences( MAX_ANDROID_VERSION );
 			userPreferences.putAll( rtdbAccessor.getUserPreferences( (Date) appProperty.getValue() ) );
+
+			// Updating AppProperty
+			appProperty.setValue( new Date() );
+			appProperty = dataAccessor.createOrUpdateAppProperty( appProperty );
 
 			for( Long userId : userPreferences.keySet() )
 				emailList.addAll( dataAccessor.getEmailList( userId, null, (String) null, EmailState.PENDING, null ) );
 
 		}
-
-		// Updating AppProperty
-		appProperty.setValue( new Date() );
-		appProperty = dataAccessor.createOrUpdateAppProperty( appProperty );
 
 		Map<Long, User> users = dataAccessor.getUsers( userPreferences.keySet() );
 
@@ -148,15 +146,16 @@ public class EmailProcessApi extends GenericApi {
 			emailList = new ArrayList<>();
 
 			DataListIterator<Email> itr = dataAccessor.getEmailListIteratorForStatePending( null, true );
-			while( itr.hasNext() )
-				emailList.add( itr.next() );
-
 			List<Long> missingUserIds = new ArrayList<>();
-			for( Email email : emailList )
+			while( itr.hasNext() ) {
+				Email email = itr.next();
+				emailList.add( email );
 				missingUserIds.add( email.getUserId() );
+			}
 
 			missingUserIds.removeAll( userPreferences.keySet() );
 			userPreferences.putAll( rtdbAccessor.getUserPreferences( missingUserIds ) );
+
 		}
 
 
