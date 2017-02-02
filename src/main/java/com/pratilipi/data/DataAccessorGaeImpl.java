@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -897,8 +896,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 				
 				// Shuffling and saving in Memcache
-				Collections.shuffle( pratilipiIdList );
-				memcache.put( memcacheId, (ArrayList<Long>) pratilipiIdList, 60 );
+//				Collections.shuffle( pratilipiIdList );
+				memcache.put(
+						memcacheId,
+						(ArrayList<Long>) pratilipiIdList,
+						SystemProperty.STAGE == SystemProperty.STAGE_PROD ? 60 : 5 );
 				
 			}			
 
