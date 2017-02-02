@@ -9,8 +9,13 @@ import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.PageType;
 import com.pratilipi.common.type.PratilipiState;
+import com.pratilipi.common.type.Website;
+import com.pratilipi.common.util.FacebookApi;
+import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.type.Page;
 import com.pratilipi.data.type.Pratilipi;
 import com.pratilipi.data.util.PratilipiDataUtil;
 import com.pratilipi.taskqueue.Task;
@@ -38,11 +43,16 @@ public class PratilipiStatsApi extends GenericApi {
 	public GenericResponse post( Request request )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
-		Pratilipi pratilipi = DataAccessorFactory.getDataAccessor().getPratilipi( request.pratilipiId );
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		Pratilipi pratilipi = dataAccessor.getPratilipi( request.pratilipiId );
 		if( pratilipi == null || pratilipi.getState() != PratilipiState.PUBLISHED )
 			return new GenericResponse();
-		
-		
+	
+		if( request.fbLikeShareCount == null ) {
+			Page page = dataAccessor.getPage( PageType.PRATILIPI, pratilipi.getId() );
+			request.fbLikeShareCount = FacebookApi.getUrlShareCount( "http://" + Website.ALL_LANGUAGE.getHostName() + page.getUri() );
+		}
+
 		PratilipiDataUtil.updatePratilipiStats(
 				request.pratilipiId,
 				request.readCountOffset,
