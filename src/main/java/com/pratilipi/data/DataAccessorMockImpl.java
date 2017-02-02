@@ -1308,21 +1308,13 @@ public class DataAccessorMockImpl implements DataAccessor {
 		return null;
 	}
 
+	@Override
+	public int getEmailCount( Long userId, EmailType type, EmailState state, Integer resultCount ) {
+		return 0;
+	}
 
 	@Override
-	public DataIdListIterator<Email> getEmailIdListIteratorForStatePendingAndScheduled() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	@Override
-	public DataListIterator<Email> getEmailListIteratorForStatePending() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	@Override
-	public List<Email> getEmailListWithStatePending( Long userId ) {
+	public DataListIterator<Email> getEmailListIteratorForStatePending( Long userId, boolean scheduled ) {
 		// TODO Auto-generated method stub
 		return null;
 	}

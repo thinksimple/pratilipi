@@ -2085,45 +2085,61 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	}
 
 	@Override
-	public DataIdListIterator<Email> getEmailIdListIteratorForStatePendingAndScheduled() {
+	public int getEmailCount( Long userId, EmailType type, EmailState state, Integer resultCount ) {
 
-		QueryResultIterator<Key<EmailEntity>> iterator = ObjectifyService.ofy().load()
-				.type( EmailEntity.class )
-				.filter( "STATE", EmailState.PENDING )
-				.filter( "SCHEDULED_DATE <", new Date() )
-				.order( "SCHEDULED_DATE" )
-				.chunk( 1000 )
-				.keys()
-				.iterator();
+		Query<EmailEntity> query = ObjectifyService.ofy().load().type( EmailEntity.class );
 
-		return new DataIdListIterator<Email>( iterator );
+		if( userId != null )
+			query = query.filter( "USER_ID", userId );
+		if( type != null )
+			query = query.filter( "TYPE", type );
+		if( state != null )
+			query = query.filter( "STATE", state );
+		if( resultCount != null && resultCount > 0 )
+			query = query.limit( resultCount ); 
 
-	}
-
-	@Override
-	public DataListIterator<Email> getEmailListIteratorForStatePending() {
-
-		QueryResultIterator<EmailEntity> iterator = ObjectifyService.ofy().load()
-				.type( EmailEntity.class )
-				.filter( "STATE", EmailState.PENDING )
-				.chunk( 1000 )
-				.iterator();
-
-		return new DataListIterator<Email>( iterator );
+		return query.count();
 
 	}
 
 	@Override
-	public List<Email> getEmailListWithStatePending( Long userId ) {
+	public DataListIterator<Email> getEmailListIteratorForStatePending( Long userId, boolean scheduled ) {
 
-		List<EmailEntity> emailList = ObjectifyService.ofy().load().type( EmailEntity.class )
-				.filter( "USER_ID", userId )
-				.filter( "STATE", EmailState.PENDING )
-				.filter( "SCHEDULED_DATE <", new Date() )
-				.order( "SCHEDULED_DATE" )
-				.list();
+		Query<EmailEntity> query = ObjectifyService.ofy().load()
+				.type( EmailEntity.class )
+				.filter( "STATE", EmailState.PENDING );
 
-		return new ArrayList<Email>( emailList );
+		if( userId != null )
+			query = query.filter( "USER_ID", userId );
+
+		if( scheduled ) {
+			query = query.filter( "SCHEDULED_DATE <", new Date() );
+			query = query.order( "SCHEDULED_DATE" );
+		}
+
+		query = query.chunk( 1000 );
+
+		return new DataListIterator<Email>( query.iterator() );
+
+	}
+
+	public DataListIterator<Email> getEmailListIteratorForStatePendingAndScheduled() {
+		return getEmailListIteratorForStatePendingAndScheduled( null );
+	}
+
+	public DataListIterator<Email> getEmailListIteratorForStatePendingAndScheduled( Long userId ) {
+
+		Query<EmailEntity> query = ObjectifyService.ofy().load()
+									.type( EmailEntity.class )
+									.filter( "STATE", EmailState.PENDING )
+									.filter( "SCHEDULED_DATE <", new Date() )
+									.order( "SCHEDULED_DATE" )
+									.chunk( 1000 );
+
+		if( userId != null )
+			query = query.filter( "USER_ID", userId );
+
+		return new DataListIterator<Email>( query.iterator() );
 
 	}
 

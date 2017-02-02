@@ -233,9 +233,8 @@ public interface DataAccessor {
 	Email getEmail( Long emailId );
 	Email getEmail( Long userId, EmailType type, Long primaryContentId );
 	Email getEmail( Long userId, EmailType type, String primaryContentId );
-	DataIdListIterator<Email> getEmailIdListIteratorForStatePendingAndScheduled();
-	DataListIterator<Email> getEmailListIteratorForStatePending();
-	List<Email> getEmailListWithStatePending( Long userId );
+	int getEmailCount( Long userId, EmailType type, EmailState state, Integer resultCount );
+	DataListIterator<Email> getEmailListIteratorForStatePending( Long userId, boolean scheduled );
 	List<Email> getEmailList( Long userId, EmailType type, Long primaryContentId, EmailState state, Integer resultCount );
 	List<Email> getEmailList( Long userId, EmailType type, String primaryContentId, EmailState state, Integer resultCount );
 	Email createOrUpdateEmail( Email email );
