@@ -35,7 +35,9 @@ public class DataStoreBackupUtil {
 		StringBuilder csv = new StringBuilder( CSV_HEADER + LINE_SEPARATOR );
 		
 		int count = 0;
-		QueryResultIterator<UserEntity> itr = ObjectifyService.ofy().load()
+		QueryResultIterator<UserEntity> itr = ObjectifyService.ofy()
+				.cache( false )
+				.load()
 				.type( UserEntity.class )
 				.chunk( 1000 )
 				.iterator();
@@ -80,7 +82,9 @@ public class DataStoreBackupUtil {
 		StringBuilder csv = new StringBuilder( CSV_HEADER + LINE_SEPARATOR );
 
 		int count = 0;
-		QueryResultIterator<PratilipiEntity> itr = ObjectifyService.ofy().load()
+		QueryResultIterator<PratilipiEntity> itr = ObjectifyService.ofy()
+				.cache( false )
+				.load()
 				.type( PratilipiEntity.class )
 				.chunk( 1000 )
 				.iterator();
@@ -122,7 +126,7 @@ public class DataStoreBackupUtil {
 		
 		String CSV_HEADER = "AuthorId,UserId,"
 				+ "FirstName,LastName,PenName,FirstNameEN,LastNameEN,PenNameEN,"
-				+ "Language,HasSummary,ContentsPublished,RegistrationDate";
+				+ "Language,HasSummary,ContentsPublished,FollowCount,RegistrationDate";
 		String CSV_SEPARATOR = ",";
 		String LINE_SEPARATOR = "\n";
 		
@@ -134,7 +138,9 @@ public class DataStoreBackupUtil {
 
 		StringBuilder csv = new StringBuilder( CSV_HEADER + LINE_SEPARATOR );
 		int count = 0;
-		QueryResultIterator<AuthorEntity> itr = ObjectifyService.ofy().load()
+		QueryResultIterator<AuthorEntity> itr = ObjectifyService.ofy()
+				.cache( false )
+				.load()
 				.type( AuthorEntity.class )
 				.chunk( 1000 )
 				.iterator();
@@ -151,6 +157,7 @@ public class DataStoreBackupUtil {
 					.append( CSV_SEPARATOR ).append( author.getLanguage() )
 					.append( CSV_SEPARATOR ).append( author.getSummary() != null && author.getSummary().trim().length() != 0 )
 					.append( CSV_SEPARATOR ).append( author.getContentPublished() )
+					.append( CSV_SEPARATOR ).append( author.getFollowCount() )
 					.append( CSV_SEPARATOR ).append( csvDateFormat.format( author.getRegistrationDate() ) )
 					.append( LINE_SEPARATOR );
 			count++;
