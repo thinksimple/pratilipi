@@ -21,9 +21,18 @@
 	
 		// Check if the Opera browser is Opera Mini in Extreme Savings Mode
 		var isOperaExtreme = (navigator.userAgent.indexOf('Opera Mini/') > -1) && (navigator.userAgent.indexOf('Presto/') > -1);
-    	alert( "isOpera"+ isOpera );
-    	alert( "isOperaHigh" + isOperaHigh);
-    	alert( "isOperaExtreme" + isOperaExtreme );
+		
+		var h = document.createElement("H1")                // Create a <h1> element
+		var t = document.createTextNode("isOpera" + isOpera);     // Create a text node
+		h.appendChild(t);
+		
+		var h2 = document.createElement("H1")                // Create a <h1> element
+		var t2 = document.createTextNode("isOperaHigh" + isOperaHigh);     // Create a text node
+		h2.appendChild(t2); 	
+		
+		var h3 = document.createElement("H1")                // Create a <h1> element
+		var t3 = document.createTextNode("isOperaExtreme" + isOperaExtreme);     // Create a text node
+		h3.appendChild(t3); 		
 	</script>	
 </head>
 
