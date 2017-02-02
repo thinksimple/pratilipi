@@ -64,7 +64,7 @@
 <#-- Basic functions -->
 <#include "Scripts.ftl">
 
-<#-- Basic functions -->
+<#-- Basic functions for mini-->
 <#include "ScriptsMini.ftl">
 
 <#if lang=="hi" && stage=="prod">
