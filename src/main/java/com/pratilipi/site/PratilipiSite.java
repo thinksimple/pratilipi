@@ -435,6 +435,10 @@ public class PratilipiSite extends HttpServlet {
 				dataModel = createDataModelForEmailTemplatesPage( filterLanguage );
 				templateName = "EmailTemplate.ftl";
 
+			} else if( ! basicMode && uri.equals( "/android-translation" ) ) {
+				dataModel = new HashMap<>();
+				templateName = "AndroidTranslation.ftl";
+
 			} else if( ! basicMode && uri.equals( "/edit-event" ) ){
 
 				resourceList.add( ThirdPartyResource.CKEDITOR.getTag() );
