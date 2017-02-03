@@ -6,8 +6,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
      <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.grey-red.min.css" /> 
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-    <script src="dialog-polyfill/dialog-polyfill.js"></script>
-    <link rel="stylesheet" type="text/css" href="dialog-polyfill/dialog-polyfill.css" />
+    <script src="https://raw.githubusercontent.com/GoogleChrome/dialog-polyfill/master/dialog-polyfill.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://raw.githubusercontent.com/GoogleChrome/dialog-polyfill/master/dialog-polyfill.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <style>
     .demo-list-control {
