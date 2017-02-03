@@ -1,4 +1,4 @@
-<div id="androidSubsribeAlert" class="container alert alert-warning alert-dismissible fade in" style="z-index: 1;margin-bottom: 0; border-radius: 0; cursor: pointer; padding: 0; color: #fff; background-color: #1e1e1e;border: none; margin-left: -5px; margin-right: -5px; display: none;" role="alert">
+<div id="androidSubsribeAlert" class="container alert alert-warning alert-dismissible fade in" style="z-index: 1;margin-bottom: 0; border-radius: 0; cursor: pointer; padding: 0; color: #fff; background-color: #1e1e1e; border: none; margin-left: -5px; margin-right: -5px; display: none;" role="alert">
 	<button style="outline: none; top:0;right: 0px; margin-top: 10px; opacity: 1; color: #fff !important;margin-right: 10px;" type="button" class="close pull-right" data-dismiss="alert" aria-label="Close" onclick="androidBannerCrossed();">
 		<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 	</button>
