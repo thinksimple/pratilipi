@@ -94,13 +94,12 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 	public UserPreferenceRtdb getUserPreference( Long userId )
 			throws UnexpectedServerException {
 
-		String memcacheId = _getMemcacheId( userId );
-		String jsonStr = memcache.get( memcacheId );
+		String jsonStr = memcache.get( _getMemcacheId( userId ) );
 		if( jsonStr == null ) {
 			try {
 				BlobEntry blobEntry = HttpUtil.doGet( DATABASE_URL + DATABASE_PREFERENCE_TABLE + "/" + userId + ".json", headersMap, null );
 				jsonStr = new String( blobEntry.getData(), "UTF-8" );
-				memcache.put( memcacheId, jsonStr, 5 );
+				memcache.put( _getMemcacheId( userId ), jsonStr, 5 );
 			} catch( UnsupportedEncodingException | JsonSyntaxException e ) {
 				logger.log( Level.SEVERE, e.getMessage() );
 				throw new UnexpectedServerException();
@@ -119,13 +118,16 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 			return new HashMap<>();
 
 		Map<Long, UserPreferenceRtdb> userPreferences = new HashMap<>( userIdList.size() );
+		List<Long> existingUserIdList = new ArrayList<>();
 		for( Long userId : userIdList ) {
 			String json = memcache.get( _getMemcacheId( userId ) );
 			if( json != null ) {
 				userPreferences.put( userId, _getUserPreferenceRtdb( json ) );
-				userIdList.remove( userId );
+				existingUserIdList.add( userId );
 			}
 		}
+
+		userIdList.removeAll( existingUserIdList );
 
 		Map<Long, String> userIdUrlMap = new HashMap<>( userIdList.size() );
 		for( Long userId : userIdList )
