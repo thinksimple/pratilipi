@@ -2,28 +2,28 @@
 	<#include "pratilipi-android-launch.ftl">
 	<div class="row" style="text-align: center; margin: 0 auto;">
 		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-			<a href="/" onclick="triggerGAEvent( 'logo' )">
+			<a href="/" onclick="triggerGAEvent(  <#if user.isGuest() == true>'logo_guest'<#else>'logo_user'</#if> )">
 			<div class="sprites-icon pratilipi-logo-icon">
 			</div>
 			</a>
 		</div>
 		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" >
-			<a style="display: block;" href="/navigation" onclick="triggerGAEvent( 'navigation' )">
+			<a style="display: block;" href="/navigation" onclick="triggerGAEvent( <#if user.isGuest() == true>'navigation_guest'<#else>'navigat_user'</#if> )">
 				<div class="sprites-icon header-sprite-icon menu-icon"></div>
 			</a>
 		</div>
 		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-			<a style="display: block;" onclick="showPopup();triggerGAEvent( 'write' );" >
+			<a style="display: block;" onclick="showPopup();triggerGAEvent( <#if user.isGuest() == true>'write_guest'<#else>'write_user'</#if> );" >
 				<div class="sprites-icon header-sprite-icon edit-icon"></div>
 			</a>
 		</div>
 		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-			<a style="display: block;" onclick="triggerGAEvent( 'library' )" <#if user.isGuest() == true>href="/login?ret=/library"<#else>href="/library"</#if>>
+			<a style="display: block;" onclick="triggerGAEvent( <#if user.isGuest() == true>'library_guest'<#else>'library_user'</#if> )" <#if user.isGuest() == true>href="/login?ret=/library"<#else>href="/library"</#if>>
 				<div class="sprites-icon header-sprite-icon library-books-icon"></div>
 			</a>
 		</div>
 		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" style="position: relative;">
-			<a style="display: block;" onclick="triggerGAEvent( 'notification' )" <#if user.isGuest() == true>href="/login?ret=/notifications"<#else>href="/notifications?ret=${requestUrl}" </#if>>
+			<a style="display: block;" onclick="triggerGAEvent( <#if user.isGuest() == true>'notification_guest'<#else>'notification_user'</#if> )" <#if user.isGuest() == true>href="/login?ret=/notifications"<#else>href="/notifications?ret=${requestUrl}" </#if>>
 				<div class="sprites-icon header-sprite-icon notifications-icon"></div>
 			</a>
 		</div>				
@@ -53,7 +53,7 @@
 						<input type="text" class="form-control" name="q" placeholder="${ _strings.search }" style="display: table-cell; width:100%;" maxlength="120" <#if pratilipiListSearchQuery?? >value="${ pratilipiListSearchQuery }"</#if> >
 
 						<div style="background: #f5f5f5;    padding: 3px 4px 3px 5px;" class="input-group-addon">
-						    <button class="search-button" type="submit" onclick="triggerGAEvent( 'search' )">
+						    <button class="search-button" type="submit" onclick="triggerGAEvent( <#if user.isGuest() == true>'search_guest'<#else>'search_user'</#if> )">
 							    <div class="sprites-icon search-icon"></div>
 						    </button>
 						</div>
