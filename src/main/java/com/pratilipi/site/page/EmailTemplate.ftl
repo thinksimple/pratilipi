@@ -43,7 +43,7 @@
 					data: { 
 						'language': "${ language }", 
 						'group': "EMAIL",
-						'keyValues': encodeURIComponent( JSON.stringify( data ) )
+						'keyValues': JSON.stringify( data )
 					},
 
 					success: function( response ) {
