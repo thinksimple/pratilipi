@@ -243,6 +243,7 @@ public interface DataAccessor {
 	
 	// I18N Table
 	I18n newI18n( String i18nId );
+	I18n getI18n( String i18nId );
 	List<I18n> getI18nList( I18nGroup i18nGroup );
 	Map<String, String> getI18nStrings( I18nGroup i18nGroup, Language language );
 	I18n createOrUpdateI18n( I18n i18n );

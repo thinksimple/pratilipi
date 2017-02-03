@@ -2186,6 +2186,11 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	public I18n newI18n( String i18nId ) {
 		return new I18nEntity( i18nId );
 	}
+
+	@Override
+	public I18n getI18n( String i18nId ) {
+		return getEntity( I18nEntity.class, i18nId );
+	}
 	
 	@Override
 	public List<I18n> getI18nList( I18nGroup i18nGroup ) {

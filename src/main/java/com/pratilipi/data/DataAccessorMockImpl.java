@@ -1224,6 +1224,11 @@ public class DataAccessorMockImpl implements DataAccessor {
 	}
 	
 	@Override
+	public I18n getI18n( String i18nId ) {
+		return null;
+	}
+
+	@Override
 	public List<I18n> getI18nList(I18nGroup i18nGroup) {
 		// TODO Auto-generated method stub
 		return null;
