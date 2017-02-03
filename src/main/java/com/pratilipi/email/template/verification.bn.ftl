@@ -1,6 +1,6 @@
 <#-- SENDER_NAME: Team Pratilipi -->
 <#-- SENDER_EMAIL: contact@pratilipi.com -->
-<#-- SUBJECT: Please verify your e-mail address -->
+<#-- SUBJECT: প্রতিলিপি অ্যাকাউন্ট - ইমেল যাচাই করুন -->
 
 <!DOCTYPE html>
 <html>

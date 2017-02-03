@@ -1,6 +1,6 @@
 <#-- SENDER_NAME: Team Pratilipi -->
 <#-- SENDER_EMAIL: contact@pratilipi.com -->
-<#-- SUBJECT: Pratilipi - Update password -->
+<#-- SUBJECT: പ്രതിലിപി - പാസ്സ്‌വേര്‍ഡ്‌ അപ്ഡേറ്റ് ചെയ്യൂ  -->
 
 <!DOCTYPE html>
 <html>

@@ -1,6 +1,6 @@
 <#-- SENDER_NAME: Team Pratilipi -->
 <#-- SENDER_EMAIL: contact@pratilipi.com -->
-<#-- SUBJECT: Please verify your e-mail address -->
+<#-- SUBJECT: താങ്കളുടെ ഇ മെയില്‍ അഡ്രസ്‌ വെരിഫൈ ചെയ്യൂ  -->
 
 <!DOCTYPE html>
 <html>

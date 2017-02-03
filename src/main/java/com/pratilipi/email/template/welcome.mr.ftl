@@ -1,6 +1,6 @@
 <#-- SENDER_NAME: Team Pratilipi -->
 <#-- SENDER_EMAIL: contact@pratilipi.com -->
-<#-- SUBJECT: Welcome to Pratilipi.com -->
+<#-- SUBJECT: प्रतिलिपिच्या कुटुंबात आपले स्वागत आहे! -->
 
 <!DOCTYPE html>
 <html lang="mr">
