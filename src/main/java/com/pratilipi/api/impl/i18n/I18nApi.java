@@ -1,12 +1,10 @@
 package com.pratilipi.api.impl.i18n;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Post;
@@ -33,7 +31,7 @@ public class I18nApi extends GenericApi {
 
 		private Language language;
 
-		private String keyValues;
+		private Map<String, String> keyValues;
 
 	}
 
@@ -44,21 +42,23 @@ public class I18nApi extends GenericApi {
 		if( ! UserAccessUtil.hasUserAccess( AccessTokenFilter.getAccessToken().getUserId(), request.language, AccessType.I18N_UPDATE ) )
 			throw new InsufficientAccessException();
 
-		JsonObject jsonObject = null;
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		List<I18n> i18nList = new ArrayList<>();
 
-		try {
-			jsonObject = new Gson().fromJson( URLDecoder.decode( request.keyValues, "UTF-8" ), JsonObject.class );
-		} catch( JsonSyntaxException | UnsupportedEncodingException e ) {
-			throw new UnexpectedServerException();
+		for( Entry<String, String> entry : request.keyValues.entrySet() ) {
+			I18n i18n = dataAccessor.getI18n( entry.getKey() );
+			if( i18n == null )
+				i18n = dataAccessor.newI18n( entry.getKey() );
+
+			// Resetting the group if its already set
+			i18n.setGroup( request.group );
+			i18n.setI18nString( request.language, entry.getValue() );
+
+			i18nList.add( i18n );
+
 		}
 
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		List<I18n> i18nList = dataAccessor.getI18nList( request.group );
-		for( I18n i18n : i18nList )
-			if( jsonObject.has( i18n.getId() ) )
-				i18n.setI18nString( request.language, jsonObject.get( i18n.getId() ).getAsString() );
-
-		dataAccessor.createOrUpdateI18nList( i18nList );
+		i18nList = dataAccessor.createOrUpdateI18nList( i18nList );
 
 		return new GenericResponse();
 
