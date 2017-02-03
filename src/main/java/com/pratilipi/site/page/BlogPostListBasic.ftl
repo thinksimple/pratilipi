@@ -36,7 +36,6 @@
 		<#include "../element/basic/pratilipi-header.ftl">
 			<div class="parent-container">
 				<div class="container">
-					<#include "../element/basic/pratilipi-android-launch.ftl">
 					<div id="androidLaunchBottom">
 						<#list blogPostList as blogPost>
 							<div class="secondary-500 pratilipi-shadow box" style="padding: 12px 16px;">

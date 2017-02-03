@@ -1,4 +1,5 @@
 <div class="secondary-500 pratilipi-shadow pratilipi-new-header" style="display: block; padding: 0px 5px 0px 5px;">
+	<#include "pratilipi-android-launch.ftl">
 	<div class="row" style="text-align: center; margin: 0 auto;">
 		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
 			<a href="/" onclick="triggerGAEvent( 'logo' )">

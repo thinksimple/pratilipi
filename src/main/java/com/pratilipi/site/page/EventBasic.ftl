@@ -26,7 +26,6 @@
 		<#include "../element/basic/pratilipi-header.ftl">
 			<div class="parent-container">
 				<div class="container">
-					<#include "../element/basic/pratilipi-android-launch.ftl">
 					<div id="androidLaunchBottom">
 						<#if ( action == "list_contents") >
 							<#include "../element/basic/pratilipi-event-list.ftl">
