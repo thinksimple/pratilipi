@@ -6,8 +6,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
      <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.grey-red.min.css" /> 
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-    <script src="https://raw.githubusercontent.com/GoogleChrome/dialog-polyfill/master/dialog-polyfill.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://raw.githubusercontent.com/GoogleChrome/dialog-polyfill/master/dialog-polyfill.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.6/dialog-polyfill.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.6/dialog-polyfill.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <style>
     .demo-list-control {
@@ -208,11 +208,7 @@ dialog.querySelector('.continue').addEventListener('click', function() {
         console.log(group);
         $.ajax({
             type: 'GET',
-            url: 'http://' + language.toLowerCase() + '.gamma.pratilipi.com/api/i18n?language=' + language + '&group=' + group,
-            data: {
-                get_param: 'value'
-            },
-            // dataType: 'jsonp',
+            url: '/api/i18n?language=' + language + '&group=' + group,
             success: function(data) {
                 console.log(data)
             }
