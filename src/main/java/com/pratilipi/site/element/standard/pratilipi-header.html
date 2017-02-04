@@ -506,7 +506,7 @@
 				if( event.keyCode != null && event.keyCode != 0 && event.keyCode != 13 || this.query == null || this.query.trim() == "" )
 					return;
 				
-			  	triggerGAEvent( "search" );
+			  	this.triggerGAEvent( "search" );
 			  	
 				var query = jQuery( "#search-input" ).val();
 				/* query = query.replace( /[^A-Z0-9]+/ig, " " ); */
