@@ -724,60 +724,33 @@ public class AuditLogProcessApi extends GenericApi {
 	private void _updateEmailTable( List<Email> emailList ) throws UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		RtdbAccessor rtdbAccessor = DataAccessorFactory.getRtdbAccessor();
 
-		Set<Long> userIds = new HashSet<>( emailList.size() );
+		Set<Long> userIds = new HashSet<>();
 		for( Email email : emailList )
 			userIds.add( email.getUserId() );
 
-		Map<Long,UserPreferenceRtdb> userPreferenceMap = rtdbAccessor.getUserPreferences( userIds );
+		Map<Long,UserPreferenceRtdb> userPreferenceMap = 
+				DataAccessorFactory.getRtdbAccessor().getUserPreferences( userIds );
 		Map<Long,User> users = dataAccessor.getUsers( userIds );
 
-		List<Email> immediateEmails = new ArrayList<>();
-
+		List<Email> emailsToUpdate = new ArrayList<>( emailList.size() );
 		for( Email email : emailList ) {
-			if( users.get( email.getUserId() ).getEmail() == null )
-				continue;
-			UserPreferenceRtdb preference = userPreferenceMap.get( email.getUserId() );
-			if( preference.getEmailFrequency() == EmailFrequency.IMMEDIATELY ) {
-				email.setScheduledDate( new Date() );
-				immediateEmails.add( email );
-			}
-		}
 
-		immediateEmails = dataAccessor.createOrUpdateEmailList( immediateEmails );
-
-		/*
-		Set<Long> userIds = new HashSet<>();
-
-		Map<Long,UserPreferenceRtdb> userPreferenceMap = new HashMap<>();
-		for( Email email : emailList ) {
-			UserPreferenceRtdb preference;
-			if( userPreferenceMap.containsKey( email.getUserId() ) ) {
-				preference = userPreferenceMap.get( email.getUserId() );
-			} else {
-				preference = rtdbAccessor.getUserPreference( email.getUserId() );
-				userPreferenceMap.put( email.getUserId(), preference );
-			}
-			userIds.add( email.getUserId() );
-		}
-
-		Map<Long,User> users = dataAccessor.getUsers( userIds );
-		for( Email email : emailList ) {
 			UserPreferenceRtdb preference = userPreferenceMap.get( email.getUserId() );
 			User user = users.get( email.getUserId() );
+
 			if( user.getEmail() == null )
 				continue;
-			if( preference.getEmailFrequency() == null || preference.getEmailFrequency() == EmailFrequency.IMMEDIATELY )
-				email.setScheduledDate( new Date() );
-			else if( preference.getEmailFrequency() == EmailFrequency.NEVER )
-				emailList.remove( email );
-			else
-				email.setScheduledDate( preference.getEmailFrequency().getNextSchedule( user.getLastEmailedDate() ) );
+
+			if( preference.getEmailFrequency() == EmailFrequency.NEVER )
+				continue;
+
+			email.setScheduledDate( preference.getEmailFrequency().getNextSchedule( user.getLastEmailedDate() ) );
+			emailsToUpdate.add( email );
+
 		}
 
-		emailList = dataAccessor.createOrUpdateEmailList( emailList );
-		*/
+		emailsToUpdate = dataAccessor.createOrUpdateEmailList( emailsToUpdate );
 
 	}
 

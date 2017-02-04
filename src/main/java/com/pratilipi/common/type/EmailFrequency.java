@@ -25,8 +25,11 @@ public enum EmailFrequency {
 		if( this == NEVER )
 			return null;
 
+		if( this == IMMEDIATELY )
+			return new Date();
+
 		if( lastEmailDate == null )
-			return new Date( new Date().getTime() + delayMillis );
+			lastEmailDate = new Date( 1483209000000L ); // 2017-01-01 00:00:00 IST
 
 		while( lastEmailDate.before( new Date() ) )
 			lastEmailDate = new Date( lastEmailDate.getTime() + delayMillis );
