@@ -13,6 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.EmailState;
 import com.pratilipi.common.type.EmailType;
 import com.pratilipi.common.type.I18nGroup;
@@ -29,10 +30,13 @@ import com.pratilipi.data.client.PratilipiData;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.client.UserPratilipiData;
 import com.pratilipi.data.client.VoteData;
+import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Email;
+import com.pratilipi.data.type.User;
 import com.pratilipi.data.type.UserAuthor;
 import com.pratilipi.data.type.Vote;
 import com.pratilipi.email.EmailTemplateUtil;
+import com.pratilipi.filter.AccessTokenFilter;
 
 
 public class EmailDataUtil {
@@ -78,6 +82,22 @@ public class EmailDataUtil {
 	private static String _getContentSnippet( Email email ) throws UnexpectedServerException {
 		return _getContentSnippet( email, null );
 	}
+	
+	private static void _updateUserEntity( Long userId ) {
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		User user = dataAccessor.getUser( userId );
+		AuditLog auditLog = dataAccessor.newAuditLog(
+				AccessTokenFilter.getAccessToken(),
+				AccessType.USER_UPDATE,
+				user );
+
+		user.setLastEmailedDate( new Date() );
+		user.setLastUpdated( new Date() );
+		user = dataAccessor.createOrUpdateUser( user, auditLog );
+
+	}
+
 
 	private static String _getContentSnippet( Email email, Language language ) throws UnexpectedServerException {
 
@@ -151,6 +171,8 @@ public class EmailDataUtil {
 
 		dataAccessor.createOrUpdateEmailList( emailList );
 
+		_updateUserEntity( userId );
+
 	}
 
 	public static void sendEmail( Long emailId ) throws UnexpectedServerException {
@@ -189,6 +211,8 @@ public class EmailDataUtil {
 		email.setState( EmailState.SENT );
 		email.setLastUpdated( new Date() );
 		dataAccessor.createOrUpdateEmail( email );
+
+		_updateUserEntity( email.getUserId() );
 
 	}
 	
