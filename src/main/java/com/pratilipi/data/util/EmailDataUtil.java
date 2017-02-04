@@ -41,29 +41,6 @@ import com.pratilipi.filter.AccessTokenFilter;
 
 public class EmailDataUtil {
 
-	private static class EmailData {
-
-		private Map<String, Object> dataModel;
-
-		private Language defaultLanguage;
-
-
-		public EmailData( Map<String, Object> dataModel, Language defaultLanguage ) {
-			this.dataModel = dataModel;
-			this.defaultLanguage = defaultLanguage;
-		}
-
-
-		public Map<String, Object> getDataModel() {
-			return dataModel;
-		}
-
-		public Language getDefaultLanguage() {
-			return defaultLanguage;
-		}
-
-	}
-
 	@SuppressWarnings("unused")
 	private static final Logger logger =
 			Logger.getLogger( EmailDataUtil.class.getName() );
@@ -99,9 +76,10 @@ public class EmailDataUtil {
 	}
 
 
+	@SuppressWarnings("unchecked")
 	private static String _getContentSnippet( Email email, Language language ) throws UnexpectedServerException {
 
-		EmailData emailData = null;
+		Object[] emailData = null;
 
 		if( email.getType() == EmailType.PRATILIPI_PUBLISHED_AUTHOR 
 				|| email.getType() == EmailType.PRATILIPI_PUBLISHED_FOLLOWER )
@@ -124,9 +102,9 @@ public class EmailDataUtil {
 			emailData = _createDataModelForVoteCommentEmail( email.getPrimaryContentId() );
 
 		String template = EmailTemplateUtil.getEmailTemplate( email.getType(), 
-				language != null ? language : emailData.getDefaultLanguage() );
+				language != null ? language : (Language) emailData[1] );
 
-		return FreeMarkerUtil.processString( emailData.getDataModel(), template );
+		return FreeMarkerUtil.processString( ( Map<String, Object> ) emailData[0], template );
 
 	}
 
@@ -230,7 +208,7 @@ public class EmailDataUtil {
 	}
 
 
-	private static EmailData _createDataModelForPratilipiPublishedEmail( Long pratilipiId )
+	private static Object[] _createDataModelForPratilipiPublishedEmail( Long pratilipiId )
 			throws UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -246,11 +224,11 @@ public class EmailDataUtil {
 		dataModel.put( "author_name", pratilipi.getAuthor().getName() != null ? pratilipi.getAuthor().getName() : pratilipi.getAuthor().getNameEn() );
 		dataModel.put( "author_page_url", _getDomainName( pratilipi.getLanguage() ) + pratilipi.getAuthor().getPageUrl() );
 
-		return new EmailData( dataModel, pratilipi.getLanguage() );
+		return new Object[] { dataModel, pratilipi.getLanguage() };
 
 	}
 
-	private static EmailData _createDataModelForAuthorFollowEmail( String userAuthorId ) 
+	private static Object[] _createDataModelForAuthorFollowEmail( String userAuthorId ) 
 			throws UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -267,11 +245,11 @@ public class EmailDataUtil {
 		if( follower.getFollowCount() > 0 )
 			dataModel.put( "follower_followers_count", follower.getFollowCount() );
 
-		return new EmailData( dataModel, user.getLanguage() );
+		return new Object[] { dataModel, user.getLanguage() };
 
 	}
 
-	private static EmailData _createDataModelForUserPratilipiEmail( String userPratilipiId )
+	private static Object[] _createDataModelForUserPratilipiEmail( String userPratilipiId )
 			throws UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -302,11 +280,11 @@ public class EmailDataUtil {
 		if( userPratilipi.getCommentCount() != null )
 			dataModel.put( "review_comment_count", userPratilipi.getCommentCount().toString() );
 
-		return new EmailData( dataModel, pratilipi.getLanguage() );
+		return new Object[] { dataModel, pratilipi.getLanguage() };
 
 	}
 
-	private static EmailData _createDataModelForCommentReviewEmail( Long commentId ) 
+	private static Object[] _createDataModelForCommentReviewEmail( Long commentId ) 
 			throws UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -336,11 +314,11 @@ public class EmailDataUtil {
 		dataModel.put( "comment_date", _getDateFormat( comment.getCreationDate() ) );
 		dataModel.put( "comment_comment", HtmlUtil.truncateText( comment.getContent(), 200 ) );
 
-		return new EmailData( dataModel, pratilipi.getLanguage() );
+		return new Object[] { dataModel, pratilipi.getLanguage() };
 
 	}
 	
-	private static EmailData _createDataModelForVoteReviewEmail( String voteId ) 
+	private static Object[] _createDataModelForVoteReviewEmail( String voteId ) 
 			throws UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -369,11 +347,11 @@ public class EmailDataUtil {
 				? voter.getAuthor().getName()
 				: voter.getAuthor().getNameEn() );
 
-		return new EmailData( dataModel, pratilipi.getLanguage() );
+		return new Object[] { dataModel, pratilipi.getLanguage() };
 
 	}
 	
-	private static EmailData _createDataModelForVoteCommentEmail( String voteId ) 
+	private static Object[] _createDataModelForVoteCommentEmail( String voteId ) 
 			throws UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -409,7 +387,7 @@ public class EmailDataUtil {
 		dataModel.put( "comment_date", _getDateFormat( comment.getCreationDate() ) );
 		dataModel.put( "comment_comment", HtmlUtil.truncateText( comment.getContent(), 200 ) );
 
-		return new EmailData( dataModel, pratilipi.getLanguage() );
+		return new Object[] { dataModel, pratilipi.getLanguage() };
 
 	}
 
