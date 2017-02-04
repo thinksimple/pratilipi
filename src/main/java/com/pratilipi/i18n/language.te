@@ -450,3 +450,31 @@ notification_settings_save_changes = Save Changes
 whatsapp_read_unlimited_stories = ప్రతిలిపిలో మరెన్నో కథలు, కవితలు, వ్యాసాలను ఉచితంగా చదవండి
 whatsapp_read_story = , ప్రతిలిపిలో చదవండి: 
 whatsapp_follow_author = , ప్రతిలిపిలో అనుసరించండి: 
+
+
+# SEO Titles
+seo_root_domain					= Pratilipi - Read, Write and Share Stories in your own mother tongue
+seo_pratilipi_page				= ${ authorName }'s content ${ pratilipiTitle } Summary
+seo_author_page					= ${ authorName }
+seo_home_page					= తెలుగు పుస్తకాలు,కథలు మరియు ప్రేమ కవితలు ప్రతిలిపిలో చదవండి
+seo_events_page					= ఆన్ లైన్ పోటీలు 
+seo_library_page				= ప్రతిలిపిలో మీరు సేవ్  చేసుకున్న పుస్తకాలు,షార్ట్ స్టోరీస్ మరియు లవ్ కవితలు
+seo_event_page					= ${ eventName }
+seo_reader_panel				= ${ authorName } తెలుగు కథ ${ pratilipiTitle } ప్రతిలిపిలో చదవండి
+seo_blogpost_page				= ${ blogTitle }
+seo_search_page					= మీకు ఇష్టమైన ప్రేమ కథలను,రచయితలను ఇంకా ఎన్నో ప్రతిలిపిలో శోదించండి
+seo_writer_panel				= తెలుగు ప్రతిలిపిలో ${ authorName }  గారి ${ pratilipiTitle } రచన 
+seo_notifications_page			= ప్రతిలిపిలో మీ నోటిఫికేషన్స్
+seo_blog_page					= ప్రతిలిపి తెలుగు బ్లాగ్ మరియు ఎడిటోరియల్
+seo_author_interview			= పాపులర్ రచయితలతో ఇంటర్వ్యూలు ప్రతిలిపి తెలుగు 
+seo_followers_page				= ప్రతిలిపిలో ${ authorName } గారి అనుచరులు
+seo_following_page				= మీరు ప్రతిలిపిలో వీరిని అనుసరిస్తున్నారు
+seo_list_page					= ${ listTitle }
+seo_static_page					= ${ staticTitle }
+seo_account_page				= ${ authorName } 
+seo_navigation_page				= వర్గం
+seo_update_password_page		= అప్ డేట్ పాస్వర్డ్ -ప్రతిలిపి తెలుగు  
+seo_share_page					= మీ స్నేహితులకు షేర్ చేయండి
+seo_register_page				= ప్రతిలిపిలో మీ ఖాతాను తయారుచేసుకోండి
+seo_login_page					= ప్రతిలిపిలోకి లాగ్ఇన్ 
+seo_reset_password_page			= మీ పాస్వర్డ్ రీసెట్ చేసుకోండి 

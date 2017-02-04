@@ -450,3 +450,31 @@ notification_settings_save_changes = Save Changes
 whatsapp_read_unlimited_stories = ಅನಿಯಮಿತ ಕಥೆ, ಕವನ, ಲೇಖನಗಳನ್ನು ಭಾರತೀಯ ಭಾಷೆಗಳಲ್ಲಿ ಉಚಿತವಾಗಿ ಓದಿರಿ! 
 whatsapp_read_story = , ಪ್ರತಿಲಿಪಿಯಲ್ಲಿ ಓದಿರಿ : 
 whatsapp_follow_author = , ಪ್ರತಿಲಿಪಿಯಲ್ಲಿ ಹಿಂಬಾಲಿಸಿ : 
+
+
+# SEO Titles
+seo_root_domain					= Pratilipi - Read, Write and Share Stories in your own mother tongue
+seo_pratilipi_page				= ${ authorName }'s content ${ pratilipiTitle } Summary
+seo_author_page					= ${ authorName }
+seo_home_page					= ಕನ್ನಡ ಕಥೆಗಳು, ಕವನಗಳು ಮತ್ತು ಪುಸ್ತಕಗಳನ್ನು ಪ್ರತಿಲಿಪಿಯಲ್ಲಿ ಓದಿರಿ 
+seo_events_page					= ಆನ್ಲೈನ್ ಸ್ಪರ್ಧೆಗಳು
+seo_library_page				= ಪ್ರತಿಲಿಪಿಯಲ್ಲಿನ ನಿಮ್ಮ ಸಂರಕ್ಷಿತ ಕಥೆಗಳು, ಕವನಗಳು ಮತ್ತು ಪುಸ್ತಕಗಳು
+seo_event_page					= ${ eventName }
+seo_reader_panel				= ${ authorName } ಅವರ ಕನ್ನಡ ಕಥೆ ${ pratilipiTitle } ಅನ್ನು ಪ್ರತಿಲಿಪಿಯಲ್ಲಿ ಓದಿರಿ
+seo_blogpost_page				= ${ blogTitle }
+seo_search_page					= ನಿಮ್ಮ ನೆಚ್ಚಿನ ಕನ್ನಡ ಕಥೆಗಳು, ಬರಹಗಾರರು ಮತ್ತು ಇನ್ನೂ ಅನೇಕ ಸಂಗತಿಗಳಿಗಾಗಿ ಪ್ರತಿಲಿಪಿಯಲ್ಲಿ ಹುಡುಕಿ
+seo_writer_panel				= ${ authorName } ರ ಬರಹ ${ pratilipiTitle } 
+seo_notifications_page			= ಪ್ರತಿಲಿಪಿಯಲ್ಲಿನ ನಿಮ್ಮ ನೋಟಿಫಿಕೇಶನ್ಸ್ 
+seo_blog_page					= ಪ್ರತಿಲಿಪಿ ಕನ್ನಡ ಬ್ಲಾಗ್ ಮತ್ತು ಸಂಪಾದಕೀಯ 
+seo_author_interview			= ಪ್ರತಿಲಿಪಿ ಕನ್ನಡದಲ್ಲಿನ ಜನಪ್ರಿಯ ಬರಹಗಾರರ ಸಂದರ್ಶನಗಳು 
+seo_followers_page				= ಪ್ರತಿಲಿಪಿಯಲ್ಲಿ ${ authorName } ಅವರ ಹಿಂಬಾಲಕರು
+seo_following_page				= ನೀವು ಈ ಬರಹಗಾರರನ್ನು ಪ್ರತಿಲಿಪಿಯಲ್ಲಿ ಹಿಂಬಾಲಿಸುತ್ತಿದ್ದೀರಿ 
+seo_list_page					= ${ listTitle }
+seo_static_page					= ${ staticTitle }
+seo_account_page				= ${ authorName } 
+seo_navigation_page				= ಪ್ರಭೇದಗಳು 
+seo_update_password_page		= ಪಾಸ್ವರ್ಡ್ ಅಪ್ಡೇಟ್  
+seo_share_page					= ಇದನ್ನು ನಿಮ್ಮ ಸ್ನೇಹಿತರಿಗೆ ಶೇರ್ ಮಾಡಿ 
+seo_register_page				= ಪ್ರತಿಲಿಪಿಯಲ್ಲಿ ನಿಮ್ಮ ಖಾತೆ ತೆರೆಯಿರಿ 
+seo_login_page					= ಪ್ರತಿಲಿಪಿಗೆ ಲಾಗಿನ್ ಆಗಿ 
+seo_reset_password_page			= ನಿಮ್ಮ ಪಾಸ್ವರ್ಡ್ ರೀಸೆಟ್ ಮಾಡಿ 

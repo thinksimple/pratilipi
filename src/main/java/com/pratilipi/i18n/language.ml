@@ -450,3 +450,31 @@ notification_settings_save_changes = Save Changes
 whatsapp_read_unlimited_stories = ഇന്ത്യന്‍ ഭാഷകളിലുള്ള ഏറെ കഥകളും കവിതകളും ലേഖനങ്ങളുമെല്ലാം സൗജന്യമായി വായിക്കൂ !
 whatsapp_read_story = , എന്ന  രചന പ്രതിലിപിയില്‍ വായിക്കൂ: 
 whatsapp_follow_author = , നെ പ്രതിലിപിയില്‍  ഫോളോ ചെയ്യൂ:
+
+
+# SEO Titles
+seo_root_domain					= Pratilipi - Read, Write and Share Stories in your own mother tongue
+seo_pratilipi_page				= ${ authorName } എഴുതിയ ${ pratilipiTitle } എന്ന രചനയുടെ സംഗ്രഹം
+seo_author_page					= ${ authorName }
+seo_home_page					= മലയാളം കഥകള്‍ , കവിതകള്‍, വരികള്‍  പുസ്തകങ്ങള്‍,പ്രേമലേഖനങ്ങള്‍  എന്നിവയെല്ലാം പ്രതിലിപിയില്‍ വായിക്കൂ 
+seo_events_page					= ഓണ്‍ലൈന്‍ മത്സരങ്ങള്‍
+seo_library_page				= പ്രതിലിപിയില്‍ താങ്കള്‍ സേവ് ചെയ്ത ചെറു കഥകള്‍ , കവിതകള്‍, വരികള്‍ പുസ്തകങ്ങള്‍ തുടങ്ങിയവ  
+seo_event_page					= ${ eventName }
+seo_reader_panel				= ${ authorName } എഴുതിയ ${ pratilipiTitle } എന്ന രചന പ്രതിലിപിയില്‍ വായിക്കൂ
+seo_blogpost_page				= ${ blogTitle }
+seo_search_page					= നിങ്ങളുടെ ഇഷ്ട രചനകളും, വരികളും  പ്രിയ എഴുത്തുകാരെയും പ്രതിലിപിയില്‍ തിരയൂ 
+seo_writer_panel				= ${ authorName } എഴുതിയ ${ pratilipiTitle } 
+seo_notifications_page			= പ്രതിലിപിയിലെ താങ്കളുടെ നോട്ടിഫിക്കേഷന്‍സ്
+seo_blog_page					= പ്രതിലിപി മലയാളം ബ്ലോഗ്
+seo_author_interview			= പ്രതിലിപിയിലെ എഴുത്തുകാരുമായുള്ള അഭിമുഖങ്ങള്‍
+seo_followers_page				= ${ authorName } ന്‍റെ പ്രതിലിപിയിലെ ഫോളോവേര്‍സ്
+seo_following_page				= നിങ്ങള്‍ ഇവരെ പ്രതിലിപിയില്‍ ഫോളോ ചെയ്യുന്നു
+seo_list_page					= ${ listTitle }
+seo_static_page					= ${ staticTitle }
+seo_account_page				= ${ authorName } 
+seo_navigation_page				= വിഭാഗങ്ങള്‍ 
+seo_update_password_page		= പാസ്സ്‌വേര്‍ഡ്‌ മാറ്റൂ  
+seo_share_page					= സുഹൃത്തുക്കള്‍ക്ക് ഷെയര്‍ ചെയ്യൂ 
+seo_register_page				= പ്രതിലിപിയില്‍ താങ്കളുടെ അക്കൗണ്ട് സൃഷ്ടിക്കൂ 
+seo_login_page					= പ്രതിലിപിയില്‍ ലോഗിന്‍ ചെയ്യൂ 
+seo_reset_password_page			= പാസ്സ്‌വേര്‍ഡ്‌ റീസെറ്റ് ചെയ്യൂ 
