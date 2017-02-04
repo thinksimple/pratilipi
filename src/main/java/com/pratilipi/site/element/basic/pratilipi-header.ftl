@@ -30,9 +30,9 @@
 		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
 			<a style="display: block;" <#if user.isGuest() == true>href="/login?ret=${ requestUrl }"<#else>href="${ user.getProfilePageUrl() }"</#if>>
 				<#if user.isGuest() == true>
-					<div class="sprites-icon header-sprite-icon account-circle-icon" onclick="triggerGAEvent( 'login' )"></div>
+					<div class="sprites-icon header-sprite-icon account-circle-icon" onclick="triggerGAEvent( 'profile_guest' )"></div>
 				<#else>
-					<img onclick="triggerGAEvent( 'profile' )" style="width: 24px; height: 24px; margin: 10px auto;" src="${ user.getProfileImageUrl( 24 ) }" />
+					<img onclick="triggerGAEvent( 'profile_user' )" style="width: 24px; height: 24px; margin: 10px auto;" src="${ user.getProfileImageUrl( 24 ) }" />
 				</#if>
 				
 			</a>

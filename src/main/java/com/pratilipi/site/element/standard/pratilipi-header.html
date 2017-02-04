@@ -256,10 +256,11 @@
 		<div class="secondary-500" id="header-card">
 			<div class="parent-container">
 				<div class="vertical-align container">
-					<div class="pratilipi-logo" onclick="triggerGlobalGAEvent( 'header_standard', 'click', 'logo', 1 )">
+					<div class="pratilipi-logo">
 						<a href="/">
 							<iron-image sizing="contain" style="width: 46px; height: 46px; margin-top: 6px;" 
-										title="${ _strings.pratilipi }" alt="${ _strings.pratilipi }" 
+										title="${ _strings.pratilipi }" alt="${ _strings.pratilipi }" data-arg="logo"
+										on-click="triggerGAEventFromDom"
 										src="http://public.pratilipi.com/pratilipi-logo/png/Logo-2C-RGB-80px.png"></iron-image>
 						</a>
 					</div>
@@ -272,7 +273,7 @@
 							<paper-menu class="dropdown-content" role="listbox">
 								<template is="dom-repeat" items="{{ languageArray }}" as="language">
 									<template is="dom-if" if="{{ !language.current }}">
-										<a class="pratilipi-black" href="{{ language.link }}">
+										<a class="pratilipi-black" href="{{ language.link }}" on-click="triggerGAEventFromDom" data-arg="language_selection">
 											<paper-item class="language-font">{{ language.value }}</paper-item>
 										</a>
 									</template>
@@ -284,33 +285,33 @@
 						</paper-menu-button>
 					</div>
 					<div class="button-holder menu-icon">
-						<a on-click="_openMenuNavigation" onclick="triggerGlobalGAEvent( 'header_standard', 'click', 'navigation', 1 )">
-							<iron-icon icon="icons:menu"></iron-icon>
+						<a on-click="_openMenuNavigation">
+							<iron-icon icon="icons:menu" on-click="triggerGAEventFromDom" data-arg="navigation"></iron-icon>
 						</a>
 					</div>
 					<div class="search-bar">
 						<form id="search-form" class="search-form" action="javascript:void(0);" on-keyup="onSubmit">
 							<paper-input id="search-input" class="search-input" name="q" type="search" placeholder="${ _strings.search_bar_help }" onfocus="this.placeholder = ''" onblur="this.placeholder = '${ _strings.search_bar_help }'" value="{{ query::input }}">
-								<paper-icon-button suffix icon="icons:search" noink on-click="onSubmit" onclick="triggerGlobalGAEvent( 'header_standard', 'click', 'search', 1 )"></paper-icon-button>
+								<paper-icon-button suffix icon="icons:search" noink on-click="onSubmit" ></paper-icon-button>
 								<paper-icon-button prefix class="menu-icon-search-bar" icon="icons:menu" noink on-click="_openMenuNavigation"></paper-icon-button>
 							</paper-input>
 						</form>
 					</div>
 					<div class="button-holder">
-						<a on-click="write" onclick="triggerGlobalGAEvent( 'header_standard', 'click', 'write', 1 )">
-							<iron-icon icon="icons:create"></iron-icon>
+						<a on-click="write">
+							<iron-icon icon="icons:create" on-click="triggerGAEventFromDom" data-arg="write"></iron-icon>
 						</a>
 					</div>
 					<div class="button-holder">
-						<a on-click="_gotoLibrary" onclick="triggerGlobalGAEvent( 'header_standard', 'click', 'library', 1 )">
-							<iron-icon icon="av:library-books"></iron-icon>
+						<a on-click="_gotoLibrary">
+							<iron-icon icon="av:library-books" on-click="triggerGAEventFromDom" data-arg="library"></iron-icon>
 						</a>
 					</div>
 					<div class="button-holder dropdown">
 						<div style="display: inline-block" class="dropdown">
 							<template is="dom-if" if="{{ isGuest }}">
-								<a on-click="_logInToViewNotifications" onclick="triggerGlobalGAEvent( 'header_standard', 'click', 'notification', 1 )">
-									<iron-icon icon="social:notifications"></iron-icon>
+								<a on-click="_logInToViewNotifications">
+									<iron-icon icon="social:notifications" on-click="triggerGAEventFromDom" data-arg="notification"></iron-icon>
 								</a>
 							</template>
 							<template is="dom-if" if="{{ !isGuest }}">
@@ -335,27 +336,27 @@
 					</div>
 					<div class="button-holder sign-in-text">
 						<template is="dom-if" if="{{ isGuest }}">
-							<a on-click="_logIn" onclick="triggerGlobalGAEvent( 'header_standard', 'click', 'login', 1 )">
+							<a on-click="_logIn">
 								<iron-icon icon="social:person"></iron-icon>
 							</a>
 						</template>
 						<template is="dom-if" if="{{ !isGuest }}">
-							<a href="{{ profilePageUrl }}" onclick="triggerGlobalGAEvent( 'header_standard', 'click', 'profile', 1 )">
-								<img class="img-circle pratilipi-shadow" style="width: 32px; height: 32px;"
+							<a href="{{ profilePageUrl }}">
+								<img on-click="triggerGAEventFromDom" data-arg="profile" class="img-circle pratilipi-shadow" style="width: 32px; height: 32px;"
 									alt="{{ displayName }}" src="{{ profileImageUrl }}" />
 							</a>
 						</template>
 					</div>
 					<div class="sign-in-button button-inside-container">
 						<template is="dom-if" if="{{ isGuest }}">
-							<button class="btn btn-primary" on-click="_logIn" onclick="triggerGlobalGAEvent( 'header_standard', 'click', 'login', 1 )">
+							<button class="btn btn-primary" on-click="_logIn" >
 								<iron-icon icon="social:person"></iron-icon>
 								<span>${ _strings.user_sign_in }</span>
 							</button>
 						</template>
 						<template is="dom-if" if="{{ !isGuest }}">
-							<a href="{{ profilePageUrl }}" onclick="triggerGlobalGAEvent( 'header_standard', 'click', 'profile', 1 )">
-								<img class="img-circle pratilipi-shadow" style="width: 32px; height: 32px;"
+							<a href="{{ profilePageUrl }}">
+								<img on-click="triggerGAEventFromDom" data-arg="profile" class="img-circle pratilipi-shadow" style="width: 32px; height: 32px;"
 									alt="{{ displayName }}" src="{{ profileImageUrl }}" />
 								<span>{{ displayName }}</span>
 							</a>
@@ -364,14 +365,14 @@
 				</div>
 				<div class="sign-in-button button-outside-container">
 					<template is="dom-if" if="{{ isGuest }}">
-						<button class="btn btn-primary" on-click="_logIn" onclick="triggerGlobalGAEvent( 'header_standard', 'click', 'login', 1 )">
+						<button class="btn btn-primary" on-click="_logIn">
 							<iron-icon icon="social:person"></iron-icon>
 							<span>${ _strings.user_sign_in }</span>
 						</button>
 					</template>
 					<template is="dom-if" if="{{ !isGuest }}">
-						<a href="{{ profilePageUrl }}" onclick="triggerGlobalGAEvent( 'header_standard', 'click', 'profile', 1 )">
-							<img class="img-circle pratilipi-shadow" style="width: 32px; height: 32px;"
+						<a href="{{ profilePageUrl }}">
+							<img on-click="triggerGAEventFromDom" data-arg="profile" class="img-circle pratilipi-shadow" style="width: 32px; height: 32px;"
 								alt="{{ displayName }}" src="{{ profileImageUrl }}" />
 							<span>{{ displayName }}</span>
 						</a>
@@ -458,6 +459,7 @@
 			},
 
 			_logIn: function() {
+			  	this.triggerGAEvent('profile');
 				document.querySelector( 'pratilipi-user' ).logIn();
 			},
 
@@ -490,6 +492,7 @@
 			},
 
 			_hideNotificationCount: function() {
+			  	this.triggerGAEvent( "notification" );
 				resetNewNotificationCount();
 				if( !this.isBigWindow )
 					window.location.href = "/notifications";
@@ -502,7 +505,9 @@
 			onSubmit: function( event ) {
 				if( event.keyCode != null && event.keyCode != 0 && event.keyCode != 13 || this.query == null || this.query.trim() == "" )
 					return;
-
+				
+			  	triggerGAEvent( "search" );
+			  	
 				var query = jQuery( "#search-input" ).val();
 				/* query = query.replace( /[^A-Z0-9]+/ig, " " ); */
 				this.set( 'query', query );
@@ -548,6 +553,18 @@
 					this.set( 'newNotificationCount', newNotificationCount );
 					this.getNotificationData();
 				}
+			},
+			
+			triggerGAEventFromDom: function( event ) {
+			  	var event_label =  Polymer.dom(event).path[2].getAttribute('data-arg') || event.currentTarget.getAttribute('data-arg');
+			  	console.log( event_label );
+			  	this.triggerGAEvent( event_label );
+			},
+			
+			triggerGAEvent: function( event_label ) {
+			  var event_label_val;
+			  event_label_val = this.user.isGuest ? event_label + "_guest" : event_label + "_user";
+			  triggerGlobalGAEvent( 'header_standard', 'click', event_label_val, 1 );
 			}
 
 		});
