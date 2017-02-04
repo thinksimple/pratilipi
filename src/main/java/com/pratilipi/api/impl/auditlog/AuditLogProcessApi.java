@@ -39,7 +39,6 @@ import com.pratilipi.common.util.SystemProperty;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
-import com.pratilipi.data.RtdbAccessor;
 import com.pratilipi.data.type.AppProperty;
 import com.pratilipi.data.type.AuditLog;
 import com.pratilipi.data.type.Author;
@@ -560,7 +559,7 @@ public class AuditLogProcessApi extends GenericApi {
 
 	}
 
-	
+	/*
 	private Email _createCommentAddedAuthorEmail( Author author, Comment comment ) {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -590,7 +589,7 @@ public class AuditLogProcessApi extends GenericApi {
 		return email;
 
 	}
-	
+	*/
 	
 	private Email _createVoteOnReviewReviewerEmail( UserPratilipi userPratilipi, Vote vote ) {
 
@@ -725,7 +724,7 @@ public class AuditLogProcessApi extends GenericApi {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
-		Set<Long> userIds = new HashSet<>();
+		Set<Long> userIds = new HashSet<>( emailList.size() );
 		for( Email email : emailList )
 			userIds.add( email.getUserId() );
 
