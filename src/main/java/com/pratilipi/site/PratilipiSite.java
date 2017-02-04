@@ -85,9 +85,9 @@ import com.pratilipi.data.type.PratilipiContentDoc;
 import com.pratilipi.data.type.PratilipiContentDoc.Chapter;
 import com.pratilipi.data.util.BlogPostDataUtil;
 import com.pratilipi.data.util.EventDataUtil;
+import com.pratilipi.data.util.PageDataUtil;
 import com.pratilipi.data.util.PratilipiDataUtil;
 import com.pratilipi.data.util.PratilipiDocUtil;
-import com.pratilipi.data.util.PageDataUtil;
 import com.pratilipi.data.util.UserDataUtil;
 import com.pratilipi.data.util.UserPratilipiDataUtil;
 import com.pratilipi.email.EmailTemplateUtil;
@@ -677,13 +677,14 @@ public class PratilipiSite extends HttpServlet {
 	private Set<String> getResourceList( Boolean basicMode ) {
 		Set<String> resourceList = new HashSet<>();
 		if( basicMode ) {
-			resourceList.add( ThirdPartyResource.JQUERY_BOOTSTRAP.getTag() );
-			resourceList.add( ThirdPartyResource.FIREBASE.getTag() );
+			resourceList.add( ThirdPartyResource.JQUERY.getTag() );
+			resourceList.add( ThirdPartyResource.BOOTSTRAP_JS.getTag() );
+			resourceList.add( ThirdPartyResource.BOOTSTRAP_CSS.getTag() );
 		} else {
 			resourceList.add( ThirdPartyResource.JQUERY_BOOTSTRAP_POLYMER_JS.getTag() );
 			resourceList.add( ThirdPartyResource.POLYMER_ELEMENTS.getTag() );
-			resourceList.add( ThirdPartyResource.FIREBASE.getTag() );
 		}
+		resourceList.add( ThirdPartyResource.FIREBASE.getTag() );
 		return resourceList;
 	}
 
