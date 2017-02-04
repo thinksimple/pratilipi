@@ -450,3 +450,31 @@ notification_settings_save_changes = Save Changes
 whatsapp_read_unlimited_stories = अमर्याद रचना वाचा, लिहा, आणि मित्रांसोबत शेयर करा
 whatsapp_read_story = , वाचा प्रतिलिपि वर :
 whatsapp_follow_author = , ला प्रतिलिपि पर फॉलो करा : 
+
+
+# SEO Titles
+seo_root_domain					= Pratilipi - Read, Write and Share Stories in your own mother tongue
+seo_pratilipi_page				= ${ authorName } च्या मराठी कथा ${ pratilipiTitle } चा सारांश 
+seo_author_page					= ${ authorName }
+seo_home_page					= वाचा मराठी कथा ,कविता आणि पुस्तके -  प्रतिलिपि मराठी वर 
+seo_events_page					= ऑनलाइन प्रतियोगिता 
+seo_library_page				= तुमच्या जतन केलेल्या कथा ,कविता आणि पुस्तके वर 
+seo_event_page					= ${ eventName }
+seo_reader_panel				= वाचा ${ authorName } च्या मराठी कथा ${ pratilipiTitle } प्रतिलिपि वर
+seo_blogpost_page				= ${ blogTitle }
+seo_search_page					= प्रतिलिपि वर आपले आवडते साहित्य, लेखक और खूप काही शोधा
+seo_writer_panel				= वाचा ${ pratilipiTitle } लेखक ${ authorName } 
+seo_notifications_page			= प्रतिलिपि वर आपल्यासाठी जरुरी सूचना 
+seo_blog_page					= प्रतिलिपि मराठी ब्लॉग तसेच संपादकीय 
+seo_author_interview			= लोकप्रिय साहित्यकारांसोबत  प्रश्नोत्तरे 
+seo_followers_page				= ${ authorName } चे प्रतिलिपि वर फॉलोवर्स
+seo_following_page				= आपण प्रतिलिपीवर यांना फॉलो करत आहात
+seo_list_page					= ${ listTitle }
+seo_static_page					= ${ staticTitle }
+seo_account_page				= ${ authorName } 
+seo_navigation_page				= श्रेणी 
+seo_update_password_page		= पासवर्ड अपडेट 
+seo_share_page					= आपल्या मित्रांसोबत शेयर करा
+seo_register_page				= प्रतिलिपि वर आपले अकाउंट बनवा 
+seo_login_page					= प्रतिलिपि वर लॉग-इन करा 
+seo_reset_password_page			= आपला पासवर्ड रीसेट करा

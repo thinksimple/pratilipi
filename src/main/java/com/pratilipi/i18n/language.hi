@@ -450,3 +450,31 @@ notification_settings_save_changes = Save Changes
 whatsapp_read_unlimited_stories = भारतीय भाषाओँ में अनगिनत रचनाएं पढ़ें, लिखें और दोस्तों से साझा करें, पूर्णत: नि:शुल्क
 whatsapp_read_story = , को प्रतिलिपि पर पढ़ें : 
 whatsapp_follow_author = , को प्रतिलिपि पर फॉलो करें:
+
+
+# SEO Titles
+seo_root_domain					= Pratilipi - Read, Write and Share Stories in your own mother tongue
+seo_pratilipi_page				= ${ authorName } की हिंदी कहानी ${ pratilipiTitle } का सारांश 
+seo_author_page					= ${ authorName }
+seo_home_page					= पढ़ें हिंदी कहानियाँ, कवितायें और किताबें प्रतिलिपि पर
+seo_events_page					= ऑनलाइन प्रतियोगितायें
+seo_library_page				= आपके द्वारा सेव की हुई कहानियाँ, कवितायें और किताबें
+seo_event_page					= ${ eventName }
+seo_reader_panel				= पढ़ें ${ authorName } की हिंदी कहानी ${ pratilipiTitle } प्रतिलिपि पर 
+seo_blogpost_page				= ${ blogTitle }
+seo_search_page					= प्रतिलिपि पर अपनी पसंदीदा कहानियाँ, कविता, रचनायें, लेखक और बहुत कुछ खोजें
+seo_writer_panel				= पढ़ें ${ pratilipiTitle } लेखक ${ authorName } 
+seo_notifications_page			= प्रतिलिपि पर आपके लिए जरूरी सूचनायें
+seo_blog_page					= प्रतिलिपि हिंदी ब्लॉग एवम सम्पादकीय
+seo_author_interview			= लोकप्रिय रचनाकारों के साथ सवाल-जवाब
+seo_followers_page				= ${ authorName } के प्रतिलिपि पर फॉलोवर्स
+seo_following_page				= आप प्रतिलिपि पर इनको फॉलो कर रहे हैं 
+seo_list_page					= ${ listTitle }
+seo_static_page					= ${ staticTitle }
+seo_account_page				= ${ authorName } 
+seo_navigation_page				= श्रेणियाँ
+seo_update_password_page		= पासवर्ड अपडेट 
+seo_share_page					= अपने दोस्तों के साथ साझा करें
+seo_register_page				= प्रतिलिपि पर अपना अकाउंट बनायें
+seo_login_page					= प्रतिलिपि पर लॉग-इन करें
+seo_reset_password_page			= अपना पासवर्ड रीसेट करें 

@@ -450,3 +450,31 @@ notification_settings_save_changes = Save Changes
 whatsapp_read_unlimited_stories = અગણિત રચનાઓ વાંચો, લખો અને આપના મિત્રો સાથે શેર કરો. તદ્દન નિ:શુલ્ક
 whatsapp_read_story = , ને પ્રતિલિપિ પર વાંચો : 
 whatsapp_follow_author = , ને પ્રતિલિપિ પર ફોલો કરો: 
+
+
+# SEO Titles
+seo_root_domain					= Pratilipi - Read, Write and Share Stories in your own mother tongue
+seo_pratilipi_page				= ${ authorName } ની ગુજરાતી વાર્તા ${ pratilipiTitle } નો સારાંશ 
+seo_author_page					= ${ authorName }
+seo_home_page					= વાંચો ગુજરાતી વાર્તાઓ, કવિતાઓ અને પુસ્તકો પ્રતિલિપિ પર
+seo_events_page					= ઓનલાઈન સ્પર્ધાઓ 
+seo_library_page				= આપની સાચવેલી વાર્તાઓ, કવિતાઓ અને પુસ્તકો 
+seo_event_page					= ${ eventName }
+seo_reader_panel				= વાંચો ${ authorName } ની ગુજરાતી વાર્તા ${ pratilipiTitle } પ્રતિલિપિ પર 
+seo_blogpost_page				= ${ blogTitle }
+seo_search_page					= પ્રતિલિપિ પર તમારી મનપસંદ રચનાઓ, લેખક અને બીજું ઘણું શોધો
+seo_writer_panel				= વાંચો ${ pratilipiTitle } લેખક ${ authorName } 
+seo_notifications_page			= પ્રતિલિપિ પર તમારા માટે જરૂરી સૂચનાઓ
+seo_blog_page					= પ્રતિલિપિ ગુજરાતી બ્લોગ અને સંપાદકીય
+seo_author_interview			= લોકપ્રિય રચનાકારો સાથે સવાલ જવાબ 
+seo_followers_page				= ${ authorName } ના પ્રતિલિપિ પર ફોલોઅર્સ 
+seo_following_page				= તમે પ્રતિલિપિ પર આમને ફોલો કરી રહ્યા છો
+seo_list_page					= ${ listTitle }
+seo_static_page					= ${ staticTitle }
+seo_account_page				= ${ authorName } 
+seo_navigation_page				= શ્રેણીઓ 
+seo_update_password_page		= પાસવર્ડ અપડેટ  
+seo_share_page					= તમારા મિત્રો સાથે શેર કરો
+seo_register_page				= પ્રતિલિપિ પર તમારું એકાઉન્ટ બનાવો
+seo_login_page					= પ્રતિલિપિ પર લોગ-ઇન કરો
+seo_reset_password_page			= તમારો પાસવર્ડ રીસેટ કરો

@@ -450,3 +450,31 @@ notification_settings_save_changes = Save Changes
 whatsapp_read_unlimited_stories = ভারতীয় ভাষায় অগুনতি রচনা পড়ুন,লিখুন এবং বন্ধুদের সাথে শেয়ার করুন,সম্পূর্ণ নিঃশুল্ক
 whatsapp_read_story = , প্রতিলিপিতে পড়ুন : 
 whatsapp_follow_author = , কে প্রতিলিপিতে অনুসরণ করুন: 
+
+
+# SEO Titles
+seo_root_domain					= Pratilipi - Read, Write and Share Stories in your own mother tongue
+seo_pratilipi_page				= ${ authorName } -র বাংলা কাহিনী ${ pratilipiTitle } এর সারাংশ     
+seo_author_page					= ${ authorName }
+seo_home_page					= পড়ুন বাংলা কাহিনী, কবিতা এবং গ্রন্থ প্রতিলিপিতে
+seo_events_page					= অনলাইন প্রতিযোগিতাসমূহ
+seo_library_page				= আপনার দ্বারা সেভ করা কাহিনী, কবিতা এবং গ্রন্থ
+seo_event_page					= ${ eventName }
+seo_reader_panel				= পড়ুন ${ authorName } -এর বাংলা কাহিনী ${ pratilipiTitle } প্রতিলিপিতে  
+seo_blogpost_page				= ${ blogTitle }
+seo_search_page					= প্রতিলিপিতে আপনার পছন্দের সাহিত্য, লেখক এবং আরও অনেক কিছু খুঁজুন
+seo_writer_panel				= পড়ুন ${ pratilipiTitle } লেখক  ${ authorName } 
+seo_notifications_page			= প্রতিলিপিতেে আপনার জন্য জরুরী বিজ্ঞপ্তি
+seo_blog_page					= প্রতিলিপি বাংলা ব্লগ এবং সম্পাদকীয়
+seo_author_interview			= জনপ্রিয় রচনাকারদের সাথে প্রশ্ন-উত্তর 
+seo_followers_page				= ${ authorName }  -র প্রতিলিপিতে অনুসরণকারী
+seo_following_page				= আপনি প্রতিলিপিতে এদের অনুসরণ করছেন
+seo_list_page					= ${ listTitle }
+seo_static_page					= ${ staticTitle }
+seo_account_page				= ${ authorName } 
+seo_navigation_page				= শ্রেণী
+seo_update_password_page		= পাসওয়ার্ড আপডেট 
+seo_share_page					= আপনার বন্ধুদের সাথে শেয়ার করুন
+seo_register_page				= প্রতিলিপিতে আপনার অ্যাকাউন্ট বানান
+seo_login_page					= প্রতিলিপিতে লগ-ইন করুন
+seo_reset_password_page			= আপনার পাসওয়ার্ড রিসেট করুন 
