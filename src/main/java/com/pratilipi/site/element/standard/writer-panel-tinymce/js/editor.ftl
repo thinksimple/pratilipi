@@ -14,6 +14,7 @@ var Editor = function( parent_object ) {
 	 	"Bullet list": "unordered_list",
 	 	"Numbered list": "ordered_list"	 
 	};
+	this.$chapter_content_object = $( #chapter-content );
 };
 
 Editor.prototype.init = function() {
@@ -87,6 +88,7 @@ Editor.prototype.init = function() {
 				_this.parent_object.initializeData();
 				
 				ed.on( "keydown", function(e) {
+					console.log( _this.$chapter_content_object.text().trim().split(/\s+/).length );
 					var keycode = e.keycode || e.which;
 					var translation = new Translation( keycode );
 					if( translation.action == 'enter' && _this.getClosestSelectionNode( 'blockquote' ).length ) {

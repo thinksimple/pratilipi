@@ -141,8 +141,6 @@
 		},
 		triggerGAEventFromDom: function( event ) {
 	  		var event_label =  Polymer.dom(event).path[2].getAttribute('data-arg') || event.currentTarget.getAttribute('data-arg');
-	  		console.log( event_label );
-	  		debugger
 	  		this.domHost.triggerGAEvent( event_label );
 		},		
 
