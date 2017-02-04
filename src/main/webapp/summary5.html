@@ -3,8 +3,7 @@
 <head>
     <title>
         Pratilipi Summary Page
-    </title>
-    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>    
+    </title>    
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js"></script>
     <!-- Latest compiled and minified CSS -->
@@ -26,8 +25,7 @@
     <!-- http://10.ptlp.co/pratilipi/cover?width=150 -->
     <div class="demo-layout-transparent mdl-layout mdl-js-layout mdl-layout--fixed-drawer
             mdl-layout--fixed-header">
-    	<!-- ko component: "pratilipi-header" -->
-		<!-- /ko -->
+		<pratilipi-header></pratilipi-header>
     	<!-- ko component: "pratilipi-navigation" -->
 		<!-- /ko -->
         <main class="mdl-layout__content">
@@ -148,5 +146,6 @@
         </main>
     </div>
     <script src="summary.js?3"></script>
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 </body>
 </html>
