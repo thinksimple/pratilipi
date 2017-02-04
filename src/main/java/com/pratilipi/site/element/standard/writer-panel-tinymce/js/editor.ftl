@@ -14,7 +14,7 @@ var Editor = function( parent_object ) {
 	 	"Bullet list": "unordered_list",
 	 	"Numbered list": "ordered_list"	 
 	};
-	this.$chapter_content_object = $( #chapter-content );
+	this.$chapter_content_object = $( "#chapter-content" );
 };
 
 Editor.prototype.init = function() {
