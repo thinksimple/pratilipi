@@ -184,6 +184,7 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 			for( Entry<String, JsonElement> entry : jsonObject.entrySet() ) {
 				Long userId = Long.parseLong( entry.getKey() );
 				userPreferenceMap.put( userId, _getUserPreferenceRtdb( entry.getValue().getAsJsonObject() ) );
+				memcache.put( _getMemcacheId( userId ), entry.getValue().getAsJsonObject().toString(), 5 );
 			}
 			return userPreferenceMap;
 		} catch( UnsupportedEncodingException | JsonSyntaxException e ) {
