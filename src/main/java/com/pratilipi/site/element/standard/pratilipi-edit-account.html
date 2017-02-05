@@ -24,6 +24,18 @@
 			margin: 24px auto 0 auto;
 			display: block;
 		}
+		paper-spinner.new-spinner {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			margin: auto;
+			--paper-spinner-layer-1-color: #D0021B;
+			--paper-spinner-layer-2-color: #107FE5;
+			--paper-spinner-layer-3-color: #D0021B;
+			--paper-spinner-layer-4-color: #107FE5;
+		}
 	</style>
 
 	<template>
@@ -71,6 +83,7 @@
 							${ _strings.user_sign_out }
 						</button>
 					</template>
+					<paper-spinner active="{{ spinnerActive }}" class="new-spinner"><</paper-spinner>
 				</div>
 			</div>
 		</div>
@@ -101,7 +114,8 @@
 				phoneIcon: { type: String, value: "icons:create" },
 				phone: { type: String },
 
-				showLogoutButton: { type: Boolean, value: false }
+				showLogoutButton: { type: Boolean, value: false },
+				spinnerActive: { type: Boolean, value: false }
 			},
 			
 			_userChanged: function() {
@@ -135,8 +149,8 @@
 					delete ajaxPost.params[ "phone" ];
 					ajaxPost.params.email = this.email;
 					ajaxPost.generateRequest();
+					this.set( 'spinnerActive', true );
 				}
-					
 			},
 			
 			editPhone: function() {
@@ -157,17 +171,20 @@
 					}
 					ajaxPost.params.phone = this.phone;
 					ajaxPost.generateRequest();
+					this.set( 'spinnerActive', true );
 				}
 			},
 			
 			_apiResponse: function() {
 				var user = event.detail.response;
 				document.querySelector( 'pratilipi-user' ).updateUser( user );
+				this.set( 'spinnerActive', false );
 				this._disableEditEmail();
 				this._disableEditPhone();
 			},
 			
 			_apiError: function() {
+				this.set( 'spinnerActive', false );
 				if( event.detail.request.xhr.status === 400 || event.detail.request.xhr.status === 401 || event.detail.request.xhr.status === 500 )
 					alert( event.detail.request.xhr.response.email != null ? event.detail.request.xhr.response.email : event.detail.request.xhr.response.message );
 				else
