@@ -172,6 +172,8 @@
 					alert( event.detail.request.xhr.response.email != null ? event.detail.request.xhr.response.email : event.detail.request.xhr.response.message );
 				else
 					alert( "Some Error occurred! Please try Again." );
+				this.set( 'email', this.user.email );
+				this.set( 'phone', this.user.phone );
 				this._disableEditEmail();
 				this._disableEditPhone();
 			},
