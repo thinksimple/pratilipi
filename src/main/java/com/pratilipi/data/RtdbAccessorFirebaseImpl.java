@@ -111,11 +111,13 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 	}
 
 	@Override
-	public Map<Long, UserPreferenceRtdb> getUserPreferences( Collection<Long> userIdList )
+	public Map<Long, UserPreferenceRtdb> getUserPreferences( Collection<Long> userIds )
 			throws UnexpectedServerException {
 
-		if( userIdList == null || userIdList.isEmpty() )
+		if( userIds == null || userIds.isEmpty() )
 			return new HashMap<>();
+
+		List<Long> userIdList = new ArrayList<>( userIds );
 
 		Map<Long, UserPreferenceRtdb> userPreferences = new HashMap<>( userIdList.size() );
 		List<Long> existingUserIdList = new ArrayList<>();
@@ -182,7 +184,6 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 			for( Entry<String, JsonElement> entry : jsonObject.entrySet() ) {
 				Long userId = Long.parseLong( entry.getKey() );
 				userPreferenceMap.put( userId, _getUserPreferenceRtdb( entry.getValue().getAsJsonObject() ) );
-				memcache.put( _getMemcacheId( userId ), entry.getValue().getAsJsonObject().toString(), 5 );
 			}
 			return userPreferenceMap;
 		} catch( UnsupportedEncodingException | JsonSyntaxException e ) {
