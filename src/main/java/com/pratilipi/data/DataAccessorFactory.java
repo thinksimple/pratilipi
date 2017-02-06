@@ -23,7 +23,7 @@ public class DataAccessorFactory {
 														? new SearchAccessorGaeImpl( indexName ) 
 														: new SearchAccessorMockImpl( indexName );
 	private static final ThreadLocal<BlobAccessor> threadLocalBlobAccessor = new ThreadLocal<>();
-	private static final BlobAccessor blobAccessorBackup = new BlobAccessorGcsImpl( gcsBucketBackup );
+	private static final BlobAccessor blobAccessorBackup = new BlobAccessorGcsImpl2( gcsBucketBackup );
 	private static final ThreadLocal<DocAccessor> threadLocalDocAccessor = new ThreadLocal<>();
 
 	
@@ -67,8 +67,7 @@ public class DataAccessorFactory {
 		BlobAccessor blobAccessor = threadLocalBlobAccessor.get();
 		if( blobAccessor == null ) {
 			blobAccessor = new BlobAccessorWithMemcache(
-					SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) ? 
-							new BlobAccessorGcsImpl( gcsBucket ) : new BlobAccessorGcsImpl2( gcsBucket ), 
+					new BlobAccessorGcsImpl2( gcsBucket ), 
 					new MemcacheWrapper( cacheL1, cacheL2 ) );
 			threadLocalBlobAccessor.set( blobAccessor );
 		}
