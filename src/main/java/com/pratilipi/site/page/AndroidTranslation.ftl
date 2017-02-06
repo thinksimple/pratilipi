@@ -248,6 +248,7 @@ dialog.querySelector('.continue').addEventListener('click', function() {
     dialog.close();
     $('.option-selector').show();
     $('.continue-over').click(function() {
+        $('.option-selector').html('<div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>');
         var group = $(this).val();
         console.log(group);
         $.ajax({
@@ -274,11 +275,7 @@ dialog.querySelector('.continue').addEventListener('click', function() {
                 }
                 var out = tHead + tBodyInit + formInit + inLoop + formEnd + tBodyEnd;
                 $('.action-form').html(out);
-                var actionForm = $('.action-form').get(0);
-                console.log(actionForm);
-                console.log(componentHandler);
                 componentHandler.upgradeDom();
-                $('.option-selector').hide();
                 $('.action-form').show();
             }
         });
