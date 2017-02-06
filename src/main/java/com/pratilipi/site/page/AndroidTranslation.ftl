@@ -42,11 +42,11 @@
     }
     
     .email {
-        background: url('card_bkg/email.jpg') center / cover;
+        background: url('http://i.imgur.com/Igzq3y0.jpg') center / cover;
     }
     
     .notif {
-        background: url('card_bkg/notif.jpg') center / cover;
+        background: url('http://i.imgur.com/ivt2BdL.jpg') center / cover;
     }
     
     .mdl-grid {
