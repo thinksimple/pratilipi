@@ -50,9 +50,9 @@
     }
     
     .mdl-grid {
-        padding-top: 10%;
-        padding-left: 10%;
-        width: 70%;
+        /*padding-top: 5%;*/
+        margin-left: 5%;
+        width: 100%;
     }
     
     .pratilipi-logo {
@@ -65,10 +65,7 @@
         width:100%!important;
         max-width:100%!important;
     }
-    .th{
-        text-align: center!important;
-    }
-
+    
     .mdl-data-table {
         table-layout:fixed;
         width:100%; 
@@ -248,14 +245,13 @@ dialog.querySelector('.continue').addEventListener('click', function() {
     dialog.close();
     $('.option-selector').show();
     $('.continue-over').click(function() {
-        $('.option-selector').html('<img src="http://www.downgraf.com/wp-content/uploads/2014/09/01-progress.gif"/>');
+        $('.option-selector').hide();
         var group = $(this).val();
         console.log(group);
         $.ajax({
             type: 'GET',
             url: '/api/i18n?language=' + language + '&group=' + group,
-            success: function(resp) {
-                data = JSON.parse(resp);
+            success: function(data) {
                 console.log(data);
                 var formInit = "<form action='#'>";
                 var formEnd = "</form>";
@@ -276,7 +272,6 @@ dialog.querySelector('.continue').addEventListener('click', function() {
                 }
                 var out = tHead + tBodyInit + formInit + inLoop + formEnd + tBodyEnd;
                 $('.action-form').html(out);
-                $('.option-selector').hide();
                 componentHandler.upgradeDom();
                 $('.action-form').show();
             }
