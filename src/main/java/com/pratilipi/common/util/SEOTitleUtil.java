@@ -28,6 +28,9 @@ public class SEOTitleUtil {
 	private static String _getPageTitle( String i18nId, Map<String,String> dataModel, Language language ) 
 			throws UnexpectedServerException {
 
+		if( language == null ) // www.gamma.pratilipi.com
+			language = Language.ENGLISH;
+
 		String contentTitle = FreeMarkerUtil.processString( dataModel, I18n.getString( i18nId, language ) ).trim();
 		String contentTitleEn = FreeMarkerUtil.processString( dataModel, I18n.getString( i18nId, Language.ENGLISH ) ).trim();
 
