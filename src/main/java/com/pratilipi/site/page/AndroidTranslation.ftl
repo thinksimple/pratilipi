@@ -248,7 +248,7 @@ dialog.querySelector('.continue').addEventListener('click', function() {
     dialog.close();
     $('.option-selector').show();
     $('.continue-over').click(function() {
-        $('.option-selector').html('<div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>');
+        $('.option-selector').hide();
         var group = $(this).val();
         console.log(group);
         $.ajax({
