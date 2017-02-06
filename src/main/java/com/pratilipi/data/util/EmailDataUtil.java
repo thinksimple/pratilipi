@@ -117,7 +117,7 @@ public class EmailDataUtil {
 
 		for( Email email : emailList ) {
 
-			if( email.getState() == EmailState.SENT )
+			if( email.getState() != EmailState.PENDING )
 				continue;
 
 			consolidatedContent = consolidatedContent + _getContentSnippet( email, user.getLanguage() );
@@ -126,6 +126,9 @@ public class EmailDataUtil {
 			email.setLastUpdated( new Date() );
 
 		}
+
+		if( consolidatedContent.isEmpty() ) // No PENDING emails 
+			return;
 
 		String content = EmailTemplateUtil.getEmailBody( consolidatedContent, user.getLanguage() );
 
@@ -158,7 +161,7 @@ public class EmailDataUtil {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Email email = dataAccessor.getEmail( emailId );
 
-		if( email.getState() == EmailState.SENT )
+		if( email.getState() != EmailState.PENDING )
 			return;
 
 		UserData user = UserDataUtil.createUserData( dataAccessor.getUser( email.getUserId() ) );
