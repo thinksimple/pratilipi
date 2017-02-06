@@ -1,11 +1,14 @@
 package com.pratilipi.api.impl.email;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -111,6 +114,9 @@ public class EmailProcessApi extends GenericApi {
 		Map<Long, User> users = dataAccessor.getUsers( userPreferences.keySet() );
 
 		// Re-scheduling for all Emails
+		DateFormat dateFormat = new SimpleDateFormat();
+		dateFormat.setTimeZone( TimeZone.getTimeZone( "IST" ) );
+
 		List<Email> rescheduledEmails = new ArrayList<>();
 		for( Email email : emailList ) {
 
@@ -121,8 +127,8 @@ public class EmailProcessApi extends GenericApi {
 				continue;
 
 			logger.log( Level.INFO, "Rescheduling email: " + email.getId() + 
-									" from " + email.getScheduledDate() + 
-									" to " + preference.getEmailFrequency().getNextSchedule( user.getLastEmailedDate() ) );
+									" from " + dateFormat.format( email.getScheduledDate() ) + 
+									" to " + dateFormat.format( preference.getEmailFrequency().getNextSchedule( user.getLastEmailedDate() ) ) );
 
 			email.setScheduledDate( preference.getEmailFrequency().getNextSchedule( user.getLastEmailedDate() ) );
 			email.setLastUpdated( new Date() );
@@ -146,7 +152,7 @@ public class EmailProcessApi extends GenericApi {
 			emailList = new ArrayList<>();
 
 			DataListIterator<Email> itr = dataAccessor.getEmailListIteratorForStatePending( null, true );
-			List<Long> missingUserIds = new ArrayList<>();
+			Set<Long> missingUserIds = new HashSet<>();
 			while( itr.hasNext() ) {
 				Email email = itr.next();
 				emailList.add( email );
@@ -163,6 +169,8 @@ public class EmailProcessApi extends GenericApi {
 		Set<Long> emailIdTaskSet = new HashSet<>();
 		Set<Long> userIdTaskSet = new HashSet<>();
 		for( Email email : emailList ) {
+			if( email.getScheduledDate() == null ) // User changed setting to NEVER -> Scheduled Date will be null
+				continue;
 			if( email.getScheduledDate().after( new Date() ) ) // Since we got all PENDING emails in case 1
 				continue;
 			UserPreferenceRtdb preference = userPreferences.get( email.getUserId() );
