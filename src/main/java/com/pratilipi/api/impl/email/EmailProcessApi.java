@@ -123,14 +123,14 @@ public class EmailProcessApi extends GenericApi {
 			UserPreferenceRtdb preference = userPreferences.get( email.getUserId() );
 			User user = users.get( email.getUserId() );
 
-			if( email.getScheduledDate().equals( preference.getEmailFrequency().getNextSchedule( user.getLastEmailedDate() ) ) )
+			if( email.getScheduledDate().equals( preference.getEmailFrequency().getNextSchedule( user ) ) )
 				continue;
 
 			logger.log( Level.INFO, "Rescheduling email: " + email.getId() + 
 									" from " + dateFormat.format( email.getScheduledDate() ) + 
-									" to " + dateFormat.format( preference.getEmailFrequency().getNextSchedule( user.getLastEmailedDate() ) ) );
+									" to " + dateFormat.format( preference.getEmailFrequency().getNextSchedule( user ) ) );
 
-			email.setScheduledDate( preference.getEmailFrequency().getNextSchedule( user.getLastEmailedDate() ) );
+			email.setScheduledDate( preference.getEmailFrequency().getNextSchedule( user ) );
 			email.setLastUpdated( new Date() );
 
 			rescheduledEmails.add( email );

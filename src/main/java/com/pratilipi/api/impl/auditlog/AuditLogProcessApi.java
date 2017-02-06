@@ -744,7 +744,7 @@ public class AuditLogProcessApi extends GenericApi {
 			if( preference.getEmailFrequency() == EmailFrequency.NEVER )
 				continue;
 
-			email.setScheduledDate( preference.getEmailFrequency().getNextSchedule( user.getLastEmailedDate() ) );
+			email.setScheduledDate( preference.getEmailFrequency().getNextSchedule( user ) );
 			emailsToUpdate.add( email );
 
 		}
