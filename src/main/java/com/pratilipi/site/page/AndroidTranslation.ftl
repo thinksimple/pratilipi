@@ -254,7 +254,8 @@ dialog.querySelector('.continue').addEventListener('click', function() {
         $.ajax({
             type: 'GET',
             url: '/api/i18n?language=' + language + '&group=' + group,
-            success: function(data) {
+            success: function(resp) {
+                data = JSON.parse(resp);
                 console.log(data);
                 var formInit = "<form action='#'>";
                 var formEnd = "</form>";
