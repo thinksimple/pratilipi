@@ -248,7 +248,7 @@ dialog.querySelector('.continue').addEventListener('click', function() {
     dialog.close();
     $('.option-selector').show();
     $('.continue-over').click(function() {
-        $('.option-selector').hide();
+        $('.option-selector').html('<img src="http://www.downgraf.com/wp-content/uploads/2014/09/01-progress.gif"/>');
         var group = $(this).val();
         console.log(group);
         $.ajax({
@@ -276,6 +276,7 @@ dialog.querySelector('.continue').addEventListener('click', function() {
                 }
                 var out = tHead + tBodyInit + formInit + inLoop + formEnd + tBodyEnd;
                 $('.action-form').html(out);
+                $('.option-selector').hide();
                 componentHandler.upgradeDom();
                 $('.action-form').show();
             }
