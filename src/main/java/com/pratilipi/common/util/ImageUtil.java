@@ -68,7 +68,7 @@ public class ImageUtil {
 	
 	public static BlobEntry resize( BlobEntry blobEntry, int width, int height ) throws UnexpectedServerException {
 		
-		if( blobEntry.getMimeType().equalsIgnoreCase( "image/svg+xml" ) ) {
+		if( blobEntry.getMimeType() != null && blobEntry.getMimeType().equalsIgnoreCase( "image/svg+xml" ) ) {
 			blobEntry.setData( ImageSvgUtil.resizeSvg( blobEntry.getData(), width ) );
 			return blobEntry;
 		}
@@ -79,7 +79,7 @@ public class ImageUtil {
 				height < 4000 && height != 0 ? height : 4000,
 				height == 0 ? false : true );
 		
-		if( blobEntry.getMimeType().equalsIgnoreCase( "image/png" ) ) {
+		if( blobEntry.getMimeType() != null && blobEntry.getMimeType().equalsIgnoreCase( "image/png" ) ) {
 			image = imagesService.applyTransform( resize, image, OutputEncoding.PNG );
 		} else {
 			image = imagesService.applyTransform( resize, image, OutputEncoding.JPEG );
