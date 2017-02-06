@@ -237,9 +237,6 @@
     </div>
 </body>
 <script>
-String.prototype.toProperCase = function () {
-    return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
-};
 var dialog = document.querySelector('dialog');
 $('.action-form').hide();
 $('.option-selector').hide();
@@ -260,7 +257,7 @@ dialog.querySelector('.continue').addEventListener('click', function() {
                 console.log(data);
                 var formInit = "<form action='#'>";
                 var formEnd = "</form>";
-                var tHead = '<thead><tr><th class="mdl-data-table__cell--non-numeric">English</th><th>' + language.toProperCase() + '</th></tr></thead>';
+                var tHead = '<thead><tr><th class="mdl-data-table__cell--non-numeric">English</th><th>' + language + '</th></tr></thead>';
                 var tBodyInit = "<tbody>";
                 var tBodyEnd = "</tbody>";
                 var textFieldInit = '<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">';
