@@ -120,7 +120,8 @@ public class PratilipiSite extends HttpServlet {
 		}
 
 		String uri = request.getRequestURI();
-		String canonicalUrl = "http://" + UxModeFilter.getWebsite().getHostName() + uri; 
+		String canonicalUrl = "http://" + UxModeFilter.getWebsite().getHostName() + uri;
+		String alternateUrl = "http://" + UxModeFilter.getWebsite().getMobileHostName() + uri;
 
 		// BasicMode
 		boolean basicMode = UxModeFilter.isBasicMode();
@@ -208,8 +209,10 @@ public class PratilipiSite extends HttpServlet {
 				templateName = ( basicMode ? "NotificationBasic.ftl" : "Notification.ftl" );
 
 			} else if( uri.equals( "/search" ) ) {
-				if( request.getQueryString() != null )
+				if( request.getQueryString() != null ) {
 					canonicalUrl = canonicalUrl + "?" + request.getQueryString();
+					alternateUrl = alternateUrl + "?" + request.getQueryString();
+				}
 				dataModel = createDataModelForSearchPage( basicMode, filterLanguage, request );
 				// TODO: Remove check asap
 				if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) )
@@ -320,8 +323,10 @@ public class PratilipiSite extends HttpServlet {
 			// Standard Mode links only
 			} else if( ! basicMode && uri.equals( "/pratilipi-write" ) ) {
 
-				if( request.getQueryString() != null )
+				if( request.getQueryString() != null ) {
 					canonicalUrl = canonicalUrl + "?" + request.getQueryString();
+					alternateUrl = alternateUrl + "?" + request.getQueryString();
+				}
 
 				resourceList.remove( ThirdPartyResource.POLYMER_ELEMENTS.getTag() );
 				resourceList.add( ThirdPartyResource.BOOTSTRAP_CSS.getTag() );
@@ -532,8 +537,10 @@ public class PratilipiSite extends HttpServlet {
 
 			} else if( page != null && page.getType() == PageType.READ ) {
 
-				if( request.getQueryString() != null )
+				if( request.getQueryString() != null ) {
 					canonicalUrl = canonicalUrl + "?" + request.getQueryString();
+					alternateUrl = alternateUrl + "?" + request.getQueryString();
+				}
 
 				Long pratilipiId = Long.parseLong( request.getParameter( RequestParameter.CONTENT_ID.getName() ) );
 				String fontSize = AccessTokenFilter.getCookieValue( RequestCookie.FONT_SIZE.getName(), request );
@@ -629,6 +636,7 @@ public class PratilipiSite extends HttpServlet {
 		dataModel.put( "website_host", UxModeFilter.getWebsite().getHostName() );
 		dataModel.put( "website_mobile_host", UxModeFilter.getWebsite().getMobileHostName() );
 		dataModel.put( "canonical_url", canonicalUrl );
+		dataModel.put( "alternate_url", alternateUrl );
 		dataModel.put( "languageMap", gson.toJson( languageMap ) );
 		dataModel.put( "_strings", I18n.getStrings( displayLanguage ) );
 		dataModel.put( "resourceList", resourceList );
