@@ -16,6 +16,7 @@
 /search?q=stories        अन्य कहानियां                Analytics#categoryName::other-stories        App#imageName::shortstories.jpg         App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "searchQuery":"stories" }
 /upanyas                 उपन्यास                     Analytics#categoryName::books        App#imageName::novels.jpg              App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"upanyas" }
 /samajik-kahaniya        सामाजिक कहानियाँ            Analytics#categoryName::social        App#imageName::social.jpg              App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"samajik-kahaniya" }     
+/mythology               प्राचीन साहित्य               Analytics#categoryName::mythology      App#imageName::mythology.jpg          App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"mythology" }
 /search?q=poems          पद्य                        Analytics#categoryName::poetry        App#imageName::poems.jpg               App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "searchQuery":"poems" }
 /gazals                  ग़ज़ल                       Analytics#categoryName::gazals        App#imageName::gazals.jpg              App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"gazals" }
 /search?q=articles       लेख                       Analytics#categoryName::articles        App#imageName::articles.jpg             App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "searchQuery":"articles" }
@@ -23,7 +24,6 @@
 /childhood-stories       बाल-साहित्य                 Analytics#categoryName::children        App#imageName::children.jpg             App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"childhood-stories" }
 /vichar-vimarsh          विचार विमर्श                Analytics#categoryName::vichar-vimarsh   App#imageName::experiences.jpg          App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"vichar-vimarsh" }
 /jivani-evam-atmakatha   जीवनी एवं आत्मकथा          Analytics#categoryName::biographies     App#imageName::biography.jpg           App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"jivani-evam-atmakatha" }
-/mythology               प्राचीन साहित्य               Analytics#categoryName::mythology      App#imageName::mythology.jpg          App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"mythology" }
 /yatra-vrutant           यात्रा – वृत्तांत               Analytics#categoryName::travel       App#imageName::youth.jpg              App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"yatra-vrutant" }
 /self-help               स्व - विकास                Analytics#categoryName::self-help   App#imageName::selfhelp.jpg            App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"self-help" }
 /swad-ka-tadka           स्वाद का तड़का             Analytics#categoryName::cooking      App#imageName::cooking.jpg             App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"swad-ka-tadka" }
