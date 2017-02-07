@@ -1168,7 +1168,7 @@ public class PratilipiSite extends HttpServlet {
 	}
 	
 	public Map<String, Object> createDataModelForBlogPage( Long blogId, Language language, boolean basicMode ) 
-			throws InsufficientAccessException {
+			throws InsufficientAccessException, UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Blog blog = dataAccessor.getBlog( blogId );
@@ -1186,7 +1186,14 @@ public class PratilipiSite extends HttpServlet {
 		boolean hasAccessToAdd = BlogPostDataUtil.hasAccessToAddBlogPostData( blogPostLanguage );
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put( "title", blog.getTitle() );
+
+		if( blogId.equals( 5683739602452480L ) ) // Blog
+			dataModel.put( "title", SEOTitleUtil.getBlogPageTitle( language ) );
+		else if( blogId.equals( 5197509039226880L ) ) // Author Interviews 
+			dataModel.put( "title", SEOTitleUtil.getAuthorInterviewPageTitle( language ) );
+		else
+			dataModel.put( "title", blog.getTitle() );
+
 		if( basicMode ) {
 			dataModel.put( "blogPostList", blogPostList.getBlogPostList() );
 		} else {
