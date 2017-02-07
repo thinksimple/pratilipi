@@ -3,8 +3,6 @@ package com.pratilipi.common.type;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-import com.pratilipi.data.type.User;
-
 public enum EmailFrequency {
 
 	IMMEDIATELY	( 0 ),
@@ -22,7 +20,7 @@ public enum EmailFrequency {
 	}
 
 	
-	public Date getNextSchedule( User user ) {
+	public Date getNextSchedule( Date lastEmailed ) {
 
 		if( this == NEVER )
 			return null;
@@ -30,12 +28,10 @@ public enum EmailFrequency {
 		if( this == IMMEDIATELY )
 			return new Date();
 
-		Date lastEmailDate = user.getLastEmailedDate() != null ? user.getLastEmailedDate() : user.getLastUpdated();
+		while( lastEmailed.before( new Date() ) )
+			lastEmailed = new Date( lastEmailed.getTime() + delayMillis );
 
-		while( lastEmailDate.before( new Date() ) )
-			lastEmailDate = new Date( lastEmailDate.getTime() + delayMillis );
-
-		return lastEmailDate;
+		return lastEmailed;
 
 	}
 
