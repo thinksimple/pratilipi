@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLDecoder;
@@ -16,6 +17,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,6 +36,9 @@ import com.pratilipi.data.type.BlobEntry;
 
 public class HttpUtil {
 
+	private static final Logger logger = Logger.getLogger( HttpUtil.class.getName() );
+	
+	
 	public static class HttpUtilRequest {
 
 		private String targetUrl;
@@ -67,7 +73,48 @@ public class HttpUtil {
 
 	}
 
-	private static final Logger logger = Logger.getLogger( HttpUtil.class.getName() );
+	public static class Response {
+
+		private String targetUrl;
+		private Future<HTTPResponse> futureResponse;
+
+		
+		public Response( String targetUrl, Future<HTTPResponse> futureResponse ) {
+			this.targetUrl = targetUrl;
+			this.futureResponse = futureResponse;
+		}
+
+		
+		public boolean isDone() {
+			return futureResponse.isDone();
+		}
+
+		public BlobEntry get() throws UnexpectedServerException {
+			return get( 60, TimeUnit.SECONDS );
+		}
+
+		public BlobEntry get( long timeout, TimeUnit unit ) throws UnexpectedServerException {
+
+			try {
+				
+				return _toBlobEntry( targetUrl, futureResponse.get( timeout, unit ) );
+				
+			} catch( InterruptedException | ExecutionException | TimeoutException e ) {
+				logger.log( Level.SEVERE, "Failed to execute Http Get call.", e );
+				throw new UnexpectedServerException();
+			}
+			
+		}
+
+		public boolean cancel( boolean mayInterruptIfRunning ) {
+			return futureResponse.cancel( mayInterruptIfRunning );
+		}
+
+		public boolean isCancelled() {
+			return futureResponse.isCancelled();
+		}
+
+	}
 	
 	
 	private static String createQueryString( Map<String, String> params )
@@ -114,6 +161,7 @@ public class HttpUtil {
 
 	}
 
+	@Deprecated
 	public static Map<String, String> doGet( List<HttpUtilRequest> requests ) 
 			throws UnexpectedServerException {
 
@@ -174,6 +222,29 @@ public class HttpUtil {
 			return response;
 		} catch( IOException e ) {
 			logger.log( Level.SEVERE, "Failed to execute Http Get call.", e );
+			throw new UnexpectedServerException();
+		}
+
+	}
+	
+	public static Response asyncGet( String targetURL, Map<String, String> headersMap, Map<String, String> paramsMap ) throws UnexpectedServerException {
+
+		try {
+			
+			if( paramsMap != null && paramsMap.size() != 0 )
+				targetURL = targetURL + "?" + createQueryString( paramsMap );
+			
+			HTTPRequest httpRequest = new HTTPRequest( new URL( targetURL ) );
+
+			if( headersMap != null )
+				for( Entry<String, String> entry : headersMap.entrySet() )
+					httpRequest.setHeader( new HTTPHeader( entry.getKey(), entry.getValue() ) );
+
+			return new Response(
+					targetURL,
+					URLFetchServiceFactory.getURLFetchService().fetchAsync( httpRequest ) );
+			
+		} catch( UnsupportedEncodingException | MalformedURLException e ) {
 			throw new UnexpectedServerException();
 		}
 
@@ -272,6 +343,37 @@ public class HttpUtil {
 		String response = URLDecoder.decode( IOUtils.toString( connection.getInputStream(), "UTF-8" ), "UTF-8" );
 		logger.log( Level.INFO, "Http POST Response Type: " + response + " & Length: "  + response.length() );
 		return response;
+	}
+
+	private static BlobEntry _toBlobEntry( String targetUrl, HTTPResponse response ) throws UnexpectedServerException {
+		
+		String mimeType = null;
+		int status = response.getResponseCode();
+		byte[] data = response.getContent();
+
+		for( HTTPHeader header : response.getHeadersUncombined() ) {
+			if( header.getName().equals( "Content-Type" ) ) {
+				mimeType = header.getValue();
+				break;
+			}
+		}
+		
+		logger.log( Level.INFO, "Http GET Request: " + targetUrl );
+		logger.log( Level.INFO, "Status: " + status );
+		logger.log( Level.INFO, "Type: " + mimeType );
+		logger.log( Level.INFO, "Length: "  + data.length );
+		
+		if( status != 200 ) {
+			try {
+				logger.log( Level.SEVERE, "Response: " + new String( data, "UTF-8" ) );
+			} catch( IOException e ) {
+				logger.log( Level.SEVERE, "Failed to parse error response.", e );
+			}
+			throw new UnexpectedServerException();
+		}
+		
+		return DataAccessorFactory.getBlobAccessor().newBlob( null, data, mimeType );
+		
 	}
 	
 }
