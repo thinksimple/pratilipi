@@ -1,6 +1,5 @@
 package com.pratilipi.data;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,14 +9,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.EmailFrequency;
 import com.pratilipi.common.type.NotificationType;
@@ -38,20 +35,116 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 
 
 	private final Map<String, String> headersMap;
-	private final Memcache memcache;
-
-	public RtdbAccessorFirebaseImpl( String googleApiAccessToken, Memcache memcache ) {
-		this.headersMap = new HashMap<>();
-		this.headersMap.put( "Authorization", "Bearer " + googleApiAccessToken );
-		this.memcache = memcache;
-	}
-
-
-	private String _getMemcacheId( Long userId ) {
-		return "Firebase.PREFERENCE." + userId;
-	}
 
 	
+	public RtdbAccessorFirebaseImpl( String googleApiAccessToken ) {
+		this.headersMap = new HashMap<>();
+		this.headersMap.put( "Authorization", "Bearer " + googleApiAccessToken );
+	}
+
+
+	// PREFERENCE Table
+
+	@Override
+	public UserPreferenceRtdb getUserPreference( Long userId )
+			throws UnexpectedServerException {
+
+		try {
+			BlobEntry blobEntry = HttpUtil.doGet( _getUserPreferenceDbUrl( userId ), headersMap, null );
+			String jsonStr = new String( blobEntry.getData(), "UTF-8" );
+			return _getUserPreferenceRtdb( jsonStr );
+		} catch( UnsupportedEncodingException e ) {
+			logger.log( Level.SEVERE, "Failed to parse response from Firebase.", e );
+			throw new UnexpectedServerException();
+		}
+
+	}
+
+	@Override
+	public Map<Long, UserPreferenceRtdb> getUserPreferences( Collection<Long> userIds )
+			throws UnexpectedServerException {
+
+		if( userIds == null || userIds.isEmpty() )
+			return new HashMap<>();
+
+		userIds = new HashSet<>( userIds );
+
+		List<String> targetUrlList = new ArrayList<>( userIds.size() );
+		for( Long userId : userIds )
+			targetUrlList.add( _getUserPreferenceDbUrl( userId ) );
+		
+		Map<String, BlobEntry> blobEntries = HttpUtil.doGet( targetUrlList, headersMap );
+
+		Map<Long, UserPreferenceRtdb> userPreferences = new HashMap<>( userIds.size() );
+		try {
+			for( Long userId : userIds ) {
+				BlobEntry blobEntry = blobEntries.get( userId );
+				String jsonStr = new String( blobEntry.getData(), "UTF-8" );
+				userPreferences.put( userId, _getUserPreferenceRtdb( jsonStr ) );
+			}
+		} catch( UnsupportedEncodingException e ) {
+			logger.log( Level.SEVERE, "Failed to parse response from Firebase.", e );
+			throw new UnexpectedServerException();
+		}
+		
+		return userPreferences;
+
+	}
+
+	@Override
+	public Map<Long, UserPreferenceRtdb> getUserPreferences( Date minLastUpdated ) 
+			throws UnexpectedServerException {
+
+		Map<String,String> paramsMap = new HashMap<>();
+		paramsMap.put( "orderBy", "\"" + "lastUpdated" + "\"" );
+		paramsMap.put( "startAt", minLastUpdated.getTime() + "" );
+		return _getUserPreferences( paramsMap );
+
+	}
+
+	@Override
+	public Map<Long, UserPreferenceRtdb> getUserPreferences( Integer maxAndroidVersionCode ) 
+			throws UnexpectedServerException {
+
+		Map<String,String> paramsMap = new HashMap<>();
+		paramsMap.put( "orderBy", "\"" + "androidVersionCode" + "\"" );
+		paramsMap.put( "endAt", maxAndroidVersionCode + "" );
+		return _getUserPreferences( paramsMap );
+
+	}
+
+	private Map<Long, UserPreferenceRtdb> _getUserPreferences( Map<String, String> paramsMap )
+			throws UnexpectedServerException {
+
+		try {
+			
+			BlobEntry blobEntry = HttpUtil.doGet( _getUserPreferenceDbUrl(), headersMap, paramsMap );
+			String jsonStr = new String( blobEntry.getData(), "UTF-8" );
+			JsonObject json = new Gson().fromJson( jsonStr, JsonElement.class ).getAsJsonObject();
+			
+			Map<Long, UserPreferenceRtdb> userPreferenceMap = new HashMap<>();
+			for( Entry<String, JsonElement> entry : json.entrySet() )
+				userPreferenceMap.put(
+						Long.parseLong( entry.getKey() ),
+						_getUserPreferenceRtdb( entry.getValue().getAsJsonObject() ) );
+			
+			return userPreferenceMap;
+			
+		} catch( UnsupportedEncodingException e ) {
+			logger.log( Level.SEVERE, e.getMessage() );
+			throw new UnexpectedServerException();
+		}
+
+	}
+
+	private String _getUserPreferenceDbUrl() {
+		return DATABASE_URL + DATABASE_PREFERENCE_TABLE + ".json";
+	}
+	
+	private String _getUserPreferenceDbUrl( Long userId ) {
+		return DATABASE_URL + DATABASE_PREFERENCE_TABLE + "/" + userId + ".json";
+	}
+
 	private UserPreferenceRtdb _getUserPreferenceRtdb( String jsonStr ) {
 		if( jsonStr.equals( "null" ) )
 			jsonStr = "{}";
@@ -86,128 +179,6 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 		}
 
 		return new Gson().fromJson( json, UserPreferenceRtdbImpl.class );
-
-	}
-
-
-	// PREFERENCE Table
-
-	@Override
-	public UserPreferenceRtdb getUserPreference( Long userId )
-			throws UnexpectedServerException {
-
-		String jsonStr = memcache.get( _getMemcacheId( userId ) );
-		if( jsonStr == null ) {
-			try {
-				BlobEntry blobEntry = HttpUtil.doGet( DATABASE_URL + DATABASE_PREFERENCE_TABLE + "/" + userId + ".json", headersMap, null );
-				jsonStr = new String( blobEntry.getData(), "UTF-8" );
-				memcache.put( _getMemcacheId( userId ), jsonStr, 5 );
-			} catch( UnsupportedEncodingException | JsonSyntaxException e ) {
-				logger.log( Level.SEVERE, e.getMessage() );
-				throw new UnexpectedServerException();
-			}
-		}
-
-		return _getUserPreferenceRtdb( jsonStr );
-
-	}
-
-	@Override
-	public Map<Long, UserPreferenceRtdb> getUserPreferences( Collection<Long> userIds )
-			throws UnexpectedServerException {
-
-		if( userIds == null || userIds.isEmpty() )
-			return new HashMap<>();
-
-		Set<Long> userIdSet = new HashSet<>( userIds );
-
-		Set<String> memcacheIds = new HashSet<>( userIdSet.size() );
-		for( Long userId : userIdSet )
-			memcacheIds.add( _getMemcacheId( userId ) );
-		Map<String, String> memcacheDataMap = memcache.getAll( memcacheIds );
-
-		List<Long> existingUserIdList = new ArrayList<>();
-		Map<Long, UserPreferenceRtdb> userPreferences = new HashMap<>( userIdSet.size() );
-
-		for( Long userId : userIdSet ) {
-			String json = memcacheDataMap.get( _getMemcacheId( userId ) );
-			if( json != null ) {
-				userPreferences.put( userId, _getUserPreferenceRtdb( json ) );
-				existingUserIdList.add( userId );
-			}
-		}
-
-		userIdSet.removeAll( existingUserIdList );
-
-		Map<Long, String> userIdUrlMap = new HashMap<>( userIdSet.size() );
-		for( Long userId : userIdSet )
-			userIdUrlMap.put( userId, DATABASE_URL + DATABASE_PREFERENCE_TABLE + "/" + userId + ".json" );
-
-
-		Map<String, BlobEntry> responses = HttpUtil.doGet( userIdUrlMap.values(), this.headersMap );
-
-
-		memcacheDataMap = new HashMap<>();
-		for( Long userId : userIdSet ) {
-			try {
-				String json = new String( responses.get( userIdUrlMap.get( userId ) ).getData(), "UTF-8" );
-				userPreferences.put( userId, _getUserPreferenceRtdb( json ) );
-				memcacheDataMap.put( _getMemcacheId( userId ), json );
-			} catch( IOException e ) {
-				logger.log( Level.SEVERE, "Failed to parse response.", e );
-				throw new UnexpectedServerException();
-			}
-		}
-
-		if( ! memcacheDataMap.isEmpty() )
-			memcache.putAll( memcacheDataMap, 5 );
-
-		return userPreferences;
-
-	}
-
-	@Override
-	public Map<Long, UserPreferenceRtdb> getUserPreferences( Date minLastUpdated ) 
-			throws UnexpectedServerException {
-
-		Map<String,String> paramsMap = new HashMap<>();
-		paramsMap.put( "orderBy", "\"" + "lastUpdated" + "\"" );
-		paramsMap.put( "startAt", minLastUpdated.getTime() + "" );
-		return _getUserPreferences( paramsMap );
-
-	}
-
-	@Override
-	public Map<Long, UserPreferenceRtdb> getUserPreferences( Integer maxAndroidVersionCode ) 
-			throws UnexpectedServerException {
-
-		Map<String,String> paramsMap = new HashMap<>();
-		paramsMap.put( "orderBy", "\"" + "androidVersionCode" + "\"" );
-		paramsMap.put( "endAt", maxAndroidVersionCode + "" );
-		return _getUserPreferences( paramsMap );
-
-	}
-
-	private Map<Long, UserPreferenceRtdb> _getUserPreferences( Map<String, String> paramsMap )
-			throws UnexpectedServerException {
-
-		try {
-			BlobEntry blobEntry = HttpUtil.doGet( DATABASE_URL + DATABASE_PREFERENCE_TABLE + ".json", headersMap, paramsMap );
-			String jsonStr = new String( blobEntry.getData(), "UTF-8" );
-			JsonObject jsonObject = new Gson().fromJson( jsonStr, JsonElement.class ).getAsJsonObject();
-			Map<Long, UserPreferenceRtdb> userPreferenceMap = new HashMap<>();
-			Map<String, String> memcacheDataMap = new HashMap<>();
-			for( Entry<String, JsonElement> entry : jsonObject.entrySet() ) {
-				Long userId = Long.parseLong( entry.getKey() );
-				userPreferenceMap.put( userId, _getUserPreferenceRtdb( entry.getValue().getAsJsonObject() ) );
-				memcacheDataMap.put( _getMemcacheId( userId ), entry.getValue().getAsJsonObject().toString() );
-			}
-			memcache.putAll( memcacheDataMap, 5 );
-			return userPreferenceMap;
-		} catch( UnsupportedEncodingException | JsonSyntaxException e ) {
-			logger.log( Level.SEVERE, e.getMessage() );
-			throw new UnexpectedServerException();
-		}
 
 	}
 

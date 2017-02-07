@@ -1,12 +1,13 @@
 package com.pratilipi.data.type;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import com.pratilipi.common.type.EmailFrequency;
 import com.pratilipi.common.type.NotificationType;
 
 
-public interface UserPreferenceRtdb {
+public interface UserPreferenceRtdb extends Serializable {
 
 	EmailFrequency getEmailFrequency();
 

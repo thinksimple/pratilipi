@@ -13,13 +13,15 @@ import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.data.type.UserPreferenceRtdb;
 
 
-public class RtdbAccessorWithMemcacheImpl implements RtdbAccessor {
+public class RtdbAccessorWithMemcache implements RtdbAccessor {
 
+	private static final int expirationDeltaMinutes = 5;
+	
 	private final RtdbAccessor rtdbAccessor;
 	private final Memcache memcache;
 
 
-	public RtdbAccessorWithMemcacheImpl( RtdbAccessor rtdbAccessor, Memcache memcache ) {
+	public RtdbAccessorWithMemcache( RtdbAccessor rtdbAccessor, Memcache memcache ) {
 		this.rtdbAccessor = rtdbAccessor;
 		this.memcache = memcache;
 	}
@@ -37,7 +39,7 @@ public class RtdbAccessorWithMemcacheImpl implements RtdbAccessor {
 		UserPreferenceRtdb userPref = memcache.get( _getUserPreferenceMemcacheId( userId ) );
 		if( userPref == null ) {
 			userPref = rtdbAccessor.getUserPreference( userId );
-			memcache.put( _getUserPreferenceMemcacheId( userId ) , userPref );
+			memcache.put( _getUserPreferenceMemcacheId( userId ), userPref, expirationDeltaMinutes );
 		}
 		
 		return userPref;
