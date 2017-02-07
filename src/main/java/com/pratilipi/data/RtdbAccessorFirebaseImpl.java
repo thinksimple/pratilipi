@@ -1,5 +1,6 @@
 package com.pratilipi.data;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -148,14 +149,19 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 			httpUtilRequestList.add( new Request( targetUrl, this.headersMap, null ) );
 
 
-		Map<String, String> responses = HttpUtil.doGet( httpUtilRequestList );
+		Map<String, BlobEntry> responses = HttpUtil.doGet( userIdUrlMap.values(), this.headersMap );
 
 
 		memcacheDataMap = new HashMap<>();
 		for( Long userId : userIdSet ) {
-			String json = responses.get( userIdUrlMap.get( userId ) );
-			userPreferences.put( userId, _getUserPreferenceRtdb( json ) );
-			memcacheDataMap.put( _getMemcacheId( userId ), json );
+			try {
+				String json = new String( responses.get( userIdUrlMap.get( userId ) ).getData(), "UTF-8" );
+				userPreferences.put( userId, _getUserPreferenceRtdb( json ) );
+				memcacheDataMap.put( _getMemcacheId( userId ), json );
+			} catch( IOException e ) {
+				logger.log( Level.SEVERE, "Failed to parse response.", e );
+				throw new UnexpectedServerException();
+			}
 		}
 
 		if( ! memcacheDataMap.isEmpty() )
