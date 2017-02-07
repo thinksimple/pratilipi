@@ -123,6 +123,9 @@ public class EmailProcessApi extends GenericApi {
 			UserPreferenceRtdb preference = userPreferences.get( email.getUserId() );
 			User user = users.get( email.getUserId() );
 
+			if( email.getScheduledDate().before( new Date() ) )
+				continue;
+
 			if( email.getScheduledDate().equals( preference.getEmailFrequency().getNextSchedule( user ) ) )
 				continue;
 
