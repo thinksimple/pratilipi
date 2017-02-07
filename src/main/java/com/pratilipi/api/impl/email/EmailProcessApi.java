@@ -114,7 +114,7 @@ public class EmailProcessApi extends GenericApi {
 		Map<Long, User> users = dataAccessor.getUsers( userPreferences.keySet() );
 
 		// Re-scheduling for all Emails
-		DateFormat dateFormat = new SimpleDateFormat();
+		DateFormat dateFormat = new SimpleDateFormat( "dd-MMM-yyyy HH:mm:ss z" );
 		dateFormat.setTimeZone( TimeZone.getTimeZone( "IST" ) );
 
 		List<Email> rescheduledEmails = new ArrayList<>();
