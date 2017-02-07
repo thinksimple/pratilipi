@@ -109,7 +109,7 @@ public class MemcacheGaeImpl implements Memcache {
 	@Override
 	public <K, T extends Serializable> void putAll( Map<K, T> keyValueMap, int expirationDeltaMinutes ) {
 
-		Map props = Collections.emptyMap();
+		Map props = new HashMap();
 		if( expirationDeltaMinutes > 0 )
 			props.put( GCacheFactory.EXPIRATION_DELTA, expirationDeltaMinutes * 60 );
 
