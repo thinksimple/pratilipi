@@ -119,6 +119,7 @@ public class PratilipiV1Api extends GenericApi {
 		private Float averageRating;
 		private Long readCount;
 		private Long fbLikeShareCount;
+		private Integer wordCount;
 		
 		private Boolean addedToLib;
 		private Boolean hasAccessToUpdate;
@@ -158,6 +159,7 @@ public class PratilipiV1Api extends GenericApi {
 			this.averageRating = pratilipiData.getAverageRating();
 			this.readCount = pratilipiData.getReadCount();
 			this.fbLikeShareCount = pratilipiData.getFbLikeShareCount();
+			this.wordCount = pratilipiData.getWordCount();
 			
 			this.hasAccessToUpdate = pratilipiData.hasAccessToUpdate();
 			
@@ -187,12 +189,15 @@ public class PratilipiV1Api extends GenericApi {
 				this.ratingCount = pratilipi.getRatingCount();
 				this.averageRating = pratilipi.getAverageRating();
 				this.readCount = pratilipi.getReadCount();
+				this.wordCount = pratilipi.getWordCount();
+
 				this.addedToLib = pratilipi.isAddedToLib();
 				this.hasAccessToUpdate = pratilipi.hasAccessToUpdate();
 			}
 
 		}
 		
+		@Deprecated
 		public Response( PratilipiData pratilipi, boolean listItem ) {
 			
 			this.pratilipiId = pratilipi.getId();
@@ -303,6 +308,10 @@ public class PratilipiV1Api extends GenericApi {
 
 		public Long getFbLikeShareCount() {
 			return fbLikeShareCount;
+		}
+
+		public Integer getWordCount() {
+			return wordCount;
 		}
 
 		
