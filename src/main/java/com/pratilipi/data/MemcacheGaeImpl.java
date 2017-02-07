@@ -100,11 +100,18 @@ public class MemcacheGaeImpl implements Memcache {
 		
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public <K, T extends Serializable> void putAll( Map<K, T> keyValueMap ) {
-		
+		putAll( keyValueMap, 0 );
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
+	public <K, T extends Serializable> void putAll( Map<K, T> keyValueMap, int expirationDeltaMinutes ) {
+
 		Map props = Collections.emptyMap();
+		if( expirationDeltaMinutes > 0 )
+			props.put( GCacheFactory.EXPIRATION_DELTA, expirationDeltaMinutes * 60 );
 
 		for( int i = 0; i < 5; i++ ) {
 

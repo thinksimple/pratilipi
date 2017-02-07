@@ -16,6 +16,8 @@ public interface Memcache {
 
 	<K, T extends Serializable> void putAll( Map<K, T> keyValueMap );
 
+	<K, T extends Serializable> void putAll( Map<K, T> keyValueMap, int expirationDeltaMinutes );
+
 	<K> void remove( K key );
 
 	void flush();

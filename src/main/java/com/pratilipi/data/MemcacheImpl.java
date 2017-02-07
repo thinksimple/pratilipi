@@ -49,7 +49,7 @@ public class MemcacheImpl implements Memcache {
 	
 	@Override
 	public <K, T extends Serializable> void put( K key, T value ) {
-		cache.put( key, value );
+		put( key, value, 0 );
 	}
 
 	@Override
@@ -59,6 +59,11 @@ public class MemcacheImpl implements Memcache {
 
 	@Override
 	public <K, T extends Serializable> void putAll( Map<K, T> keyValueMap ) {
+		putAll( keyValueMap, 0 );
+	}
+
+	@Override
+	public <K, T extends Serializable> void putAll( Map<K, T> keyValueMap, int expirationDeltaMinutes ) {
 		for( Entry<K, T> entry : keyValueMap.entrySet() )
 			cache.put( entry.getKey(), entry.getValue() );
 	}

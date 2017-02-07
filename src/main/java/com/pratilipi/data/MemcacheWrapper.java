@@ -67,6 +67,12 @@ public class MemcacheWrapper implements Memcache {
 	}
 
 	@Override
+	public <K, T extends Serializable> void putAll( Map<K, T> keyValueMap, int expirationDeltaMinutes ) {
+		cacheL1.putAll( keyValueMap, expirationDeltaMinutes );
+		cacheL2.putAll( keyValueMap, expirationDeltaMinutes );
+	}
+
+	@Override
 	public <K> void remove( K key ) {
 		cacheL1.remove( key );
 		cacheL2.remove( key );
