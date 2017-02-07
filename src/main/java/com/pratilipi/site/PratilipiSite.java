@@ -180,32 +180,20 @@ public class PratilipiSite extends HttpServlet {
 			if( uri.equals( "/" ) ) {
 				if( UxModeFilter.getWebsite() == Website.ALL_LANGUAGE || UxModeFilter.getWebsite() == Website.GAMMA_ALL_LANGUAGE ) {
 					dataModel = createDataModelForMasterHomePage( filterLanguage );
-					// TODO: Remove check asap
-					if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) )
-						dataModel.put( "title", SEOTitleUtil.getMasterHomePageTitle() );
 					templateName = "MasterHome.ftl";
 				} else {
 					dataModel = createDataModelForHomePage( basicMode, filterLanguage );
-					// TODO: Remove check asap
-					if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) )
-						dataModel.put( "title", SEOTitleUtil.getHomePageTitle( filterLanguage ) );
 					templateName = ( basicMode ? "HomeBasic.ftl" : "Home.ftl" );
 				}
 
 			} else if( uri.equals( "/library" ) ) {
 				dataModel = createDataModelForLibraryPage( basicMode, filterLanguage );
-				// TODO: Remove check asap
-				if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) )
-					dataModel.put( "title", SEOTitleUtil.getLibraryPageTitle( filterLanguage ) );
 				templateName = ( basicMode ? "LibraryBasic.ftl" : "Library.ftl" );
 
 			} else if( uri.equals( "/notifications" ) ) {
 				dataModel = createDataModelForNotificationsPage( filterLanguage, basicMode );
 				if( request.getParameter( "action" ) != null )
 					dataModel.put( "action", request.getParameter( "action" ) );
-				// TODO: Remove check asap
-				if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) )
-					dataModel.put( "title", SEOTitleUtil.getNotificationsPageTitle( filterLanguage ) );
 				templateName = ( basicMode ? "NotificationBasic.ftl" : "Notification.ftl" );
 
 			} else if( uri.equals( "/search" ) ) {
@@ -214,16 +202,10 @@ public class PratilipiSite extends HttpServlet {
 					alternateUrl = alternateUrl + "?" + request.getQueryString();
 				}
 				dataModel = createDataModelForSearchPage( basicMode, filterLanguage, request );
-				// TODO: Remove check asap
-				if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) )
-					dataModel.put( "title", SEOTitleUtil.getSearchPageTitle( filterLanguage ) );
 				templateName = ( basicMode ? "SearchBasic.ftl" : "Search.ftl" );
 
 			} else if( uri.equals( "/events" ) ) {
 				dataModel = createDataModelForEventsPage( filterLanguage, basicMode );
-				// TODO: Remove check asap
-				if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) )
-					dataModel.put( "title", SEOTitleUtil.getEventsPageTitle( filterLanguage ) );
 				templateName = ( basicMode ? "EventListBasic.ftl" : "EventList.ftl" );
 
 			} else if( uri.equals( "/followers" ) ) {
@@ -243,14 +225,11 @@ public class PratilipiSite extends HttpServlet {
 
 				if( authorId == null ) {
 					dataModel = new HashMap<String, Object>();
-					dataModel.put( "title", I18n.getString( "author_followers", filterLanguage ) );
+					dataModel.put( "title", SEOTitleUtil.getFollowersPageTitle( authorId, filterLanguage ) );
 				} else {
 					dataModel = createDataModelForFollowersPage( authorId, currentPage, filterLanguage, basicMode );
 				}
 
-				// TODO: Remove check asap
-				if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) )
-					dataModel.put( "title", SEOTitleUtil.getFollowersPageTitle( authorId, filterLanguage ) );
 				templateName = ( basicMode ? "FollowersListBasic.ftl" : "FollowersList.ftl" );
 
 			} else if( uri.equals( "/following" ) ) {
@@ -267,14 +246,10 @@ public class PratilipiSite extends HttpServlet {
 
 				if( userId == null || userId == 0L ) {
 					dataModel = new HashMap<String, Object>();
-					dataModel.put( "title", I18n.getString( "author_following", filterLanguage ) );
+					dataModel.put( "title", SEOTitleUtil.getFollowersPageTitle( userId, filterLanguage ) );
 				} else {
 					dataModel = createDataModelForFollowingPage( userId, currentPage, filterLanguage, basicMode );
 				}
-
-				// TODO: Remove check asap
-				if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) )
-					dataModel.put( "title", SEOTitleUtil.getFollowersPageTitle( userId, filterLanguage ) );
 
 				templateName = ( basicMode ? "FollowingListBasic.ftl" : "FollowingList.ftl" );
 
@@ -332,44 +307,34 @@ public class PratilipiSite extends HttpServlet {
 				resourceList.add( ThirdPartyResource.BOOTSTRAP_CSS.getTag() );
 				resourceList.add( ThirdPartyResource.TINYMCE.getTag() );
 
-				dataModel = new HashMap<String, Object>();
-				dataModel.put( "title", "Writer Panel" );
+				
 
 				Long authorId = request.getParameter( RequestParameter.AUTHOR_ID.getName() ) != null 
 						? Long.parseLong( request.getParameter( RequestParameter.AUTHOR_ID.getName() ) ) 
 						: null;
 
-				Long pratilipiId = request.getParameter( RequestParameter.CONTENT_ID.getName() ) != null 
-							? Long.parseLong( request.getParameter( RequestParameter.CONTENT_ID.getName() ) ) 
-							: null;
+				Long pratilipiId = Long.parseLong( request.getParameter( RequestParameter.CONTENT_ID.getName() ) ); 
 
+				PratilipiV2Api.GetRequest pratilipiRequest = new PratilipiV2Api.GetRequest();
+				pratilipiRequest.setPratilipiId( pratilipiId );
+				PratilipiV2Api.Response pratilipiResponse = ApiRegistry.getApi( PratilipiV2Api.class ).get( pratilipiRequest );
 
-				if( authorId != null )
-					dataModel.put( "authorId", authorId );
+				PratilipiContentIndexApi.GetRequest indexReq = new PratilipiContentIndexApi.GetRequest();
+				indexReq.setPratilipiId( pratilipiId );
+				PratilipiContentIndexApi.Response indexResponse = ApiRegistry.getApi( PratilipiContentIndexApi.class )
+														.getIndex( indexReq );
 
-				if( pratilipiId != null ) {
-					PratilipiV2Api.GetRequest pratilipiRequest = new PratilipiV2Api.GetRequest();
-					pratilipiRequest.setPratilipiId( pratilipiId );
-					PratilipiV2Api.Response pratilipiResponse = ApiRegistry.getApi( PratilipiV2Api.class ).get( pratilipiRequest );
-
-					PratilipiContentIndexApi.GetRequest indexReq = new PratilipiContentIndexApi.GetRequest();
-					indexReq.setPratilipiId( pratilipiId );
-					PratilipiContentIndexApi.Response indexResponse = ApiRegistry.getApi( PratilipiContentIndexApi.class )
-															.getIndex( indexReq );
-
-					dataModel.put( "pratilipiId", pratilipiId );
-					dataModel.put( "pratilipi", pratilipiResponse );
-					dataModel.put( "pratilipiJson", new Gson().toJson( pratilipiResponse ) );
-					dataModel.put( "indexJson", new Gson().toJson( indexResponse ) );
-				}
+				dataModel = new HashMap<String, Object>();
+				dataModel.put( "title", SEOTitleUtil.getWritePageTitle( pratilipiId, filterLanguage ) );
+				dataModel.put( "authorId", authorId );
+				dataModel.put( "pratilipiId", pratilipiId );
+				dataModel.put( "pratilipi", pratilipiResponse );
+				dataModel.put( "pratilipiJson", new Gson().toJson( pratilipiResponse ) );
+				dataModel.put( "indexJson", new Gson().toJson( indexResponse ) );
 
 				String action = request.getParameter( "action" );
 				if( action != null )
 					dataModel.put( "action", action );
-
-				// TODO: Remove check asap
-				if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) )
-					dataModel.put( "title", SEOTitleUtil.getWritePageTitle( pratilipiId, filterLanguage ) );
 
 				templateName = "WriterV2.ftl";
 
@@ -504,24 +469,15 @@ public class PratilipiSite extends HttpServlet {
 			// Non - hardcoded links
 			} else if( page != null && page.getType() == PageType.PRATILIPI ) {
 				resourceList.addAll( createFbOpenGraphTags( page.getPrimaryContentId() ) );
-				dataModel = createDataModelForPratilipiPage( page.getPrimaryContentId(), basicMode, request );
-				// TODO: Remove check asap
-				if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) )
-					dataModel.put( "title", SEOTitleUtil.getPratilipiPageTitle( page.getPrimaryContentId(), filterLanguage ) );
+				dataModel = createDataModelForPratilipiPage( page.getPrimaryContentId(), filterLanguage, basicMode, request );
 				templateName = ( basicMode ? "PratilipiBasic.ftl" : "Pratilipi.ftl" );
 
 			} else if( page != null && page.getType() == PageType.AUTHOR ) {
-				dataModel = createDataModelForAuthorPage( page.getPrimaryContentId(), basicMode, request );
-				// TODO: Remove check asap
-				if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) )
-					dataModel.put( "title", SEOTitleUtil.getAuthorPageTitle( page.getPrimaryContentId(), filterLanguage ) );
+				dataModel = createDataModelForAuthorPage( page.getPrimaryContentId(), filterLanguage, basicMode, request );
 				templateName = ( basicMode ? "AuthorBasic.ftl" : "Author.ftl" );
 
 			} else if( page != null && page.getType() == PageType.EVENT ) {
-				dataModel = createDataModelForEventPage( page.getPrimaryContentId(), basicMode, request );
-				// TODO: Remove check asap
-				if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) )
-					dataModel.put( "title", SEOTitleUtil.getEventPageTitle( page.getPrimaryContentId(), filterLanguage ) );
+				dataModel = createDataModelForEventPage( page.getPrimaryContentId(), filterLanguage, basicMode, request );
 				templateName = ( basicMode ? "EventBasic.ftl" : "Event.ftl" );
 
 			} else if( page != null && page.getType() == PageType.BLOG ) {
@@ -529,10 +485,7 @@ public class PratilipiSite extends HttpServlet {
 				templateName = ( basicMode ? "BlogPostListBasic.ftl" : "BlogPostList.ftl" );
 
 			} else if( page != null && page.getType() == PageType.BLOG_POST ) {
-				dataModel = createDataModelForBlogPostPage( page.getPrimaryContentId(), basicMode );
-				// TODO: Remove check asap
-				if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) )
-					dataModel.put( "title", SEOTitleUtil.getBlogPostPageTitle( page.getPrimaryContentId(), filterLanguage ) );
+				dataModel = createDataModelForBlogPostPage( page.getPrimaryContentId(), filterLanguage, basicMode );
 				templateName = ( basicMode ? "BlogPostBasic.ftl" : "BlogPost.ftl" );
 
 			} else if( page != null && page.getType() == PageType.READ ) {
@@ -558,16 +511,13 @@ public class PratilipiSite extends HttpServlet {
 
 				dataModel = createDataModelForReadPage( pratilipiId, 
 														pageNo, 
-														request.getParameter( RequestParameter.API_VERSION.getName() ), 
+														request.getParameter( RequestParameter.API_VERSION.getName() ),
+														filterLanguage,
 														basicMode );
 
 				dataModel.put( "fontSize", fontSize != null ? Integer.parseInt( fontSize ) : 14 );
 				dataModel.put( "imageSize", imageSize != null ? Integer.parseInt( imageSize ) : 636 );
 				dataModel.put( "action", action );
-
-				// TODO: Remove check asap
-				if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) )
-					dataModel.put( "title", SEOTitleUtil.getReadPageTitle( pratilipiId, filterLanguage ) );
 
 				templateName = ( basicMode ? "ReadBasic.ftl" : "Read.ftl" );
 
@@ -809,9 +759,9 @@ public class PratilipiSite extends HttpServlet {
 	
 	private Map<String, Object> createDataModelForMasterHomePage( Language filterLanguage )
 			throws InsufficientAccessException {
-		
+
 		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put( "title", createPageTitle( I18n.getString( "home_page_title", filterLanguage ), null ) );
+		dataModel.put( "title", SEOTitleUtil.getMasterHomePageTitle() );
 		return dataModel;
 
 	}
@@ -820,7 +770,7 @@ public class PratilipiSite extends HttpServlet {
 			throws InsufficientAccessException, IOException, UnexpectedServerException {
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put( "title", createPageTitle( I18n.getString( "home_page_title", filterLanguage ), null ) );
+		dataModel.put( "title", SEOTitleUtil.getHomePageTitle( filterLanguage ) );
 
 		if( basicMode ) {
 			if( filterLanguage == null )
@@ -842,7 +792,7 @@ public class PratilipiSite extends HttpServlet {
 				= UserPratilipiDataUtil.getUserLibrary( AccessTokenFilter.getAccessToken().getUserId(), null, null, null );
 		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put( "title", "My Library" );
+		dataModel.put( "title", SEOTitleUtil.getLibraryPageTitle( filterLanguage ) );
 		if( basicMode ) {
 			dataModel.put( "pratilipiList", toListResponseObject( pratilipiDataListCursorTuple.getDataList() ) );
 		} else {
@@ -855,7 +805,7 @@ public class PratilipiSite extends HttpServlet {
 	}
 
 	
-	public Map<String, Object> createDataModelForPratilipiPage( Long pratilipiId, boolean basicMode, HttpServletRequest request )
+	public Map<String, Object> createDataModelForPratilipiPage( Long pratilipiId, Language language, boolean basicMode, HttpServletRequest request )
 			throws InsufficientAccessException, UnexpectedServerException {
 
 		PratilipiV2Api.GetRequest pratilipiRequest = new PratilipiV2Api.GetRequest();
@@ -873,7 +823,7 @@ public class PratilipiSite extends HttpServlet {
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		Gson gson = new Gson();
-		dataModel.put( "title", createPratilipiPageTitle( pratilipiResponse ) );
+		dataModel.put( "title", SEOTitleUtil.getPratilipiPageTitle( pratilipiId, language ) );
 		if( basicMode ) {
 			dataModel.put( "pratilipi", pratilipiResponse );
 			dataModel.put( "userpratilipi", userPratilipiResponse );
@@ -925,7 +875,7 @@ public class PratilipiSite extends HttpServlet {
 		
 	}
 	
-	public Map<String, Object> createDataModelForAuthorPage( Long authorId, boolean basicMode, HttpServletRequest request )
+	public Map<String, Object> createDataModelForAuthorPage( Long authorId, Language language, boolean basicMode, HttpServletRequest request )
 			throws InsufficientAccessException, UnexpectedServerException {
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
@@ -936,7 +886,7 @@ public class PratilipiSite extends HttpServlet {
 		AuthorApi.Response authorResponse = ApiRegistry
 				.getApi( AuthorApi.class )
 				.get( authorApiGetRequest );
-		dataModel.put( "title", createAuthorPageTitle( authorResponse ) );
+		dataModel.put( "title", SEOTitleUtil.getAuthorPageTitle( authorId, language ) );
 
 		if( basicMode )
 			dataModel.put( "author", authorResponse );
@@ -1036,7 +986,7 @@ public class PratilipiSite extends HttpServlet {
 	}
 
 	public Map<String, Object> createDataModelForFollowersPage( Long authorId, Integer currPage, Language language, Boolean basicMode ) 
-			throws InsufficientAccessException {
+			throws InsufficientAccessException, UnexpectedServerException {
 
 		AuthorApi.GetRequest authorApiGetRequest = new AuthorApi.GetRequest();
 		authorApiGetRequest.setAuthorId( authorId );
@@ -1055,7 +1005,7 @@ public class PratilipiSite extends HttpServlet {
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		Gson gson = new Gson();
-		dataModel.put( "title", I18n.getString( "author_followers_heading", language ) + " | " + createAuthorPageTitle( authorResponse ) );
+		dataModel.put( "title", SEOTitleUtil.getFollowersPageTitle( authorId, language ) );
 		if( basicMode ) {
 			dataModel.put( "author", authorResponse );
 			dataModel.put( "followersList", followersList );
@@ -1072,7 +1022,7 @@ public class PratilipiSite extends HttpServlet {
 	}
 
 	public Map<String, Object> createDataModelForFollowingPage( Long userId, Integer currPage, Language language, Boolean basicMode ) 
-			throws InsufficientAccessException {
+			throws InsufficientAccessException, UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		Long authorId = dataAccessor.getAuthorByUserId( userId ).getId();
@@ -1094,7 +1044,7 @@ public class PratilipiSite extends HttpServlet {
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		Gson gson = new Gson();
-		dataModel.put( "title", I18n.getString( "author_following_heading", language ) + " | " + createAuthorPageTitle( authorResponse ) );
+		dataModel.put( "title", SEOTitleUtil.getFollowersPageTitle( userId, language ) );
 		if( basicMode ) {
 			dataModel.put( "author", authorResponse );
 			dataModel.put( "followingList", followingList );
@@ -1141,7 +1091,8 @@ public class PratilipiSite extends HttpServlet {
 
 	}
 
-	public Map<String, Object> createDataModelForEventsPage( Language language, boolean basicMode ) throws InsufficientAccessException {
+	public Map<String, Object> createDataModelForEventsPage( Language language, boolean basicMode ) 
+			throws InsufficientAccessException, UnexpectedServerException {
 
 		EventData eventData = new EventData();
 		eventData.setLanguage( language );
@@ -1154,7 +1105,7 @@ public class PratilipiSite extends HttpServlet {
 											.get( request );
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put( "title", I18n.getString( "event_events", language ) );
+		dataModel.put( "title", SEOTitleUtil.getEventsPageTitle( language ) );
 		dataModel.put( "hasAccessToAdd", hasAccessToAdd );
 		if( basicMode ) {
 			dataModel.put( "eventList", eventListResponse.getEventList() );
@@ -1164,7 +1115,7 @@ public class PratilipiSite extends HttpServlet {
 		return dataModel;
 	}
 	
-	public Map<String, Object> createDataModelForEventPage( Long eventId, boolean basicMode, HttpServletRequest request )
+	public Map<String, Object> createDataModelForEventPage( Long eventId, Language language, boolean basicMode, HttpServletRequest request )
 			throws InsufficientAccessException, UnexpectedServerException {
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
@@ -1176,7 +1127,7 @@ public class PratilipiSite extends HttpServlet {
 											.getApi( EventApi.class )
 											.get( eventRequest );
 
-		dataModel.put( "title", createPageTitle( eventResponse.getName(), eventResponse.getNameEn() ) );
+		dataModel.put( "title", SEOTitleUtil.getEventPageTitle( eventId, language ) );
 		if( basicMode )
 			dataModel.put( "event", eventResponse );
 		else
@@ -1249,8 +1200,8 @@ public class PratilipiSite extends HttpServlet {
 		return dataModel;
 	}
 
-	public Map<String, Object> createDataModelForBlogPostPage( Long blogPostId, boolean basicMode )
-			throws InsufficientAccessException {
+	public Map<String, Object> createDataModelForBlogPostPage( Long blogPostId, Language language, boolean basicMode )
+			throws InsufficientAccessException, UnexpectedServerException {
 
 		BlogPostApi.GetRequest request = new BlogPostApi.GetRequest();
 		request.setBlogPostId( blogPostId );
@@ -1259,7 +1210,7 @@ public class PratilipiSite extends HttpServlet {
 				.get( request ); 
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put( "title", createPageTitle( response.getTitle(), response.getTitleEn() ) );
+		dataModel.put( "title", SEOTitleUtil.getBlogPostPageTitle( blogPostId, language ) );
 		if( basicMode ) {
 			dataModel.put( "blogPost", response );
 		} else {
@@ -1269,7 +1220,7 @@ public class PratilipiSite extends HttpServlet {
 
 	}
 	
-	public Map<String, Object> createDataModelForReadPage( Long pratilipiId, Integer chapterNo, String version, boolean basicMode )
+	public Map<String, Object> createDataModelForReadPage( Long pratilipiId, Integer chapterNo, String version, Language language, boolean basicMode )
 			throws InvalidArgumentException, UnexpectedServerException, InsufficientAccessException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -1396,6 +1347,7 @@ public class PratilipiSite extends HttpServlet {
 
 		Gson gson = new Gson();
 		Map<String, Object> dataModel = new HashMap<String, Object>();
+		dataModel.put( "title", SEOTitleUtil.getReadPageTitle( pratilipiId, language ) );
 		dataModel.put( "title", createReadPageTitle( pratilipiData, 1, 1 ) );
 		dataModel.put( "pageNo", chapterNo );
 		dataModel.put( "pageCount", pageCount );
@@ -1467,7 +1419,7 @@ public class PratilipiSite extends HttpServlet {
 		Gson gson = new Gson();
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put( "title", "Search" );
+		dataModel.put( "title", SEOTitleUtil.getSearchPageTitle( language ) );
 		if( basicMode ) {
 			dataModel.put( "pratilipiList", response.getPratilipiList() );
 			dataModel.put( "pratilipiListSearchQuery", searchQuery );
@@ -1493,7 +1445,7 @@ public class PratilipiSite extends HttpServlet {
 				.get( new NotificationListApi.GetRequest() );
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put( "title", I18n.getString( "notification_notifications", language ) );
+		dataModel.put( "title", SEOTitleUtil.getNotificationsPageTitle( language ) );
 		dataModel.put( "notificationList", response.getNotificationList() );
 		dataModel.put( "notificationListJson", new Gson().toJson( response ) );
 
@@ -1538,8 +1490,6 @@ public class PratilipiSite extends HttpServlet {
 			}
 		}
 		
-		String title = createPageTitle( listTitle, listTitleEn, displayLanugage );
-		
 		Integer offset = null;
 		Integer pageCurr = 1;
 		Integer pageSize = 20;
@@ -1570,7 +1520,7 @@ public class PratilipiSite extends HttpServlet {
 
 		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put( "title", title );
+		dataModel.put( "title", SEOTitleUtil.getListPageTitle( listName, filterLanguage ) );
 		dataModel.put( "pratilipiListTitle", listTitle );
 		if( basicMode ) {
 			dataModel.put( "pratilipiList", pratilipiListResponse.getPratilipiList() );
@@ -1584,10 +1534,6 @@ public class PratilipiSite extends HttpServlet {
 			dataModel.put( "pratilipiListCursor", pratilipiListResponse.getCursor() );
 		}
 
-		// TODO: Remove check asap
-		if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) )
-			dataModel.put( "title", SEOTitleUtil.getListPageTitle( listName, filterLanguage ) );
-
 		return dataModel;
 		
 	}
@@ -1596,14 +1542,13 @@ public class PratilipiSite extends HttpServlet {
 	public Map<String, Object> createDataModelForStaticPage( String pageName, Language lang )
 			throws UnexpectedServerException {
 
-		String title = null;
 		StringBuilder content = new StringBuilder();
 		try {
 			String fileName = "static." + ( lang == null ? "" : lang.getCode() + "." ) + pageName;
 			File file = new File( getClass().getResource( dataFilePrefix + fileName ).toURI() );
 			LineIterator it = FileUtils.lineIterator( file, "UTF-8" );
 			if( it.hasNext() )
-				title = it.nextLine().trim();
+				it.nextLine().trim(); // title
 			while( it.hasNext() )
 				content.append( it.nextLine() + "<br/>" );
 			LineIterator.closeQuietly( it );
@@ -1615,12 +1560,8 @@ public class PratilipiSite extends HttpServlet {
 		}
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put( "title", title );
+		dataModel.put( "title", SEOTitleUtil.getStaticPageTitle( pageName, lang ) );
 		dataModel.put( "content", content.toString() );
-		
-		// TODO: Remove check asap
-		if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) )
-			dataModel.put( "title", SEOTitleUtil.getStaticPageTitle( pageName, lang ) );
 
 		return dataModel;
 	}
