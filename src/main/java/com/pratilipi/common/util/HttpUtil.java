@@ -11,6 +11,7 @@ import java.net.URLConnection;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +40,7 @@ public class HttpUtil {
 	private static final Logger logger = Logger.getLogger( HttpUtil.class.getName() );
 	
 	
-	public static class HttpUtilRequest {
+	public static class Request {
 
 		private String targetUrl;
 
@@ -48,27 +49,14 @@ public class HttpUtil {
 		private Map<String, String> paramsMap;
 
 
-		public HttpUtilRequest( String targetUrl ) {
+		public Request( String targetUrl ) {
 			this.targetUrl = targetUrl;
 		}
 
-		public HttpUtilRequest( String targetUrl, Map<String, String> headersMap, Map<String, String> paramsMap ) {
+		public Request( String targetUrl, Map<String, String> headersMap, Map<String, String> paramsMap ) {
 			this.targetUrl = targetUrl;
 			this.headersMap = headersMap;
 			this.paramsMap = paramsMap;
-		}
-
-
-		public String getTargetUrl() {
-			return targetUrl;
-		}
-
-		public Map<String, String> getHeadersMap() {
-			return headersMap;
-		}
-
-		public Map<String, String> getParamsMap() {
-			return paramsMap;
 		}
 
 	}
@@ -162,7 +150,7 @@ public class HttpUtil {
 	}
 
 	@Deprecated
-	public static Map<String, String> doGet( List<HttpUtilRequest> requests ) 
+	public static Map<String, String> doGet( List<Request> requests ) 
 			throws UnexpectedServerException {
 
 		Map<String, String> urlResponseMap = new HashMap<>();
@@ -172,17 +160,17 @@ public class HttpUtil {
 
 			Map<String, Future<HTTPResponse>> responses = new HashMap<>( requests.size() );
 
-			for( HttpUtilRequest req : requests ) {
+			for( Request req : requests ) {
 
-				HTTPRequest httpRequest = new HTTPRequest( req.getParamsMap() != null ?
-						new URL( req.getTargetUrl() + "?" + createQueryString( req.getParamsMap() ) ) : new URL( req.getTargetUrl() ) );
+				HTTPRequest httpRequest = new HTTPRequest( req.paramsMap != null ?
+						new URL( req.targetUrl + "?" + createQueryString( req.paramsMap ) ) : new URL( req.targetUrl ) );
 
-				if( req.getHeadersMap() != null )
-					for( Entry<String, String> entry : req.getHeadersMap().entrySet() )
+				if( req.headersMap != null )
+					for( Entry<String, String> entry : req.headersMap.entrySet() )
 						httpRequest.setHeader( new HTTPHeader( entry.getKey(), entry.getValue() ) );
 
-				logger.log( Level.INFO, "Http GET Request: " + req.getTargetUrl() );
-				responses.put( req.getTargetUrl(), urlFetch.fetchAsync( httpRequest ) );
+				logger.log( Level.INFO, "Http GET Request: " + req.targetUrl );
+				responses.put( req.targetUrl, urlFetch.fetchAsync( httpRequest ) );
 
 			}
 
@@ -227,6 +215,10 @@ public class HttpUtil {
 
 	}
 	
+	public static Response asyncGet( Request request ) throws UnexpectedServerException {
+		return asyncGet( request.targetUrl, request.headersMap, request.paramsMap );
+	}
+	
 	public static Response asyncGet( String targetURL, Map<String, String> headersMap, Map<String, String> paramsMap ) throws UnexpectedServerException {
 
 		try {
@@ -248,6 +240,13 @@ public class HttpUtil {
 			throw new UnexpectedServerException();
 		}
 
+	}
+	
+	public static List<Response> asyncGet( List<Request> requestList ) throws UnexpectedServerException {
+		List<Response> responseList = new ArrayList<>( requestList.size() );
+		for( Request request : requestList )
+			responseList.add( asyncGet( request ) );
+		return responseList;
 	}
 	
 	public static String doPost( String targetURL, Map<String, String> paramsMap )
