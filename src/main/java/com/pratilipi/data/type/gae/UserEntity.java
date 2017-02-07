@@ -271,7 +271,7 @@ public class UserEntity implements User {
 
 	@Override
 	public Date getLastEmailedDate() {
-		return LAST_EMAILED != null ? LAST_EMAILED : getLastUpdated();
+		return LAST_EMAILED == null ? SIGN_UP_DATE: LAST_EMAILED;
 	}
 	
 	@Override
