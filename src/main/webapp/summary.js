@@ -1,9 +1,10 @@
 $(document).ready(function() {  
-  var pratilipiSummaryControllerObject = new pratilipiSummaryController();
-  pratilipiSummaryControllerObject.init();
+ /* var pratilipiSummaryControllerObject = new pratilipiSummaryController();
+  pratilipiSummaryControllerObject.init(); */
+  ko.applyBindings();
 });
 
-var pratilipiSummaryController = function() {
+/*var pratilipiSummaryController = function() {
   this.ViewModel = {
     title: ko.observable(),
     titleEn: ko.observable(),
@@ -34,7 +35,7 @@ pratilipiSummaryController.prototype.getData = function() {
   var self = this;
   $.ajax({
       type: 'get',
-      url: '/api/pratilipi?_apiVer=2&pratilipiId=5150530175238144',
+      url: '/api/pratilipi?_apiVer=2&pratilipiId=1',
       data: { 
           // 'language': "${ language }"
       },
@@ -53,3 +54,4 @@ pratilipiSummaryController.prototype.getData = function() {
 pratilipiSummaryController.prototype.pushToViewModel = function( data ) {
   this.ViewModel.title(data["title"]).titleEn(data["titleEn"]).coverImageUrl("https://d3cwrmdwk8nw1j.cloudfront.net/pratilipi/cover?pratilipiId=6243354113212416&version=1453103809428&width=150").author_name(data.author.name).language(data["language"]).summary(data["summary"]).state(data["state"]).publish_date(data["listingDateMillis"]).averageRating(data["averageRating"]).ratingCount(data["ratingCount"]).readCount(data["readCount"]).type(data["type"]);  
 };
+*/

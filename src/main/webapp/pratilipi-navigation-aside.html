@@ -1,0 +1,8 @@
+<aside class="mdl-components__nav mdl-shadow--4dp">
+     <!-- ko foreach: navigationList -->
+     	<h6 data-bind="text: title"></h6>
+     	<!-- ko foreach: linkList -->
+       		<a data-bind="attr: { href: url }, text: name"></a>
+		<!-- /ko -->
+	<!-- /ko -->         		
+</aside>

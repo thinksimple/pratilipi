@@ -1,5 +1,5 @@
 <#if action == "one" >
-	<#include "/summary1.html"> <#-- with unnecessary links  -->
+	<#include "/summary1.html"> <#-- with unnecessary links with temp drawer -->
 <#elseif action == "two">
 	<#include "/summary2.html"> <#-- w/o unnecessary links -->
 <#elseif action == "three">
