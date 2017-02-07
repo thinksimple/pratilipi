@@ -11,7 +11,6 @@ import java.net.URLConnection;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +27,6 @@ import org.apache.commons.io.IOUtils;
 import com.google.appengine.api.urlfetch.HTTPHeader;
 import com.google.appengine.api.urlfetch.HTTPRequest;
 import com.google.appengine.api.urlfetch.HTTPResponse;
-import com.google.appengine.api.urlfetch.URLFetchService;
 import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
 import com.google.gson.JsonObject;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -150,55 +148,6 @@ public class HttpUtil {
 	}
 
 	@Deprecated
-	public static Map<String, String> doGet( List<Request> requests ) 
-			throws UnexpectedServerException {
-
-		Map<String, String> urlResponseMap = new HashMap<>();
-		URLFetchService urlFetch = URLFetchServiceFactory.getURLFetchService();
-
-		try {
-
-			Map<String, Future<HTTPResponse>> responses = new HashMap<>( requests.size() );
-
-			for( Request req : requests ) {
-
-				HTTPRequest httpRequest = new HTTPRequest( req.paramsMap != null ?
-						new URL( req.targetUrl + "?" + createQueryString( req.paramsMap ) ) : new URL( req.targetUrl ) );
-
-				if( req.headersMap != null )
-					for( Entry<String, String> entry : req.headersMap.entrySet() )
-						httpRequest.setHeader( new HTTPHeader( entry.getKey(), entry.getValue() ) );
-
-				logger.log( Level.INFO, "Http GET Request: " + req.targetUrl );
-				responses.put( req.targetUrl, urlFetch.fetchAsync( httpRequest ) );
-
-			}
-
-			for( Entry<String, Future<HTTPResponse>> entry : responses.entrySet() ) {
-
-				HTTPResponse response = entry.getValue().get();
-
-				if( response.getResponseCode() != 200 ) {
-					logger.log( Level.SEVERE, "Failed to execute Http Get call: " + entry.getKey() );
-					logger.log( Level.SEVERE, "Response: " + new String( response.getContent(), "UTF-8" ) );
-					logger.log( Level.SEVERE, "Response Code: " + response.getResponseCode() );
-					throw new UnexpectedServerException();
-				}
-
-				urlResponseMap.put( entry.getKey(), new String( response.getContent(), "UTF-8" ) );
-
-			}
-
-		} catch ( IOException | InterruptedException | ExecutionException e ) {
-			logger.log( Level.SEVERE, "Failed to execute Http Get call.", e );
-			throw new UnexpectedServerException();
-		}
-
-		return urlResponseMap;
-
-	}
-
-	@Deprecated
 	public static String doGet( String targetURL, Map<String, String> paramsMap ) 
 			throws UnexpectedServerException {
 		
@@ -214,6 +163,22 @@ public class HttpUtil {
 		}
 
 	}
+
+	
+	public static Map<String, BlobEntry> doGet( List<String> targetUrlList, Map<String, String> headersMap ) throws UnexpectedServerException {
+
+		Map<String, Response> responses = new HashMap<>( targetUrlList.size() );
+		for( String targetUrl : targetUrlList )
+			responses.put( targetUrl, asyncGet( targetUrl, headersMap, null ) );
+		
+		Map<String, BlobEntry> blobEntries = new HashMap<>();
+		for( String targetUrl : targetUrlList )
+			blobEntries.put( targetUrl, responses.get( targetUrl ).get() );
+	
+		return blobEntries;
+		
+	}
+
 	
 	public static Response asyncGet( Request request ) throws UnexpectedServerException {
 		return asyncGet( request.targetUrl, request.headersMap, request.paramsMap );
@@ -242,12 +207,13 @@ public class HttpUtil {
 
 	}
 	
-	public static List<Response> asyncGet( List<Request> requestList ) throws UnexpectedServerException {
-		List<Response> responseList = new ArrayList<>( requestList.size() );
+	public static Map<Request, Response> asyncGet( List<Request> requestList ) throws UnexpectedServerException {
+		Map<Request, Response> responses = new HashMap<>( requestList.size() );
 		for( Request request : requestList )
-			responseList.add( asyncGet( request ) );
-		return responseList;
+			responses.put( request, asyncGet( request ) );
+		return responses;
 	}
+	
 	
 	public static String doPost( String targetURL, Map<String, String> paramsMap )
 			throws UnexpectedServerException {
@@ -344,6 +310,7 @@ public class HttpUtil {
 		return response;
 	}
 
+	
 	private static BlobEntry _toBlobEntry( String targetUrl, HTTPResponse response ) throws UnexpectedServerException {
 		
 		String mimeType = null;
