@@ -11,6 +11,7 @@ import java.net.URLConnection;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -165,7 +166,7 @@ public class HttpUtil {
 	}
 
 	
-	public static Map<String, BlobEntry> doGet( List<String> targetUrlList, Map<String, String> headersMap ) throws UnexpectedServerException {
+	public static Map<String, BlobEntry> doGet( Collection<String> targetUrlList, Map<String, String> headersMap ) throws UnexpectedServerException {
 
 		Map<String, Response> responses = new HashMap<>( targetUrlList.size() );
 		for( String targetUrl : targetUrlList )

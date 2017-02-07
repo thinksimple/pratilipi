@@ -22,7 +22,6 @@ import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.EmailFrequency;
 import com.pratilipi.common.type.NotificationType;
 import com.pratilipi.common.util.HttpUtil;
-import com.pratilipi.common.util.HttpUtil.Request;
 import com.pratilipi.data.type.BlobEntry;
 import com.pratilipi.data.type.UserPreferenceRtdb;
 import com.pratilipi.data.type.rtdb.UserPreferenceRtdbImpl;
@@ -143,10 +142,6 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 		Map<Long, String> userIdUrlMap = new HashMap<>( userIdSet.size() );
 		for( Long userId : userIdSet )
 			userIdUrlMap.put( userId, DATABASE_URL + DATABASE_PREFERENCE_TABLE + "/" + userId + ".json" );
-
-		List<Request> httpUtilRequestList = new ArrayList<>();
-		for( String targetUrl : userIdUrlMap.values() )
-			httpUtilRequestList.add( new Request( targetUrl, this.headersMap, null ) );
 
 
 		Map<String, BlobEntry> responses = HttpUtil.doGet( userIdUrlMap.values(), this.headersMap );
