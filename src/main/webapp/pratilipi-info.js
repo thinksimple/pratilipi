@@ -25,7 +25,7 @@ function() {
     this.getData = function() {
       $.ajax({
         type: 'get',
-        url: '/api/pratilipi?_apiVer=2&pratilipiId=1',
+        url: '/api/pratilipi?_apiVer=2&pratilipiId=5150530175238144',
         data: { 
             // 'language': "${ language }"
         },
