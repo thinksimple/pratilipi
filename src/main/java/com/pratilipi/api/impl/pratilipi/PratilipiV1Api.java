@@ -114,12 +114,12 @@ public class PratilipiV1Api extends GenericApi {
 		
 		private Object index;
 		
+		private Integer wordCount;
 		private Long reviewCount;
 		private Long ratingCount;
 		private Float averageRating;
 		private Long readCount;
 		private Long fbLikeShareCount;
-		private Integer wordCount;
 		
 		private Boolean addedToLib;
 		private Boolean hasAccessToUpdate;
@@ -154,12 +154,12 @@ public class PratilipiV1Api extends GenericApi {
 			if( pratilipiData.getLastUpdated() != null )
 				this.lastUpdatedMillis = pratilipiData.getLastUpdated().getTime();
 
+			this.wordCount = pratilipiData.getWordCount();
 			this.reviewCount = pratilipiData.getReviewCount();
 			this.ratingCount = pratilipiData.getRatingCount();
 			this.averageRating = pratilipiData.getAverageRating();
 			this.readCount = pratilipiData.getReadCount();
 			this.fbLikeShareCount = pratilipiData.getFbLikeShareCount();
-			this.wordCount = pratilipiData.getWordCount();
 			
 			this.hasAccessToUpdate = pratilipiData.hasAccessToUpdate();
 			
@@ -186,10 +186,10 @@ public class PratilipiV1Api extends GenericApi {
 					this.contentType = pratilipi.getContentType();
 				if( UxModeFilter.isAndroidApp() )
 					this.listingDateMillis = pratilipi.getListingDate().getTime();
+				this.wordCount = pratilipi.getWordCount();
 				this.ratingCount = pratilipi.getRatingCount();
 				this.averageRating = pratilipi.getAverageRating();
 				this.readCount = pratilipi.getReadCount();
-				this.wordCount = pratilipi.getWordCount();
 
 				this.addedToLib = pratilipi.isAddedToLib();
 				this.hasAccessToUpdate = pratilipi.hasAccessToUpdate();
@@ -290,6 +290,10 @@ public class PratilipiV1Api extends GenericApi {
 		}
 
 		
+		public Integer getWordCount() {
+			return wordCount;
+		}
+
 		public Long getReviewCount() {
 			return reviewCount;
 		}
@@ -308,10 +312,6 @@ public class PratilipiV1Api extends GenericApi {
 
 		public Long getFbLikeShareCount() {
 			return fbLikeShareCount;
-		}
-
-		public Integer getWordCount() {
-			return wordCount;
 		}
 
 		

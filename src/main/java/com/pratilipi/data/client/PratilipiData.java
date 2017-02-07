@@ -58,13 +58,13 @@ public class PratilipiData implements Serializable {
 	private Object index;
 	
 	
+	private Integer wordCount;
 	private Long reviewCount;
 	private Long ratingCount;
 	private Float averageRating;
 	private Double relevance;
 	private Long readCount;
 	private Long fbLikeShareCount;
-	private Integer wordCount;
 	
 	
 	private Boolean addedToLib;
@@ -267,6 +267,14 @@ public class PratilipiData implements Serializable {
 	}
 
 
+	public Integer getWordCount() {
+		return wordCount;
+	}
+	
+	public void setWordCount( Integer wordCount ) {
+		this.wordCount = wordCount;
+	}
+
 	public Long getReviewCount() {
 		return reviewCount;
 	}
@@ -316,14 +324,6 @@ public class PratilipiData implements Serializable {
 		this.fbLikeShareCount = fbLikeShareCount;
 	}
 	
-	public Integer getWordCount() {
-		return wordCount;
-	}
-	
-	public void setWordCount( Integer wordCount ) {
-		this.wordCount = wordCount;
-	}
-
 
 	public boolean isAddedToLib() {
 		return addedToLib == null ? false : addedToLib;
