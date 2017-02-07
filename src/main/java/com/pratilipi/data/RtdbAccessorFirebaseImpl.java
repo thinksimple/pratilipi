@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -117,35 +119,47 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 		if( userIds == null || userIds.isEmpty() )
 			return new HashMap<>();
 
-		List<Long> userIdList = new ArrayList<>( userIds );
+		Set<Long> userIdSet = new HashSet<>( userIds );
 
-		Map<Long, UserPreferenceRtdb> userPreferences = new HashMap<>( userIdList.size() );
+		Set<String> memcacheIds = new HashSet<>( userIdSet.size() );
+		for( Long userId : userIdSet )
+			memcacheIds.add( _getMemcacheId( userId ) );
+		Map<String, String> memcacheDataMap = memcache.getAll( memcacheIds );
+
 		List<Long> existingUserIdList = new ArrayList<>();
-		for( Long userId : userIdList ) {
-			String json = memcache.get( _getMemcacheId( userId ) );
+		Map<Long, UserPreferenceRtdb> userPreferences = new HashMap<>( userIdSet.size() );
+
+		for( Long userId : userIdSet ) {
+			String json = memcacheDataMap.get( _getMemcacheId( userId ) );
 			if( json != null ) {
 				userPreferences.put( userId, _getUserPreferenceRtdb( json ) );
 				existingUserIdList.add( userId );
 			}
 		}
 
-		userIdList.removeAll( existingUserIdList );
+		userIdSet.removeAll( existingUserIdList );
 
-		Map<Long, String> userIdUrlMap = new HashMap<>( userIdList.size() );
-		for( Long userId : userIdList )
+		Map<Long, String> userIdUrlMap = new HashMap<>( userIdSet.size() );
+		for( Long userId : userIdSet )
 			userIdUrlMap.put( userId, DATABASE_URL + DATABASE_PREFERENCE_TABLE + "/" + userId + ".json" );
 
 		List<HttpUtilRequest> httpUtilRequestList = new ArrayList<>();
 		for( String targetUrl : userIdUrlMap.values() )
 			httpUtilRequestList.add( new HttpUtilRequest( targetUrl, this.headersMap, null ) );
 
+
 		Map<String, String> responses = HttpUtil.doGet( httpUtilRequestList );
 
-		for( Long userId : userIdList ) {
+
+		memcacheDataMap = new HashMap<>();
+		for( Long userId : userIdSet ) {
 			String json = responses.get( userIdUrlMap.get( userId ) );
 			userPreferences.put( userId, _getUserPreferenceRtdb( json ) );
-			memcache.put( _getMemcacheId( userId ), json, 5 );
+			memcacheDataMap.put( _getMemcacheId( userId ), json );
 		}
+
+		if( ! memcacheDataMap.isEmpty() )
+			memcache.putAll( memcacheDataMap, 5 );
 
 		return userPreferences;
 
@@ -181,11 +195,13 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 			String jsonStr = new String( blobEntry.getData(), "UTF-8" );
 			JsonObject jsonObject = new Gson().fromJson( jsonStr, JsonElement.class ).getAsJsonObject();
 			Map<Long, UserPreferenceRtdb> userPreferenceMap = new HashMap<>();
+			Map<String, String> memcacheDataMap = new HashMap<>();
 			for( Entry<String, JsonElement> entry : jsonObject.entrySet() ) {
 				Long userId = Long.parseLong( entry.getKey() );
 				userPreferenceMap.put( userId, _getUserPreferenceRtdb( entry.getValue().getAsJsonObject() ) );
-				memcache.put( _getMemcacheId( userId ), entry.getValue().getAsJsonObject().toString(), 5 );
+				memcacheDataMap.put( _getMemcacheId( userId ), entry.getValue().getAsJsonObject().toString() );
 			}
+			memcache.putAll( memcacheDataMap, 5 );
 			return userPreferenceMap;
 		} catch( UnsupportedEncodingException | JsonSyntaxException e ) {
 			logger.log( Level.SEVERE, e.getMessage() );
