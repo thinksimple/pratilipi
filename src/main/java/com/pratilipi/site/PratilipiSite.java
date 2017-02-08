@@ -109,7 +109,7 @@ public class PratilipiSite extends HttpServlet {
 	static {
 		try {
 			Map<String, Object> dataModel = new HashMap<>();
-			dataModel.put( "action", "two" );
+			dataModel.put( "action", "one" );
 			dataModel.put( "_strings", I18n.getStrings( Language.TAMIL ) );
 			dataModel.put( "language", Language.TAMIL );
 			appShell = FreeMarkerUtil.processTemplate( dataModel, templateFilePrefix + "Knockout.ftl" );
