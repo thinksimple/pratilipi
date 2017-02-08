@@ -6,6 +6,7 @@ import java.util.Map;
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
+import com.google.cloud.storage.BlobInfo.Builder;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 import com.pratilipi.data.type.BlobEntry;
@@ -36,15 +37,15 @@ public class BlobAccessorGcsImpl2 implements BlobAccessor {
 	@Override
 	public BlobEntry getBlob( String fileName ) {
 		Blob blob = gcsService.get( BlobId.of( bucketName, fileName ) );
-		return blob == null ? null : new BlobEntryGcsImpl( blob );
+		return blob == null || blob.getSize() == 0 ? null : new BlobEntryGcsImpl( blob );
 	}
 
 	@Override
 	public BlobEntry createOrUpdateBlob( BlobEntry blobEntry ) {
 		
 		BlobId blobId = BlobId.of( bucketName, blobEntry.getName() );
-		com.google.cloud.storage.BlobInfo.Builder blobInfoBuilder = BlobInfo.newBuilder( blobId );
-
+		Builder blobInfoBuilder = BlobInfo.newBuilder( blobId );
+		
 		if( blobEntry.getMimeType() != null )
 			blobInfoBuilder.setContentType( blobEntry.getMimeType() );
 		
