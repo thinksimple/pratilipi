@@ -17,7 +17,7 @@
 /upanyas                 उपन्यास                     Analytics#categoryName::books        App#imageName::novels.jpg              App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"upanyas" }
 /samajik-kahaniya        सामाजिक कहानियाँ            Analytics#categoryName::social        App#imageName::social.jpg              App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"samajik-kahaniya" }     
 /mythology               प्राचीन साहित्य               Analytics#categoryName::mythology      App#imageName::mythology.jpg          App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"mythology" }
-/chhoti-kahaniya         छोटी कहानियाँ              Analytics#categoryName::two-min       App#imageName::shortstories.jpg          App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"chhoti-kahaniya" }
+/chhoti-kahaniya         छोटी कहानियाँ              Analytics#categoryName::short-stories       App#imageName::shortstories.jpg          App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"chhoti-kahaniya" }
 /search?q=poems          पद्य                        Analytics#categoryName::poetry        App#imageName::poems.jpg               App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "searchQuery":"poems" }
 /gazals                  ग़ज़ल                       Analytics#categoryName::gazals        App#imageName::gazals.jpg              App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"gazals" }
 /search?q=articles       लेख                       Analytics#categoryName::articles        App#imageName::articles.jpg             App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "searchQuery":"articles" }
