@@ -150,6 +150,7 @@
 </body>
 <script>
 $('.continue-over').click(function() {
+    console.log(window.location.hostname);
     $('.option-selector').html('<img src="http://www.downgraf.com/wp-content/uploads/2014/09/01-progress.gif"/>');
     //http://hindi.gamma.pratilipi.com/api?requests={%22req1%22:%22/i18n?group=EMAIL%26language=TAMIL%22,%22req2%22:%22/i18n?group=EMAIL%26language=ENGLISH%22}
     var group = $(this).val();
