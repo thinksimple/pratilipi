@@ -1,5 +1,6 @@
 function() {
     this.reviewList = ko.observableArray([]);
+    this.pratilipiId = getQueryVariable( "id" );
     this.pushToReviewList = function( revList ) {
       for( var i=0; i< revList.length; i++ ) {
         this.reviewList.push( revList[i] );
@@ -12,7 +13,7 @@ function() {
 //      this.pushToReviewList( response["reviewList"] );
       $.ajax({
         type: 'get',
-        url: '/api/userpratilipi/review/list?pratilipiId=6321516031508480&resultCount=3',
+        url: '/api/userpratilipi/review/list?pratilipiId=' + self.pratilipiId + "&count=3",
         success: function( response ) {
           var res = jQuery.parseJSON( response );
           self.pushToReviewList( res["reviewList"] ); 
