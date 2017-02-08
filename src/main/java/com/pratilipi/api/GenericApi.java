@@ -268,6 +268,12 @@ public abstract class GenericApi extends HttpServlet {
 			
 			response.setContentType( "text/html" );
 			response.setCharacterEncoding( "UTF-8" );
+
+			if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) ) {
+				response.setContentType( "application/json" );
+				response.addHeader( "Access-Control-Allow-Origin", "*" );
+			}
+
 			PrintWriter writer = response.getWriter();
 			writer.println( new Gson().toJson( apiResponse ) );
 			writer.close();
@@ -276,6 +282,12 @@ public abstract class GenericApi extends HttpServlet {
 			
 			response.setContentType( "text/html" );
 			response.setCharacterEncoding( "UTF-8" );
+
+			if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) ) {
+				response.setContentType( "application/json" );
+				response.addHeader( "Access-Control-Allow-Origin", "*" );
+			}
+
 			PrintWriter writer = response.getWriter();
 
 			if( apiResponse instanceof InvalidArgumentException ) {
