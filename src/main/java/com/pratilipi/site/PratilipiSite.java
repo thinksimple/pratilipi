@@ -134,6 +134,10 @@ public class PratilipiSite extends HttpServlet {
 		}
 
 		String uri = request.getRequestURI();
+		if( uri.equals( "/poc1" ) ) {
+			_dispatchResponse( appShell, "text/html", "UTF-8", response );
+			return;
+		}
 		String canonicalUrl = "http://" + UxModeFilter.getWebsite().getHostName() + uri;
 		String alternateUrl = "http://" + UxModeFilter.getWebsite().getMobileHostName() + uri;
 
@@ -174,12 +178,6 @@ public class PratilipiSite extends HttpServlet {
 						UxModeFilter.getWebsite(),
 						basicMode );
 				_dispatchResponse( content, "application/xml", "UTF-8", response );
-				return;
-			}
-
-			// TODO: Remove asap - POC
-			if( uri.equals( "/poc1" ) ) {
-				_dispatchResponse( appShell, "text/html", "UTF-8", response );
 				return;
 			}
 
