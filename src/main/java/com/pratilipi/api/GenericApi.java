@@ -269,9 +269,9 @@ public abstract class GenericApi extends HttpServlet {
 			response.setContentType( "text/html" );
 			response.setCharacterEncoding( "UTF-8" );
 
-			if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) ) {
+			if( SystemProperty.STAGE.equals( SystemProperty.STAGE_GAMMA ) ) {
 				response.setContentType( "application/json" );
-				response.addHeader( "Access-Control-Allow-Origin", "*" );
+				response.addHeader( "Access-Control-Allow-Origin", "http://localhost:8080" );
 			}
 
 			PrintWriter writer = response.getWriter();
@@ -283,9 +283,9 @@ public abstract class GenericApi extends HttpServlet {
 			response.setContentType( "text/html" );
 			response.setCharacterEncoding( "UTF-8" );
 
-			if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) ) {
+			if( SystemProperty.STAGE.equals( SystemProperty.STAGE_GAMMA ) ) {
 				response.setContentType( "application/json" );
-				response.addHeader( "Access-Control-Allow-Origin", "*" );
+				response.addHeader( "Access-Control-Allow-Origin", "http://localhost:8080" );
 			}
 
 			PrintWriter writer = response.getWriter();
