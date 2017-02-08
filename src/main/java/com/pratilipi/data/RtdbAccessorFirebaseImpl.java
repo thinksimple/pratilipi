@@ -78,7 +78,7 @@ public class RtdbAccessorFirebaseImpl implements RtdbAccessor {
 		Map<Long, UserPreferenceRtdb> userPreferences = new HashMap<>( userIds.size() );
 		try {
 			for( Long userId : userIds ) {
-				BlobEntry blobEntry = blobEntries.get( userId );
+				BlobEntry blobEntry = blobEntries.get( _getUserPreferenceDbUrl( userId ) );
 				String jsonStr = new String( blobEntry.getData(), "UTF-8" );
 				userPreferences.put( userId, _getUserPreferenceRtdb( jsonStr ) );
 			}
