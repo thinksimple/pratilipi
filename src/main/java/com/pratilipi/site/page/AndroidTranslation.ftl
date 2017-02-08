@@ -183,7 +183,7 @@ $('.continue-over').click(function() {
             for (var e in englishData){
                 for (var l in langData){
                     if (e==l){
-                        inLoop = inLoop + '<tr>' + '<td class=mdl-data-table__cell--non-numeric">' + englishData[e] + '</td>' + '<td>' + textFieldInit + inputField + i + '"></textarea>' + labelField + i + '">' + langData[l] + '</label>' + textFieldEnd + '</td>' + '</tr>';
+                        inLoop = inLoop + '<tr>' + '<td class=mdl-data-table__cell--non-numeric">' + englishData[e] + '</td>' + '<td>' + textFieldInit + inputField + i + '" value="' + langData[l] +'"></textarea>' + labelField + i + '">' + langData[l] + '</label>' + textFieldEnd + '</td>' + '</tr>';
                         i = i + 1; 
                     }
                 }
