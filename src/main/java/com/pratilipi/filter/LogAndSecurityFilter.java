@@ -36,14 +36,16 @@ public class LogAndSecurityFilter implements Filter {
 			FilterChain chain ) throws IOException, ServletException {
 
 		String uri = ( ( HttpServletRequest ) request ).getRequestURI().toString();
-		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
-		Page page = dataAccessor.getPage( uri );
-		if( page != null ) {
-			if( page.getType() == PageType.BLOG_POST ) {
-				JsonObject jsonObject = new JsonObject();
-				jsonObject.addProperty( "pageId", page.getId() );
-				jsonObject.addProperty( "accessToken", AccessTokenFilter.getAccessToken().getId() );
-				logger.log( Level.INFO, "DataFlow#PAGE_HIT::" + jsonObject.toString() );
+		if( ! uri.equals( "/poc1" ) ) {
+			DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+			Page page = dataAccessor.getPage( uri );
+			if( page != null ) {
+				if( page.getType() == PageType.BLOG_POST ) {
+					JsonObject jsonObject = new JsonObject();
+					jsonObject.addProperty( "pageId", page.getId() );
+					jsonObject.addProperty( "accessToken", AccessTokenFilter.getAccessToken().getId() );
+					logger.log( Level.INFO, "DataFlow#PAGE_HIT::" + jsonObject.toString() );
+				}
 			}
 		}
 
