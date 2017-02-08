@@ -103,6 +103,20 @@ public class PratilipiSite extends HttpServlet {
 
 	private static final String templateFilePrefix = "com/pratilipi/site/page/";
 	public static final String dataFilePrefix = "page/data/";
+
+	private static String appShell = null;
+	
+	static {
+		try {
+			Map<String, Object> dataModel = new HashMap<>();
+			dataModel.put( "action", "two" );
+			dataModel.put( "_strings", I18n.getStrings( Language.TAMIL ) );
+			dataModel.put( "language", Language.TAMIL );
+			appShell = FreeMarkerUtil.processTemplate( dataModel, templateFilePrefix + "Knockout.ftl" );
+		} catch ( UnexpectedServerException e ) {
+			logger.log( Level.SEVERE, "App Shell couldn't be generated!" );
+		}
+	}
 	
 	
 	public void doGet( HttpServletRequest request, HttpServletResponse response )
@@ -160,6 +174,12 @@ public class PratilipiSite extends HttpServlet {
 						UxModeFilter.getWebsite(),
 						basicMode );
 				_dispatchResponse( content, "application/xml", "UTF-8", response );
+				return;
+			}
+
+			// TODO: Remove asap - POC
+			if( uri.equals( "/poc1" ) ) {
+				_dispatchResponse( appShell, "text/html", "UTF-8", response );
 				return;
 			}
 
