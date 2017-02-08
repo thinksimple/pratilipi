@@ -5,6 +5,7 @@ ${ "'" + captured?replace("\\n", "", 'r') + "'" }
 
 
 ko.components.register('pratilipi-header', {
+	viewModel: <#include "pratilipi-header.js">,
     template: <@add_backslashes><#include "pratilipi-header.html"></@add_backslashes>
 });
 

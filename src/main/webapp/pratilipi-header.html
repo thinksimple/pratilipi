@@ -8,23 +8,20 @@
                     </a>
                 </div>
                 <div class="pratilipi-text">
-                    <select class="form-control focus-outline-none" id="select-language" style="box-shadow:none;padding:0px;border:none;color: #d0021b;height:30px;font-size: 18px;width: auto;">
-                        <option selected="" disabled="">Pratilipi</option>
-                        <option value="tamil">Pratilipi</option>
-                        <option value="malayalam">Pratilipi</option>
-                        <option value="marathi">Pratilipi</option>
-                        <option value="bengali">Pratilipi</option>
-                        <option value="hindi">Pratilipi</option>
-                        <option value="gujarati">Pratilipi</option>
-                        <option value="telugu">Pratilipi</option>
-                        <option value="kannada">Pratilipi</option>
+                    <select data-bind="options: languageList,
+                       value: currentLanguage,
+                       optionsText: function(item) { return item.text },
+                       optionsValue: function(item) { return item.value },
+                       event:{ change: languageChangeHandler }" class="form-control focus-outline-none" id="select-language" style="box-shadow:none;padding:0px;border:none;color: #d0021b;height:30px;font-size: 18px;width: auto;">
                     </select>
                 </div>
-                <div class="search-bar  ">
-                    <form action="javascript:void(0);" on-keyup="onSubmit" style="margin-bottom: 0;">
-                        <div class="sprites-icon header-sprite-icon search-sprite-icon" style="position: absolute;top: 15%;right: 0;z-index: 1;"></div>
+                <div class="search-bar">
+                    <form action="javascript:void(0);" data-bind="submit: search" style="margin-bottom: 0;">
+                        <button style="position: absolute;top: 10%;right: 0;z-index: 1;cursor: pointer;" class="mdl-button mdl-js-button mdl-button--icon">
+                        	<div class="sprites-icon header-sprite-icon search-sprite-icon" ></div>
+                        </button>
                         <div class="sprites-icon header-sprite-icon menu-search-sprite-icon" style="position: absolute;top: 15%;z-index: 1;"></div>
-                        <input class="form-control horizontal-form-input focus-outline-none" id="title-vernacular" placeholder="Search for stories">
+                        <input class="form-control horizontal-form-input focus-outline-none" placeholder="Search for stories" data-bind="textInput: searchQuery">
                     </form>
                 </div>
                 <div class="button-holder menu-icon">
@@ -73,21 +70,18 @@
     <div class="pratilipi-search-bar visible-xs">
         <div class="flex-container">
             <div class="" style="cursor: pointer;padding-top: 0;align-self: center;position: relative;">
-                <select class="form-control focus-outline-none" id="select-language" style="box-shadow:none;padding:0px;border:none;color: #d0021b;height:30px;font-size: 18px;">
-                    <option selected="" disabled="">Pratilipi</option>
-                    <option value="tamil">Pratilipi</option>
-                    <option value="malayalam">Pratilipi</option>
-                    <option value="marathi">Pratilipi</option>
-                    <option value="bengali">Pratilipi</option>
-                    <option value="hindi">Pratilipi</option>
-                    <option value="gujarati">Pratilipi</option>
-                    <option value="telugu">Pratilipi</option>
-                    <option value="kannada">Pratilipi</option>
+                <select data-bind="options: languageList,
+                       value: currentLanguage,
+                       optionsText: function(item) { return item.text },
+                       optionsValue: function(item) { return item.value },
+                       event:{ change: languageChangeHandler }" class="form-control focus-outline-none" id="select-language" style="box-shadow:none;padding:0px;border:none;color: #d0021b;height:30px;font-size: 18px;">
                 </select>
             </div>
-            <form action="javascript:void(0);" on-keyup="onSubmit" style="position: relative;margin-bottom: 8px;flex-grow: 1;margin-left: 4px;margin-right: 8px;">
-                <div class="sprites-icon header-sprite-icon search-sprite-icon" style="position: absolute;top: 15%;right: 0;z-index: 1;"></div>
-                <input class="form-control horizontal-form-input focus-outline-none" id="title-vernacular" placeholder="Search for stories">
+            <form data-bind="submit: search" action="javascript:void(0);" on-keyup="onSubmit" style="position: relative;margin-bottom: 8px;flex-grow: 1;margin-left: 4px;margin-right: 8px;">
+                <button style="position: absolute;top: 10%;right: 0;z-index: 1;cursor: pointer;" class="mdl-button mdl-js-button mdl-button--icon">
+                	<div class="sprites-icon header-sprite-icon search-sprite-icon" style="position: absolute;top: 15%;right: 0;z-index: 1;"></div>
+                </button>
+                <input class="form-control horizontal-form-input focus-outline-none" placeholder="Search for stories" data-bind="textInput: searchQuery">
             </form>
         </div>
     </div>

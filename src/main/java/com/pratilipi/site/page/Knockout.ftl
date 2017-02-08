@@ -1,4 +1,5 @@
 <#if action == "one" >
+	<#assign prefix = "http://hindi.gamma.pratilipi.com">
 	<#include "/summary1.html"> <#-- with unnecessary links with temp drawer -->
 <#elseif action == "two">
 	<#include "/summary2.html"> <#-- w/o unnecessary links -->

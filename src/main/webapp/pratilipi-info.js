@@ -1,5 +1,4 @@
-function() {
-    
+function() {    
     this.initializeData = function() {
         this.id = getQueryVariable("id");
         this.navigationList = ko.observableArray([]);
@@ -25,13 +24,14 @@ function() {
     this.getData = function() {
       $.ajax({
         type: 'get',
-        url: '/api/pratilipi?_apiVer=2&pratilipiId='+ self.id,
+//        url: '/api/pratilipi?_apiVer=2&pratilipiId='+ self.id,
+        url: '${ prefix }/api/pratilipi?_apiVer=2&pratilipiId=' + self.id,
         data: { 
             // 'language': "${ language }"
         },
         success: function( response ) {
-          var res = jQuery.parseJSON( response );
-          self.pushToViewModel( res );
+//          var res = jQuery.parseJSON( response );
+          self.pushToViewModel( response );
         },
         error: function( response ) {
           console.log( response );

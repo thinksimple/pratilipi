@@ -189,7 +189,7 @@ pratilipi-header .horizontal-form-input:focus {
   box-shadow: none; }
 
 pratilipi-header .horizontal-form-input:focus {
-  border-color: #d0021b; }
+  border-bottom: 2px solid #d0021b; }
 
 pratilipi-header .button-holder {
   flex-basis: 48px;
