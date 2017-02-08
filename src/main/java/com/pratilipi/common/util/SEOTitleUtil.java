@@ -43,7 +43,7 @@ public class SEOTitleUtil {
 	// TYPE: PRATILIPI
 	private static Map<String, String> _getDataModelForPratilipiData( PratilipiData pratilipi ) {
 		Map<String,String> dataModel = new HashMap<>();
-		dataModel.put( "authorName", pratilipi.getAuthor().getName() );
+		dataModel.put( "authorName", pratilipi.getAuthor().getName() != null ? pratilipi.getAuthor().getName() : pratilipi.getAuthor().getNameEn() );
 		dataModel.put( "authorNameEn", pratilipi.getAuthor().getNameEn() != null ? pratilipi.getAuthor().getNameEn() : pratilipi.getAuthor().getName() );
 		dataModel.put( "pratilipiTitle", pratilipi.getTitle() );
 		dataModel.put( "pratilipiTitleEn", pratilipi.getTitleEn() != null ? pratilipi.getTitleEn() : pratilipi.getTitle() );
@@ -109,7 +109,7 @@ public class SEOTitleUtil {
 			throws UnexpectedServerException {
 
 		Map<String,String> dataModel = new HashMap<>();
-		dataModel.put( "authorName", author.getName() );
+		dataModel.put( "authorName", author.getName() != null ? author.getName() : author.getNameEn() );
 		dataModel.put( "authorNameEn", author.getNameEn() != null ? author.getNameEn() : author.getName() );
 		return _getPageTitle( "seo_author_page", dataModel, language );
 	}
@@ -301,7 +301,7 @@ public class SEOTitleUtil {
 			throws UnexpectedServerException {
 
 		Map<String,String> dataModel = new HashMap<>();
-		dataModel.put( "authorName", author.getName() );
+		dataModel.put( "authorName", author.getName() != null ? author.getName() : author.getNameEn() );
 		dataModel.put( "authorNameEn", author.getNameEn() != null ? author.getNameEn() : author.getName() );
 		return _getPageTitle( "seo_followers_page", dataModel, language );
 	}
@@ -318,7 +318,7 @@ public class SEOTitleUtil {
 			throws UnexpectedServerException {
 
 		Map<String,String> dataModel = new HashMap<>();
-		dataModel.put( "authorName", author.getName() );
+		dataModel.put( "authorName", author.getName() != null ? author.getName() : author.getNameEn() );
 		dataModel.put( "authorNameEn", author.getNameEn() != null ? author.getNameEn() : author.getName() );
 		return _getPageTitle( "seo_following_page", dataModel, language );
 
