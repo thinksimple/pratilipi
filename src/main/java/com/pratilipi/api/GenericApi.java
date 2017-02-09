@@ -38,7 +38,9 @@ import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.Website;
 import com.pratilipi.common.util.SystemProperty;
+import com.pratilipi.filter.UxModeFilter;
 
 @SuppressWarnings("serial")
 public abstract class GenericApi extends HttpServlet {
@@ -271,7 +273,8 @@ public abstract class GenericApi extends HttpServlet {
 
 			if( SystemProperty.STAGE.equals( SystemProperty.STAGE_GAMMA ) ) {
 				response.setContentType( "application/json" );
-				response.addHeader( "Access-Control-Allow-Origin", "http://localhost:8080" );
+				if( UxModeFilter.getWebsite() == Website.ALPHA )
+					response.addHeader( "Access-Control-Allow-Origin", "http://localhost:8080" );
 			}
 
 			PrintWriter writer = response.getWriter();
@@ -285,7 +288,8 @@ public abstract class GenericApi extends HttpServlet {
 
 			if( SystemProperty.STAGE.equals( SystemProperty.STAGE_GAMMA ) ) {
 				response.setContentType( "application/json" );
-				response.addHeader( "Access-Control-Allow-Origin", "http://localhost:8080" );
+				if( UxModeFilter.getWebsite() == Website.ALPHA )
+					response.addHeader( "Access-Control-Allow-Origin", "http://localhost:8080" );
 			}
 
 			PrintWriter writer = response.getWriter();
