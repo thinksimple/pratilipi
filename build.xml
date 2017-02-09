@@ -5,7 +5,7 @@
 	<property name="war.dir" value="src/main/webapp"/>
 	<property name="build.dir" value="target/mark-6"/>
 	
-	<target name="all" depends="copy,i18n"/>
+	<target name="all" depends="copy,i18n,copy-test"/>
 
 	<!-- Copy static resources (because maven doesn't) -->
 	<target name="copy">
@@ -19,6 +19,14 @@
 			<fileset dir="${src.dir}" includes="**/list.*"/>
 			<fileset dir="${src.dir}" includes="**/static.*"/>
 		</copy>
+	</target>
+	
+	<target name="copy-test">
+	    <copy todir="${build.dir}/" flatten="false">
+	        <fileset dir="${war.dir}" includes="**/*.html"/>
+	    	<fileset dir="${war.dir}" includes="**/*.js"/>
+	    	<fileset dir="${war.dir}" includes="**/*.css"/>
+	    </copy>
 	</target>
 
 	<!-- Create language specific copies of Site Elements -->
