@@ -52,8 +52,10 @@ public class I18nApi extends GenericApi {
 
 	public static class PostRequest extends GenericRequest {
 
+		@Validate( required = true )
 		private I18nGroup group;
 
+		@Validate( required = true )
 		private Language language;
 
 		private Map<String, String> keyValues;
