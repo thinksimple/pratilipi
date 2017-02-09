@@ -265,8 +265,10 @@ pratilipi-header :host {
     height: 48px; }
   pratilipi-header .pratilipi-logo {
     width: 16.66666667%;
-    padding-right: 15px;
-    padding-left: 15px; }
+    float: left;
+    margin: 0;
+    padding-left: 15px;
+    padding-right: 15px; }
   pratilipi-header #header-card {
     border: none;
     box-shadow: none; }
@@ -277,8 +279,8 @@ pratilipi-header :host {
     position: relative; }
   pratilipi-header .button-holder {
     width: 16.66666667%;
-    padding-right: 15px;
-    padding-left: 15px; }
+    float: left;
+    margin: 10px auto; }
   pratilipi-header .sign-in-button {
     display: none; }
   pratilipi-header .visible-xs {
