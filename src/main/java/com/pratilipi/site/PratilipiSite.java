@@ -112,6 +112,7 @@ public class PratilipiSite extends HttpServlet {
 			dataModel.put( "action", "one" );
 			dataModel.put( "_strings", I18n.getStrings( Language.TAMIL ) );
 			dataModel.put( "language", Language.TAMIL );
+			dataModel.put( "stage", SystemProperty.STAGE );
 			appShell = FreeMarkerUtil.processTemplate( dataModel, templateFilePrefix + "Knockout.ftl" );
 		} catch ( UnexpectedServerException e ) {
 			logger.log( Level.SEVERE, "App Shell couldn't be generated!" );
