@@ -11,10 +11,15 @@ function() {
 
       $.ajax({
         type: 'get',
-        url: '${ prefix }/api/userpratilipi/review/list?pratilipiId=' + self.pratilipiId + "&resultCount=3",
+        url: '<#if stage == "alpha">${ prefix }</#if>/api/userpratilipi/review/list?pratilipiId=' + self.pratilipiId + "&resultCount=3",
         success: function( response ) {
 //          var res = jQuery.parseJSON( response );
-          self.pushToReviewList( response["reviewList"] ); 
+          <#if stage == "alpha">
+              var res = response;
+          <#else>
+              var res = jQuery.parseJSON( response );
+          </#if>           
+          self.pushToReviewList( res["reviewList"] );
         },
         error: function( response ) {
             console.log( response );

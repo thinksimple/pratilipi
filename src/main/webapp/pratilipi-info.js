@@ -25,13 +25,17 @@ function() {
       $.ajax({
         type: 'get',
 //        url: '/api/pratilipi?_apiVer=2&pratilipiId='+ self.id,
-        url: '${ prefix }/api/pratilipi?_apiVer=2&pratilipiId=' + self.id,
+        url: '<#if stage == "alpha">${ prefix }</#if>/api/pratilipi?_apiVer=2&pratilipiId=' + self.id,
         data: { 
             // 'language': "${ language }"
         },
         success: function( response ) {
-//          var res = jQuery.parseJSON( response );
-          self.pushToViewModel( response );
+          <#if stage == "alpha">
+              var res = response;
+          <#else>
+              var res = jQuery.parseJSON( response );
+          </#if>         
+          self.pushToViewModel( res );
         },
         error: function( response ) {
           console.log( response );

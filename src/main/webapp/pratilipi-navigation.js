@@ -9,10 +9,14 @@ function() {
     this.getNavigationList = function() {
       $.ajax({
         type: 'get',
-        url: '/api/navigation/list?language=HINDI',
+        url: '<#if stage == "alpha">${ prefix }</#if>/api/navigation/list?language=HINDI',
         success: function( response ) {
-//          var res = jQuery.parseJSON( response );
-          self.pushToNavigationList( response["navigationList"] ); 
+          <#if stage == "alpha">
+              var res = response;
+          <#else>
+              var res = jQuery.parseJSON( response );
+          </#if> 
+          self.pushToNavigationList( res["navigationList"] ); 
         },
         error: function( response ) {
             console.log( response );

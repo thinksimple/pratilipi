@@ -191,11 +191,6 @@ pratilipi-header .horizontal-form-input:focus {
 pratilipi-header .horizontal-form-input:focus {
   border-bottom: 2px solid #d0021b; }
 
-pratilipi-header .button-holder {
-  flex-basis: 48px;
-  white-space: nowrap;
-  text-align: right; }
-
 pratilipi-header .button-holder a,
 pratilipi-header .button-holder a:hover,
 pratilipi-header .button-holder a:focus {
@@ -269,9 +264,9 @@ pratilipi-header :host {
   pratilipi-header .vertical-align {
     height: 48px; }
   pratilipi-header .pratilipi-logo {
-    -webkit-flex: 1;
-    flex: 1;
-    padding-left: 8px; }
+    width: 16.66666667%;
+    padding-right: 15px;
+    padding-left: 15px; }
   pratilipi-header #header-card {
     border: none;
     box-shadow: none; }
@@ -281,8 +276,9 @@ pratilipi-header :host {
     display: none;
     position: relative; }
   pratilipi-header .button-holder {
-    flex: 1;
-    text-align: center; }
+    width: 16.66666667%;
+    padding-right: 15px;
+    padding-left: 15px; }
   pratilipi-header .sign-in-button {
     display: none; }
   pratilipi-header .visible-xs {
@@ -290,7 +286,11 @@ pratilipi-header :host {
 
 @media only screen and (min-width: 768px) {
   pratilipi-header .visible-xs {
-    display: none !important; } }
+    display: none !important; }
+  pratilipi-header .button-holder {
+    flex-basis: 48px;
+    white-space: nowrap;
+    text-align: right; } }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   pratilipi-header .search-bar input {
