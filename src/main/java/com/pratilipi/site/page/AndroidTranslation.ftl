@@ -51,7 +51,7 @@
     }
     
     .mdl-grid {
-        /*padding-top: 5%;*/
+        padding-top: 7%;
         margin-left: 5%;
         width: 100%;
     }
@@ -93,24 +93,22 @@
     }
     /* unrelated to responsive table css */
     
-    #my-table {
-        margin-top: 24px;
+    .action-form {
+        margin-top: 7%;
     }
     
     .material-icons {
         vertical-align: -25%;
     }
+    header{
+        position: fixed!important;
+    }
     </style>
 </head>
 
 <body>
-    <div class="mdl-layout mdl-js-layout">
-        <header class="mdl-layout__header mdl-layout__header--scroll">
-            <div class="mdl-layout__header-row">
-                <span class="mdl-layout-title">
-                    <img src="http://public.pratilipi.com/pratilipi-logo/png/Logo-2C-RGB-80px.png" class="pratilipi-logo"/>
-                </span>
-            </div>
+    <div class="mdl-layout mdl-js-layout mdl-layout--no-desktop-drawer-button">
+        <header class="mdl-layout__header mdl-layout__header--scroll myHeader">
         </header>
         <main>
             <div class="mdl-grid option-selector">
@@ -154,36 +152,36 @@
     </div>
 </body>
 <script>
+var basicHeader = '<div class="mdl-layout__header-row"><span class="mdl-layout-title"><img src="http://public.pratilipi.com/pratilipi-logo/png/Logo-2C-RGB-80px.png" class="pratilipi-logo"/></span>';
+var submitHeader = basicHeader + '<div class="mdl-layout-spacer"></div><nav class="mdl-navigation"><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent back-to-options" value="BACK">Back</button><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent submit-form" value="SUBMIT">Submit</button></nav>'
+$('.myHeader').html(basicHeader + '</div>');
+// var language = window.location.hostname.split(".")[0];
+var language = 'hindi';
 $('.continue-over').click(function() {
-    $('.option-selector').html('<img src="http://www.downgraf.com/wp-content/uploads/2014/09/01-progress.gif"/>');
-    //http://hindi.gamma.pratilipi.com/api?requests={%22req1%22:%22/i18n?group=EMAIL%26language=TAMIL%22,%22req2%22:%22/i18n?group=EMAIL%26language=ENGLISH%22}
+    // $('.option-selector').html('<img src="http://www.downgraf.com/wp-content/uploads/2014/09/01-progress.gif"/>');
     var group = $(this).val();
-    var language = window.location.hostname.split(".")[0].toUpperCase();
     $.ajax({
         type: 'GET',
         // url: '/api/i18n?language=' + language + '&group=' + group,
-        url: '/api?requests={%22req1%22:%22/i18n?group=' + group + '%26language=' + language + '%22,%22req2%22:%22/i18n?group=' + group + '%26language=ENGLISH%22}',
-        success: function(resp) {
-            data = JSON.parse(resp);
-            englishData = data["req2"]["response"]["keyValues"];
-            langData = data["req1"]["response"]["keyValues"];
-            console.log(englishData);
-            console.log(langData);
-            var formInit = "<form action='#'>";
+        url: 'http://' + language + '.gamma.pratilipi.com/api?requests={%22req1%22:%22/i18n?group=' + group + '%26language=' + language.toUpperCase() + '%22,%22req2%22:%22/i18n?group=' + group + '%26language=ENGLISH%22}',
+        success: function(data) {
+            var englishData = data["req2"]["response"]["keyValues"];
+            var langData = data["req1"]["response"]["keyValues"];
+            var formInit = "<form class='myForm'>";
             var formEnd = "</form>";
             var tHead = '<thead><tr><th class="mdl-data-table__cell--non-numeric">English</th><th>' + language + '</th></tr></thead>';
             var tBodyInit = "<tbody>";
             var tBodyEnd = "</tbody>";
             var textFieldInit = '<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">';
             var textFieldEnd = '</div>';
-            var inputField = '<textarea class="mdl-textfield__input" type="text" id="sample';
+            var inputField = '<input class="mdl-textfield__input text-input my-input" type="text" id="sample';
             var labelField = '<label class="mdl-textfield__label" for="sample';
             var i = 0;
             var inLoop = "";
             for (var e in englishData){
                 for (var l in langData){
                     if (e==l){
-                        inLoop = inLoop + '<tr>' + '<td class=mdl-data-table__cell--non-numeric">' + englishData[e] + '</td>' + '<td>' + textFieldInit + inputField + i +'">' + langData[l] + '</textarea>' + labelField + i + '">' + langData[l] + '</label>' + textFieldEnd + '</td>' + '</tr>';
+                        inLoop = inLoop + '<tr>' + '<td class=mdl-data-table__cell--non-numeric">' + englishData[e] + '</td>' + '<td>' + textFieldInit + inputField + i + '" name="' + e +'" value="' + langData[l] + '"/>'+ labelField + i + '">' + langData[l] + '</label>' + textFieldEnd + '</td>' + '</tr>';
                         i = i + 1; 
                     }
                 }
@@ -192,9 +190,45 @@ $('.continue-over').click(function() {
             $('.action-form').html(out);
             $('.option-selector').hide();
             componentHandler.upgradeDom();
-            $('.action-form').show();        
+            $('.action-form').show();
+            $('.myHeader').html(submitHeader + '</div>');
         }
     })
-}); 
+});
+$(".myHeader").on("click",'.back-to-options',function(event){
+    var answer = confirm("Do you want to continue?");
+    if (answer){
+        $('.myHeader').html(basicHeader+'</div>');
+        $('.action-form').hide();
+        $('.option-selector').show();     
+    }
+});
+$(".myHeader").on("click",'.submit-form',function(event){
+    var answer = confirm("Are you sure?");
+    if (answer){
+        var keyValues = {};
+        $(".my-input").each(function() {
+            keyValues[$(this).attr("name")] = $(this).val();
+        });
+        var settings = {
+          "async": true,
+          "crossDomain": true,
+          "url": "http://hindi.gamma.pratilipi.com/api/i18n",
+          "method": "POST",
+          "headers": {
+            "content-type": "application/x-www-form-urlencoded",
+            "cache-control": "no-cache",
+            },
+          "data": {
+            "language": language.toUpperCase(),
+            "keyValues": JSON.stringify(keyValues),
+            "group": "EMAIL"
+          }
+        }
+        $.ajax(settings).done(function (response) {
+          console.log(response);
+        });         
+    }
+});
 </script>
 </html>
