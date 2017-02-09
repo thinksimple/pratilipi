@@ -81,7 +81,8 @@
   vertical-align: middle; }
 
 pratilipi-header header {
-  display: block !important; }
+  display: block !important;
+  min-height: 52px !important; }
 
 pratilipi-header .secondary-500 {
   color: #333;
@@ -350,7 +351,7 @@ pratilipi-navigation-aside .mdl-components__nav {
   background: #fff;
   width: 200px;
   box-sizing: border-box;
-  padding: 24px 0;
+  padding: 0px 10px;
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;

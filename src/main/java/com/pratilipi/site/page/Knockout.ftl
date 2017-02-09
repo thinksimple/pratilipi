@@ -2,6 +2,7 @@
 	<#assign prefix = "http://hindi.gamma.pratilipi.com">
 	<#include "/summary1.html"> <#-- with unnecessary links with temp drawer -->
 <#elseif action == "two">
+	<#assign prefix = "http://hindi.gamma.pratilipi.com">
 	<#include "/summary2.html"> <#-- w/o unnecessary links -->
 <#elseif action == "three">
 	<#include "/summary3.html"> <#-- no shadow doms  -->
