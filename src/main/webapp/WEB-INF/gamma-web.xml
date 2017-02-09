@@ -84,6 +84,15 @@
 	</servlet-mapping>
 
 	<servlet>
+		<servlet-name>page</servlet-name>
+		<jsp-file>/poc2/index.html</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>page</servlet-name>
+		<url-pattern>/poc3</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
 		<servlet-name>PratilipiSite</servlet-name>
 		<servlet-class>com.pratilipi.site.PratilipiSite</servlet-class>
 		<load-on-startup>1</load-on-startup>
