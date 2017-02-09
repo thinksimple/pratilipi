@@ -1373,7 +1373,6 @@ public class PratilipiSite extends HttpServlet {
 		Gson gson = new Gson();
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", SEOTitleUtil.getReadPageTitle( pratilipiId, language ) );
-		dataModel.put( "title", createReadPageTitle( pratilipiData, 1, 1 ) );
 		dataModel.put( "pageNo", chapterNo );
 		dataModel.put( "pageCount", pageCount );
 		dataModel.put( "content", content );
