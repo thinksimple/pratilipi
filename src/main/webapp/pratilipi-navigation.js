@@ -11,8 +11,8 @@ function() {
         type: 'get',
         url: '/api/navigation/list?language=HINDI',
         success: function( response ) {
-          var res = jQuery.parseJSON( response );
-          self.pushToNavigationList( res["navigationList"] ); 
+//          var res = jQuery.parseJSON( response );
+          self.pushToNavigationList( response["navigationList"] ); 
         },
         error: function( response ) {
             console.log( response );
