@@ -368,6 +368,17 @@ pratilipi-navigation-aside a {
   padding: 5px 20px 5px 20px;
   display: block; }
 
+.pratilipi-navigation-drawer h6 {
+  margin: 0px;
+  padding: 20px 20px 5px 20px;
+  color: #D0021B; }
+
+.pratilipi-navigation-drawer a {
+  color: #333;
+  text-decoration: none;
+  padding: 5px 20px 5px 20px;
+  display: block; }
+
 pratilipi-review-list .margin-top-15 {
   margin-top: 15px; }
 
