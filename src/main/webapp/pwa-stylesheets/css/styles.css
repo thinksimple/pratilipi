@@ -80,6 +80,9 @@
 .vertical-middle {
   vertical-align: middle; }
 
+.mdl-layout__drawer {
+  z-index: 11 !important; }
+
 header {
   display: block !important;
   min-height: 52px !important; }
@@ -367,6 +370,9 @@ pratilipi-navigation-aside a {
   text-decoration: none;
   padding: 5px 20px 5px 20px;
   display: block; }
+
+.pratilipi-navigation-drawer {
+  background: #fff; }
 
 .pratilipi-navigation-drawer h6 {
   margin: 0px;
