@@ -35,6 +35,7 @@
    this.currentLanguage = ko.observable( "HINDI" );
    this.searchQuery = ko.observable();
    
+   
    this.languageChangeHandler = function() {
      /* change this to current url */
        window.location = ( "http://" + this.currentLanguage() + ".pratilipi.com" );
