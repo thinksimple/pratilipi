@@ -10,10 +10,43 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.6/dialog-polyfill.css" />
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="http://0.ptlp.co/resource-all/rangy_core.rangy_selectionsaverestore.min.js"></script>
+    <script src="http://hindi.pratilipi.com/resources/js/tinymce-writer/suggester.js"></script>
+    <script src="http://hindi.pratilipi.com/resources/js/tinymce-writer/app.js"></script>
     <style>
     html {
         font-family: 'Noto Sans', sans-serif;
     }
+
+    .word-suggester {
+        position: absolute;
+        padding: 10px;
+        border: whitesmoke 1px solid;
+        display: inline-block;
+        min-width: 100px;
+        display: none;
+        background: white;
+        z-index: 65538;
+        font-size: 16px;
+      }
+
+    .word-input {
+        border: none;
+        display: inline-block;
+        border-right: 2px grey solid;
+    }
+
+    .suggestions {
+
+    }
+
+    .suggestion {
+        cursor: pointer;
+    }
+    .highlight-suggestion {
+        background: lightgrey;
+        font-weight: 700;
+    }    
     
     .demo-list-control {
         width: 300px;
@@ -74,7 +107,7 @@
         width: 100%;
     }
     
-    #my-table td,
+    .action-form td,
     th {
         width: auto;
         white-space: nowrap;
@@ -148,10 +181,26 @@
                 </table>
             </div>
     </div>
+    <div class="word-suggester">
+      <div class="word-input"></div>
+      <div class="suggestions">
+        <div class="suggestion"></div>
+      </div>
+    </div>
     </main>
     </div>
 </body>
 <script>
+var LANGS = {
+  'hindi':'hi',
+  'bengali':'bn',
+  'gujarati':'gu',
+  'kannada':'kn',
+  'malayalam':'ml',
+  'marathi':'mr',
+  'tamil':'ta',
+  'telugu':'te',
+  }
 var basicHeader = '<div class="mdl-layout__header-row"><span class="mdl-layout-title"><img src="http://public.pratilipi.com/pratilipi-logo/png/Logo-2C-RGB-80px.png" class="pratilipi-logo"/></span>';
 var submitHeader = basicHeader + '<div class="mdl-layout-spacer"></div><nav class="mdl-navigation"><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent back-to-options" value="BACK">Back</button><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent submit-form" value="SUBMIT">Submit</button></nav>'
 $('.myHeader').html(basicHeader + '</div>');
@@ -191,44 +240,52 @@ $('.continue-over').click(function() {
             $('.option-selector').hide();
             componentHandler.upgradeDom();
             $('.action-form').show();
+            var $inT = $('.my-input')
+            var inputTransObj = {};
+            $(".my-input").each(function() {
+                inputTransObj[$(this).attr("name")] = new transliterationApp($(this), LANGS[language]);
+                inputTransObj[$(this).attr("name")].init();
+            });
             $('.myHeader').html(submitHeader + '</div>');
         }
     })
-});
-$(".myHeader").on("click",'.back-to-options',function(event){
-    var answer = confirm("Do you want to continue?");
-    if (answer){
-        $('.myHeader').html(basicHeader+'</div>');
-        $('.action-form').hide();
-        $('.option-selector').show();     
-    }
-});
-$(".myHeader").on("click",'.submit-form',function(event){
-    var answer = confirm("Are you sure?");
-    if (answer){
-        var keyValues = {};
-        $(".my-input").each(function() {
-            keyValues[$(this).attr("name")] = $(this).val();
-        });
-        var settings = {
-          "async": true,
-          "crossDomain": true,
-          "url": "http://hindi.gamma.pratilipi.com/api/i18n",
-          "method": "POST",
-          "headers": {
-            "content-type": "application/x-www-form-urlencoded",
-            "cache-control": "no-cache",
-            },
-          "data": {
-            "language": language.toUpperCase(),
-            "keyValues": JSON.stringify(keyValues),
-            "group": "EMAIL"
+  $(".myHeader").on("click",'.back-to-options',function(event){
+      var answer = confirm("Do you want to continue?");
+      if (answer){
+          $('.myHeader').html(basicHeader+'</div>');
+          $('.action-form').hide();
+          $('.option-selector').show();     
+      }
+  });
+  $(".myHeader").on("click",'.submit-form',function(event){
+      var answer = confirm("Are you sure?");
+      if (answer){
+          var keyValues = {};
+          $(".my-input").each(function() {
+              keyValues[$(this).attr("name")] = $(this).val();
+          });
+          var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": "http://" + language +".gamma.pratilipi.com/api/i18n",
+            "method": "POST",
+            "headers": {
+              "content-type": "application/x-www-form-urlencoded",
+              "cache-control": "no-cache",
+              },
+            "data": {
+              "language": language.toUpperCase(),
+              "keyValues": JSON.stringify(keyValues),
+              "group": group,
+            }
           }
-        }
-        $.ajax(settings).done(function (response) {
-          console.log(response);
-        });         
-    }
+          console.log(settings['url']);
+          console.log(settings['data']);
+          $.ajax(settings).done(function (response) {
+            console.log(response);
+          });        
+      }
+  });
 });
 </script>
 </html>
