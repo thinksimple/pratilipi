@@ -92,7 +92,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>page</servlet-name>
-		<url-pattern>/poc3</url-pattern>
+		<url-pattern>/poc3/*</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
