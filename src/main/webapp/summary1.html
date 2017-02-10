@@ -22,9 +22,15 @@
 
 <body>
     <!-- http://10.ptlp.co/pratilipi/cover?width=150 -->
-    <div class="demo-layout-transparent mdl-layout mdl-js-layout">
-    	<pratilipi-header></pratilipi-header>
-
+    <div class="demo-layout-transparent mdl-layout mdl-js-layout mdl-layout--fixed-header">
+	    <header class="mdl-layout__header mdl-layout__header--transparent">
+	    	<!-- ko component: "pratilipi-header" --><!-- /ko -->
+	    </header>
+	
+		<div class="mdl-layout__drawer mdl-layout--small-screen-only">
+			<!-- ko component: "pratilipi-navigation-drawer" --><!-- /ko -->
+		</div>
+				
         <main class="mdl-layout__content">
         	<div class="mdl-components mdl-js-components">
 				<pratilipi-navigation-aside class="mdl-layout--large-screen-only mdl-shadow--2dp"></pratilipi-navigation-aside>

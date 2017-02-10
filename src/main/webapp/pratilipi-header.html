@@ -1,4 +1,3 @@
-<header class="mdl-layout__header mdl-layout__header--transparent">
     <div class="secondary-500" id="header-card">
         <div class="parent-container">
             <div class="vertical-align container">
@@ -20,11 +19,11 @@
                         <button style="position: absolute;top: 10%;right: 0;z-index: 1;cursor: pointer;" class="mdl-button mdl-js-button mdl-button--icon">
                         	<div class="sprites-icon header-sprite-icon search-sprite-icon" ></div>
                         </button>
-                        <div class="sprites-icon header-sprite-icon menu-search-sprite-icon" style="position: absolute;top: 15%;z-index: 1;"></div>
+                        <div data-bind="click: openMenuNavigationDrawer" class="sprites-icon header-sprite-icon menu-search-sprite-icon" style="position: absolute;top: 15%;z-index: 1;"></div>
                         <input class="form-control horizontal-form-input focus-outline-none" placeholder="Search for stories" data-bind="textInput: searchQuery">
                     </form>
                 </div>
-                <div class="button-holder menu-icon">
+                <div class="button-holder menu-icon" data-bind="click: openMenuNavigationDrawer">
                     <a on-click="_openMenuNavigation">
                         <div class="sprites-icon header-sprite-icon menu-sprite-icon"></div>
                     </a>
@@ -85,5 +84,4 @@
             </form>
             <div style="clear: both" />
         </div>
-    </div>
-</header>
+    </div>   

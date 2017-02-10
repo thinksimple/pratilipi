@@ -23,6 +23,12 @@ function() {
            var search_url = "/search?q=" + self.searchQuery();
            window.location.href = search_url;        
        }
-
    };
+   
+   this.openMenuNavigationDrawer = function() {
+     if(!(typeof(componentHandler) == 'undefined')){
+       componentHandler.upgradeAllRegistered();
+     }
+     document.querySelector('.mdl-layout').MaterialLayout.toggleDrawer();
+   }
 }

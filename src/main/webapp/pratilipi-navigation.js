@@ -1,4 +1,5 @@
 function() {
+    componentHandler.upgradeDom();
     this.navigationList = ko.observableArray([]);
     this.pushToNavigationList = function( navList ) {
       for( var i=0; i< navList.length; i++ ) {
