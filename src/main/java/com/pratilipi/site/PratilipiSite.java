@@ -412,21 +412,29 @@ public class PratilipiSite extends HttpServlet {
 
 
 			// Internal links - Standard Version only
-			} else if( ! basicMode && uri.equals( "/authors" ) ) {
-				dataModel = createDataModelForAuthorsPage( filterLanguage );
-				templateName = "AuthorList.ftl";
+			} else if( ! basicMode && uri.startsWith( "/admin" ) ) {
 
-			} else if( ! basicMode && uri.equals( "/batch-process" ) ) {
-				dataModel = createDataModelForBatchProcessListPage();
-				templateName = "BatchProcessList.ftl";
+				if( uri.equals( "/admin" ) ) {
+					dataModel = new HashMap<>();
+					dataModel.put( "title", "Pratilipi - Admin Access" );
+					templateName = "Admin.ftl";
 
-			} else if( ! basicMode && uri.equals( "/email-templates" ) ) {
-				dataModel = createDataModelForEmailTemplatesPage( filterLanguage );
-				templateName = "EmailTemplate.ftl";
+				} else if( uri.equals( "/admin/authors" ) ) {
+					dataModel = createDataModelForAuthorsPage( filterLanguage );
+					templateName = "AuthorList.ftl";
 
-			} else if( ! basicMode && uri.equals( "/android-translation" ) ) {
-				dataModel = new HashMap<>();
-				templateName = "AndroidTranslation.ftl";
+				} else if( uri.equals( "/admin/batch-process" ) ) {
+					dataModel = createDataModelForBatchProcessListPage();
+					templateName = "BatchProcessList.ftl";
+
+				} else if( uri.equals( "/admin/email-templates" ) ) {
+					dataModel = createDataModelForEmailTemplatesPage( filterLanguage );
+					templateName = "EmailTemplate.ftl";
+
+				} else if( uri.equals( "/admin/translations" ) ) {
+					dataModel = new HashMap<>();
+					templateName = "AndroidTranslation.ftl";
+				} 
 
 			} else if( ! basicMode && uri.equals( "/edit-event" ) ){
 
