@@ -5,9 +5,10 @@
 		<pratilipi-alert></pratilipi-alert>
 
 		<div class="header-pos">
-   			<pratilipi-header language-map="[[ languageMap ]]" user='[[ user ]]'></pratilipi-header>
+			<pratilipi-android-launch></pratilipi-android-launch>
    		</div>
    		<main>
+   			<pratilipi-header language-map="[[ languageMap ]]" user='[[ user ]]'></pratilipi-header>
 			<div class="parent-container margin-top-bottom">
 				<div class="container">
 					<pratilipi-navigation
@@ -17,7 +18,6 @@
 					<!-- Navigation & Search bar for extra-small & small screens. -->
 					<pratilipi-navigation-drawer with-backdrop navigation-list='[[ navigationList ]]'></pratilipi-navigation-drawer>
 					<div style="overflow:hidden; padding: 0 2px;">
-						<pratilipi-android-launch></pratilipi-android-launch>
 						<div id="androidLaunchBottom">
 							<template is="dom-if" if="{{ hasAccessToAdd }}">
 								<paper-card style="display: block; padding: 45px 20px; margin: 0 auto; text-align: center;">
