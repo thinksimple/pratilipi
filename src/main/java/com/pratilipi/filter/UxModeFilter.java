@@ -1,7 +1,6 @@
 package com.pratilipi.filter;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.servlet.Filter;
@@ -263,7 +262,7 @@ public class UxModeFilter implements Filter {
 			if( referer == null )
 				threadLocalRefererHost.set( hostName );
 			else
-				threadLocalRefererHost.set( getRefererHost( referer ) );
+				threadLocalRefererHost.set( new URL( referer ).getHost() );
 
 		}
 		
@@ -275,10 +274,6 @@ public class UxModeFilter implements Filter {
 		
 	}
 
-	private static String getRefererHost( String referer ) 
-			throws MalformedURLException {
-		return new URL( referer ).getHost();
-	}
 
 	public static boolean isAndroidApp() {
 		return isAndroidApp;
