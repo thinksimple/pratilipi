@@ -1,6 +1,8 @@
 package com.pratilipi.filter;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -27,6 +29,7 @@ public class UxModeFilter implements Filter {
 	
 	private static final ThreadLocal<Boolean> threadLocalBasicMode = new ThreadLocal<Boolean>();
 	private static final ThreadLocal<Website> threadLocalWebsite = new ThreadLocal<Website>();
+	private static final ThreadLocal<String> threadLocalRefererHost = new ThreadLocal<String>();
 
 	
 	@Override
@@ -47,6 +50,7 @@ public class UxModeFilter implements Filter {
 
 			threadLocalBasicMode.set( false );
 			threadLocalWebsite.set( null );
+			threadLocalRefererHost.set( null );
 		
 		} else {
 		
@@ -255,13 +259,25 @@ public class UxModeFilter implements Filter {
 			threadLocalBasicMode.set( basicMode );
 			threadLocalWebsite.set( website );
 
+			String referer = request.getHeader( "referer" );
+			if( referer == null )
+				threadLocalRefererHost.set( hostName );
+			else
+				threadLocalRefererHost.set( getRefererHost( referer ) );
+
 		}
 		
 		chain.doFilter( req, resp );
 
 		threadLocalBasicMode.remove();
 		threadLocalWebsite.remove();
+		threadLocalRefererHost.remove();
 		
+	}
+
+	private static String getRefererHost( String referer ) 
+			throws MalformedURLException {
+		return new URL( referer ).getHost();
 	}
 
 	public static boolean isAndroidApp() {
@@ -274,6 +290,10 @@ public class UxModeFilter implements Filter {
 
 	public static Website getWebsite() {
 		return threadLocalWebsite.get();
+	}
+
+	public static String getRefererHost() {
+		return threadLocalRefererHost.get();
 	}
 
 	@Deprecated

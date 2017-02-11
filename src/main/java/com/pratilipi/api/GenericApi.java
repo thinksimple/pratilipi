@@ -38,7 +38,9 @@ import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
+import com.pratilipi.common.type.Website;
 import com.pratilipi.common.util.SystemProperty;
+import com.pratilipi.filter.UxModeFilter;
 
 @SuppressWarnings("serial")
 public abstract class GenericApi extends HttpServlet {
@@ -271,7 +273,7 @@ public abstract class GenericApi extends HttpServlet {
 
 			if( SystemProperty.STAGE.equals( SystemProperty.STAGE_GAMMA ) ) {
 				response.setContentType( "application/json" );
-				response.addHeader( "Access-Control-Allow-Origin", "*" );
+				response.addHeader( "Access-Control-Allow-Origin", getAccessControlAllowOrigin() );
 			}
 
 			PrintWriter writer = response.getWriter();
@@ -285,7 +287,7 @@ public abstract class GenericApi extends HttpServlet {
 
 			if( SystemProperty.STAGE.equals( SystemProperty.STAGE_GAMMA ) ) {
 				response.setContentType( "application/json" );
-				response.addHeader( "Access-Control-Allow-Origin", "*" );
+				response.addHeader( "Access-Control-Allow-Origin", getAccessControlAllowOrigin() );
 			}
 
 			PrintWriter writer = response.getWriter();
@@ -308,4 +310,12 @@ public abstract class GenericApi extends HttpServlet {
 		
 	}
 	
+	protected String getAccessControlAllowOrigin() {
+		String refererHost = UxModeFilter.getRefererHost();
+		for( Website website : Website.values() )
+			if( refererHost.equals( website.getHostName() ) || refererHost.equals( website.getMobileHostName() ) )
+				return "http://" + ( website == Website.ALPHA ? ( refererHost + ":8080" ) : refererHost );
+		return null;
+	}
+
 }

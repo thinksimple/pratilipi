@@ -117,7 +117,7 @@ public class GenericBatchApi extends GenericApi {
 
 		if( SystemProperty.STAGE.equals( SystemProperty.STAGE_GAMMA ) ) {
 			response.setContentType( "application/json" );
-			response.addHeader( "Access-Control-Allow-Origin", "*" );
+			response.addHeader( "Access-Control-Allow-Origin", super.getAccessControlAllowOrigin() );
 		}
 		
 		boolean bool = true;
