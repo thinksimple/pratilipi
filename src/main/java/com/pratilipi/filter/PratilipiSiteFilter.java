@@ -92,6 +92,11 @@ public class PratilipiSiteFilter implements Filter {
 		
 		redirections.put( "/about", "/about/pratilipi" );
 		redirections.put( "/career", "/work-with-us" );
+
+		redirections.put( "/authors", "/admin/authors" );
+		redirections.put( "/email-templates", "/admin/email-templates" );
+		redirections.put( "/batch-process", "/admin/batch-process" );
+
 	}
 	
 
