@@ -1569,12 +1569,13 @@ public class PratilipiSite extends HttpServlet {
 			throws UnexpectedServerException {
 
 		StringBuilder content = new StringBuilder();
+		String staticTitle = null;
 		try {
 			String fileName = "static." + ( lang == null ? "" : lang.getCode() + "." ) + pageName;
 			File file = new File( getClass().getResource( dataFilePrefix + fileName ).toURI() );
 			LineIterator it = FileUtils.lineIterator( file, "UTF-8" );
 			if( it.hasNext() )
-				it.nextLine().trim(); // title
+				staticTitle = it.nextLine().trim();
 			while( it.hasNext() )
 				content.append( it.nextLine() + "<br/>" );
 			LineIterator.closeQuietly( it );
@@ -1587,6 +1588,7 @@ public class PratilipiSite extends HttpServlet {
 
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put( "title", SEOTitleUtil.getStaticPageTitle( pageName, lang ) );
+		dataModel.put( "staticTitle", staticTitle );
 		dataModel.put( "content", content.toString() );
 
 		return dataModel;
