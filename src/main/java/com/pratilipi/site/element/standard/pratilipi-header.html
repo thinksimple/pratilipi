@@ -10,12 +10,17 @@
 			display: block;
 		}
 		#header-card {
-			position: fixed;
-			z-index: 10;
+			position: relative;
+			z-index: 1;
 			width: 100%;
 			display: block;
 			border-bottom: 1px solid #d3d3d3;
 			box-shadow: 0 3px 2px -2px rgba(200,200,200,0.2);
+		}
+		@media only screen and (min-width: 768px) {
+			#header-card {
+				height: 52px;
+			}
 		}
 		.notification-dropdown-menu {
 			position: absolute !important; 

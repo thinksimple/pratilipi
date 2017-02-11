@@ -3,7 +3,7 @@
 
 <#-- Style CSS -->
 <#include "Font.ftl">
-<link type="text/css" rel="stylesheet" href="/resources/css/style.css">
+<link type="text/css" rel="stylesheet" href="/resources/css/style.css?2">
 
 <#-- Scroll Handler -->
 <#if mainPage??>
