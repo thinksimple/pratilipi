@@ -82,7 +82,8 @@
 
 	    node.set({
 			"emailFrequency": notification_preferences[ "emailFrequency" ],
-			"notificationSubscriptions": notification_preferences[ "notificationSubscriptions" ] 
+			"notificationSubscriptions": notification_preferences[ "notificationSubscriptions" ],
+			"lastUpdated": firebase.database.ServerValue.TIMESTAMP 
 		});
 
 	}
