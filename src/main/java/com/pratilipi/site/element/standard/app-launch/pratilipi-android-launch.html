@@ -26,12 +26,12 @@
 	</style>
 	<template>
 		<div id="androidAlert" class="alert alert-dismissible fade in android-banner" role="alert">
-			<button style="outline: none; right: 6px; margin-top: 12px; opacity: 1; color: #fff!important;" type="button" class="close pull-right" data-dismiss="alert" aria-label="Close" onclick="androidBannerCrossed();" on-click="hide">
+			<button style="outline: none; right: 6px; opacity: 1; color: #fff!important; line-height: 64px;" type="button" class="close pull-right" data-dismiss="alert" aria-label="Close" onclick="androidBannerCrossed();" on-click="hide">
 				<iron-icon style="color: #fff;" icon="icons:close"></iron-icon>
 			</button>
 			<div style="padding: 12px 2px; width: 95%; width: calc(100% - 32px); display: flex;" onclick="androidBannerClicked(); window.open( 'https://play.google.com/store/apps/details?id=com.pratilipi.mobile.android&referrer=utm_source%3Dpratilipi_main_web%26utm_medium%3Dweb_bottom_strip%26utm_campaign%3Dapp_download' );">
 				<span style="font-weight: 400; align-self: center;">
-					<span style="font-size: 22px; line-height: 26px; padding-left: 8px;">${ _strings.pratilipi_app_click_download }</span>
+					<span style="font-size: 20px; line-height: 26px; padding-left: 8px;">${ _strings.pratilipi_app_click_download }</span>
 				</span>
 				<img style="width: 40px; height: 40px; margin-right: 12px; align-self: center; margin-left: auto;" src="http://0.ptlp.co/resource-all/home-page/google_playstore_40.png"/>
 			</div>
@@ -75,13 +75,17 @@
 					$( elem ).css( "padding-top", $( this.querySelector( '#androidAlert' ) ).height() + 8 );
 			}
 			-->
+
 			var mainDiv = document.getElementsByTagName( "main" );
 			var androidSubscribeAlert = $( this.querySelector( '#androidAlert' ) );
+			var button = $( this.querySelector( '#androidAlert button' ) );
 
 			if( $( androidSubscribeAlert ).css( "display" ) == "none" )
 				$( mainDiv ).css( "padding-top", 0 );
 			else
 				$( mainDiv ).css( "padding-top", $( androidSubscribeAlert ).height() );
+			
+			$( button ).css( "line-height", $( androidSubscribeAlert ).height() + "px" );
 		},
 
 		hide: function() {
