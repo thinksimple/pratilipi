@@ -242,14 +242,16 @@
 						<template is="dom-if" if="{{ canDelete }}">
 							<button disabled="{{ requestOnFlight }}" on-click="deleteContent" class="pratilipi-grey-button">${ _strings.pratilipi_delete_content }</button>
 						</template>
-						<template is="dom-if" if="{{ !userpratilipi.addedToLib }}">
-							<button on-click="addToLibrary" class="pratilipi-light-blue-button">${ _strings.add_to_library }</button>
-						</template>
-						<template is="dom-if" if="{{ userpratilipi.addedToLib }}">
-							<button on-click="removeFromLibrary" class="pratilipi-grey-button">${ _strings.remove_from_library }</button>
+						<template is="dom-if" if="{{ canAddToLibrary }}">
+							<template is="dom-if" if="{{ !userpratilipi.addedToLib }}">
+								<button on-click="addToLibrary" class="pratilipi-light-blue-button">${ _strings.add_to_library }</button>
+							</template>
+							<template is="dom-if" if="{{ userpratilipi.addedToLib }}">
+								<button on-click="removeFromLibrary" class="pratilipi-grey-button">${ _strings.remove_from_library }</button>
+							</template>
 						</template>
 					</div>
-					
+
 				</div>
 			</div>
 		</paper-card>
@@ -351,8 +353,9 @@
 				summary: { type: String, observer: "_summaryObserver" },
 				hasSummary: { type: Boolean },
 				toggleSummaryBoolean: { type: Boolean, value: false },
-				requestOnFlight: { type: Boolean, value: false }
+				requestOnFlight: { type: Boolean, value: false },
 
+				canAddToLibrary: { type: Boolean, value: true }
 			},
 			
 			isMobile: function() {
@@ -463,6 +466,10 @@
 				this.set( 'canDelete', pratilipi.state != null && pratilipi.state != "DELETED" && this.state != "PUBLISHED" && false && pratilipi.hasAccessToUpdate );
 				this.set( 'summary', pratilipi.summary != null && pratilipi.summary.trim() != "" ? pratilipi.summary : null );
 				this.set( 'canShare', pratilipi.state == "PUBLISHED" );
+
+				var user = document.querySelector( 'pratilipi-user' ).getCurrentUser();
+				this.set( "canAddToLibrary", this.pratilipi.state == "PUBLISHED" && ( user.isGuest || pratilipi.author.authorId != user.author.authorId ) );
+
 				if( pratilipi.type != null )
 					this.set( 'type', this.pratilipiTypes[ pratilipi.type.toUpperCase() ].name );
 				<#-- Explicitly setting canDelete to false - awaiting business call -->

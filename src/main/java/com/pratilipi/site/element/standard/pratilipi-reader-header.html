@@ -386,10 +386,9 @@
 				this.pratilipiContentType = this.contentType == "PRATILIPI";
 				this.imageContentType = this.contentType == "IMAGE";
 
-				if( this.pratilipi.state != "PUBLISHED" ) {
-					this.set( "canShare", false );
-					this.set( "canAddToLibrary", false );
-				}
+				this.set( "canShare", this.pratilipi.state == "PUBLISHED" );
+				var user = document.querySelector( 'pratilipi-user' ).getCurrentUser();
+				this.set( "canAddToLibrary", this.pratilipi.state == "PUBLISHED" && ( user.isGuest || this.pratilipi.author.authorId != user.author.authorId ) );
 					
 			},
 			
