@@ -433,7 +433,7 @@ public class PratilipiSite extends HttpServlet {
 
 				} else if( uri.equals( "/admin/translations" ) ) {
 					dataModel = new HashMap<>();
-					templateName = "AndroidTranslation.ftl";
+					templateName = "Translation.ftl";
 				} 
 
 			} else if( ! basicMode && uri.equals( "/edit-event" ) ){
