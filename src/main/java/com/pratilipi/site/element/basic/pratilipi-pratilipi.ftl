@@ -125,14 +125,16 @@
 	<div style="padding-top: 20px; padding-bottom: 20px;">
 		<a class="pratilipi-light-blue-button" onClick="trackPixelEvents( 'ReadOnSummaryPage' );" href="${ pratilipi.readPageUrl }&ret=${ pratilipi.getPageUrl() }">${ _strings.read }</a>
 		<br />
-		<#if userpratilipi?? && userpratilipi.isAddedtoLib()??>
-			<button style="margin-top: 15px;" type="button" class="pratilipi-grey-button" onclick="addToOrRemoveFromLibrary()">
-				<#if !userpratilipi.isAddedtoLib()>${ _strings.add_to_library }<#else>${ _strings.remove_from_library }</#if>
-			</button>
-		<#else>
-			<a style="margin-top: 15px;" class="pratilipi-grey-button" href="/login?ret=${ pratilipi.getPageUrl() }">
-				${ _strings.add_to_library }
-			</a>
+		<#if pratilipi.getState() == "PUBLISHED" && ( user.isGuest() || pratilipi.getAuthor().getId() != user.getAuthor().getId() )>
+			<#if userpratilipi?? && userpratilipi.isAddedtoLib()??>
+				<button style="margin-top: 15px;" type="button" class="pratilipi-grey-button" onclick="addToOrRemoveFromLibrary()">
+					<#if !userpratilipi.isAddedtoLib()>${ _strings.add_to_library }<#else>${ _strings.remove_from_library }</#if>
+				</button>
+			<#else>
+				<a style="margin-top: 15px;" class="pratilipi-grey-button" href="/login?ret=${ pratilipi.getPageUrl() }">
+					${ _strings.add_to_library }
+				</a>
+			</#if>
 		</#if>
 	</div>
 	<#if pratilipi.hasAccessToUpdate()==true >

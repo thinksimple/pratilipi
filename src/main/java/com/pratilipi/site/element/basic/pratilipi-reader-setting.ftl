@@ -48,23 +48,25 @@
 			<span>${ _strings.add_to_library }</span>
 		</a>
 	<#else>
-		<#if userpratilipi?? && userpratilipi.isAddedtoLib()??>
-			<#if userpratilipi.isAddedtoLib() == true>
-				<a class="menu-item" style="cursor: pointer;" onCLick="removeFromLibrary()">
-					<div class="sprites-icon reader-setting-icon library-minus-icon"></div>
-					<span>${ _strings.remove_from_library }</span>
-				</a>							
+		<#if pratilipi.getState() == "PUBLISHED" && ( user.isGuest() || pratilipi.getAuthor().getId() != user.getAuthor().getId() )>
+			<#if userpratilipi?? && userpratilipi.isAddedtoLib()??>
+				<#if userpratilipi.isAddedtoLib() == true>
+					<a class="menu-item" style="cursor: pointer;" onCLick="removeFromLibrary()">
+						<div class="sprites-icon reader-setting-icon library-minus-icon"></div>
+						<span>${ _strings.remove_from_library }</span>
+					</a>							
+				<#else>
+					<a class="menu-item" style="cursor: pointer;" onClick="addToLibrary()">
+						<div class="sprites-icon reader-setting-icon library-plus-icon"></div>
+						<span>${ _strings.add_to_library }</span>
+					</a>
+				</#if>
 			<#else>
 				<a class="menu-item" style="cursor: pointer;" onClick="addToLibrary()">
 					<div class="sprites-icon reader-setting-icon library-plus-icon"></div>
 					<span>${ _strings.add_to_library }</span>
 				</a>
 			</#if>
-		<#else>
-			<a class="menu-item" style="cursor: pointer;" onClick="addToLibrary()">
-				<div class="sprites-icon reader-setting-icon library-plus-icon"></div>
-				<span>${ _strings.add_to_library }</span>
-			</a>
 		</#if>
 	</#if>
 	
