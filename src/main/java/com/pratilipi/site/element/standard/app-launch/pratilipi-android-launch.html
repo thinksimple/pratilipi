@@ -16,9 +16,11 @@
 				position: fixed;
 				z-index: 1049;
 				left: 0;
-				width: 98%;
+				width: 100%;
+				margin: 0;
+				/* width: 98%;
 				margin-left: 1%;
-				margin-bottom: 0;
+				margin-bottom: 0; */
 			}
 		}
 	</style>
@@ -28,12 +30,10 @@
 				<iron-icon style="color: #fff;" icon="icons:close"></iron-icon>
 			</button>
 			<div style="padding: 12px 2px; width: 95%; width: calc(100% - 32px); display: flex;" onclick="androidBannerClicked(); window.open( 'https://play.google.com/store/apps/details?id=com.pratilipi.mobile.android&referrer=utm_source%3Dpratilipi_main_web%26utm_medium%3Dweb_bottom_strip%26utm_campaign%3Dapp_download' );">
-				<img style="width: 40px; height: 40px; margin-right: 12px; align-self: center;" src="http://0.ptlp.co/resource-all/home-page/google_playstore_40.png"/>
 				<span style="font-weight: 400; align-self: center;">
-					<span style="font-size: 22px; line-height: 26px;">${ _strings.pratilipi_app_launched_website_strip }</span>
-					<br /> 
-					<span style="font-size: 15px;">${ _strings.pratilipi_app_click_download }</span>
+					<span style="font-size: 22px; line-height: 26px; padding-left: 8px;">${ _strings.pratilipi_app_click_download }</span>
 				</span>
+				<img style="width: 40px; height: 40px; margin-right: 12px; align-self: center; margin-left: auto;" src="http://0.ptlp.co/resource-all/home-page/google_playstore_40.png"/>
 			</div>
 		</div>
 	</template>
