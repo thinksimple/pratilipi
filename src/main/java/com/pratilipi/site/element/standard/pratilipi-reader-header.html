@@ -387,8 +387,6 @@
 				this.imageContentType = this.contentType == "IMAGE";
 
 				this.set( "canShare", this.pratilipi.state == "PUBLISHED" );
-				var user = document.querySelector( 'pratilipi-user' ).getCurrentUser();
-				this.set( "canAddToLibrary", this.pratilipi.state == "PUBLISHED" && ( user.isGuest || this.pratilipi.author.authorId != user.author.authorId ) );
 					
 			},
 			
@@ -410,6 +408,8 @@
 
 				this.async( function() {
 					this.set( "canReview", this.domHost.getUser().isGuest || this.domHost.getUserPratilipi().hasAccessToReview );
+					var user = document.querySelector( 'pratilipi-user' ).getCurrentUser();
+					this.set( "canAddToLibrary", this.pratilipi.state == "PUBLISHED" && ( user.isGuest || this.pratilipi.author.authorId != user.author.authorId ) );
 				});
 				
 				// Hack
