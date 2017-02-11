@@ -4,6 +4,11 @@
 	<head>
 		<#assign mainPage="pratilipi-static-page">
 		<#include "meta/Head.ftl">
+		<style>
+			main {
+				padding-top: 54px;
+			}
+		</style>
 	</head>
 	
 	<body>
