@@ -398,3 +398,85 @@ pratilipi-review-list .font-14 {
 pratilipi-review-list a.reviewer-name {
   text-decoration: none;
   color: black; }
+
+.pratilipi-login-container {
+  text-align: center;
+  margin: 0 auto;
+  max-width: 300px;
+  margin-top: 20px; 
+  }
+
+.login-sprite-icon-24 {
+  /*margin: 10px auto;*/
+  width: 24px;
+  height: 24px; }
+
+.fb-icon {
+  background-position: 0 -120px; }
+
+.gplus-icon {
+  background-position: -72px -120px; }
+
+.pratilipi-red-button {
+  background-color: #d0021b !important;
+  border-color: #d0021b !important;
+  margin: 8px 0 !important; }
+
+.pratilipi-fb-blue-button {
+  background-color: #3b5998 !important;
+  border-color: #3b5998 !important; }
+
+.pratilipi-white-button {
+  background-color: #fff !important;
+  border-color: #ccc !important; }
+
+.pratilipi-login-container {
+  text-align: center;
+  margin: 0 auto;
+  max-width: 300px;
+  margin-top: 20px; }
+
+.pratilipi-logo {
+  width: 50px;
+  height: 50px; }
+
+.pratilipi-heading {
+  margin-top: 10px; }
+
+.pratilipi-content-container {
+  padding: 0 15px 15px 15px; }
+
+.login-button {
+  margin: 8px 0 !important;
+  width: 100% !important; }
+
+.login-or {
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.26); }
+
+.login-textfield {
+  padding: 12px 0; }
+
+.login-textfield .mdl-textfield__label {
+  top: 16px; }
+
+.login-textfield .mdl-textfield__label:after {
+  bottom: 12px !important;
+  background-color: #d0021b; }
+
+.forgot-password-link {
+  color: rgba(0, 0, 0, 0.26);
+  font-size: 12px;
+  display: block; }
+
+.pull-right {
+  float: right; }
+
+.sign-up-link {
+  font-weight: 550; }
+
+.pratilipi-red {
+  color: #d0021b; }
+
+.margin-zero {
+  margin: 0; }

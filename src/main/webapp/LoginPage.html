@@ -1,0 +1,58 @@
+<html>
+
+<head>
+    <title>
+        Pratilipi Summary Page
+    </title>
+    <script type='text/javascript' src='js/knockout-3.4.1.js'></script>
+    <!-- Latest compiled and minified CSS -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.red-light_blue.min.css" />
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <link rel="stylesheet" href="pwa-stylesheets/css-minified/styles.css" />
+</head>  
+<body>
+    <div class="pratilipi-login-container">
+        <img class="pratilipi-logo" src="http://0.ptlp.co/resource-hi/logo/pratilipi_logo.png">
+        <h4 class="pratilipi-heading">Sign into Pratilipi </h4>
+        <div class="pratilipi-content-container">
+            <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored pratilipi-fb-blue-button login-button">
+                <div class="sprites-icon login-sprite-icon-24 fb-icon"></div>
+                Sign In with Facebook
+            </button>
+            <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect pratilipi-white-button pratilipi-fb-blue-button login-button">
+                <div class="sprites-icon login-sprite-icon-24 gplus-icon"></div>
+                Sign In with Google
+            </button>
+        </div>
+        <p class="login-or margin-zero">-------------------------- or --------------------------</p>
+        <form id="login_form" class="pratilipi-content-container margin-zero">
+            <div class="mdl-textfield mdl-js-textfield login-textfield" >
+                <input class="mdl-textfield__input" type="text" id="sample1">
+                <label class="mdl-textfield__label" for="sample1" style="">Enter Email...</label>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield login-textfield" >
+                <input class="mdl-textfield__input" type="text" id="sample1">
+                <label class="mdl-textfield__label" for="sample1" style="">Password...</label>
+            </div>
+            <a class="forgot-password-link pull-right">
+                Forgot Passoword ?
+            </a>
+            <div class="clearfix"></div>
+            <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored pratilipi-red-button">Sign in</button>
+        </form>
+        <p class="sign-up-link"> If you are new to Pratilipi <a href="" class="pratilipi-red">Sign Up</a> </p>
+    </div>
+    <script>
+    function AppViewModel() {
+        this.firstName = ko.observable("Bert");
+        this.lastName = ko.observable("Bertington");
+    }
+
+    // Activates knockout.js
+    ko.applyBindings(new AppViewModel());
+    </script>
+</body>
+</html>  
