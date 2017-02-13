@@ -158,8 +158,12 @@ public class AccessTokenFilter implements Filter {
 	private void setCookieValue( String cookieName, String cookieValue, HttpServletResponse response ) {
 		Cookie cookie = new Cookie( cookieName, cookieValue );
 		cookie.setDomain( SystemProperty.STAGE == SystemProperty.STAGE_ALPHA ? "localhost" : "pratilipi.com" );
-		if( UxModeFilter.getWebsite() == Website.GAMMA_HINDI_HTTPS )
+
+		if( UxModeFilter.getWebsite() == Website.GAMMA_HINDI_HTTPS ) {
 			cookie.setDomain( Website.GAMMA_HINDI_HTTPS.getHostName() );
+			cookie.setSecure( true );
+		}
+
 		cookie.setPath( "/" );
 		response.addCookie( cookie );
 	}
