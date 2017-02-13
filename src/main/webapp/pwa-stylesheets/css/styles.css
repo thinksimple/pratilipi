@@ -83,6 +83,11 @@
 .mdl-layout__drawer {
   z-index: 11 !important; }
 
+.smaller-icon-button {
+  min-width: 24px !important;
+  width: 24px !important;
+  height: 24px !important; }
+
 .pratilipi-header header {
   display: block !important;
   min-height: 52px !important; }
@@ -389,8 +394,7 @@ pratilipi-review-list .margin-top-15 {
   margin-top: 15px; }
 
 pratilipi-review-list .reply:before {
-  content: "\002022";
-  margin: 0 5px; }
+  content: "\002022"; }
 
 pratilipi-review-list .font-14 {
   font-size: 14px !important; }

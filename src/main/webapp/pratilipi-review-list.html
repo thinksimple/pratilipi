@@ -1,7 +1,7 @@
-<div class="mdl-shadow--2dp mdl-cell mdl-cell--8-col-tablet mdl-cell--9-col">
+<div class="mdl-shadow--2dp mdl-cell mdl-cell--8-col-tablet mdl-cell--9-col" data-bind="visible: reviewList().length > 0">
     <div class="mdl-grid">
 		<h3 class="mdl-cell mdl-cell--12-col mdl-typography--headline">Reviews</h3>
-        <div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero " data-bind="visible: reviewList().length > 0">
+        <div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero ">
 			<ul class="demo-list-three mdl-list" data-bind="foreach: reviewList">
 				<li class="mdl-list__item mdl-list__item--three-line height-auto padding-8 display-block">
 					<span class="mdl-list__item-primary-content height-auto">
@@ -15,9 +15,16 @@
 						<span class="">
 							<!-- ko if: likeCount -->
 								<span data-bind="text: likeCount"></span>
-							 <!-- /ko --> 
-							<i class="material-icons material-icons-16 vertical-middle">thumb_up</i>
-							<i class="material-icons material-icons-16 reply vertical-middle">message</i>
+							<!-- /ko --> 
+							 
+							<button data-bind="click: $parent.likeDislikeReview" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon smaller-icon-button">
+							  <i class="material-icons material-icons-16" role="presentation">thumb_up</i><span class="visuallyhidden">like comment</span>
+							</button>
+							<span class="reply"></span>		
+							<button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon smaller-icon-button">
+							  <i class="material-icons material-icons-16" role="presentation">message</i><span class="visuallyhidden">comment</span>
+							</button>	
+																				
 							<!-- ko if: commentCount -->
 								<span class="reply">View all replies</span>
 							<!-- /ko -->
