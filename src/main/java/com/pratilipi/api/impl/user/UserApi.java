@@ -2,6 +2,7 @@ package com.pratilipi.api.impl.user;
 
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
+import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.impl.author.AuthorApi;
@@ -210,6 +211,11 @@ public class UserApi extends GenericApi {
 		
 	}
 
+
+	@Get
+	public Response get( GenericRequest request ) {
+		return new Response( UserDataUtil.getCurrentUser(), UserApi.class );
+	}
 
 	@Post
 	public Response post( PostRequest request )
