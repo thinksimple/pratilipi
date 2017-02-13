@@ -26,7 +26,7 @@ function getQueryVariable(variable) {
   console.log('Query Variable ' + variable + ' not found');
 }
 
-var ViewModel = {
+function ViewModel() {
     this.userEmail = "";
     this.userPassword = "";
     this.login = function() {
@@ -65,6 +65,7 @@ var ViewModel = {
             }
           });
         }, { scope: 'public_profile,email,user_birthday' } );      
-    }
-    ko.applyBindings();
-};
+    };
+}
+
+ko.applyBindings( new ViewModel() );

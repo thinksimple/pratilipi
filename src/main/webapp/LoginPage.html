@@ -4,7 +4,7 @@
     <title>
         Pratilipi Summary Page
     </title>
-    <script type='text/javascript' src='js/knockout-3.4.1.js'></script>
+    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js'></script>
     <!-- Latest compiled and minified CSS -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -18,7 +18,7 @@
         <img class="pratilipi-logo" src="http://0.ptlp.co/resource-hi/logo/pratilipi_logo.png">
         <h4 class="pratilipi-heading">Sign into Pratilipi </h4>
         <div class="pratilipi-content-container">
-            <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored pratilipi-fb-blue-button login-button">
+            <button data-bind="click: login" type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored pratilipi-fb-blue-button login-button">
                 <div class="sprites-icon login-sprite-icon-24 fb-icon"></div>
                 Sign In with Facebook
             </button>
