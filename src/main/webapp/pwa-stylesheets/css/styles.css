@@ -401,9 +401,9 @@ pratilipi-review-list a.reviewer-name {
 
 .pratilipi-login-container {
   text-align: center;
-  margin: 0 auto;
-  max-width: 300px;
-  margin-top: 20px; }
+  margin: auto;
+  padding-top: 20px;
+  max-width: 280px; }
 
 .pratilipi-login-container .login-sprite-icon-24 {
   /*margin: 10px auto;*/
