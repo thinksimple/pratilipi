@@ -1,10 +1,10 @@
 package com.pratilipi.api.impl.test;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.google.gson.Gson;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
@@ -14,8 +14,7 @@ import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
-import com.pratilipi.data.DataListIterator;
-import com.pratilipi.data.type.Email;
+import com.pratilipi.data.type.UserPratilipi;
 
 @SuppressWarnings( "serial" )
 @Bind( uri = "/test" )
@@ -26,10 +25,10 @@ public class TestApi extends GenericApi {
 	public static class Request extends GenericRequest {
 
 		@Validate( required = true )
-		private Long userId;
+		private Long pratilipiId;
 		
-		public void setUserId( Long userId ) {
-			this.userId = userId;
+		public void setPratilipiId( Long pratilipiId ) {
+			this.pratilipiId = pratilipiId;
 		}
 
 	}
@@ -39,12 +38,10 @@ public class TestApi extends GenericApi {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
-		DataListIterator<Email> it = dataAccessor.getEmailListIteratorForStatePending( request.userId, true );
-		List<Email> emailList = new ArrayList<>();
-		while( it.hasNext() )
-			emailList.add( it.next() );
+		List<UserPratilipi> userPratilipiList = dataAccessor.getUserPratilipiList( null, request.pratilipiId, null, null, true ).getDataList();
 
-		logger.log( Level.INFO, "Found " + emailList.size() + " emails for the user." );
+		logger.log( Level.INFO, "Found " + userPratilipiList.size() + " reviews for the pratilipiId." );
+		logger.log( Level.INFO, new Gson().toJson( userPratilipiList ) );
 
 		return new GenericResponse();
 
