@@ -33,7 +33,7 @@
 	</dispatch>
 
 	<dispatch>
-		<url>gamma-dot-prod-pratilipi.appspot.com/*</url>
+		<url>gamma.prod-pratilipi.appspot.com/*</url>
 		<module>gamma</module>
 	</dispatch>
 
