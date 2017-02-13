@@ -259,7 +259,7 @@ public class UxModeFilter implements Filter {
 			threadLocalWebsite.set( website );
 
 			String referer = request.getHeader( "referer" );
-			if( referer == null )
+			if( referer == null || ! referer.startsWith( "http" ) ) // Eg: referer = android-app
 				threadLocalRefererHost.set( hostName );
 			else
 				threadLocalRefererHost.set( new URL( referer ).getHost() );
