@@ -22,6 +22,7 @@ import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.RequestCookie;
 import com.pratilipi.common.type.RequestHeader;
 import com.pratilipi.common.type.RequestParameter;
+import com.pratilipi.common.type.Website;
 import com.pratilipi.common.util.SystemProperty;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
@@ -157,6 +158,8 @@ public class AccessTokenFilter implements Filter {
 	private void setCookieValue( String cookieName, String cookieValue, HttpServletResponse response ) {
 		Cookie cookie = new Cookie( cookieName, cookieValue );
 		cookie.setDomain( SystemProperty.STAGE == SystemProperty.STAGE_ALPHA ? "localhost" : "pratilipi.com" );
+		if( UxModeFilter.getWebsite() == Website.GAMMA_HINDI_HTTPS )
+			cookie.setDomain( Website.GAMMA_HINDI_HTTPS.getHostName() );
 		cookie.setPath( "/" );
 		response.addCookie( cookie );
 	}
