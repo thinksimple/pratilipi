@@ -1358,11 +1358,18 @@ public class DataAccessorGaeImpl implements DataAccessor {
 				cursor == null ? null : cursor.toWebSafeString() );
 		
 	}
-	
+
 	@Override
 	public DataListCursorTuple<UserPratilipi> getUserPratilipiList( Long userId,
 			Long pratilipiId, String cursorStr, Integer resultCount ) {
-		
+
+		return getUserPratilipiList( userId, pratilipiId, cursorStr, resultCount, false );
+	}
+
+	@Override
+	public DataListCursorTuple<UserPratilipi> getUserPratilipiList( Long userId,
+			Long pratilipiId, String cursorStr, Integer resultCount, boolean sortByReviewDate ) {
+
 		Query<UserPratilipiEntity> query = ObjectifyService.ofy().load().type( UserPratilipiEntity.class );
 				
 		if( userId != null )
@@ -1376,7 +1383,10 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		
 		if( resultCount != null && resultCount > 0 )
 			query = query.limit( resultCount );
-		
+
+		if( sortByReviewDate )
+			query = query.order( "REVIEW_DATE" );
+
 		
 		QueryResultIterator<UserPratilipiEntity> iterator = query.iterator();
 
