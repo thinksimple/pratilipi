@@ -1018,7 +1018,7 @@ public class PratilipiDocUtil {
 		}
 		
 		
-		List<UserPratilipi> userPratilipiList = dataAccessor.getUserPratilipiList( null, pratilipiId, null, null ).getDataList();
+		List<UserPratilipi> userPratilipiList = dataAccessor.getUserPratilipiList( null, pratilipiId, null, null, true ).getDataList();
 		long ratingCount = 0;
 		long totalRating = 0;
 		List<UserPratilipiDoc> reviewDocList = new ArrayList<>();
