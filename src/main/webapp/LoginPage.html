@@ -19,7 +19,7 @@
         <img class="pratilipi-logo" src="http://0.ptlp.co/resource-hi/logo/pratilipi_logo.png">
         <h4 class="pratilipi-heading">Sign into Pratilipi </h4>
         <div class="pratilipi-content-container">
-            <button data-bind="click: login" type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored pratilipi-fb-blue-button login-button">
+            <button data-bind="click: login_from_fb" type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored pratilipi-fb-blue-button login-button">
                 <div class="sprites-icon login-sprite-icon-24 fb-icon"></div>
                 Sign In with Facebook
             </button>
@@ -42,10 +42,10 @@
                 Forgot Password ?
             </a>
             <div class="clearfix"></div>
-            <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored pratilipi-red-button login-button">Sign in</button>
+            <button data-bind="click: login" type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored pratilipi-red-button login-button">Sign in</button>
         </form>
         <p class="sign-up-link"> If you are new to Pratilipi <a href="" class="pratilipi-red">Sign Up</a> </p>
     </div>
 </body>
-<script src="login.js?4"></script>
+<script src="login.js?5"></script>
 </html>  
