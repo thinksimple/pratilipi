@@ -35,7 +35,7 @@ function() {
         url: '<#if stage == "alpha">${ prefix }</#if>/api/userpratilipi/review/list?pratilipiId=' + self.pratilipiId + "&resultCount=3",
         success: function( response ) {
 //          var res = jQuery.parseJSON( response );
-          <#if stage == "alpha">
+          <#if stage == "alpha" || stage == "gamma">
               var res = response;
           <#else>
               var res = jQuery.parseJSON( response );
