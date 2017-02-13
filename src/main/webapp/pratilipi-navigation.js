@@ -12,11 +12,7 @@ function() {
         type: 'get',
         url: '<#if stage == "alpha">${ prefix }</#if>/api/navigation/list?language=HINDI',
         success: function( response ) {
-          <#if stage == "alpha">
-              var res = response;
-          <#else>
-              var res = jQuery.parseJSON( response );
-          </#if> 
+          var res = response;
           self.pushToNavigationList( res["navigationList"] ); 
         },
         error: function( response ) {

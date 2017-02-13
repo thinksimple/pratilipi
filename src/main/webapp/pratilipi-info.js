@@ -30,11 +30,7 @@ function() {
             // 'language': "${ language }"
         },
         success: function( response ) {
-          <#if stage == "alpha">
-              var res = response;
-          <#else>
-              var res = jQuery.parseJSON( response );
-          </#if>         
+          var res = response;       
           self.pushToViewModel( res );
         },
         error: function( response ) {
