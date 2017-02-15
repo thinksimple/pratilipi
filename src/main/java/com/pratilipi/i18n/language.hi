@@ -1,4 +1,4 @@
-# Do NOT edit
+ # Do NOT edit
 pratilipi					= प्रतिलिपि
 home_page_title				= पढ़ें हिंदी कहानियाँ, कवितायें, उपन्यास और बहुत कुछ
 facebook_page				= https://www.facebook.com/Pratilipidotcom/
@@ -144,11 +144,11 @@ write_heading				= लिखिए
 write_help					= कहानी, कविता, लेख, पुस्तक आदी स्वयं प्रकाशित करे 
 write_title					= यहाँ शीर्षक दर्ज कीजिए 
 write_title_en				= शीर्षक अंग्रेजी में  
-write_type					= विधा
+write_type					= प्रकार 
 write_language				= भाषा 
 write_summary				= संक्षिप्त सारांश दर्ज करें 
 write_create_new_content	= आगे बढ़ीए
-write_on_desktop_only		= प्रतिलिपि पर रचनायें लिखने के लिए कृपया डेस्कटॉप/लेपटॉप से लोग-इन करें। 
+write_on_desktop_only		= प्रतिलिपि पर रचनायें लिखने के लिए कृपया डेस्कटॉप/लेपटॉप से http://hindi.pratilipi.com पर लोग-इन करें। 
 write_fill_title			= शीर्षक
 write_select_type			= श्रेणी 
 
