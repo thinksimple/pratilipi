@@ -148,7 +148,7 @@ write_type					= തരം തിരഞ്ഞെടുക്കൂ
 write_language				= ഭാഷ
 write_summary				= സംഗ്രഹം (നിര്‍ബന്ധമില്ല)
 write_create_new_content	= പുതിയ രചന സൃഷ്ടിക്കൂ
-write_on_desktop_only		= രചനകള്‍  ചേര്‍ക്കാന്‍ കമ്പ്യുട്ടറില്‍  നിന്നും ലോഗിന്‍ ചെയ്യൂ
+write_on_desktop_only		= പ്രതിലിപിയില്‍ എഴുതാന്‍ ,താങ്കളുടെ കമ്പ്യൂട്ടറില്‍ നിന്നും malayalam.pratilipi.com എന്ന വെബ്സൈറ്റില്‍ ലോഗിന്‍ ചെയ്യുക.
 write_fill_title			= തലവാചകം എഴുതൂ 
 write_select_type			= തരം തിരഞ്ഞെടുക്കൂ
 
