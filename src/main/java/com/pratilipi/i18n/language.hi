@@ -36,8 +36,8 @@ author_about				= संक्षिप्त परिचय
 author_language				= भाषा	
 author_since				= प्रतिलिपि के साथ   
 author_count_works			= प्रकाशित साहित्य 
-author_count_reads			= पाठकों ने पढ़ा  	
-author_count_likes			= ने पसंद किया 	
+author_count_reads			= पाठक संख्या  	
+author_count_likes			= पसंद संख्या 	
 author_edit_profile			= प्रोफ़ाइल संपादित करें
 author_update_image				= प्रोफ़ाइल चित्र अपडेट करे
 author_drafts				= अप्रकाशित रचनायें
@@ -48,7 +48,7 @@ author_activity					= गतिविधि
 author_about					= व्यक्तिगत
 author_biography				= परिचय
 author_location					= स्थान
-author_date_of_birth			= जन्म तिथि
+author_date_of_birth			= जन्म तारीख़ 
 author_follow					= फ़ॉलो
 author_unfollow					= अनफ़ॉलो
 author_followers_heading		= अनुयायी
@@ -63,7 +63,7 @@ author_settings_require_first_name	= पहला नाम दर्ज कर�
 author_settings_require_language	= भाषा सुनिश्चित करें  
 
 # Pratilipi
-pratilipi_type				= विधा
+pratilipi_type				= प्रकार 
 pratilipi_listing_date		= प्रकाशन दिनांक
 pratilipi_last_updated_date	= आखिरी बदलाव 
 pratilipi_published			= प्रकाशित	
@@ -73,7 +73,7 @@ pratilipi_edit_info			= संबंधित जानकारी संपा
 pratilipi_edit_content		= रचना सम्पादित करें 
 pratilipi_update_cover		= अपलोड फोटो
 pratilipi_count_reads		= पाठक संख्या	
-pratilipi_count_reviews		= कुल टिप्पणीयाँ
+pratilipi_count_reviews		= कुल टिपण्णी 
 pratilipi_count_likes		= कुल लाइक्स	
 pratilipi_no_reviews		= आपकी टिप्पणी दर्ज कर आप प्रथम समीक्षक बन सकते है | 
 pratilipi_confirm_move_to_drafts_title	= ड्राफ्ट में जाएँ
@@ -103,7 +103,7 @@ rating_4_star				= ४
 rating_5_star				= ५ 
 
 # Review
-review_heading				= टिप्पणीयाँ 
+review_heading				= टिपण्णी 
 review_write_a_review		= टिप्पणी लिखें 
 review_title				= टिप्पणी का शीर्षक  
 review_title_help			= उदाहरण के लिए – एक अद्भुत कहानी या एक सामान्य कहानी 
