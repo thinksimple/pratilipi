@@ -18,7 +18,7 @@ function() {
 
     
     this.pushToViewModel = function( data ) {
-        this.title(data["title"]).titleEn(data["titleEn"]).coverImageUrl("https://d3cwrmdwk8nw1j.cloudfront.net/pratilipi/cover?pratilipiId=6243354113212416&version=1453103809428&width=150").author_name(data.author.name).language(data["language"]).summary(data["summary"]).state(data["state"]).publish_date(data["listingDateMillis"]).averageRating(data["averageRating"]).ratingCount(data["ratingCount"]).readCount(data["readCount"]).type(data["type"]);
+        this.title(data["title"]).titleEn(data["titleEn"]).coverImageUrl( data["coverImageUrl"] ).author_name(data.author.name).language(data["language"]).summary(data["summary"]).state(data["state"]).publish_date(data["listingDateMillis"]).averageRating(data["averageRating"]).ratingCount(data["ratingCount"]).readCount(data["readCount"]).type(data["type"]);
     }
     var self = this;
     this.getData = function() {

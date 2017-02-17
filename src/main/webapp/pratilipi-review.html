@@ -1,0 +1,41 @@
+<li class="mdl-list__item mdl-list__item--three-line height-auto padding-8 display-block">
+	<span class="mdl-list__item-primary-content height-auto">
+	  	<img data-bind="attr: { src: reviewObject.userImageUrl }" class="mdl-list__item-avatar">
+	  	<a class="reviewer-name" data-bind="attr: { href: reviewObject.userProfilePageUrl }, text: reviewObject.user.displayName"></a>
+	  	<span class="mdl-list__item-secondary-action pull-right pratilipiRed" href="#" >
+	  		<!-- ko foreach: ko.utils.range(1, filledStars) -->
+	  			<i class="material-icons material-icons-16">star</i>
+	  		<!-- /ko -->
+	  		<!-- ko foreach: ko.utils.range(1, emptyStars) -->
+	  			<i class="material-icons material-icons-16">star_border</i>
+	  		<!-- /ko -->
+	  		
+	  	</span>
+  		<span class="mdl-list__item-text-body height-auto" data-bind="text: reviewObject.review"></span>		
+  						  		
+	</span>
+	<div class="margin-top-15 font-14">
+		<span class="">
+			<!-- ko if: likeCount -->
+				<span data-bind="text: likeCount"></span>
+			<!-- /ko -->
+			<button  data-bind="click: likeDislikeReview" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon smaller-icon-button">
+			  <i class="material-icons material-icons-16" role="presentation" data-bind="css: { pratilipiRed: isLiked() }">thumb_up</i><span class="visuallyhidden">like comment</span>
+			</button>
+			<span class="reply"></span>		
+			<button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon smaller-icon-button">
+			  <i class="material-icons material-icons-16" role="presentation">message</i><span class="visuallyhidden">comment</span>
+			</button>	
+																
+			<!-- ko if: commentCount -->
+				<span class="viewAllReplies">View all replies</span>
+			<!-- /ko -->
+			
+		</span>
+		<span class="pull-right">
+			1 Nov 2016
+		</span>
+	</div>
+	
+</li>
+<hr />	
