@@ -270,25 +270,36 @@
 			</plugin>
 
 			<plugin>
-				<groupId>nl.geodienstencentrum.maven</groupId>
+				<groupId>org.jasig.maven</groupId>
 				<artifactId>sass-maven-plugin</artifactId>
+				<version>1.1.1</version>
 				<executions>
 					<execution>
-						<id>generate-css</id>
+						<id>compile</id>
 						<phase>prepare-package</phase>
 						<goals>
 							<goal>update-stylesheets</goal>
 						</goals>
-						<configuration>
-							<sassSourceDirectory>${basedir}/src/main/webapp/pwa-stylesheets/scss</sassSourceDirectory>
-							<destination>${basedir}/src/main/webapp/pwa-stylesheets/css</destination>
-						</configuration>
 					</execution>
 				</executions>
+				<configuration>
+					<resources>
+						<resource>
+							<source>
+								<directory>${basedir}/src/main/webapp/pwa-stylesheets/scss</directory>
+							</source>
+							<destination>${basedir}/src/main/webapp/pwa-stylesheets/css</destination>
+						</resource>
+					</resources>
+					<sassOptions>
+						<cache>false</cache>
+						<always_update>true</always_update>
+					</sassOptions>
+				</configuration>
 			</plugin>
-			
+
 		</plugins>
-		
+
 	</build>
 	
 </project>
