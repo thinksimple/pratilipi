@@ -1,0 +1,96 @@
+@mixin button-color-background( $color ) {
+  	background-color: $color !important;
+    border-color: $color !important;
+}
+@mixin box-shadow( $arg1, $arg2, $arg3, $arg4, $color ) {
+    -moz-box-shadow: $arg1 $arg2 $arg3 $arg4 $color;
+	-webkit-box-shadow: $arg1 $arg2 $arg3 $arg4 $color; 
+}	
+
+.pratilipi-login-container {
+    text-align: center;
+	margin: auto;
+    padding-top: 20px;
+    max-width: 280px;
+}
+
+.pratilipi-login-container {
+	.login-sprite-icon-24 {
+	    /*margin: 10px auto;*/
+	    width: 24px;
+	    height: 24px;
+	    float: left;
+	    margin: 6px 0;
+	}
+	
+	.fb-icon {
+	    background-position: 0 -120px;
+	}
+	
+	.gplus-icon {
+	    background-position: -72px -120px;
+	}
+	
+	.pratilipi-red-button {
+		@include button-color-background( #d0021b );
+	}
+	
+	.pratilipi-fb-blue-button {
+	    @include button-color-background( #3b5998 );
+	}
+	
+	.pratilipi-white-button {
+	    background-color: #fff !important;
+	    border-color: #ccc !important;
+	}
+	
+	.pratilipi-logo {
+	    width: 40px;
+	    height: 40px;
+	}
+	
+	.pratilipi-heading {
+	    margin-top: 10px;
+	}
+	
+	.pratilipi-content-container {
+	}
+	
+	.login-button {
+	    margin: 8px 0 !important;
+	    width: 100% !important;
+	}
+	.login-or {
+	    color: rgba(0, 0, 0, .26);
+	}
+	
+	.login-textfield {
+	    padding: 12px 0;
+	}
+	.login-textfield .mdl-textfield__label{
+	    top: 16px;
+	}
+	.login-textfield .mdl-textfield__label:after {
+	    bottom: 12px !important;
+	    background-color: #d0021b;
+	}
+	.forgot-password-link {
+	    color: rgba(0, 0, 0, .26);
+	    font-size: 12px;
+	    display: block;
+	}
+	.pull-right {
+	    float: right;
+	}
+	.sign-up-link {
+	    font-weight: 550
+	}
+	.pratilipi-red {
+	    color: #d0021b;
+	}
+	.margin-zero {
+	    margin: 0;
+	}
+   
+}
+

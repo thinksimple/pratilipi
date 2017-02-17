@@ -1,0 +1,20 @@
+pratilipi-review {
+	.margin-top-15 {
+		margin-top: 15px;
+	}	
+	.reply:before {
+	    content: "\002022";
+	}	
+
+	.font-14 {
+		font-size: 14px !important;
+	}
+	a.reviewer-name	{
+		text-decoration: none;
+		color: black;
+	}
+	.viewAllReplies:before {
+		content: "\002022";
+		margin-right: 5px;
+	}
+}

@@ -1,0 +1,25 @@
+pratilipi-navigation-aside {
+    .mdl-components__nav {
+        display: inline-block;
+        background: #fff;
+        width: 200px;
+        box-sizing: border-box;
+        padding: 0px 10px;
+        -webkit-flex-shrink: 0;
+        -ms-flex-negative: 0;
+        flex-shrink: 0;
+        z-index: 1;
+    } 
+   	h6 {
+      margin: 0px;
+      padding: 20px 20px 5px 20px;
+      color: #D0021B;
+    }
+    
+    a {
+      color: #333;
+      text-decoration: none;
+      padding: 5px 20px 5px 20px;
+      display: block;
+    }
+}     

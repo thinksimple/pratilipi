@@ -22,6 +22,9 @@
 .padding-zero {
   padding: 0; }
 
+.pratilipiRed {
+  color: #d0021b; }
+
 .see-more-text {
   /* hide text if it more than N lines  */
   overflow: hidden;
@@ -390,18 +393,25 @@ pratilipi-navigation-aside a {
   padding: 5px 20px 5px 20px;
   display: block; }
 
-pratilipi-review-list .margin-top-15 {
+pratilipi-review-list {
+  width: 100%; }
+
+pratilipi-review .margin-top-15 {
   margin-top: 15px; }
 
-pratilipi-review-list .reply:before {
+pratilipi-review .reply:before {
   content: "\002022"; }
 
-pratilipi-review-list .font-14 {
+pratilipi-review .font-14 {
   font-size: 14px !important; }
 
-pratilipi-review-list a.reviewer-name {
+pratilipi-review a.reviewer-name {
   text-decoration: none;
   color: black; }
+
+pratilipi-review .viewAllReplies:before {
+  content: "\002022";
+  margin-right: 5px; }
 
 .pratilipi-login-container {
   text-align: center;
