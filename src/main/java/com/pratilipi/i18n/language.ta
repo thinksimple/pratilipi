@@ -148,7 +148,7 @@ write_type					= வகை *
 write_language				= மொழித்தேர்வு
 write_summary				= படைப்பைப் பற்றி (விருப்பமிருப்பின்)
 write_create_new_content	= புதிய படைப்பை உருவாக்க
-write_on_desktop_only		= பிரதிலிபியில் எழுத, கணினியிலிருந்து 'http://tamil.pratilipi.com' சென்று லாக் இன் செய்யவும்
+write_on_desktop_only		= பிரதிலிபியில் எழுத, கணினியிலிருந்து http://tamil.pratilipi.com சென்று லாக் இன் செய்யவும்
 write_fill_title			= தலைப்பை நிரப்பவும்.
 write_select_type			= வகையை தேர்வு செய்யவும்.
 
