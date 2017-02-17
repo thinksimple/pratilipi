@@ -9,6 +9,6 @@ public enum EmailState {
 	@Deprecated
 	INVALID_EMAIL,
 	SENT,		// Email successfully sent
-	DROPPED		// Permanently dropeed e-mail
+	DROPPED		// Permanently dropped e-mail
 
 }
