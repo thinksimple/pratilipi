@@ -1,9 +1,9 @@
 <#macro compress_single_line>
-<#local captured><#nested></#local>
+<#local captured><#compress><#nested></#compress></#local>
 ${ captured?replace( "^\\s+|\\s+$|\\n|\\r", " ", "rm" ) }
 </#macro>
 <#if stage=="prod">
-<#compress><@compress_single_line><#compress><#include "${ templateName }"></#compress></@compress_single_line></#compress>
+<@compress_single_line><#include "${ templateName }"></@compress_single_line>
 <#else>
 <#include "${ templateName }">
 </#if>
