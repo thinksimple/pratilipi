@@ -49,11 +49,12 @@ public class UserPratilipiReviewListApi extends GenericApi {
 		
 		private List<UserPratilipiApi.Response> reviewList;
 		private String cursor;
+		private Long numberFound;
 
 		
 		Response() {}
 		
-		Response( List<UserPratilipiData> reviewList, String cursor ) {
+		Response( List<UserPratilipiData> reviewList, String cursor, Long numberFound ) {
 			this.reviewList = new ArrayList<>( reviewList.size() );
 			for( UserPratilipiData review : reviewList )
 				this.reviewList.add( new UserPratilipiApi.Response( review, UserPratilipiReviewListApi.class ) );
@@ -67,6 +68,11 @@ public class UserPratilipiReviewListApi extends GenericApi {
 		public String getCursor() {
 			return cursor;
 		}
+
+		public Long getNumberFound() {
+			return numberFound;
+		}
+
 	}
 
 	
@@ -82,7 +88,8 @@ public class UserPratilipiReviewListApi extends GenericApi {
 		
 		return new Response(
 				userPratilipiListCursorTuple.getDataList(),
-				userPratilipiListCursorTuple.getCursor() );
+				userPratilipiListCursorTuple.getCursor(),
+				userPratilipiListCursorTuple.getNumberFound() );
 	
 	}
 
