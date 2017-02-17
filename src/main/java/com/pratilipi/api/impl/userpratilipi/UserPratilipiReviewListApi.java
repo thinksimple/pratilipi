@@ -59,6 +59,7 @@ public class UserPratilipiReviewListApi extends GenericApi {
 			for( UserPratilipiData review : reviewList )
 				this.reviewList.add( new UserPratilipiApi.Response( review, UserPratilipiReviewListApi.class ) );
 			this.cursor = cursor;
+			this.numberFound = numberFound;
 		}
 
 		public List<UserPratilipiApi.Response> getReviewList() {
