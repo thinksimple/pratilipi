@@ -33,7 +33,8 @@ public class EmailUtil {
 			Message msg = new MimeMessage( session );
 			msg.setFrom( new InternetAddress( senderEmail, senderName ) );
 			msg.addRecipient( Message.RecipientType.TO, new InternetAddress( recipientEmail, MimeUtility.encodeText( recipientName, "UTF-8", "B" ) ) );
-			msg.addRecipient( Message.RecipientType.BCC, new InternetAddress( "mail-archive@pratilipi.com", "Mail Archive" ) );
+			// TODO: Uncomment when we migrate to other email service providers
+//			msg.addRecipient( Message.RecipientType.BCC, new InternetAddress( "mail-archive@pratilipi.com", "Mail Archive" ) );
 			msg.setSubject( MimeUtility.encodeText( subject, "UTF-8", "B" ) );
 			msg.setContent( body, "text/html" );
 			Transport.send( msg );
