@@ -24,9 +24,13 @@
     <!-- http://10.ptlp.co/pratilipi/cover?width=150 -->
     <div class="demo-layout-transparent mdl-layout mdl-js-layout mdl-layout--fixed-header">
 	    <header class="mdl-layout__header mdl-layout__header--transparent pratilipi-header">
-	    	<!-- ko component: "pratilipi-header" --><!-- /ko -->
+	    	<!-- ko component: {
+				name: "pratilipi-header",
+				params: { initialText: "Hello, world!", otherParam: 123 }
+			} -->
+			<!-- /ko -->
 	    </header>
-	
+
 		<div class="mdl-layout__drawer mdl-layout--small-screen-only">
 			<!-- ko component: "pratilipi-navigation-drawer" --><!-- /ko -->
 		</div>

@@ -1,87 +1,82 @@
-    <div class="secondary-500" id="header-card">
-        <div class="parent-container">
-            <div class="vertical-align container">
-                <div class="pratilipi-logo">
-                    <a href="/">
-                        <div class="sprites-icon pratilipi-logo-icon"></div>
-                    </a>
-                </div>
-                <div class="pratilipi-text">
-                    <select data-bind="options: languageList,
-                       value: currentLanguage,
-                       optionsText: function(item) { return item.text },
-                       optionsValue: function(item) { return item.value },
-                       event:{ change: languageChangeHandler }" class="form-control focus-outline-none" id="select-language" style="box-shadow:none;padding:0px;border:none;color: #d0021b;height:30px;font-size: 18px;width: auto;">
-                    </select>
-                </div>
-                <div class="search-bar">
-                    <form action="javascript:void(0);" data-bind="submit: search" style="margin-bottom: 0;">
-                        <button style="position: absolute;top: 10%;right: 0;z-index: 1;cursor: pointer;" class="mdl-button mdl-js-button mdl-button--icon">
-                        	<div class="sprites-icon header-sprite-icon search-sprite-icon" ></div>
-                        </button>
-                        <div data-bind="click: openMenuNavigationDrawer" class="sprites-icon header-sprite-icon menu-search-sprite-icon" style="position: absolute;top: 15%;z-index: 1;"></div>
-                        <input class="form-control horizontal-form-input focus-outline-none" placeholder="Search for stories" data-bind="textInput: searchQuery">
-                    </form>
-                </div>
-                <div class="button-holder menu-icon" data-bind="click: openMenuNavigationDrawer">
-                    <a on-click="_openMenuNavigation">
-                        <div class="sprites-icon header-sprite-icon menu-sprite-icon"></div>
-                    </a>
-                </div>
-                <div class="button-holder">
-                    <a href="/">
-                        <div class="sprites-icon header-sprite-icon edit-icon"></div>
-                    </a>
-                </div>
-                <div class="button-holder">
-                    <a href="/">
-                        <div class="sprites-icon header-sprite-icon library-books-icon"></div>
-                    </a>
-                </div>
-                <div class="button-holder">
-                    <a href="/">
-                        <div class="sprites-icon header-sprite-icon notifications-icon"></div>
-                    </a>
-                </div>
-                <div class="sign-in-button button-inside-container">
-                    <button class="btn btn-primary">
-                        <!-- <iron-icon icon="social:person"></iron-icon> -->
-                        <div class="sprites-icon header-sprite-icon account-circle-icon"></div>
-                        <span>Sign in kijiye</span>
-                    </button>
-                </div>
-                <div class="button-holder sign-in-text">
-                    <!-- <template is="dom-if" if="{{ isGuest }}"> -->
-                    <a on-click="_logIn">
-                        <div class="sprites-icon header-sprite-icon account-circle-icon"></div>
-                    </a>
-                </div>
-            </div>
-            <div class="sign-in-button button-outside-container" style="margin: 7px auto;">
-                <button class="btn btn-primary">
-                    <!-- <iron-icon icon="social:person"></iron-icon> -->
-                    <div class="sprites-icon header-sprite-icon account-circle-icon"></div>
-                    <span>Sign in kijiye</span>
-                </button>
-            </div>
-        </div>
-    </div>
-    <div class="pratilipi-search-bar visible-xs">
-        <div class="flex-container">
-            <div class="" style="float: left;cursor: pointer;padding-top: 0;align-self: center;position: relative;">
-                <select data-bind="options: languageList,
-                       value: currentLanguage,
-                       optionsText: function(item) { return item.text },
-                       optionsValue: function(item) { return item.value },
-                       event:{ change: languageChangeHandler }" class="form-control focus-outline-none" id="select-language" style="box-shadow:none;padding:0px;border:none;color: #d0021b;height:30px;font-size: 18px;">
-                </select>
-            </div>
-            <form data-bind="submit: search" action="javascript:void(0);" on-keyup="onSubmit" style="position: relative;overflow: hidden;margin-bottom: 8px;flex-grow: 1;margin-left: 4px;margin-right: 8px;">
-                <button style="position: absolute;top: 10%;right: 0;z-index: 1;cursor: pointer;" class="mdl-button mdl-js-button mdl-button--icon">
-                	<div class="sprites-icon header-sprite-icon search-sprite-icon" style="position: absolute;top: 15%;right: 0;z-index: 1;"></div>
-                </button>
-                <input class="form-control horizontal-form-input focus-outline-none" placeholder="Search for stories" data-bind="textInput: searchQuery">
-            </form>
-            <div style="clear: both" />
-        </div>
-    </div>   
+<div class="secondary-500" id="header-card">
+	<div class="parent-container">
+		<div class="vertical-align container">
+			<div class="pratilipi-logo">
+				<a href="/">
+					<span class="sprites-icon pratilipi-logo-icon"></span>
+				</a>
+			</div>
+			<div class="pratilipi-text">
+				<select data-bind="options: languageList,
+					value: currentLanguage,
+					optionsText: function(item) { return item.text },
+					optionsValue: function(item) { return item.value },
+					event:{ change: languageChangeHandler }" 
+					class="form-control focus-outline-none" 
+					id="select-language" 
+					style="box-shadow:none; padding:0px; border:none; color: #d0021b; height:30px; font-size: 18px; width: auto;">
+				</select>
+			</div>
+			<div class="search-bar">
+				<form action="javascript:void(0);" data-bind="submit: search" style="margin-bottom: 0;">
+					<button style="position: absolute; top: 10%; right: 0; z-index: 1; cursor: pointer;" class="mdl-button mdl-js-button mdl-button--icon">
+						<div class="sprites-icon header-sprite-icon search-sprite-icon" ></div>
+					</button>
+					<div data-bind="click: openMenuNavigationDrawer" class="sprites-icon header-sprite-icon menu-search-sprite-icon" style="position: absolute;top: 15%; z-index: 1;"></div>
+					<input class="form-control horizontal-form-input focus-outline-none" placeholder="${ _strings.search_bar_help }" data-bind="textInput: searchQuery">
+				</form>
+			</div>
+			<div style="cursor: pointer;" class="button-holder menu-icon" data-bind="click: openMenuNavigationDrawer">
+				<span class="sprites-icon header-sprite-icon menu-sprite-icon"></span>
+			</div>
+			<div style="cursor: pointer;" class="button-holder">
+				<span class="sprites-icon header-sprite-icon edit-icon"></span>
+			</div>
+			<div class="button-holder">
+				<span class="sprites-icon header-sprite-icon library-books-icon"></span>
+			</div>
+			<div class="button-holder">
+				<span class="sprites-icon header-sprite-icon notifications-icon"></span>
+			</div>
+			<div class="sign-in-button button-inside-container">
+				<button class="btn btn-primary">
+					<div class="sprites-icon header-sprite-icon account-circle-icon"></div>
+					<span>${ _strings.user_sign_in }</span>
+				</button>
+			</div>
+			<div class="button-holder sign-in-text">
+				<span class="sprites-icon header-sprite-icon account-circle-icon"></span>
+			</div>
+		</div>
+		<div class="sign-in-button button-outside-container" style="margin: 7px auto;">
+			<button class="btn btn-primary">
+				<div class="sprites-icon header-sprite-icon account-circle-icon"></div>
+				<span>${ _strings.user_sign_in }</span>
+			</button>
+		</div>
+	</div>
+</div>
+<div class="pratilipi-search-bar visible-xs">
+	<div class="flex-container">
+		<div class="" style="float: left; cursor: pointer; padding-top: 0; align-self: center; position: relative;">
+			<select data-bind="options: languageList,
+				value: currentLanguage,
+				optionsText: function(item) { return item.text },
+				optionsValue: function(item) { return item.value },
+				event:{ change: languageChangeHandler }" 
+				class="form-control focus-outline-none" 
+				id="select-language" 
+				style="box-shadow:none; padding:0px; border:none;color: #d0021b; height:30px; font-size: 18px;">
+			</select>
+		</div>
+		<form data-bind="submit: search" 
+				action="javascript:void(0);" 
+				style="position: relative; overflow: hidden; margin-bottom: 8px; flex-grow: 1; margin-left: 4px; margin-right: 8px;">
+			<button style="position: absolute;top: 10%;right: 0;z-index: 1;cursor: pointer;" class="mdl-button mdl-js-button mdl-button--icon">
+				<div class="sprites-icon header-sprite-icon search-sprite-icon" style="position: absolute; top: 15%; right: 0; z-index: 1;"></div>
+			</button>
+			<input class="form-control horizontal-form-input focus-outline-none" placeholder="Search for stories" data-bind="textInput: searchQuery">
+		</form>
+		<div style="clear: both"></div>
+	</div>
+</div>

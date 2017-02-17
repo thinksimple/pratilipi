@@ -1,5 +1,5 @@
 <#macro add_backslashes>
-<#local captured><#nested></#local>
+<#local captured><#compress><#nested></#compress></#local>
 ${ "'" + captured?replace("\\n", "", 'r') + "'" }
 </#macro>
 
