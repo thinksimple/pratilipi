@@ -1,10 +1,10 @@
 // styles.scss
 @import 'sprites-file';
 @import 'common-styles';
-@import 'pratilipi-header-test';
+@import 'pratilipi-header';
 @import 'pratilipi-navigation';
 @import 'pratilipi-navigation-aside';
 @import 'pratilipi-navigation-drawer';
-@import '_pratilipi-review-list.scss';
-@import '_pratilipi-review.scss';
-@import '_pratilipi-login.scss';
+@import 'pratilipi-review-list';
+@import 'pratilipi-review';
+@import 'pratilipi-login';
