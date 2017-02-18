@@ -36,7 +36,23 @@
 				<span class="sprites-icon header-sprite-icon library-books-icon"></span>
 			</div>
 			<div class="button-holder">
-				<span class="sprites-icon header-sprite-icon notifications-icon"></span>
+				<span style="margin-right: 0;" 
+						id="notificationLink" 
+						class="material-icons mdl-badge mdl-badge--overlap mdl-badge--no-background" 
+						data-badge="1">notifications</span>
+				<div id="notificationContainer">
+					<div id="notificationTitle">${ _strings.notification_notifications }</div>
+					<div id="notificationsBody" class="notifications">
+						<ul class="ul_menu">
+							<li class="mdl-menu__item mdl-menu__item--full-bleed-divider">Test</li>
+							<li class="mdl-menu__item mdl-menu__item--full-bleed-divider">Some Action</li>
+							<li class="mdl-menu__item mdl-menu__item--full-bleed-divider">Another Action</li>
+							<li class="mdl-menu__item mdl-menu__item--full-bleed-divider">Disabled Action</li>
+							<li class="mdl-menu__item mdl-menu__item--full-bleed-divider">Yet Another Action</li>
+						</ul>
+					</div>
+					<div id="notificationFooter"><a href="#">See All</a></div>
+				</div>
 			</div>
 			<div class="sign-in-button button-inside-container">
 				<button class="btn btn-primary">

@@ -31,4 +31,11 @@ function( params ) {
 	  document.querySelector('.mdl-layout').MaterialLayout.toggleDrawer();
 	}
 
+	$( "#notificationLink" ).click( function() { $( "#notificationContainer" ).fadeToggle(50); $( "#notificationLink" ).removeClass( "mdl-badge" ); return false; } );
+	$( document ).click( function() { $( "#notificationContainer" ).hide(); } );
+	$( "#notificationContainer" ).click( function() { return false; } );
+	
+	/* Loading Notifications */
+	
+
 }
