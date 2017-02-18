@@ -99,7 +99,7 @@ public class AuthorDataUtil {
 			if( width != null )
 				url = url + "&width=" + width;
 			if( SystemProperty.STAGE == SystemProperty.STAGE_GAMMA )
-				url = "http://104.199.243.212:8080" + url;
+				url = "http://104.199.135.243:8080" + url;
 			else if( SystemProperty.CDN != null )
 				url = SystemProperty.CDN.replace( "*", "0" ) + url;
 		} else {
@@ -107,7 +107,7 @@ public class AuthorDataUtil {
 			if( width != null )
 				url = url + "&width=" + width;
 			if( SystemProperty.STAGE == SystemProperty.STAGE_GAMMA )
-				url = "http://104.199.243.212:8080" + url;
+				url = "http://104.199.135.243:8080" + url;
 			else if( SystemProperty.CDN != null )
 				url = SystemProperty.CDN.replace( "*", author.getId() % 5 + 1 + "" ) + url;
 		}
