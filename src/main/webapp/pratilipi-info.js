@@ -4,7 +4,8 @@ function() {
         this.navigationList = ko.observableArray([]);
         this.title = ko.observable();
         this.titleEn = ko.observable();
-        this.coverImageUrl = ko.observable();
+        this.coverImageUrlDesktop = ko.observable();
+        this.coverImageUrlMobile = ko.observable();
         this.author_name = ko.observable();
         this.language = ko.observable();
         this.summary = ko.observable();
@@ -18,7 +19,8 @@ function() {
 
     
     this.pushToViewModel = function( data ) {
-        this.title(data["title"]).titleEn(data["titleEn"]).coverImageUrl( data["coverImageUrl"] ).author_name(data.author.name).language(data["language"]).summary(data["summary"]).state(data["state"]).publish_date(data["listingDateMillis"]).averageRating(data["averageRating"]).ratingCount(data["ratingCount"]).readCount(data["readCount"]).type(data["type"]);
+        this.title(data["title"]).titleEn(data["titleEn"]).author_name(data.author.name).language(data["language"]).summary(data["summary"]).state(data["state"]).publish_date(data["listingDateMillis"]).averageRating(data["averageRating"]).ratingCount(data["ratingCount"]).readCount(data["readCount"]).type(data["type"]);
+        this.coverImageUrlDesktop( data["coverImageUrl"] + "&width=200" ).coverImageUrlMobile( data["coverImageUrl"] + "&width=150" );
     }
     var self = this;
     this.getData = function() {

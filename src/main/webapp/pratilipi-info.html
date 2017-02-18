@@ -1,7 +1,11 @@
 <div class="mdl-shadow--2dp mdl-cell mdl-cell--8-col-tablet mdl-cell--9-col">
     <div class="mdl-grid">
-        <div class="mdl-card__media mdl-cell mdl-cell--4-col-phone mdl-cell--3-col-tablet mdl-cell--4-col-desktop">
-            <img data-bind="attr: { src: coverImageUrl }" border="0" alt="" style="padding:10px;display:block;margin:auto;">
+        <div class="mdl-card__media mdl-cell mdl-cell--4-col-phone mdl-cell--3-col-tablet mdl-cell--4-col-desktop alignCenter">
+            <#-- <img data-bind="attr: { src: coverImageUrl }" border="0" alt="" style="padding:10px;display:block;margin:auto;"> -->
+        	<picture>
+		    <source media="(min-width: 480px)"  data-bind="attr: { srcset: coverImageUrlDesktop }" />
+			    <img data-bind="attr: { src: coverImageUrlMobile }" border="0" alt="">
+			</picture>
         </div>
         <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--5-col-tablet mdl-cell--8-col-desktop">
             <div class="mdl-card__title">

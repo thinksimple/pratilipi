@@ -8,6 +8,7 @@ function( params ) {
     this.maxRating = 5;
     this.filledStars = this.reviewObject.rating;
     this.emptyStars = this.maxRating - this.filledStars;
+    this.userImageUrl = this.reviewObject.userImageUrl + "&width=40";
     
     this.likeDislikeReview = function( item ) {
 //        if( self.userIsGuest() ) {
