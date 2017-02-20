@@ -134,7 +134,7 @@ function( params ) {
           }, 
           success: function( response ) {
               var res = response;   
-              comment.message("");
+              comment.reply("");
               self.addToCommentsList( response );              
           },
           error: function( response ) {
