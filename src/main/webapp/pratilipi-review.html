@@ -32,10 +32,14 @@
 			</button>	
 																
 			<!-- ko if: commentCount -->
-				<span class="viewAllReplies">View all replies</span>
+				<span class="viewAllReplies clickableElement" data-bind="click: toggleShowRepliesState, text: showRepliesText"></span>
 			<!-- /ko -->
+			
 		</span>
 	</div>
+	<ul class="mdl-list sub-review" data-bind="visible: isCommentsShown, foreach: comments">
+		<pratilipi-review-comment params="value: $data"></pratilipi-review-comment>
+	</ul>
 </li>
 <li>
 	<div><hr/></div>

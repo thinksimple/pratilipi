@@ -37,3 +37,8 @@ ko.components.register('pratilipi-review', {
 	viewModel: <#include "pratilipi-review.js">,
     template: <@add_backslashes><#include "pratilipi-review.html"></@add_backslashes>
 });
+
+ko.components.register('pratilipi-review-comment', {
+	viewModel: <#include "pratilipi-review-comment.js">,
+    template: <@add_backslashes><#include "pratilipi-review-comment.html"></@add_backslashes>
+});

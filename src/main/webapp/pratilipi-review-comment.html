@@ -1,0 +1,25 @@
+<li class="mdl-list__item left-padding display-block">
+	<div class="mdl-list__item mdl-list__item--two-line padding-zero">
+		<span class="mdl-list__item-primary-content">
+			<img data-bind="attr: { src: userImageUrl }" class="mdl-list__item-avatar">
+			<a data-bind="attr: { href: userProfilePageUrl }, text: reviewCommentObject.user.displayName"></a>
+			<span class="mdl-list__item-sub-title">1 Nov 2016</span> <#-- Add proper date-->
+		</span>
+	</div>
+	<div class="mdl-list__item-text-body" data-bind="text: reviewCommentObject.content">
+	</div>
+	<div>
+		<span class="font-14">
+			<!-- ko if: likeCount -->
+				<span data-bind="text: likeCount"></span>
+			<!-- /ko -->
+			<button  data-bind="click: likeDislikeReview" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+			  <i class="material-icons material-icons-16" role="presentation" data-bind="css: { pratilipiRed: isLiked() }">thumb_up</i><span class="visuallyhidden">like comment</span>
+			</button>
+			<span class="reply"></span>		
+			<button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+			  <i class="material-icons material-icons-16" role="presentation">message</i><span class="visuallyhidden">comment</span>
+			</button>				
+		</span>
+	</div>
+</li>
