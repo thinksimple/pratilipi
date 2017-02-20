@@ -20,6 +20,10 @@ function( params ) {
 //        console.log( item );      
     }; 
     
+    this.showReplyState = function() {
+      alert('fyuv');
+    };
+    
     this.updateLikeCount = function() {
         if( this.isLiked() ) {
             this.isLiked( false );

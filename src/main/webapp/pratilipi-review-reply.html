@@ -1,0 +1,18 @@
+<li class="mdl-list__item left-padding display-block">
+    <div class="mdl-list__item mdl-list__item--two-line padding-zero">
+		<span class="mdl-list__item-primary-content">
+			<i class="material-icons mdl-list__item-avatar">person</i>
+			<span>Me</span>
+		</span>
+	</div>
+    <form action="#">
+    	<div class="mdl-textfield mdl-js-textfield reviewReply"> 			        
+        	<textarea data-bind="textInput: reply" class="mdl-textfield__input js-autoresize-textarea" type="text" rows= "2" id="review" ></textarea>
+            <label class="mdl-textfield__label" for="review">Write Reply...</label>
+        </div>
+    </form>
+	<div class="pull-right">
+	    <button data-bind="click: $parent.hideReplyState.bind($parent)" class="mdl-button mdl-js-button mdl-js-ripple-effect">Cancel</button>
+	    <button data-bind="disable: isSaveDisabled, click: $parent.addComment.bind( $parent )" class="mdl-button mdl-js-button mdl-button--colored mdl-js-ripple-effect mdl-button--raised">Save</button>
+	</div>
+</li>

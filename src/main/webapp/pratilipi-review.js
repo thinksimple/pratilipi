@@ -10,10 +10,18 @@ function( params ) {
     this.emptyStars = this.maxRating - this.filledStars;
     this.userImageUrl = this.reviewObject.userImageUrl + "&width=40";
     this.isCommentsShown = ko.observable( false );
+    this.isReplyStateOn = ko.observable( false );
+    
+    this.isSubreviewListVisible = ko.computed( function() {
+        return this.isCommentsShown() || this.isReplyStateOn();
+    }, this );
+    
     this.showRepliesText = ko.computed( function() {
         return this.isCommentsShown() ? "Hide all replies" : "Show all replies";
     }, this );
+    
     this.comments = ko.observableArray([]);
+    
     this.isCommentsLoaded = ko.computed( function() {
         return this.comments().length ? true : false;
     }, this );
@@ -30,6 +38,24 @@ function( params ) {
 //        }
 //        console.log( item );      
     }; 
+    
+    this.addComment = function( comment ) {
+        this.generatePostCommentAjaxRequest( comment );
+    }
+    
+    this.showReplyState = function( item ) {
+    //    if( self.userIsGuest() ) {
+    //        /* change url to login page */
+    //    }
+    //    else {
+            this.isReplyStateOn( true );
+            componentHandler.upgradeDom();
+    //    }     
+    }; 
+    
+    this.hideReplyState = function() {
+      this.isReplyStateOn( false );
+    }
     
     this.updateLikeCount = function() {
         debugger
@@ -94,15 +120,39 @@ function( params ) {
 //                self.updateLikeCount();
             }
         });             
-    }   
-    /* func not used anywhre, refactor */
-    this.showOrHideReplies = function() {
-        this.toggleShowRepliesText();
-    }
+    }  
+    
+    this.generatePostCommentAjaxRequest = function( comment ) {
+      comment.saveInProgress( true );
+      $.ajax({
+          type: 'post',
+          url: '<#if stage == "alpha">${ prefix }</#if>/api/comment',
+          data: {
+              parentType: "REVIEW",
+              parentId: self.reviewObject.userPratilipiId,
+              content: comment.reply()
+          }, 
+          success: function( response ) {
+              var res = response;   
+              comment.message("");
+              self.addToCommentsList( response );              
+          },
+          error: function( response ) {
+          },
+          complete: function() {
+              comment.saveInProgress( false );
+              self.hideReplyState();
+          }
+      });             
+   }    
     
     this.populateCommentsList = function( commentList ) {
         for(var i = 0; i < commentList.length; i++) {
             this.comments.push( commentList[i] );
         }        
-    }    
+    }  
+    
+    this.addToCommentsList = function( comment ) {
+        this.comments.push( comment );
+    }      
 }

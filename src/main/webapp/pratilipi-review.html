@@ -27,7 +27,7 @@
 			  <i class="material-icons material-icons-16" role="presentation" data-bind="css: { pratilipiRed: isLiked() }">thumb_up</i><span class="visuallyhidden">like comment</span>
 			</button>
 			<span class="reply"></span>		
-			<button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+			<button data-bind="click: showReplyState" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
 			  <i class="material-icons material-icons-16" role="presentation">message</i><span class="visuallyhidden">comment</span>
 			</button>	
 																
@@ -37,8 +37,11 @@
 			
 		</span>
 	</div>
-	<ul class="mdl-list sub-review" data-bind="visible: isCommentsShown, foreach: comments">
-		<pratilipi-review-comment params="value: $data"></pratilipi-review-comment>
+	<ul class="mdl-list sub-review" data-bind="visible: isSubreviewListVisible">
+		<div data-bind="visible: isCommentsShown, foreach: comments">
+			<pratilipi-review-comment params="value: $data"></pratilipi-review-comment>
+		</div>
+		<pratilipi-review-reply data-bind="visible: isReplyStateOn" params="parent: $parent"></pratilipi-review-reply>
 	</ul>
 </li>
 <li>
