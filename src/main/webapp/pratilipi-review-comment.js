@@ -41,11 +41,7 @@ function( params ) {
             },
             success: function( response ) {
         //      var res = jQuery.parseJSON( response );
-                <#if stage == "alpha">
-                    var res = response;
-                <#else>
-                    var res = jQuery.parseJSON( response );
-                </#if>           
+                var res = response;          
                 console.log(res);
             },
             error: function( response ) {

@@ -36,7 +36,7 @@ function() {
         success: function( response ) {
 //          var res = jQuery.parseJSON( response );
               var res = response;          
-          self.pushToReviewList( res["reviewList"] );
+              self.pushToReviewList( res["reviewList"] );
         },
         error: function( response ) {
             console.log( response );

@@ -86,11 +86,7 @@ function( params ) {
             }, 
             success: function( response ) {
         //      var res = jQuery.parseJSON( response );
-                <#if stage == "alpha">
-                    var res = response;
-                <#else>
-                    var res = jQuery.parseJSON( response );
-                </#if>           
+                var res = response;        
                 self.populateCommentsList( response["commentList"] );
             },
             error: function( response ) {
