@@ -39,7 +39,7 @@
 			var anHttpRequest = new XMLHttpRequest();
 			anHttpRequest.onreadystatechange = function() { 
 				if( anHttpRequest.readyState == 4 ) {
-					console.log( anHttpRequest.getResponseHeader( 'content-type' ) );
+					/* console.log( anHttpRequest.getResponseHeader( 'content-type' ) ); */
 					aCallback( anHttpRequest.responseText, anHttpRequest.status );
 				}
 			};
