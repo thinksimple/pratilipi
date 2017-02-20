@@ -20,10 +20,6 @@ function( params ) {
 //        console.log( item );      
     }; 
     
-    this.showReplyState = function() {
-      alert('fyuv');
-    };
-    
     this.updateLikeCount = function() {
         if( this.isLiked() ) {
             this.isLiked( false );
@@ -44,9 +40,7 @@ function( params ) {
                 type: self.isLiked ? "LIKE" : "NONE"
             },
             success: function( response ) {
-        //      var res = jQuery.parseJSON( response );
-                var res = response;          
-                console.log(res);
+                var res = response;
             },
             error: function( response ) {
                 /* revert changes */

@@ -7,30 +7,7 @@ function( params ) {
     
     this.isSaveDisabled = ko.computed( function() {
         return this.reply().trim().length == 0 ||  this.saveInProgress();
-    }, this );
-
-    this.generateLikeAjaxRequest = function() {
-        $.ajax({
-            type: 'post',
-            url: '<#if stage == "alpha">${ prefix }</#if>/api/vote',
-            data: {
-                parentType: "COMMENT",
-                parentId: self.reviewCommentObject.commentId,
-                type: self.isLiked ? "LIKE" : "NONE"
-            },
-            success: function( response ) {
-        //      var res = jQuery.parseJSON( response );
-                var res = response;          
-                console.log(res);
-            },
-            error: function( response ) {
-                /* revert changes */
-                self.updateLikeCount();
-            }
-        });      
-    };
-    
-    
+    }, this );    
     
     var textarea = document.querySelector('textarea.js-autoresize-textarea');
 
