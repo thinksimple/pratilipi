@@ -98,17 +98,13 @@ public class AuthorDataUtil {
 			url = url + "?version=2";
 			if( width != null )
 				url = url + "&width=" + width;
-			if( SystemProperty.STAGE == SystemProperty.STAGE_GAMMA )
-				url = "http://104.199.135.243:8080" + url;
-			else if( SystemProperty.CDN != null )
+			if( SystemProperty.CDN != null )
 				url = SystemProperty.CDN.replace( "*", "0" ) + url;
 		} else {
 			url = url + "?authorId=" + author.getId() + "&version=" + author.getProfileImage();
 			if( width != null )
 				url = url + "&width=" + width;
-			if( SystemProperty.STAGE == SystemProperty.STAGE_GAMMA )
-				url = "http://104.199.135.243:8080" + url;
-			else if( SystemProperty.CDN != null )
+			if( SystemProperty.CDN != null )
 				url = SystemProperty.CDN.replace( "*", author.getId() % 5 + 1 + "" ) + url;
 		}
 		return url;
