@@ -19,7 +19,7 @@
 <#elseif action == "nine">
 	<#include "/LoginPage.html">	
 <#elseif action == "ten">
-	<#include "/.html">
+	<#include "/RegisterPage.html">
 <#elseif action == "eleven">
 	<#include "/pwa11.html">	
 <#elseif action == "twelve">
