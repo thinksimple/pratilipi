@@ -15,13 +15,13 @@
 		<img class="pratilipi-logo" src="http://0.ptlp.co/resource-hi/logo/pratilipi_logo.png">
 		<h4 class="pratilipi-heading">${ _strings.user_sign_in }</h4>
 		<div class="pratilipi-content-container">
-			<button data-bind="{ click: login_from_fb, disable: requestOnFlight }" 
+			<button data-bind="{ click: facebookLogin, disable: requestOnFlight }" 
 					type="submit" 
 					class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored pratilipi-fb-blue-button login-button">
 				<div class="sprites-icon login-sprite-icon-24 fb-icon"></div>
 				${ _strings.user_sign_in_with_facebook }
 			</button>
-			<button data-bind="{ click: login_from_google, disable: requestOnFlight }" 
+			<button data-bind="{ click: googleLogin, disable: requestOnFlight }" 
 					type="submit" 
 					class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect pratilipi-white-button pratilipi-fb-blue-button login-button">
 				<div class="sprites-icon login-sprite-icon-24 gplus-icon"></div>
@@ -31,12 +31,12 @@
 		<p class="login-or margin-zero">${ _strings.or }</p>
 		<form id="login_form" class="pratilipi-content-container margin-zero">
 			<div class="mdl-textfield mdl-js-textfield login-textfield" >
-				<input data-bind="textInput: userEmail" class="mdl-textfield__input" type="text" id="sample1">
-				<label class="mdl-textfield__label" for="sample1" style="">${ _strings.user_email }</label>
+				<input data-bind="textInput: userEmail" class="mdl-textfield__input" type="text" id="user_email">
+				<label class="mdl-textfield__label" for="user_email" style="">${ _strings.user_email }</label>
 			</div>
 			<div class="mdl-textfield mdl-js-textfield login-textfield" >
-				<input data-bind="textInput: userPassword" class="mdl-textfield__input" type="password" id="sample1">
-				<label class="mdl-textfield__label" for="sample1" style="">${ _strings.user_password }</label>
+				<input data-bind="textInput: userPassword" class="mdl-textfield__input" type="password" id="user_password">
+				<label class="mdl-textfield__label" for="user_password" style="">${ _strings.user_password }</label>
 			</div>
 			<a data-bind="attr: {href: '/resetpassword?retUrl=' + getRetUrl() }" class="forgot-password-link pull-right">
 				${ _strings.user_forgot_password }

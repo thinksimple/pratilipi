@@ -90,11 +90,13 @@ function ViewModel() {
 	var self = this;
 	var httpUtil = new HttpUtil();
 
+	self.userName = ko.observable( "" );
 	self.userEmail = ko.observable( "" );
 	self.userPassword = ko.observable( "" );
 	self.requestOnFlight = ko.observable( false );
+	self.agreedTerms = ko.observable( false );
 
-	self.login_from_google = function( data, event ) {
+	self.googleLogin = function( isRegister ) {
 		if( self.requestOnFlight() )
 			return;
 		self.requestOnFlight( true );
@@ -105,7 +107,7 @@ function ViewModel() {
 				function( response, status ) {
 					self.requestOnFlight( false );
 					if( status == 200 ) {
-						window.location.href = getRetUrl( true );
+						window.location.href = isRegister ? response[ "profilePageUrl" ] : getRetUrl( true );
 					} else {
 						alert( "Error: " + status + " - "
 								+ ( response != null && response[ "message" ] != null ? 
@@ -118,7 +120,7 @@ function ViewModel() {
 		}); 
 	};
 
-	self.login_from_fb = function() {
+	self.facebookLogin = function( isRegister ) {
 		if( self.requestOnFlight() )
 			return;
 		FB.login( function( fbResponse ) {
@@ -131,7 +133,7 @@ function ViewModel() {
 				function( response, status ) {
 					self.requestOnFlight( false );
 					if( status == 200 ) {
-						window.location.href = getRetUrl( true );
+						window.location.href = isRegister ? response[ "profilePageUrl" ] : getRetUrl( true );
 					} else {
 						alert( "Error: " + status + " - "
 								+ ( response != null && response[ "message" ] != null ? 
@@ -164,6 +166,7 @@ function ViewModel() {
 				if( status == 200 ) {
 					window.location.href = getRetUrl( true );
 				} else {
+					/* TODO: Multiple messages handling */
 					var message = null;
 					if( response[ "email" ] != null )
 						message = response[ "email" ];
@@ -177,8 +180,54 @@ function ViewModel() {
 				}
 		});
 	};
-	
-	/* TODO: Signup function */
+
+	self.register = function() {
+		if( self.requestOnFlight() )
+			return;
+		/* TODO: i18n on error messages */
+		if( self.userName() == null || self.userName().trim() == "" ) {
+			alert( "Please Enter your Name." );
+			return;
+		}
+		if( self.userEmail() == null || self.userEmail().trim() == "" ) {
+			alert( "Please Enter your Email." );
+			return;
+		}
+		if( self.userPassword() == null || self.userPassword().trim() == "" ) {
+			alert( "Please Enter your Password." );
+			return;
+		}
+		if( ! validateEmail( self.userEmail() ) ) {
+			alert( "Please Enter a valid Email." );
+			return;
+		}
+		if( ! self.agreedTerms() ) {
+			alert( "Please agree to our terms and conditions." );
+			return;
+		}
+		self.requestOnFlight( true );
+		httpUtil.post( "/api/user/register", { "name": self.userName(), "email": self.userEmail(), "password": self.userPassword() }, 
+			function( response, status ) {
+				self.requestOnFlight( false );
+				if( status == 200 ) {
+					window.location.href = response[ "profilePageUrl" ];
+				} else {
+					/* TODO: Multiple messages handling */
+					var message = null;
+					if( response[ "name" ] != null )
+						message = response[ "name" ];
+					else if( response[ "email" ] != null )
+						message = response[ "email" ];
+					else if( response[ "password" ] != null )
+						message = response[ "password" ];
+					else if( response[ "message" ] != null )
+						message = response[ "message" ];
+					else
+						message = "${ _strings.server_error_message }";
+					alert( "Error: " + status + " - " + message );
+				}
+		});
+	};
 }
 
 ko.applyBindings( new ViewModel() );

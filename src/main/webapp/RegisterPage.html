@@ -1,0 +1,66 @@
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>Pratilipi Register Page</title>
+	<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js'></script>
+	<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.red-light_blue.min.css" />
+	<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+	<link rel="stylesheet" href="pwa-stylesheets/css/styles.css?3" />
+</head>
+<body>
+	<div class="pratilipi-login-container">
+		<img class="pratilipi-logo" src="http://0.ptlp.co/resource-hi/logo/pratilipi_logo.png">
+		<h4 class="pratilipi-heading">${ _strings.user_sign_up_for_pratilipi }</h4>
+		<div class="pratilipi-content-container">
+			<button data-bind="{ click: function(){ facebookLogin( true ); }, disable: requestOnFlight }" 
+					type="submit" 
+					class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored pratilipi-fb-blue-button login-button">
+				<div class="sprites-icon login-sprite-icon-24 fb-icon"></div>
+				${ _strings.user_sign_in_with_facebook }
+			</button>
+			<button data-bind="{ click: function(){ googleLogin( true ); }, disable: requestOnFlight }" 
+					type="submit" 
+					class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect pratilipi-white-button pratilipi-fb-blue-button login-button">
+				<div class="sprites-icon login-sprite-icon-24 gplus-icon"></div>
+				${ _strings.user_sign_in_with_google }
+			</button>
+		</div>
+		<p class="login-or margin-zero">${ _strings.or }</p>
+		<form id="login_form" class="pratilipi-content-container margin-zero">
+			<div class="mdl-textfield mdl-js-textfield login-textfield" >
+				<input data-bind="textInput: userName" class="mdl-textfield__input" type="text" id="user_name">
+				<label class="mdl-textfield__label" for="user_name">${ _strings.user_full_name }</label>
+			</div>
+			<div class="mdl-textfield mdl-js-textfield login-textfield" >
+				<input data-bind="textInput: userEmail" class="mdl-textfield__input" type="email" id="user_email">
+				<label class="mdl-textfield__label" for="user_email">${ _strings.user_email }</label>
+			</div>
+			<div class="mdl-textfield mdl-js-textfield login-textfield" >
+				<input data-bind="textInput: userPassword" class="mdl-textfield__input" type="password" id="user_password">
+				<label class="mdl-textfield__label" for="user_password">${ _strings.user_password }</label>
+			</div>
+			<div class="clearfix"></div>
+			<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect terms-conditions" for="agree-terms-conditions">
+				<input data-bind="checked: agreedTerms" type="checkbox" id="agree-terms-conditions" class="mdl-checkbox__input" />
+				<span class="mdl-checkbox__label">
+					${ _strings.register_part_1 }
+					<a href="/privacy-policy" target="_blank">${ _strings.footer_privacy_policy }</a>
+					&nbsp;${ _strings.register_part_2 }&nbsp;
+					<a href="/terms-of-service" target="_blank">${ _strings.footer_terms_of_service }</a>
+					&nbsp;${ _strings.register_part_3 }</span>
+			</label>
+			<button data-bind="{ click: register, disable: requestOnFlight }" 
+					type="submit" 
+					class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored pratilipi-red-button login-button">${ _strings.user_sign_up }</button>
+			<div class="member-login">
+				<span class="text-muted">${ _strings.user_is_registered }&nbsp;</span>
+				<a data-bind="attr: {href: '/login?retUrl=' + getRetUrl() }" class="pratilipi-blue">${ _strings.user_to_sign_in }</a>
+			</div>
+		</form>
+	</div>
+</body>
+<script src="login.js?5"></script>
+</html>  

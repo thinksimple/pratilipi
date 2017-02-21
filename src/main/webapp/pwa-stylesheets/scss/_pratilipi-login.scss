@@ -50,6 +50,7 @@
 	}
 	
 	.pratilipi-heading {
+		line-height: 28px;
 	    margin-top: 10px;
 	}
 	
@@ -91,6 +92,15 @@
 	.margin-zero {
 	    margin: 0;
 	}
-   
+    .terms-conditions {
+		display: block;
+		margin: 16px 0;
+		a {
+			white-space: nowrap;
+		}
+    }
+    .member-login {
+    	margin: 12px 0;
+    }
 }
 

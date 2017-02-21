@@ -43,8 +43,14 @@
 				<div id="notificationContainer">
 					<div id="notificationTitle">${ _strings.notification_notifications }</div>
 					<div id="notificationsBody" class="notifications">
-						<div data-bind="visible: notificationsLoaded() == 'LOADING'">LOADING</div>
-						<div data-bind="visible: notificationsLoaded() == 'LOADED_EMPTY'">LOADED_EMPTY</div>
+						<!-- <div data-bind="visible: notificationsLoaded() == 'LOADING'"
+							class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></div> -->
+						<!-- <div data-bind="visible: notificationsLoaded() == 'LOADED_EMPTY'">
+								There are no notifications for you at this point of time. Please check later.
+							</div>  -->
+						<!-- <div data-bind="visible: notificationsLoaded == 'FAILED'">
+								Notifications failed to load. Please click here to re-load the notifications.
+							</div> -->
 						<ul data-bind="{ visible: notificationsLoaded() == 'LOADED',
 										foreach: {data: notificationList, as: 'notification'}}">
 							<li class="mdl-menu__item">
@@ -68,7 +74,6 @@
 								</a>
 							</li>
 						</ul>
-						<div data-bind="visible: notificationsLoaded == 'FAILED'">FAILED</div>
 					</div>
 					<div id="notificationFooter"><a href="/notifications">${ _strings.view_more }</a></div>
 				</div>
