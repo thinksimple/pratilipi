@@ -569,6 +569,7 @@ public class PratilipiSite extends HttpServlet {
 			dataModel = new HashMap<String, Object>();
 			dataModel.put( "title", "Unauthorized Access !" );
 			templateName = ( basicMode ? "error/AuthorizationErrorBasic.ftl" : "error/AuthorizationError.ftl" );
+			logger.log( Level.SEVERE, "Unauthorised Exception: ", e );
 			response.setStatus( HttpServletResponse.SC_UNAUTHORIZED );
 
 		} catch( InvalidArgumentException | UnexpectedServerException e ) {
@@ -576,6 +577,7 @@ public class PratilipiSite extends HttpServlet {
 			dataModel = new HashMap<String, Object>();
 			dataModel.put( "title", "Server Error !" );
 			templateName = ( basicMode ? "error/ServerErrorBasic.ftl" : "error/ServerError.ftl" );
+			logger.log( Level.SEVERE, "Service Unavailable: ", e );
 			response.setStatus( HttpServletResponse.SC_SERVICE_UNAVAILABLE );
 		}
 
@@ -1504,6 +1506,7 @@ public class PratilipiSite extends HttpServlet {
 	private Map<String, Object> createDataModelForListPage( PratilipiType type, String listName,
 			boolean basicMode, Language displayLanugage, Language filterLanguage,
 			HttpServletRequest request ) throws InsufficientAccessException, UnexpectedServerException {
+
 
 		String listTitle = null;
 		String listTitleEn = null;
