@@ -1558,7 +1558,10 @@ public class PratilipiSite extends HttpServlet {
 
 		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put( "title", SEOTitleUtil.getListPageTitle( listName, filterLanguage ) );
+		if( listName != null )
+			dataModel.put( "title", SEOTitleUtil.getListPageTitle( listName, filterLanguage ) );
+		else
+			dataModel.put( "title", I18n.getString( "pratilipi", filterLanguage ) );
 		dataModel.put( "pratilipiListTitle", listTitle );
 		if( basicMode ) {
 			dataModel.put( "pratilipiList", pratilipiListResponse.getPratilipiList() );
