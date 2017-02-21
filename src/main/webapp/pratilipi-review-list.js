@@ -1,11 +1,11 @@
 function() {
-    this.reviewList = ko.observableArray([]);
+    this.reviewList = ko.observableArray( [] );
     this.pratilipiId = getQueryVariable( "id" );
 //    this.userIsGuest = ko.observable();
     this.pushToReviewList = function( revList ) {
-      for( var i=0; i< revList.length; i++ ) {
-        this.reviewList.push( revList[i] );
-      }
+        for( var i=0; i< revList.length; i++ ) {
+            this.reviewList.push( revList[i] );
+        }
     }
     var self = this;
     
@@ -29,52 +29,42 @@ function() {
 //    };
     
     this.getReviewList = function() {
-
-      $.ajax({
-        type: 'get',
-        url: '<#if stage == "alpha">${ prefix }</#if>/api/userpratilipi/review/list?pratilipiId=' + self.pratilipiId + "&resultCount=3",
-        success: function( response ) {
-//          var res = jQuery.parseJSON( response );
-              var res = response;          
-              self.pushToReviewList( res["reviewList"] );
-        },
-        error: function( response ) {
-            console.log( response );
-            console.log( typeof( response ) );
-        }
-      });
+        $.ajax({
+            type: 'get',
+            url: '<#if stage == "alpha">${ prefix }</#if>/api/userpratilipi/review/list?pratilipiId=' + self.pratilipiId + "&resultCount=3",
+            success: function( response ) {
+    //          var res = jQuery.parseJSON( response );
+                var res = response;          
+                self.pushToReviewList( res[ "reviewList" ] );
+            },
+            error: function( response ) {
+                console.log( response );
+                console.log( typeof( response ) );
+            }
+        });
     };
-//    
-//    this.generateLikeAjaxRequest = function( item ) {
-//      $.ajax({
-//        type: 'post',
-//        url: '<#if stage == "alpha">${ prefix }</#if>/api/vote',
-//        data: {
-//          parentType: "REVIEW",
-//          parentId: item.userPratilipiId,
-//          type: item.isLiked ? "LIKE" : "NONE"
-//        }, 
-//        success: function( response ) {
-////          var res = jQuery.parseJSON( response );
-//          <#if stage == "alpha">
-//              var res = response;
-//          <#else>
-//              var res = jQuery.parseJSON( response );
-//          </#if>           
-//              console.log(res);
-//        },
-//        error: function( response ) {
-//            /* revert changes */
-//          if( item.isLiked ) {
-//            item.isLiked = false;
-//            item.likeCount--;
-//          } else {
-//              item.isLiked = true;
-//              item.likeCount++;
-//          }                    
-//        }
-//      });      
-//    };
 //    this.getUser();
     this.getReviewList();
+    
+    var dialog = document.querySelector( 'dialog' );
+//    var showDialogButton = document.querySelector( '.show' );
+    if ( !dialog.showModal ) {
+        dialogPolyfill.registerDialog( dialog );
+    }
+    
+    this.openReviewModal = function() {
+        componentHandler.upgradeDom();
+        dialog.showModal();
+    };
+   
+    this.hideReviewModal = function() {
+        dialog.close();
+    };    
+//    showDialogButton.addEventListener('click', function() {
+//        componentHandler.upgradeDom();
+//        dialog.showModal();
+//    });
+//    dialog.querySelector('.close').addEventListener('click', function() {
+//        dialog.close();
+//    });    
 }

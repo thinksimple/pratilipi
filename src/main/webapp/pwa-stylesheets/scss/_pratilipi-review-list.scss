@@ -1,3 +1,11 @@
 pratilipi-review-list {
 	width: 100%;
 }
+
+pratilipi-review-list {
+	dialog {
+		position: fixed !important;
+  		top: 50% !important;
+  		transform: translate(0, -50%);
+	}
+}
