@@ -38,26 +38,26 @@ public class InitDataUtil {
 
 		InitBannerDoc[] initBannerDocs = new InitBannerDoc[] {
 
-				docAccessor.newInitBannerDoc( "पढ़िए २०१६ की सुपरहीट कहानियाँ...", 
-						"pratilipi-hindi-carousel-44.jpg", 
-						"pratilipi-hindi-carousel-44-small.jpg", 
-						"/2016-ki-superhit-kahaniya",
+				docAccessor.newInitBannerDoc( "प्रेम कथाएं", 
+						"pratilipi-hindi-carousel-51.jpg", 
+						"pratilipi-hindi-carousel-51-small.jpg", 
+						"/lovestories",
 						"PratilipiListApi",
-						gson.fromJson( "{ \"language\":\"HINDI\", \"state\":\"PUBLISHED\", \"listName\":\"2016-ki-superhit-kahaniya\" }", JsonElement.class ).getAsJsonObject() ),
+						gson.fromJson( "{ \"language\":\"HINDI\", \"state\":\"PUBLISHED\", \"listName\":\"lovestories\" }", JsonElement.class ).getAsJsonObject() ),
 
 				docAccessor.newInitBannerDoc( "सस्पेंस और थ्रिलर कथाए", 
-						"pratilipi-hindi-carousel-45.jpg", 
-						"pratilipi-hindi-carousel-45-small.jpg", 
+						"pratilipi-hindi-carousel-52.jpg", 
+						"pratilipi-hindi-carousel-52-small.jpg", 
 						"/suspense-aur-thriller",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"HINDI\", \"state\":\"PUBLISHED\", \"listName\":\"suspense-aur-thriller\" }", JsonElement.class ).getAsJsonObject() ),
 
-				docAccessor.newInitBannerDoc( "प्रेम कथाएं", 
-						"pratilipi-hindi-carousel-47.jpg", 
-						"pratilipi-hindi-carousel-47-small.jpg", 
-						"/lovestories",
+				docAccessor.newInitBannerDoc( "नई प्रकाशित रचनाएं", 
+						"pratilipi-hindi-carousel-54.jpg", 
+						"pratilipi-hindi-carousel-54-small.jpg", 
+						"/nayi-prakashit-rachnaye",
 						"PratilipiListApi",
-						gson.fromJson( "{ \"language\":\"HINDI\", \"state\":\"PUBLISHED\", \"listName\":\"lovestories\" }", JsonElement.class ).getAsJsonObject() ),
+						gson.fromJson( "{ \"language\":\"HINDI\", \"state\":\"PUBLISHED\", \"listName\":\"nayi-prakashit-rachnaye\" }", JsonElement.class ).getAsJsonObject() ),
 
 		};
 		
@@ -68,26 +68,26 @@ public class InitDataUtil {
 		
 		initBannerDocs = new InitBannerDoc[] {
 
-				docAccessor.newInitBannerDoc( "વાંચો ૨૦૧૬ની સુપરહિટ વાર્તાઓ...", 
-						"pratilipi-gujarati-carousel-43.jpg", 
-						"pratilipi-gujarati-carousel-43-small.jpg", 
-						"/2016-ki-superhit",
+				docAccessor.newInitBannerDoc( "રોમાંસ", 
+						"pratilipi-gujarati-carousel-47.jpg", 
+						"pratilipi-gujarati-carousel-47-small.jpg", 
+						"/romance",
 						"PratilipiListApi",
-						gson.fromJson( "{ \"language\":\"GUJARATI\", \"state\":\"PUBLISHED\", \"listName\":\"2016-ki-superhit\" }", JsonElement.class ).getAsJsonObject() ),
+						gson.fromJson( "{ \"language\":\"GUJARATI\", \"state\":\"PUBLISHED\", \"listName\":\"romance\" }", JsonElement.class ).getAsJsonObject() ),
 
 				docAccessor.newInitBannerDoc( "રહસ્યમય અને રોમાંચક વાર્તાઓ", 
-						"pratilipi-gujarati-carousel-44.jpg", 
-						"pratilipi-gujarati-carousel-44-small.jpg", 
+						"pratilipi-gujarati-carousel-48.jpg", 
+						"pratilipi-gujarati-carousel-48-small.jpg", 
 						"/rahasyamay-ane-romanchak",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"GUJARATI\", \"state\":\"PUBLISHED\", \"listName\":\"rahasyamay-ane-romanchak\" }", JsonElement.class ).getAsJsonObject() ),
 
-				docAccessor.newInitBannerDoc( "રોમાંસ વાર્તાઓ", 
-						"pratilipi-gujarati-carousel-46.jpg", 
-						"pratilipi-gujarati-carousel-46-small.jpg", 
-						"/romance",
+				docAccessor.newInitBannerDoc( "નવી પ્રકાશિત રચનાઓ", 
+						"pratilipi-gujarati-carousel-50.jpg", 
+						"pratilipi-gujarati-carousel-50-small.jpg", 
+						"/navi-prakashit-rachnao",
 						"PratilipiListApi",
-						gson.fromJson( "{ \"language\":\"GUJARATI\", \"state\":\"PUBLISHED\", \"listName\":\"romance\" }", JsonElement.class ).getAsJsonObject() ),
+						gson.fromJson( "{ \"language\":\"GUJARATI\", \"state\":\"PUBLISHED\", \"listName\":\"navi-prakashit-rachnao\" }", JsonElement.class ).getAsJsonObject() ),
 
 		};
 			
@@ -128,26 +128,26 @@ public class InitDataUtil {
 		
 		initBannerDocs = new InitBannerDoc[] {
 
-				docAccessor.newInitBannerDoc( "२०१६ च्या सुपरहिट कथा...", 
-						"pratilipi-marathi-carousel-39.jpg", 
-						"pratilipi-marathi-carousel-39-small.jpg", 
-						"/2016-superhit-katha",
+				docAccessor.newInitBannerDoc( "प्रेम कथा", 
+						"pratilipi-marathi-carousel-43.jpg", 
+						"pratilipi-marathi-carousel-43-small.jpg", 
+						"/lovestories",
 						"PratilipiListApi",
-						gson.fromJson( "{ \"language\":\"MARATHI\", \"state\":\"PUBLISHED\", \"listName\":\"2016-superhit-katha\" }", JsonElement.class ).getAsJsonObject() ),
+						gson.fromJson( "{ \"language\":\"MARATHI\", \"state\":\"PUBLISHED\", \"listName\":\"lovestories\" }", JsonElement.class ).getAsJsonObject() ),
 
 				docAccessor.newInitBannerDoc( "रहस्य कथा", 
-						"pratilipi-marathi-carousel-40.jpg", 
-						"pratilipi-marathi-carousel-40-small.jpg", 
+						"pratilipi-marathi-carousel-44.jpg", 
+						"pratilipi-marathi-carousel-44-small.jpg", 
 						"/rahasyakatha",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"MARATHI\", \"state\":\"PUBLISHED\", \"listName\":\"rahasyakatha\" }", JsonElement.class ).getAsJsonObject() ),
 
-				docAccessor.newInitBannerDoc( "प्रेम कथा", 
-						"pratilipi-marathi-carousel-42.jpg", 
-						"pratilipi-marathi-carousel-42-small.jpg", 
-						"/lovestories",
+				docAccessor.newInitBannerDoc( "नवीन प्रकाशित साहित्य", 
+						"pratilipi-marathi-carousel-46.jpg", 
+						"pratilipi-marathi-carousel-46-small.jpg", 
+						"/newly-published-content",
 						"PratilipiListApi",
-						gson.fromJson( "{ \"language\":\"MARATHI\", \"state\":\"PUBLISHED\", \"listName\":\"lovestories\" }", JsonElement.class ).getAsJsonObject() ),
+						gson.fromJson( "{ \"language\":\"MARATHI\", \"state\":\"PUBLISHED\", \"listName\":\"newly-published-content\" }", JsonElement.class ).getAsJsonObject() ),
 
 		};
 			
@@ -195,26 +195,26 @@ public class InitDataUtil {
 		
 		initBannerDocs = new InitBannerDoc[] {
 
-				docAccessor.newInitBannerDoc( "পড়ুন ২০১৬র জনপ্রিয় সব কাহিনী", 
-						"pratilipi-bengali-carousel-40.jpg", 
-						"pratilipi-bengali-carousel-40-small.jpg", 
-						"/2016-superhit-stories",
+				docAccessor.newInitBannerDoc( "প্রেমকাহিনী", 
+						"pratilipi-bengali-carousel-44.jpg", 
+						"pratilipi-bengali-carousel-44-small.jpg", 
+						"/premkahini",
 						"PratilipiListApi",
-						gson.fromJson( "{ \"language\":\"BENGALI\", \"state\":\"PUBLISHED\", \"listName\":\"2016-superhit-stories\" }", JsonElement.class ).getAsJsonObject() ),
+						gson.fromJson( "{ \"language\":\"BENGALI\", \"state\":\"PUBLISHED\", \"listName\":\"premkahini\" }", JsonElement.class ).getAsJsonObject() ),
 
 				docAccessor.newInitBannerDoc( "রহস্যগল্প", 
-						"pratilipi-bengali-carousel-41.jpg", 
-						"pratilipi-bengali-carousel-41-small.jpg", 
+						"pratilipi-bengali-carousel-45.jpg", 
+						"pratilipi-bengali-carousel-45-small.jpg", 
 						"/rahashyogalpo",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"BENGALI\", \"state\":\"PUBLISHED\", \"listName\":\"rahashyogalpo\" }", JsonElement.class ).getAsJsonObject() ),
 
-				docAccessor.newInitBannerDoc( "প্রেমকাহিনী", 
-						"pratilipi-bengali-carousel-43.jpg", 
-						"pratilipi-bengali-carousel-43-small.jpg", 
-						"/premkahini",
+				docAccessor.newInitBannerDoc( "নতুন প্রকাশিত রচনা", 
+						"pratilipi-bengali-carousel-47.jpg", 
+						"pratilipi-bengali-carousel-47-small.jpg", 
+						"/natun-prakashito-rachona",
 						"PratilipiListApi",
-						gson.fromJson( "{ \"language\":\"BENGALI\", \"state\":\"PUBLISHED\", \"listName\":\"premkahini\" }", JsonElement.class ).getAsJsonObject() ),
+						gson.fromJson( "{ \"language\":\"BENGALI\", \"state\":\"PUBLISHED\", \"listName\":\"natun-prakashito-rachona\" }", JsonElement.class ).getAsJsonObject() ),
 
 		};
 			
