@@ -3,8 +3,8 @@
 		<h3 class="mdl-cell mdl-cell--12-col mdl-typography--headline">Reviews</h3>
         <div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero ">
 			<div class="mdl-grid padding-zero">
-				<div class="mdl-cell--6-col mdl-cell--4-col-tablet padding-zero">
-					<i class="material-icons material-icons-36">star_border</i><i class="material-icons material-icons-36">star_border</i><i class="material-icons material-icons-36">star_border</i><i class="material-icons material-icons-36">star_border</i><i class="material-icons material-icons-36">star_border</i>
+				<div class="mdl-cell--6-col mdl-cell--4-col-tablet padding-zero" data-bind="foreach: ko.utils.range( 1, maxRating )">
+					<i class="material-icons material-icons-36 clickableElement" data-bind="click: $parent.openReviewModalWithRating">star_border</i>
 				</div>
 				<div class="mdl-cell--6-col mdl-cell--4-col-tablet padding-zero">
                 	<button data-bind="click: openReviewModal" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect pull-right">Write a review</button>
@@ -21,16 +21,21 @@
 <dialog class="mdl-dialog">
 	<h3 class="mdl-dialog__title">Rate and Review</h3>
 	<div class="mdl-dialog__content">
-		<i class="material-icons material-icons-36">star_border</i><i class="material-icons material-icons-36">star_border</i><i class="material-icons material-icons-36">star_border</i><i class="material-icons material-icons-36">star_border</i><i class="material-icons material-icons-36">star_border</i>
+		<!-- ko foreach: ko.utils.range( 1, selectedReviewRating ) -->
+  			<i class="material-icons material-icons-36 clickableElement" data-bind="click: $parent.wassup.bind($data, $data)">star</i>
+  		<!-- /ko -->
+  		<!-- ko foreach: ko.utils.range( 1, emptyReviewRating ) -->
+  			<i class="material-icons material-icons-36 clickableElement" data-bind="click: $parent.wassup.bind($data, $data + $parent.selectedReviewRating() )">star_border</i>
+  		<!-- /ko -->
 		<form action="#">
 			<div class="mdl-textfield mdl-js-textfield">
-				<textarea class="mdl-textfield__input" type="text" rows= "3" id="review" ></textarea>
+				<textarea data-bind="textInput: newReviewContent" class="mdl-textfield__input" type="text" rows= "3" id="review" ></textarea>
 				<label class="mdl-textfield__label" for="review">Write Review</label>
 			</div>
 		</form>
 	</div>
 	<div class="mdl-dialog__actions">
-		<button class="mdl-button mdl-js-button mdl-button--colored mdl-js-ripple-effect mdl-button--raised">Save</button>
+		<button data-bind="click: postNewReview, disable: isSaveDisabled" class="mdl-button mdl-js-button mdl-button--colored mdl-js-ripple-effect mdl-button--raised">Save</button>
 		<button data-bind="click: hideReviewModal" class="mdl-button mdl-js-button mdl-js-ripple-effect close">Cancel</button>
 	</div>
 </dialog> 
