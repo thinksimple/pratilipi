@@ -28,12 +28,12 @@
 
 
 	<dispatch>
-		<url>*.gamma.pratilipi.com/*</url>
+		<url>gamma.prod-pratilipi.appspot.com/*</url>
 		<module>gamma</module>
 	</dispatch>
 
 	<dispatch>
-		<url>gamma.prod-pratilipi.appspot.com/*</url>
+		<url>*.gamma.pratilipi.com/*</url>
 		<module>gamma</module>
 	</dispatch>
 
