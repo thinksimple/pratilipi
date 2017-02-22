@@ -130,3 +130,29 @@ img.img-circle {
 .material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
 
 a:link, a:visited {text-decoration: none;}
+
+/*
+.page-loading-spinner {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+	z-index: 65535;
+	background-image: url(http://public.pratilipi.com/pratilipi-logo/png/Logo-2C-RGB-80px.png);
+	background-size: contain;
+	.mdl-spinner {
+		width: 56px;
+		height: 56px;
+	}
+	.mdl-spinner__circle {
+		border-width: 6px;
+	}
+	.mdl-spinner--single-color {
+		.mdl-spinner__layer-1, .mdl-spinner__layer-2, .mdl-spinner__layer-3, .mdl-spinner__layer-4 {
+			border-color: #d0021b;
+		}
+	}
+}
+*/

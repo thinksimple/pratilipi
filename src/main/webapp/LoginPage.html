@@ -30,11 +30,11 @@
 		</div>
 		<p class="login-or margin-zero">${ _strings.or }</p>
 		<form id="login_form" class="pratilipi-content-container margin-zero">
-			<div class="mdl-textfield mdl-js-textfield login-textfield" >
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 				<input data-bind="textInput: userEmail" class="mdl-textfield__input" type="text" id="user_email">
 				<label class="mdl-textfield__label" for="user_email" style="">${ _strings.user_email }</label>
 			</div>
-			<div class="mdl-textfield mdl-js-textfield login-textfield" >
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 				<input data-bind="textInput: userPassword" class="mdl-textfield__input" type="password" id="user_password">
 				<label class="mdl-textfield__label" for="user_password" style="">${ _strings.user_password }</label>
 			</div>
@@ -49,5 +49,6 @@
 		<div class="sign-up-link">${ _strings.user_is_new }&nbsp;&nbsp;<a data-bind="attr: {href: '/register?retUrl=' + getRetUrl() }" class="pratilipi-red">${ _strings.user_sign_up_for_pratilipi }</a></div>
 	</div>
 </body>
-<script src="login.js?5"></script>
+<script src="scripts.js"></script>
+<script src="login.js"></script>
 </html>  

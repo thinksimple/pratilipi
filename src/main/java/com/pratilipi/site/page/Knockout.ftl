@@ -21,7 +21,7 @@
 <#elseif action == "ten">
 	<#include "/RegisterPage.html">
 <#elseif action == "eleven">
-	<#include "/pwa11.html">	
+	<#include "/ResetPasswordPage.html">	
 <#elseif action == "twelve">
 	<#include "/pwa12.html">
 <#elseif action == "thirteen">
