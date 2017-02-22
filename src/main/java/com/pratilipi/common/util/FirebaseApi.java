@@ -86,7 +86,7 @@ public class FirebaseApi {
 		JsonObject notificationJson = new JsonObject();
 		notificationJson.addProperty( "body", message );
 		notificationJson.addProperty( "tag", tag );
-		notificationJson.addProperty( "sound", "default" );
+// 		notificationJson.addProperty( "sound", "default" );
 		notificationJson.addProperty( "icon", "ic_pratilipi_notification_icon" );
 		notificationJson.addProperty( "click_action", androidHandler );
 		
@@ -122,7 +122,7 @@ public class FirebaseApi {
 		JsonObject dataJson = new JsonObject();
 		dataJson.addProperty( "body", message );
 		dataJson.addProperty( "tag", tag );
-		dataJson.addProperty( "sound", "default" );
+// 		dataJson.addProperty( "sound", "default" );
 		dataJson.addProperty( "click_action", androidHandler );
 		dataJson.addProperty( "sourceId", sourceId );
 		dataJson.addProperty( "sourceImageUrl", sourceImageUrl );
