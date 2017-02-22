@@ -31,6 +31,12 @@ public class UserPratilipiEntity implements UserPratilipi {
 	@Index( IfNotNull.class )
 	private Date LAST_OPENED_DATE;
 
+	@Index( IfNotNull.class )
+	private Boolean ADDED_TO_LIB;
+	
+	@Index( IfNotNull.class )
+	private Date ADDED_TO_LIB_DATE;
+
 	
 	@Index( IfNotNull.class )
 	private Integer RATING;
@@ -51,14 +57,6 @@ public class UserPratilipiEntity implements UserPratilipi {
 	
 	@Index( IfNotNull.class )
 	private Long COMMENT_COUNT;
-
-	
-	@Index( IfNotNull.class )
-	private Boolean ADDED_TO_LIB;
-	
-	@Index( IfNotNull.class )
-	private Date ADDED_TO_LIB_DATE;
-
 	
 	
 	public UserPratilipiEntity() {}
@@ -130,6 +128,26 @@ public class UserPratilipiEntity implements UserPratilipi {
 	@Override
 	public void setLastOpenedDate( Date lastOpenedDate ) {
 		this.LAST_OPENED_DATE = lastOpenedDate;
+	}
+	
+	@Override
+	public Boolean isAddedToLib() {
+		return ADDED_TO_LIB == null ? false : ADDED_TO_LIB;
+	}
+
+	@Override
+	public void setAddedToLib( Boolean addedToLib ) {
+		this.ADDED_TO_LIB = addedToLib;
+	}
+
+	@Override
+	public Date getAddedToLibDate() {
+		return ADDED_TO_LIB_DATE;
+	}
+	
+	@Override
+	public void setAddedToLibDate( Date addedToLibDate ) {
+		this.ADDED_TO_LIB_DATE = addedToLibDate;
 	}
 
 
@@ -204,25 +222,4 @@ public class UserPratilipiEntity implements UserPratilipi {
 		this.COMMENT_COUNT = count;
 	}
 	
-	
-	@Override
-	public Boolean isAddedToLib() {
-		return ADDED_TO_LIB == null ? false : ADDED_TO_LIB;
-	}
-
-	@Override
-	public void setAddedToLib( Boolean addedToLib ) {
-		this.ADDED_TO_LIB = addedToLib;
-	}
-
-	@Override
-	public Date getAddedToLibDate() {
-		return ADDED_TO_LIB_DATE;
-	}
-	
-	@Override
-	public void setAddedToLibDate( Date addedToLibDate ) {
-		this.ADDED_TO_LIB_DATE = addedToLibDate;
-	}
-
 }

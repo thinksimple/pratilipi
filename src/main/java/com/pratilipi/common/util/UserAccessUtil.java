@@ -7,7 +7,7 @@ public class UserAccessUtil {
 	
 	private static final AccessType[] MEMBER_ACCESS = {
 			AccessType.PRATILIPI_ADD_REVIEW,
-			AccessType.USER_PRATILIPI_REVIEW, AccessType.USER_PRATILIPI_ADDED_TO_LIB,
+			AccessType.USER_PRATILIPI_REVIEW, AccessType.USER_PRATILIPI_LIBRARY,
 			AccessType.USER_AUTHOR_FOLLOWING,
 			AccessType.COMMENT_ADD, AccessType.COMMENT_UPDATE,
 			AccessType.VOTE };

@@ -17,10 +17,13 @@ public class UserPratilipiLibraryApi extends GenericApi {
 	
 	public static class PostRequest extends GenericRequest {
 
-		@Validate( required = true )
+		@Validate( required = true, minLong = 1L )
 		private Long pratilipiId;
 		
-		@Validate( required = true )
+		@Validate( minInt = 1 )
+		private Integer lastOpenedPage;
+		
+		@Validate
 		private Boolean addedToLib;
 
 	}
@@ -33,6 +36,7 @@ public class UserPratilipiLibraryApi extends GenericApi {
 		UserPratilipiData userPratilipiData = UserPratilipiDataUtil.saveUserPratilipiAddToLibrary(
 				AccessTokenFilter.getAccessToken().getUserId(),
 				request.pratilipiId,
+				request.lastOpenedPage,
 				request.addedToLib );
 
 		return new UserPratilipiApi.Response( userPratilipiData, UserPratilipiLibraryApi.class );

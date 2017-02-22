@@ -30,8 +30,10 @@ public enum AccessType {
 	BLOG_POST_ADD	( "Add BlogPost" ),
 	BLOG_POST_UPDATE( "Update BlogPost" ),
 
-	USER_PRATILIPI_REVIEW		( "Updating REVIEW field in USER_PRATILIPI." ),
+	USER_PRATILIPI_REVIEW		( "Updating RATING, REVIEW fields in USER_PRATILIPI." ),
+	@Deprecated
 	USER_PRATILIPI_ADDED_TO_LIB	( "Updating ADDED_TO_LIB field in USER_PRATILIPI." ),
+	USER_PRATILIPI_LIBRARY		( "Updating LAST_OPENED_PAGE, ADDED_TO_LIB fields in USER_PRATILIPI." ),
 	
 	USER_AUTHOR_FOLLOWING		( "Updating FOLLOWING field in USER_AUTHOR." ),
 	

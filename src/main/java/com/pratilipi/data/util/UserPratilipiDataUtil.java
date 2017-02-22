@@ -199,7 +199,7 @@ public class UserPratilipiDataUtil {
 		
 	}
 	
-	public static UserPratilipiData saveUserPratilipiAddToLibrary( Long userId, Long pratilipiId, Boolean addedToLibrary )
+	public static UserPratilipiData saveUserPratilipiAddToLibrary( Long userId, Long pratilipiId, Integer lastOpenedPage, Boolean addedToLibrary )
 			throws InsufficientAccessException, UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -211,18 +211,28 @@ public class UserPratilipiDataUtil {
 		}
 
 		
-		if( ! hasAccessToUpdateUserPratilipiData( userPratilipi, AccessType.USER_PRATILIPI_ADDED_TO_LIB ) )
+		if( lastOpenedPage == null && addedToLibrary == null )
+			return createUserPratilipiData( userPratilipi );
+		
+		if( ! hasAccessToUpdateUserPratilipiData( userPratilipi, AccessType.USER_PRATILIPI_LIBRARY ) )
 			throw new InsufficientAccessException();
 
 		
 		AuditLog auditLog = dataAccessor.newAuditLog(
 				AccessTokenFilter.getAccessToken(),
-				AccessType.USER_PRATILIPI_ADDED_TO_LIB,
+				AccessType.USER_PRATILIPI_LIBRARY,
 				userPratilipi );
 
-		userPratilipi.setAddedToLib( addedToLibrary );
-		userPratilipi.setAddedToLibDate( new Date() );
-
+		if( lastOpenedPage != null ) {
+			userPratilipi.setLastOpenedPage( lastOpenedPage );
+			userPratilipi.setLastOpenedDate( new Date() );
+		}
+		
+		if( addedToLibrary != null ) {
+			userPratilipi.setAddedToLib( addedToLibrary );
+			userPratilipi.setAddedToLibDate( new Date() );
+		}
+		
 		userPratilipi = dataAccessor.createOrUpdateUserPratilipi( userPratilipi, auditLog );
 		
 		
