@@ -10,7 +10,7 @@ import com.pratilipi.api.impl.pratilipi.PratilipiListV1Api;
 import com.pratilipi.api.impl.pratilipi.PratilipiListV2Api;
 import com.pratilipi.api.impl.pratilipi.PratilipiV1Api;
 import com.pratilipi.api.impl.pratilipi.PratilipiV2Api;
-import com.pratilipi.api.impl.user.UserApi;
+import com.pratilipi.api.impl.user.UserV1Api;
 import com.pratilipi.api.impl.user.UserLoginApi;
 import com.pratilipi.api.impl.userauthor.UserAuthorFollowListApi;
 import com.pratilipi.api.impl.userpratilipi.UserPratilipiApi;
@@ -193,7 +193,7 @@ public class AuthorApi extends GenericApi {
 
 		private Long authorId;
 
-		private UserApi.Response user;
+		private UserV1Api.Response user;
 		
 		private String firstName;
 		private String lastName;
@@ -247,7 +247,7 @@ public class AuthorApi extends GenericApi {
 				
 				this.authorId = authorData.getId();
 				
-				this.user = authorData.getUser() == null ? null : new UserApi.Response( authorData.getUser(), AuthorApi.class );
+				this.user = authorData.getUser() == null ? null : new UserV1Api.Response( authorData.getUser(), AuthorApi.class );
 				
 				this.firstName = authorData.getFirstName();
 				this.lastName = authorData.getLastName();
@@ -293,7 +293,7 @@ public class AuthorApi extends GenericApi {
 				
 				this.authorId = authorData.getId();
 				
-				this.user = authorData.getUser() == null ? null : new UserApi.Response( authorData.getUser(), clazz );
+				this.user = authorData.getUser() == null ? null : new UserV1Api.Response( authorData.getUser(), clazz );
 				
 				this.firstName = authorData.getFirstName();
 				this.lastName = authorData.getLastName();
@@ -375,7 +375,7 @@ public class AuthorApi extends GenericApi {
 							: authorData.getName();
 				} else {
 					this.authorId = authorData.getId();
-					this.user = new UserApi.Response( authorData.getUser(), clazz );
+					this.user = new UserV1Api.Response( authorData.getUser(), clazz );
 					this.name = authorData.getName() == null
 							? authorData.getNameEn()
 							: authorData.getName();
@@ -395,7 +395,7 @@ public class AuthorApi extends GenericApi {
 			return authorId;
 		}
 		
-		public UserApi.Response getUser() {
+		public UserV1Api.Response getUser() {
 			return user;
 		}
 		

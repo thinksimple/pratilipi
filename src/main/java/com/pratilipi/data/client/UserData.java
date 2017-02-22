@@ -20,6 +20,8 @@ public class UserData implements Serializable {
 
 	private String googleId;
 
+	private Boolean password;
+	
 	private String firstName;
 	
 	private String lastName;
@@ -99,6 +101,14 @@ public class UserData implements Serializable {
 
 	public void setGoogleId( String googleId ) {
 		this.googleId = googleId;
+	}
+	
+	public Boolean hasPassword() {
+		return password;
+	}
+
+	public void setPassword( Boolean password ) {
+		this.password = password ;
 	}
 	
 	public String getFirstName() {
