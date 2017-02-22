@@ -44,7 +44,6 @@ import com.pratilipi.api.impl.pratilipi.PratilipiStatsApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiV1Api;
 import com.pratilipi.api.impl.pratilipi.PratilipiV2Api;
 import com.pratilipi.api.impl.test.TestApi;
-import com.pratilipi.api.impl.user.UserV1Api;
 import com.pratilipi.api.impl.user.UserEmailApi;
 import com.pratilipi.api.impl.user.UserLoginApi;
 import com.pratilipi.api.impl.user.UserLoginFacebookApi;
@@ -52,6 +51,8 @@ import com.pratilipi.api.impl.user.UserLoginGoogleApi;
 import com.pratilipi.api.impl.user.UserLogoutApi;
 import com.pratilipi.api.impl.user.UserPasswordUpdateApi;
 import com.pratilipi.api.impl.user.UserRegisterApi;
+import com.pratilipi.api.impl.user.UserV1Api;
+import com.pratilipi.api.impl.user.UserV2Api;
 import com.pratilipi.api.impl.user.UserVerificationApi;
 import com.pratilipi.api.impl.userauthor.UserAuthorFollowListApi;
 import com.pratilipi.api.impl.userauthor.UserAuthorFollowV1Api;
@@ -115,7 +116,8 @@ public class ApiService extends GenericService {
 		ApiRegistry.register( BlogPostApi.class );					// *.pratilipi.com
 		ApiRegistry.register( BlogPostListApi.class );				// *.pratilipi.com
 		
-		ApiRegistry.register( UserV1Api.class );						// *.pratilipi.com
+		ApiRegistry.register( UserV1Api.class );					// *.pratilipi.com
+		ApiRegistry.register( UserV2Api.class );					// *.pratilipi.com
 		
 		ApiRegistry.register( UserPratilipiApi.class );				// *.pratilipi.com
 		ApiRegistry.register( UserPratilipiLibraryApi.class );		// *.pratilipi.com
