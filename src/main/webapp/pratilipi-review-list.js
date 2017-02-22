@@ -1,11 +1,23 @@
 function() {
     var self = this;
-    this.reviewList = ko.observableArray( [] );
     this.pratilipiId = getQueryVariable( "id" );
-    this.maxRating = 5;
+    this.maxRating = 5;    
+    this.firstLoadReviewCount = 5;
+    this.subsequentLoadReviewCount = 10;  
+    
+    this.reviewList = ko.observableArray( [] );
     this.selectedReviewRating = ko.observable( 0 );
     this.newReviewContent = ko.observable( "" );
     this.isSaveInProgress = ko.observable( false );
+    this.totalReviewsPresent = ko.observable( 0 );
+
+    this.totalReviewsShown = ko.computed(function() {
+        return this.reviewList().length;
+    }, this);
+    
+    this.areMoreReviews = ko.computed(function() {
+        return this.totalReviewsShown() < this.totalReviewsPresent();
+    }, this);
     
     this.isNewReviewRatingZero = function() {
       return this.selectedReviewRating() == 0;
@@ -26,10 +38,12 @@ function() {
         for( var i=0; i< revList.length; i++ ) {
             this.reviewList.push( revList[i] );
         }
-    }
+    };
+    
     this.addToReviewList = function( review ) {
         this.reviewList.unshift( review );
-    }   
+        this.settotalReviewsPresent( this.totalReviewsPresent() + 1 );
+    };  
 
 //    this.getUser = function() {
 //      $.ajax({
@@ -49,13 +63,40 @@ function() {
 //        }
 //      });      
 //    };
+    this.settotalReviewsPresent = function( count ) {
+        this.totalReviewsPresent( count );
+    };
     
     this.getReviewList = function() {
         $.ajax({
             type: 'get',
-            url: '<#if stage == "alpha">${ prefix }</#if>/api/userpratilipi/review/list?pratilipiId=' + self.pratilipiId + "&resultCount=3",
+            url: '<#if stage == "alpha">${ prefix }</#if>/api/userpratilipi/review/list',
+            data: {
+                pratilipiId: self.pratilipiId,
+                resultCount: self.firstLoadReviewCount
+            },
             success: function( response ) {
-    //          var res = jQuery.parseJSON( response );
+                var res = response;          
+                self.pushToReviewList( res[ "reviewList" ] );
+                self.settotalReviewsPresent( res["numberFound"] );
+            },
+            error: function( response ) {
+                console.log( response );
+                console.log( typeof( response ) );
+            }
+        });
+    };
+    
+    this.loadMoreReviews = function() {
+        $.ajax({
+            type: 'get',
+            url: '<#if stage == "alpha">${ prefix }</#if>/api/userpratilipi/review/list',
+            data: {
+                pratilipiId: self.pratilipiId,
+                resultCount: self.subsequentLoadReviewCount,
+                cursor: self.totalReviewsShown
+            },
+            success: function( response ) {
                 var res = response;          
                 self.pushToReviewList( res[ "reviewList" ] );
             },
@@ -64,7 +105,7 @@ function() {
                 console.log( typeof( response ) );
             }
         });
-    };
+    };    
 //    this.getUser();
     this.getReviewList();
     
@@ -117,6 +158,7 @@ function() {
             },
             complete: function() {
                 self.isSaveInProgress( false );
+                self.hideReviewModal();
                 /* hide add review?*/
 //                self.hideReplyState();
             }

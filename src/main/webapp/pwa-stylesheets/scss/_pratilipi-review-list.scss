@@ -8,4 +8,7 @@ pratilipi-review-list {
   		top: 50% !important;
   		transform: translate(0, -50%);
 	}
+	li.show-more {
+		list-style-type: none;
+	}
 }

@@ -15,6 +15,13 @@
 			<ul class="demo-list-three mdl-list" data-bind="foreach: reviewList">
 				<pratilipi-review params="value: $data"></pratilipi-review>								
 			</ul>
+			<li class="show-more" data-bind="if: areMoreReviews">
+				<div>
+				    <center>
+					    <button data-bind="click: loadMoreReviews" class="mdl-button mdl-js-button mdl-button--accent mdl-js-ripple-effect">Show more</button>
+					</center>
+				</div>
+			</li>
         </div>
     </div>
 </div>
