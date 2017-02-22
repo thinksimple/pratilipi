@@ -1,3 +1,5 @@
+/* TODO: Move these functions to different files and compress and minify */
+/* HttpUtil */
 var HttpUtil = function() {
 	function formatParams( params ) {
 		if( params == null ) return "";
@@ -8,26 +10,67 @@ var HttpUtil = function() {
 		var anHttpRequest = new XMLHttpRequest();
 		anHttpRequest.onreadystatechange = function() { 
 			if( anHttpRequest.readyState == 4 && aCallback != null )
-				aCallback( anHttpRequest.getResponseHeader( 'content-type' ).indexOf( "application/json;" ) 
-					? JSON.parse( anHttpRequest.responseText )
-					: anHttpRequest.responseText, anHttpRequest.status );
+				aCallback( anHttpRequest.getResponseHeader( 'content-type' ).indexOf( "application/json;" ) > -1 
+					? JSON.parse( anHttpRequest.responseText ) : anHttpRequest.responseText, 
+					anHttpRequest.status );
 		};
 		anHttpRequest.open( "GET", aUrl + "?" + formatParams( params ), true );
 		anHttpRequest.setRequestHeader( "Content-type", "application/x-www-form-urlencoded" );
-        anHttpRequest.send( null );
+		anHttpRequest.send( null );
 	};
 	this.post = function( aUrl, params, aCallback ) {
 		var anHttpRequest = new XMLHttpRequest();
-		anHttpRequest.onreadystatechange = function() {
-		    if( anHttpRequest.readyState == 4 && aCallback != null )
-		    	aCallback( JSON.parse( anHttpRequest.responseText ), anHttpRequest.status );
-		}
+		anHttpRequest.onreadystatechange = function() { 
+			if( anHttpRequest.readyState == 4 && aCallback != null )
+				aCallback( anHttpRequest.getResponseHeader( 'content-type' ).indexOf( "application/json;" ) > -1 
+					? JSON.parse( anHttpRequest.responseText ) : anHttpRequest.responseText, 
+					anHttpRequest.status );
+		};
 		anHttpRequest.open( "POST", aUrl, true );
 		anHttpRequest.setRequestHeader( "Content-type", "application/x-www-form-urlencoded" );
 		anHttpRequest.send( formatParams( params ) );
 	};
 }
 
+/* Toaster & SnackBar */
+var snackbarContainer = document.createElement( 'div' );
+snackbarContainer.id = "pratilipi-toast";
+snackbarContainer.className = "mdl-js-snackbar mdl-snackbar";
+snackbarContainer.innerHTML = '<div class="mdl-snackbar__text"></div><button class="mdl-snackbar__action" type="button"></button>';
+document.body.appendChild( snackbarContainer );
+
+var ToastUtil = (function() {
+	return {
+		closeToast: function( event ) {
+			/* snackbarContainer.MaterialSnackbar.cleanup_(); */
+			/* As cleanup_ is not part of the public api and buggy, we are not using it. */
+			/* Removing "mdl-snackbar--active" woduln't allow additional toasts to display until that long timeout is completed */
+			snackbarContainer.classList.remove( "mdl-snackbar--active" );
+		},
+		toast: function( message, timeout, includeCloseButton ) {
+			if( message == null ) return;
+			var data = { message: message,
+						timeout: timeout == null ? 2000 : timeout };
+			if( includeCloseButton ) {
+				data[ "actionHandler" ] = this.closeToast;
+				data[ "actionText" ] = "x";
+			}
+			snackbarContainer.MaterialSnackbar.showSnackbar( data );
+		},
+		toastUp: function( message ) {
+			var snackbarText = document.querySelector( '.mdl-snackbar__text' );
+			snackbarText.innerHTML = message;
+			snackbarContainer.classList.add( "mdl-snackbar--active" );
+		},
+		toastDown: function( count ) {
+			setTimeout( function() {
+				snackbarContainer.classList.remove( "mdl-snackbar--active" );
+			}, 50 );
+		}
+	};
+})();
+
+/* Helper functions */
 function getUrlParameter( variable ) {
 	var query = window.location.search.substring(1);
 	var vars = query.split( "&" );
