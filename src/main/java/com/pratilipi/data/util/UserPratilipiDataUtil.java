@@ -199,7 +199,7 @@ public class UserPratilipiDataUtil {
 		
 	}
 	
-	public static UserPratilipiData saveUserPratilipiAddToLibrary( Long userId, Long pratilipiId, Integer lastOpenedPage, Boolean addedToLibrary )
+	public static UserPratilipiData saveUserPratilipiAddToLibrary( Long userId, Long pratilipiId, String lastOpenedPage, Boolean addedToLibrary )
 			throws InsufficientAccessException, UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();

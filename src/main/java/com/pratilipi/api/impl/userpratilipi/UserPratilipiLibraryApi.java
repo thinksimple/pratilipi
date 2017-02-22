@@ -20,8 +20,8 @@ public class UserPratilipiLibraryApi extends GenericApi {
 		@Validate( required = true, minLong = 1L )
 		private Long pratilipiId;
 		
-		@Validate( minInt = 1 )
-		private Integer lastOpenedPage;
+		@Validate
+		private String lastOpenedPage;
 		
 		@Validate
 		private Boolean addedToLib;

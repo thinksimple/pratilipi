@@ -17,9 +17,9 @@ public interface UserPratilipi extends GenericOfyType {
 	void setPratilipiId( Long pratilipiId );
 
 	
-	Integer getLastOpenedPage();
+	String getLastOpenedPage();
 	
-	void setLastOpenedPage( Integer lastOpenedPage );
+	void setLastOpenedPage( String lastOpenedPage );
 
 	Date getLastOpenedDate();
 	

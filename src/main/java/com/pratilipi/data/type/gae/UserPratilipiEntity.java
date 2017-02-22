@@ -26,7 +26,7 @@ public class UserPratilipiEntity implements UserPratilipi {
 
 	
 	@Index( IfNotNull.class )
-	private Integer LAST_OPENED_PAGE;
+	private String LAST_OPENED_PAGE;
 	
 	@Index( IfNotNull.class )
 	private Date LAST_OPENED_DATE;
@@ -111,12 +111,12 @@ public class UserPratilipiEntity implements UserPratilipi {
 	
 
 	@Override
-	public Integer getLastOpenedPage() {
+	public String getLastOpenedPage() {
 		return LAST_OPENED_PAGE;
 	}
 	
 	@Override
-	public void setLastOpenedPage( Integer lastOpenedPage ) {
+	public void setLastOpenedPage( String lastOpenedPage ) {
 		this.LAST_OPENED_PAGE = lastOpenedPage;
 	}
 
