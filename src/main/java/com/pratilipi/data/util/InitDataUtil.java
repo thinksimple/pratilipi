@@ -129,15 +129,15 @@ public class InitDataUtil {
 		initBannerDocs = new InitBannerDoc[] {
 
 				docAccessor.newInitBannerDoc( "प्रेम कथा", 
-						"pratilipi-marathi-carousel-43.jpg", 
-						"pratilipi-marathi-carousel-43-small.jpg", 
+						"pratilipi-marathi-carousel-44.jpg", 
+						"pratilipi-marathi-carousel-44-small.jpg", 
 						"/lovestories",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"MARATHI\", \"state\":\"PUBLISHED\", \"listName\":\"lovestories\" }", JsonElement.class ).getAsJsonObject() ),
 
 				docAccessor.newInitBannerDoc( "रहस्य कथा", 
-						"pratilipi-marathi-carousel-44.jpg", 
-						"pratilipi-marathi-carousel-44-small.jpg", 
+						"pratilipi-marathi-carousel-43.jpg", 
+						"pratilipi-marathi-carousel-43-small.jpg", 
 						"/rahasyakatha",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"MARATHI\", \"state\":\"PUBLISHED\", \"listName\":\"rahasyakatha\" }", JsonElement.class ).getAsJsonObject() ),
