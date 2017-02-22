@@ -42,7 +42,7 @@ import com.pratilipi.api.impl.pratilipi.PratilipiContentV2Api;
 import com.pratilipi.api.impl.pratilipi.PratilipiContentV3Api;
 import com.pratilipi.api.impl.pratilipi.PratilipiListV2Api;
 import com.pratilipi.api.impl.pratilipi.PratilipiV2Api;
-import com.pratilipi.api.impl.user.UserApi;
+import com.pratilipi.api.impl.user.UserV1Api;
 import com.pratilipi.api.impl.userauthor.UserAuthorFollowListApi;
 import com.pratilipi.api.impl.userauthor.UserAuthorFollowV1Api;
 import com.pratilipi.api.impl.userpratilipi.UserPratilipiApi;
@@ -585,7 +585,7 @@ public class PratilipiSite extends HttpServlet {
 		// Adding common data to the Data Model
 		Gson gson = new Gson();
 		UserData userData = UserDataUtil.getCurrentUser();
-		UserApi.Response userResponse = new UserApi.Response( userData, UserApi.class );
+		UserV1Api.Response userResponse = new UserV1Api.Response( userData, UserV1Api.class );
 
 		Map<PratilipiType, Map<String, String>> pratilipiTypes = new HashMap<>();
 		for( PratilipiType pratilipiType : PratilipiType.values() ) {

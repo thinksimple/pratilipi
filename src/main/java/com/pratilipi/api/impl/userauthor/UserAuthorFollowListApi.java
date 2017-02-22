@@ -7,7 +7,7 @@ import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.impl.author.AuthorApi;
-import com.pratilipi.api.impl.user.UserApi;
+import com.pratilipi.api.impl.user.UserV1Api;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
@@ -52,7 +52,7 @@ public class UserAuthorFollowListApi extends GenericApi {
 	
 	public static class Response extends GenericResponse { 
 
-		private List<UserApi.Response> userList;
+		private List<UserV1Api.Response> userList;
 		private List<AuthorApi.Response> authorList;
 		private String cursor;
 		private Long numberFound;
@@ -65,7 +65,7 @@ public class UserAuthorFollowListApi extends GenericApi {
 			if( userList != null ) {
 				this.userList = new ArrayList<>( userList.size() ); 
 				for( UserData user : userList )
-					this.userList.add( new UserApi.Response( user, UserAuthorFollowListApi.class ) );
+					this.userList.add( new UserV1Api.Response( user, UserAuthorFollowListApi.class ) );
 				this.numberFound = numberFound;
 			}
 			
@@ -81,7 +81,7 @@ public class UserAuthorFollowListApi extends GenericApi {
 		}
 
 
-		public List<UserApi.Response> getUserList() {
+		public List<UserV1Api.Response> getUserList() {
 			return userList;
 		}
 

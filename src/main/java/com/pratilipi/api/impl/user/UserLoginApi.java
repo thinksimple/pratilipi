@@ -37,14 +37,14 @@ public class UserLoginApi extends GenericApi {
 	
 	
 	@Post
-	public UserApi.Response post( Request request )
+	public UserV1Api.Response post( Request request )
 			throws InvalidArgumentException, InsufficientAccessException {
 		
 		UserData userData = UserDataUtil.loginUser(
 				request.getEmail(),
 				request.getPassword() );
 		
-		return new UserApi.Response( userData, UserLoginApi.class );
+		return new UserV1Api.Response( userData, UserLoginApi.class );
 
 	}
 	

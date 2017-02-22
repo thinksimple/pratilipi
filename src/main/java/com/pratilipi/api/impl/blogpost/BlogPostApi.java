@@ -7,7 +7,7 @@ import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.annotation.Validate;
-import com.pratilipi.api.impl.user.UserApi;
+import com.pratilipi.api.impl.user.UserV1Api;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
@@ -62,7 +62,7 @@ public class BlogPostApi extends GenericApi {
 		private String content;
 		
 		private BlogPostState state;
-		private UserApi.Response createdBy;
+		private UserV1Api.Response createdBy;
 		private Long creationDateMillis;
 		private Long lastUpdatedMillis;
 		
@@ -81,7 +81,7 @@ public class BlogPostApi extends GenericApi {
 			this.content = blogPostData.getContent();
 			this.state = blogPostData.getState();
 			if( blogPostData.getCreatedBy() != null )
-				this.createdBy = new UserApi.Response( blogPostData.getCreatedBy(), BlogPostApi.class );
+				this.createdBy = new UserV1Api.Response( blogPostData.getCreatedBy(), BlogPostApi.class );
 			this.creationDateMillis = blogPostData.getCreationDate().getTime();
 			this.lastUpdatedMillis = blogPostData.getLastUpdated().getTime();
 			this.pageUrl = blogPostData.getPageUrl();
@@ -98,7 +98,7 @@ public class BlogPostApi extends GenericApi {
 					this.content = HtmlUtil.toPlainText( blogPostData.getContent() );
 				this.state = blogPostData.getState();
 				if( blogPostData.getCreatedBy() != null )
-					this.createdBy = new UserApi.Response( blogPostData.getCreatedBy(), clazz );
+					this.createdBy = new UserV1Api.Response( blogPostData.getCreatedBy(), clazz );
 				this.creationDateMillis = blogPostData.getCreationDate().getTime();
 				this.lastUpdatedMillis = blogPostData.getLastUpdated().getTime();
 				this.pageUrl = blogPostData.getPageUrl();
@@ -133,7 +133,7 @@ public class BlogPostApi extends GenericApi {
 			return state;
 		}
 		
-		public UserApi.Response getCreatedBy() {
+		public UserV1Api.Response getCreatedBy() {
 			return createdBy;
 		}
 		

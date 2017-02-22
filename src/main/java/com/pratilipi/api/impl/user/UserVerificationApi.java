@@ -35,7 +35,7 @@ public class UserVerificationApi extends GenericApi {
 
 	
 	@Post
-	public UserApi.Response post( PostRequest request )
+	public UserV1Api.Response post( PostRequest request )
 			throws InvalidArgumentException, InsufficientAccessException {
 		
 		UserDataUtil.verifyUserEmail(
@@ -46,7 +46,7 @@ public class UserVerificationApi extends GenericApi {
 				request.getEmail(),
 				request.getVerificationToken() );
 		
-		return new UserApi.Response( userData, UserVerificationApi.class );
+		return new UserV1Api.Response( userData, UserVerificationApi.class );
 		
 	}
 	

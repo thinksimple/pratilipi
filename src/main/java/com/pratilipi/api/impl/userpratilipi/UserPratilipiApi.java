@@ -6,7 +6,7 @@ import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
 import com.pratilipi.api.annotation.Validate;
-import com.pratilipi.api.impl.user.UserApi;
+import com.pratilipi.api.impl.user.UserV1Api;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -44,7 +44,7 @@ public class UserPratilipiApi extends GenericApi {
 		@Deprecated
 		private String userProfilePageUrl;
 		
-		private UserApi.Response user;
+		private UserV1Api.Response user;
 		
 		private Integer rating;
 		private String review;
@@ -83,7 +83,7 @@ public class UserPratilipiApi extends GenericApi {
 				userImageUrl = userPratilipiData.getUserImageUrl();
 				userProfilePageUrl = userPratilipiData.getUserProfilePageUrl();
 
-				user = new UserApi.Response( userPratilipiData.getUser(), UserPratilipiApi.class );
+				user = new UserV1Api.Response( userPratilipiData.getUser(), UserPratilipiApi.class );
 				
 				rating = userPratilipiData.getRating();
 				review = userPratilipiData.getReview();
@@ -107,7 +107,7 @@ public class UserPratilipiApi extends GenericApi {
 				userImageUrl = userPratilipiData.getUserImageUrl();
 				userProfilePageUrl = userPratilipiData.getUserProfilePageUrl();
 	
-				user = new UserApi.Response( userPratilipiData.getUser(), clazz );
+				user = new UserV1Api.Response( userPratilipiData.getUser(), clazz );
 				
 				rating = userPratilipiData.getRating();
 				review = userPratilipiData.getReview();
@@ -156,7 +156,7 @@ public class UserPratilipiApi extends GenericApi {
 		}
 		
 
-		public UserApi.Response getUser() {
+		public UserV1Api.Response getUser() {
 			return user;
 		}
 		

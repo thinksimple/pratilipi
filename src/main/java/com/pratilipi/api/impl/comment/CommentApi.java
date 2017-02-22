@@ -4,7 +4,7 @@ import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.annotation.Validate;
-import com.pratilipi.api.impl.user.UserApi;
+import com.pratilipi.api.impl.user.UserV1Api;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.InsufficientAccessException;
@@ -44,7 +44,7 @@ public class CommentApi extends GenericApi {
 		
 		private Long commentId;
 		
-		private UserApi.Response user;
+		private UserV1Api.Response user;
 		
 		private CommentParentType parentType;
 		private String parentId;
@@ -64,7 +64,7 @@ public class CommentApi extends GenericApi {
 		
 		Response( CommentData commentData ) {
 			this.commentId = commentData.getId();
-			this.user = new UserApi.Response( commentData.getUser(), CommentApi.class );
+			this.user = new UserV1Api.Response( commentData.getUser(), CommentApi.class );
 			this.parentType = commentData.getParentType();
 			this.parentId = commentData.getParentId();
 			this.content = commentData.getContent();

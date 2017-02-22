@@ -40,7 +40,7 @@ public class UserRegisterApi extends GenericApi {
 	
 	
 	@Post
-	public UserApi.Response post( PostRequest request )
+	public UserV1Api.Response post( PostRequest request )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
 		String firstName = request.name.trim();
@@ -82,7 +82,7 @@ public class UserRegisterApi extends GenericApi {
 		TaskQueueFactory.getAuthorTaskQueue().add( task3 );
 
 		
-		return new UserApi.Response( userData, UserRegisterApi.class );
+		return new UserV1Api.Response( userData, UserRegisterApi.class );
 		
 	}
 	

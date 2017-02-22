@@ -3,8 +3,6 @@ package com.pratilipi.api.impl.user;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
-import com.pratilipi.api.annotation.Post;
-import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.impl.author.AuthorApi;
 import com.pratilipi.api.impl.author.AuthorListApi;
 import com.pratilipi.api.impl.blogpost.BlogPostApi;
@@ -15,55 +13,25 @@ import com.pratilipi.api.impl.userpratilipi.UserPratilipiApi;
 import com.pratilipi.api.impl.userpratilipi.UserPratilipiReviewListApi;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
-import com.pratilipi.common.exception.InsufficientAccessException;
-import com.pratilipi.common.exception.InvalidArgumentException;
-import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.UserState;
-import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.client.UserData;
-import com.pratilipi.data.util.AuthorDataUtil;
 import com.pratilipi.data.util.UserDataUtil;
-import com.pratilipi.filter.AccessTokenFilter;
 import com.pratilipi.filter.UxModeFilter;
-import com.pratilipi.taskqueue.Task;
-import com.pratilipi.taskqueue.TaskQueueFactory;
 
 @SuppressWarnings("serial")
-@Bind( uri= "/user" )
-public class UserApi extends GenericApi {
+@Bind( uri= "/user", ver = "2" )
+public class UserV2Api extends UserV1Api {
 
-	public static class PostRequest extends GenericRequest {
-		
-		// userId == null, User updating his/her own data
-		// userId == 0L, AEE adding new User
-		// userId > 0L, AEE updating data on User's behalf
-		@Validate( minLong = 0L )
-		private Long userId;
+	public static class GetRequest extends GenericRequest {}
 
-		private String name;
-		private boolean hasName;
-
-		@Validate( regEx = REGEX_EMAIL, regExErrMsg = ERR_EMAIL_INVALID )
-		private String email;
-		private boolean hasEmail;
-
-		@Validate( regEx = REGEX_PHONE, regExErrMsg = ERR_PHONE_INVALID )
-		private String phone;
-		private boolean hasPhone;
-
-		private Language language;
-		private boolean hasLanguage;
-
-	}
-
+	
 	@SuppressWarnings("unused")
 	public static class Response extends GenericResponse {
 		
 		private Long userId;
-		@Deprecated
-		private Long authorId;
 		private AuthorApi.Response author;
 		private String displayName;
+		private Boolean password;
 		private String email;
 		private String phone;
 		private UserState state;
@@ -82,13 +50,9 @@ public class UserApi extends GenericApi {
 		
 		private Response() {}
 		
-		private Response( UserData userData ) {
-			this( userData, UserApi.class );
-		}
-		
 		public Response( UserData userData, Class<? extends GenericApi> clazz ) {
 			
-			if( clazz == UserApi.class
+			if( clazz == UserV2Api.class
 					|| clazz == UserLoginApi.class || clazz == UserLoginFacebookApi.class || clazz == UserLoginGoogleApi.class
 					|| clazz == UserLogoutApi.class
 					|| clazz == UserRegisterApi.class
@@ -96,9 +60,9 @@ public class UserApi extends GenericApi {
 					|| clazz == UserVerificationApi.class ) {
 				
 				this.userId = userData.getId();
-				this.authorId = userData.getAuthor().getId();
 				this.author = new AuthorApi.Response( userData.getAuthor(), UserLoginApi.class );
 				this.displayName = userData.getDisplayName();
+				this.password = userData.hasPassword();
 				this.email = userData.getEmail();
 				this.phone = userData.getPhone();
 				this.state = userData.getState();
@@ -213,82 +177,8 @@ public class UserApi extends GenericApi {
 
 
 	@Get
-	public Response get( GenericRequest request ) {
-		return new Response( UserDataUtil.getCurrentUser(), UserApi.class );
-	}
-
-	@Post
-	public Response post( PostRequest request )
-			throws InvalidArgumentException, InsufficientAccessException {
-
-		UserData userData = request.userId == null
-				? new UserData( AccessTokenFilter.getAccessToken().getUserId() )
-				: new UserData( request.userId.equals( 0L ) ? null : request.userId );
-
-		if( request.hasName ) {
-			String firstName = request.name.trim();
-			String lastName = null;
-			if( firstName.lastIndexOf( ' ' ) != -1 ) {
-				lastName = firstName.substring( firstName.lastIndexOf( ' ' ) + 1 );
-				firstName = firstName.substring( 0, firstName.lastIndexOf( ' ' ) );
-			}
-			userData.setFirstName( firstName );
-			userData.setLastName( lastName );
-		}
-		if( request.hasEmail )
-			userData.setEmail( request.email );
-		if( request.hasPhone )
-			userData.setPhone( request.phone );
-		if( request.hasLanguage )
-			userData.setLanguage( request.language );
-		
-		// Save UserData
-		userData = UserDataUtil.saveUserData( userData );
-
-		
-		// New User (added by AEE)
-		if( request.userId != null && request.userId.equals( 0L ) ) {
-			
-			// Create Author profile for the User
-			Long authorId = AuthorDataUtil.createAuthorProfile(
-					userData,
-					request.language == null ? UxModeFilter.getFilterLanguage() : request.language );
-			
-			userData.setAuthor( new AuthorData( authorId ) );
-			userData.setProfilePageUrl( "/author/" + authorId );
-
-			// Send welcome mail to the user
-			Task task = TaskQueueFactory.newTask()
-					.setUrl( "/user/email" )
-					.addParam( "userId", userData.getId().toString() )
-					.addParam( "language", request.language == null ? UxModeFilter.getDisplayLanguage().toString() : request.language.toString() )
-					.addParam( "sendWelcomeMail", "true" );
-			TaskQueueFactory.getUserTaskQueue().add( task );
-			
-		}
-
-
-		// Send verification mail if user updates his email and state is REGISTERED
-		if( request.hasEmail && userData.getState() == UserState.REGISTERED ) {
-			Task task = TaskQueueFactory.newTask()
-					.setUrl( "/user/email" )
-					.addParam( "userId", userData.getId().toString() )
-					.addParam( "language", ( userData.getLanguage() == null ? Language.ENGLISH : userData.getLanguage() ).toString() )
-					.addParam( "sendEmailVerificationMail", "true" );
-			TaskQueueFactory.getUserTaskQueue().add( task );
-		}
-		
-		
-		// Process Author data
-		Task task = TaskQueueFactory.newTask()
-				.setUrl( "/author/process" )
-				.addParam( "authorId", userData.getAuthor().getId().toString() )
-				.addParam( "processData", "true" );
-		TaskQueueFactory.getAuthorTaskQueue().add( task );
-		
-		
-		return new Response( userData );
-		
+	public Response get( GetRequest request ) {
+		return new Response( UserDataUtil.getCurrentUser(), UserV2Api.class );
 	}
 	
 }

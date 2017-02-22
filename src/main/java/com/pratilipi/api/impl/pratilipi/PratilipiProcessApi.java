@@ -13,6 +13,7 @@ import com.pratilipi.api.annotation.Post;
 import com.pratilipi.api.impl.pratilipi.shared.PostPratilipiProcessRequest;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
+import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.AuthorState;
@@ -139,7 +140,7 @@ public class PratilipiProcessApi extends GenericApi {
 	
 	@Post
 	public GenericResponse postPratilipiProcess( PostPratilipiProcessRequest request )
-			throws InvalidArgumentException, UnexpectedServerException {
+			throws InvalidArgumentException, UnexpectedServerException, InsufficientAccessException {
 
 		List<Long> pratilipiIdList = request.getPratilipiIdList() != null ? request.getPratilipiIdList() : new ArrayList<Long>( 1 );
 		if( request.getPratilipiId() != null )

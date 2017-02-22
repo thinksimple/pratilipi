@@ -12,10 +12,10 @@ import com.pratilipi.data.util.UserDataUtil;
 public class UserLogoutApi extends GenericApi {
 
 	@Get
-	public UserApi.Response post( GenericRequest request )
+	public UserV1Api.Response post( GenericRequest request )
 			throws InvalidArgumentException {
 		
-		return new UserApi.Response( UserDataUtil.logoutUser(), UserLoginApi.class );
+		return new UserV1Api.Response( UserDataUtil.logoutUser(), UserLoginApi.class );
 		
 	}
 	

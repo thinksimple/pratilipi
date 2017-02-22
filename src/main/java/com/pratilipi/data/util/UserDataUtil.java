@@ -130,6 +130,7 @@ public class UserDataUtil {
 		
 		UserData userData = new UserData( user.getId() );
 		userData.setFacebookId( user.getFacebookId() );
+		userData.setPassword( user.getPassword() != null );
 		userData.setEmail( user.getEmail() );
 		userData.setPhone( user.getPhone() );
 		userData.setLanguage( user.getLanguage() );

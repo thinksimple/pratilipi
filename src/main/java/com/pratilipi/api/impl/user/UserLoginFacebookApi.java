@@ -35,7 +35,7 @@ public class UserLoginFacebookApi extends GenericApi {
 	}
 	
 	@Post
-	public UserApi.Response post( PostRequest request )
+	public UserV1Api.Response post( PostRequest request )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 		
 		UserData userData = UserDataUtil.loginFacebookUser(
@@ -83,7 +83,7 @@ public class UserLoginFacebookApi extends GenericApi {
 		TaskQueueFactory.getUserTaskQueue().addAll( taskList );
 
 		
-		return new UserApi.Response( userData, UserLoginFacebookApi.class );
+		return new UserV1Api.Response( userData, UserLoginFacebookApi.class );
 	
 	}
 

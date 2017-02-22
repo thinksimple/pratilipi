@@ -50,7 +50,7 @@ public class UserPasswordUpdateApi extends GenericApi {
 	
 	
 	@Post
-	public UserApi.Response post( PostRequest request )
+	public UserV1Api.Response post( PostRequest request )
 			throws InvalidArgumentException, InsufficientAccessException {
 		
 		UserData userData;
@@ -69,7 +69,7 @@ public class UserPasswordUpdateApi extends GenericApi {
 			throw new InvalidArgumentException( GenericRequest.ERR_INSUFFICIENT_ARGS );
 		}
 		
-		return new UserApi.Response( userData, UserPasswordUpdateApi.class );
+		return new UserV1Api.Response( userData, UserPasswordUpdateApi.class );
 		
 	}
 	

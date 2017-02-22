@@ -33,7 +33,7 @@ public class UserLoginGoogleApi extends GenericApi {
 
 	
 	@Post
-	public UserApi.Response post( PostRequest request )
+	public UserV1Api.Response post( PostRequest request )
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 
 		UserData userData = UserDataUtil.loginGoogleUser(
@@ -65,7 +65,7 @@ public class UserLoginGoogleApi extends GenericApi {
 			
 		}
 
-		return new UserApi.Response( userData, UserLoginGoogleApi.class );
+		return new UserV1Api.Response( userData, UserLoginGoogleApi.class );
 
 	}
 
