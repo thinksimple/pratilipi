@@ -23,15 +23,15 @@ public class SiteElementUtil {
 
 		String elementFolderName = args[0];
 		String i18nElementFolderNamePrefix = args[1];
-		
-		
+		String framework = args[2];
+
 		for( Language language : Language.values() ) {
 
 			File elementFolder = new File( elementFolderName );
 			for( String elementName : elementFolder.list() ) {
 				if( ! elementName.endsWith( ".html" ) )
 					continue;
-				
+
 				File element = new File( elementFolder, elementName );
 				if( element.isDirectory() )
 					continue;
@@ -46,12 +46,21 @@ public class SiteElementUtil {
 				dataModel.put( "_strings", I18n.getStrings( language ) );
 
 				// I18n element file output stream
-				File i18nElementFolder = new File( i18nElementFolderNamePrefix + language.getCode() );
-				i18nElementFolder.mkdir();
-				File i18nElement = new File( i18nElementFolder, elementName );
-				i18nElement.createNewFile();
+				File i18nElement = null;
+				if( framework.equals( "polymer" ) ) {
+					File i18nElementFolder = new File( i18nElementFolderNamePrefix + language.getCode() );
+					i18nElementFolder.mkdir();
+					i18nElement = new File( i18nElementFolder, elementName );
+					i18nElement.createNewFile();
+
+				} else if( framework.equals( "knockout" ) ) {
+					String elName = elementName.substring( 0, elementName.indexOf( ".html" ) ) + "-" + language.getCode() + ".html";
+					i18nElement = new File( i18nElementFolderNamePrefix, elName );
+					i18nElement.createNewFile();
+				}
+
 				OutputStreamWriter i18nElementOS = new OutputStreamWriter( new FileOutputStream( i18nElement ), "UTF-8" );
-				
+
 				// The magic
 				FreeMarkerUtil.processTemplate(
 						dataModel,
