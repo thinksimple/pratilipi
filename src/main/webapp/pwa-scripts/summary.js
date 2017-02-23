@@ -7,8 +7,7 @@ function AppViewModel() {
             type: 'get',
             url: '/api/user',
             success: function( response ) {
-                var res = jQuery.parseJSON( response );   
-                self.userIsGuest( res["isGuest"] );
+                self.userIsGuest( response["isGuest"] );
 //                  self.userIsGuest( false );
             },
             error: function( response ) {
