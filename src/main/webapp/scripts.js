@@ -10,9 +10,8 @@ var HttpUtil = function() {
 		var anHttpRequest = new XMLHttpRequest();
 		anHttpRequest.onreadystatechange = function() { 
 			if( anHttpRequest.readyState == 4 && aCallback != null )
-				aCallback( anHttpRequest.getResponseHeader( 'content-type' ).indexOf( "application/json;" ) > -1 
-					? JSON.parse( anHttpRequest.responseText ) : anHttpRequest.responseText, 
-					anHttpRequest.status );
+				/* anHttpRequest.getResponseHeader( 'content-type' ).indexOf( "application/json;" ) */
+				aCallback( JSON.parse( anHttpRequest.responseText ), anHttpRequest.status );
 		};
 		anHttpRequest.open( "GET", aUrl + ( aUrl.indexOf( "?" ) > -1 ? "&" : "?" ) + this.formatParams( params ), true );
 		anHttpRequest.setRequestHeader( "Content-type", "application/x-www-form-urlencoded" );
@@ -38,16 +37,19 @@ var DataAccessor = function() {
 	var httpUtil = new HttpUtil();
 
 	var API_PREFIX = "/api";
+/*	var API_PREFIX = "http://hindi.gamma.pratilipi.com/api"; */
 
 	var PAGE_API = "/page";
 	var PRATILIPI_API = "/pratilipi?_apiVer=2";
 	var USER_PRATILIPI_API = "/userpratilipi";
+	var AUTHOR_API = "/author";
+	var USER_AUTHOR_FOLLOW_API = "/userauthor/follow?_apiVer=2";
 
 	var request = function( name, api, params ) {
 		return {
 			"name": name,
 			"api": api,
-			"params": httpUtil.formatParams( params )
+			"params": encodeURIComponent( httpUtil.formatParams( params ) )
 		};
     };
 
@@ -93,6 +95,43 @@ var DataAccessor = function() {
 					var pratilipi = response.req1.status == 200 ? response.req1.response : null;
 					var userpratilipi = includeUserPratilipi && response.req2.status == 200 ? response.req2.response : null; 
 					aCallBack( pratilipi, userpratilipi );
+				}
+		});
+	}
+
+	this.getAuthorByUri = function( pageUri, includeUserAuthor, aCallBack ) {
+
+		var requests = [];
+		requests.push( new request( "req1", PAGE_API, { "uri": pageUri } ) );
+		requests.push( new request( "req2", AUTHOR_API, { "authorId": "$req1.primaryContentId" } ) );
+
+		if( includeUserAuthor )
+			requests.push( new request( "req3", USER_AUTHOR_FOLLOW_API, { "authorId": "$req1.primaryContentId" } ) );
+
+		httpUtil.get( API_PREFIX, { "requests": processRequests( requests ) }, 
+			function( response, status ) {
+				if( aCallBack != null ) {
+					var author = response.req2.status == 200 ? response.req2.response : null;
+					var userauthor = includeUserAuthor && response.req3.status == 200 ? response.req3.response : null; 
+					aCallBack( author, userauthor );
+				}
+		});
+	}
+
+	this.getAuthorById = function( authorId, includeUserAuthor, aCallBack ) {
+
+		var requests = [];
+		requests.push( new request( "req1", AUTHOR_API, { "authorId": authorId } ) );
+
+		if( includeUserAuthor )
+			requests.push( new request( "req2", USER_AUTHOR_FOLLOW_API, { "authorId": authorId } ) );
+
+		httpUtil.get( API_PREFIX, { "requests": processRequests( requests ) }, 
+			function( response, status ) {
+				if( aCallBack != null ) {
+					var author = response.req1.status == 200 ? response.req1.response : null;
+					var userauthor = includeUserAuthor && response.req2.status == 200 ? response.req2.response : null; 
+					aCallBack( author, userauthor );
 				}
 		});
 	}
