@@ -1,7 +1,7 @@
 /* TODO: Move these functions to different files and compress and minify */
 /* HttpUtil */
 var HttpUtil = function() {
-	function formatParams( params ) {
+	this.formatParams = function( params ) {
 		if( params == null ) return "";
 		if( typeof( params ) === "string" ) return params;
 		return Object.keys( params ).map( function(key) { return key + "=" + params[key] }).join("&");
@@ -14,7 +14,7 @@ var HttpUtil = function() {
 					? JSON.parse( anHttpRequest.responseText ) : anHttpRequest.responseText, 
 					anHttpRequest.status );
 		};
-		anHttpRequest.open( "GET", aUrl + "?" + formatParams( params ), true );
+		anHttpRequest.open( "GET", aUrl + ( aUrl.indexOf( "?" ) > -1 ? "&" : "?" ) + this.formatParams( params ), true );
 		anHttpRequest.setRequestHeader( "Content-type", "application/x-www-form-urlencoded" );
 		anHttpRequest.send( null );
 	};
@@ -28,8 +28,60 @@ var HttpUtil = function() {
 		};
 		anHttpRequest.open( "POST", aUrl, true );
 		anHttpRequest.setRequestHeader( "Content-type", "application/x-www-form-urlencoded" );
-		anHttpRequest.send( formatParams( params ) );
+		anHttpRequest.send( this.formatParams( params ) );
 	};
+}
+
+/* DataAccessor */
+var DataAccessor = function() {
+
+	var httpUtil = new HttpUtil();
+
+	var API_PREFIX = "/api";
+
+	var PAGE_API = "/page";
+	var PRATILIPI_API = "/pratilipi?_apiVer=2";
+	var USER_PRATILIPI_API = "/userpratilipi";
+
+	var request = function( name, api, params ) {
+		return {
+			"name": name,
+			"api": api,
+			"params": httpUtil.formatParams( params )
+		};
+    };
+
+	var processRequests = function( requests ) {
+		var params = {};
+		for( var i = 0; i < requests.length; i++ ) {
+			var request = requests[i];
+			params[ request.name ] = request.api + encodeURIComponent( request.api.indexOf( "?" ) > -1 ? "&" : "?" ) + request.params;
+		}
+		return JSON.stringify( params );
+	};
+
+	this.getPratilipiByUri = function( pageUri, includeUserPratilipi ) {
+
+		var requests = [];
+		requests.push( new request( "req1", PAGE_API, { "uri": pageUri } ) );
+		requests.push( new request( "req2", PRATILIPI_API, { "pratilipiId": "$req1.primaryContentId" } ) );
+
+		if( includeUserPratilipi )
+			requests.push( new request( "req3", USER_PRATILIPI_API, { "pratilipiId": "$req1.primaryContentId" } ) );
+
+		httpUtil.get( API_PREFIX, { "requests": processRequests( requests ) }, function( response, status ) {
+			console.log( response );
+			console.log( status );
+		});
+	}
+
+	this.getPratilipiById = function( pratilipiId ) {
+		httpUtil.get( API_PREFIX + PRATILIPI_API, { "pratilipiId": pratilipiId }, function( response, status ) {
+			console.log( response );
+			console.log( status );
+		});
+	}
+
 }
 
 /* Toaster & SnackBar */
