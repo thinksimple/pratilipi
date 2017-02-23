@@ -49,13 +49,9 @@ function( params ) {
 //    this.getUser = function() {
 //      $.ajax({
 //        type: 'get',
-//        url: '<#if stage == "alpha">${ prefix }</#if>/api/user',
+//        url: '/api/user',
 //        success: function( response ) {
-//          <#if stage == "alpha" || stage == "gamma">
-//              var res = response;
-//          <#else>
-//              var res = jQuery.parseJSON( response );
-//          </#if>        
+//          var res = jQuery.parseJSON( response );
 //          self.userIsGuest( res["isGuest"] );
 //        },
 //        error: function( response ) {
@@ -71,7 +67,7 @@ function( params ) {
     this.getReviewList = function() {
         $.ajax({
             type: 'get',
-            url: '<#if stage == "alpha">${ prefix }</#if>/api/userpratilipi/review/list',
+            url: '/api/userpratilipi/review/list',
             data: {
                 pratilipiId: self.pratilipiId,
                 resultCount: self.firstLoadReviewCount
@@ -91,7 +87,7 @@ function( params ) {
     this.loadMoreReviews = function() {
         $.ajax({
             type: 'get',
-            url: '<#if stage == "alpha">${ prefix }</#if>/api/userpratilipi/review/list',
+            url: '/api/userpratilipi/review/list',
             data: {
                 pratilipiId: self.pratilipiId,
                 resultCount: self.subsequentLoadReviewCount,
@@ -155,7 +151,7 @@ function( params ) {
         this.isSaveInProgress( true );
         $.ajax({
             type: 'post',
-            url: '<#if stage == "alpha">${ prefix }</#if>/api/userpratilipi/review',
+            url: '/api/userpratilipi/review',
             data: {
                 pratilipiId: self.pratilipiId,
                 rating: self.selectedReviewRating(),

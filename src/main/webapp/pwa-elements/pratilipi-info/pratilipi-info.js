@@ -38,7 +38,7 @@ function( params ) {
         $.ajax({
             type: 'get',
     //        url: '/api/pratilipi?_apiVer=2&pratilipiId='+ self.id,
-            url: '<#if stage == "alpha">${ prefix }</#if>/api/pratilipi?_apiVer=2&pratilipiId=' + self.id,
+            url: '/api/pratilipi?_apiVer=2&pratilipiId=' + self.id,
             data: { 
                 // 'language': "${ language }"
             },
@@ -66,7 +66,7 @@ function( params ) {
         $.ajax({
             type: 'post',
     //        url: '/api/pratilipi?_apiVer=2&pratilipiId='+ self.id,
-            url: '<#if stage == "alpha">${ prefix }</#if>/api/userauthor/follow',
+            url: '/api/userauthor/follow',
             data: {
                 authorId: self.author_id,
                 following: true

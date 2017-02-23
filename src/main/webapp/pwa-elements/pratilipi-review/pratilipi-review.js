@@ -79,19 +79,14 @@ function( params ) {
     this.generateLikeAjaxRequest = function() {
         $.ajax({
             type: 'post',
-            url: '<#if stage == "alpha">${ prefix }</#if>/api/vote',
+            url: '/api/vote',
             data: {
                 parentType: "REVIEW",
                 parentId: self.reviewObject.userPratilipiId,
                 type: self.isLiked ? "LIKE" : "NONE"
             }, 
             success: function( response ) {
-        //      var res = jQuery.parseJSON( response );
-                <#if stage == "alpha">
-                    var res = response;
-                <#else>
-                    var res = jQuery.parseJSON( response );
-                </#if>           
+                var res = jQuery.parseJSON( response );
                 console.log(res);
             },
             error: function( response ) {
@@ -104,7 +99,7 @@ function( params ) {
     this.generateGetCommentsAjaxRequest = function() {
         $.ajax({
             type: 'get',
-            url: '<#if stage == "alpha">${ prefix }</#if>/api/comment/list',
+            url: '/api/comment/list',
             data: {
                 parentType: "REVIEW",
                 parentId: self.reviewObject.userPratilipiId,
@@ -125,7 +120,7 @@ function( params ) {
       comment.saveInProgress( true );
       $.ajax({
           type: 'post',
-          url: '<#if stage == "alpha">${ prefix }</#if>/api/comment',
+          url: '/api/comment',
           data: {
               parentType: "REVIEW",
               parentId: self.reviewObject.userPratilipiId,

@@ -239,3 +239,13 @@ function validatePhone( phone ) {
 	var pattern = /^[0-9]{10}$/;
 	return pattern.test( phone );
 }
+function convertDate( date ) {
+	var d = new Date( date );
+	function day(d) { return (d < 10) ? '0' + d : d; }
+	function month(m) { var months = ['${ _strings.month_jan }','${ _strings.month_feb }','${ _strings.month_mar }',
+	                                  '${ _strings.month_apr }','${ _strings.month_may }','${ _strings.month_jun }',
+	                                  '${ _strings.month_jul }','${ _strings.month_aug }','${ _strings.month_sep }',
+	                                  '${ _strings.month_oct }','${ _strings.month_nov }','${ _strings.month_dec }']; 
+	                                  return months[m]; }
+	return [ day( d.getDate() ), month( d.getMonth() ), d.getFullYear() ].join(' ');
+}

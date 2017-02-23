@@ -33,7 +33,7 @@ function( params ) {
     this.generateLikeAjaxRequest = function() {
         $.ajax({
             type: 'post',
-            url: '<#if stage == "alpha">${ prefix }</#if>/api/vote',
+            url: '/api/vote',
             data: {
                 parentType: "COMMENT",
                 parentId: self.reviewCommentObject.commentId,

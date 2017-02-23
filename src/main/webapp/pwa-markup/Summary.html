@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="${ lang }">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<title>Pratilipi Summary Page</title>
+		<script src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js"></script>
+
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+		<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.red-light_blue.min.css" />
+		<link rel="stylesheet" href="pwa-stylesheets/css/styles-new.css?28" />
+
+		<link rel="stylesheet" type="text/css" href="dialog-polyfill.css" />
+		<script src="dialog-polyfill.js"></script>	
+
+		<#include "functions.ftl">
+		<@register element="pratilipi-header" />
+		<@register element="pratilipi-footer" />
+		<@register element="pratilipi-info" />
+		<@register element="pratilipi-review-list" />
+		<@register element="pratilipi-review" />
+		<@register element="pratilipi-review-comment" />
+		<@register element="pratilipi-review-reply" />
+		<@register element="pratilipi-navigation-drawer" />
+		<@register element="pratilipi-navigation-aside" />
+		<@register element="pratilipi-navigation" />
+
+	</head>
+
+<body>
+	<!-- http://10.ptlp.co/pratilipi/cover?width=150 -->
+	<div class="demo-layout-transparent mdl-layout mdl-js-layout mdl-layout--fixed-header">
+		<header class="mdl-layout__header mdl-layout__header--transparent pratilipi-header">
+			<!-- ko component: {
+				name: "pratilipi-header",
+				params: { initialText: "Hello, world!", otherParam: 123 }
+			} -->
+			<!-- /ko -->
+		</header> 
+		<div class="mdl-layout__drawer mdl-layout--small-screen-only">
+			<!-- ko component: "pratilipi-navigation-drawer" --><!-- /ko -->
+		</div>
+				
+		<main class="mdl-layout__content">
+			<div class="mdl-components mdl-js-components">
+				<pratilipi-navigation-aside class="mdl-layout--large-screen-only mdl-card-border white-background"></pratilipi-navigation-aside>
+				<div class="mdl-grid">
+
+					<pratilipi-info params="{ isGuest: userIsGuest }"></pratilipi-info>	
+					
+					<pratilipi-review-list params="{ isGuest: userIsGuest }"></pratilipi-review-list>															   
+				</div>
+			</div>
+
+			<pratilipi-footer></pratilipi-footer>
+		</main>
+
+	</div>
+
+
+	<script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+	<script src="scripts.js"></script>  
+	<script src="summary.js?5"></script>
+</body>
+</html>
