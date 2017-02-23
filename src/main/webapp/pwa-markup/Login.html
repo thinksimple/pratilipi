@@ -1,0 +1,54 @@
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>Pratilipi Login Page</title>
+	<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js'></script>
+	<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.red-light_blue.min.css" />
+	<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+	<link rel="stylesheet" href="pwa-stylesheets/css/styles.css?3" />
+</head>
+<body>
+	<div class="pratilipi-login-container">
+		<img class="pratilipi-logo" src="http://0.ptlp.co/resource-hi/logo/pratilipi_logo.png">
+		<h4 class="pratilipi-heading">${ _strings.user_sign_in }</h4>
+		<div class="pratilipi-content-container">
+			<button data-bind="{ click: facebookLogin, disable: requestOnFlight }" 
+					type="submit" 
+					class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored pratilipi-fb-blue-button login-button">
+				<div class="sprites-icon login-sprite-icon-24 fb-icon"></div>
+				${ _strings.user_sign_in_with_facebook }
+			</button>
+			<button data-bind="{ click: googleLogin, disable: requestOnFlight }" 
+					type="submit" 
+					class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect pratilipi-white-button pratilipi-fb-blue-button login-button">
+				<div class="sprites-icon login-sprite-icon-24 gplus-icon"></div>
+				${ _strings.user_sign_in_with_google }
+			</button>
+		</div>
+		<p class="login-or margin-zero">${ _strings.or }</p>
+		<form id="login_form" class="pratilipi-content-container margin-zero">
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+				<input data-bind="textInput: userEmail" class="mdl-textfield__input" type="text" id="user_email">
+				<label class="mdl-textfield__label" for="user_email" style="">${ _strings.user_email }</label>
+			</div>
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+				<input data-bind="textInput: userPassword" class="mdl-textfield__input" type="password" id="user_password">
+				<label class="mdl-textfield__label" for="user_password" style="">${ _strings.user_password }</label>
+			</div>
+			<a data-bind="attr: {href: '/resetpassword?retUrl=' + getRetUrl() }" class="forgot-password-link pull-right">
+				${ _strings.user_forgot_password }
+			</a>
+			<div class="clearfix"></div>
+			<button data-bind="{ click: login, disable: requestOnFlight }" 
+					type="submit" 
+					class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored pratilipi-red-button login-button">${ _strings.user_to_sign_in }</button>
+		</form>
+		<div class="sign-up-link">${ _strings.user_is_new }&nbsp;&nbsp;<a data-bind="attr: {href: '/register?retUrl=' + getRetUrl() }" class="pratilipi-red">${ _strings.user_sign_up_for_pratilipi }</a></div>
+	</div>
+</body>
+<script src="scripts.js"></script>
+<script src="login.js"></script>
+</html>  
