@@ -19,7 +19,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-	<script>   
+	<script>
     	<#include "summary-components.ftl">
     </script>
     <script>
@@ -32,23 +32,6 @@
 		                                  '${ _strings.month_oct }','${ _strings.month_nov }','${ _strings.month_dec }']; 
 		                                  return months[m]; }
 		return [ day( d.getDate() ), month( d.getMonth() ), d.getFullYear() ].join(' ');
-	}
-    var HttpUtil = function() {
-		function formatParams( params ) {
-			if( params == null ) return "";
-			return "?" + Object.keys( params ).map( function(key) { return key + "=" + params[key] }).join("&");
-		}
-		this.get = function( aUrl, params, aCallback ) {
-			var anHttpRequest = new XMLHttpRequest();
-			anHttpRequest.onreadystatechange = function() { 
-				if( anHttpRequest.readyState == 4 ) {
-					/* console.log( anHttpRequest.getResponseHeader( 'content-type' ) ); */
-					aCallback( anHttpRequest.responseText, anHttpRequest.status );
-				}
-			};
-			anHttpRequest.open( "GET", aUrl + formatParams( params ), true );            
-	        anHttpRequest.send( null );
-		};
 	}
     </script>
 </head>
@@ -84,7 +67,8 @@
     </div>
 
 
-    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>  
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+	<script src="scripts.js"></script>  
     <script src="summary.js?5"></script>
 </body>
 </html>
