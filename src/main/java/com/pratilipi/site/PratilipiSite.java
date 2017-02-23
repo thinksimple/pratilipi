@@ -104,22 +104,6 @@ public class PratilipiSite extends HttpServlet {
 	private static final String templateFilePrefix = "com/pratilipi/site/page/";
 	public static final String dataFilePrefix = "page/data/";
 
-	private static String appShell = null;
-	
-	static {
-		try {
-			Map<String, Object> dataModel = new HashMap<>();
-			dataModel.put( "action", "one" );
-			dataModel.put( "_strings", I18n.getStrings( Language.TAMIL ) );
-			dataModel.put( "language", Language.TAMIL );
-			dataModel.put( "stage", SystemProperty.STAGE );
-			appShell = FreeMarkerUtil.processTemplate( dataModel, templateFilePrefix + "Knockout.ftl" );
-		} catch ( UnexpectedServerException e ) {
-			logger.log( Level.SEVERE, "App Shell couldn't be generated!" );
-		}
-	}
-	
-	
 	public void doGet( HttpServletRequest request, HttpServletResponse response )
 			throws IOException {
 
@@ -135,10 +119,6 @@ public class PratilipiSite extends HttpServlet {
 		}
 
 		String uri = request.getRequestURI();
-		if( uri.equals( "/poc1" ) ) {
-			_dispatchResponse( appShell, "text/html", "UTF-8", response );
-			return;
-		}
 		String canonicalUrl = "http://" + UxModeFilter.getWebsite().getHostName() + uri;
 		String alternateUrl = "http://" + UxModeFilter.getWebsite().getMobileHostName() + uri;
 
@@ -413,7 +393,7 @@ public class PratilipiSite extends HttpServlet {
 					templateName = "Login.ftl";
 				}
 
-			} else if( basicMode && uri.equals( "/forgot-password" ) ) {
+			} else if( uri.equals( "/forgot-password" ) ) {
 				if( basicMode ) {
 					canonicalUrl = "http://" + UxModeFilter.getWebsite().getMobileHostName() + uri;
 					dataModel = new HashMap<String, Object>();
