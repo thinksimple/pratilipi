@@ -30,7 +30,7 @@
 					window.location.href = "/register" + "?ret=/";
 			}
 			function forgotPassword() {
-				window.location.href = "/resetpassword";
+				window.location.href = "/forgot-password";
 			}
 			function login() {
 				var email = $( '#inputEmail' ).val();

@@ -413,12 +413,16 @@ public class PratilipiSite extends HttpServlet {
 					templateName = "Login.ftl";
 				}
 
-			} else if( basicMode && uri.equals( "/resetpassword" ) ) {
-				canonicalUrl = "http://" + UxModeFilter.getWebsite().getMobileHostName() + uri;
-				dataModel = new HashMap<String, Object>();
-				dataModel.put( "title", "Reset Password" );
-				templateName = "PasswordResetBasic.ftl";
-
+			} else if( basicMode && uri.equals( "/forgot-password" ) ) {
+				if( basicMode ) {
+					canonicalUrl = "http://" + UxModeFilter.getWebsite().getMobileHostName() + uri;
+					dataModel = new HashMap<String, Object>();
+					dataModel.put( "title", "Reset Password" );
+					templateName = "PasswordResetBasic.ftl";
+				} else if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) ) {
+					dataModel = new HashMap<String, Object>();
+					templateName = "ForgotPassword.ftl";
+				}
 
 
 			// Internal links - Standard Version only

@@ -96,6 +96,8 @@ public class PratilipiSiteFilter implements Filter {
 		redirections.put( "/authors", "/admin/authors" );
 		redirections.put( "/email-templates", "/admin/email-templates" );
 		redirections.put( "/batch-process", "/admin/batch-process" );
+		
+		redirections.put( "/resetpassword", "/forgot-password" );
 
 	}
 	

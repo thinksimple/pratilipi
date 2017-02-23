@@ -91,7 +91,7 @@ public class PageDataUtil {
 		sitemap.append( _getSitemapEntry( hostName, "/login", null, null, null ) );		
 		sitemap.append( _getSitemapEntry( hostName, "/register", null, null, null ) );		
 		sitemap.append( _getSitemapEntry( hostName, "/account", null, null, null ) );		
-		sitemap.append( _getSitemapEntry( hostName, "/resetpassword", null, null, null ) );		
+		sitemap.append( _getSitemapEntry( hostName, "/forgot-password", null, null, null ) );		
 		sitemap.append( _getSitemapEntry( hostName, "/updatepassword", null, null, null ) );		
 		sitemap.append( _getSitemapEntry( hostName, "/navigation", null, null, null ) );		
 
