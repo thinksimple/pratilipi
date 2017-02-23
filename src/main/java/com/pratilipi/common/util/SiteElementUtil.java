@@ -29,7 +29,7 @@ public class SiteElementUtil {
 
 			File elementFolder = new File( elementFolderName );
 			for( String elementName : elementFolder.list() ) {
-				if( ! elementName.endsWith( ".html" ) )
+				if( ! elementName.endsWith( ".html" ) && ! elementName.endsWith( ".js" ) )
 					continue;
 
 				File element = new File( elementFolder, elementName );
@@ -54,7 +54,13 @@ public class SiteElementUtil {
 					i18nElement.createNewFile();
 
 				} else if( framework.equals( "knockout" ) ) {
-					String elName = elementName.substring( 0, elementName.indexOf( ".html" ) ) + "-" + language.getCode() + ".html";
+					String elName = null;
+					if( elementName.endsWith( ".html" ) ) {
+						elName = elementName.substring( 0, elementName.indexOf( ".html" ) ) + "-" + language.getCode() + ".html";
+					} else if( elementName.endsWith( ".js" ) ) {
+						elName = elementName.substring( 0, elementName.indexOf( ".js" ) ) + "-" + language.getCode() + ".js";
+					}
+					
 					i18nElement = new File( i18nElementFolderNamePrefix, elName );
 					i18nElement.createNewFile();
 				}
