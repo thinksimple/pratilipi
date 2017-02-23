@@ -391,11 +391,16 @@ public class PratilipiSite extends HttpServlet {
 				dataModel.put( "title", "Share" );
 				templateName = "ShareBasic.ftl";
 
-			} else if( basicMode && uri.equals( "/register" ) ) {
-				canonicalUrl = "http://" + UxModeFilter.getWebsite().getMobileHostName() + uri;
-				dataModel = new HashMap<String, Object>();
-				dataModel.put( "title", "Register" );
-				templateName = "RegisterBasic.ftl";
+			} else if( uri.equals( "/register" ) ) {
+				if( basicMode ) {
+					canonicalUrl = "http://" + UxModeFilter.getWebsite().getMobileHostName() + uri;
+					dataModel = new HashMap<String, Object>();
+					dataModel.put( "title", "Register" );
+					templateName = "RegisterBasic.ftl";
+				} else if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) ) {
+					dataModel = new HashMap<String, Object>();
+					templateName = "Register.ftl";
+				}
 
 			} else if( uri.equals( "/login" ) ) {
 				if( basicMode ) {
