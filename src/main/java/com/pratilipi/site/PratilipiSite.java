@@ -489,9 +489,14 @@ public class PratilipiSite extends HttpServlet {
 
 			// Non - hardcoded links
 			} else if( page != null && page.getType() == PageType.PRATILIPI ) {
-				resourceList.addAll( createFbOpenGraphTags( page.getPrimaryContentId() ) );
-				dataModel = createDataModelForPratilipiPage( page.getPrimaryContentId(), filterLanguage, basicMode, request );
-				templateName = ( basicMode ? "PratilipiBasic.ftl" : "Pratilipi.ftl" );
+				if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) ) {
+					dataModel = new HashMap<>();
+					templateName = "Knockout.ftl";
+				} else {
+					resourceList.addAll( createFbOpenGraphTags( page.getPrimaryContentId() ) );
+					dataModel = createDataModelForPratilipiPage( page.getPrimaryContentId(), filterLanguage, basicMode, request );
+					templateName = ( basicMode ? "PratilipiBasic.ftl" : "Pratilipi.ftl" );					
+				}
 
 			} else if( page != null && page.getType() == PageType.AUTHOR ) {
 				dataModel = createDataModelForAuthorPage( page.getPrimaryContentId(), filterLanguage, basicMode, request );
