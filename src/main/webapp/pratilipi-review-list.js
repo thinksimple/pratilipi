@@ -1,5 +1,6 @@
-function() {
+function( params ) {
     var self = this;
+    this.isGuest = params.isGuest;
     this.pratilipiId = getQueryVariable( "id" );
     this.maxRating = 5;    
     this.firstLoadReviewCount = 5;
@@ -109,14 +110,20 @@ function() {
 //    this.getUser();
     this.getReviewList();
     
-    var dialog = document.querySelector( 'dialog' );
+    var dialog = document.querySelector( '#pratilipi-review-dialog' );
     if ( !dialog.showModal ) {
         dialogPolyfill.registerDialog( dialog );
     }
     
-    this.openReviewModal = function() {
-        componentHandler.upgradeDom();
-        dialog.showModal();
+    this.openReviewModal = function() {        
+        if( self.isGuest() ) {
+            goToLoginPage();
+            return;
+        }
+        else {
+            componentHandler.upgradeDom();
+            dialog.showModal();
+        }
     };
    
     this.hideReviewModal = function() {
@@ -127,11 +134,15 @@ function() {
         this.selectedReviewRating( rating );
     };   
     
-    this.wassup = function( rating1 ) {
+    this.changeReviewRating = function( rating1 ) {
         self.setSelectedReviewRating( rating1 );
     };
     
     this.openReviewModalWithRating = function( rating ) {
+        if( self.isGuest() ) {
+            goToLoginPage();
+            return;
+        }      
         self.setSelectedReviewRating( rating );
         self.openReviewModal();
     };

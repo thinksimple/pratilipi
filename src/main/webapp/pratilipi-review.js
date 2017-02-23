@@ -1,6 +1,7 @@
 function( params ) {
     var self = this;
     this.reviewObject = params.value;
+    this.isGuest = params.isGuest;
     console.log( this.reviewObject );
     this.likeCount = ko.observable( this.reviewObject.likeCount );
     this.commentCount = ko.observable( this.reviewObject.commentCount );
@@ -9,6 +10,7 @@ function( params ) {
     this.filledStars = this.reviewObject.rating;
     this.emptyStars = this.maxRating - this.filledStars;
     this.userImageUrl = this.reviewObject.userImageUrl + "&width=40";
+    this.review_date = convertDate( this.reviewObject.reviewDateMillis );
     this.isCommentsShown = ko.observable( false );
     this.isReplyStateOn = ko.observable( false );
     
@@ -28,14 +30,14 @@ function( params ) {
     
     
     this.likeDislikeReview = function( item ) {
-//        if( self.userIsGuest() ) {
-//            /* change url to login page */
-//        }
-//        else {
+        if( self.isGuest() ) {
+            goToLoginPage();
+        }
+        else {
           /* increase or decrease like count and change boolean and also change the like button*/
-        this.updateLikeCount();
-        this.generateLikeAjaxRequest();
-//        }
+            this.updateLikeCount();
+            this.generateLikeAjaxRequest();
+        }
 //        console.log( item );      
     }; 
     
@@ -44,13 +46,13 @@ function( params ) {
     }
     
     this.showReplyState = function( item ) {
-    //    if( self.userIsGuest() ) {
-    //        /* change url to login page */
-    //    }
-    //    else {
-            this.isReplyStateOn( true );
-            componentHandler.upgradeDom();
-    //    }     
+       if( self.isGuest() ) {
+           goToLoginPage();
+       }
+       else {
+           this.isReplyStateOn( true );
+           componentHandler.upgradeDom();
+       }       
     }; 
     
     this.hideReplyState = function() {
@@ -58,13 +60,10 @@ function( params ) {
     }
     
     this.updateLikeCount = function() {
-        debugger
         if( this.isLiked() ) {
-            debugger
             this.isLiked( false );
             this.likeCount( this.likeCount() - 1 );
         } else {
-            debugger
             this.isLiked( true );
             this.likeCount( this.likeCount() + 1 );
         }
@@ -154,5 +153,7 @@ function( params ) {
     
     this.addToCommentsList = function( comment ) {
         this.comments.push( comment );
-    }      
+    } 
+    
+    componentHandler.upgradeDom();
 }

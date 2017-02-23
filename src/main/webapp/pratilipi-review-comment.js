@@ -1,23 +1,23 @@
 function( params ) {
     var self = this;
     this.reviewCommentObject = params.value;
+    this.isGuest = params.isGuest;    
 
     this.likeCount = ko.observable( this.reviewCommentObject.likeCount );
     this.isLiked = ko.observable( this.reviewCommentObject.isLiked );
     this.userImageUrl = this.reviewCommentObject.user.profileImageUrl + "&width=40";
+    this.comment_date = convertDate( this.reviewCommentObject.creationDateMillis );
     this.userProfilePageUrl = this.reviewCommentObject.user.profilePageUrl;
     console.log( this.userImageUrl );
     
     this.likeDislikeReview = function( item ) {
-//        if( self.userIsGuest() ) {
-//            /* change url to login page */
-//        }
-//        else {
-          /* increase or decrease like count and change boolean and also change the like button*/
-        this.updateLikeCount();
-        this.generateLikeAjaxRequest();
-//        }
-//        console.log( item );      
+        if( self.isGuest() ) {
+            goToLoginPage();
+        } else {
+            this.updateLikeCount();
+            this.generateLikeAjaxRequest();
+        }
+        /* increase or decrease like count and change boolean and also change the like button*/     
     }; 
     
     this.updateLikeCount = function() {

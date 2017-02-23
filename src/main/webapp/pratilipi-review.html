@@ -3,7 +3,7 @@
 		<span class="mdl-list__item-primary-content">
 			<img data-bind="attr: { src: userImageUrl }" class="mdl-list__item-avatar">
 			<a class="reviewer-name" data-bind="attr: { href: reviewObject.userProfilePageUrl }, text: reviewObject.user.displayName"></a>
-			<span class="mdl-list__item-sub-title">1 Nov 2016</span>
+			<span data-bind="text: review_date" class="mdl-list__item-sub-title"></span>
 		</span>
 		<span class="mdl-list__item-secondary-content pratilipiRed" >
 			<span class="mdl-list__item-secondary-action" href="#">
@@ -26,7 +26,10 @@
 			<button  data-bind="click: likeDislikeReview" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
 			  <i class="material-icons material-icons-16" role="presentation" data-bind="css: { pratilipiRed: isLiked() }">thumb_up</i><span class="visuallyhidden">like comment</span>
 			</button>
-			<span class="reply"></span>		
+			<span class="reply"></span>	
+			<!-- ko if: commentCount -->
+				<span data-bind="text: commentCount"></span>
+			<!-- /ko -->				
 			<button data-bind="click: showReplyState" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
 			  <i class="material-icons material-icons-16" role="presentation">message</i><span class="visuallyhidden">comment</span>
 			</button>	
@@ -39,7 +42,7 @@
 	</div>
 	<ul class="mdl-list sub-review" data-bind="visible: isSubreviewListVisible">
 		<div data-bind="visible: isCommentsShown, foreach: comments">
-			<pratilipi-review-comment params="value: $data"></pratilipi-review-comment>
+			<pratilipi-review-comment params="{ value: $data, isGuest: $root.userIsGuest }"></pratilipi-review-comment>
 		</div>
 		<pratilipi-review-reply data-bind="visible: isReplyStateOn" params="parent: $parent"></pratilipi-review-reply>
 	</ul>

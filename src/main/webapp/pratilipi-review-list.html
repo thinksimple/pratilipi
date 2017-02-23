@@ -1,4 +1,4 @@
-<div class="mdl-shadow--2dp mdl-cell mdl-cell--8-col-tablet mdl-cell--9-col" data-bind="visible: reviewList().length > 0">
+<div class="mdl-card mdl-card-border mdl-cell mdl-cell--8-col-tablet mdl-cell--9-col" data-bind="visible: reviewList().length > 0">
     <div class="mdl-grid">
 		<h3 class="mdl-cell mdl-cell--12-col mdl-typography--headline">Reviews</h3>
         <div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero ">
@@ -7,13 +7,13 @@
 					<i class="material-icons material-icons-36 clickableElement" data-bind="click: $parent.openReviewModalWithRating">star_border</i>
 				</div>
 				<div class="mdl-cell--6-col mdl-cell--4-col-tablet padding-zero">
-                	<button data-bind="click: openReviewModal" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect pull-right">Write a review</button>
+                	<button data-bind="click: openReviewModal.bind($data, $root.userIsGuest() )" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect pull-right">Write a review</button>
 				</div>
 			</div>
         </div>		
         <div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero ">
 			<ul class="demo-list-three mdl-list" data-bind="foreach: reviewList">
-				<pratilipi-review params="value: $data"></pratilipi-review>								
+				<pratilipi-review params="{ value: $data, isGuest: $root.userIsGuest }"></pratilipi-review>								
 			</ul>
 			<li class="show-more" data-bind="if: areMoreReviews">
 				<div>
@@ -25,14 +25,14 @@
         </div>
     </div>
 </div>
-<dialog class="mdl-dialog">
+<dialog class="mdl-dialog" id="pratilipi-review-dialog">
 	<h3 class="mdl-dialog__title">Rate and Review</h3>
 	<div class="mdl-dialog__content">
 		<!-- ko foreach: ko.utils.range( 1, selectedReviewRating ) -->
-  			<i class="material-icons material-icons-36 clickableElement" data-bind="click: $parent.wassup.bind($data, $data)">star</i>
+  			<i class="material-icons material-icons-36 clickableElement" data-bind="click: $parent.changeReviewRating.bind($data, $data)">star</i>
   		<!-- /ko -->
   		<!-- ko foreach: ko.utils.range( 1, emptyReviewRating ) -->
-  			<i class="material-icons material-icons-36 clickableElement" data-bind="click: $parent.wassup.bind($data, $data + $parent.selectedReviewRating() )">star_border</i>
+  			<i class="material-icons material-icons-36 clickableElement" data-bind="click: $parent.changeReviewRating.bind($data, $data + $parent.selectedReviewRating() )">star_border</i>
   		<!-- /ko -->
 		<form action="#">
 			<div class="mdl-textfield mdl-js-textfield">
