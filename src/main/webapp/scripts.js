@@ -60,7 +60,7 @@ var DataAccessor = function() {
 		return JSON.stringify( params );
 	};
 
-	this.getPratilipiByUri = function( pageUri, includeUserPratilipi ) {
+	this.getPratilipiByUri = function( pageUri, includeUserPratilipi, aCallBack ) {
 
 		var requests = [];
 		requests.push( new request( "req1", PAGE_API, { "uri": pageUri } ) );
@@ -69,16 +69,31 @@ var DataAccessor = function() {
 		if( includeUserPratilipi )
 			requests.push( new request( "req3", USER_PRATILIPI_API, { "pratilipiId": "$req1.primaryContentId" } ) );
 
-		httpUtil.get( API_PREFIX, { "requests": processRequests( requests ) }, function( response, status ) {
-			console.log( response );
-			console.log( status );
+		httpUtil.get( API_PREFIX, { "requests": processRequests( requests ) }, 
+			function( response, status ) {
+				if( aCallBack != null ) {
+					var pratilipi = response.req2.status == 200 ? response.req2.response : null;
+					var userpratilipi = includeUserPratilipi && response.req3.status == 200 ? response.req3.response : null; 
+					aCallBack( pratilipi, userpratilipi );
+				}
 		});
 	}
 
-	this.getPratilipiById = function( pratilipiId ) {
-		httpUtil.get( API_PREFIX + PRATILIPI_API, { "pratilipiId": pratilipiId }, function( response, status ) {
-			console.log( response );
-			console.log( status );
+	this.getPratilipiById = function( pratilipiId, includeUserPratilipi, aCallBack ) {
+
+		var requests = [];
+		requests.push( new request( "req1", PRATILIPI_API, { "pratilipiId": pratilipiId } ) );
+
+		if( includeUserPratilipi )
+			requests.push( new request( "req2", USER_PRATILIPI_API, { "pratilipiId": pratilipiId } ) );
+
+		httpUtil.get( API_PREFIX, { "requests": processRequests( requests ) }, 
+			function( response, status ) {
+				if( aCallBack != null ) {
+					var pratilipi = response.req1.status == 200 ? response.req1.response : null;
+					var userpratilipi = includeUserPratilipi && response.req2.status == 200 ? response.req2.response : null; 
+					aCallBack( pratilipi, userpratilipi );
+				}
 		});
 	}
 
