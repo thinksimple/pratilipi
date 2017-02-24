@@ -14,12 +14,12 @@ function( params ) {
 	this.searchQuery = ko.observable();
 
 	this.languageChangeHandler = function() {
-		window.location = ( "http://" + this.currentLanguage() + ".pratilipi.com" );
+		window.location = ( "http://" + self.currentLanguage() + ".pratilipi.com" );
 	};
 
 	this.search = function( formElement ) {
-		 if( this.searchQuery() && this.searchQuery().trim().length ) {
-			  var search_url = "/search?q=" + this.searchQuery();
+		 if( self.searchQuery() && self.searchQuery().trim().length ) {
+			  var search_url = "/search?q=" + self.searchQuery();
 			  window.location.href = search_url;
 		 }
 	};
@@ -62,8 +62,8 @@ function( params ) {
 
 	this.updateNotifications = function() {
 		if( ! appViewModel.user.isGuest() && appViewModel.notificationCount() != 0 ) {
-			if( this.notificationsLoaded() == "LOADING" ) return;
-			this.notificationsLoaded( "LOADING" );
+			if( self.notificationsLoaded() == "LOADING" ) return;
+			self.notificationsLoaded( "LOADING" );
 			var dataAccessor = new DataAccessor();
 			dataAccessor.getNotificationList( function( notificationList ) {
 				self.notificationList( notificationList );
