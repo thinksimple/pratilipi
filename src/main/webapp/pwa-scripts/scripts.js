@@ -44,6 +44,7 @@ var DataAccessor = function() {
 	var USER_PRATILIPI_API = "/userpratilipi";
 	var AUTHOR_API = "/author";
 	var USER_AUTHOR_FOLLOW_API = "/userauthor/follow?_apiVer=2";
+	var USER_API = "/user";
 
 	var request = function( name, api, params ) {
 		return {
@@ -132,6 +133,15 @@ var DataAccessor = function() {
 					var author = response.req1.status == 200 ? response.req1.response : null;
 					var userauthor = includeUserAuthor && response.req2.status == 200 ? response.req2.response : null; 
 					aCallBack( author, userauthor );
+				}
+		});
+	}
+
+	this.getUser = function( aCallBack ) {
+		httpUtil.get( API_PREFIX + USER_API, null, 
+			function( response, status ) {
+				if( aCallBack != null ) {
+					aCallBack( response );
 				}
 		});
 	}
