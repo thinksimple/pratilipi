@@ -54,7 +54,7 @@
 						<ul data-bind="{ visible: notificationsLoaded() == 'LOADED',
 										foreach: {data: notificationList, as: 'notification'}}">
 							<li class="mdl-menu__item">
-								<a class="notification-message" data-bind="attr: {href: sourceUrl}">
+								<a class="notification-message" data-bind="attr: {'href': sourceUrl}">
 									<span style="display: flex;">
 										<span class="notification-display-image">
 											<img class="img-circle" data-bind="attr: {src: displayImageUrl + ( displayImageUrl.indexOf('?') ? '&' : '?' ) + 'width=96'}" />

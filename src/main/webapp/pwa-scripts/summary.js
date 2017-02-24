@@ -34,7 +34,7 @@ var initFirebase = function() {
 };
 
 var resetFbNotificationCount = function() {
-	var node = firebase.database().ref( "NOTIFICATION" ).child( user.userId ).child( "newNotificationCount" );
+	var node = firebase.database().ref( "NOTIFICATION" ).child( appViewModel.user.userId() ).child( "newNotificationCount" );
 	node.set( 0 );
 };
 

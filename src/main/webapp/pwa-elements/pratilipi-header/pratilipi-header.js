@@ -73,7 +73,7 @@ function( params ) {
 	};
 
 	this.computedNotificationCount = ko.computed( function() {
-		self.updateNotifications();
+		setTimeout( self.updateNotifications, 0 );
 		if( appViewModel.notificationCount() < 1 ) {
 			notificationLink.removeClass( "mdl-badge" );
 			return "";
