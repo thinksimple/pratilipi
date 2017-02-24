@@ -52,6 +52,8 @@ var DataAccessor = function() {
 	var USER_PRATILIPI_REVIEW_API = "/userpratilipi/review";
 	var USER_AUTHOR_FOLLOW_API = "/userauthor/follow?_apiVer=2";
 	var USER_PRATILIPI_LIBRARY_API = "/userpratilipi/library";
+	var COMMENT_API = "/comment";
+	var VOTE_API = "/vote";
 
 	var request = function( name, api, params ) {
 		return {
@@ -59,7 +61,7 @@ var DataAccessor = function() {
 			"api": api,
 			"params": encodeURIComponent( httpUtil.formatParams( params ) )
 		};
-    };
+	};
 
 	var processRequests = function( requests ) {
 		var params = {};
@@ -203,23 +205,62 @@ var DataAccessor = function() {
 		httpUtil.post( API_PREFIX + USER_PRATILIPI_REVIEW_API, 
 				params, 
 				function( response, status ) { processPostResponse( response, status, successCallBack, errorCallBack ) } );
-	}
+	};
+
+	this.createOrUpdateReviewComment = function( userPratilipiId, commentId, content, successCallBack, errorCallBack ) {
+		if( userPratilipiId == null && commentId == null ) return;
+		var params = { "state": "ACTIVE" };
+		if( userPratilipiId != null ) params[ "parentId" ] = userPratilipiId;
+		if( commentId != null ) params[ "commentId" ] = commentId;
+		if( content != null ) params[ "content" ] = content;
+		httpUtil.post( API_PREFIX + COMMENT_API, 
+				params, 
+				function( response, status ) { processPostResponse( response, status, successCallBack, errorCallBack ) } );
+	},
 
 	this.followOrUnfollowAuthor = function( authorId, following, successCallBack, errorCallBack ) {
 		if( authorId == null || following == null ) return;
 		httpUtil.post( API_PREFIX + USER_AUTHOR_FOLLOW_API, 
 				{ "authorId": authorId, "following": following }, 
 				function( response, status ) { processPostResponse( response, status, successCallBack, errorCallBack ) } );
-	}
+	};
 	
 	this.addOrRemoveFromLibrary = function( pratilipiId, addedToLib, successCallBack, errorCallBack ) {
 		if( pratilipiId == null || addedToLib == null ) return;
 		httpUtil.post( API_PREFIX + USER_PRATILIPI_LIBRARY_API, 
 				{ "pratilipiId": pratilipiId, "addedToLib": addedToLib }, 
 				function( response, status ) { processPostResponse( response, status, successCallBack, errorCallBack ) } );
+	};
+
+	this.likeOrDislikeReview = function( userPratilipiId, isLiked, successCallBack, errorCallBack ) {
+		if( userPratilipiId == null || isLiked == null ) return;
+		httpUtil.post( API_PREFIX + VOTE_API, 
+				{ "parentId": userPratilipiId, "parentType": "REVIEW", "type": isLiked ? "LIKE" : "NONE" }, 
+				function( response, status ) { processPostResponse( response, status, successCallBack, errorCallBack ) } );
+	},
+
+	this.likeOrDislikeComment = function( commentId, isLiked, successCallBack, errorCallBack ) {
+		if( commentId == null || isLiked == null ) return;
+		httpUtil.post( API_PREFIX + VOTE_API, 
+				{ "parentId": commentId, "parentType": "COMMENT", "type": isLiked ? "LIKE" : "NONE" }, 
+				function( response, status ) { processPostResponse( response, status, successCallBack, errorCallBack ) } );
+	},
+
+	this.deleteReview = function( pratilipiId, successCallBack, errorCallBack ) {
+		if( pratilipiId == null ) return;
+		httpUtil.post( API_PREFIX + USER_PRATILIPI_REVIEW_API, 
+				{ "pratilipiId": pratilipiId, "reviewState": "DELETED" }, 
+				function( response, status ) { processPostResponse( response, status, successCallBack, errorCallBack ) } );
 	}
 
-}
+	this.deleteComment = function( commentId, successCallBack, errorCallBack ) {
+		if( commentId == null ) return;
+		httpUtil.post( API_PREFIX + COMMENT_API, 
+				{ "commentId": commentId, "state": "DELETED" }, 
+				function( response, status ) { processPostResponse( response, status, successCallBack, errorCallBack ) } );
+	}
+
+};
 
 /* Toaster & SnackBar */
 var snackbarContainer = document.createElement( 'div' );
@@ -326,9 +367,9 @@ function convertDate( date ) {
 	var d = new Date( date );
 	function day(d) { return (d < 10) ? '0' + d : d; }
 	function month(m) { var months = ['${ _strings.month_jan }','${ _strings.month_feb }','${ _strings.month_mar }',
-	                                  '${ _strings.month_apr }','${ _strings.month_may }','${ _strings.month_jun }',
-	                                  '${ _strings.month_jul }','${ _strings.month_aug }','${ _strings.month_sep }',
-	                                  '${ _strings.month_oct }','${ _strings.month_nov }','${ _strings.month_dec }']; 
-	                                  return months[m]; }
+									'${ _strings.month_apr }','${ _strings.month_may }','${ _strings.month_jun }',
+									'${ _strings.month_jul }','${ _strings.month_aug }','${ _strings.month_sep }',
+									'${ _strings.month_oct }','${ _strings.month_nov }','${ _strings.month_dec }']; 
+						return months[m]; }
 	return [ day( d.getDate() ), month( d.getMonth() ), d.getFullYear() ].join(' ');
 }
