@@ -46,6 +46,9 @@ var DataAccessor = function() {
 	var USER_AUTHOR_FOLLOW_API = "/userauthor/follow?_apiVer=2";
 	var USER_API = "/user";
 	var NOTIFICATION_LIST_API = "/notification/list";
+	var NAVIGATION_LIST_API = "/navigation/list";
+	var USER_PRATILIPI_REVIEW_LIST_API = "/userpratilipi/review/list";
+	var COMMENT_LIST_API = "/comment/list";
 
 	var request = function( name, api, params ) {
 		return {
@@ -149,6 +152,42 @@ var DataAccessor = function() {
 
 	this.getNotificationList = function( aCallBack ) {
 		httpUtil.get( API_PREFIX + NOTIFICATION_LIST_API, null, 
+			function( response, status ) {
+				if( aCallBack != null ) {
+					aCallBack( status == 200 ? response : null );
+				}
+		});
+	}
+
+	this.getNavigationList = function( aCallBack ) {
+		httpUtil.get( API_PREFIX + NAVIGATION_LIST_API, { "language": "${ language }" }, 
+			function( response, status ) {
+				if( aCallBack != null ) {
+					aCallBack( status == 200 ? response : null );
+				}
+		});
+	}
+
+	this.getReviewList = function( pratilipiId, cursor, offset, resultCount, aCallBack ) {
+		if( pratilipiId == null ) return;
+		var params = { "pratilipiId": pratilipiId };
+		if( cursor != null ) params[ "cursor" ] = cursor;
+		if( offset != null ) params[ "offset" ] = offset;
+		if( resultCount != null ) params[ "resultCount" ] = resultCount;
+		httpUtil.get( API_PREFIX + USER_PRATILIPI_REVIEW_LIST_API, params, 
+			function( response, status ) {
+				if( aCallBack != null ) {
+					aCallBack( status == 200 ? response : null );
+				}
+		});
+	}
+
+	this.getReviewCommentList = function( userPratilipiId, cursor, resultCount, aCallBack ) {
+		if( userPratilipiId != null ) return;
+		var params = { "parentType": "REVIEW", "parentId": userPratilipiId };
+		if( cursor != null ) params[ "cursor" ] = cursor;
+		if( resultCount != null ) params[ "resultcount" ] = resultcount;
+		httpUtil.get( API_PREFIX + COMMENT_LIST_API, params, 
 			function( response, status ) {
 				if( aCallBack != null ) {
 					aCallBack( status == 200 ? response : null );
