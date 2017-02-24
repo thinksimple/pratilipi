@@ -1,35 +1,46 @@
 var AppViewModel = function() {
 	this.user = ko.observable( {} );
+	this.notificationCount = ko.observable( -1 );
 };
+
 var appViewModel = new AppViewModel();
+
+var initFirebase = function() {
+	if( appViewModel.user().isGuest() ) return;
+	var firebaseLibrary = document.createElement( 'script' );
+	firebaseLibrary.setAttribute( "src", "https://www.gstatic.com/firebasejs/3.6.10/firebase.js" );
+	firebaseLibrary.onload = function() {
+		var config = {
+			apiKey: "AIzaSyAAnK0-vDmY1UEcrRRbCzXgdpF2oQn-E0w",
+			authDomain: "prod-pratilipi.firebaseapp.com",
+			databaseURL: "https://prod-pratilipi.firebaseio.com",
+			storageBucket: "prod-pratilipi.appspot.com",
+		};
+		firebase.initializeApp( config );
+		firebase.auth().onAuthStateChanged( function( fbUser ) {
+			if( fbUser ) {
+				var node = firebase.database().ref( "NOTIFICATION" ).child( fbUser.uid ).child( "newNotificationCount" );
+				node.on( 'value', function( snapshot ) {
+					var newNotificationCount = snapshot.val() != null ? snapshot.val() : 0;
+					if( appViewModel.notificationCount() != newNotificationCount )
+						appViewModel.notificationCount( newNotificationCount );
+				});
+			} else {
+				firebase.auth().signInWithCustomToken( appViewModel.user().firebaseToken() );
+			}
+		});
+	};
+	document.body.appendChild( firebaseLibrary );
+}
 
 var updateUser = function() {
 	var dataAccessor = new DataAccessor();
 	dataAccessor.getUser( function( user ) {
 		ko.mapping.fromJS( user, {}, appViewModel.user );
 		appViewModel.user.valueHasMutated();
+		initFirebase();
 	});
 }
 
 ko.applyBindings( appViewModel );
 updateUser();
-
-function goToLoginPage() {
-	window.location.href = "/login-pwa";
-}
-
-function sharePratilipiOnFacebook( url ) {
-	window.open( "http://www.facebook.com/sharer.php?u=" + url, "share", "width=1100,height=500,left=70px,top=60px" );
-}
-
-function sharePratilipiOnTwitter( url ) {
-	window.open( "http://twitter.com/share?url=" + url, "share", "width=1100,height=500,left=70px,top=60px" );
-}
-
-function sharePratilipiOnGplus( url ) {
-	window.open( "https://plus.google.com/share?url=" + url, "share", "width=1100,height=500,left=70px,top=60px" );
-}
-
-function sharePratilipiOnWhatsapp( text ) {
-	window.open( "whatsapp://send?text=" + text );
-}

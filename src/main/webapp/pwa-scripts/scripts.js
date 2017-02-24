@@ -373,3 +373,23 @@ function convertDate( date ) {
 						return months[m]; }
 	return [ day( d.getDate() ), month( d.getMonth() ), d.getFullYear() ].join(' ');
 }
+
+function goToLoginPage() {
+	window.location.href = "/login?retUrl=" + encodeURIComponent( window.location.pathname );
+}
+
+function sharePratilipiOnFacebook( url ) {
+	window.open( "http://www.facebook.com/sharer.php?u=" + url, "share", "width=1100,height=500,left=70px,top=60px" );
+}
+
+function sharePratilipiOnTwitter( url ) {
+	window.open( "http://twitter.com/share?url=" + url, "share", "width=1100,height=500,left=70px,top=60px" );
+}
+
+function sharePratilipiOnGplus( url ) {
+	window.open( "https://plus.google.com/share?url=" + url, "share", "width=1100,height=500,left=70px,top=60px" );
+}
+
+function sharePratilipiOnWhatsapp( text ) {
+	window.open( "whatsapp://send?text=" + text );
+}
