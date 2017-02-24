@@ -1,6 +1,11 @@
 function( params ) {
-	console.log( params.user );
 	var self = this;
+	this.user = params.user;
+	this.notificationCount = params.notificationCount;
+	this.notificationText = ko.computed( function() {
+		if( this.notificationCount() < 1 ) return "";
+		return this.notificationCount() < 100 ? this.notificationCount() : "99+";
+	}, this );
 	this.languageList = [
 		{ value: "TAMIL", text:  "தமிழ்"},
 		{ value: "MALAYALAM", text: "മലയാളം"},
@@ -11,7 +16,7 @@ function( params ) {
 		{ value: "TELUGU", text:  "తెలుగు"},
 		{ value: "KANNADA", text: "ಕನ್ನಡ"}
 	];
-	this.currentLanguage = ko.observable( "HINDI" );
+	this.currentLanguage = ko.observable( "${ language }" );
 	this.searchQuery = ko.observable();
 
 	this.languageChangeHandler = function() {
@@ -29,17 +34,26 @@ function( params ) {
 		if( !( typeof( componentHandler ) == 'undefined' ) ) {
 			componentHandler.upgradeAllRegistered();
 		}
-	  document.querySelector('.mdl-layout').MaterialLayout.toggleDrawer();
+	  document.querySelector( '.mdl-layout' ).MaterialLayout.toggleDrawer();
 	}
 
-	$( "header.pratilipi-header #notificationLink" ).click( function() { $( "header.pratilipi-header #notificationContainer" ).fadeToggle(50); $( "header.pratilipi-header #notificationLink" ).removeClass( "mdl-badge" ); return false; } );
-	$( document ).click( function() { $( "#notificationContainer" ).hide(); } );
-	$( "header.pratilipi-header #notificationContainer" ).click( function() { return false; } );
+	var notificationContainer = $( "header.pratilipi-header #notificationContainer" );
+	var notificationLink = $( "header.pratilipi-header #notificationLink" );
+	notificationLink.click( function() {
+		if( self.user && self.user.userId && self.user.userId() != 0 ) {
+			notificationContainer.fadeToggle(50);
+		} else {
+			window.location.href = "/login?retUrl=" + encodeURIComponent( "/notifications" );
+		}
+		return false;
+	});
+
+	$( document ).click( function() { notificationContainer.hide(); } );
+	notificationContainer.click( function() { return false; } );
 
 	/* Loading Notifications */
 	this.notificationsLoaded = ko.observable( "LOADING" );
 	this.notificationList = ko.observableArray( [] );
-
 	/*
 	 * 3 Possible values for 'notificationsLoaded'
 	 * LOADING
@@ -48,11 +62,12 @@ function( params ) {
 	 * FAILED
 	 * 
 	 * */
-
-	var dataAccessor = new DataAccessor();
-	dataAccessor.getNotificationList( function( notificationList ) {
-		self.notificationList( notificationList );
-		self.notificationsLoaded( notificationList == null ? "FAILED" : ( notificationList.length > 0 ? "LOADED" : "LOADED_EMPTY" ) );
-	});
+	if( this.user.userId && this.user.userId() != 0 && this.notificationCount() != 0 && this.notificationsLoaded() != "LOADING" ) {
+		var dataAccessor = new DataAccessor();
+		dataAccessor.getNotificationList( function( notificationList ) {
+			self.notificationList( notificationList );
+			self.notificationsLoaded( notificationList == null ? "FAILED" : ( notificationList.length > 0 ? "LOADED" : "LOADED_EMPTY" ) );
+		});
+	}
 
 }
