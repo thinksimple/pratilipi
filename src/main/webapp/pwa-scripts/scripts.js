@@ -67,6 +67,11 @@ var DataAccessor = function() {
 		return JSON.stringify( params );
 	};
 
+	var processGetResponse = function( response, status, aCallBack ) {
+		if( aCallBack != null )
+			aCallBack( status == 200 ? response : null );
+	};
+
 	this.getPratilipiByUri = function( pageUri, includeUserPratilipi, aCallBack ) {
 
 		var requests = [];
@@ -84,7 +89,7 @@ var DataAccessor = function() {
 					aCallBack( pratilipi, userpratilipi );
 				}
 		});
-	}
+	};
 
 	this.getPratilipiById = function( pratilipiId, includeUserPratilipi, aCallBack ) {
 
@@ -102,7 +107,7 @@ var DataAccessor = function() {
 					aCallBack( pratilipi, userpratilipi );
 				}
 		});
-	}
+	};
 
 	this.getAuthorByUri = function( pageUri, includeUserAuthor, aCallBack ) {
 
@@ -121,7 +126,7 @@ var DataAccessor = function() {
 					aCallBack( author, userauthor );
 				}
 		});
-	}
+	};
 
 	this.getAuthorById = function( authorId, includeUserAuthor, aCallBack ) {
 
@@ -139,34 +144,25 @@ var DataAccessor = function() {
 					aCallBack( author, userauthor );
 				}
 		});
-	}
+	};
 
 	this.getUser = function( aCallBack ) {
-		httpUtil.get( API_PREFIX + USER_API, null, 
-			function( response, status ) {
-				if( aCallBack != null ) {
-					aCallBack( status == 200 ? response : null );
-				}
-		});
-	}
+		httpUtil.get( API_PREFIX + USER_API, 
+						null, 
+						function( response, status ) { processGetResponse( response, status, aCallBack ) } );
+	};
 
 	this.getNotificationList = function( aCallBack ) {
-		httpUtil.get( API_PREFIX + NOTIFICATION_LIST_API, null, 
-			function( response, status ) {
-				if( aCallBack != null ) {
-					aCallBack( status == 200 ? response : null );
-				}
-		});
-	}
+		httpUtil.get( API_PREFIX + NOTIFICATION_LIST_API, 
+						null, 
+						function( response, status ) { processGetResponse( response, status, aCallBack ) } );
+	};
 
 	this.getNavigationList = function( aCallBack ) {
-		httpUtil.get( API_PREFIX + NAVIGATION_LIST_API, { "language": "${ language }" }, 
-			function( response, status ) {
-				if( aCallBack != null ) {
-					aCallBack( status == 200 ? response : null );
-				}
-		});
-	}
+		httpUtil.get( API_PREFIX + NAVIGATION_LIST_API, 
+						{ "language": "${ language }" }, 
+						function( response, status ) { processGetResponse( response, status, aCallBack ) } );
+	};
 
 	this.getReviewList = function( pratilipiId, cursor, offset, resultCount, aCallBack ) {
 		if( pratilipiId == null ) return;
@@ -174,26 +170,20 @@ var DataAccessor = function() {
 		if( cursor != null ) params[ "cursor" ] = cursor;
 		if( offset != null ) params[ "offset" ] = offset;
 		if( resultCount != null ) params[ "resultCount" ] = resultCount;
-		httpUtil.get( API_PREFIX + USER_PRATILIPI_REVIEW_LIST_API, params, 
-			function( response, status ) {
-				if( aCallBack != null ) {
-					aCallBack( status == 200 ? response : null );
-				}
-		});
-	}
+		httpUtil.get( API_PREFIX + USER_PRATILIPI_REVIEW_LIST_API, 
+						params, 
+						function( response, status ) { processGetResponse( response, status, aCallBack ) } );
+	};
 
 	this.getReviewCommentList = function( userPratilipiId, cursor, resultCount, aCallBack ) {
 		if( userPratilipiId != null ) return;
 		var params = { "parentType": "REVIEW", "parentId": userPratilipiId };
 		if( cursor != null ) params[ "cursor" ] = cursor;
 		if( resultCount != null ) params[ "resultcount" ] = resultcount;
-		httpUtil.get( API_PREFIX + COMMENT_LIST_API, params, 
-			function( response, status ) {
-				if( aCallBack != null ) {
-					aCallBack( status == 200 ? response : null );
-				}
-		});
-	}
+		httpUtil.get( API_PREFIX + COMMENT_LIST_API, 
+						params, 
+						function( response, status ) { processGetResponse( response, status, aCallBack ) } );
+	};
 
 }
 
