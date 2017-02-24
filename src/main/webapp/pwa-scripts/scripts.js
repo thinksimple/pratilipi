@@ -45,6 +45,7 @@ var DataAccessor = function() {
 	var AUTHOR_API = "/author";
 	var USER_AUTHOR_FOLLOW_API = "/userauthor/follow?_apiVer=2";
 	var USER_API = "/user";
+	var NOTIFICATION_LIST_API = "/notification/list";
 
 	var request = function( name, api, params ) {
 		return {
@@ -141,7 +142,16 @@ var DataAccessor = function() {
 		httpUtil.get( API_PREFIX + USER_API, null, 
 			function( response, status ) {
 				if( aCallBack != null ) {
-					aCallBack( response );
+					aCallBack( status == 200 ? response : null );
+				}
+		});
+	}
+
+	this.getNotificationList = function( aCallBack ) {
+		httpUtil.get( API_PREFIX + NOTIFICATION_LIST_API, null, 
+			function( response, status ) {
+				if( aCallBack != null ) {
+					aCallBack( status == 200 ? response : null );
 				}
 		});
 	}

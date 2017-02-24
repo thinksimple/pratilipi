@@ -1,4 +1,5 @@
 function( params ) {
+	console.log( params.user );
 	var self = this;
 	this.languageList = [
 		{ value: "TAMIL", text:  "தமிழ்"},
@@ -37,6 +38,7 @@ function( params ) {
 
 	/* Loading Notifications */
 	this.notificationsLoaded = ko.observable( "LOADING" );
+	this.notificationList = ko.observableArray( [] );
 
 	/*
 	 * 3 Possible values for 'notificationsLoaded'
@@ -47,19 +49,10 @@ function( params ) {
 	 * 
 	 * */
 
-	var httpUtil = new HttpUtil();
-	var notificationList = null;
-
-	httpUtil.get( "/api/notification/list", { "resultCount": 10 }, function( response, status ) {
-		if( status == 200 ) {
-			notificationList = response.notificationList;
-			self.notificationsLoaded( notificationList.length > 0 ? "LOADED" : "LOADED_EMPTY" );
-			console.log( self.notificationsLoaded() );
-		} else {
-			self.notificationsLoaded( 'FAILED' );
-		}
+	var dataAccessor = new DataAccessor();
+	dataAccessor.getNotificationList( function( notificationList ) {
+		self.notificationList( notificationList );
+		self.notificationsLoaded( notificationList == null ? "FAILED" : ( notificationList.length > 0 ? "LOADED" : "LOADED_EMPTY" ) );
 	});
-
-	this.notificationList = ko.observableArray( notificationList );
 
 }
