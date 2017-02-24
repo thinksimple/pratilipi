@@ -2,10 +2,10 @@
     <div class="mdl-grid">
         <div class="mdl-card__media mdl-cell mdl-cell--4-col-phone mdl-cell--3-col-tablet mdl-cell--4-col-desktop alignCenter">
             <#-- <img data-bind="attr: { src: coverImageUrl }" border="0" alt="" style="padding:10px;display:block;margin:auto;"> -->
-        	<picture>
-		    <source media="(min-width: 480px)"  data-bind="attr: { srcset: coverImageUrlDesktop }" />
-			    <img data-bind="attr: { src: coverImageUrlMobile }" border="0" alt="">
-			</picture>
+            <picture>
+            <source media="(min-width: 480px)"  data-bind="attr: { srcset: coverImageUrlDesktop }" />
+                <img data-bind="attr: { src: coverImageUrlMobile }" border="0" alt="">
+            </picture>
         </div>
         <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--5-col-tablet mdl-cell--8-col-desktop">
             <div class="mdl-card__title">
@@ -29,8 +29,7 @@
                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
                     Read
                 </button>
-                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
-                    + Library
+                <button data-bind="text: libraryText, click: addToLibrary" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
                 </button>
                 <button data-bind="click: openShareModal" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
                     <i class="material-icons">share</i>
@@ -43,72 +42,76 @@
                 <br> Type:
                 <!--ko text: type -->
                 <!--/ko-->
-           	</div>
-       	</div>
-		<div class="mdl-cell mdl-cell--12-col padding-zero ">
-		    <p></p>
-		    <hr/>
-		</div>
-  		<h3 class="mdl-cell mdl-cell--12-col mdl-typography--headline">Summary</h3>
-  		<div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero ">
-      		<p class="see-more-text" data-bind="text: summary">
-      		</p>
-      		<div style="text-align:center;">
-              	<button class="mdl-button mdl-js-button mdl-button--accent mdl-js-ripple-effect">
-                  	See More
-              	</button>
             </div>
+        </div>
+        <div class="mdl-cell mdl-cell--12-col padding-zero ">
+            <p></p>
             <hr/>
-        </div> 
+        </div>
+        
+        <!-- ko if: isSummaryPresent -->
+            <h3 class="mdl-cell mdl-cell--12-col mdl-typography--headline">Summary</h3>
+            <div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero ">
+                <pratilipi-see-more params="{ originalText: summary }"></pratilipi-see-more>
+                <hr/>
+            </div>
+        <!-- /ko -->
+
         <h3 class="mdl-cell mdl-cell--12-col mdl-typography--headline">About the Author</h3>
-		<div class="mdl-cell mdl-cell--12-col" style="display: flex;align-items: center;justify-content: space-between;">
-			<span style="display: flex;align-items: center;">
-				<i class="material-icons mdl-list__item-avatar">person</i>
-		  		<span style="margin: 10px;font-weight: 700;" data-bind="text: author_name"></span>
-		    </span>
-			<button data-bind="click: followAuthor" class="mdl-button mdl-js-button mdl-button--primary mdl-layout--large-screen-only">
-				Follow
-			</button>
-			<button data-bind="click: followAuthor" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored mdl-layout--small-screen-only">
-			  	<i class="material-icons">person_add</i>
-			</button>
-		</div>
+        <div class="mdl-cell mdl-cell--12-col" style="display: flex;align-items: center;justify-content: space-between;">
+            <span style="display: flex;align-items: center;">
+                <img data-bind="attr: { src: author_profile_image_url }" class="mdl-list__item-avatar">
+                <a style="margin: 10px;font-weight: 700;" data-bind="attr: { href: author_page_url }, text: author_name"></a>
+                <!-- <span style="margin: 10px;font-weight: 700;" data-bind="text: author_name"></span> -->
+            </span>
+            <button data-bind="click: followAuthor, text: followText" class="mdl-button mdl-js-button mdl-button--primary mdl-layout--large-screen-only">
+            </button>
+            <button data-bind="click: followAuthor" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored mdl-layout--small-screen-only">
+                <i class="material-icons" data-bind="text: followIconText"></i>
+            </button>
+        </div>
         <div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero ">
-            <p class="see-more-text">
-                Excepteur reprehenderit sint exercitation ipsum consequat qui sit id velit elit. Velit anim eiusmod labore sit amet. Voluptate voluptate irure occaecat deserunt incididunt esse in. Sunt velit aliquip sunt elit ex nulla reprehenderit qui ut eiusmod ipsum do. Duis veniam reprehenderit laborum occaecat id proident nulla veniam. Duis enim deserunt voluptate aute veniam sint pariatur exercitation. Irure mollit est sit labore est deserunt pariatur duis aute laboris cupidatat. Consectetur consequat esse est sit veniam adipisicing ipsum enim irure.
+            <p class="see-more-text" data-bind="text: author_summary">
             </p>
             <hr/>
         </div> 
    </div>
 </div>
 <dialog class="mdl-dialog" id="pratilipi-share-dialog">
-	<h4 class="mdl-dialog__title">Share</h4>
-	<div class="mdl-dialog__content">
-		<ul class="demo-list-icon mdl-list">
-		  	<li data-bind="click: shareOnSocialMedia" class="mdl-list__item clickableElement" data-share-platform="Facebook">
-		    	<span class="mdl-list__item-primary-content">
-		    		<div class="new-sprites-icon mdl-list__item-icon sprites-icon-size-24 fb-icon"></div>
-		    		Facebook
-				</span>
-		  	</li>
-		  	<li data-bind="click: shareOnSocialMedia" class="mdl-list__item clickableElement" data-share-platform="Twitter">
-		    	<span class="mdl-list__item-primary-content">
-		    		<div class="new-sprites-icon mdl-list__item-icon sprites-icon-size-24 twitter-icon"></div>
-		    		Twitter
-				</span>
-		  	</li>
-		  	<li data-bind="click: shareOnSocialMedia" class="mdl-list__item clickableElement" data-share-platform="Gplus">
-		    	<span class="mdl-list__item-primary-content">
-		    		<div class="new-sprites-icon mdl-list__item-icon sprites-icon-size-24 gplus-icon"></div>
-		    		Google Plus
-				</span>
-		  	</li>
-		  	<li data-bind="click: shareOnSocialMedia" class="mdl-list__item clickableElement" data-share-platform="Whatsapp">
-		    	<span class="mdl-list__item-primary-content">
-		    		<div class="new-sprites-icon mdl-list__item-icon sprites-icon-size-24 whatsapp-icon"></div>
-		    		Whatsapp
-				</span>
-		  	</li>		  	
-		</ul>
-	</div>
+    <h4 class="mdl-dialog__title">Share</h4>
+    <div class="mdl-dialog__content">
+        <ul class="demo-list-icon mdl-list">
+            <li data-bind="click: shareOnSocialMedia" class="mdl-list__item clickableElement" data-share-platform="Facebook">
+                <span class="mdl-list__item-primary-content">
+                    <div class="new-sprites-icon mdl-list__item-icon sprites-icon-size-24 fb-icon"></div>
+                    Facebook
+                </span>
+            </li>
+            <li data-bind="click: shareOnSocialMedia" class="mdl-list__item clickableElement" data-share-platform="Twitter">
+                <span class="mdl-list__item-primary-content">
+                    <div class="new-sprites-icon mdl-list__item-icon sprites-icon-size-24 twitter-icon"></div>
+                    Twitter
+                </span>
+            </li>
+            <li data-bind="click: shareOnSocialMedia" class="mdl-list__item clickableElement" data-share-platform="Gplus">
+                <span class="mdl-list__item-primary-content">
+                    <div class="new-sprites-icon mdl-list__item-icon sprites-icon-size-24 gplus-icon"></div>
+                    Google Plus
+                </span>
+            </li>
+            <li data-bind="click: shareOnSocialMedia" class="mdl-list__item clickableElement" data-share-platform="Whatsapp">
+                <span class="mdl-list__item-primary-content">
+                    <div class="new-sprites-icon mdl-list__item-icon sprites-icon-size-24 whatsapp-icon"></div>
+                    Whatsapp
+                </span>
+            </li>           
+        </ul>
+    </div>
 </dialog>
+<!--                 <p class="see-more-text" data-bind="text: summary">
+                </p>
+                <div style="text-align:center;">
+                    <button class="mdl-button mdl-js-button mdl-button--accent mdl-js-ripple-effect">
+                        See More
+                    </button>
+                </div> -->

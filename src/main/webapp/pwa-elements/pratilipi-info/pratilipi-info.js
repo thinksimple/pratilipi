@@ -1,14 +1,13 @@
 function( params ) { 
-    this.initializeData = function() {
-        this.id = getQueryVariable("id");
-        this.isGuest = params.isGuest();
-        this.navigationList = ko.observableArray([]);
+    var userPratilipihardcoded = {"userId":5124071978172416,"pratilipiId":6046785843757056,"userName":"राधिका","userImageUrl":"https://d3cwrmdwk8nw1j.cloudfront.net/author/image?authorId=6334457649823744&version=1472193677000","userProfilePageUrl":"/radhika-garg-garg","user":{"userId":5124071978172416,"displayName":"राधिका","profilePageUrl":"/radhika-garg-garg","profileImageUrl":"https://d3cwrmdwk8nw1j.cloudfront.net/author/image?authorId=6334457649823744&version=1472193677000"},"addedToLib":false,"hasAccessToReview":true,"isLiked":false};
+    var userAuthorhardcoded = {"authorId":5655563241259008,"following":false};
+    this.initializePratilipiData = function() {
+        this.id = ko.observable();
+        this.isGuest = params.isGuest; 
         this.title = ko.observable();
         this.titleEn = ko.observable();
         this.coverImageUrlDesktop = ko.observable();
         this.coverImageUrlMobile = ko.observable();
-        this.author_name = ko.observable();
-        this.author_id = ko.observable();
         this.language = ko.observable();
         this.summary = ko.observable();
         this.state = ko.observable();
@@ -18,9 +17,19 @@ function( params ) {
         this.readCount = ko.observable();
         this.type = ko.observable();
         this.pageUrl = ko.observable();
+        this.isAddedToLibrary = ko.observable( false );
         
-        this.isFollowRequestInProgess = ko.observable( false );
-        this.isAddToLibraryRequestInProgess = ko.observable( false );
+        // this.isFollowRequestInProgress = ko.observable( false );
+        // this.isAddToLibraryRequestInProgress = ko.observable( false );
+
+        this.libraryText = ko.computed( function() {
+            return this.isAddedToLibrary() ? "- Library" : "+ Library";
+        }, this);
+
+        this.isSummaryPresent = ko.computed( function() {
+            return this.summary() && this.summary().trim().length;
+        }, this);
+
         
         this.dialog = document.querySelector( '#pratilipi-share-dialog' );
         if ( !this.dialog.showModal ) {
@@ -28,59 +37,134 @@ function( params ) {
         }
     }
 
+    this.initializeAuthorData = function() {
+        this.isUserFollowing = ko.observable( false );
+        this.author_name = ko.observable();
+        this.author_id = ko.observable();
+        this.author_page_url = ko.observable();
+        this.author_profile_image_url = ko.observable();
+        this.author_summary = ko.observable();
+        this.followText = ko.computed( function() {
+            return this.isUserFollowing() ? "Unfollow" : "Follow";
+        }, this); 
+        this.followIconText = ko.computed( function() {
+            return this.isUserFollowing() ? "done" : "person_add";
+        }, this);              
+    };
+
     
-    this.pushToViewModel = function( data ) {
-        this.title(data["title"]).titleEn(data["titleEn"]).author_name(data.author.name).author_id(data.author.authorId).language(data["language"]).summary(data["summary"]).pageUrl(data["pageUrl"]).state(data["state"]).publish_date( convertDate( data["listingDateMillis"] ) ).averageRating( self.roundOffToOneDecimal( data["averageRating"] ) ).ratingCount( data["ratingCount"] ).readCount(data["readCount"]).type(data["type"]);
-        this.coverImageUrlDesktop( data["coverImageUrl"] + "&width=200" ).coverImageUrlMobile( data["coverImageUrl"] + "&width=150" );
-    }
+    this.pushToPratilipiViewModel = function( pratilipi, userpratilipi ) {
+        this.id( pratilipi["pratilipiId"] ).title(pratilipi["title"]).titleEn(pratilipi["titleEn"]).author_name(pratilipi.author.name).author_id(pratilipi.author.authorId).language(pratilipi["language"]).summary(pratilipi["summary"]).pageUrl(pratilipi["pageUrl"]).state(pratilipi["state"]).publish_date( convertDate( pratilipi["listingDateMillis"] ) ).averageRating( self.roundOffToOneDecimal( pratilipi["averageRating"] ) ).ratingCount( pratilipi["ratingCount"] ).readCount(pratilipi["readCount"]).type(pratilipi["type"]);
+        this.coverImageUrlDesktop( pratilipi["coverImageUrl"] + "&width=200" ).coverImageUrlMobile( pratilipi["coverImageUrl"] + "&width=150" );
+        this.isAddedToLibrary( userpratilipi[ "addedToLib" ] );
+    };
+
+    this.pushToAuthorViewModel = function( author, userAuthor ) {
+        this.author_id( author["authorId"] ).author_name( author["fullName"] ).author_page_url( author["pageUrl"] ).author_profile_image_url( author["imageUrl"] ).author_summary( author["summary"] );
+        this.isUserFollowing( userAuthor["following"] );
+    }; 
+       
     var self = this;
-    this.getData = function() {
-        $.ajax({
-            type: 'get',
-    //        url: '/api/pratilipi?_apiVer=2&pratilipiId='+ self.id,
-            url: '/api/pratilipi?_apiVer=2&pratilipiId=' + self.id,
-            data: { 
-                // 'language': "${ language }"
-            },
-            success: function( response ) {
-                var res = response;       
-                self.pushToViewModel( res );
-            },
-            error: function( response ) {
-                console.log( response );
-                console.log( typeof(response) );
-            }
+    // this.getData = function() {
+    //     $.ajax({
+    //         type: 'get',
+    // //        url: '/api/pratilipi?_apiVer=2&pratilipiId='+ self.id,
+    //         url: '<#if stage == "alpha">${ prefix }</#if>/api/pratilipi?_apiVer=2&pratilipiId=' + self.id,
+    //         data: { 
+    //             // 'language': "${ language }"
+    //         },
+    //         success: function( response ) {
+    //             var res = response;       
+    //             self.pushToPratilipiViewModel( res );
+    //         },
+    //         error: function( response ) {
+    //             console.log( response );
+    //             console.log( typeof(response) );
+    //         }
+    //     });
+    // };
+
+    this.fetchPratilipiAndUserPratilipi = function() {
+        var dataAccessor = new DataAccessor();
+        dataAccessor.getPratilipiByUri( "/jitesh-donga/vishwamanav", true,
+        function( pratilipi, userpratilipi ) {
+            self.pushToPratilipiViewModel( pratilipi, userPratilipihardcoded );
+            self.fetchAuthorAndUserAuthor();
         });
     };
+
+    this.fetchAuthorAndUserAuthor = function() {
+        var dataAccessor = new DataAccessor();
+        dataAccessor.getAuthorById( self.author_id() , true, function( author, userAuthor ) {
+            self.pushToAuthorViewModel( author, userAuthorhardcoded );
+        } );
+    };    
     
     this.followAuthor = function() {
         if( self.isGuest() ) {
             goToLoginPage();
         } else {
-            sendFollowAuthorAjaxRequest();
+            self.toggleFollowingState();
+            self.sendFollowAuthorAjaxRequest();
         }
     };
-    
-    this.sendFollowAuthorAjaxRequest = function() {
-        self.isFollowRequestInProgess( true );
+
+    this.addToLibrary = function() {
+        if( self.isGuest() ) {
+            goToLoginPage();
+        } else {
+            self.toggleLibraryState();
+            self.sendLibraryAjaxRequest();
+        }        
+    };
+
+    this.toggleLibraryState = function() {
+        this.isAddedToLibrary( !this.isAddedToLibrary() );
+    };
+
+    this.toggleFollowingState = function() {
+        this.isUserFollowing( !this.isUserFollowing() );
+    };
+
+    this.sendLibraryAjaxRequest = function() {
         $.ajax({
             type: 'post',
     //        url: '/api/pratilipi?_apiVer=2&pratilipiId='+ self.id,
-            url: '/api/userauthor/follow',
+            url: '<#if stage == "alpha">${ prefix }</#if>/api/userpratilipi/library',
             data: {
-                authorId: self.author_id,
-                following: true
+                pratilipiId: self.id(),
+                addedToLib: self.isAddedToLibrary()
             },
             success: function( response ) {
-                var res = response;       
-                self.pushToViewModel( res );
             },
             error: function( response ) {
+                self.toggleLibraryState();
                 console.log( response );
                 console.log( typeof(response) );
             },
             complete: function() {
-                this.isFollowRequestInProgess( false );
+                // self.isAddToLibraryRequestInProgress( false );
+                /* populate button text acc to the response */
+            }
+        });              
+    };      
+    
+    this.sendFollowAuthorAjaxRequest = function() {
+        $.ajax({
+            type: 'post',
+    //        url: '/api/pratilipi?_apiVer=2&pratilipiId='+ self.id,
+            url: '<#if stage == "alpha">${ prefix }</#if>/api/userauthor/follow',
+            data: {
+                authorId: self.author_id,
+                following: self.isUserFollowing()
+            },
+            success: function( response ) {
+            },
+            error: function( response ) {
+                self.toggleFollowingState();
+            },
+            complete: function() {
+                // this.isFollowRequestInProgress( false );
                 /* populate button text acc to the response */
             }
         });              
@@ -117,8 +201,9 @@ function( params ) {
     };
     
     this.init = function() {
-        this.initializeData();
-        this.getData();
+        this.initializePratilipiData();
+        this.initializeAuthorData();
+        this.fetchPratilipiAndUserPratilipi();
     }
     
     this.init();
