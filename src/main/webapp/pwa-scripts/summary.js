@@ -1,12 +1,12 @@
 var AppViewModel = function() {
-	this.user = ko.observable( {} );
+	this.user = ko.mapping.fromJS( { "isGuest": true }, {}, this.user );
 	this.notificationCount = ko.observable( -1 );
 };
 
 var appViewModel = new AppViewModel();
 
 var initFirebase = function() {
-	if( appViewModel.user().isGuest() ) return;
+	if( appViewModel.user.isGuest() ) return;
 	var firebaseLibrary = document.createElement( 'script' );
 	firebaseLibrary.setAttribute( "src", "https://www.gstatic.com/firebasejs/3.6.10/firebase.js" );
 	firebaseLibrary.onload = function() {
@@ -26,21 +26,25 @@ var initFirebase = function() {
 						appViewModel.notificationCount( newNotificationCount );
 				});
 			} else {
-				firebase.auth().signInWithCustomToken( appViewModel.user().firebaseToken() );
+				firebase.auth().signInWithCustomToken( appViewModel.user.firebaseToken() );
 			}
 		});
 	};
 	document.body.appendChild( firebaseLibrary );
-}
+};
+
+var resetFbNotificationCount = function() {
+	var node = firebase.database().ref( "NOTIFICATION" ).child( user.userId ).child( "newNotificationCount" );
+	node.set( 0 );
+};
 
 var updateUser = function() {
 	var dataAccessor = new DataAccessor();
 	dataAccessor.getUser( function( user ) {
 		ko.mapping.fromJS( user, {}, appViewModel.user );
-		appViewModel.user.valueHasMutated();
 		initFirebase();
 	});
-}
+};
 
 ko.applyBindings( appViewModel );
 updateUser();

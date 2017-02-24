@@ -1,11 +1,5 @@
 function( params ) {
 	var self = this;
-	this.user = params.user;
-	this.notificationCount = params.notificationCount;
-	this.notificationText = ko.computed( function() {
-		if( this.notificationCount() < 1 ) return "";
-		return this.notificationCount() < 100 ? this.notificationCount() : "99+";
-	}, this );
 	this.languageList = [
 		{ value: "TAMIL", text:  "தமிழ்"},
 		{ value: "MALAYALAM", text: "മലയാളം"},
@@ -24,8 +18,8 @@ function( params ) {
 	};
 
 	this.search = function( formElement ) {
-		 if( self.searchQuery() && self.searchQuery().trim().length ) {
-			  var search_url = "/search?q=" + self.searchQuery();
+		 if( this.searchQuery() && this.searchQuery().trim().length ) {
+			  var search_url = "/search?q=" + this.searchQuery();
 			  window.location.href = search_url;
 		 }
 	};
@@ -37,11 +31,13 @@ function( params ) {
 	  document.querySelector( '.mdl-layout' ).MaterialLayout.toggleDrawer();
 	}
 
+	/* Notifications */
 	var notificationContainer = $( "header.pratilipi-header #notificationContainer" );
 	var notificationLink = $( "header.pratilipi-header #notificationLink" );
 	notificationLink.click( function() {
-		if( self.user && self.user.userId && self.user.userId() != 0 ) {
+		if( ! appViewModel.user.isGuest() ) {
 			notificationContainer.fadeToggle(50);
+			resetFbNotificationCount();
 		} else {
 			window.location.href = "/login?retUrl=" + encodeURIComponent( "/notifications" );
 		}
@@ -52,22 +48,37 @@ function( params ) {
 	notificationContainer.click( function() { return false; } );
 
 	/* Loading Notifications */
-	this.notificationsLoaded = ko.observable( "LOADING" );
+	this.notificationsLoaded = ko.observable( "INITIAL" );
 	this.notificationList = ko.observableArray( [] );
 	/*
-	 * 3 Possible values for 'notificationsLoaded'
+	 * 5 Possible values for 'notificationsLoaded'
+	 * INITIAL
 	 * LOADING
 	 * LOADED_EMPTY
 	 * LOADED
 	 * FAILED
 	 * 
 	 * */
-	if( this.user.userId && this.user.userId() != 0 && this.notificationCount() != 0 && this.notificationsLoaded() != "LOADING" ) {
-		var dataAccessor = new DataAccessor();
-		dataAccessor.getNotificationList( function( notificationList ) {
-			self.notificationList( notificationList );
-			self.notificationsLoaded( notificationList == null ? "FAILED" : ( notificationList.length > 0 ? "LOADED" : "LOADED_EMPTY" ) );
-		});
-	}
 
+	this.updateNotifications = function() {
+		if( ! appViewModel.user.isGuest() && appViewModel.notificationCount() != 0 ) {
+			if( this.notificationsLoaded() == "LOADING" ) return;
+			this.notificationsLoaded( "LOADING" );
+			var dataAccessor = new DataAccessor();
+			dataAccessor.getNotificationList( function( notificationList ) {
+				self.notificationList( notificationList );
+				self.notificationsLoaded( notificationList == null ? "FAILED" : ( notificationList.length > 0 ? "LOADED" : "LOADED_EMPTY" ) );
+			});
+		}
+	};
+
+	this.computedNotificationCount = ko.computed( function() {
+		self.updateNotifications();
+		if( appViewModel.notificationCount() < 1 ) {
+			notificationLink.removeClass( "mdl-badge" );
+			return "";
+		}
+		notificationLink.addClass( "mdl-badge" );
+		return appViewModel.notificationCount() < 100 ? appViewModel.notificationCount() : "99+";
+	}, this );
 }

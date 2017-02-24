@@ -39,7 +39,7 @@
 				<span style="margin-right: 0;" 
 						id="notificationLink" 
 						class="material-icons mdl-badge mdl-badge--overlap mdl-badge--no-background"
-						data-bind="attr: { 'data-badge': notificationText }">notifications</span>
+						data-bind="attr: { 'data-badge': computedNotificationCount }">notifications</span>
 				<div id="notificationContainer">
 					<div id="notificationTitle">${ _strings.notification_notifications }</div>
 					<div id="notificationsBody" class="notifications">
@@ -88,7 +88,7 @@
 				<span class="sprites-icon header-sprite-icon account-circle-icon"></span>
 			</div>
 		</div>
-		<div class="sign-in-button button-outside-container" style="margin: 7px auto;">
+		<div class="sign-in-button button-outside-container">
 			<button class="btn btn-primary">
 				<div class="sprites-icon header-sprite-icon account-circle-icon"></div>
 				<span>${ _strings.user_sign_in }</span>
