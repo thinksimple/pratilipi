@@ -49,6 +49,9 @@ var DataAccessor = function() {
 	var NAVIGATION_LIST_API = "/navigation/list";
 	var USER_PRATILIPI_REVIEW_LIST_API = "/userpratilipi/review/list";
 	var COMMENT_LIST_API = "/comment/list";
+	var USER_PRATILIPI_REVIEW_API = "/userpratilipi/review";
+	var USER_AUTHOR_FOLLOW_API = "/userauthor/follow?_apiVer=2";
+	var USER_PRATILIPI_LIBRARY_API = "/userpratilipi/library";
 
 	var request = function( name, api, params ) {
 		return {
@@ -70,6 +73,13 @@ var DataAccessor = function() {
 	var processGetResponse = function( response, status, aCallBack ) {
 		if( aCallBack != null )
 			aCallBack( status == 200 ? response : null );
+	};
+
+	var processPostResponse = function( response, status, successCallBack, errorCallBack ) {
+		if( status == 200 && successCallBack != null )
+			successCallBack( response );
+		else if( status != 200 && errorCallBack != null )
+			errorCallBack( response );
 	};
 
 	this.getPratilipiByUri = function( pageUri, includeUserPratilipi, aCallBack ) {
@@ -184,6 +194,30 @@ var DataAccessor = function() {
 						params, 
 						function( response, status ) { processGetResponse( response, status, aCallBack ) } );
 	};
+
+	this.createOrUpdateReview = function( pratilipiId, rating, review, successCallBack, errorCallBack ) {
+		if( pratilipiId == null ) return;
+		var params = { "pratilipiId": pratilipiId, "reviewState": "PUBLISHED" };
+		if( rating != null ) params[ "rating" ] = rating;
+		if( review != null ) params[ "review" ] = review;
+		httpUtil.post( API_PREFIX + USER_PRATILIPI_REVIEW_API, 
+				params, 
+				function( response, status ) { processPostResponse( response, status, successCallBack, errorCallBack ) } );
+	}
+
+	this.followOrUnfollowAuthor = function( authorId, following, successCallBack, errorCallBack ) {
+		if( authorId == null || following == null ) return;
+		httpUtil.post( API_PREFIX + USER_AUTHOR_FOLLOW_API, 
+				{ "authorId": authorId, "following": following }, 
+				function( response, status ) { processPostResponse( response, status, successCallBack, errorCallBack ) } );
+	}
+	
+	this.addOrRemoveFromLibrary = function( pratilipiId, addedToLib, successCallBack, errorCallBack ) {
+		if( pratilipiId == null || addedToLib == null ) return;
+		httpUtil.post( API_PREFIX + USER_PRATILIPI_LIBRARY_API, 
+				{ "pratilipiId": pratilipiId, "addedToLib": addedToLib }, 
+				function( response, status ) { processPostResponse( response, status, successCallBack, errorCallBack ) } );
+	}
 
 }
 
