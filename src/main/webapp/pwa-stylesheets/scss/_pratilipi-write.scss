@@ -1,0 +1,21 @@
+pratilipi-write {
+	div.modal-content {
+		border-radius: 1px;
+		div.modal-header {
+			span.close {
+				float: right !important;
+				cursor: pointer;
+			}
+		}
+		div.modal-body {
+			padding: 15px 30px;
+			.mdl-textfield {
+				width: 100%;
+				display: block;
+			}
+		}
+		div.modal-footer {
+			border: none;
+		}
+	}
+}
