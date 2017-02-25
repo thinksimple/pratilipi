@@ -22,8 +22,7 @@ var initFirebase = function() {
 				var node = firebase.database().ref( "NOTIFICATION" ).child( fbUser.uid ).child( "newNotificationCount" );
 				node.on( 'value', function( snapshot ) {
 					var newNotificationCount = snapshot.val() != null ? snapshot.val() : 0;
-					if( appViewModel.notificationCount() != newNotificationCount )
-						appViewModel.notificationCount( newNotificationCount );
+					appViewModel.notificationCount( newNotificationCount );
 				});
 			} else {
 				firebase.auth().signInWithCustomToken( appViewModel.user.firebaseToken() );

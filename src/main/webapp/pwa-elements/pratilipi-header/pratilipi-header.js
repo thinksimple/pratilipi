@@ -61,7 +61,8 @@ function( params ) {
 	 * */
 
 	this.updateNotifications = function() {
-		if( ! appViewModel.user.isGuest() && appViewModel.notificationCount() != 0 ) {
+		if( (  ! appViewModel.user.isGuest() && appViewModel.notificationCount() != 0 ) 
+				|| ( self.notificationsLoaded() == "INITIAL" && appViewModel.notificationCount() == 0 ) ) {
 			if( self.notificationsLoaded() == "LOADING" ) return;
 			self.notificationsLoaded( "LOADING" );
 			var dataAccessor = new DataAccessor();
