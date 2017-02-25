@@ -1,0 +1,63 @@
+<div class="modal fade" id="pratilipiWrite" tabindex="-1" role="dialog" aria-labelledby="pratilipi-write">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<span data-dismiss="modal" aria-label="Close" class="material-icons close">close</span>
+				<h6 class="modal-title">${ _strings.writer_add_content_title }</h6>
+			</div>
+			<div class="modal-body">
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fullwidth getmdl-select__fix-height">
+					<#assign languageVernacular=_strings[ "language_" + lang ]>
+					<input class="mdl-textfield__input" 
+							id="pratilipi_write_language" 
+							data-val="${ language }"
+							value="${ languageVernacular }"
+							type="text" readonly tabIndex="-1" />
+					<label class="mdl-textfield__label" for="pratilipi_write_language">${ _strings.write_language }</label>
+					<ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu" for="pratilipi_write_language">
+						<li class="mdl-menu__item" data-val="BENGALI">${ _strings.language_bn }</li>
+						<li class="mdl-menu__item" data-val="MARATHI">${ _strings.language_mr }</li>
+						<li class="mdl-menu__item" data-val="HINDI">${ _strings.language_hi }</li>
+						<li class="mdl-menu__item" data-val="GUJARATI">${ _strings.language_gu }</li>
+						<li class="mdl-menu__item" data-val="TAMIL">${ _strings.language_ta }</li>
+						<li class="mdl-menu__item" data-val="MALAYALAM">${ _strings.language_ml }</li>
+						<li class="mdl-menu__item" data-val="TELUGU">${ _strings.language_te }</li>
+						<li class="mdl-menu__item" data-val="KANNADA">${ _strings.language_kn }</li>
+					</ul>
+				</div>
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+					<input data-bind="textInput: title" class="mdl-textfield__input" type="text" id="pratilipi_write_title">
+					<label class="mdl-textfield__label" for="pratilipi_write_title">${ _strings.writer_input_title }</label>
+				</div>
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+					<input data-bind="textInput: titleEn" class="mdl-textfield__input" type="text" id="pratilipi_write_title_en">
+					<label class="mdl-textfield__label" for="pratilipi_write_title_en">${ _strings.writer_input_title_en }</label>
+				</div>
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fullwidth getmdl-select__fix-height">
+					<input class="mdl-textfield__input" 
+							id="pratilipi_write_type" 
+							type="text" readonly tabIndex="-1" />
+					<label class="mdl-textfield__label" for="pratilipi_write_type">${ _strings.write_type }</label>
+					<ul class="mdl-menu mdl-menu--top-left mdl-js-menu" for="pratilipi_write_type">
+						<#list pratilipiTypes as pratilipiType>
+							<li class="mdl-menu__item" value="${ pratilipiType.value }">${ pratilipiType.name }</li>
+						</#list>
+					</ul>
+				</div>
+				<#--
+				<div class="accept-terms">
+					<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect terms-conditions" for="agree-terms-conditions">
+						<input data-bind="checked: agreedTerms" type="checkbox" id="agree-terms-conditions" class="mdl-checkbox__input" />
+						<span class="mdl-checkbox__label">${ _strings.writer_accept_copyright }</span>
+					</label>
+					<a target="_blank" style="color: #333; text-decoration: underline;" href="/terms-of-service">${ _strings.writer_read_copyright }</a>
+				</div>
+				-->
+			</div>
+			<div class="modal-footer">
+				<#-- <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" data-dismiss="modal">Close</button> -->
+				<button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" data-bind="click: submit">${ _strings.writer_to_next_screen }</button>
+			</div>
+		</div>
+	</div>
+</div>
