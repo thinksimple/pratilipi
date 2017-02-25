@@ -65,9 +65,10 @@ function( params ) {
 			if( self.notificationsLoaded() == "LOADING" ) return;
 			self.notificationsLoaded( "LOADING" );
 			var dataAccessor = new DataAccessor();
-			dataAccessor.getNotificationList( function( notificationList ) {
+			dataAccessor.getNotificationList( function( notificationResponse ) {
+				var notificationList = notificationResponse.notificationList;
 				self.notificationList( notificationList );
-				self.notificationsLoaded( notificationList == null ? "FAILED" : ( notificationList.length > 0 ? "LOADED" : "LOADED_EMPTY" ) );
+				self.notificationsLoaded( notificationResponse == null ? "FAILED" : ( notificationList.length > 0 ? "LOADED" : "LOADED_EMPTY" ) );
 			});
 		}
 	};
