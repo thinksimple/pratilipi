@@ -45,7 +45,7 @@ function( params ) {
 	});
 
 	$( document ).click( function() { notificationContainer.hide(); } );
-	notificationContainer.click( function() { return false; } );
+	notificationContainer.click( function(e) { e.stopPropagation(); } );
 
 	/* Loading Notifications */
 	this.notificationsLoaded = ko.observable( "INITIAL" );

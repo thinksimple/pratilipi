@@ -51,8 +51,7 @@
 						<!-- <div data-bind="visible: notificationsLoaded == 'FAILED'">
 								Notifications failed to load. Please click here to re-load the notifications.
 							</div> -->
-						<ul data-bind="{ visible: notificationsLoaded() == 'LOADED',
-										foreach: {data: notificationList, as: 'notification'}}">
+						<ul data-bind="foreach: {data: notificationList, as: 'notification'}">
 							<li class="mdl-menu__item">
 								<a class="notification-message" data-bind="attr: {'href': sourceUrl}">
 									<span style="display: flex;">
@@ -118,22 +117,5 @@
 			<input class="form-control horizontal-form-input focus-outline-none" placeholder="Search for stories" data-bind="textInput: searchQuery">
 		</form>
 		<div style="clear: both"></div>
-	</div>
-</div>
-<div class="modal fade" id="pratilipiWrite" tabindex="-1" role="dialog" aria-labelledby="pratilipi-write">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="myModalLabel">Modal title</h4>
-			</div>
-			<div class="modal-body">
-	        	Modal Body
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary">Save changes</button>
-			</div>
-		</div>
 	</div>
 </div>
