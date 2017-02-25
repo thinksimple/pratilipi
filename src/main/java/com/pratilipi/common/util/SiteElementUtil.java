@@ -5,11 +5,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.Language;
+import com.pratilipi.common.type.PratilipiType;
 import com.pratilipi.i18n.I18n;
 
 public class SiteElementUtil {
@@ -44,6 +47,16 @@ public class SiteElementUtil {
 				dataModel.put( "fbAppId", "293990794105516" );
 				dataModel.put( "googleClientId", "659873510744-kfim969enh181h4gbctffrjg5j47tfuq.apps.googleusercontent.com" );
 				dataModel.put( "_strings", I18n.getStrings( language ) );
+
+				List<Map<String, String>> pratilipiTypes = new ArrayList<>();
+				for( PratilipiType pratilipiType : PratilipiType.values() ) {
+					Map<String, String> type = new HashMap<>();
+					type.put( "name", I18n.getString( pratilipiType.getStringId(), language ) );
+					type.put( "namePlural", I18n.getString( pratilipiType.getPluralStringId(), language ) );
+					type.put( "value", pratilipiType.name() );
+					pratilipiTypes.add( type );
+				}
+				dataModel.put( "pratilipiTypes", pratilipiTypes );
 
 				// I18n element file output stream
 				File i18nElement = null;
