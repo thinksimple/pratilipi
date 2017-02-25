@@ -40,11 +40,10 @@
 					<label class="mdl-textfield__label" for="pratilipi_write_type">${ _strings.write_type }</label>
 					<ul class="mdl-menu mdl-menu--top-left mdl-js-menu" for="pratilipi_write_type">
 						<#list pratilipiTypes as pratilipiType>
-							<li class="mdl-menu__item" value="${ pratilipiType.value }">${ pratilipiType.name }</li>
+							<li class="mdl-menu__item" data-val="${ pratilipiType.value }">${ pratilipiType.name }</li>
 						</#list>
 					</ul>
 				</div>
-				<#--
 				<div class="accept-terms">
 					<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect terms-conditions" for="agree-terms-conditions">
 						<input data-bind="checked: agreedTerms" type="checkbox" id="agree-terms-conditions" class="mdl-checkbox__input" />
@@ -52,11 +51,11 @@
 					</label>
 					<a target="_blank" style="color: #333; text-decoration: underline;" href="/terms-of-service">${ _strings.writer_read_copyright }</a>
 				</div>
-				-->
 			</div>
 			<div class="modal-footer">
-				<#-- <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" data-dismiss="modal">Close</button> -->
-				<button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" data-bind="click: submit">${ _strings.writer_to_next_screen }</button>
+				<button data-bind="{ click: submit, disable: requestOnFlight }" 
+						class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" 
+						type="button">${ _strings.writer_to_next_screen }</button>
 			</div>
 		</div>
 	</div>

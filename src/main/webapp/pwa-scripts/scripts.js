@@ -21,9 +21,7 @@ var HttpUtil = function() {
 		var anHttpRequest = new XMLHttpRequest();
 		anHttpRequest.onreadystatechange = function() { 
 			if( anHttpRequest.readyState == 4 && aCallback != null )
-				aCallback( anHttpRequest.getResponseHeader( 'content-type' ).indexOf( "application/json;" ) > -1 
-					? JSON.parse( anHttpRequest.responseText ) : anHttpRequest.responseText, 
-					anHttpRequest.status );
+				aCallback( JSON.parse( anHttpRequest.responseText ), anHttpRequest.status );
 		};
 		anHttpRequest.open( "POST", aUrl, true );
 		anHttpRequest.setRequestHeader( "Content-type", "application/x-www-form-urlencoded" );
@@ -188,7 +186,7 @@ var DataAccessor = function() {
 	};
 
 	this.getReviewCommentList = function( userPratilipiId, cursor, resultCount, aCallBack ) {
-		if( userPratilipiId != null ) return;
+		if( userPratilipiId == null ) return;
 		var params = { "parentType": "REVIEW", "parentId": userPratilipiId };
 		if( cursor != null ) params[ "cursor" ] = cursor;
 		if( resultCount != null ) params[ "resultcount" ] = resultcount;
@@ -257,6 +255,13 @@ var DataAccessor = function() {
 		if( commentId == null ) return;
 		httpUtil.post( API_PREFIX + COMMENT_API, 
 				{ "commentId": commentId, "state": "DELETED" }, 
+				function( response, status ) { processPostResponse( response, status, successCallBack, errorCallBack ) } );
+	},
+
+	this.createOrUpdatePratilipi = function( pratilipi, successCallBack, errorCallBack ) {
+		if( pratilipi == null ) return;
+		httpUtil.post( API_PREFIX + PRATILIPI_API, 
+				pratilipi, 
 				function( response, status ) { processPostResponse( response, status, successCallBack, errorCallBack ) } );
 	}
 
