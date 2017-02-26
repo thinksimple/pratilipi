@@ -6,7 +6,7 @@
 				<h6 class="modal-title">${ _strings.writer_add_content_title }</h6>
 			</div>
 			<div class="modal-body">
-				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fullwidth getmdl-select__fix-height">
+				<div class="mdl-textfield mdl-js-textfield getmdl-select getmdl-select__fullwidth getmdl-select__fix-height">
 					<#assign languageVernacular=_strings[ "language_" + lang ]>
 					<input class="mdl-textfield__input" 
 							id="pratilipi_write_language" 
@@ -25,15 +25,10 @@
 						<li class="mdl-menu__item" data-val="KANNADA">${ _strings.language_kn }</li>
 					</ul>
 				</div>
-				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-					<input data-bind="textInput: title" class="mdl-textfield__input" type="text" id="pratilipi_write_title">
-					<label class="mdl-textfield__label" for="pratilipi_write_title">${ _strings.writer_input_title }</label>
-				</div>
-				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-					<input data-bind="textInput: titleEn" class="mdl-textfield__input" type="text" id="pratilipi_write_title_en">
-					<label class="mdl-textfield__label" for="pratilipi_write_title_en">${ _strings.writer_input_title_en }</label>
-				</div>
-				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fullwidth getmdl-select__fix-height">
+				<input class="title" data-bind="textInput: title" placeholder="${ _strings.writer_input_title } *" make-transliterable />
+				<div class="clearfix"></div>
+				<input class="title" data-bind="textInput: titleEn" placeholder="${ _strings.writer_input_title_en }" />
+				<div class="mdl-textfield mdl-js-textfield getmdl-select getmdl-select__fullwidth getmdl-select__fix-height">
 					<input class="mdl-textfield__input" 
 							id="pratilipi_write_type" 
 							type="text" readonly tabIndex="-1" />
@@ -49,7 +44,7 @@
 						<input data-bind="checked: agreedTerms" type="checkbox" id="agree-terms-conditions" class="mdl-checkbox__input" />
 						<span class="mdl-checkbox__label">${ _strings.writer_accept_copyright }</span>
 					</label>
-					<a target="_blank" style="color: #333; text-decoration: underline;" href="/terms-of-service">${ _strings.writer_read_copyright }</a>
+					<a target="_blank" href="/terms-of-service">${ _strings.writer_read_copyright }</a>
 				</div>
 			</div>
 			<div class="modal-footer">

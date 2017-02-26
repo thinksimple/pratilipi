@@ -37,8 +37,33 @@
 
 		<link rel="stylesheet" href="https://cdn.rawgit.com/CreativeIT/getmdl-select/master/getmdl-select.min.css">
 		<script defer src="https://cdn.rawgit.com/CreativeIT/getmdl-select/master/getmdl-select.min.js"></script>
-
-
+		<style>
+			.word-suggester {
+				position: absolute;
+				padding: 10px;
+				border: whitesmoke 1px solid;
+				display: inline-block;
+				min-width: 100px;
+				display: none;
+				background: white;
+				z-index: 65538;
+				font-size: 16px;
+			}
+			
+			.word-input {
+				border: none;
+				display: inline-block;
+				border-right: 2px grey solid;
+			}
+			.suggestion {
+				cursor: pointer;
+				line-height: 24px;
+			}
+			.highlight-suggestion {
+				background: lightgrey;
+				font-weight: 700;
+			}
+		</style>
 	</head>
 
 <body>
@@ -71,9 +96,21 @@
 		-->
 	</div>
 
+	<div class="word-suggester"><div class="word-input"></div><div class="suggestions"><div class="suggestion"></div></div></div>
 	<script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 	<script src="/pwa-scripts/scripts-${ lang }.js?2"></script>
 	<script src="/pwa-scripts/summary-${ lang }.js?5"></script>
+	<script src="/pwa-scripts/transliteration-suggester-${ lang }.js"></script>
+	<script src="/pwa-scripts/transliteration-app-${ lang }.js"></script>
 	<script src="http://public.pratilipi.com/third-party/bootstrap-3.3.7-modal/modal.min.js"></script>
+	<script src="http://0.ptlp.co/resource-all/rangy_core.rangy_selectionsaverestore.min.js"></script>
+	
+	<script>
+	$( "*[make-transliterable]" ).each( function() {
+		var $content_object = $( this );
+		this.content_transliteration_object = new transliterationApp( $content_object, "${ lang }" );
+		this.content_transliteration_object.init();
+	});
+	</script>
 </body>
 </html>
