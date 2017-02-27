@@ -1,18 +1,14 @@
-.pratilipi-navigation-drawer {
+nav.pratilipi-navigation-drawer {
 	background: #fff;
-}
-
-.pratilipi-navigation-drawer {
-   	h6 {
-      margin: 0px;
-      padding: 20px 20px 5px 20px;
-      color: #D0021B;
-    }
-    
-    a {
-      color: #333;
-      text-decoration: none;
-      padding: 5px 20px 5px 20px;
-      display: block;
-    }
+	h6 {
+		margin: 0px;
+		padding: 16px 0 0 16px;
+		color: #D0021B;
+	}
+	a.mdl-navigation__link {
+		color: #333;
+		text-decoration: none;
+		padding: 5px 20px 5px 20px;
+		display: block;
+	}
 }

@@ -1,8 +1,10 @@
-<nav class="mdl-navigation mdl-typography--body-1-force-preferred-font pratilipi-navigation-drawer">
-	<#list navigationList as navigation>
-		<h6>${ navigation.title }</h6>
-		<#list navigation.linkList as link>
-			<a class="mdl-navigation__link" href="${ link.url }">${ link.name }</a>
-		</#list>  
-	</#list>
-</nav>
+<div class="mdl-layout__drawer mdl-layout--small-screen-only">
+	<nav class="mdl-navigation pratilipi-navigation-drawer">
+		<#list navigationList as navigation>
+			<h6>${ navigation.title }</h6>
+			<#list navigation.linkList as link>
+				<a class="mdl-navigation__link" href="${ link.url }">${ link.name }</a>
+			</#list>
+		</#list>
+	</nav>
+</div>

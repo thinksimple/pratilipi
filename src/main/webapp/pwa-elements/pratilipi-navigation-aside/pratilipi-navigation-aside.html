@@ -1,8 +1,14 @@
-<aside class="mdl-components__nav">
-     <#list navigationList as navigation>
-		<h6>${ navigation.title }</h6>
-		<#list navigation.linkList as link>
-			<a class="mdl-navigation__link" href="${ link.url }">${ link.name }</a>
-		</#list>  
-	</#list>         		
-</aside>
+<div class="pratilipi-navigation-aside mdl-layout--large-screen-only mdl-card-border white-background">
+	<div class="mdl-components__nav">
+	     <#list navigationList as navigation>
+			<h6>${ navigation.title }</h6>
+			<div class="mdl-list">
+				<#list navigation.linkList as link>
+					<a class="mdl-list__item mdl-navigation__link" href="${ link.url }">
+						${ link.name }
+					</a>
+				</#list>
+			</div>
+		</#list>
+	</div>
+</div>
