@@ -1,9 +1,10 @@
 function( params ) { 
+    console.log( params );
     var userPratilipihardcoded = {"userId":5124071978172416,"pratilipiId":6046785843757056,"userName":"राधिका","userImageUrl":"https://d3cwrmdwk8nw1j.cloudfront.net/author/image?authorId=6334457649823744&version=1472193677000","userProfilePageUrl":"/radhika-garg-garg","user":{"userId":5124071978172416,"displayName":"राधिका","profilePageUrl":"/radhika-garg-garg","profileImageUrl":"https://d3cwrmdwk8nw1j.cloudfront.net/author/image?authorId=6334457649823744&version=1472193677000"},"addedToLib":false,"hasAccessToReview":true,"isLiked":false};
     var userAuthorhardcoded = {"authorId":5655563241259008,"following":false};
     this.initializePratilipiData = function() {
         this.id = ko.observable();
-        this.isGuest = params.isGuest; 
+        this.isGuest = ko.observable( appViewModel.user.isGuest() ); 
         this.title = ko.observable();
         this.titleEn = ko.observable();
         this.coverImageUrlDesktop = ko.observable();
@@ -36,6 +37,10 @@ function( params ) {
             dialogPolyfill.registerDialog( this.dialog );
         }
     }
+    
+    this.formatDate = function( date ) {
+        return convertDate( date );
+    };
 
     this.initializeAuthorData = function() {
         this.isUserFollowing = ko.observable( false );
@@ -65,24 +70,6 @@ function( params ) {
     }; 
        
     var self = this;
-    // this.getData = function() {
-    //     $.ajax({
-    //         type: 'get',
-    // //        url: '/api/pratilipi?_apiVer=2&pratilipiId='+ self.id,
-    //         url: '/api/pratilipi?_apiVer=2&pratilipiId=' + self.id,
-    //         data: { 
-    //             // 'language': "${ language }"
-    //         },
-    //         success: function( response ) {
-    //             var res = response;       
-    //             self.pushToPratilipiViewModel( res );
-    //         },
-    //         error: function( response ) {
-    //             console.log( response );
-    //             console.log( typeof(response) );
-    //         }
-    //     });
-    // };
 
     this.fetchPratilipiAndUserPratilipi = function() {
         var dataAccessor = new DataAccessor();

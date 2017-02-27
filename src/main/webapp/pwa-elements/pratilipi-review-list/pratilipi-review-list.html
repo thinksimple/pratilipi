@@ -1,19 +1,20 @@
-<div class="mdl-card mdl-card-border mdl-cell mdl-cell--8-col-tablet mdl-cell--9-col" data-bind="visible: reviewList().length > 0">
+<div class="mdl-card mdl-card-border mdl-cell mdl-cell--8-col-tablet mdl-cell--9-col" >
     <div class="mdl-grid">
-		<h3 class="mdl-cell mdl-cell--12-col mdl-typography--headline">Reviews</h3>
-        <div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero ">
+		<!-- <h3 class="mdl-cell mdl-cell--12-col mdl-typography--headline" data-bind="text: pratilipiObj.pratilipiId"></h3> -->
+		<h3 class="mdl-cell mdl-cell--12-col mdl-typography--headline">${ _strings.review_heading }</h3>
+        <div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero " data-bind="if: hasAccessToReview">
 			<div class="mdl-grid padding-zero">
 				<div class="mdl-cell--6-col mdl-cell--4-col-tablet padding-zero" data-bind="foreach: ko.utils.range( 1, maxRating )">
 					<i class="material-icons material-icons-36 clickableElement" data-bind="click: $parent.openReviewModalWithRating">star_border</i>
 				</div>
 				<div class="mdl-cell--6-col mdl-cell--4-col-tablet padding-zero">
-                	<button data-bind="click: openReviewModal.bind($data, $root.userIsGuest() )" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect pull-right">Write a review</button>
+                	<button data-bind="click: openReviewModal.bind( $data )" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect pull-right">Write a review</button>
 				</div>
 			</div>
         </div>		
-        <div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero ">
+        <div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero " data-bind="visible: reviewList().length > 0">
 			<ul class="demo-list-three mdl-list" data-bind="foreach: reviewList">
-				<pratilipi-review params="{ value: $data, isGuest: $root.userIsGuest }"></pratilipi-review>								
+				<pratilipi-review params="{ value: $data }"></pratilipi-review>								
 			</ul>
 			<li class="show-more" data-bind="if: areMoreReviews">
 				<div>

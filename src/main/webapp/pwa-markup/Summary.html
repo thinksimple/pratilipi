@@ -23,6 +23,7 @@
 		<@register element="pratilipi-header" />
 		<@register element="pratilipi-footer" />
 		<@register element="pratilipi-info" />
+		<@register element="pratilipi-summary-page" />
 		<@register element="pratilipi-review-list" />
 		<@register element="pratilipi-review" />
 		<@register element="pratilipi-review-comment" />
@@ -79,21 +80,13 @@
 		<div class="mdl-layout__drawer mdl-layout--small-screen-only">
 			<!-- ko component: "pratilipi-navigation-drawer" --><!-- /ko -->
 		</div>
-		<#--
 		<main class="mdl-layout__content">
 			<div class="mdl-components mdl-js-components">
 				<pratilipi-navigation-aside class="mdl-layout--large-screen-only mdl-card-border white-background"></pratilipi-navigation-aside>
-				<div class="mdl-grid">
-
-					<pratilipi-info params="{ isGuest: userIsGuest }"></pratilipi-info>	
-					
-					<pratilipi-review-list params="{ isGuest: userIsGuest }"></pratilipi-review-list>															   
-				</div>
+				<pratilipi-summary-page></pratilipi-summary-page>				   
 			</div>
-
 			<pratilipi-footer></pratilipi-footer>
 		</main>
-		-->
 	</div>
 
 	<div class="word-suggester"><div class="word-input"></div><div class="suggestions"><div class="suggestion"></div></div></div>

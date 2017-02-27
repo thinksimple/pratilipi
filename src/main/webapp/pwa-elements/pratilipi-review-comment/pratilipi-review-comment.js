@@ -1,7 +1,8 @@
 function( params ) {
     var self = this;
+    var dataAccessor = new DataAccessor();
     this.reviewCommentObject = params.value;
-    this.isGuest = params.isGuest;    
+    this.isGuest = ko.observable( appViewModel.user.isGuest() );    
 
     this.likeCount = ko.observable( this.reviewCommentObject.likeCount );
     this.isLiked = ko.observable( this.reviewCommentObject.isLiked );
@@ -30,23 +31,20 @@ function( params ) {
         }
     }
 
+    this.getLikeParam = function() {
+        return this.isLiked() ? "LIKE" : "NONE";
+    }
+
+    this.likeSuccessCallback = function() {
+
+    };
+
+    this.likeErrorCallback = function() {
+        self.updateLikeCount();
+    };
+
     this.generateLikeAjaxRequest = function() {
-        $.ajax({
-            type: 'post',
-            url: '/api/vote',
-            data: {
-                parentType: "COMMENT",
-                parentId: self.reviewCommentObject.commentId,
-                type: self.isLiked ? "LIKE" : "NONE"
-            },
-            success: function( response ) {
-                var res = response;
-            },
-            error: function( response ) {
-                /* revert changes */
-                self.updateLikeCount();
-            }
-        });      
+        dataAccessor.likeOrDislikeComment( self.reviewCommentObject.commentId, this.getLikeParam(), this.likeSuccessCallback, this.likeErrorCallback );      
     };
        
 }

@@ -1,8 +1,9 @@
 function( params ) {
     var self = this;
+    this.dataAccessor = new DataAccessor();
     this.reviewObject = params.value;
-    this.isGuest = params.isGuest;
-    console.log( this.reviewObject );
+    this.isGuest = appViewModel.user.isGuest();
+    // console.log( this.reviewObject );
     this.likeCount = ko.observable( this.reviewObject.likeCount );
     this.commentCount = ko.observable( this.reviewObject.commentCount );
     this.isLiked = ko.observable( false );
@@ -29,8 +30,8 @@ function( params ) {
     }, this );
     
     
-    this.likeDislikeReview = function( item ) {
-        if( self.isGuest() ) {
+    this.likeDislikeReview = function() {
+        if( appViewModel.user.isGuest() ) {
             goToLoginPage();
         }
         else {
@@ -46,7 +47,7 @@ function( params ) {
     }
     
     this.showReplyState = function( item ) {
-       if( self.isGuest() ) {
+       if( appViewModel.user.isGuest() ) {
            goToLoginPage();
        }
        else {
@@ -76,48 +77,40 @@ function( params ) {
         }
     };
 
+    this.getLikeParam = function() {
+        return this.isLiked() ? "LIKE" : "NONE";
+    }
+
+    this.likeSuccessCallback = function() {
+
+    };
+
+    this.likeErrorCallback = function() {
+        self.updateLikeCount();
+    };
+
     this.generateLikeAjaxRequest = function() {
-        $.ajax({
-            type: 'post',
-            url: '/api/vote',
-            data: {
-                parentType: "REVIEW",
-                parentId: self.reviewObject.userPratilipiId,
-                type: self.isLiked ? "LIKE" : "NONE"
-            }, 
-            success: function( response ) {
-                var res = jQuery.parseJSON( response );
-                console.log(res);
-            },
-            error: function( response ) {
-                /* revert changes */
-                self.updateLikeCount();
-            }
-        });      
+        this.dataAccessor.likeOrDislikeReview( self.reviewObject.userPratilipiId, this.getLikeParam(), this.likeSuccessCallback, this.likeErrorCallback );    
+    }
+    
+    this.getCommentsCallback = function( response ) {
+        if( response ) {
+            this.populateCommentsList( response["commentList"] );
+        }
     };
     
     this.generateGetCommentsAjaxRequest = function() {
-        $.ajax({
-            type: 'get',
-            url: '/api/comment/list',
-            data: {
-                parentType: "REVIEW",
-                parentId: self.reviewObject.userPratilipiId,
-            }, 
-            success: function( response ) {
-        //      var res = jQuery.parseJSON( response );
-                var res = response;        
-                self.populateCommentsList( response["commentList"] );
-            },
-            error: function( response ) {
-                /* revert changes */
-//                self.updateLikeCount();
-            }
-        });             
-    }  
+        this.dataAccessor.getReviewCommentList( this.reviewObject.userPratilipiId, null, null, this.getCommentsCallback.bind( this ) );            
+    };
+
+    this.postCommentSuccessCallback = function( response ) {
+        comment.reply("");
+        self.addToCommentsList( response );
+    }; 
     
     this.generatePostCommentAjaxRequest = function( comment ) {
       comment.saveInProgress( true );
+      // this.dataAccessor.createOrUpdateReviewComment( self.reviewObject.userPratilipiId, null, comment.reply(), this.postCommentSuccessCallback, this.postCommentErrorCallback );
       $.ajax({
           type: 'post',
           url: '/api/comment',
@@ -137,18 +130,18 @@ function( params ) {
               comment.saveInProgress( false );
               self.hideReplyState();
           }
-      });             
-   }    
+      });            
+   };    
     
     this.populateCommentsList = function( commentList ) {
         for(var i = 0; i < commentList.length; i++) {
             this.comments.push( commentList[i] );
         }        
-    }  
+    }; 
     
     this.addToCommentsList = function( comment ) {
         this.comments.push( comment );
-    } 
+    };
     
     componentHandler.upgradeDom();
 }

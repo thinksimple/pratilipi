@@ -1,8 +1,10 @@
 <li class="mdl-list__item left-padding display-block">
     <div class="mdl-list__item mdl-list__item--two-line padding-zero">
 		<span class="mdl-list__item-primary-content">
-			<i class="material-icons mdl-list__item-avatar">person</i>
-			<span>Me</span>
+			<img data-bind="attr: { src: $root.user.profileImageUrl }" class="mdl-list__item-avatar">
+			<a data-bind="attr: { href: $root.user.userProfilePageUrl }, text: $root.user.displayName"></a>		
+<!-- 			<i class="material-icons mdl-list__item-avatar">person</i>
+			<span>Me</span> -->
 		</span>
 	</div>
     <form action="#">

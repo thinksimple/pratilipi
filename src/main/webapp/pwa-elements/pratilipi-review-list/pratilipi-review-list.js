@@ -1,7 +1,23 @@
 function( params ) {
     var self = this;
-    this.isGuest = params.isGuest;
-    this.pratilipiId = getQueryVariable( "id" );
+//    console.log( "params", params );
+//    console.log( "pobj", params.pratilipiObj );
+//    console.log( "upobj", params.userPratilipiObj );
+    this.pratilipiObj = params.pratilipiObj;
+    this.userPratilipiObj = params.userPratilipiObj;
+    console.log( this.userPratilipiObj );
+    
+    this.hasAccessToReview = ko.computed( function() { /* test this for changes in review access */
+        if( appViewModel.user.isGuest() )
+            return  true;
+        // else if( !isEmpty( this.userPratilipiObj ) ) /* if user is not guest, this will never be empty */
+            // return this.userPratilipiObj.hasAccessToReview();
+        return true;
+    }, this);
+    
+    this.isGuest = ko.observable( appViewModel.user.isGuest() );
+    this.dataAccessor = new DataAccessor();
+    // this.pratilipiId = "5093925535612928";
     this.maxRating = 5;    
     this.firstLoadReviewCount = 5;
     this.subsequentLoadReviewCount = 10;  
@@ -46,65 +62,31 @@ function( params ) {
         this.settotalReviewsPresent( this.totalReviewsPresent() + 1 );
     };  
 
-//    this.getUser = function() {
-//      $.ajax({
-//        type: 'get',
-//        url: '/api/user',
-//        success: function( response ) {
-//          var res = jQuery.parseJSON( response );
-//          self.userIsGuest( res["isGuest"] );
-//        },
-//        error: function( response ) {
-//            console.log( response );
-//            console.log( typeof( response ) );
-//        }
-//      });      
-//    };
     this.settotalReviewsPresent = function( count ) {
         this.totalReviewsPresent( count );
     };
+
+    this.getReviewListCallback = function( response ) {
+        if( response ) {
+            this.pushToReviewList( response[ "reviewList" ] );
+            this.settotalReviewsPresent( response["numberFound"] );            
+        }
+    };
+
+    this.loadMoreReviewsCallback = function( response ) {
+        if( response ) {
+            this.pushToReviewList( response[ "reviewList" ] );           
+        }
+    };
     
     this.getReviewList = function() {
-        $.ajax({
-            type: 'get',
-            url: '/api/userpratilipi/review/list',
-            data: {
-                pratilipiId: self.pratilipiId,
-                resultCount: self.firstLoadReviewCount
-            },
-            success: function( response ) {
-                var res = response;          
-                self.pushToReviewList( res[ "reviewList" ] );
-                self.settotalReviewsPresent( res["numberFound"] );
-            },
-            error: function( response ) {
-                console.log( response );
-                console.log( typeof( response ) );
-            }
-        });
+        this.dataAccessor.getReviewList( this.pratilipiId, null, null, this.firstLoadReviewCount, this.getReviewListCallback.bind( this ) );
     };
     
     this.loadMoreReviews = function() {
-        $.ajax({
-            type: 'get',
-            url: '/api/userpratilipi/review/list',
-            data: {
-                pratilipiId: self.pratilipiId,
-                resultCount: self.subsequentLoadReviewCount,
-                cursor: self.totalReviewsShown
-            },
-            success: function( response ) {
-                var res = response;          
-                self.pushToReviewList( res[ "reviewList" ] );
-            },
-            error: function( response ) {
-                console.log( response );
-                console.log( typeof( response ) );
-            }
-        });
+        this.dataAccessor.getReviewList( this.pratilipiId, this.totalReviewsShown(), null, this.subsequentLoadReviewCount, this.loadMoreReviewsCallback.bind( this ) );
     };    
 //    this.getUser();
-    this.getReviewList();
     
     var dialog = document.querySelector( '#pratilipi-review-dialog' );
     if ( !dialog.showModal ) {
@@ -142,13 +124,27 @@ function( params ) {
         self.setSelectedReviewRating( rating );
         self.openReviewModal();
     };
+
+    this.postReviewSuccessCallback = function( response ) {
+        self.addToReviewList( response ); 
+        self.postReviewCompleteCallback();
+    };
+    this.postReviewErrorCallback = function() {
+        self.postReviewCompleteCallback();
+    };
+    this.postReviewCompleteCallback = function() {
+        self.isSaveInProgress( false );
+        self.hideReviewModal();
+    };        
     
     this.postNewReview = function() {
-        this.sendReviewPostAjaxRequest();
+        this.isSaveInProgress( true );
+        this.dataAccessor.createOrUpdateReview( self.pratilipiId, self.selectedReviewRating(), self.newReviewContent(), this.postReviewSuccessCallback, this.postReviewErrorCallback );
     }
     
     this.sendReviewPostAjaxRequest = function() {
-        this.isSaveInProgress( true );
+        
+
         $.ajax({
             type: 'post',
             url: '/api/userpratilipi/review',
@@ -171,6 +167,18 @@ function( params ) {
             }
         });     
       
-    };  
+    }; 
+    
+     if( !isEmpty( this.pratilipiObj ) ) {
+        this.pratilipiId = this.pratilipiObj.pratilipiId();
+        this.getReviewList();
+     }  
+     
+     // if( appViewModel.user.isGuest() ) {
+     //     this.hasAccessToReview( true );
+     // } else if ( !isEmpty( this.userPratilipiObj ) ) {
+     //      this.hasAccessToReview( this.userPratilipiObj.hasAccessToReview() );  
+     // }  
+      
    
 }

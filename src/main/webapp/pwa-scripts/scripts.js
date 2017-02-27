@@ -34,8 +34,8 @@ var DataAccessor = function() {
 
 	var httpUtil = new HttpUtil();
 
-	var API_PREFIX = "/api";
-/*	var API_PREFIX = "http://hindi.gamma.pratilipi.com/api"; */
+	 var API_PREFIX = "/api";
+	//var API_PREFIX = "http://hindi.gamma.pratilipi.com/api"; 
 
 	var PAGE_API = "/page";
 	var PRATILIPI_API = "/pratilipi?_apiVer=2";
@@ -397,4 +397,13 @@ function sharePratilipiOnGplus( url ) {
 
 function sharePratilipiOnWhatsapp( text ) {
 	window.open( "whatsapp://send?text=" + text );
+}
+
+function isEmpty(obj) {
+  for(var prop in obj) {
+      if(obj.hasOwnProperty(prop))
+          return false;
+  }
+
+  return JSON.stringify(obj) === JSON.stringify({});
 }

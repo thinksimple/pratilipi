@@ -1,0 +1,19 @@
+<div class="mdl-grid">
+
+	<div class="pratilipi-info">
+	     <!-- ko component: {
+			name: "pratilipi-info",
+			params: { pratilipiObj: pratilipiObject(), userPratilipiObj: userPratilipiObject() }
+		} --> 
+		<!-- /ko -->
+	</div>
+	<div class="pratilipi-review-list">
+	     <!-- ko component: {
+			name: "pratilipi-review-list",
+			params: { pratilipiObj: pratilipiObject(), userPratilipiObj: userPratilipiObject() }
+		} --> 
+		<!-- /ko -->
+	</div>	
+     <!-- for ref how to access a property  -->
+    <p data-bind="text: pratilipiObject().pratilipiId"></p>                                                           
+</div>
