@@ -1,34 +1,34 @@
 @mixin button-color-background( $color ) {
-  	background-color: $color !important;
-    border-color: $color !important;
+	background-color: $color !important;
+	border-color: $color !important;
 }
 @mixin box-shadow( $arg1, $arg2, $arg3, $arg4, $color ) {
-    -moz-box-shadow: $arg1 $arg2 $arg3 $arg4 $color;
+	-moz-box-shadow: $arg1 $arg2 $arg3 $arg4 $color;
 	-webkit-box-shadow: $arg1 $arg2 $arg3 $arg4 $color; 
 }	
 
 .pratilipi-login-container {
-    text-align: center;
+	text-align: center;
 	margin: auto;
-    padding-top: 20px;
-    max-width: 280px;
+	padding-top: 20px;
+	max-width: 280px;
 }
 
 .pratilipi-login-container {
 	.login-sprite-icon-24 {
-	    /*margin: 10px auto;*/
-	    width: 24px;
-	    height: 24px;
-	    float: left;
-	    margin: 6px 0;
+		/*margin: 10px auto;*/
+		width: 24px;
+		height: 24px;
+		float: left;
+		margin: 6px 0;
 	}
 	
 	.fb-icon {
-	    background-position: 0 -120px;
+		background-position: 0 -120px;
 	}
 	
 	.gplus-icon {
-	    background-position: -72px -120px;
+		background-position: -72px -120px;
 	}
 	
 	.pratilipi-red-button {
@@ -36,71 +36,65 @@
 	}
 	
 	.pratilipi-fb-blue-button {
-	    @include button-color-background( #3b5998 );
+		@include button-color-background( #3b5998 );
 	}
 	
 	.pratilipi-white-button {
-	    background-color: #fff !important;
-	    border-color: #ccc !important;
+		background-color: #fff !important;
+		border-color: #ccc !important;
 	}
 	
 	.pratilipi-logo {
-	    width: 40px;
-	    height: 40px;
+		width: 40px;
+		height: 40px;
 	}
 	
 	.pratilipi-heading {
 		line-height: 28px;
-	    margin-top: 10px;
+		margin-top: 10px;
 	}
-	
-	.pratilipi-content-container {
-	}
-	
+
 	.login-button {
-	    margin: 8px 0 !important;
-	    width: 100% !important;
+		margin: 8px 0 !important;
+		width: 100% !important;
 	}
 	.login-or {
-	    color: rgba(0, 0, 0, .26);
+		color: rgba(0, 0, 0, .26);
 	}
 	
 	.login-textfield {
-	    padding: 12px 0;
+		padding: 12px 0;
 	}
 	.login-textfield .mdl-textfield__label{
-	    top: 16px;
+		top: 16px;
 	}
 	.login-textfield .mdl-textfield__label:after {
-	    bottom: 12px !important;
-	    background-color: #d0021b;
+		bottom: 12px !important;
+		background-color: #d0021b;
 	}
 	.forgot-password-link {
-	    color: rgba(0, 0, 0, .26);
-	    font-size: 12px;
-	    display: block;
-	}
-	.pull-right {
-	    float: right;
+		color: rgba(0, 0, 0, .26);
+		font-size: 12px;
+		display: block;
 	}
 	.sign-up-link {
-	    font-weight: 550
+		font-weight: 550
 	}
 	.pratilipi-red {
-	    color: #d0021b;
+		color: #d0021b;
 	}
 	.margin-zero {
-	    margin: 0;
+		margin: 0;
 	}
-    .terms-conditions {
+	.terms-conditions {
 		display: block;
 		margin: 16px 0;
 		a {
 			white-space: nowrap;
 		}
-    }
-    .member-login {
-    	margin: 12px 0;
-    }
+	}
+	.member-login {
+		margin: 12px 0;
+	}
 }
 
