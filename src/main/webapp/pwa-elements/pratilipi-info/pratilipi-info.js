@@ -94,7 +94,7 @@ function( params ) {
             }, this); 
             
             this.isSummaryPresent = ko.computed( function() {
-                return this.pratilipiObj.summary() && this.pratilipiObj.summary().trim().length;
+                return this.pratilipiObj.summary && this.pratilipiObj.summary().trim().length;
             }, this); 
 
             this.dialog = document.querySelector( '#pratilipi-share-dialog' );
