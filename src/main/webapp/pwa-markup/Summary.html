@@ -20,7 +20,7 @@
 		<link rel="stylesheet" href="http://public.pratilipi.com/third-party/bootstrap-3.3.7-modal/modal.min.css">
 
 		<#include "functions.ftl">
-		<@register element="pratilipi-header" />
+		<@register element="pratilipi-header-new" />
 		<@register element="pratilipi-footer" />
 		<@register element="pratilipi-info" />
 		<@register element="pratilipi-summary-page" />
@@ -70,12 +70,10 @@
 <body>
 	<!-- http://10.ptlp.co/pratilipi/cover?width=150 -->
 	<div class="demo-layout-transparent mdl-layout mdl-js-layout mdl-layout--fixed-header">
-		<header class="mdl-layout__header mdl-layout__header--transparent pratilipi-header">
-			<!-- ko component: {
-				name: "pratilipi-header"
-			} -->
-			<!-- /ko -->
-		</header>
+		<!-- ko component: {
+			name: "pratilipi-header-new"
+		} -->
+		<!-- /ko -->
 		<pratilipi-write></pratilipi-write>
 		<div class="mdl-layout__drawer mdl-layout--small-screen-only">
 			<!-- ko component: "pratilipi-navigation-drawer" --><!-- /ko -->

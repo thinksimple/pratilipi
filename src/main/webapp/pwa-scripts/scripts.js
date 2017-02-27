@@ -399,11 +399,10 @@ function sharePratilipiOnWhatsapp( text ) {
 	window.open( "whatsapp://send?text=" + text );
 }
 
-function isEmpty(obj) {
-  for(var prop in obj) {
-      if(obj.hasOwnProperty(prop))
-          return false;
-  }
-
-  return JSON.stringify(obj) === JSON.stringify({});
+function isEmpty( obj ) {
+	for( var prop in obj ) {
+		if( obj.hasOwnProperty( prop ) )
+			return false;
+	}
+	return JSON.stringify( obj ) === JSON.stringify( {} );
 }

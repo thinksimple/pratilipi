@@ -1,5 +1,6 @@
 var AppViewModel = function() {
-	this.user = ko.mapping.fromJS( { "isGuest": true }, {}, this.user );
+	var defaultUser = { "isGuest": true, "profilePageUrl": "", "profileImageUrl": "", "displayName": "" };
+	this.user = ko.mapping.fromJS( defaultUser, {}, this.user );
 	this.notificationCount = ko.observable( -1 );
 };
 
