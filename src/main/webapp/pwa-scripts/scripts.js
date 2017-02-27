@@ -162,9 +162,9 @@ var DataAccessor = function() {
 						function( response, status ) { processGetResponse( response, status, aCallBack ) } );
 	};
 
-	this.getNotificationList = function( aCallBack ) {
+	this.getNotificationList = function( resultCount, aCallBack ) {
 		httpUtil.get( API_PREFIX + NOTIFICATION_LIST_API, 
-						null, 
+						resultCount == null ? null : { "resultCount": resultCount }, 
 						function( response, status ) { processGetResponse( response, status, aCallBack ) } );
 	};
 

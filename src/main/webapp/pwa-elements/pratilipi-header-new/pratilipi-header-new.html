@@ -17,20 +17,20 @@
 			</#list>
 		</ul>
 
-		<div class="header-icons-holder visible-xs">
+		<div class="header-icons-holder menu-icon-holder">
 			<button data-bind="event: { click: openMenuNavigationDrawer }" class="mdl-button mdl-js-button mdl-button--icon">
 				<i class="material-icons">menu</i>
 			</button>
 		</div>
 
 		<form class="hidden-xs" action="javascript:void(0);" data-bind="submit: search">
-			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+			<div class="mdl-textfield mdl-js-textfield">
 				<input class="mdl-textfield__input" type="text" id="pratilipi-header-search" data-bind="textInput: searchQuery" />
 				<div class="mdl-textfield__label" for="pratilipi-header-search">
 					${ _strings.search_bar_help }
 				</div>
 				<i data-bind="event: { click: search }" class="material-icons search">search</i>
-				<i data-bind="event: { click: openMenuNavigationDrawer }" class="material-icons menu">menu</i>
+				<#-- <i data-bind="event: { click: openMenuNavigationDrawer } }" class="material-icons menu">menu</i> -->
 			</div>
 		</form>
 		<div class="header-icons-holder">
@@ -134,7 +134,7 @@
 			</#list>
 		</ul>
 		<form action="javascript:void(0);" data-bind="submit: search">
-			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+			<div class="mdl-textfield mdl-js-textfield">
 				<input class="mdl-textfield__input" type="text" id="pratilipi-header-search-mobile" data-bind="textInput: searchQuery" />
 				<div class="mdl-textfield__label" for="pratilipi-header-search-mobile">
 					${ _strings.search }
