@@ -2,13 +2,29 @@ function( params ) {
     console.log( params );
     var self = this;
     this.abc = "abc";
-//    this.followText = ko.observable("");
+    this.isUserFollowing = ko.observable( false );
+
+    this.followText = ko.computed( function() {
+        return this.isUserFollowing() ? "Unfollow" : "Follow";            
+    }, this);
+
     this.userPratilipihardcoded = {"userId":5124071978172416,"pratilipiId":6046785843757056,"userName":"राधिका","userImageUrl":"https://d3cwrmdwk8nw1j.cloudfront.net/author/image?authorId=6334457649823744&version=1472193677000","userProfilePageUrl":"/radhika-garg-garg","user":{"userId":5124071978172416,"displayName":"राधिका","profilePageUrl":"/radhika-garg-garg","profileImageUrl":"https://d3cwrmdwk8nw1j.cloudfront.net/author/image?authorId=6334457649823744&version=1472193677000"},"addedToLib":false,"hasAccessToReview":true,"isLiked":false};
     var userAuthorhardcoded = {"authorId":5655563241259008,"following":false};
     this.pratilipiObj = params.pratilipiObj;
     this.userPratilipiObj = params.userPratilipiObj;
     this.authorObj = ko.mapping.fromJS( {"profileImageUrl": "","pageUrl": "", "name": "", "summary": ""} , {}, this.authorObj );
-    this.userAuthorObj = ko.mapping.fromJS( {"following": false}, {}, this.userAuthorObj );     
+    this.userAuthorObj = ko.mapping.fromJS( {"following": false}, {}, this.userAuthorObj ); 
+
+    this.getShareUrl = function( share_platform ) {
+        var share_url = encodeURIComponent( window.location.origin + this.pratilipiObj.pageUrl() );
+        if( share_platform == "Whatsapp" ) {          
+            var text = "%22" + this.pratilipiObj.title() + "%22${ _strings.whatsapp_read_story }%20" + share_url +"%0A${ _strings.whatsapp_read_unlimited_stories }";
+            return text; /* test if message goes correctly in whatsapp */
+        } else {
+            return share_url;
+        }
+    };
+
     this.shareOnSocialMedia = function( item, event ) {
         var element = event.currentTarget;
         var share_platform = element.getAttribute('data-share-platform');
@@ -18,16 +34,6 @@ function( params ) {
         this.hideShareModal();
     };
     if( !isEmpty( this.pratilipiObj ) ) {
-
-        this.getShareUrl = function( share_platform ) {
-            var share_url = encodeURIComponent( window.location.origin + this.pratilipiObj.pageUrl() );
-            if( share_platform == "Whatsapp" ) {          
-                var text = "%22" + this.pratilipiObj.title() + "%22${ _strings.whatsapp_read_story }%20" + share_url +"%0A${ _strings.whatsapp_read_unlimited_stories }";
-                return text; /* test if message goes correctly in whatsapp */
-            } else {
-                return share_url;
-            }
-        };
         
         
         this.openShareModal = function() {
@@ -118,18 +124,52 @@ function( params ) {
             else
                 return userAuthorhardcoded.addedToLib; /* change before pushing */
                 // return this.userPratilpiObj.isAddedToLib();
-        }         
+        };
+
+        this.toggleFollowingState = function() {
+            this.isUserFollowing( !this.isUserFollowing() );
+        };
+
+        this.sendFollowAuthorAjaxRequest = function() {
+            this.dataAccessor.followOrUnfollowAuthor( this.author_id(), this.isUserFollowing(), null, this.toggleFollowingState.bind( this ) );
+        //     $.ajax({
+        //         type: 'post',
+        // //        url: '/api/pratilipi?_apiVer=2&pratilipiId='+ this.id,
+        //         url: '/api/userauthor/follow',
+        //         data: {
+        //             authorId: this.author_id,
+        //             following: this.isUserFollowing()
+        //         },
+        //         success: function( response ) {
+        //         },
+        //         error: function( response ) {
+        //             self.toggleFollowingState();
+        //         },
+        //         complete: function() {
+        //             // this.isFollowRequestInProgress( false );
+        //             /* populate button text acc to the response */
+        //         }
+        //     });              
+        };       
+
+        this.followAuthor = function() {
+            if( this.isGuest() ) {
+                goToLoginPage();
+            } else {
+                this.toggleFollowingState();
+                this.sendFollowAuthorAjaxRequest();
+            }
+        };         
 
         this.initializeAuthorData = function() {
-            this.isUserFollowing = ko.observable( this.getInitialFollowingState() );
+            this.isUserFollowing( this.getInitialFollowingState() );
             // this.author_name = ko.observable();
             // this.author_id = ko.observable( this.pratilipiObj.author.authorId() );
             // this.author_page_url = ko.observable();
             // this.author_profile_image_url = ko.observable();
             // this.author_summary = ko.observable();
-            this.followText = ko.computed( function() {
-                return this.isUserFollowing() ? "Unfollow" : "Follow";
-            }, this); 
+
+ 
             this.followIconText = ko.computed( function() {
                 return this.isUserFollowing() ? "done" : "person_add";
             }, this);              

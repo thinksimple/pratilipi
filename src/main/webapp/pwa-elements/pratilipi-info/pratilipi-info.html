@@ -64,7 +64,7 @@
                 <a style="margin: 10px;font-weight: 700;" data-bind="attr: { href: authorObj.pageUrl }, text: authorObj.name()"></a>
                 <!-- <span style="margin: 10px;font-weight: 700;" data-bind="text: author_name"></span> -->
             </span>
-            <button data-bind="text: getFollowText" class="mdl-button mdl-js-button mdl-button--primary mdl-layout--large-screen-only">
+            <button data-bind="click: followAuthor, text: followText" class="mdl-button mdl-js-button mdl-button--primary mdl-layout--large-screen-only">
             </button> 
 <!--             <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored mdl-layout--small-screen-only">
                 <i class="material-icons" data-bind="text: followIconText"></i>
