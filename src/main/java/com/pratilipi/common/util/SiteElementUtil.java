@@ -13,6 +13,7 @@ import java.util.Map;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PratilipiType;
+import com.pratilipi.common.type.Website;
 import com.pratilipi.i18n.I18n;
 
 public class SiteElementUtil {
@@ -48,15 +49,29 @@ public class SiteElementUtil {
 				dataModel.put( "googleClientId", "659873510744-kfim969enh181h4gbctffrjg5j47tfuq.apps.googleusercontent.com" );
 				dataModel.put( "_strings", I18n.getStrings( language ) );
 
-				List<Map<String, String>> pratilipiTypes = new ArrayList<>();
+				List<Map<String, Object>> pratilipiTypes = new ArrayList<>();
 				for( PratilipiType pratilipiType : PratilipiType.values() ) {
-					Map<String, String> type = new HashMap<>();
+					Map<String, Object> type = new HashMap<>();
 					type.put( "name", I18n.getString( pratilipiType.getStringId(), language ) );
 					type.put( "namePlural", I18n.getString( pratilipiType.getPluralStringId(), language ) );
 					type.put( "value", pratilipiType.name() );
 					pratilipiTypes.add( type );
 				}
 				dataModel.put( "pratilipiTypes", pratilipiTypes );
+
+				// Language lisr
+				List<Map<String, Object>> languageList = new ArrayList<>();
+				for( Language lang : Language.values() ) {
+					if( lang == Language.ENGLISH ) continue;
+					Map<String, Object> langMap = new HashMap<>();
+					langMap.put( "value", lang );
+					langMap.put( "code", lang.getCode() );
+					langMap.put( "hostName", "http://" + lang.getHostName() );
+					langMap.put( "name", lang.getName() );
+					langMap.put( "nameEn", lang.getNameEn() );
+					languageList.add(langMap);
+				}
+				dataModel.put( "languageList", languageList );
 
 				// I18n element file output stream
 				File i18nElement = null;
