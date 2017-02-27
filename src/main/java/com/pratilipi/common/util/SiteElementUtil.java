@@ -3,24 +3,77 @@ package com.pratilipi.common.util;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.io.IOUtils;
 
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.Language;
 import com.pratilipi.common.type.PratilipiType;
-import com.pratilipi.common.type.Website;
+import com.pratilipi.data.DataAccessor;
 import com.pratilipi.i18n.I18n;
 
 public class SiteElementUtil {
 
 	public static final String defaultLang = "en";
 
-	
+	private static List<Map<String, Object>> getNavigationList( Language language ) {
+
+		List<String> lines = null;
+		try {
+			String fileName = "curated/navigation." + language.getCode();
+			InputStream inputStream = DataAccessor.class.getResource( fileName ).openStream();
+			lines = IOUtils.readLines( inputStream, "UTF-8" );
+			inputStream.close();
+		} catch( NullPointerException | IOException e ) {
+			System.out.println( "Failed to fetch " + language.getNameEn() + " navigation list." );
+			lines = new ArrayList<>( 0 );
+		}
+
+		List<Map<String, Object>> navigationList = new ArrayList<>();
+
+		String navigationListTitle = null;
+		List<Map<String, String>> linkList = new ArrayList<>();
+
+		for( String line : lines ) {
+			line = line.trim();
+			if( line.isEmpty() )
+				continue;
+
+			if( line.contains( "App#" ) ) {
+				Map<String, String> navigationEntry = new HashMap<>();
+				navigationEntry.put( "url", line.substring( 0, line.indexOf( ' ' ) ).trim() );
+				line = line.substring( line.indexOf( ' ' ) ).trim();
+				navigationEntry.put( "name", line.substring( 0, line.indexOf( "Analytics#" ) ).trim() );
+				linkList.add( navigationEntry );
+			}
+			else {
+				if( navigationListTitle != null ) {
+					Map<String, Object> navigation = new LinkedHashMap<>();
+					navigation.put( "title", navigationListTitle );
+					navigation.put( "linkList", linkList );
+					navigationList.add( navigation );
+					linkList = new ArrayList<>(); 
+				}
+				navigationListTitle = line;
+			}
+		}
+		Map<String, Object> navigation = new LinkedHashMap<>();
+		navigation.put( "title", navigationListTitle );
+		navigation.put( "linkList", linkList );
+		navigationList.add( navigation );
+
+		return navigationList;
+
+	}
+
 	public static void main( String args[] ) throws IOException,
 			UnexpectedServerException, URISyntaxException,
 			ClassNotFoundException {
@@ -73,6 +126,7 @@ public class SiteElementUtil {
 				}
 				dataModel.put( "languageList", languageList );
 
+				dataModel.put( "navigationList", getNavigationList( language ) );
 				// I18n element file output stream
 				File i18nElement = null;
 				if( framework.equals( "polymer" ) ) {
