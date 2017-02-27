@@ -50,11 +50,22 @@
 			</a>
 		</div>
 		<div class="header-icons-holder">
-			<span 	id="pratilipi-header-notifications"
-					class="material-icons mdl-badge--overlap mdl-badge--no-background"
-					data-bind="{ attr: { 'data-badge': ( appViewModel.notificationCount() > 99 ? '99+' : appViewModel.notificationCount() ) }, 
-								css: { 'mdl-badge': ( appViewModel.notificationCount() > 0 ) } }">
+			<span data-bind="{ attr: { 'href': '/login?retUrl=%2Fnotifications' },
+							visible: appViewModel.user.isGuest() }" 
+				class="mdl-button mdl-js-button mdl-button--icon">
 				<i class="material-icons">notifications</i>
+			</span>
+			<a data-bind="{ attr: { 'href': '/notifications' },
+							visible: ! appViewModel.user.isGuest() }" 
+				class="mdl-button mdl-js-button mdl-button--icon hidden-sm hidden-md hidden-lg">
+				<i class="material-icons">notifications</i>
+			</a>
+			<span id="pratilipi-header-notifications"
+					class="material-icons mdl-badge--overlap mdl-badge--no-background mdl-badge hidden-xs"
+					data-bind="{ attr: { 'data-badge': ( appViewModel.notificationCount() > 99 ? '99+' : appViewModel.notificationCount() ) }, 
+								css: { 'mdl-badge': ( appViewModel.notificationCount() > 0 ) },
+								visible: ! appViewModel.user.isGuest() }">
+				<i style="margin-top: 2px;" class="material-icons">notifications</i>
 			</span>
 		</div>
 		<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu notification-ul hidden-xs" 

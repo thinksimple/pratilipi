@@ -1,4 +1,4 @@
-<div class="modal fade" id="pratilipiWrite" tabindex="-1" role="dialog" aria-labelledby="pratilipi-write">
+<div class="modal fade pratilipi-write" id="pratilipiWrite" tabindex="-1" role="dialog" aria-labelledby="pratilipi-write">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -15,14 +15,9 @@
 							type="text" readonly tabIndex="-1" />
 					<label class="mdl-textfield__label" for="pratilipi_write_language">${ _strings.write_language }</label>
 					<ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu" for="pratilipi_write_language">
-						<li class="mdl-menu__item" data-val="BENGALI">${ _strings.language_bn }</li>
-						<li class="mdl-menu__item" data-val="MARATHI">${ _strings.language_mr }</li>
-						<li class="mdl-menu__item" data-val="HINDI">${ _strings.language_hi }</li>
-						<li class="mdl-menu__item" data-val="GUJARATI">${ _strings.language_gu }</li>
-						<li class="mdl-menu__item" data-val="TAMIL">${ _strings.language_ta }</li>
-						<li class="mdl-menu__item" data-val="MALAYALAM">${ _strings.language_ml }</li>
-						<li class="mdl-menu__item" data-val="TELUGU">${ _strings.language_te }</li>
-						<li class="mdl-menu__item" data-val="KANNADA">${ _strings.language_kn }</li>
+						<#list languageList as aLang>
+							<a class="mdl-menu__item" href="${ aLang.hostName }/?action=write">${ aLang.name }</a>
+						</#list>
 					</ul>
 				</div>
 				<input class="title" data-bind="textInput: title" placeholder="${ _strings.writer_input_title } *" make-transliterable />

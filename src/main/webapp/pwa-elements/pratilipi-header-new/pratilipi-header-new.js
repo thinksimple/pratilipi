@@ -52,7 +52,7 @@ function( params ) {
 
 	this.userObserver = ko.computed( function() {
 		if( ! appViewModel.user.isGuest() && getUrlParameter( 'action' ) == "write" ) {
-			$( 'pratilipi-write .modal' ).modal();
+			$( '#pratilipiWrite' ).modal();
 		}
 	}, this );
 
