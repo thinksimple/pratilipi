@@ -44,6 +44,9 @@
 		}
 		form {
 			flex-grow: 1;
+			.mdl-textfield__label {
+				font-size: 14px !important;
+			}
 			.mdl-textfield {
 				width: 100%;
 				color: #333 !important;
@@ -207,6 +210,9 @@
 			}
 		}
 		form {
+			.mdl-textfield__label {
+				font-size: 14px !important;
+			}
 			flex-grow: 1;
 			.mdl-textfield {
 				width: 100%;
