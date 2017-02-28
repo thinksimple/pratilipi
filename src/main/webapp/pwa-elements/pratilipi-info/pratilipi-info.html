@@ -1,11 +1,12 @@
 <div class="mdl-card mdl-card-border mdl-cell mdl-cell--8-col-tablet mdl-cell--9-col">
     <div class="mdl-grid">
         <div class="mdl-card__media mdl-cell mdl-cell--4-col-phone mdl-cell--3-col-tablet mdl-cell--4-col-desktop alignCenter">
-            <img src="https://d3cwrmdwk8nw1j.cloudfront.net/pratilipi/cover?pratilipiId=5093925535612928&version=1468070905501&width=150" border="0" alt="" style="padding:10px;display:block;margin:auto;"> 
-            <#-- <picture>
-            <source media="(min-width: 480px)"  data-bind="attr: { srcset: $parent.coverImageUrlDesktop }" />
-                <img data-bind="attr: { src: coverImageUrlMobile }" border="0" alt="">
-            </picture> -->
+            <#-- <img src="https://d3cwrmdwk8nw1j.cloudfront.net/pratilipi/cover?pratilipiId=5093925535612928&version=1468070905501&width=150" border="0" alt="" style="padding:10px;display:block;margin:auto;"> -->
+            <picture>
+            	<#-- <source media="(min-width: 480px)"  data-bind="attr: { srcset: ( $parent.pratilipiObject().coverImageUrl() + '&width=200' ) }" /> -->
+                <source media="(min-width: 480px)"  data-bind="attr: { srcset: getDesktopCoverImageUrl( $parent.pratilipiObject().coverImageUrl() ) }" />
+                <img data-bind="attr: { src: getMobileCoverImageUrl( $parent.pratilipiObject().coverImageUrl() ) }" border="0" alt="">
+            </picture> 
         </div>
         <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--5-col-tablet mdl-cell--8-col-desktop">
             <div class="mdl-card__title">
@@ -44,35 +45,37 @@
                 <!--/ko-->
             </div>
         </div>
+        
+        <!-- ko if: $parent.pratilipiObject().summary -->
+            <div class="mdl-cell mdl-cell--12-col padding-zero ">
+                <p></p>
+                <hr/>
+            </div>        
+            <h3 class="mdl-cell mdl-cell--12-col mdl-typography--headline">Summary</h3>
+            <div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero ">
+                <pratilipi-see-more params="{ originalText: $parent.pratilipiObject().summary() }"></pratilipi-see-more>
+            </div>
+        <!-- /ko -->
+
         <div class="mdl-cell mdl-cell--12-col padding-zero ">
             <p></p>
             <hr/>
         </div>
-        
-        <!-- ko if: $parent.pratilipiObject().summary -->
-            <h3 class="mdl-cell mdl-cell--12-col mdl-typography--headline">Summary</h3>
-            <div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero ">
-                <pratilipi-see-more params="{ originalText: $parent.pratilipiObject().summary() }"></pratilipi-see-more>
-                <hr/>
-            </div>
-        <!-- /ko -->
-
         <h3 class="mdl-cell mdl-cell--12-col mdl-typography--headline">About the Author</h3>
         <div class="mdl-cell mdl-cell--12-col" style="display: flex;align-items: center;justify-content: space-between;">
             <span style="display: flex;align-items: center;">
-                <img data-bind="attr: { src: authorObj.profileImageUrl() }" class="mdl-list__item-avatar">
+                <img data-bind="attr: { src: getImageThumbnail( authorObj.profileImageUrl() ) }" class="mdl-list__item-avatar">
                 <a style="margin: 10px;font-weight: 700;" data-bind="attr: { href: authorObj.pageUrl }, text: authorObj.name()"></a>
                 <!-- <span style="margin: 10px;font-weight: 700;" data-bind="text: author_name"></span> -->
             </span>
             <button data-bind="click: followAuthor, text: followText" class="mdl-button mdl-js-button mdl-button--primary mdl-layout--large-screen-only">
             </button> 
-<!--             <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored mdl-layout--small-screen-only">
-                <i class="material-icons" data-bind="text: followIconText"></i>
-            </button> -->
+             <button data-bind="click: followAuthor" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored mdl-layout--small-screen-only">
+                <i class="material-icons" data-bind="text: ( isUserFollowing() ? 'done' : 'person_add' )"></i>
+            </button> 
         </div>
         <div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero " data-bind="if: authorObj.summary().length">
             <pratilipi-see-more params="{ originalText: authorObj.summary() }"></pratilipi-see-more>
-            <hr/>
         </div> 
    </div>
 </div>

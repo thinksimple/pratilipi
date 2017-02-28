@@ -16,7 +16,7 @@
 	  		</span>
 		</span>
 	</div>
-	<div class="mdl-list__item-text-body font-14" data-bind="text: reviewObject.review">
+	<div class="mdl-list__item-text-body review-text" data-bind="text: reviewObject.review">
 	</div>
 	<div>
 		<span class="font-14">
@@ -48,5 +48,7 @@
 	</ul>
 </li>
 <li>
-	<div><hr/></div>
+	<div data-bind="if: $index() != ( $parents[1].totalReviewsPresent() - 1 ) ">
+		<hr />
+	</div>
 </li>

@@ -4,7 +4,7 @@ function() {
     this.pratilipiObject = ko.observable( {} );
     this.userPratilipiObject = ko.observable( {} );
     this.pratilipiUri = window.location.pathname;
-    // this.pratilipiUri = "/jitesh-donga/vishwamanav";
+//    this.pratilipiUri = "/mridula-garg/yaha-kamlini-khilti-hai";
 
     this.pushToViewModel = function( pratilipi, userPratilipi ) {
         ko.mapping.fromJS( pratilipi, {}, this.pratilipiObject );

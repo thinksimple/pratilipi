@@ -1,7 +1,7 @@
 function( params ) { 
     console.log( params );
     var self = this;
-    this.abc = "abc";
+//    this.abc = "abc";
     this.isUserFollowing = ko.observable( false );
 
     this.followText = ko.computed( function() {
@@ -131,25 +131,7 @@ function( params ) {
         };
 
         this.sendFollowAuthorAjaxRequest = function() {
-            this.dataAccessor.followOrUnfollowAuthor( this.author_id(), this.isUserFollowing(), null, this.toggleFollowingState.bind( this ) );
-        //     $.ajax({
-        //         type: 'post',
-        // //        url: '/api/pratilipi?_apiVer=2&pratilipiId='+ this.id,
-        //         url: '/api/userauthor/follow',
-        //         data: {
-        //             authorId: this.author_id,
-        //             following: this.isUserFollowing()
-        //         },
-        //         success: function( response ) {
-        //         },
-        //         error: function( response ) {
-        //             self.toggleFollowingState();
-        //         },
-        //         complete: function() {
-        //             // this.isFollowRequestInProgress( false );
-        //             /* populate button text acc to the response */
-        //         }
-        //     });              
+            this.dataAccessor.followOrUnfollowAuthor( this.author_id(), this.isUserFollowing(), null, this.toggleFollowingState.bind( this ) );            
         };       
 
         this.followAuthor = function() {
@@ -159,20 +141,19 @@ function( params ) {
                 this.toggleFollowingState();
                 this.sendFollowAuthorAjaxRequest();
             }
-        };         
+        }; 
+
+        this.getImageThumbnail =function( url ) {
+            return url + "&width=40";
+        }; 
 
         this.initializeAuthorData = function() {
             this.isUserFollowing( this.getInitialFollowingState() );
-            // this.author_name = ko.observable();
-            // this.author_id = ko.observable( this.pratilipiObj.author.authorId() );
-            // this.author_page_url = ko.observable();
-            // this.author_profile_image_url = ko.observable();
-            // this.author_summary = ko.observable();
 
  
-            this.followIconText = ko.computed( function() {
-                return this.isUserFollowing() ? "done" : "person_add";
-            }, this);              
+            // this.followIconText = ko.computed( function() {
+            //     return this.isUserFollowing() ? "done" : "person_add";
+            // }, this);              
         };        
         
 
