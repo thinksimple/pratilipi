@@ -16,9 +16,9 @@ function( params ) {
 	};
 
 	/* Loading Notifications */
-	document.querySelector( '.notification-ul.mdl-menu' ).addEventListener( 'click', function( event ) {
-		event.stopPropagation();
-	});
+//	document.querySelector( '.notification-ul.mdl-menu' ).addEventListener( 'click', function( event ) {
+//		event.stopPropagation();
+//	});
 
 	this.notificationsLoaded = ko.observable( "INITIAL" );
 	this.notificationList = ko.observableArray( [] );
