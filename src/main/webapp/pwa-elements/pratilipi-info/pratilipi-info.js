@@ -80,7 +80,7 @@ function( params ) {
                 return false;
             else
                 // return this.userPratilipihardcoded.addedToLib; /* change before pushing */
-                return this.userPratilpiObj.addedToLib();
+                return this.userPratilipiObj.addedToLib();
         }        
 
         this.initializePratilipiData = function() {
