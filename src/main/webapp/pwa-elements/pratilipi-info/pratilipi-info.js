@@ -5,11 +5,11 @@ function( params ) {
     this.isUserFollowing = ko.observable( false );
 
     this.followText = ko.computed( function() {
-        return this.isUserFollowing() ? "Unfollow" : "Follow";            
+        return this.isUserFollowing() ? "${ _strings.author_unfollow }" : "${ _strings.author_follow }";          
     }, this);
 
-    this.userPratilipihardcoded = {"userId":5124071978172416,"pratilipiId":6046785843757056,"userName":"राधिका","userImageUrl":"https://d3cwrmdwk8nw1j.cloudfront.net/author/image?authorId=6334457649823744&version=1472193677000","userProfilePageUrl":"/radhika-garg-garg","user":{"userId":5124071978172416,"displayName":"राधिका","profilePageUrl":"/radhika-garg-garg","profileImageUrl":"https://d3cwrmdwk8nw1j.cloudfront.net/author/image?authorId=6334457649823744&version=1472193677000"},"addedToLib":false,"hasAccessToReview":true,"isLiked":false};
-    var userAuthorhardcoded = {"authorId":5655563241259008,"following":false};
+    // this.userPratilipihardcoded = {"userId":5124071978172416,"pratilipiId":6046785843757056,"userName":"राधिका","userImageUrl":"https://d3cwrmdwk8nw1j.cloudfront.net/author/image?authorId=6334457649823744&version=1472193677000","userProfilePageUrl":"/radhika-garg-garg","user":{"userId":5124071978172416,"displayName":"राधिका","profilePageUrl":"/radhika-garg-garg","profileImageUrl":"https://d3cwrmdwk8nw1j.cloudfront.net/author/image?authorId=6334457649823744&version=1472193677000"},"addedToLib":false,"hasAccessToReview":true,"isLiked":false};
+    // var userAuthorhardcoded = {"authorId":5655563241259008,"following":false};
     this.pratilipiObj = params.pratilipiObj;
     this.userPratilipiObj = params.userPratilipiObj;
     this.authorObj = ko.mapping.fromJS( {"profileImageUrl": "","pageUrl": "", "name": "", "summary": ""} , {}, this.authorObj );
@@ -79,8 +79,8 @@ function( params ) {
             if ( this.isGuest() ) 
                 return false;
             else
-                return this.userPratilipihardcoded.addedToLib; /* change before pushing */
-                // return this.userPratilpiObj.isAddedToLib();
+                // return this.userPratilipihardcoded.addedToLib; /* change before pushing */
+                return this.userPratilpiObj.isAddedToLib();
         }        
 
         this.initializePratilipiData = function() {
@@ -90,7 +90,7 @@ function( params ) {
             this.isAddedToLibrary = ko.observable( this.getInitialLibState() ); 
 
             this.libraryText = ko.computed( function() {
-                return this.isAddedToLibrary() ? "- Library" : "+ Library";
+                return this.isAddedToLibrary() ? "- ${ _strings.library }" : "+ ${ _strings.library }";
             }, this); 
             
             this.isSummaryPresent = ko.computed( function() {
@@ -114,7 +114,7 @@ function( params ) {
 
         this.fetchAuthorAndUserAuthor = function() {
             this.dataAccessor.getAuthorById( this.author_id() , true, function( author, userAuthor ) {
-                self.pushToAuthorViewModel( author, userAuthorhardcoded );
+                self.pushToAuthorViewModel( author, userAuthor );
             } );
         };
 
@@ -122,8 +122,8 @@ function( params ) {
             if ( this.isGuest() ) 
                 return false;
             else
-                return userAuthorhardcoded.addedToLib; /* change before pushing */
-                // return this.userPratilpiObj.isAddedToLib();
+                // return userAuthorhardcoded.addedToLib; /* change before pushing */
+                return this.userPratilpiObj.isAddedToLib();
         };
 
         this.toggleFollowingState = function() {

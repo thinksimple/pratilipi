@@ -28,7 +28,7 @@
             </div>
             <div class="mdl-card__actions">
                 <a data-bind="attr: { href: $parent.pratilipiObject().readPageUrl }" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
-                    Read
+                    ${  _strings.read }
                 </a>
                 <button data-bind="text: libraryText, click: addToLibrary" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
                 </button>
@@ -37,10 +37,10 @@
                 </button>
             </div>
             <div class="mdl-card__supporting-text">
-                Published:
+                ${ _strings.pratilipi_listing_date }:
                 <!--ko text:  formatDate( $parent.pratilipiObject().listingDateMillis() ) -->
                 <!--/ko-->
-                <br> Type:
+                <br> ${ _strings.pratilipi_type }:
                 <!--ko text: $parent.pratilipiObject().type -->
                 <!--/ko-->
             </div>
@@ -51,7 +51,7 @@
                 <p></p>
                 <hr/>
             </div>        
-            <h3 class="mdl-cell mdl-cell--12-col mdl-typography--headline">Summary</h3>
+            <h3 class="mdl-cell mdl-cell--12-col mdl-typography--headline">${ _strings.pratilipi_summary }</h3>
             <div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero ">
                 <pratilipi-see-more params="{ originalText: $parent.pratilipiObject().summary() }"></pratilipi-see-more>
             </div>
@@ -61,7 +61,7 @@
             <p></p>
             <hr/>
         </div>
-        <h3 class="mdl-cell mdl-cell--12-col mdl-typography--headline">About the Author</h3>
+        <h3 class="mdl-cell mdl-cell--12-col mdl-typography--headline">${ _strings.author_about }</h3>
         <div class="mdl-cell mdl-cell--12-col" style="display: flex;align-items: center;justify-content: space-between;">
             <span style="display: flex;align-items: center;">
                 <img data-bind="attr: { src: getImageThumbnail( authorObj.profileImageUrl() ) }" class="mdl-list__item-avatar">
@@ -85,25 +85,25 @@
         <ul class="demo-list-icon mdl-list">
             <li data-bind="click: shareOnSocialMedia" class="mdl-list__item clickableElement" data-share-platform="Facebook">
                 <span class="mdl-list__item-primary-content">
-                    <div class="sprites mdl-list__item-icon sprites-icon-size-24 facebook-icon"></div>
+                    <div class="new-sprites-icon mdl-list__item-icon sprites-icon-size-24 fb-icon"></div>
                     Facebook
                 </span>
             </li>
             <li data-bind="click: shareOnSocialMedia" class="mdl-list__item clickableElement" data-share-platform="Twitter">
                 <span class="mdl-list__item-primary-content">
-                    <div class="sprites mdl-list__item-icon sprites-icon-size-24 twitter-icon"></div>
+                    <div class="new-sprites-icon mdl-list__item-icon sprites-icon-size-24 twitter-icon"></div>
                     Twitter
                 </span>
             </li>
             <li data-bind="click: shareOnSocialMedia" class="mdl-list__item clickableElement" data-share-platform="Gplus">
                 <span class="mdl-list__item-primary-content">
-                    <div class="sprites mdl-list__item-icon sprites-icon-size-24 google-plus-icon"></div>
+                    <div class="new-sprites-icon mdl-list__item-icon sprites-icon-size-24 gplus-icon"></div>
                     Google Plus
                 </span>
             </li>
             <li data-bind="click: shareOnSocialMedia" class="mdl-list__item clickableElement" data-share-platform="Whatsapp">
                 <span class="mdl-list__item-primary-content">
-                    <div class="sprites mdl-list__item-icon sprites-icon-size-24 whatsapp-icon"></div>
+                    <div class="new-sprites-icon mdl-list__item-icon sprites-icon-size-24 whatsapp-icon"></div>
                     Whatsapp
                 </span>
             </li>           

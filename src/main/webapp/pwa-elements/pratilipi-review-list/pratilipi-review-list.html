@@ -8,7 +8,7 @@
 					<i class="material-icons material-icons-36 clickableElement" data-bind="click: $parent.openReviewModalWithRating">star_border</i>
 				</div>
 				<div class="mdl-cell--6-col mdl-cell--4-col-tablet padding-zero">
-                	<button data-bind="click: openReviewModal.bind( $data )" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect pull-right">Write a review</button>
+                	<button data-bind="click: openReviewModal.bind( $data )" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect pull-right">${ _strings.review_write_a_review }</button>
 				</div>
 			</div>
         </div>		
@@ -19,7 +19,7 @@
 			<li class="show-more" data-bind="if: areMoreReviews">
 				<div>
 				    <center>
-					    <button data-bind="click: loadMoreReviews" class="mdl-button mdl-js-button mdl-button--accent mdl-js-ripple-effect">Show more</button>
+					    <button data-bind="click: loadMoreReviews" class="mdl-button mdl-js-button mdl-button--accent mdl-js-ripple-effect">${ _strings.show_more }</button>
 					</center>
 				</div>
 			</li>
@@ -38,12 +38,12 @@
 		<form action="#">
 			<div class="mdl-textfield mdl-js-textfield">
 				<textarea data-bind="textInput: newReviewContent" class="mdl-textfield__input" type="text" rows= "3" id="review" ></textarea>
-				<label class="mdl-textfield__label" for="review">Write Review</label>
+				<label class="mdl-textfield__label" for="review">${ _strings.review_write_a_review }</label>
 			</div>
 		</form>
 	</div>
 	<div class="mdl-dialog__actions">
-		<button data-bind="click: postNewReview, disable: isSaveDisabled" class="mdl-button mdl-js-button mdl-button--colored mdl-js-ripple-effect mdl-button--raised">Save</button>
-		<button data-bind="click: hideReviewModal" class="mdl-button mdl-js-button mdl-js-ripple-effect close">Cancel</button>
+		<button data-bind="click: postNewReview, disable: isSaveDisabled" class="mdl-button mdl-js-button mdl-button--colored mdl-js-ripple-effect mdl-button--raised">${ _strings.review_submit_review }</button>
+		<button data-bind="click: hideReviewModal" class="mdl-button mdl-js-button mdl-js-ripple-effect close">${ _strings.cancel }</button>
 	</div>
 </dialog> 

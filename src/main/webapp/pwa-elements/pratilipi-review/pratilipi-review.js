@@ -20,7 +20,7 @@ function( params ) {
     }, this );
     
     this.showRepliesText = ko.computed( function() {
-        return this.isCommentsShown() ? "Hide all replies" : "Show all replies";
+        return this.isCommentsShown() ? "Hide all replies" : "${ _strings.review_see_all_reviews }";
     }, this );
     
     this.comments = ko.observableArray([]);
