@@ -80,7 +80,7 @@ function( params ) {
                 return false;
             else
                 // return this.userPratilipihardcoded.addedToLib; /* change before pushing */
-                return this.userPratilpiObj.isAddedToLib();
+                return this.userPratilpiObj.addedToLib();
         }        
 
         this.initializePratilipiData = function() {
@@ -123,7 +123,7 @@ function( params ) {
                 return false;
             else
                 // return userAuthorhardcoded.addedToLib; /* change before pushing */
-                return this.userPratilpiObj.isAddedToLib();
+                return this.userAuthorObj.following();
         };
 
         this.toggleFollowingState = function() {
