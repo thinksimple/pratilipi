@@ -72,14 +72,14 @@
 				<div id="notificationsBody" class="notifications">
 					<div style="margin: 25px auto;" data-bind="visible: notificationsLoaded() == 'LOADING'"
 						class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></div>
-					<!-- <div data-bind="visible: notificationsLoaded() == 'LOADED_EMPTY'">
-							There are no notifications for you at this point of time. Please check later.
-						</div>  -->
-					<!-- <div data-bind="visible: notificationsLoaded == 'FAILED'">
-							Notifications failed to load. Please click here to re-load the notifications.
-						</div> -->
+					<div style="margin: 25px 15px;" data-bind="visible: notificationsLoaded() == 'LOADED_EMPTY'">
+						There are no notifications for you at this point of time. Please check later.
+					</div>
+					<div style="margin: 25px 15px;" data-bind="visible: notificationsLoaded() == 'FAILED'">
+						<a style="cursor: pointer;" data-bind="click: updateNotifications">Notifications failed to load. Please click here to re-load the notifications.</a> 
+					</div>
 					<ul data-bind="{ foreach: {data: notificationList, as: 'notification'},
-									 visible: notificationsLoaded() == 'LOADED' || notificationsLoaded() == 'LOADED_EMPTY' }">
+									 visible: notificationsLoaded() == 'LOADED' }">
 						<li class="mdl-menu__item">
 							<a class="notification-message" data-bind="attr: {'href': sourceUrl}">
 								<span style="display: flex;">

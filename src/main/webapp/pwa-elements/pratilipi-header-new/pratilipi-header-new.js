@@ -41,33 +41,33 @@ function( params ) {
 	 * */
 
 	this.updateNotifications = function() {
-		if( (  ! appViewModel.user.isGuest() && appViewModel.notificationCount() != 0 ) 
-				|| ( self.notificationsLoaded() == "INITIAL" && appViewModel.notificationCount() == 0 ) ) {
-			if( self.notificationsLoaded() == "LOADING" ) return;
-			self.notificationsLoaded( "LOADING" );
-			var dataAccessor = new DataAccessor();
-			var resultCount = 9;
-			dataAccessor.getNotificationList( resultCount, function( notificationResponse ) {
-				if( notificationResponse == null ) {
-					self.notificationsLoaded( "FAILED" );
-				} else {
-					var notificationList = notificationResponse.notificationList;
-					self.notificationList( notificationList );
-					self.notificationsLoaded( notificationList.length > 0 ? "LOADED" : "LOADED_EMPTY" );
-				}
-			});
-		}
+		if( self.notificationsLoaded() == "LOADING" ) return;
+		self.notificationsLoaded( "LOADING" );
+		var resultCount = 9;
+		new DataAccessor().getNotificationList( resultCount, function( notificationResponse ) {
+			if( notificationResponse == null ) {
+				self.notificationsLoaded( "FAILED" );
+			} else {
+				var notificationList = notificationResponse.notificationList;
+				self.notificationList( notificationList );
+				self.notificationsLoaded( notificationList.length > 0 ? "LOADED" : "LOADED_EMPTY" );
+			}
+		});
 	};
 
 	this.userObserver = ko.computed( function() {
+		if( ! appViewModel.user.isGuest() ) {
+			setTimeout( self.updateNotifications, 0 );
+		}
 		if( ! appViewModel.user.isGuest() && getUrlParameter( 'action' ) == "write" ) {
 			$( '#pratilipiWrite' ).modal();
 		}
 	}, this );
 
 	this.notificationCountObserver = ko.computed( function() {
-		console.log( appViewModel.notificationCount() );
-		setTimeout( self.updateNotifications, 0 );
+		if( (  ! appViewModel.user.isGuest() && appViewModel.notificationCount() != 0 ) ) {
+			setTimeout( self.updateNotifications, 0 );
+		}
 	}, this );
 
 }
