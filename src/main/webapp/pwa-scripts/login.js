@@ -50,6 +50,7 @@ function ViewModel() {
 			httpUtil.post( "/api/user/login/google", { "googleIdToken": googleUser.getAuthResponse().id_token }, 
 				function( response, status ) {
 					if( status == 200 ) {
+						ToastUtil.toastUp( "${ _strings.user_login_success }" );
 						window.location.href = isRegister ? response[ "profilePageUrl" ] : getRetUrl( true );
 					} else {
 						self.requestOnFlight( false );
@@ -77,6 +78,7 @@ function ViewModel() {
 			httpUtil.post( "/api/user/login/facebook", { "fbUserAccessToken": fbResponse.authResponse.accessToken }, 
 				function( response, status ) {
 					if( status == 200 ) {
+						ToastUtil.toastUp( "${ _strings.user_login_success }" );
 						window.location.href = isRegister ? response[ "profilePageUrl" ] : getRetUrl( true );
 					} else {
 						self.requestOnFlight( false );
@@ -109,6 +111,7 @@ function ViewModel() {
 		httpUtil.post( "/api/user/login", { "email": self.userEmail(), "password": self.userPassword() }, 
 			function( response, status ) {
 				if( status == 200 ) {
+					ToastUtil.toastUp( "${ _strings.user_login_success }" );
 					window.location.href = getRetUrl( true );
 				} else {
 					self.requestOnFlight( false );
@@ -155,6 +158,7 @@ function ViewModel() {
 		httpUtil.post( "/api/user/register", { "name": self.userName(), "email": self.userEmail(), "password": self.userPassword() }, 
 			function( response, status ) {
 				if( status == 200 ) {
+					ToastUtil.toastUp( "${ _strings.user_register_success }" );
 					window.location.href = response[ "profilePageUrl" ];
 				} else {
 					self.requestOnFlight( false );

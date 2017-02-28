@@ -16,9 +16,17 @@ function( params ) {
 	};
 
 	/* Loading Notifications */
-//	document.querySelector( '.notification-ul.mdl-menu' ).addEventListener( 'click', function( event ) {
-//		event.stopPropagation();
-//	});
+	var notificationContainer = $( "header.pratilipi-header #notificationContainer" );
+	var notificationLink = $( "header.pratilipi-header #notificationLink" );
+	notificationLink.click( function() {
+		notificationContainer.fadeToggle(50);
+		resetFbNotificationCount();
+		return false;
+	});
+
+	$( document ).click( function() { notificationContainer.hide(); } );
+	notificationContainer.click( function(e) { e.stopPropagation(); } );
+
 
 	this.notificationsLoaded = ko.observable( "INITIAL" );
 	this.notificationList = ko.observableArray( [] );

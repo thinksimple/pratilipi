@@ -8,6 +8,7 @@ var appViewModel = new AppViewModel();
 
 var initFirebase = function() {
 	if( appViewModel.user.isGuest() ) return;
+	appViewModel.notificationCount( 0 );
 	var firebaseLibrary = document.createElement( 'script' );
 	firebaseLibrary.setAttribute( "src", "${ firebaseLibrary }" );
 	firebaseLibrary.onload = function() {
