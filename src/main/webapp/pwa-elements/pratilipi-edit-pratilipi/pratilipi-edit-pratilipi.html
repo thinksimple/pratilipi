@@ -1,0 +1,31 @@
+<div class="modal fade pratilipi-edit-pratilipi" id="pratilipi_edit_pratilipi" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<span data-dismiss="modal" aria-label="Close" class="material-icons close">close</span>
+				<h6 class="modal-title">${ _strings.pratilipi_edit_info }</h6>
+			</div>
+			<div class="modal-body">
+				<input class="title" data-bind="textInput: title" placeholder="${ _strings.writer_input_title } *" make-transliterable />
+				<div class="clearfix"></div>
+				<input class="title" data-bind="textInput: titleEn" placeholder="${ _strings.writer_input_title_en }" />
+				<div class="mdl-textfield mdl-js-textfield getmdl-select getmdl-select__fullwidth getmdl-select__fix-height">
+					<input class="mdl-textfield__input" 
+							id="pratilipi_edit_pratilipi_type" 
+							type="text" readonly tabIndex="-1" />
+					<label class="mdl-textfield__label" for="pratilipi_edit_pratilipi_type">${ _strings.write_type }</label>
+					<ul class="mdl-menu mdl-menu--top-left mdl-js-menu" for="pratilipi_edit_pratilipi_type">
+						<#list pratilipiTypes as pratilipiType>
+							<li class="mdl-menu__item" data-val="${ pratilipiType.value }">${ pratilipiType.name }</li>
+						</#list>
+					</ul>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button data-bind="{ click: submit, disable: requestOnFlight }" 
+						class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" 
+						type="button">${ _strings.save_changes }</button>
+			</div>
+		</div>
+	</div>
+</div>
