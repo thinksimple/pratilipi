@@ -68,6 +68,7 @@ public class ConversationDataUtil {
 		
 		conversation = dataAccessor.createOrUpdateConversation( conversation, conversationMessage );
 		
+		/*
 		String language = author != null ? author.getLanguage().getNameEn().toLowerCase() : null;
 		Logger.getLogger(ConversationDataUtil.class.getSimpleName())
 					.log(Level.SEVERE, "Language : " + language);
@@ -86,8 +87,10 @@ public class ConversationDataUtil {
 					.log(Level.SEVERE, "Conversation Id : " + conversation.getId());
 			e.printStackTrace();
 		}
+		*/
 	}
 	
+	/*
 	private static void createSupportMailTask(
 			InternetAddress[] receiversList, String userId, String name, 
 			String email, String phone, String message, JsonObject data, String team) 
@@ -164,5 +167,5 @@ public class ConversationDataUtil {
 		
 		return emailList;
 	}
-
+	*/
 }
