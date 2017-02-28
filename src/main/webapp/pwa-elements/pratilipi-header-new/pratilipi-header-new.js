@@ -42,11 +42,11 @@ function( params ) {
 			dataAccessor.getNotificationList( resultCount, function( notificationResponse ) {
 				if( notificationResponse == null ) {
 					self.notificationsLoaded( "FAILED" );
-					return;
+				} else {
+					var notificationList = notificationResponse.notificationList;
+					self.notificationList( notificationList );
+					self.notificationsLoaded( notificationList.length > 0 ? "LOADED" : "LOADED_EMPTY" );
 				}
-				var notificationList = notificationResponse.notificationList;
-				self.notificationList( notificationList );
-				self.notificationsLoaded( notificationList.length > 0 ? "LOADED" : "LOADED_EMPTY" );
 			});
 		}
 	};
@@ -58,7 +58,7 @@ function( params ) {
 	}, this );
 
 	this.notificationCountObserver = ko.computed( function() {
-		appViewModel.notificationCount();
+		console.log( appViewModel.notificationCount() );
 		setTimeout( self.updateNotifications, 0 );
 	}, this );
 

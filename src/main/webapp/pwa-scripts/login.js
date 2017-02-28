@@ -49,10 +49,10 @@ function ViewModel() {
 		GoogleAuth.signIn().then( function( googleUser ) {
 			httpUtil.post( "/api/user/login/google", { "googleIdToken": googleUser.getAuthResponse().id_token }, 
 				function( response, status ) {
-					self.requestOnFlight( false );
 					if( status == 200 ) {
 						window.location.href = isRegister ? response[ "profilePageUrl" ] : getRetUrl( true );
 					} else {
+						self.requestOnFlight( false );
 						var message = "Error: " + status + " - "
 						+ ( response != null && response[ "message" ] != null ? 
 						response[ "message" ] : "Some exception occurred at server. Please try again." );
@@ -76,10 +76,10 @@ function ViewModel() {
 			self.requestOnFlight( true );
 			httpUtil.post( "/api/user/login/facebook", { "fbUserAccessToken": fbResponse.authResponse.accessToken }, 
 				function( response, status ) {
-					self.requestOnFlight( false );
 					if( status == 200 ) {
 						window.location.href = isRegister ? response[ "profilePageUrl" ] : getRetUrl( true );
 					} else {
+						self.requestOnFlight( false );
 						var message = "Error: " + status + " - "
 						+ ( response != null && response[ "message" ] != null ? 
 						response[ "message" ] : "Some exception occurred at server. Please try again." );
@@ -108,10 +108,10 @@ function ViewModel() {
 		self.requestOnFlight( true );
 		httpUtil.post( "/api/user/login", { "email": self.userEmail(), "password": self.userPassword() }, 
 			function( response, status ) {
-				self.requestOnFlight( false );
 				if( status == 200 ) {
 					window.location.href = getRetUrl( true );
 				} else {
+					self.requestOnFlight( false );
 					/* TODO: Multiple messages handling */
 					var message = null;
 					if( response[ "email" ] != null )
@@ -154,10 +154,10 @@ function ViewModel() {
 		self.requestOnFlight( true );
 		httpUtil.post( "/api/user/register", { "name": self.userName(), "email": self.userEmail(), "password": self.userPassword() }, 
 			function( response, status ) {
-				self.requestOnFlight( false );
 				if( status == 200 ) {
 					window.location.href = response[ "profilePageUrl" ];
 				} else {
+					self.requestOnFlight( false );
 					/* TODO: Multiple messages handling */
 					var message = null;
 					if( response[ "name" ] != null )

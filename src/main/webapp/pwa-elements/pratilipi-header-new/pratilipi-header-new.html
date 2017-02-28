@@ -22,17 +22,17 @@
 				<i class="material-icons">menu</i>
 			</button>
 		</div>
-
-		<form class="hidden-xs" action="javascript:void(0);" data-bind="submit: search">
-			<div class="mdl-textfield mdl-js-textfield">
-				<input class="mdl-textfield__input" type="text" id="pratilipi-header-search" data-bind="textInput: searchQuery" />
-				<div class="mdl-textfield__label" for="pratilipi-header-search">
-					${ _strings.search_bar_help }
+		<div class="search-bar-holder">
+			<form class="hidden-xs" action="javascript:void(0);" data-bind="submit: search">
+				<div class="mdl-textfield mdl-js-textfield">
+					<input class="mdl-textfield__input" type="text" id="pratilipi-header-search" data-bind="textInput: searchQuery" />
+					<div class="mdl-textfield__label" for="pratilipi-header-search">
+						${ _strings.search_bar_help }
+					</div>
+					<i data-bind="event: { click: search }" class="material-icons search">search</i>
 				</div>
-				<i data-bind="event: { click: search }" class="material-icons search">search</i>
-				<#-- <i data-bind="event: { click: openMenuNavigationDrawer }" class="material-icons menu">menu</i> -->
-			</div>
-		</form>
+			</form>
+		</div>
 		<div class="header-icons-holder">
 			<button data-bind="visible: ! appViewModel.user.isGuest()"
 				data-toggle="modal" data-target="#pratilipiWrite" class="mdl-button mdl-js-button mdl-button--icon">
@@ -61,7 +61,7 @@
 				<i class="material-icons">notifications</i>
 			</a>
 			<span id="pratilipi-header-notifications"
-					class="mdl-button mdl-js-button mdl-button--icon  mdl-badge--overlap mdl-badge--no-background mdl-badge hidden-xs"
+					class="mdl-badge--overlap mdl-badge--no-background mdl-badge hidden-xs"
 					data-bind="{ attr: { 'data-badge': ( appViewModel.notificationCount() > 99 ? '99+' : appViewModel.notificationCount() ) }, 
 								css: { 'mdl-badge': ( appViewModel.notificationCount() > 0 ) },
 								visible: ! appViewModel.user.isGuest() }">
