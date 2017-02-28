@@ -219,7 +219,7 @@ var DataAccessor = function() {
 	this.followOrUnfollowAuthor = function( authorId, following, successCallBack, errorCallBack ) {
 		if( authorId == null || following == null ) return;
 		httpUtil.post( API_PREFIX + USER_AUTHOR_FOLLOW_API, 
-				{ "authorId": authorId, "following": following }, 
+				{ "authorId": authorId, "state": following ? "FOLLOWING" : "UNFOLLOWED" }, 
 				function( response, status ) { processPostResponse( response, status, successCallBack, errorCallBack ) } );
 	};
 	
