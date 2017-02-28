@@ -9,7 +9,7 @@ var appViewModel = new AppViewModel();
 var initFirebase = function() {
 	if( appViewModel.user.isGuest() ) return;
 	var firebaseLibrary = document.createElement( 'script' );
-	firebaseLibrary.setAttribute( "src", "https://www.gstatic.com/firebasejs/3.6.10/firebase.js" );
+	firebaseLibrary.setAttribute( "src", "${ firebaseLibrary }" );
 	firebaseLibrary.onload = function() {
 		var config = {
 			apiKey: "AIzaSyAAnK0-vDmY1UEcrRRbCzXgdpF2oQn-E0w",
