@@ -23,5 +23,10 @@ function() {
         dataAccessor.getPratilipiByUri( this.pratilipiUri, true, this.ajaxReqCallback.bind(this) );
     };
 
+    this.updatePratilipi = function( pratilipi ) {
+        ko.mapping.fromJS( pratilipi, {}, this.pratilipiObject );
+        this.pratilipiObject.valueHasMutated();
+    }
+
     this.fetchPratilipiAndUserPratilipi();
 }
