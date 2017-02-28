@@ -100,7 +100,7 @@ public class SiteElementUtil {
 				dataModel.put( "domain", language.getHostName() );
 				dataModel.put( "fbAppId", "293990794105516" );
 				dataModel.put( "googleClientId", "659873510744-kfim969enh181h4gbctffrjg5j47tfuq.apps.googleusercontent.com" );
-				dataModel.put( "firebaseLibrary", "http://0.ptlp.co/resource-all/pwa/js/firebase_app_auth_database.js" );
+				dataModel.put( "firebaseLibrary", "https://www.gstatic.com/firebasejs/3.6.10/firebase.js" );
 				dataModel.put( "_strings", I18n.getStrings( language ) );
 
 				List<Map<String, Object>> pratilipiTypes = new ArrayList<>();
