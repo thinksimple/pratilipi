@@ -12,19 +12,19 @@
 </head>
 <body>
 	<div class="pratilipi-login-container">
-		<img class="pratilipi-logo" src="http://0.ptlp.co/resource-hi/logo/pratilipi_logo.png">
+		<span class="sprites-icon sprites-icon-size-24 pratilipi-logo-icon"></span>
 		<h5 class="pratilipi-heading">${ _strings.user_sign_up_for_pratilipi }</h5>
 		<div class="pratilipi-content-container">
 			<button data-bind="{ click: function(){ facebookLogin( true ); }, disable: requestOnFlight }" 
 					type="submit" 
 					class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored pratilipi-fb-blue-button login-button">
-				<div class="sprites-icon login-sprite-icon-24 fb-icon"></div>
+				<div class="sprites-icon login-sprite-icon-24 facebook-login-icon"></div>
 				${ _strings.user_sign_in_with_facebook }
 			</button>
 			<button data-bind="{ click: function(){ googleLogin( true ); }, disable: requestOnFlight }" 
 					type="submit" 
 					class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect pratilipi-white-button pratilipi-fb-blue-button login-button">
-				<div class="sprites-icon login-sprite-icon-24 gplus-icon"></div>
+				<div class="sprites-icon login-sprite-icon-24 google-login-icon"></div>
 				${ _strings.user_sign_in_with_google }
 			</button>
 		</div>
