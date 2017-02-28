@@ -260,6 +260,7 @@ var DataAccessor = function() {
 
 	this.createOrUpdatePratilipi = function( pratilipi, successCallBack, errorCallBack ) {
 		if( pratilipi == null ) return;
+		if( pratilipi[ "pratilipiId" ] == null ) pratilipi[ "oldContent" ] = false;
 		httpUtil.post( API_PREFIX + PRATILIPI_API, 
 				pratilipi, 
 				function( response, status ) { processPostResponse( response, status, successCallBack, errorCallBack ) } );
