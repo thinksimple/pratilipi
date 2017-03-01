@@ -13,7 +13,7 @@ import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.util.EmailUtil;
 
 @SuppressWarnings("serial")
-@Bind( uri= "/support/email" )
+@Bind( uri= "/contact/email" )
 public class ConversationEmailApi extends GenericApi {
 	
 	public static class PostRequest extends GenericRequest {

@@ -146,7 +146,7 @@ public class ConversationDataUtil {
 				"CC : " + Arrays.toString(receiversList));
 
 		// CREATING TASK QUEUE FOR EMAIL.
-		Task task = TaskQueueFactory.newTask().setUrl("/support/email").addParam("body", body)
+		Task task = TaskQueueFactory.newTask().setUrl("/contact/email").addParam("body", body)
 				.addParam("subject", subject).addParam("receivers", Arrays.toString(receiversList))
 				.addParam("cc", Arrays.toString(cc));
 
