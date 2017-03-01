@@ -88,5 +88,17 @@
 		this.content_transliteration_object.init();
 	});
 	</script>
+	<script>
+	if ('serviceWorker' in navigator) {
+	  navigator.serviceWorker.register('/pwa-service-worker/sw-precache.js')
+	  .then(function(registration) {
+	    console.log('Service Worker registration successful with scope: ',
+	     registration.scope);
+	  })
+	  .catch(function(err) {
+	    console.log('Service Worker registration failed: ', err);
+	  });
+	}
+	</script>	
 </body>
 </html>
