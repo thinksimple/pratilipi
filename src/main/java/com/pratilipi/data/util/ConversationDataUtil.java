@@ -16,6 +16,7 @@ import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.ContactTeam;
 import com.pratilipi.common.type.UserState;
+import com.pratilipi.common.util.EmailUtil;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.type.Author;
@@ -145,12 +146,21 @@ public class ConversationDataUtil {
 		Logger.getLogger(ConversationDataUtil.class.getSimpleName()).log(Level.SEVERE,
 				"CC : " + Arrays.toString(receiversList));
 
-		// CREATING TASK QUEUE FOR EMAIL.
-		Task task = TaskQueueFactory.newTask().setUrl("/contact/email").addParam("body", body)
-				.addParam("subject", subject).addParam("receivers", Arrays.toString(receiversList))
-				.addParam("cc", Arrays.toString(cc));
-
-		TaskQueueFactory.getConversationTaskQueue().add(task);
+//		// CREATING TASK QUEUE FOR EMAIL.
+//		Task task = TaskQueueFactory.newTask().setUrl("/contact/email").addParam("body", body)
+//				.addParam("subject", subject).addParam("receivers", Arrays.toString(receiversList))
+//				.addParam("cc", Arrays.toString(cc));
+//
+//		TaskQueueFactory.getConversationTaskQueue().add(task);
+		
+		EmailUtil.sendMail(
+			"Team Android", 
+			"android@pratilipi.com", 
+			receiversList, 
+			new InternetAddress[]{new InternetAddress("ranjeet@pratilipi.com", "Ranjeet Pratap Singh")}, 
+			subject, 
+			body
+		);
 
 	}
 
