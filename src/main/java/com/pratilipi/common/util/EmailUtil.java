@@ -60,7 +60,7 @@ public class EmailUtil {
 //			msg.addRecipient( Message.RecipientType.BCC, new InternetAddress( "mail-archive@pratilipi.com", "Mail Archive" ) );
 			msg.setSubject( subject );
 			msg.setContent( body, "text/html" );
-			logger.log(Level.SEVERE, "Sending mail");
+			logger.log(Level.INFO, "Sending mail");
 			Transport.send( msg );
 		} catch ( UnsupportedEncodingException | MessagingException e ) {
 //			logger.log( Level.SEVERE, "Failed to send mail to " + recipientEmail + ".", e );

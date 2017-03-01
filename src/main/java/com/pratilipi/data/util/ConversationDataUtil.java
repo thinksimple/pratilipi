@@ -16,7 +16,6 @@ import com.pratilipi.common.exception.InvalidArgumentException;
 import com.pratilipi.common.exception.UnexpectedServerException;
 import com.pratilipi.common.type.ContactTeam;
 import com.pratilipi.common.type.UserState;
-import com.pratilipi.common.util.EmailUtil;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.type.Author;
@@ -100,7 +99,7 @@ public class ConversationDataUtil {
 			receiverList.toArray(receivers);
 			createSupportMailTask(receivers, userId.toString(), name, email, phone, message, data, team.name());
 		} catch (UnsupportedEncodingException | UnexpectedServerException e) {
-			// TODO Auto-generated catch block
+			
 			logger.log(Level.SEVERE, "Exception while creating conversation mail task");
 			logger.log(Level.SEVERE, "User ID : " + userId);
 			logger.log(Level.SEVERE, "Conversation Id : " + conversation.getId());
@@ -136,8 +135,8 @@ public class ConversationDataUtil {
 		String body = "User Name : " + name + "<br>" + 
 				"Email : " + email + "<br>" +
 				"Phone Number : " + phone + "<br>" + 
-				"User Id : " + userId + "<br>"
-				+ reportString + 
+				"User Id : " + userId + "<br>" +
+				reportString + 
 				"Message : " + MimeUtility.encodeText(message, "UTF-8", "B");
 
 		Logger.getLogger(ConversationDataUtil.class.getSimpleName()).log(Level.SEVERE, "Body : " + body);
@@ -145,26 +144,16 @@ public class ConversationDataUtil {
 		InternetAddress[] cc = new InternetAddress[] {
 				new InternetAddress("ranjeet@pratilipi.com", "Ranjeet Pratap Singh") };
 
-		Logger.getLogger(ConversationDataUtil.class.getSimpleName()).log(Level.SEVERE, "CC : " + Arrays.toString(cc));
+		logger.log(Level.INFO, "CC : " + Arrays.toString(cc));
 
-		Logger.getLogger(ConversationDataUtil.class.getSimpleName()).log(Level.SEVERE,
-				"CC : " + Arrays.toString(receiversList));
+		logger.log(Level.INFO, "TO : " + Arrays.toString(receiversList));
 
-//		// CREATING TASK QUEUE FOR EMAIL.
-//		Task task = TaskQueueFactory.newTask().setUrl("/contact/email").addParam("body", body)
-//				.addParam("subject", subject).addParam("receivers", Arrays.toString(receiversList))
-//				.addParam("cc", Arrays.toString(cc));
-//
-//		TaskQueueFactory.getConversationTaskQueue().add(task);
-		
-		EmailUtil.sendMail(
-			"Team Pratilipi", 
-			"contact@pratilipi.com", 
-			receiversList, 
-			new InternetAddress[]{new InternetAddress("rahul@pratilipi.com", "Rahul Ranjan")}, 
-			subject, 
-			body
-		);
+		// CREATING TASK QUEUE FOR EMAIL.
+		Task task = TaskQueueFactory.newTask().setUrl("/contact/email").addParam("body", body)
+				.addParam("subject", subject).addParam("receivers", Arrays.toString(receiversList))
+				.addParam("cc", Arrays.toString(cc));
+
+		TaskQueueFactory.getConversationTaskQueue().add(task);
 
 	}
 
@@ -172,12 +161,12 @@ public class ConversationDataUtil {
 			throws UnsupportedEncodingException {
 		ArrayList<InternetAddress> emailList = new ArrayList<>();
 		emailList.add(new InternetAddress("abhishek@pratilipi.com", "Abhishek Sharma"));
-//		emailList.add(new InternetAddress("shreyans@pratilipi.com", "Shreyans Maini"));
+		emailList.add(new InternetAddress("shreyans@pratilipi.com", "Shreyans Maini"));
 		if (teamName.contains(AEE) || teamName.contains(ISSUES)) {
 			// when contact team name is AEE_* or ANDROID_APP_ISSUES
 			if (language != null)
 				emailList.add(new InternetAddress(language + DOMAIN, language + DOMAIN));
-			logger.log(Level.SEVERE, "Language Team : " + language + DOMAIN);
+			logger.log(Level.INFO, "Language Team : " + language + DOMAIN);
 		} else if (teamName.contains(TECH_SUPPORT)) {
 			// when contact team name is ANDROID_APP_TECH_SUPPORT
 			emailList.add(new InternetAddress("prashant@pratilipi.com", "Prashant"));
