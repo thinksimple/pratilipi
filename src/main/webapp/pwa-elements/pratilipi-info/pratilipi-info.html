@@ -11,6 +11,20 @@
         <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--5-col-tablet mdl-cell--8-col-desktop">
             <div class="mdl-card__title">
                 <h2 class="mdl-card__title-text" data-bind="text: $parent.pratilipiObject().title"></h2>
+				<button data-bind="visible: ! $parent.pratilipiObject().hasAccessToUpdate()" 
+						id="pratilipi-info-edit-pratilipi"
+						class="mdl-button mdl-js-button mdl-button--icon">
+					<i class="material-icons">create</i>
+				</button>
+				<ul style="width: 200px;" class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="pratilipi-info-edit-pratilipi">
+					<li class="mdl-menu__item" data-toggle="modal" data-target="#pratilipi_edit_pratilipi">${ _strings.pratilipi_edit_info }</li>
+					<li class="mdl-menu__item">
+						<a data-bind="attr: { 'href': $parent.pratilipiObject().writePageUrl() }"
+							style="color: #333">
+							${ _strings.pratilipi_edit_content }
+						</a>
+					</li>
+				</ul>
             </div>
             <div class="css-author-name mdl-card__title">
                 <h5 style="margin:0;" data-bind="text: $parent.pratilipiObject().author.name()"></h5>
@@ -110,6 +124,7 @@
         </ul>
     </div>
 </dialog>
+
 <!--                 <p class="see-more-text" data-bind="text: summary">
                 </p>
                 <div style="text-align:center;">
@@ -117,3 +132,5 @@
                         See More
                     </button>
                 </div> -->
+                
+                

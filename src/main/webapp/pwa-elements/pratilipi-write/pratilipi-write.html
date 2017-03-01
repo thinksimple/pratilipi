@@ -16,7 +16,11 @@
 					<label class="mdl-textfield__label" for="pratilipi_write_language">${ _strings.write_language }</label>
 					<ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu" for="pratilipi_write_language">
 						<#list languageList as aLang>
-							<a class="mdl-menu__item" href="${ aLang.hostName }/?action=write">${ aLang.name }</a>
+							<#if aLang.value == language>
+								<li class="mdl-menu__item" style="background: #eee;">${ aLang.name }</li>
+							<#else>
+								<a class="mdl-menu__item" href="${ aLang.hostName }/?action=write">${ aLang.name }</a>
+							</#if>
 						</#list>
 					</ul>
 				</div>

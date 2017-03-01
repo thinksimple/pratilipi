@@ -6,9 +6,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 		<title>Pratilipi Summary Page</title>
 
-		<script src="http://0.ptlp.co/resource-all/pwa/js/jquery.js" crossorigin="anonymous"></script>
+		<script src="http://0.ptlp.co/resource-all/pwa/js/jquery.js"></script>
 		<script src="http://0.ptlp.co/resource-all/pwa/js/ko.ko_mapping.js"></script>
-		<script src="http://0.ptlp.co/resource-all/pwa/js/materialise.materialise_dropdown.bootstrap_modal.js"></script>
 		<link rel="stylesheet" href="http://0.ptlp.co/resource-all/pwa/css/material-icons.materialise.materialise_dropdown.bootstrap_modal.css"/>
 
 		<link rel="stylesheet" type="text/css" href="/pwa-stylesheets/css/dialog-polyfill.css" />
@@ -22,6 +21,7 @@
 		<@register element="pratilipi-header-new" />
 		<@register element="pratilipi-footer" />
 		<@register element="pratilipi-info" />
+		<@register element="pratilipi-edit-pratilipi" />
 		<@register element="pratilipi-summary-page" />
 		<@register element="pratilipi-review-list" />
 		<@register element="pratilipi-review" />
@@ -66,10 +66,10 @@
 <body>
 	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 		<!-- ko component: "pratilipi-header-new" --><!-- /ko -->
+		<!-- ko component: "pratilipi-edit-pratilipi"--><!-- /ko -->
 		<main class="mdl-layout__content">
 			<div class="mdl-components mdl-js-components">
 				<!-- ko component: "pratilipi-navigation-aside" --><!-- /ko -->
-				<!-- ko component: "pratilipi-summary-page" --><!-- /ko -->
 			</div>
 			<!-- ko component: "pratilipi-footer" --><!-- /ko -->
 		</main>
@@ -88,6 +88,7 @@
 		this.content_transliteration_object.init();
 	});
 	</script>
+	<script src="http://0.ptlp.co/resource-all/pwa/js/materialise.materialise_dropdown.bootstrap_modal.js"></script>
 	<script>
 	if ('serviceWorker' in navigator) {
 	  navigator.serviceWorker.register('/pwa-service-worker/sw-precache.js')
