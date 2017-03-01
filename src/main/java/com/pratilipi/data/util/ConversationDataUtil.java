@@ -119,10 +119,10 @@ public class ConversationDataUtil {
 			type = data.get(TYPE).getAsString();
 			if (type.toLowerCase().equals("pratilipi")) {
 				subject = "REPORTED PRATILIPI";
-				reportString = "Reported Pratilipi Id : " + data.get(ID).getAsString() + "\n";
+				reportString = "Reported Pratilipi Id : " + data.get(ID).getAsString() + "</br>";
 			} else {
 				subject = "REPORTED AUTHOR";
-				reportString = "Reported Author Id : " + data.get(ID).getAsString() + "\n";
+				reportString = "Reported Author Id : " + data.get(ID).getAsString() + "</br>";
 			}
 		}
 
@@ -133,8 +133,12 @@ public class ConversationDataUtil {
 
 		Logger.getLogger(ConversationDataUtil.class.getSimpleName()).log(Level.SEVERE, "Subject : " + subject);
 
-		String body = "User Name : " + name + "\n" + "Phone Number : " + phone + "\n" + "User Id : " + userId + "\n"
-				+ reportString + "Message : " + MimeUtility.encodeText(message, "UTF-8", "B") + "\n";
+		String body = "User Name : " + name + "</br>" + 
+				"Email : " + email + "</br>" +
+				"Phone Number : " + phone + "</br>" + 
+				"User Id : " + userId + "</br>"
+				+ reportString + 
+				"Message : " + MimeUtility.encodeText(message, "UTF-8", "B") + "</br>";
 
 		Logger.getLogger(ConversationDataUtil.class.getSimpleName()).log(Level.SEVERE, "Body : " + body);
 
@@ -157,7 +161,7 @@ public class ConversationDataUtil {
 			"Team Pratilipi", 
 			"contact@pratilipi.com", 
 			receiversList, 
-			new InternetAddress[]{new InternetAddress("ranjeet@pratilipi.com", "Ranjeet Pratap Singh")}, 
+			new InternetAddress[]{new InternetAddress("rahul@pratilipi.com", "Rahul Ranjan")}, 
 			subject, 
 			body
 		);
@@ -168,7 +172,7 @@ public class ConversationDataUtil {
 			throws UnsupportedEncodingException {
 		ArrayList<InternetAddress> emailList = new ArrayList<>();
 		emailList.add(new InternetAddress("abhishek@pratilipi.com", "Abhishek Sharma"));
-		emailList.add(new InternetAddress("shreyans@pratilipi.com", "Shreyans Maini"));
+//		emailList.add(new InternetAddress("shreyans@pratilipi.com", "Shreyans Maini"));
 		if (teamName.contains(AEE) || teamName.contains(ISSUES)) {
 			// when contact team name is AEE_* or ANDROID_APP_ISSUES
 			if (language != null)
