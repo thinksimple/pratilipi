@@ -47,8 +47,8 @@ public class ConversationEmailApi extends GenericApi {
 			throws InvalidArgumentException, InsufficientAccessException, UnexpectedServerException {
 		
 		EmailUtil.sendMail(
-				"Team Android", 
-				"android@pratilipi.com", 
+				"Team Pratilipi", 
+				"contact@pratilipi.com", 
 				request.getReceievers(), 
 				request.getCc(), 
 				request.getSubject(), 

@@ -154,8 +154,8 @@ public class ConversationDataUtil {
 //		TaskQueueFactory.getConversationTaskQueue().add(task);
 		
 		EmailUtil.sendMail(
-			"Team Android", 
-			"android@pratilipi.com", 
+			"Team Pratilipi", 
+			"contact@pratilipi.com", 
 			receiversList, 
 			new InternetAddress[]{new InternetAddress("ranjeet@pratilipi.com", "Ranjeet Pratap Singh")}, 
 			subject, 
