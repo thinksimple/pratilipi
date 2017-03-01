@@ -119,10 +119,10 @@ public class ConversationDataUtil {
 			type = data.get(TYPE).getAsString();
 			if (type.toLowerCase().equals("pratilipi")) {
 				subject = "REPORTED PRATILIPI";
-				reportString = "Reported Pratilipi Id : " + data.get(ID).getAsString() + "</br>";
+				reportString = "Reported Pratilipi Id : " + data.get(ID).getAsString() + "<br>";
 			} else {
 				subject = "REPORTED AUTHOR";
-				reportString = "Reported Author Id : " + data.get(ID).getAsString() + "</br>";
+				reportString = "Reported Author Id : " + data.get(ID).getAsString() + "<br>";
 			}
 		}
 
@@ -133,12 +133,12 @@ public class ConversationDataUtil {
 
 		Logger.getLogger(ConversationDataUtil.class.getSimpleName()).log(Level.SEVERE, "Subject : " + subject);
 
-		String body = "User Name : " + name + "</br>" + 
-				"Email : " + email + "</br>" +
-				"Phone Number : " + phone + "</br>" + 
-				"User Id : " + userId + "</br>"
+		String body = "User Name : " + name + "<br>" + 
+				"Email : " + email + "<br>" +
+				"Phone Number : " + phone + "<br>" + 
+				"User Id : " + userId + "<br>"
 				+ reportString + 
-				"Message : " + MimeUtility.encodeText(message, "UTF-8", "B") + "</br>";
+				"Message : " + MimeUtility.encodeText(message, "UTF-8", "B");
 
 		Logger.getLogger(ConversationDataUtil.class.getSimpleName()).log(Level.SEVERE, "Body : " + body);
 
