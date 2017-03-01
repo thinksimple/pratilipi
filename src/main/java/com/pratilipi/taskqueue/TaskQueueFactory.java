@@ -16,6 +16,7 @@ public class TaskQueueFactory {
 	private static final String QUEUE_USER_AUTHOR		= "user-author";
 	private static final String QUEUE_NOTIFICATION		= "fe-notification";
 	private static final String QUEUE_EMAIL_HP			= "hp-email";
+	private static final String QUEUE_CONVERSATION_EMAIL		= "conversation-email";
 	
 	
 	public static TaskQueue getUserTaskQueue() {
@@ -52,6 +53,10 @@ public class TaskQueueFactory {
 
 	public static TaskQueue getEmailHpTaskQueue() {
 		return getTaskQueue( QUEUE_EMAIL_HP );
+	}
+	
+	public static TaskQueue getConversationTaskQueue() {
+		return getTaskQueue(QUEUE_CONVERSATION_EMAIL);
 	}
 	
 	protected static TaskQueue getTaskQueue( String taskQueueName ) {

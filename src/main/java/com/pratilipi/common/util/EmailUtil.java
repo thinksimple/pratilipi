@@ -45,5 +45,25 @@ public class EmailUtil {
 		}
 
 	}
+	
+	
+	public static void sendMail(
+			String senderName, String senderEmail,
+			InternetAddress[] recipients, InternetAddress[] cc,
+			String subject, String body ) throws UnexpectedServerException {
+		try {
+			Message msg = new MimeMessage( session );
+			msg.setFrom( new InternetAddress( senderEmail, senderName ) );
+			msg.addRecipients( Message.RecipientType.TO, recipients);
+			msg.addRecipients( Message.RecipientType.CC, cc);
+			msg.addRecipient( Message.RecipientType.BCC, new InternetAddress( "mail-archive@pratilipi.com", "Mail Archive" ) );
+			msg.setSubject( MimeUtility.encodeText( subject, "UTF-8", "B" ) );
+			msg.setContent( body, "text/html" );
+			Transport.send( msg );
+		} catch ( UnsupportedEncodingException | MessagingException e ) {
+//			logger.log( Level.SEVERE, "Failed to send mail to " + recipientEmail + ".", e );
+			throw new UnexpectedServerException();
+		}
+	}
 
 }

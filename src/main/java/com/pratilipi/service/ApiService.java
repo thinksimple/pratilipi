@@ -17,6 +17,7 @@ import com.pratilipi.api.impl.blogpost.BlogPostListApi;
 import com.pratilipi.api.impl.comment.CommentApi;
 import com.pratilipi.api.impl.comment.CommentListApi;
 import com.pratilipi.api.impl.contact.ContactApi;
+import com.pratilipi.api.impl.contact.ConversationEmailApi;
 import com.pratilipi.api.impl.event.EventApi;
 import com.pratilipi.api.impl.event.EventBannerApi;
 import com.pratilipi.api.impl.event.EventListApi;
@@ -136,6 +137,7 @@ public class ApiService extends GenericService {
 		ApiRegistry.register( VoteApi.class );						// *.pratilipi.com
 		
 		ApiRegistry.register( ContactApi.class );					// *.pratilipi.com
+		ApiRegistry.register( ConversationEmailApi.class );			// *.pratilipi.com
 		
 		ApiRegistry.register( MailingListSubscribeApi.class );		// *.pratilipi.com
 
