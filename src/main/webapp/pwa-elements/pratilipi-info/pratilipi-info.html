@@ -11,12 +11,12 @@
         <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--5-col-tablet mdl-cell--8-col-desktop">
             <div class="mdl-card__title">
                 <h2 class="mdl-card__title-text" data-bind="text: $parent.pratilipiObject().title"></h2>
-				<button data-bind="visible: ! $parent.pratilipiObject().hasAccessToUpdate()" 
+				<button data-bind="visible: $parent.pratilipiObject().hasAccessToUpdate()" 
 						id="pratilipi-info-edit-pratilipi"
 						class="mdl-button mdl-js-button mdl-button--icon">
 					<i class="material-icons">create</i>
 				</button>
-				<ul style="width: 200px;" class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="pratilipi-info-edit-pratilipi">
+				<ul style="min-width: 200px;" class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="pratilipi-info-edit-pratilipi">
 					<li class="mdl-menu__item" data-toggle="modal" data-target="#pratilipi_edit_pratilipi">${ _strings.pratilipi_edit_info }</li>
 					<li class="mdl-menu__item">
 						<a data-bind="attr: { 'href': $parent.pratilipiObject().writePageUrl() }"

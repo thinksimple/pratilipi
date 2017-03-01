@@ -70,6 +70,7 @@
 		<main class="mdl-layout__content">
 			<div class="mdl-components mdl-js-components">
 				<!-- ko component: "pratilipi-navigation-aside" --><!-- /ko -->
+				<!-- ko component: "pratilipi-summary-page" --><!-- /ko -->
 			</div>
 			<!-- ko component: "pratilipi-footer" --><!-- /ko -->
 		</main>
@@ -90,16 +91,15 @@
 	</script>
 	<script src="http://0.ptlp.co/resource-all/pwa/js/materialise.materialise_dropdown.bootstrap_modal.js"></script>
 	<script>
-	if ('serviceWorker' in navigator) {
-	  navigator.serviceWorker.register('/pwa-service-worker/sw-precache.js')
-	  .then(function(registration) {
-	    console.log('Service Worker registration successful with scope: ',
-	     registration.scope);
-	  })
-	  .catch(function(err) {
-	    console.log('Service Worker registration failed: ', err);
-	  });
-	}
+		if( 'serviceWorker' in navigator ) {
+			navigator.serviceWorker.register( '/pwa-service-worker/sw-precache.js' )
+		  		.then( function( registration ) {
+					console.log( 'Service Worker registration successful with scope: ', registration.scope );
+				})
+				.catch( function(err) {
+					console.log('Service Worker registration failed: ', err);
+				});
+		}
 	</script>	
 </body>
 </html>
