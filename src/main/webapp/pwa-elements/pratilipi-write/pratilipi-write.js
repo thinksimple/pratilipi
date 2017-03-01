@@ -7,12 +7,12 @@ function( params ) {
 
 	this.submit = function() {
 
-		if( this.requestOnFlight() ) return;
+		if( self.requestOnFlight() ) return;
 
 		var language = document.querySelector( '#pratilipiWrite #pratilipi_write_language' ).getAttribute( "data-val" );
 		var type = document.querySelector( '#pratilipiWrite #pratilipi_write_type' ).getAttribute( "data-val" );
 
-		if( this.title().trim() == "" ) {
+		if( self.title().trim() == "" ) {
 			ToastUtil.toast( "${ _strings.writer_error_title_required }" );
 			return;
 		}
@@ -20,7 +20,7 @@ function( params ) {
 			ToastUtil.toast( "${ _strings.writer_error_category_required }" );
 			return;
 		}
-		if( ! this.agreedTerms() ) {
+		if( ! self.agreedTerms() ) {
 			ToastUtil.toast( "${ _strings.writer_error_copyright_required }" );
 			return;
 		}
@@ -36,10 +36,10 @@ function( params ) {
 		};
 
 		ToastUtil.toastUp( "${ _strings.working }" );
-		this.requestOnFlight( true );
+		self.requestOnFlight( true );
 		var pratilipi = { 
-				"title": this.title(),
-				"titleEn": this.titleEn(),
+				"title": self.title(),
+				"titleEn": self.titleEn(),
 				"language":  language,
 				"type": type,
 				"state": "DRAFTED"

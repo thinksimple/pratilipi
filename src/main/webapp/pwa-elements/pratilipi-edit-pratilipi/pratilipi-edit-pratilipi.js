@@ -6,11 +6,11 @@ function( params ) {
 
 	this.submit = function() {
 
-		if( this.requestOnFlight() ) return;
+		if( self.requestOnFlight() ) return;
 
 		var type = document.querySelector( '#pratilipi_edit_pratilipi #pratilipi_edit_pratilipi_type' ).getAttribute( "data-val" );
 
-		if( this.title().trim() == "" ) {
+		if( self.title().trim() == "" ) {
 			ToastUtil.toast( "${ _strings.writer_error_title_required }" );
 			return;
 		}
@@ -32,11 +32,11 @@ function( params ) {
 		};
 
 		ToastUtil.toastUp( "${ _strings.working }" );
-		this.requestOnFlight( true );
+		self.requestOnFlight( true );
 		var pratilipi = { 
 				"pratilipiId": "", /* TODO: pratilipiId */
-				"title": this.title(),
-				"titleEn": this.titleEn(),
+				"title": self.title(),
+				"titleEn": self.titleEn(),
 				"type": type
 		};
 
