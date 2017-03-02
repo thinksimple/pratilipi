@@ -152,7 +152,7 @@
 	<!-- CONVERSATION EMAIL -->
 
 	<queue>
-		<name>conversation_email</name>
+		<name>conversation-email</name>
 		<target>queues</target>
 		<rate>500/s</rate>
 		<bucket-size>10</bucket-size>
