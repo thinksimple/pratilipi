@@ -271,6 +271,7 @@ var DataAccessor = function() {
 /* Toaster & SnackBar */
 var snackbarContainer = document.createElement( 'div' );
 snackbarContainer.id = "pratilipi-toast";
+snackbarContainer.style.zIndex = "1051";
 snackbarContainer.className = "mdl-js-snackbar mdl-snackbar";
 snackbarContainer.innerHTML = '<div class="mdl-snackbar__text"></div><button class="mdl-snackbar__action" type="button"></button>';
 document.body.appendChild( snackbarContainer );

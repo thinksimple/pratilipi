@@ -45,6 +45,13 @@
 				opacity: 0.75;
 				font-weight: 300
 			}
+			textarea.summary {
+				display: block;
+				height: 200px;
+				width: 100%;
+				line-height: 1.4em;
+				font-size: 15px;
+			}
 		}
 		div.modal-footer {
 			border: none;

@@ -1,8 +1,9 @@
 function( params ) { 
 	var self = this;
+	this.pratilipiId = ko.observable( null );
 	this.title = ko.observable( '' );
 	this.titleEn = ko.observable( '' );
-	this.pratilipiId = ko.observable( null );
+	this.summary = ko.observable( '' );
 	this.requestOnFlight = ko.observable( false );
 
 	this.submit = function() {
@@ -29,19 +30,21 @@ function( params ) {
 		};
 
 		var errorCallBack = function( error, status ) {
-			ToastUtil.toast( error.message != null ? error.message : "${ _strings.server_error_message }" );
+			ToastUtil.toast( error.message != null ? error.message : "${ _strings.server_error_message }", 3000 );
+			setTimeout( function () { window.location.reload(); }, 3000 );
 			self.requestOnFlight( false );
 		};
 
 		ToastUtil.toastUp( "${ _strings.working }" );
-		self.requestOnFlight( true );
 		var pratilipi = { 
 				"pratilipiId": self.pratilipiId(),
 				"title": self.title(),
 				"titleEn": self.titleEn(),
-				"type": type
+				"type": type,
+				"summary": self.summary()
 		};
 
+		self.requestOnFlight( true );
 		var dataAccessor = new DataAccessor();
 		dataAccessor.createOrUpdatePratilipi( pratilipi, successCallBack, errorCallBack );
 
@@ -54,6 +57,7 @@ function( params ) {
 		self.pratilipiId( pratilipi.pratilipiId );
 		self.title( pratilipi.title );
 		self.titleEn( pratilipi.titleEn );
+		self.summary( pratilipi.summary );
 		var pratilipiTypes = {
 				<#list pratilipiTypes as pratilipiType>
 					"${ pratilipiType.value }": "${ pratilipiType.name }",
