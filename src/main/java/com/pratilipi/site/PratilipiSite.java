@@ -491,6 +491,8 @@ public class PratilipiSite extends HttpServlet {
 			} else if( page != null && page.getType() == PageType.PRATILIPI ) {
 				if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) ) {
 					dataModel = new HashMap<>();
+					// Hack: Not to minify the html file
+					dataModel.put( "stage", "pwa" );
 					templateName = "Knockout.ftl";
 				} else {
 					resourceList.addAll( createFbOpenGraphTags( page.getPrimaryContentId() ) );
@@ -623,7 +625,8 @@ public class PratilipiSite extends HttpServlet {
 		dataModel.put( "userJson", gson.toJson( userResponse ) );
 		dataModel.put( "pratilipiTypesJson", gson.toJson( pratilipiTypes ) );
 		dataModel.put( "navigationListJson", gson.toJson( navigationList ) );
-		dataModel.put( "stage", SystemProperty.STAGE );
+		if( ! dataModel.containsKey( "stage" ) ) // Hack : Remove it asap
+			dataModel.put( "stage", SystemProperty.STAGE );
 		dataModel.put( "basicMode", basicMode );
 
 		if( basicMode ) {

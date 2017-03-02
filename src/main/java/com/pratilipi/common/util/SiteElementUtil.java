@@ -102,6 +102,9 @@ public class SiteElementUtil {
 				dataModel.put( "googleClientId", "659873510744-kfim969enh181h4gbctffrjg5j47tfuq.apps.googleusercontent.com" );
 				dataModel.put( "firebaseLibrary", "https://www.gstatic.com/firebasejs/3.6.10/firebase.js" );
 				dataModel.put( "_strings", I18n.getStrings( language ) );
+				dataModel.put( "ga_website", "PWA" );
+				dataModel.put( "ga_websiteMode", "Standard" );
+				dataModel.put( "ga_websiteVersion", "Mark-7" );
 
 				List<Map<String, Object>> pratilipiTypes = new ArrayList<>();
 				for( PratilipiType pratilipiType : PratilipiType.values() ) {
