@@ -18,4 +18,17 @@
 	.hr-separator {
 	
 	}
+
+	.updload-image-button {
+		position: absolute;
+		margin-top: 248px;
+		margin-left: -48px;
+		background: #fff;
+		height: 36px;
+		width: 36px;
+		min-width: 36px;
+		@media only screen and (min-width: 480px) {
+			margin-top: 176px;
+		}
+    }
 }
