@@ -107,17 +107,21 @@
 				<div id="notificationFooter"><a href="/notifications">${ _strings.view_more }</a></div>
 			</div>
 		</div>
-		<a data-bind="{ attr: { 'href': '/login?retUrl=' + encodeURIComponent( window.location.pathname ) }, visible: appViewModel.user.isGuest() }" 
-			class="sign-in-button mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect hidden-xs">
-			<i class="material-icons">account_circle</i>
-			<span>${ _strings.user_sign_in }</span>
-		</a>
-		<a data-bind="{ visible: ! appViewModel.user.isGuest(),   
-						attr: { 'href': appViewModel.user.profilePageUrl() } }"
-			class="user-profile hidden-xs">
-			<img class="img-circle user-dp" data-bind="attr: { 'src': appViewModel.user.profileImageUrl() + ( appViewModel.user.profileImageUrl().indexOf('?') == -1 ? '?' : '&' ) + 'width=48' }" />
-			<span data-bind="text: appViewModel.user.displayName()"></span>
-		</a>
+		<div class="desktop-signin-button-holder hidden-xs">
+			<a data-bind="{ attr: { 'href': '/login?retUrl=' + encodeURIComponent( window.location.pathname ) }, 
+							visible: appViewModel.user.isGuest() }" 
+				class="sign-in-button mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect hidden-xs">
+				<i class="material-icons">account_circle</i>
+				<span>${ _strings.user_sign_in }</span>
+			</a>
+			<a data-bind="{ visible: ! appViewModel.user.isGuest(),   
+							attr: { 'href': appViewModel.user.profilePageUrl() } }"
+				class="user-profile hidden-xs">
+				<img class="img-circle user-dp" 
+					data-bind="attr: { 'src': appViewModel.user.profileImageUrl() + ( appViewModel.user.profileImageUrl().indexOf('?') == -1 ? '?' : '&' ) + 'width=48' }" />
+				<span data-bind="text: appViewModel.user.displayName()"></span>
+			</a>
+		</div>
 		<div class="header-icons-holder visible-xs">
 			<a data-bind="{ visible: appViewModel.user.isGuest(), 
 						attr: { 'href': '/login?retUrl=' + encodeURIComponent( window.location.pathname ) } }" 
