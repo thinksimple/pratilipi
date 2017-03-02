@@ -474,22 +474,12 @@ public class PratilipiSite extends HttpServlet {
 
 
 
-			// Testing Links on gamma
-			} else if( uri.equals( "/poc" ) && ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) ) {
-				resourceList.remove( ThirdPartyResource.JQUERY_BOOTSTRAP_POLYMER_JS.getTag() );
-				resourceList.remove( ThirdPartyResource.POLYMER_ELEMENTS.getTag() );
-				resourceList.remove( ThirdPartyResource.FIREBASE.getTag() );
-				resourceList.add( ThirdPartyResource.JQUERY_KNOCKOUT_BOOTSTRAP.getTag() );
-				resourceList.add( ThirdPartyResource.BOOTSTRAP_CSS.getTag() );
-				dataModel = createDataModelForHomePage( basicMode, filterLanguage );
-				dataModel.put( "action", request.getParameter( "action" ) );
-				templateName = "Knockout.ftl";
-
-
-
 			// Non - hardcoded links
 			} else if( page != null && page.getType() == PageType.PRATILIPI ) {
-				if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) ) {
+				Long userId = AccessTokenFilter.getAccessToken().getUserId();
+				boolean loadPWA = UserAccessUtil.hasUserAccess( userId, null, AccessType.USER_ADD ) 
+						|| ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD );
+				if( loadPWA ) {
 					dataModel = new HashMap<>();
 					// Hack: Not to minify the html file
 					dataModel.put( "stage", "pwa" );
