@@ -7,6 +7,26 @@
                 <source media="(min-width: 480px)"  data-bind="attr: { srcset: getDesktopCoverImageUrl( $parent.pratilipiObject().coverImageUrl() ) }" />
                 <img data-bind="attr: { src: getMobileCoverImageUrl( $parent.pratilipiObject().coverImageUrl() ) }" border="0" alt="">
             </picture> 
+			<button style="position: absolute; margin-top: -56px; margin-left: 48px; background: #fff; height: 36px; width: 36px; min-width: 36px;" 
+					class="mdl-button mdl-js-button mdl-button--fab"
+					data-bind="click: chooseImageFile">
+				<i class="material-icons">camera_alt</i>
+			</button>
+			<form id="uploadPratilipiImageForm" 
+					style="position: absolute; top: -1000px;"
+					method="post" 
+					enctype="multipart/form-data"
+					data-bind="attr: { 'action': '/api/pratilipi/cover?pratilipiId=' + pratilipiId() }" 
+					target="pratilipi_upload_target">
+				<input id="uploadPratilipiImageInput"
+						data-bind="event: { change: uploadPratilipiImage }" 
+						type="file" 
+						accept="image/*">
+			</form>
+			<iframe id="pratilipi_upload_target" 
+					name="pratilipi_upload_target" 
+					style="display: none;"
+					data-bind="event: { load: iframeLoaded }"></iframe>
         </div>
         <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--5-col-tablet mdl-cell--8-col-desktop mdl-grid mdl-grid--no-spacing">
             <div class="mdl-cell mdl-cell--12-col mdl-cell--order-1 mdl-cell--order-1-phone">

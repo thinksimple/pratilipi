@@ -1,6 +1,7 @@
 function( params ) { 
     console.log( params );
     var self = this;
+    this.pratilipiId = ko.observable( null );
 //    this.abc = "abc";
     this.isUserFollowing = ko.observable( false );
 
@@ -33,6 +34,35 @@ function( params ) {
         window[ functionToInvoke ]( shareUrl );        /* check later if its supported in older browsers */
         this.hideShareModal();
     };
+
+    this.coverUploaded = ko.observable();
+    this.chooseImageFile = function() {
+    	document.getElementById( "uploadPratilipiImageInput" ).click();
+	};
+
+	this.uploadPratilipiImage = function( vm, evt ) {
+		var files = evt.target.files;
+		var file = files[0];
+		if( file != null && ( file.name.match( ".*\.jpg" ) || file.name.match( ".*\.png" ) ) ) {
+			self.coverUploaded( true );
+			document.getElementById( "uploadPratilipiImageForm" ).submit();
+		}
+	};
+
+	this.iframeLoaded = function( vm, evt ) {
+		if( self.coverUploaded() ) {
+			self.coverUploaded( false );
+			var response = JSON.parse( evt.currentTarget.contentDocument.body.innerText );
+			if( response[ "message" ] != null ) {
+				ToastUtil.toastUp( response[ "message" ], 3000 );
+			} else {
+				// Success Callback
+				ToastUtil.toastUp( "${ _strings.success_generic_message }", 3000 );
+				setTimeout( function () { window.location.reload(); }, 3000 );
+			}
+		}
+	};
+
     if( !isEmpty( this.pratilipiObj ) ) {
         
         
@@ -99,7 +129,7 @@ function( params ) {
 
         this.initializePratilipiData = function() {
             this.isGuest = ko.observable( appViewModel.user.isGuest() );
-            this.pratilipiId = ko.observable( this.pratilipiObj.pratilipiId() );
+            this.pratilipiId( this.pratilipiObj.pratilipiId() );
             this.author_id = ko.observable( this.pratilipiObj.author.authorId() );
             this.isAddedToLibrary = ko.observable( this.getInitialLibState() ); 
 
