@@ -70,7 +70,7 @@
                     <button data-bind="text: libraryText, click: addToLibrary" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
                     </button>
                     <button data-bind="visible: $parent.pratilipiObject().hasAccessToUpdate(), 
-                    					text: ( $parent.pratilipiObject().state == 'PUBLISHED' ? '${ _strings.pratilipi_move_to_drafts }' : '${ _strings.pratilipi_publish_it }' ), 
+                    					text: ( $parent.pratilipiObject().state() == 'PUBLISHED' ? '${ _strings.pratilipi_move_to_drafts }' : '${ _strings.pratilipi_publish_it }' ), 
                     					click: togglePratilipiState" 
                     		class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
                     </button>
