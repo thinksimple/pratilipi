@@ -21,7 +21,7 @@
 					<li class="mdl-menu__item" data-toggle="modal" data-target="#pratilipi_edit_pratilipi">${ _strings.pratilipi_edit_info }</li>
 					<li class="mdl-menu__item">
 						<a data-bind="attr: { 'href': $parent.pratilipiObject().writePageUrl() }"
-							style="color: #333">
+							style="color: #333; display: block;">
 							${ _strings.pratilipi_edit_content }
 						</a>
 					</li>
@@ -48,6 +48,11 @@
                         ${  _strings.read }
                     </a>
                     <button data-bind="text: libraryText, click: addToLibrary" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+                    </button>
+                    <button data-bind="visible: $parent.pratilipiObject().hasAccessToUpdate(), 
+                    					text: ( $parent.pratilipiObject().state == 'PUBLISHED' ? '${ _strings.pratilipi_move_to_drafts }' : '${ _strings.pratilipi_publish_it }' ), 
+                    					click: togglePratilipiState" 
+                    		class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
                     </button>
                     <button data-bind="click: openShareModal" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
                         <i class="material-icons">share</i>

@@ -50,6 +50,20 @@ function( params ) {
             this.dataAccessor.addOrRemoveFromLibrary( this.pratilipiId(), this.isAddedToLibrary(), null, this.toggleLibraryState.bind( this ) );            
         };
 
+        this.togglePratilipiState = function() {
+        	var state = this.pratilipiObj.pratilipiId();
+        	var pratilipi = {
+        		"pratilipiId": this.pratilipiId(),
+        		"state": state != "PUBLISHED" ? "PUBLISHED" : "DRAFTED"
+        	};
+        	this.dataAccessor.createOrUpdatePratilipi( pratilipi, function( pratilipi ) {
+        		window.location.reload();
+        	}, function( error ) {
+        		ToastUtil.toast( error.message, 3000 );
+        		setTimeout( function () { window.location.reload(); }, 3000 );
+        	}); 
+        };
+
         this.addToLibrary = function() {
             if( this.isGuest() ) {
                 goToLoginPage();
