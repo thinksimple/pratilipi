@@ -56,8 +56,12 @@
 		<url>worker.pratilipi.com/*</url>
 		<module>worker</module>
 	</dispatch>
-	
-	
+
+	<dispatch>
+		<url>*/api</url>
+		<module>api</module>
+	</dispatch>
+
 	<dispatch>
 		<url>*/api/*</url>
 		<module>api</module>
