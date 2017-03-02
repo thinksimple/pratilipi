@@ -2,6 +2,7 @@ function( params ) {
 	var self = this;
 	this.title = ko.observable( '' );
 	this.titleEn = ko.observable( '' );
+	this.pratilipiId = ko.observable( null );
 	this.requestOnFlight = ko.observable( false );
 
 	this.submit = function() {
@@ -21,6 +22,7 @@ function( params ) {
 
 		var successCallBack = function( pratilipi ) {
 			ToastUtil.toastUp( "${ _strings.content_created_success }" );
+			window.location.reload();
 			/* TODO: Update PratilipiInfo */
 			$( '#pratilipi_edit_pratilipi' ).modal( 'hide' );
 			self.requestOnFlight( false );
@@ -34,7 +36,7 @@ function( params ) {
 		ToastUtil.toastUp( "${ _strings.working }" );
 		self.requestOnFlight( true );
 		var pratilipi = { 
-				"pratilipiId": "", /* TODO: pratilipiId */
+				"pratilipiId": self.pratilipiId(),
 				"title": self.title(),
 				"titleEn": self.titleEn(),
 				"type": type
@@ -44,5 +46,22 @@ function( params ) {
 		dataAccessor.createOrUpdatePratilipi( pratilipi, successCallBack, errorCallBack );
 
 	};
+
+	// TODO: Remove Hack asap
+	var dataAccessor = new DataAccessor();
+	dataAccessor.getPratilipiByUri( window.location.pathname, false, 
+			function( pratilipi ) {
+		self.pratilipiId( pratilipi.pratilipiId );
+		self.title( pratilipi.title );
+		self.titleEn( pratilipi.titleEn );
+		var pratilipiTypes = {
+				<#list pratilipiTypes as pratilipiType>
+					"${ pratilipiType.value }": "${ pratilipiType.name }",
+				</#list>
+		};
+		$( "#pratilipi_edit_pratilipi #pratilipi_edit_pratilipi_type" ).attr( 'data-val', pratilipi.type );
+		$( "#pratilipi_edit_pratilipi #pratilipi_edit_pratilipi_type" ).attr( 'value', pratilipiTypes[ pratilipi.type ] );
+		
+	});
 
 }
