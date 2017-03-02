@@ -61,11 +61,12 @@
 				<i class="material-icons">notifications</i>
 			</a>
 			<span id="notificationLink"
+					style="margin-top: 8px;" 
 					class="material-icons mdl-badge--overlap mdl-badge--no-background hidden-xs"
 					data-bind="{ attr: { 'data-badge': ( appViewModel.notificationCount() > 99 ? '99+' : appViewModel.notificationCount() ) }, 
 								css: { 'mdl-badge': ( appViewModel.notificationCount() > 0 ) },
 								visible: ! appViewModel.user.isGuest() }">
-				<i style="margin-top: 8px;" class="material-icons">notifications</i>
+				<i class="material-icons">notifications</i>
 			</span>
 			<div id="notificationContainer">
 				<div id="notificationTitle">${ _strings.notification_notifications }</div>
