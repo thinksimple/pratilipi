@@ -1,4 +1,4 @@
-<div class="mdl-card mdl-card-border mdl-cell mdl-cell--8-col-tablet mdl-cell--9-col">
+<div class="mdl-card mdl-card-border mdl-cell mdl-cell--8-col-tablet mdl-cell--9-col mobile-card">
     <div class="mdl-grid">
         <div class="mdl-card__media mdl-cell mdl-cell--4-col-phone mdl-cell--3-col-tablet mdl-cell--4-col-desktop alignCenter">
             <#-- <img src="https://d3cwrmdwk8nw1j.cloudfront.net/pratilipi/cover?pratilipiId=5093925535612928&version=1468070905501&width=150" border="0" alt="" style="padding:10px;display:block;margin:auto;"> -->
@@ -8,10 +8,11 @@
                 <img data-bind="attr: { src: getMobileCoverImageUrl( $parent.pratilipiObject().coverImageUrl() ) }" border="0" alt="">
             </picture> 
         </div>
-        <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--5-col-tablet mdl-cell--8-col-desktop">
-            <div class="mdl-card__title">
-                <h2 class="mdl-card__title-text" data-bind="text: $parent.pratilipiObject().title"></h2>
-				<button data-bind="visible: $parent.pratilipiObject().hasAccessToUpdate()" 
+        <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--5-col-tablet mdl-cell--8-col-desktop mdl-grid mdl-grid--no-spacing">
+            <div class="mdl-cell mdl-cell--12-col mdl-cell--order-1 mdl-cell--order-1-phone">
+                <div class="mdl-card__title padding-bottom-zero">
+                    <h2 class="mdl-card__title-text" data-bind="text: $parent.pratilipiObject().title"></h2>
+                    <button data-bind="visible: $parent.pratilipiObject().hasAccessToUpdate()" 
 						id="pratilipi-info-edit-pratilipi"
 						class="mdl-button mdl-js-button mdl-button--icon">
 					<i class="material-icons">create</i>
@@ -25,44 +26,51 @@
 						</a>
 					</li>
 				</ul>
+                </div>
+                <div class="css-author-name mdl-card__title padding-bottom-zero">
+                    <a style="margin: 0;color: #000;font-size: 20px;" data-bind="attr: { href: $parent.pratilipiObject().author.pageUrl() }, text: $parent.pratilipiObject().author.name()"></a>
+                </div>
+                <div class="mdl-card__supporting-text font-16">
+                    <!--ko text: roundOffToOneDecimal( $parent.pratilipiObject().averageRating() ) -->
+                    <!--/ko-->
+                    <i class="material-icons material-icons-16 vertical-middle">star</i> (
+                    <!--ko text: $parent.pratilipiObject().ratingCount() -->
+                    <!--/ko-->
+                    ) &nbsp;
+                    <!--ko text: $parent.pratilipiObject().readCount() -->
+                    <!--/ko-->
+                    <i class="material-icons material-icons-16 vertical-middle">remove_red_eye</i>
+                </div>                            
             </div>
-            <div class="css-author-name mdl-card__title">
-                <h5 style="margin:0;" data-bind="text: $parent.pratilipiObject().author.name()"></h5>
+            <div class="mdl-cell mdl-cell--12-col mdl-cell--order-3 mdl-cell--order-2-phone">
+                <div class="mdl-card__actions">
+                    <a data-bind="attr: { href: $parent.pratilipiObject().readPageUrl }" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+                        ${  _strings.read }
+                    </a>
+                    <button data-bind="text: libraryText, click: addToLibrary" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+                    </button>
+                    <button data-bind="click: openShareModal" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+                        <i class="material-icons">share</i>
+                    </button>
+                </div>                
             </div>
-            <div class="mdl-card__supporting-text">
-                <!--ko text: roundOffToOneDecimal( $parent.pratilipiObject().averageRating() ) -->
-                <!--/ko-->
-                <i class="material-icons material-icons-16 vertical-middle">star</i> (
-                <!--ko text: $parent.pratilipiObject().ratingCount() -->
-                <!--/ko-->
-                ) &nbsp;
-                <!--ko text: $parent.pratilipiObject().readCount() -->
-                <!--/ko-->
-                <i class="material-icons material-icons-16 vertical-middle">remove_red_eye</i>
+            <div class="mdl-cell mdl-cell--12-col mdl-cell--order-2 mdl-cell--order-3-phone">
+                <div class="mdl-card__supporting-text">
+                    <p class="font-16 margin-bottom-8"> ${ _strings.pratilipi_listing_date }:
+                        <!--ko text:  formatDate( $parent.pratilipiObject().listingDateMillis() ) -->
+                        <!--/ko-->
+                    </p>
+                    <p class="font-16 margin-bottom-8"> ${ _strings.pratilipi_type }:
+                        <!--ko text: $parent.pratilipiObject().type -->
+                        <!--/ko-->
+                    </p>
+                </div>                
             </div>
-            <div class="mdl-card__actions">
-                <a data-bind="attr: { href: $parent.pratilipiObject().readPageUrl }" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
-                    ${  _strings.read }
-                </a>
-                <button data-bind="text: libraryText, click: addToLibrary" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
-                </button>
-                <button data-bind="click: openShareModal" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
-                    <i class="material-icons">share</i>
-                </button>
-            </div>
-            <div class="mdl-card__supporting-text">
-                ${ _strings.pratilipi_listing_date }:
-                <!--ko text:  formatDate( $parent.pratilipiObject().listingDateMillis() ) -->
-                <!--/ko-->
-                <br> ${ _strings.pratilipi_type }:
-                <!--ko text: $parent.pratilipiObject().type -->
-                <!--/ko-->
-            </div>
+
         </div>
         
         <!-- ko if: $parent.pratilipiObject().summary -->
             <div class="mdl-cell mdl-cell--12-col padding-zero ">
-                <p></p>
                 <hr/>
             </div>        
             <h3 class="mdl-cell mdl-cell--12-col mdl-typography--headline">${ _strings.pratilipi_summary }</h3>
@@ -71,9 +79,8 @@
             </div>
         <!-- /ko -->
 
-        <div class="mdl-cell mdl-cell--12-col padding-zero ">
-            <p></p>
-            <hr/>
+        <div class="mdl-cell mdl-cell--12-col padding-zero margin-zero-auto">
+            <hr class="margin-zero">
         </div>
         <h3 class="mdl-cell mdl-cell--12-col mdl-typography--headline">${ _strings.author_about }</h3>
         <div class="mdl-cell mdl-cell--12-col" style="display: flex;align-items: center;justify-content: space-between;">
@@ -124,7 +131,6 @@
         </ul>
     </div>
 </dialog>
-
 <!--                 <p class="see-more-text" data-bind="text: summary">
                 </p>
                 <div style="text-align:center;">
@@ -132,5 +138,3 @@
                         See More
                     </button>
                 </div> -->
-                
-                

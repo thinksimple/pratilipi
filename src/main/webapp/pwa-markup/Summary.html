@@ -6,9 +6,9 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 		<title>Pratilipi Summary Page</title>
 
-		<script src="http://0.ptlp.co/resource-all/pwa/js/jquery.js"></script>
-		<script src="http://0.ptlp.co/resource-all/pwa/js/ko.ko_mapping.js"></script>
-		<link rel="stylesheet" href="http://0.ptlp.co/resource-all/pwa/css/material-icons.materialise.materialise_dropdown.bootstrap_modal.css"/>
+		<script src="https://d3cwrmdwk8nw1j.cloudfront.net/resource-all/pwa/js/jquery.js"></script>
+		<script src="https://d3cwrmdwk8nw1j.cloudfront.net/resource-all/pwa/js/ko.ko_mapping.js"></script>
+		<link rel="stylesheet" href="https://d3cwrmdwk8nw1j.cloudfront.net/resource-all/pwa/css/material-icons.materialise.materialise_dropdown.bootstrap_modal.css"/>
 
 		<link rel="stylesheet" type="text/css" href="/pwa-stylesheets/css/dialog-polyfill.css" />
 		<script src="/pwa-scripts/dialog-polyfill-${ lang }.js"></script>
@@ -66,7 +66,6 @@
 <body>
 	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 		<!-- ko component: "pratilipi-header-new" --><!-- /ko -->
-		<!-- ko component: "pratilipi-edit-pratilipi"--><!-- /ko -->
 		<main class="mdl-layout__content">
 			<div class="mdl-components mdl-js-components">
 				<!-- ko component: "pratilipi-navigation-aside" --><!-- /ko -->
@@ -77,7 +76,7 @@
 	</div>
 
 	<div class="word-suggester"><div class="word-input"></div><div class="suggestions"><div class="suggestion"></div></div></div>
-	<script src="http://0.ptlp.co/resource-all/rangy_core.rangy_selectionsaverestore.min.js"></script>
+	<script src="https://d3cwrmdwk8nw1j.cloudfront.net/resource-all/rangy_core.rangy_selectionsaverestore.min.js"></script>
 	<script src="/pwa-scripts/scripts-${ lang }.js?5"></script>
 	<script src="/pwa-scripts/summary-${ lang }.js?7"></script>
 	<script src="/pwa-scripts/transliteration-suggester-${ lang }.js"></script>
@@ -89,17 +88,18 @@
 		this.content_transliteration_object.init();
 	});
 	</script>
-	<script src="http://0.ptlp.co/resource-all/pwa/js/materialise.materialise_dropdown.bootstrap_modal.js"></script>
+	<script src="https://d3cwrmdwk8nw1j.cloudfront.net/resource-all/pwa/js/materialise.materialise_dropdown.bootstrap_modal.js"></script>
 	<script>
-		if( 'serviceWorker' in navigator ) {
-			navigator.serviceWorker.register( '/pwa-service-worker/sw-precache.js' )
-		  		.then( function( registration ) {
-					console.log( 'Service Worker registration successful with scope: ', registration.scope );
-				})
-				.catch( function(err) {
-					console.log('Service Worker registration failed: ', err);
-				});
-		}
+	if ('serviceWorker' in navigator) {
+	  navigator.serviceWorker.register('sw-precache.js')
+	  .then(function(registration) {
+	    console.log('Service Worker registration successful with scope: ',
+	     registration.scope);
+	  })
+	  .catch(function(err) {
+	    console.log('Service Worker registration failed: ', err);
+	  });
+	}
 	</script>	
 </body>
 </html>
