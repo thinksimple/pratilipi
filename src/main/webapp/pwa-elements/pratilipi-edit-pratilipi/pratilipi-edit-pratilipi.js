@@ -22,7 +22,7 @@ function( params ) {
 		}
 
 		var successCallBack = function( pratilipi ) {
-			ToastUtil.toastUp( "${ _strings.content_created_success }" );
+			ToastUtil.toast( "${ _strings.content_created_success }" );
 			window.location.reload();
 			/* TODO: Update PratilipiInfo */
 			$( '#pratilipi_edit_pratilipi' ).modal( 'hide' );

@@ -54,10 +54,10 @@ function( params ) {
 			self.coverUploaded( false );
 			var response = JSON.parse( evt.currentTarget.contentDocument.body.innerText );
 			if( response[ "message" ] != null ) {
-				ToastUtil.toastUp( response[ "message" ], 3000 );
+				ToastUtil.toast( response[ "message" ], 3000 );
 			} else {
 				// Success Callback
-				ToastUtil.toastUp( "${ _strings.success_generic_message }", 3000 );
+				ToastUtil.toast( "${ _strings.success_generic_message }", 3000 );
 				setTimeout( function () { window.location.reload(); }, 3000 );
 			}
 		}
