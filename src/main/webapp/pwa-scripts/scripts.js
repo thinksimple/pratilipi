@@ -34,24 +34,24 @@ var DataAccessor = function() {
 
 	var httpUtil = new HttpUtil();
 
-	 var API_PREFIX = "/api";
+	 var API_PREFIX = "/api/";
 	//var API_PREFIX = "http://hindi.gamma.pratilipi.com/api"; 
 
-	var PAGE_API = "/page";
-	var PRATILIPI_API = "/pratilipi?_apiVer=2";
-	var USER_PRATILIPI_API = "/userpratilipi";
-	var AUTHOR_API = "/author";
-	var USER_AUTHOR_FOLLOW_API = "/userauthor/follow?_apiVer=2";
-	var USER_API = "/user";
-	var NOTIFICATION_LIST_API = "/notification/list";
-	var NAVIGATION_LIST_API = "/navigation/list";
-	var USER_PRATILIPI_REVIEW_LIST_API = "/userpratilipi/review/list";
-	var COMMENT_LIST_API = "/comment/list";
-	var USER_PRATILIPI_REVIEW_API = "/userpratilipi/review";
-	var USER_AUTHOR_FOLLOW_API = "/userauthor/follow?_apiVer=2";
-	var USER_PRATILIPI_LIBRARY_API = "/userpratilipi/library";
-	var COMMENT_API = "/comment";
-	var VOTE_API = "/vote";
+	var PAGE_API = "page";
+	var PRATILIPI_API = "pratilipi?_apiVer=2";
+	var USER_PRATILIPI_API = "userpratilipi";
+	var AUTHOR_API = "author";
+	var USER_AUTHOR_FOLLOW_API = "userauthor/follow?_apiVer=2";
+	var USER_API = "user";
+	var NOTIFICATION_LIST_API = "notification/list";
+	var NAVIGATION_LIST_API = "navigation/list";
+	var USER_PRATILIPI_REVIEW_LIST_API = "userpratilipi/review/list";
+	var COMMENT_LIST_API = "comment/list";
+	var USER_PRATILIPI_REVIEW_API = "userpratilipi/review";
+	var USER_AUTHOR_FOLLOW_API = "userauthor/follow?_apiVer=2";
+	var USER_PRATILIPI_LIBRARY_API = "userpratilipi/library";
+	var COMMENT_API = "comment";
+	var VOTE_API = "vote";
 
 	var request = function( name, api, params ) {
 		return {
