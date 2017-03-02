@@ -26,6 +26,13 @@ $pratilipi_red: #d0021b;
   }		
 }
 
+.mobile-card {
+  @media (max-width: 480px) {
+    margin: 0;
+    width: 100%;
+  }		
+}
+
 .white-background {
 	background-color: white;
 }
