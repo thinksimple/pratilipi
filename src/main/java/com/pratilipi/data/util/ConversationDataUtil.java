@@ -2,13 +2,11 @@ package com.pratilipi.data.util;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeUtility;
 
 import com.google.gson.JsonObject;
@@ -94,10 +92,8 @@ public class ConversationDataUtil {
 
 		String language = author != null ? author.getLanguage().getNameEn().toLowerCase() : null;
 		try {
-			ArrayList<InternetAddress> receiverList = createReceiversId(team.name().toLowerCase(), language);
-			InternetAddress[] receivers = new InternetAddress[receiverList.size()];
-			receiverList.toArray(receivers);
-			createSupportMailTask(receivers, userId.toString(), name, email, phone, message, data, team.name());
+			ArrayList<String> receiverList = createReceiversId(team.name().toLowerCase(), language);
+			createSupportMailTask(receiverList, userId.toString(), name, email, phone, message, data, team.name());
 		} catch (UnsupportedEncodingException | UnexpectedServerException e) {
 			
 			logger.log(Level.SEVERE, "Exception while creating conversation mail task");
@@ -108,7 +104,7 @@ public class ConversationDataUtil {
 
 	}
 
-	private static void createSupportMailTask(InternetAddress[] receiversList, String userId, String name, String email,
+	private static void createSupportMailTask(List<String> receiversList, String userId, String name, String email,
 			String phone, String message, JsonObject data, String team)
 			throws UnsupportedEncodingException, UnexpectedServerException {
 
@@ -141,36 +137,35 @@ public class ConversationDataUtil {
 
 		Logger.getLogger(ConversationDataUtil.class.getSimpleName()).log(Level.SEVERE, "Body : " + body);
 
-		InternetAddress[] cc = new InternetAddress[] {
-				new InternetAddress("ranjeet@pratilipi.com", "Ranjeet Pratap Singh") };
+		ArrayList<String> cc = new ArrayList<>();
+		cc.add("ranjeet@pratilipi.com");
 
-		logger.log(Level.INFO, "CC : " + Arrays.toString(cc));
+		logger.log(Level.INFO, "CC : " + cc.toString());
 
-		logger.log(Level.INFO, "TO : " + Arrays.toString(receiversList));
-
+		logger.log(Level.INFO, "TO : " + receiversList.toString());
 		// CREATING TASK QUEUE FOR EMAIL.
 		Task task = TaskQueueFactory.newTask().setUrl("/contact/email").addParam("body", body)
-				.addParam("subject", subject).addParam("receivers", Arrays.toString(receiversList))
-				.addParam("cc", Arrays.toString(cc));
+				.addParam("subject", subject).addParam("receivers", receiversList.toString())
+				.addParam("cc", cc.toString());
 
 		TaskQueueFactory.getConversationTaskQueue().add(task);
 
 	}
 
-	private static ArrayList<InternetAddress> createReceiversId(String teamName, String language)
+	private static ArrayList<String> createReceiversId(String teamName, String language)
 			throws UnsupportedEncodingException {
-		ArrayList<InternetAddress> emailList = new ArrayList<>();
-		emailList.add(new InternetAddress("abhishek@pratilipi.com", "Abhishek Sharma"));
-		emailList.add(new InternetAddress("shreyans@pratilipi.com", "Shreyans Maini"));
+		ArrayList<String> emailList = new ArrayList<>();
+		emailList.add("abhishek@pratilipi.com");
+		emailList.add("shreyans@pratilipi.com");
 		if (teamName.contains(AEE) || teamName.contains(ISSUES)) {
 			// when contact team name is AEE_* or ANDROID_APP_ISSUES
 			if (language != null)
-				emailList.add(new InternetAddress(language + DOMAIN, language + DOMAIN));
+				emailList.add(language + DOMAIN);
 			logger.log(Level.INFO, "Language Team : " + language + DOMAIN);
 		} else if (teamName.contains(TECH_SUPPORT)) {
 			// when contact team name is ANDROID_APP_TECH_SUPPORT
-			emailList.add(new InternetAddress("prashant@pratilipi.com", "Prashant"));
-			emailList.add(new InternetAddress("kshitij@pratilipi.com", "Kshitij Sharma"));
+			emailList.add("prashant@pratilipi.com");
+			emailList.add("kshitij@pratilipi.com");
 		}
 		// For ANDROID_APP_FEATURE_REQUEST and ANDROID_APP_FEEDBACK, mail is
 		// sent to abhishek and shreyansh only
