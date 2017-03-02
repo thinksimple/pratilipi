@@ -6,7 +6,7 @@ function( params, componentInfo ) {
     this.isMoreShown = ko.observable( true );
 
     this.buttonText = ko.computed(function() {
-        return this.isMoreShown() ? "See Less" : "See More";
+        return this.isMoreShown() ? "${ _strings.show_less }" : "${ _strings.show_more }";
     }, this);
     
     this.toggleSeeMore = function() {

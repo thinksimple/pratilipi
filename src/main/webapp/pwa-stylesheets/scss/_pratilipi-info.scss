@@ -1,9 +1,27 @@
-.pratilipi-info {
-	width: 100%;
+	.pratilipi-info {
 }
 
 .pratilipi-info {
+
+	.mobile-card {
+	  @media (max-width: 480px) {
+	    margin: 0;
+	    width: 100%;
+	  }		
+	}
 	.mdl-card__media {
 		background-color: transparent !important;
+	}
+	
+	.font-16 {
+		font-size: 16px;
+	}
+	
+	.margin-bottom-8 {
+		margin-bottom: 8px !important;
+	}
+	
+	.hr-separator {
+	
 	}
 }
