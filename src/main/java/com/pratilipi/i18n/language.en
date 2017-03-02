@@ -344,6 +344,7 @@ reader_enjoyed_reading_part2	= Share it on
 # Notifications
 notification_notifications = Notifications
 notifications_no_notifications = Sorry! You don't have any notifications right now! Please check later!
+notifications_load_failed = Notifications failed to load. Please click here to re-load the notifications.
 
 # Writer Panel
 writer_add_content_title = Add Title
