@@ -34,24 +34,23 @@ var DataAccessor = function() {
 
 	var httpUtil = new HttpUtil();
 
-	 var API_PREFIX = "/api/";
-	//var API_PREFIX = "http://hindi.gamma.pratilipi.com/api"; 
+	 var API_PREFIX = "/api";
 
-	var PAGE_API = "page";
-	var PRATILIPI_API = "pratilipi?_apiVer=2";
-	var USER_PRATILIPI_API = "userpratilipi";
-	var AUTHOR_API = "author";
-	var USER_AUTHOR_FOLLOW_API = "userauthor/follow?_apiVer=2";
-	var USER_API = "user";
-	var NOTIFICATION_LIST_API = "notification/list";
-	var NAVIGATION_LIST_API = "navigation/list";
-	var USER_PRATILIPI_REVIEW_LIST_API = "userpratilipi/review/list";
-	var COMMENT_LIST_API = "comment/list";
-	var USER_PRATILIPI_REVIEW_API = "userpratilipi/review";
-	var USER_AUTHOR_FOLLOW_API = "userauthor/follow?_apiVer=2";
-	var USER_PRATILIPI_LIBRARY_API = "userpratilipi/library";
-	var COMMENT_API = "comment";
-	var VOTE_API = "vote";
+	var PAGE_API = "/page";
+	var PRATILIPI_API = "/pratilipi?_apiVer=2";
+	var USER_PRATILIPI_API = "/userpratilipi";
+	var AUTHOR_API = "/author";
+	var USER_AUTHOR_FOLLOW_API = "/userauthor/follow?_apiVer=2";
+	var USER_API = "/user";
+	var NOTIFICATION_LIST_API = "/notification/list";
+	var NAVIGATION_LIST_API = "/navigation/list";
+	var USER_PRATILIPI_REVIEW_LIST_API = "/userpratilipi/review/list";
+	var COMMENT_LIST_API = "/comment/list";
+	var USER_PRATILIPI_REVIEW_API = "/userpratilipi/review";
+	var USER_AUTHOR_FOLLOW_API = "/userauthor/follow?_apiVer=2";
+	var USER_PRATILIPI_LIBRARY_API = "/userpratilipi/library";
+	var COMMENT_API = "/comment";
+	var VOTE_API = "/vote";
 
 	var request = function( name, api, params ) {
 		return {
@@ -278,12 +277,6 @@ document.body.appendChild( snackbarContainer );
 
 var ToastUtil = (function() {
 	return {
-		closeToast: function( event ) {
-			/* snackbarContainer.MaterialSnackbar.cleanup_(); */
-			/* As cleanup_ is not part of the public api and buggy, we are not using it. */
-			/* Removing "mdl-snackbar--active" woduln't allow additional toasts to display until that long timeout is completed */
-			snackbarContainer.classList.remove( "mdl-snackbar--active" );
-		},
 		toast: function( message, timeout, includeCloseButton ) {
 			if( message == null ) return;
 			var data = { message: message,
@@ -292,17 +285,24 @@ var ToastUtil = (function() {
 				data[ "actionHandler" ] = this.closeToast;
 				data[ "actionText" ] = "x";
 			}
-			snackbarContainer.MaterialSnackbar.showSnackbar( data );
+			setTimeout( function() {
+				snackbarContainer.MaterialSnackbar.showSnackbar( data );
+			}, 1 );
 		},
 		toastUp: function( message ) {
 			var snackbarText = document.querySelector( '.mdl-snackbar__text' );
 			snackbarText.innerHTML = message;
-			snackbarContainer.classList.add( "mdl-snackbar--active" );
+			setTimeout( function() {
+				snackbarContainer.classList.add( "mdl-snackbar--active" );
+			}, 1 );
 		},
 		toastDown: function( count ) {
+			/* snackbarContainer.MaterialSnackbar.cleanup_(); */
+			/* As cleanup_ is not part of the public api and buggy, we are not using it. */
+			/* Removing "mdl-snackbar--active" woduln't allow additional toasts to display until that long timeout is completed */
 			setTimeout( function() {
 				snackbarContainer.classList.remove( "mdl-snackbar--active" );
-			}, 50 );
+			}, 1 );
 		}
 	};
 })();
