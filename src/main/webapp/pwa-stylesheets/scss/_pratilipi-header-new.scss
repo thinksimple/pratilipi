@@ -103,6 +103,20 @@
 			height: 36px;
 		}
 
+		.user-loading-spinner.mdl-spinner {
+			width: 20px;
+			height: 20px;
+		}
+		.user-loading-spinner.mdl-spinner--single-color .mdl-spinner__layer-1,
+		.user-loading-spinner.mdl-spinner--single-color .mdl-spinner__layer-2,
+		.user-loading-spinner.mdl-spinner--single-color .mdl-spinner__layer-3,
+		.user-loading-spinner.mdl-spinner--single-color .mdl-spinner__layer-4 {
+			border-color: #d0021b;
+			.mdl-spinner__circle {
+				border-width: 2px !important;
+			}
+		}
+
 	} /* End of row-one */
 
 	@media only screen and (max-width: 767px) {

@@ -1,5 +1,5 @@
 var AppViewModel = function() {
-	var defaultUser = { "isGuest": true, "profilePageUrl": "", "profileImageUrl": "", "displayName": "" };
+	var defaultUser = { "isGuest": true, "profilePageUrl": "", "profileImageUrl": "", "displayName": "", userId: null };
 	this.user = ko.mapping.fromJS( defaultUser, {}, this.user );
 	this.notificationCount = ko.observable( -1 );
 };
@@ -42,7 +42,7 @@ var updateUser = function() {
 	var dataAccessor = new DataAccessor();
 	dataAccessor.getUser( function( user ) {
 		ko.mapping.fromJS( user, {}, appViewModel.user );
-		initFirebase();
+//		initFirebase();
 	});
 };
 
