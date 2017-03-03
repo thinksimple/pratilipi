@@ -171,10 +171,11 @@ function( params ) {
 
 
 	/* Computed observables */
-	this.pratilipiObserver = ko.computed( function() {
-
+	this.pratilipiIdObserver = ko.computed( function() {
 		self.fetchAuthorAndUserAuthor( self.pratilipi.pratilipiId() );
+	});
 
+	this.pratilipiMetaObserver = ko.computed( function() {
 		self.canAddToLibrary( self.pratilipi.state() == "PUBLISHED" 
 			&& ( appViewModel.user.isGuest() || self.pratilipi.author.authorId() != appViewModel.user.author.authorId() ) );
 		self.canFollowAuthor( self.pratilipi.author.authorId() != appViewModel.user.author.authorId() );

@@ -72,12 +72,13 @@
 											visible: canAddToLibrary() }" 
 								class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
 						</button>
-						<button data-bind="visible: pratilipi.hasAccessToUpdate(), 
+						<button data-bind="{ visible: pratilipi.hasAccessToUpdate(), 
 											text: ( pratilipi.state() == 'PUBLISHED' ? '${ _strings.pratilipi_move_to_drafts }' : '${ _strings.pratilipi_publish_it }' ), 
-											click: togglePratilipiState" 
+											click: togglePratilipiState,
+											disable: pratilipiRequestOnFlight }" 
 								class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
 						</button>
-						<button data-bind="click: openShareModal" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+						<button data-bind="{ click: openShareModal, visible: canShare() }" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
 							<i class="material-icons">share</i>
 						</button>
 					</div>
