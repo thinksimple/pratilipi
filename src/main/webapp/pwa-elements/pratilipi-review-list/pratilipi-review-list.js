@@ -10,9 +10,8 @@ function( params ) {
     this.hasAccessToReview = ko.computed( function() { /* test this for changes in review access */
         if( appViewModel.user.isGuest() )
             return  true;
-        // else if( !isEmpty( this.userPratilipiObj ) ) /* if user is not guest, this will never be empty */
-            // return this.userPratilipiObj.hasAccessToReview();
-        return true;
+        else if( !isEmpty( this.userPratilipiObj ) ) /* if user is not guest, this will never be empty */
+            return this.userPratilipiObj.hasAccessToReview();
     }, this);
     
     this.isGuest = ko.observable( appViewModel.user.isGuest() );
