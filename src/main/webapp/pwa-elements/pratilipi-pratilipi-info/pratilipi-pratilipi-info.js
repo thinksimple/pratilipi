@@ -59,10 +59,12 @@ function( params ) {
 		} else {
 			var addedToLib = self.userPratilipi.addedToLib();
 			self.updateUserPratilipi( { "addedToLib": ! addedToLib } );
+			self.userPratilipiRequestOnFlight( true );
 			dataAccessor.addOrRemoveFromLibrary( self.pratilipi.pratilipiId(), ! addedToLib, 
 				function( userPratilipi ) {
-					/* Do Nothing */
-				}, function( error ) { 
+					self.userPratilipiRequestOnFlight( false );
+				}, function( error ) {
+					self.userPratilipiRequestOnFlight( false );
 					ToastUtil.toast( error[ "message" ] != null ? error[ "message" ] : "${ _strings.server_error_message }" );
 					self.updateUserPratilipi( { "addedToLib": addedToLib } );
 			});
@@ -77,12 +79,14 @@ function( params ) {
 		} else {
 			var following = self.userAuthor.following();
 			self.updateUserAuthor( { "following": ! following } );
+			self.userAuthorRequestOnFlight( true );
 			dataAccessor.followOrUnfollowAuthor( self.author.authorId(), ! following, 
 				function( userAuthor ) {
-					/* Do Nothing */
+				self.userAuthorRequestOnFlight( false );
 				}, function( error ) {
+					self.userAuthorRequestOnFlight( false );
 					ToastUtil.toast( error[ "message" ] != null ? error[ "message" ] : "${ _strings.server_error_message }" );
-					self.updateUserPratilipi( { "following": following } );
+					self.updateUserAuthor( { "following": following } );
 			});
 		}
 	};
@@ -96,9 +100,11 @@ function( params ) {
 			"state": state != "PUBLISHED" ? "PUBLISHED" : "DRAFTED"
 		};
 		self.updatePratilipi( pratilipi );
+		self.pratilipiRequestOnFlight( true );
 		dataAccessor.createOrUpdatePratilipi( pratilipi, function( pratilipi ) {
-			/* Do Nothing */
+			self.pratilipiRequestOnFlight( false );
 		}, function( error ) {
+			self.pratilipiRequestOnFlight( false );
 			self.updatePratilipi( { "state": state } );
 			ToastUtil.toast( error.message, 3000 );
 		}); 
@@ -174,15 +180,13 @@ function( params ) {
 	};
 
 
-	/* Computed Observables */
+	/* Computed observables */
 	this.pratilipiObserver = ko.computed( function() {
-		/* Load author */
-		self.fetchAuthorAndUserAuthor( pratilipi.pratilipiId() );
 
-		/* set flags */
+		self.fetchAuthorAndUserAuthor( self.pratilipi.pratilipiId() );
+
 		self.canAddToLibrary( self.pratilipi.state() == "PUBLISHED" 
 			&& ( appViewModel.user.isGuest() || self.pratilipi.author.authorId() != appViewModel.user.author.authorId() ) );
-
 		self.canFollowAuthor( self.pratilipi.author.authorId() != appViewModel.user.author.authorId() );
 		self.canPublishUnpublish( self.pratilipi.hasAccessToUpdate() );
 		self.canShare( self.pratilipi.state() == "PUBLISHED" );

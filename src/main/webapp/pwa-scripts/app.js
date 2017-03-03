@@ -1,5 +1,18 @@
 var AppViewModel = function() {
-	var defaultUser = { "isGuest": true, "profilePageUrl": "", "profileImageUrl": "", "displayName": "", userId: null };
+
+	var defaultUser = {
+		"userId": null,
+		"author": { "authorId": null },
+		"displayName": null,
+		"email": null,
+		"phone": null,
+		"state": null,
+		"isGuest": true, 
+		"isEmailVerified": false,
+		"profilePageUrl": null, 
+		"profileImageUrl": null, 
+		"firebaseToken": null
+	};
 	this.user = ko.mapping.fromJS( defaultUser, {}, this.user );
 	this.notificationCount = ko.observable( -1 );
 };
