@@ -58,7 +58,7 @@ public class EmailUtil {
 			msg.addRecipients( Message.RecipientType.CC, cc);
 			// TODO: Uncomment when we migrate to other email service providers
 //			msg.addRecipient( Message.RecipientType.BCC, new InternetAddress( "mail-archive@pratilipi.com", "Mail Archive" ) );
-			msg.setSubject( subject );
+			msg.setSubject( MimeUtility.encodeText( subject, "UTF-8", "B" ) );
 			msg.setContent( MimeUtility.encodeText( body, "UTF-8", "B" ), "text/html" );
 			logger.log(Level.INFO, "Sending mail");
 			Transport.send( msg );
