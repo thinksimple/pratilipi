@@ -40,3 +40,12 @@ function getImageUrl( imageUrl, width ) {
 	if( imageUrl == null ) return null;
 	return imageUrl + ( imageUrl.indexOf( "?" ) > -1 ? "&" : "?" ) + width;
 }
+
+function getPratilipiTypeVernacular( pratilipiType ) {
+	var pratilipiTypes = {
+		<#list pratilipiTypes as pratilipiType>
+			"${ pratilipiType.value }": "${ pratilipiType.name }",
+		</#list>
+	};
+	return pratilipiTypes[ pratilipiType ];
+}

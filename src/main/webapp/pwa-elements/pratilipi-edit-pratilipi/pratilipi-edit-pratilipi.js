@@ -58,14 +58,8 @@ function( params ) {
 		self.title( pratilipi.title );
 		self.titleEn( pratilipi.titleEn );
 		self.summary( pratilipi.summary );
-		var pratilipiTypes = {
-				<#list pratilipiTypes as pratilipiType>
-					"${ pratilipiType.value }": "${ pratilipiType.name }",
-				</#list>
-		};
 		$( "#pratilipi_edit_pratilipi #pratilipi_edit_pratilipi_type" ).attr( 'data-val', pratilipi.type );
-		$( "#pratilipi_edit_pratilipi #pratilipi_edit_pratilipi_type" ).attr( 'value', pratilipiTypes[ pratilipi.type ] );
-		
+		$( "#pratilipi_edit_pratilipi #pratilipi_edit_pratilipi_type" ).attr( 'value', getPratilipiTypeVernacular( pratilipi.type ) );
 	});
 
 }
