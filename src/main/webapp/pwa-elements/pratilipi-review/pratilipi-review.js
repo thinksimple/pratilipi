@@ -124,13 +124,15 @@ function( params ) {
           success: function( response ) {
               var res = response;   
               comment.reply("");
-              self.addToCommentsList( response );              
+              self.addToCommentsList( response );
+
           },
           error: function( response ) {
           },
           complete: function() {
               comment.saveInProgress( false );
               self.hideReplyState();
+              self.isCommentsShown( true );
           }
       });            
    };    
