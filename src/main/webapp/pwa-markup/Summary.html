@@ -17,22 +17,27 @@
 		<link rel="stylesheet" href="/pwa-stylesheets/css/styles-new.css?32" />
 
 		<#include "../pwa-ftl-files/googleAnalytics.ftl">
-		<#include "../pwa-ftl-files/functions.ftl">
 		<#include "../pwa-ftl-files/font.ftl">
 
+		<#include "../pwa-ftl-files/functions.ftl">
 		<@register element="pratilipi-header-new" />
+		<@register element="pratilipi-write" />
+		<@register element="pratilipi-navigation-drawer" />
+		<@register element="pratilipi-navigation-aside" />
 		<@register element="pratilipi-footer" />
-		<@register element="pratilipi-info" />
+		<@register element="pratilipi-see-more" />
 		<@register element="pratilipi-edit-pratilipi" />
-		<@register element="pratilipi-summary-page" />
+		<@register element="pratilipi-pratilipi-info" />
+		<@register element="pratilipi-pratilipi-page" />
+
+		<#--
 		<@register element="pratilipi-review-list" />
 		<@register element="pratilipi-review" />
 		<@register element="pratilipi-review-comment" />
 		<@register element="pratilipi-review-reply" />
-		<@register element="pratilipi-navigation-drawer" />
-		<@register element="pratilipi-navigation-aside" />
-		<@register element="pratilipi-see-more" />
-		<@register element="pratilipi-write" />
+		-->
+
+
 
 
 		<style>
@@ -70,7 +75,9 @@
 		<div class="mdl-layout__content" style="z-index: initial;">
 			<div class="mdl-components mdl-js-components">
 				<!-- ko component: "pratilipi-navigation-aside" --><!-- /ko -->
-				<!-- ko component: "pratilipi-summary-page" --><!-- /ko -->
+				<div class="mdl-grid mobile-grid">
+					<!-- ko component: "pratilipi-pratilipi-page" --><!-- /ko -->
+				</div>
 			</div>
 			<!-- ko component: "pratilipi-footer" --><!-- /ko -->
 		</div>
@@ -90,16 +97,16 @@
 	});
 	</script>
 	<script src="https://d3cwrmdwk8nw1j.cloudfront.net/resource-all/pwa/js/materialise.materialise_dropdown.bootstrap_modal.js"></script>
-	<#--<script>
-	if ('serviceWorker' in navigator) {
-	  navigator.serviceWorker.register('sw-precache.js')
-	  .then(function(registration) {
-	    console.log('Service Worker registration successful with scope: ',
-	     registration.scope);
-	  })
-	  .catch(function(err) {
-	    console.log('Service Worker registration failed: ', err);
-	  });
+	<#--
+	<script>
+	if( 'serviceWorker' in navigator ) {
+		navigator.serviceWorker.register( 'sw-precache.js' )
+			.then( function( registration ) {
+				console.log( 'Service Worker registration successful with scope: ', registration.scope );
+			})
+			.catch( function(err) {
+				console.log( 'Service Worker registration failed: ', err );
+			});
 	}
 	</script> -->	
 </body>

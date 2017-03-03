@@ -1,29 +1,33 @@
 function() {
 	var self = this;
 
-	var defaultPratilipi = { "pratilipiId": null, 
-							"title": null, 
-							"titleEn": null, 
-							"language": null, 
-							"author": { "authorId": null,"name": null, "pageUrl": null }, 
-							"summary": null, 
-							"pageUrl": null, 
-							"coverImageUrl":"",
-							"readPageUrl": null,
-							"type": null,
-							"state": null,
-							"listingDateMillis": null,
-							"wordCount": null,
-							"reviewCount": null,
-							"ratingCount": null,
-							"averageRating": null, 
-							"readCount": null, 
-							"fbLikeShareCount": null,
-							"hasAccessToUpdate": false };
-	
-	var defaultUserPratilipi = { "addedToLib": false, 
-							"hasAccessToReview": false, 
-							"isLiked": false };
+	var defaultPratilipi = { 
+			"pratilipiId": null, 
+			"title": null, 
+			"titleEn": null, 
+			"language": null, 
+			"author": { "authorId": null,"name": null, "pageUrl": null }, 
+			"summary": null, 
+			"pageUrl": null, 
+			"coverImageUrl":"",
+			"readPageUrl": null,
+			"type": null,
+			"state": null,
+			"listingDateMillis": null,
+			"wordCount": null,
+			"reviewCount": null,
+			"ratingCount": null,
+			"averageRating": null, 
+			"readCount": null, 
+			"fbLikeShareCount": null,
+			"hasAccessToUpdate": false 
+	};
+
+	var defaultUserPratilipi = {
+			"addedToLib": false, 
+			"hasAccessToReview": false, 
+			"isLiked": false 
+	};
 
 	this.pratilipi = ko.mapping.fromJS( defaultPratilipi, {}, self.pratilipi );
 	this.userPratilipi = ko.mapping.fromJS( defaultUserPratilipi, {}, self.userPratilipi );
