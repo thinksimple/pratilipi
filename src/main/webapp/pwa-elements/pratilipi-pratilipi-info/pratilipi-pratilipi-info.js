@@ -181,8 +181,4 @@ function( params ) {
 		self.canShare( self.pratilipi.state() == "PUBLISHED" );
 	}, this );
 
-	this.pratilipiTypeObserver = ko.computed( function() {
-		return getPratilipiTypeVernacular( self.pratilipi.type() );
-	}, this );
-
 }
