@@ -1,5 +1,6 @@
 package com.pratilipi.api.impl.userpratilipi;
 
+import com.google.gson.JsonObject;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Post;
@@ -21,7 +22,7 @@ public class UserPratilipiLibraryApi extends GenericApi {
 		private Long pratilipiId;
 		
 		@Validate
-		private String lastOpenedPage;
+		private JsonObject lastOpenedPage;
 		
 		@Validate
 		private Boolean addedToLib;
@@ -36,7 +37,7 @@ public class UserPratilipiLibraryApi extends GenericApi {
 		UserPratilipiData userPratilipiData = UserPratilipiDataUtil.saveUserPratilipiAddToLibrary(
 				AccessTokenFilter.getAccessToken().getUserId(),
 				request.pratilipiId,
-				request.lastOpenedPage,
+				request.lastOpenedPage == null ? null : request.lastOpenedPage.toString(),
 				request.addedToLib );
 
 		return new UserPratilipiApi.Response( userPratilipiData, UserPratilipiLibraryApi.class );
