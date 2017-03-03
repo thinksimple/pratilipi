@@ -3,8 +3,8 @@ function( params ) {
 //    console.log( "params", params );
 //    console.log( "pobj", params.pratilipiObj );
 //    console.log( "upobj", params.userPratilipiObj );
-    this.pratilipiObj = params.pratilipiObj;
-    this.userPratilipiObj = params.userPratilipiObj;
+    this.pratilipiObj = params.pratilipi;
+    this.userPratilipiObj = params.userPratilipi;
     console.log( this.userPratilipiObj, this.pratilipiObj );
     
     this.hasAccessToReview = ko.computed( function() { /* test this for changes in review access */
@@ -30,7 +30,10 @@ function( params ) {
         if( appViewModel.user.isGuest() ) {
             return 0;
         } else {
-            return this.userPratilipiObj.rating();
+            if( this.userPratilipiObj.rating )
+                return this.userPratilipiObj.rating();
+            else 
+                return 0;
         }
     };
 
@@ -38,7 +41,10 @@ function( params ) {
         if( appViewModel.user.isGuest() ) {
             return "";
         } else {
-            return this.userPratilipiObj.review();
+            if( this.userPratilipiObj.review )
+                return this.userPratilipiObj.review();
+            else 
+                return "";
         }
     };    
 
