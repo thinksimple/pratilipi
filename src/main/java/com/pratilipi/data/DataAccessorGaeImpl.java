@@ -88,6 +88,7 @@ import com.pratilipi.data.type.gae.NavigationEntity;
 import com.pratilipi.data.type.gae.NotificationEntity;
 import com.pratilipi.data.type.gae.PageEntity;
 import com.pratilipi.data.type.gae.PratilipiEntity;
+import com.pratilipi.data.type.gae.TagEntity;
 import com.pratilipi.data.type.gae.UserAuthorEntity;
 import com.pratilipi.data.type.gae.UserEntity;
 import com.pratilipi.data.type.gae.UserPratilipiEntity;
@@ -125,6 +126,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 		ObjectifyService.register( UserPratilipiEntity.class );
 		ObjectifyService.register( UserAuthorEntity.class );
 		
+		ObjectifyService.register( TagEntity.class );
 		ObjectifyService.register( CommentEntity.class );
 		ObjectifyService.register( VoteEntity.class );
 		
