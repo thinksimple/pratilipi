@@ -3,3 +3,4 @@
 /target/
 /PrivateKey.p12
 /node_modules
+/src/main/webapp/node_modules
