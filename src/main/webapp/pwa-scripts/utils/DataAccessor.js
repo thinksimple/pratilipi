@@ -3,7 +3,7 @@ var DataAccessor = function() {
 
 	var httpUtil = new HttpUtil();
 
-	 var API_PREFIX = "/api";
+	var API_PREFIX = "/api";
 
 	var PAGE_API = "/page";
 	var PRATILIPI_API = "/pratilipi?_apiVer=2";

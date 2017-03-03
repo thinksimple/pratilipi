@@ -1,9 +1,9 @@
 <#include "../pwa-ftl-files/functions.ftl">
 
 <@compress_single_line>
-	<#include "Utils/HttpUtil.js">
-	<#include "Utils/DataAccessor.js">
-	<#include "Utils/ToastUtil.js">
-	<#include "Utils/Common.js">
-	<#include "Utils/Helper.js">
+	<#include "utils/HttpUtil.js">
+	<#include "utils/DataAccessor.js">
+	<#include "utils/ToastUtil.js">
+	<#include "utils/Common.js">
+	<#include "utils/Helper.js">
 </@compress_single_line>
