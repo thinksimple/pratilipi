@@ -409,6 +409,7 @@ function isEmpty( obj ) {
 	return JSON.stringify( obj ) === JSON.stringify( {} );
 }
 
-function getUrlSeperator( url ) {
-  return url.indexOf( "?" ) > -1 ? "&" : "?";
-};
+function getImageUrl( imageUrl, width ) {
+	if( imageUrl == null ) return null;
+	return imageUrl + ( imageUrl.indexOf( "?" ) > -1 ? "&" : "?" ) + width;
+}
