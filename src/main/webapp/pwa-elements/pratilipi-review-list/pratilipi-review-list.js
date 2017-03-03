@@ -22,10 +22,28 @@ function( params ) {
     this.subsequentLoadReviewCount = 10;  
     
     this.reviewList = ko.observableArray( [] );
-    this.selectedReviewRating = ko.observable( 0 );
-    this.newReviewContent = ko.observable( "" );
+
     this.isSaveInProgress = ko.observable( false );
     this.totalReviewsPresent = ko.observable( 0 );
+
+    this.initializeReviewRating = function() {
+        if( appViewModel.user.isGuest() ) {
+            return 0;
+        } else {
+            return this.userPratilipiObj.rating();
+        }
+    };
+
+    this.initializeReviewContent = function() {
+        if( appViewModel.user.isGuest() ) {
+            return "";
+        } else {
+            return this.userPratilipiObj.review();
+        }
+    };    
+
+    this.selectedReviewRating = ko.observable( this.initializeReviewRating() );
+    this.newReviewContent = ko.observable( this.initializeReviewContent() );
 
     this.totalReviewsShown = ko.computed(function() {
         return this.reviewList().length;
@@ -37,7 +55,7 @@ function( params ) {
     
     this.isNewReviewRatingZero = function() {
       return this.selectedReviewRating() == 0;
-    }    
+    };   
     
     this.emptyReviewRating = ko.computed(function() {
         return ( this.maxRating - this.selectedReviewRating() );
