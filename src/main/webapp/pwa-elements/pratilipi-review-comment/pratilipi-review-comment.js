@@ -1,6 +1,6 @@
 function( params ) {
     var self = this;
-    var dataAccessor = new DataAccessor();
+    this.dataAccessor = new DataAccessor();
     this.reviewCommentObject = params.value;
     this.isGuest = ko.observable( appViewModel.user.isGuest() );    
 
@@ -44,7 +44,19 @@ function( params ) {
     };
 
     this.generateLikeAjaxRequest = function() {
-        dataAccessor.likeOrDislikeComment( self.reviewCommentObject.commentId, this.getLikeParam(), this.likeSuccessCallback, this.likeErrorCallback );      
+        this.dataAccessor.likeOrDislikeComment( self.reviewCommentObject.commentId, this.getLikeParam(), this.likeSuccessCallback, this.likeErrorCallback );      
     };
-       
+    
+    this.deleteSuccessCallback = function() {
+      params.deleteComment( params.value );
+    };
+    
+    this.deleteErrorCallback = function() {
+      //  params.deleteComment( params.value ); <#-- only  localhost -->
+    };    
+    
+    this.deleteSelf = function() {
+        this.dataAccessor.deleteComment( this.reviewCommentObject.commentId, this.deleteSuccessCallback.bind( this ), this.deleteErrorCallback.bind( this ) )
+    };    
+    componentHandler.upgradeDom();  
 }

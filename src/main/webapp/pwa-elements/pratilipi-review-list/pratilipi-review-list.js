@@ -5,7 +5,7 @@ function( params ) {
 //    console.log( "upobj", params.userPratilipiObj );
     this.pratilipiObj = params.pratilipiObj;
     this.userPratilipiObj = params.userPratilipiObj;
-    console.log( this.userPratilipiObj );
+    console.log( this.userPratilipiObj, this.pratilipiObj );
     
     this.hasAccessToReview = ko.computed( function() { /* test this for changes in review access */
         if( appViewModel.user.isGuest() )
@@ -142,7 +142,7 @@ function( params ) {
         this.dataAccessor.createOrUpdateReview( self.pratilipiId, self.selectedReviewRating(), self.newReviewContent(), this.postReviewSuccessCallback, this.postReviewErrorCallback );
     }
     
-    this.sendReviewPostAjaxRequest = function() {
+    this.sendReviewPostAjaxRequest = function() { /* delete this after checking */
         
 
         $.ajax({
@@ -178,7 +178,11 @@ function( params ) {
      //     this.hasAccessToReview( true );
      // } else if ( !isEmpty( this.userPratilipiObj ) ) {
      //      this.hasAccessToReview( this.userPratilipiObj.hasAccessToReview() );  
-     // }  
+     // } 
+     this.deleteReview = function( review ) {
+         self.reviewList.remove( review );
+         self.settotalReviewsPresent( self.totalReviewsPresent() - 1 );
+     };     
       
    
 }

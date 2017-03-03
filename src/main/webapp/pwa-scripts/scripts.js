@@ -408,3 +408,7 @@ function isEmpty( obj ) {
 	}
 	return JSON.stringify( obj ) === JSON.stringify( {} );
 }
+
+function getUrlSeperator( url ) {
+  return url.indexOf( "?" ) > -1 ? "&" : "?";
+};

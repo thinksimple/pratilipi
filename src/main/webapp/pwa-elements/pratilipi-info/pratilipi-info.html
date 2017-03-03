@@ -57,7 +57,7 @@
                     <!--ko text: $parent.pratilipiObject().ratingCount() -->
                     <!--/ko-->
                     ) &nbsp;
-                    <!--ko text: $parent.pratilipiObject().readCount() -->
+                    <!--ko text: formatReadCount( $parent.pratilipiObject().readCount() ) -->
                     <!--/ko-->
                     <i class="material-icons material-icons-16 vertical-middle">remove_red_eye</i>
                 </div>                            
@@ -94,13 +94,14 @@
 
         </div>
         
+        
         <!-- ko if: $parent.pratilipiObject().summary -->
-            <div class="mdl-cell mdl-cell--12-col padding-zero ">
-                <hr/>
+            <div class="mdl-cell mdl-cell--12-col padding-zero margin-zero-auto">
+                <hr class="margin-zero">
             </div>        
             <h3 class="mdl-cell mdl-cell--12-col mdl-typography--headline">${ _strings.pratilipi_summary }</h3>
             <div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero ">
-                <pratilipi-see-more params="{ originalText: $parent.pratilipiObject().summary() }"></pratilipi-see-more>
+                <pratilipi-see-more params="{ originalText: $parent.pratilipiObject().summary(), uniqueName: 'summary' }"></pratilipi-see-more>
             </div>
         <!-- /ko -->
 
@@ -121,7 +122,7 @@
             </button> 
         </div>
         <div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero " data-bind="if: authorObj.summary().length">
-            <pratilipi-see-more params="{ originalText: authorObj.summary() }"></pratilipi-see-more>
+            <pratilipi-see-more params="{ originalText: authorObj.summary(), uniqueName: 'author-about' }"></pratilipi-see-more>
         </div> 
    </div>
 </div>

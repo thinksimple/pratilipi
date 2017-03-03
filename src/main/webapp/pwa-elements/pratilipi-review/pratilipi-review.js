@@ -1,12 +1,13 @@
 function( params ) {
     var self = this;
+    //console.log( "paramstest", params );
     this.dataAccessor = new DataAccessor();
     this.reviewObject = params.value;
     this.isGuest = appViewModel.user.isGuest();
     // console.log( this.reviewObject );
     this.likeCount = ko.observable( this.reviewObject.likeCount );
     this.commentCount = ko.observable( this.reviewObject.commentCount );
-    this.isLiked = ko.observable( false );
+    this.isLiked = ko.observable( this.reviewObject.isLiked );
     this.maxRating = 5;
     this.filledStars = this.reviewObject.rating;
     this.emptyStars = this.maxRating - this.filledStars;
@@ -14,9 +15,10 @@ function( params ) {
     this.review_date = convertDate( this.reviewObject.reviewDateMillis );
     this.isCommentsShown = ko.observable( false );
     this.isReplyStateOn = ko.observable( false );
+    this.dataAccessor = new DataAccessor();
     
     this.isSubreviewListVisible = ko.computed( function() {
-        return this.isCommentsShown() || this.isReplyStateOn();
+        return ( this.isCommentsShown() && this.comments().length ) || this.isReplyStateOn(); /* test */
     }, this );
     
     this.showRepliesText = ko.computed( function() {
@@ -143,5 +145,21 @@ function( params ) {
         this.comments.push( comment );
     };
     
+    this.deleteSuccessCallback = function() {
+        params.deleteReview( params.value );
+    };
+    
+    this.deleteErrorCallback = function() {
+        //params.deleteReview( params.value ); <#-- only  localhost -->
+    };    
+    
+    this.deleteSelf = function() {
+        this.dataAccessor.deleteReview( params.pratilipiId, this.deleteSuccessCallback.bind( this ), this.deleteErrorCallback.bind( this ) )
+    }
+    
+    this.deleteComment = function( review ) {
+      self.comments.remove( review );
+      self.commentCount( self.commentCount() - 1 )
+    };      
     componentHandler.upgradeDom();
 }

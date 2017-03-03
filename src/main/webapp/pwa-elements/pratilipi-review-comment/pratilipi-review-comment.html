@@ -19,7 +19,20 @@
 			<span class="reply"></span>		
 			<button data-bind="click: $parents[1].showReplyState.bind( $parents[1] )" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
 			    <i class="material-icons material-icons-16" role="presentation">message</i><span class="visuallyhidden">comment</span>
-			</button>				
+			</button>
+			
+			<span data-bind="ifnot: $root.user.isGuest" class="dropup pull-right"> <#-- change to ifnot -->
+				<#-- if: reviewCommentObject.hasAccessToUpdate -->
+				<!-- ko if: reviewCommentObject.hasAccessToUpdate -->
+				      <button class="mdl-button mdl-js-button mdl-button--icon" type="button" id="review-comment-access" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+							<i class="material-icons">more_vert</i>
+				      </button>
+				      <ul class="dropdown-menu" aria-labelledby="review-comment-access">
+				        	<li>${ _strings.review_edit_review }</li>
+				        	<li data-bind="click: deleteSelf">${ _strings.review_delete_review }</li>
+				      </ul>
+				<!-- /ko -->			
+			</span>							
 		</span>
 	</div>
 </li>

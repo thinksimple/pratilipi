@@ -1,6 +1,7 @@
 function( params, componentInfo ) { 
     var self = this;
     this.originalText = params.originalText();
+    this.uniqueName = params.uniqueName;
     console.log( componentInfo );
     this.isSeeMoreRequired = ko.observable( false );
     this.isMoreShown = ko.observable( true );
@@ -20,7 +21,7 @@ function( params, componentInfo ) {
 
     this.checkAndAddSeeMore = function() {
         this.$seeMoreElement = $( ".js-see-more" );
-        if( this.originalText.split(" ").length > 10 ) {
+        if( this.originalText.split(" ").length > 20 ) {
             this.isSeeMoreRequired( true );
             this.toggleSeeMore();
         }

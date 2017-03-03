@@ -14,7 +14,7 @@
         </div>		
         <div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero " data-bind="visible: reviewList().length > 0">
 			<ul class="demo-list-three mdl-list" data-bind="foreach: reviewList">
-				<pratilipi-review params="{ value: $data }"></pratilipi-review>								
+				<pratilipi-review params="{ value: $data, deleteReview: $parent.deleteReview, pratilipiId: $parent.pratilipiId }"></pratilipi-review>								
 			</ul>
 			<li class="show-more" data-bind="if: areMoreReviews">
 				<div>

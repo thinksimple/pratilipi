@@ -104,16 +104,26 @@ function( params ) {
         };
 
         this.getDesktopCoverImageUrl = function( url ) {
-            return url + "&width=200";
+            var seperator = getUrlSeperator( url );
+            return url + seperator + "width=200";
         };
 
         this.getMobileCoverImageUrl = function( url ) {
-            return url + "&width=150";
+            var seperator = getUrlSeperator( url );
+            return url + seperator + "width=150";
         };
 
         this.formatDate = function( date ) {
             return convertDate( date );
         }; 
+        
+        this.formatReadCount = function( num ) {
+            if( isMobile() ) {
+                return num > 999 ? (num/1000).toFixed(1) + 'k' : num;
+            } else {
+              return num.toLocaleString('en-US');
+            }
+        };
         
         this.roundOffToOneDecimal = function( number ) {
             return Math.round( number * 10 ) / 10;
@@ -187,8 +197,9 @@ function( params ) {
             }
         }; 
 
-        this.getImageThumbnail =function( url ) {
-            return url + "&width=40";
+        this.getImageThumbnail = function( url ) {
+            var seperator = getUrlSeperator( url );
+            return url + seperator + "width=40";
         }; 
 
         this.initializeAuthorData = function() {

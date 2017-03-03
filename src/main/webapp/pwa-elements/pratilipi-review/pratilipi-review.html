@@ -1,4 +1,5 @@
 <li class="mdl-list__item padding-zero display-block">
+
 	<div class="mdl-list__item mdl-list__item--two-line padding-zero">
 		<span class="mdl-list__item-primary-content">
 			<img data-bind="attr: { src: userImageUrl }" class="mdl-list__item-avatar">
@@ -16,10 +17,12 @@
 	  		</span>
 		</span>
 	</div>
+
 	<div class="mdl-list__item-text-body review-text" data-bind="text: reviewObject.review">
 	</div>
 	<div>
-		<span class="font-14">
+
+		<span class="font-14">	
 			<!-- ko if: likeCount -->
 				<span data-bind="text: likeCount"></span>
 			<!-- /ko -->
@@ -37,12 +40,27 @@
 			<!-- ko if: commentCount -->
 				<span class="viewAllReplies clickableElement" data-bind="click: toggleShowRepliesState, text: showRepliesText"></span>
 			<!-- /ko -->
-			
+			<#-- <span data-bind="text: $parents[1].pratilipiObj.pratilipiId"></span> -->
+			<span class="dropup pull-right" data-bind="if: $root.user.isGuest"> <#-- change to ifnot -->
+				<#-- if: $parents[1].userPratilipiObj.userPratilipiId == userPratilipiId change condition -->
+				<!-- ko if: $index() == 0 -->
+				      <button class="mdl-button mdl-js-button mdl-button--icon" type="button" id="review-access" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+							<i class="material-icons">more_vert</i>
+				      </button>
+				      <ul class="dropdown-menu" aria-labelledby="review-access">
+				        <li>${ _strings.review_edit_review }</li>
+				        <li data-bind="click: deleteSelf">${ _strings.review_delete_review }</li>
+				      </ul>
+				<!-- /ko -->			
+			</span>
+
 		</span>
+
 	</div>
+
 	<ul class="mdl-list sub-review" data-bind="visible: isSubreviewListVisible">
 		<div data-bind="visible: isCommentsShown, foreach: comments">
-			<pratilipi-review-comment params="{ value: $data, isGuest: $root.userIsGuest }"></pratilipi-review-comment>
+			<pratilipi-review-comment params="{ value: $data, isGuest: $root.userIsGuest, deleteComment: $parent.deleteComment }"></pratilipi-review-comment>
 		</div>
 		<pratilipi-review-reply data-bind="visible: isReplyStateOn" params="parent: $parent"></pratilipi-review-reply>
 	</ul>
