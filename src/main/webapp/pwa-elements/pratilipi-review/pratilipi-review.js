@@ -92,7 +92,7 @@ function( params ) {
     };
 
     this.generateLikeAjaxRequest = function() {
-        this.dataAccessor.likeOrDislikeReview( self.reviewObject.userPratilipiId, this.getLikeParam(), this.likeSuccessCallback, this.likeErrorCallback );    
+        this.dataAccessor.likeOrDislikeReview( self.reviewObject.userPratilipiId, this.isLiked(), this.likeSuccessCallback, this.likeErrorCallback );    
     }
     
     this.getCommentsCallback = function( response ) {

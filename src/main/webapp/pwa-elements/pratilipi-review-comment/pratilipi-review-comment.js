@@ -29,11 +29,7 @@ function( params ) {
             this.isLiked( true );
             this.likeCount( this.likeCount() + 1 );
         }
-    }
-
-    this.getLikeParam = function() {
-        return this.isLiked() ? "LIKE" : "NONE";
-    }
+    };
 
     this.likeSuccessCallback = function() {
 
@@ -44,7 +40,7 @@ function( params ) {
     };
 
     this.generateLikeAjaxRequest = function() {
-        this.dataAccessor.likeOrDislikeComment( self.reviewCommentObject.commentId, this.getLikeParam(), this.likeSuccessCallback, this.likeErrorCallback );      
+        this.dataAccessor.likeOrDislikeComment( self.reviewCommentObject.commentId, this.isLiked(), this.likeSuccessCallback, this.likeErrorCallback );      
     };
     
     this.deleteSuccessCallback = function() {
