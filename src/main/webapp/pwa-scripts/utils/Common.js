@@ -58,7 +58,7 @@ function sharePratilipiOnWhatsapp( text ) {
 
 function getImageUrl( imageUrl, width ) {
 	if( imageUrl == null ) return null;
-	return imageUrl + ( imageUrl.indexOf( "?" ) > -1 ? "&" : "?" ) + width;
+	return imageUrl + ( imageUrl.indexOf( "?" ) > -1 ? "&" : "?" ) + "width=" + width;
 }
 
 function getPratilipiTypeVernacular( pratilipiType ) {
@@ -70,3 +70,11 @@ function getPratilipiTypeVernacular( pratilipiType ) {
 	};
 	return pratilipiTypes[ pratilipiType ];
 }
+
+function formatReadCount( readCount ) {
+	if( readCount == null ) return null;
+	if( isMobile() )
+		return readCount > 999 ? (readCount/1000).toFixed(1) + 'k' : readCount;
+	else
+		return readCount.toLocaleString( 'en-US' );
+};

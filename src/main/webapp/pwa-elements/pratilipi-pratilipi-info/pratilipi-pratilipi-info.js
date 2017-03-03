@@ -26,7 +26,6 @@ function( params ) {
 
 	this.canAddToLibrary = ko.observable( false );
 	this.canFollowAuthor = ko.observable( false );
-	this.canPublishUnpublish = ko.observable( false );
 	this.canShare = ko.observable( false );
 
 	this.pratilipiRequestOnFlight = ko.observable( false );
@@ -73,7 +72,7 @@ function( params ) {
 
 
 	/* Follow Author */
-	this.sendFollowAuthorAjaxRequest = function() {
+	this.followAuthor = function() {
 		if( appViewModel.user.isGuest() ) {
 			goToLoginPage();
 		} else {
@@ -171,15 +170,6 @@ function( params ) {
 	};
 
 
-	/* Helper functions */
-	this.formatReadCount = function( num ) {
-		if( isMobile() )
-			return num > 999 ? (num/1000).toFixed(1) + 'k' : num;
-		else
-			return num.toLocaleString( 'en-US' );
-	};
-
-
 	/* Computed observables */
 	this.pratilipiObserver = ko.computed( function() {
 
@@ -188,7 +178,6 @@ function( params ) {
 		self.canAddToLibrary( self.pratilipi.state() == "PUBLISHED" 
 			&& ( appViewModel.user.isGuest() || self.pratilipi.author.authorId() != appViewModel.user.author.authorId() ) );
 		self.canFollowAuthor( self.pratilipi.author.authorId() != appViewModel.user.author.authorId() );
-		self.canPublishUnpublish( self.pratilipi.hasAccessToUpdate() );
 		self.canShare( self.pratilipi.state() == "PUBLISHED" );
 	}, this );
 
