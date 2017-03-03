@@ -42,7 +42,7 @@ var updateUser = function() {
 	var dataAccessor = new DataAccessor();
 	dataAccessor.getUser( function( user ) {
 		ko.mapping.fromJS( user, {}, appViewModel.user );
-//		initFirebase();
+		initFirebase();
 	});
 };
 
