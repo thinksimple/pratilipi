@@ -192,10 +192,18 @@ function( params ) {
       
     }; 
     
-     if( !isEmpty( this.pratilipiObj ) ) {
-        this.pratilipiId = this.pratilipiObj.pratilipiId();
-        this.getReviewList();
-     }  
+//     if( !isEmpty( this.pratilipiObj ) ) {
+//        this.pratilipiId = this.pratilipiObj.pratilipiId();
+//        this.getReviewList();
+//     }  
+      this.init = ko.computed( function() {
+        console.log("inside reviewws");
+        if( this.pratilipiObj.pratilipiId() ) {
+          this.pratilipiId = this.pratilipiObj.pratilipiId();
+          this.getReviewList();
+        }
+  //      return this.pratilipi.title();
+      }, this );
      
      // if( appViewModel.user.isGuest() ) {
      //     this.hasAccessToReview( true );
