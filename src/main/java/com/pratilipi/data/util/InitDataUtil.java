@@ -105,6 +105,13 @@ public class InitDataUtil {
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"TAMIL\", \"state\":\"PUBLISHED\", \"listName\":\"family\" }", JsonElement.class ).getAsJsonObject() ),
 
+				docAccessor.newInitBannerDoc( "இணையப் போட்டிகள்", 
+						"pratilipi-tamil-carousel-29.jpg", 
+						"pratilipi-tamil-carousel-29-small.jpg", 
+						"/events",
+						"EventListApi",
+						gson.fromJson( "{ \"language\":\"TAMIL\" }", JsonElement.class ).getAsJsonObject() ),
+
 				docAccessor.newInitBannerDoc( "நகைச்சுவை", 
 						"pratilipi-tamil-carousel-27.jpg", 
 						"pratilipi-tamil-carousel-27-small.jpg", 
@@ -255,6 +262,13 @@ public class InitDataUtil {
 		
 		initBannerDocs = new InitBannerDoc[] {
 
+				docAccessor.newInitBannerDoc( "ಥ್ರಿಲ್ಲರ್/ಹಾರರ್ ", 
+						"pratilipi-kannada-carousel-22.jpg", 
+						"pratilipi-kannada-carousel-22-small.jpg", 
+						"/thriller",
+						"PratilipiListApi",
+						gson.fromJson( "{ \"language\":\"KANNADA\", \"state\":\"PUBLISHED\", \"listName\":\"thriller\" }", JsonElement.class ).getAsJsonObject() ),
+
 				docAccessor.newInitBannerDoc( "ಸ್ನೇಹ", 
 						"pratilipi-kannada-carousel-19.jpg", 
 						"pratilipi-kannada-carousel-19-small.jpg", 
@@ -268,13 +282,6 @@ public class InitDataUtil {
 						"/2minstories",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"KANNADA\", \"state\":\"PUBLISHED\", \"listName\":\"2minstories\" }", JsonElement.class ).getAsJsonObject() ),
-
-				docAccessor.newInitBannerDoc( "ವಿಜ್ಞಾನ", 
-						"pratilipi-kannada-carousel-21.jpg", 
-						"pratilipi-kannada-carousel-21-small.jpg", 
-						"/science",
-						"PratilipiListApi",
-						gson.fromJson( "{ \"language\":\"KANNADA\", \"state\":\"PUBLISHED\", \"listName\":\"science\" }", JsonElement.class ).getAsJsonObject() ),
 
 		};
 			
