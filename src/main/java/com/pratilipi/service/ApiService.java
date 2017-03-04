@@ -44,7 +44,7 @@ import com.pratilipi.api.impl.pratilipi.PratilipiListV2Api;
 import com.pratilipi.api.impl.pratilipi.PratilipiStatsApi;
 import com.pratilipi.api.impl.pratilipi.PratilipiV1Api;
 import com.pratilipi.api.impl.pratilipi.PratilipiV2Api;
-import com.pratilipi.api.impl.test.TestApi;
+import com.pratilipi.api.impl.test.BigQueryTestApi;
 import com.pratilipi.api.impl.user.UserEmailApi;
 import com.pratilipi.api.impl.user.UserLoginApi;
 import com.pratilipi.api.impl.user.UserLoginFacebookApi;
@@ -149,8 +149,8 @@ public class ApiService extends GenericService {
 
 		ApiRegistry.register( I18nApi.class );						// *.pratilipi.com
 		ApiRegistry.register( NavigationListApi.class );			// *.pratilipi.com
-		
-		ApiRegistry.register( TestApi.class );
+
+		ApiRegistry.register( BigQueryTestApi.class );
 
 	}
 	
