@@ -478,3 +478,9 @@ seo_share_page					= Share your favourite Stories and Writers
 seo_register_page				= Make your account on Pratilipi
 seo_login_page					= Login to Pratilipi
 seo_reset_password_page			= Reset Your Password - Pratilipi
+
+#Sharing platorm names
+facebook                        = Facebook
+twitter                        = Twitter
+google_plus                        = Google Plus
+whatsapp                        = Whatsapp

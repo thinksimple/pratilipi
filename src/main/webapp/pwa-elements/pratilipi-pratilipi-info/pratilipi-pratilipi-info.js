@@ -114,15 +114,11 @@ function( params ) {
 
 
 	/* Share */
-	var dialog = document.querySelector( '#pratilipi-share-dialog' );
+	var dialog = $( '#pratilipi-share-dialog' );
 	if( ! dialog.showModal ) { dialogPolyfill.registerDialog( dialog ); }
 
-	this.openShareModal = function() {
-		dialog.showModal();
-	};
-
 	this.hideShareModal = function() {
-		dialog.close();
+		dialog.modal('hide');
 	};
 
 	this.getPratilipiShareUrl = function( platform ) {
