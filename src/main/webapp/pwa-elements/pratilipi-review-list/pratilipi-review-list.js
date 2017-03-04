@@ -154,9 +154,9 @@ function( params ) {
     }, this );
 
     var dialog = document.querySelector( '#pratilipi-review-dialog' );
-    if ( !dialog.showModal ) {
-        dialogPolyfill.registerDialog( dialog );
-    }
+    // if ( !dialog.showModal ) {
+    //     dialogPolyfill.registerDialog( dialog );
+    // }
     
     this.openReviewModal = function() {        
         if( self.isGuest() ) {
@@ -165,12 +165,12 @@ function( params ) {
         }
         else {
             componentHandler.upgradeDom();
-            dialog.showModal();
+            dialog.modal('show');
         }
     };
    
     this.hideReviewModal = function() {
-        dialog.close();
+        dialog.modal('hide');
     };    
 
 
