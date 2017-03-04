@@ -21,6 +21,7 @@ function( params ) {
     this.totalReviewsPresent = ko.observable( 0 );
     this.selectedReviewRating = ko.observable( 0 ); /* init the initially until we get userpratiipi obj */
     this.newReviewContent = ko.observable( "" ); /* init the initially until we get userpratiipi obj */
+    this.hasUserAlreadyPostedReview = ko.observable( false );
    
 
     
@@ -47,6 +48,9 @@ function( params ) {
     };
     
     this.addToReviewList = function( review ) {
+        if( this.hasUserAlreadyPostedReview() ) {
+            this.deleteAlreadyPostedReview();
+        }
         this.reviewList.unshift( review );
         this.settotalReviewsPresent( this.totalReviewsPresent() + 1 );
     }; 
@@ -96,11 +100,14 @@ function( params ) {
 
     this.postReviewSuccessCallback = function( response ) {
         self.addToReviewList( response ); 
+        self.hasUserAlreadyPostedReview( true );
         self.postReviewCompleteCallback();
     };
+
     this.postReviewErrorCallback = function() {
         self.postReviewCompleteCallback();
     };
+
     this.postReviewCompleteCallback = function() {
         self.isSaveInProgress( false );
         self.hideReviewModal();
@@ -225,6 +232,7 @@ function( params ) {
     this.userPratilipiReviewContentObserver = ko.computed( function() {
         if( this.userPratilipi.review && this.userPratilipi.review() ) {
             this.newReviewContent( this.userPratilipi.review() );
+            this.hasUserAlreadyPostedReview( true );
         }
     }, this);      
      
@@ -233,10 +241,14 @@ function( params ) {
      // } else if ( !isEmpty( this.userpratilipi ) ) {
      //      this.hasAccessToReview( this.userpratilipi.hasAccessToReview() );  
      // } 
-     this.deleteReview = function( review ) {
-         self.reviewList.remove( review );
-         self.settotalReviewsPresent( self.totalReviewsPresent() - 1 );
-     };     
+    this.deleteReview = function( review ) {
+        self.reviewList.remove( review );
+        self.settotalReviewsPresent( self.totalReviewsPresent() - 1 );
+    };   
+
+    this.deleteAlreadyPostedReview = function() {
+        self.reviewList.remove(  function (item) { return item.userPratilipiId == this.userPratilipi.userPratilipiId(); } ); 
+    };
       
    
 }
