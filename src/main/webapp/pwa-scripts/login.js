@@ -54,10 +54,12 @@ function ViewModel() {
 						window.location.href = isRegister ? response[ "profilePageUrl" ] : getRetUrl( true );
 					} else {
 						self.requestOnFlight( false );
-						var message = "Error: " + status + " - "
-						+ ( response != null && response[ "message" ] != null ? 
-						response[ "message" ] : "Some exception occurred at server. Please try again." );
-						ToastUtil.toast( message, 2000, true );
+						var message = "${ _strings.server_error_message }";
+						if( response[ "googleIdToken" ] != null )
+							message = response[ "googleIdToken" ];
+						else if( response[ "message" ] != null )
+							message = response[ "message" ];
+						ToastUtil.toast( message, 3000, true );
 					}
 			});
 		}, function( error ) {
@@ -82,10 +84,12 @@ function ViewModel() {
 						window.location.href = isRegister ? response[ "profilePageUrl" ] : getRetUrl( true );
 					} else {
 						self.requestOnFlight( false );
-						var message = "Error: " + status + " - "
-						+ ( response != null && response[ "message" ] != null ? 
-						response[ "message" ] : "Some exception occurred at server. Please try again." );
-						ToastUtil.toast( message, 2000, true );
+						var message = "${ _strings.server_error_message }";
+						if( response[ "fbUserAccessToken" ] != null )
+							message = response[ "fbUserAccessToken" ];
+						else if( response[ "message" ] != null )
+							message = response[ "message" ];
+						ToastUtil.toast( message, 3000, true );
 					}
 			});
 		}, { scope: 'public_profile,email,user_birthday' } );			
@@ -116,16 +120,14 @@ function ViewModel() {
 				} else {
 					self.requestOnFlight( false );
 					/* TODO: Multiple messages handling */
-					var message = null;
+					var message = "${ _strings.server_error_message }";
 					if( response[ "email" ] != null )
 						message = response[ "email" ];
 					else if( response[ "password" ] != null )
 						message = response[ "password" ];
 					else if( response[ "message" ] != null )
 						message = response[ "message" ];
-					else
-						message = "Some exception occurred at server. Please try again.";
-					ToastUtil.toast( "Error: " + status + " - " + message );
+					ToastUtil.toast( message, 3000, true );
 				}
 		});
 	};
@@ -151,7 +153,7 @@ function ViewModel() {
 			return;
 		}
 		if( ! self.agreedTerms() ) {
-			ToastUtil.toast( "Please agree to our terms and conditions." );
+			ToastUtil.toast( "${ _strings.accept_terms }" );
 			return;
 		}
 		self.requestOnFlight( true );
@@ -163,7 +165,7 @@ function ViewModel() {
 				} else {
 					self.requestOnFlight( false );
 					/* TODO: Multiple messages handling */
-					var message = null;
+					var message = "${ _strings.server_error_message }";
 					if( response[ "name" ] != null )
 						message = response[ "name" ];
 					else if( response[ "email" ] != null )
@@ -172,9 +174,7 @@ function ViewModel() {
 						message = response[ "password" ];
 					else if( response[ "message" ] != null )
 						message = response[ "message" ];
-					else
-						message = "Some exception occurred at server. Please try again.";
-					ToastUtil.toast( "Error: " + status + " - " + message, 2000, true );
+					ToastUtil.toast( message, 3000, true );
 				}
 		});
 	};

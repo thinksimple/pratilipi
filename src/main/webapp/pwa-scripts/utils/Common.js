@@ -36,8 +36,11 @@ function convertDateWithMinutes( date ) {
 	return [ weekday( d.getDay() ), day( d.getDate() ), month( d.getMonth() ), d.getFullYear(), getHoursMin( d.getHours(), d.getMinutes() ) ].join(' ');
 }
 
-function goToLoginPage() {
-	window.location.href = "/login?retUrl=" + encodeURIComponent( window.location.pathname );
+function goToLoginPage( params ) {
+	if( params == null || isEmpty( params ) )
+		window.location.href = "/login?retUrl=" + encodeURIComponent( window.location.pathname );
+	else
+		window.location.href = "/login?retUrl=" + encodeURIComponent( window.location.pathname + "?" + new HttpUtil().formatParams( params ) );
 }
 
 function sharePratilipiOnFacebook( url ) {
