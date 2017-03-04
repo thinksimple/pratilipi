@@ -1,11 +1,24 @@
 function( params ) { 
 	var self = this;
-	this.pratilipiId = ko.observable( null );
-	this.title = ko.observable( '' );
-	this.titleEn = ko.observable( '' );
-	this.summary = ko.observable( '' );
-	this.requestOnFlight = ko.observable( false );
+	this.pratilipi = params.pratilipi;
+	this.updatePratilipi = params.updatePratilipi;
 
+	this.pratilipiId = ko.observable( null );
+	this.title = ko.observable( "" );
+	this.titleEn = ko.observable( "" );
+	this.summary = ko.observable( "" );
+
+	this.pratilipiObserver = ko.computed( function() {
+		self.pratilipiId( self.pratilipi.pratilipiId() );
+		self.title( self.pratilipi.title() );
+		self.titleEn( self.pratilipi.titleEn() );
+		self.summary( self.pratilipi.summary() );
+		$( "#pratilipi_edit_pratilipi #pratilipi_edit_pratilipi_type" ).attr( 'data-val', self.pratilipi.type() );
+		$( "#pratilipi_edit_pratilipi #pratilipi_edit_pratilipi_type" ).attr( 'value', getPratilipiTypeVernacular( self.pratilipi.type() ) );
+	}, this );
+
+
+	this.requestOnFlight = ko.observable( false );
 	this.submit = function() {
 
 		if( self.requestOnFlight() ) return;
@@ -16,6 +29,7 @@ function( params ) {
 			ToastUtil.toast( "${ _strings.writer_error_title_required }" );
 			return;
 		}
+
 		if( type == null || type.trim() == "" ) {
 			ToastUtil.toast( "${ _strings.writer_error_category_required }" );
 			return;
@@ -23,15 +37,13 @@ function( params ) {
 
 		var successCallBack = function( pratilipi ) {
 			ToastUtil.toast( "${ _strings.content_created_success }" );
-			window.location.reload();
-			/* TODO: Update PratilipiInfo */
+			self.updatePratilipi( pratilipi );
 			$( '#pratilipi_edit_pratilipi' ).modal( 'hide' );
 			self.requestOnFlight( false );
 		};
 
 		var errorCallBack = function( error, status ) {
 			ToastUtil.toast( error.message != null ? error.message : "${ _strings.server_error_message }", 3000 );
-			setTimeout( function () { window.location.reload(); }, 3000 );
 			self.requestOnFlight( false );
 		};
 
@@ -49,17 +61,5 @@ function( params ) {
 		dataAccessor.createOrUpdatePratilipi( pratilipi, successCallBack, errorCallBack );
 
 	};
-
-	// TODO: Remove Hack asap
-	var dataAccessor = new DataAccessor();
-	dataAccessor.getPratilipiByUri( window.location.pathname, false, 
-			function( pratilipi ) {
-		self.pratilipiId( pratilipi.pratilipiId );
-		self.title( pratilipi.title );
-		self.titleEn( pratilipi.titleEn );
-		self.summary( pratilipi.summary );
-		$( "#pratilipi_edit_pratilipi #pratilipi_edit_pratilipi_type" ).attr( 'data-val', pratilipi.type );
-		$( "#pratilipi_edit_pratilipi #pratilipi_edit_pratilipi_type" ).attr( 'value', getPratilipiTypeVernacular( pratilipi.type ) );
-	});
 
 }
