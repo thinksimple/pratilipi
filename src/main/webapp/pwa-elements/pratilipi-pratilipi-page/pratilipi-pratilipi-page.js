@@ -25,9 +25,18 @@ function() {
 	};
 
 	var defaultUserPratilipi = {
+			"userPratilipiId": null,
+			"userId": null,
+			"pratilipiId": null,
+			"userName": null,
+			"userImageUrl": null,
+			"userProfilePageUrl": null,
+			"rating": 0,
+			"review": "",
+			"reviewState": null,
 			"addedToLib": false, 
 			"hasAccessToReview": false, 
-			"isLiked": false 
+			"isLiked": false,
 	};
 
 	this.pratilipi = ko.mapping.fromJS( defaultPratilipi, {}, self.pratilipi );
