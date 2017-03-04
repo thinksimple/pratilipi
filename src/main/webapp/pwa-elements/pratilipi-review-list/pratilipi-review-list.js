@@ -250,6 +250,7 @@ function( params ) {
         self.reviewList.remove(  function(item) {
             return item.userPratilipiId == self.userPratilipi.userPratilipiId();           
         } ); 
+        self.settotalReviewsPresent( self.totalReviewsPresent() - 1 );
     };
       
    
