@@ -216,21 +216,13 @@ function( params ) {
         }
     }, this );
 
-    this.userPratilipiObserver = ko.computed( function() {
-        if( this.userPratilipi.userPratilipiId && this.userPratilipi.userPratilipiId() ) {
-          console.log( this.userPratilipi.userPratilipiId() );
-        }
-    }, this );
-
     this.userPratilipiRatingObserver = ko.computed( function() {
-        console.log( "inside up observer" );
-        if( this.userPratilipi.rating && this.userPratilipi.rating() ) {
+        if( this.userPratilipi.rating && this.userPratilipi.rating() ) { /* TODO CHnage this to 1 condn*/
             this.selectedReviewRating( this.userPratilipi.rating() );
         }
     }, this);
 
     this.userPratilipiReviewContentObserver = ko.computed( function() {
-        console.log( "inside up observer" );
         if( this.userPratilipi.review && this.userPratilipi.review() ) {
             this.newReviewContent( this.userPratilipi.review() );
         }

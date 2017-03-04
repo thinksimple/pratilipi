@@ -4,8 +4,13 @@
 		<h3 class="mdl-cell mdl-cell--12-col mdl-typography--headline">${ _strings.review_heading }</h3>
         <div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero " data-bind="if: hasAccessToReview">
 			<div class="mdl-grid padding-zero">
-				<div class="mdl-cell--6-col mdl-cell--4-col-tablet padding-zero" data-bind="foreach: ko.utils.range( 1, maxRating )">
-					<i class="material-icons material-icons-36 clickableElement" data-bind="click: $parent.openReviewModalWithRating">star_border</i>
+				<div class="mdl-cell--6-col mdl-cell--4-col-tablet padding-zero">
+					<!-- ko foreach: ko.utils.range( 1, selectedReviewRating ) -->
+			  			<i class="material-icons material-icons-36 clickableElement" data-bind="click: $parent.openReviewModalWithRating.bind($data, $data)">star</i>
+			  		<!-- /ko -->
+			  		<!-- ko foreach: ko.utils.range( 1, emptyReviewRating ) -->
+			  			<i class="material-icons material-icons-36 clickableElement" data-bind="click: $parent.openReviewModalWithRating.bind($data, $data + $parent.selectedReviewRating() )">star_border</i>
+			  		<!-- /ko -->
 				</div>
 				<div class="mdl-cell--6-col mdl-cell--4-col-tablet padding-zero">
                 	<button data-bind="click: openReviewModal.bind( $data )" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect pull-right">${ _strings.review_write_a_review }</button>
