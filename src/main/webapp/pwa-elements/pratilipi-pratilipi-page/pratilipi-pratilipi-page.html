@@ -1,25 +1,28 @@
-<!-- ko component: {
-	name: "pratilipi-edit-pratilipi",
-	params: { pratilipi: pratilipi, 
-				updatePratilipi: $data.updatePratilipi }
-} -->
-<!-- /ko -->
-
-
-<!-- ko component: {
-	name: "pratilipi-pratilipi-info",
-	params: { pratilipi: pratilipi, 
-				userPratilipi: userPratilipi, 
-				updatePratilipi: $data.updatePratilipi, 
-				updateUserPratilipi: $data.updateUserPratilipi }
-} --> 
-<!-- /ko -->
-
-<!-- ko component: {
-	name: "pratilipi-review-list",
-	params: { pratilipi: pratilipi, 
-				userPratilipi: userPratilipi, 
-				updatePratilipi: $data.updatePratilipi, 
-				updateUserPratilipi: $data.updateUserPratilipi }
-} --> 
-<!-- /ko -->
+<div data-bind="visible: ! initialDataLoaded()" 
+	style="margin: 25px auto;"  
+	class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active">
+</div>
+<div data-bind="visible: initialDataLoaded()">
+	<!-- ko component: {
+		name: "pratilipi-edit-pratilipi",
+		params: { pratilipi: pratilipi, 
+					updatePratilipi: $data.updatePratilipi }
+	} -->
+	<!-- /ko -->
+	<!-- ko component: {
+		name: "pratilipi-pratilipi-info",
+		params: { pratilipi: pratilipi, 
+					userPratilipi: userPratilipi, 
+					updatePratilipi: $data.updatePratilipi, 
+					updateUserPratilipi: $data.updateUserPratilipi }
+	} --> 
+	<!-- /ko -->
+	<!-- ko component: {
+		name: "pratilipi-review-list",
+		params: { pratilipi: pratilipi, 
+					userPratilipi: userPratilipi, 
+					updatePratilipi: $data.updatePratilipi, 
+					updateUserPratilipi: $data.updateUserPratilipi }
+	} --> 
+	<!-- /ko -->
+</div>

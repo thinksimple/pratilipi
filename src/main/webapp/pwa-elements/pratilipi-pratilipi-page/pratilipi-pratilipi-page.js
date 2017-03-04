@@ -41,12 +41,14 @@ function() {
 		ko.mapping.fromJS( userPratilipi, {}, self.userPratilipi );
 	};
 
+	this.initialDataLoaded = ko.observable( false );
 	this.fetchPratilipiAndUserPratilipi = function() {
 		var dataAccessor = new DataAccessor();
 		dataAccessor.getPratilipiByUri( window.location.pathname, true, 
 				function( pratilipi, userPratilipi ) {
 			self.updatePratilipi( pratilipi );
 			self.updateUserPratilipi( userPratilipi );
+			if( ! self.initialDataLoaded() ) self.initialDataLoaded( true );
 		});
 	};
 
