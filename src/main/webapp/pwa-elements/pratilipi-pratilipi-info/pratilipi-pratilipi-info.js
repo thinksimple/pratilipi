@@ -115,7 +115,6 @@ function( params ) {
 
 	/* Share */
 	var dialog = $( '#pratilipi-share-dialog' );
-	if( ! dialog.showModal ) { dialogPolyfill.registerDialog( dialog ); }
 
 	this.hideShareModal = function() {
 		dialog.modal('hide');
