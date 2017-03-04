@@ -153,7 +153,7 @@ function( params ) {
         return this.isNewReviewRatingZero() ||  this.isSaveInProgress();
     }, this );
 
-    var dialog = document.querySelector( '#pratilipi-review-dialog' );
+    var dialog = $( '#pratilipi-review-dialog' );
     // if ( !dialog.showModal ) {
     //     dialogPolyfill.registerDialog( dialog );
     // }
