@@ -44,11 +44,12 @@ function( params ) {
 	};
 
 	this.fetchAuthorAndUserAuthor = function() {
+		self.authorLoaded( false );
 		dataAccessor.getAuthorById( self.pratilipi.author.authorId() , true, 
 			function( author, userAuthor ) {
 				self.updateAuthor( author );
 				self.updateUserAuthor( userAuthor );
-				if( ! self.authorLoaded() ) self.authorLoaded( true );
+				self.authorLoaded( true );
 		});
 	};
 
