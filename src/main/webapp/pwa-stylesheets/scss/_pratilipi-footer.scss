@@ -2,6 +2,11 @@ pratilipi-footer {
 	footer {
 		background-color: #111111 !important;
 	}
+	.mdl-mega-footer__link-list li {
+	  @media (max-width: 480px) {
+	    line-height: 30px;
+	  }	
+	}
 }
 .footer-social-icons {
 	margin-right: 5px;
