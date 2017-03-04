@@ -477,8 +477,7 @@ public class PratilipiSite extends HttpServlet {
 			// Non - hardcoded links
 			} else if( page != null && page.getType() == PageType.PRATILIPI ) {
 				Long userId = AccessTokenFilter.getAccessToken().getUserId();
-				boolean loadPWA = UserAccessUtil.hasUserAccess( userId, null, AccessType.USER_ADD ) 
-						|| ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD );
+				boolean loadPWA = ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD );
 				if( loadPWA ) {
 					dataModel = new HashMap<>();
 					// Hack: Not to minify the html file
