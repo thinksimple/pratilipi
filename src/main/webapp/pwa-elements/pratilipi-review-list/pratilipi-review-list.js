@@ -11,6 +11,7 @@ function( params ) {
     this.firstLoadReviewCount = 5;
     this.subsequentLoadReviewCount = 10; 
     this.isReviewsLoaded = ko.observable( false );
+    this.areMoreReviesLoading = ko.observable( false );
 
 
     this.reviewList = ko.observableArray( [] );
@@ -71,6 +72,7 @@ function( params ) {
         if( response ) {
             this.pushToReviewList( response[ "reviewList" ] );           
         }
+        this.areMoreReviesLoading( false );
     };
     
     this.getReviewList = function() {
@@ -78,6 +80,7 @@ function( params ) {
     };
     
     this.loadMoreReviews = function() {
+        this.areMoreReviesLoading( true );
         this.dataAccessor.getReviewList( this.pratilipiId, this.totalReviewsShown(), null, this.subsequentLoadReviewCount, this.loadMoreReviewsCallback.bind( this ) );
     };  
 
