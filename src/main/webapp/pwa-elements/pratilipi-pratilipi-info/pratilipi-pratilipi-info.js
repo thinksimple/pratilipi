@@ -23,6 +23,7 @@ function( params ) {
 
 	this.author = ko.mapping.fromJS( defaultAuthor, {}, self.author );
 	this.userAuthor = ko.mapping.fromJS( defaultUserAuthor, {}, self.userAuthor );
+	this.authorLoaded = ko.observable( false );
 
 	this.canAddToLibrary = ko.observable( false );
 	this.canFollowAuthor = ko.observable( false );
@@ -47,6 +48,7 @@ function( params ) {
 			function( author, userAuthor ) {
 				self.updateAuthor( author );
 				self.updateUserAuthor( userAuthor );
+				if( ! self.authorLoaded() ) self.authorLoaded( true );
 		});
 	};
 
