@@ -1,7 +1,7 @@
 function( params ) {
     var self = this;
     this.pratilipi = params.pratilipi;
-    this.userpratilipi = params.userPratilipi;
+    this.userPratilipi = params.userPratilipi;
     this.updatePratilipi = params.updatePratilipi;
     this.updateUserPratilipi = params.updateUserPratilipi;
     // console.log( this.userpratilipi, this.pratilipi );
@@ -201,7 +201,7 @@ function( params ) {
             return  true;
         // else if( !isEmpty( this.userpratilipi ) ) /* if user is not guest, this will never be empty */
         else
-            return this.userpratilipi.hasAccessToReview(); /* whenever userPratilipi has accessToReview Changes ths will change */
+            return this.userPratilipi.hasAccessToReview(); /* whenever userPratilipi has accessToReview Changes ths will change */
     }, this);
 
      
@@ -213,16 +213,22 @@ function( params ) {
         }
     }, this );
 
+    this,userPratilipiObserver = ko.computed( function() {
+        if( this.userPratilipi.userPratilipiId && this.userPratilipi.userPratilipiId() ) {
+          console.log( this.userPratilipi.userPratilipiId() );
+        }
+    }, this );
+
     this.userPratilipiRatingObserver = ko.computed( function() {
         console.log( "inside up observer" );
-        if( this.userpratilipi.rating ) {
+        if( this.userPratilipi.rating && this.userPratilipi.rating() ) {
             this.selectedReviewRating( this.userPratilipi.rating() );
         }
     }, this);
 
     this.userPratilipiReviewContentObserver = ko.computed( function() {
         console.log( "inside up observer" );
-        if( this.userpratilipi.review ) {
+        if( this.userPratilipi.review && this.userPratilipi.review() ) {
             this.newReviewContent( this.userPratilipi.review() );
         }
     }, this);      
