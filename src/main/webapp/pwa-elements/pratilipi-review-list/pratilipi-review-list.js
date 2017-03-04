@@ -247,7 +247,9 @@ function( params ) {
     };   
 
     this.deleteAlreadyPostedReview = function() {
-        self.reviewList.remove(  function (item) { return item.userPratilipiId == this.userPratilipi.userPratilipiId(); } ); 
+        self.reviewList.remove(  function(item) {
+            return item.userPratilipiId == self.userPratilipi.userPratilipiId();           
+        } ); 
     };
       
    
