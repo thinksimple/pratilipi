@@ -93,7 +93,7 @@ public class ConversationDataUtil {
 		String language = author != null ? author.getLanguage().getNameEn().toLowerCase() : null;
 		try {
 			ArrayList<String> receiverList = createReceiversId(team.name().toLowerCase(), language);
-			createSupportMailTask(receiverList, userId.toString(), name, email, phone, message, data, team.name());
+			createSupportMailTask(receiverList, userId.toString(), name, email, phone, message, data, team.name(), language);
 		} catch (UnsupportedEncodingException | UnexpectedServerException e) {
 			
 			logger.log(Level.SEVERE, "Exception while creating conversation mail task");
@@ -105,7 +105,7 @@ public class ConversationDataUtil {
 	}
 
 	private static void createSupportMailTask(List<String> receiversList, String userId, String name, String email,
-			String phone, String message, JsonObject data, String team)
+			String phone, String message, JsonObject data, String team, String language)
 			throws UnsupportedEncodingException, UnexpectedServerException {
 
 		// Preparing report data
@@ -124,7 +124,7 @@ public class ConversationDataUtil {
 		if (subject.isEmpty())
 			subject = team;
 		
-		subject = subject + " :: " + name + " :: " + email;
+		subject = subject + " :: " + language + " :: " + email;
 
 		Logger.getLogger(ConversationDataUtil.class.getSimpleName()).log(Level.SEVERE, "Subject : " + subject);
 
@@ -132,6 +132,7 @@ public class ConversationDataUtil {
 				"Email : " + email + "<br>" +
 				"Phone Number : " + phone + "<br>" + 
 				"User Id : " + userId + "<br>" +
+				"Language : " + language + "<br>" +
 				reportString + 
 				"Message : " + MimeUtility.encodeText(message, "UTF-8", "B");
 
