@@ -11,7 +11,11 @@
                 	<button data-bind="click: openReviewModal.bind( $data )" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect pull-right">${ _strings.review_write_a_review }</button>
 				</div>
 			</div>
-        </div>		
+        </div>
+		<div data-bind="visible: ! isreviewsLoaded()" 
+			style="margin: 25px auto;"  
+			class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active">
+		</div>      		
         <div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero " data-bind="visible: reviewList().length > 0">
 			<ul class="demo-list-three mdl-list" data-bind="foreach: reviewList">
 				<pratilipi-review params="{ value: $data, deleteReview: $parent.deleteReview, pratilipiId: $parent.pratilipiId }"></pratilipi-review>								

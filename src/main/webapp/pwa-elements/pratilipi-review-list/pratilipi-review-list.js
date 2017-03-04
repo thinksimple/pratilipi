@@ -10,6 +10,7 @@ function( params ) {
     this.maxRating = 5;    
     this.firstLoadReviewCount = 5;
     this.subsequentLoadReviewCount = 10; 
+    this.isReviewsLoaded = ko.observable( false );
 
 
     this.reviewList = ko.observableArray( [] );
@@ -58,6 +59,8 @@ function( params ) {
             this.pushToReviewList( response[ "reviewList" ] );
             this.settotalReviewsPresent( response["numberFound"] );            
         }
+        this.isReviewsLoaded( true );
+
     };
 
     this.loadMoreReviewsCallback = function( response ) {
@@ -213,7 +216,7 @@ function( params ) {
         }
     }, this );
 
-    this,userPratilipiObserver = ko.computed( function() {
+    this.userPratilipiObserver = ko.computed( function() {
         if( this.userPratilipi.userPratilipiId && this.userPratilipi.userPratilipiId() ) {
           console.log( this.userPratilipi.userPratilipiId() );
         }
