@@ -134,7 +134,7 @@ public class ConversationDataUtil {
 				"User Id : " + userId + "<br>" +
 				"Language : " + language + "<br>" +
 				reportString + 
-				"Message : " + MimeUtility.encodeText(message, "UTF-8", "B");
+				"Message : " + message;
 
 		Logger.getLogger(ConversationDataUtil.class.getSimpleName()).log(Level.SEVERE, "Body : " + body);
 
