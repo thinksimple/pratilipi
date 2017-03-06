@@ -3,7 +3,7 @@ function( params ) {
     this.dataAccessor = new DataAccessor();
     this.reviewCommentObject = ko.mapping.fromJS( params.value, {}, self.reviewCommentObject );
     this.isGuest = ko.observable( appViewModel.user.isGuest() ); 
-    this.isEditModeOn = ko.observable( true );   
+    this.isEditModeOn = ko.observable( false );   
 
     // this.likeCount = ko.observable( this.reviewCommentObject.likeCount );
     // this.isLiked = ko.observable( this.reviewCommentObject.isLiked );
