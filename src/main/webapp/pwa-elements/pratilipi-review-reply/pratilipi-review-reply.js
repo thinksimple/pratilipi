@@ -23,9 +23,7 @@ function( params ) {
         el.style.cssText = 'height:' + el.scrollHeight + 'px';
       },0);
     } 
-    $( "*[make-transliterable]" ).each( function() {
-        var $content_object = $( this );
-        this.content_transliteration_object = new transliterationApp( $content_object, "${ lang }" );
-        this.content_transliteration_object.init();
-    });          
+    var $content_object = $( "#review" );
+    this.content_transliteration_object = new transliterationApp( $content_object, "${ lang }" );
+    this.content_transliteration_object.init();  
 }
