@@ -1,0 +1,18 @@
+<li class="mdl-list__item left-padding display-block">
+    <div class="mdl-list__item mdl-list__item--two-line padding-zero">
+		<span class="mdl-list__item-primary-content">
+			<img data-bind="attr: { src: $root.user.profileImageUrl }" class="mdl-list__item-avatar">
+			<a data-bind="attr: { href: $root.user.userProfilePageUrl }, text: $root.user.displayName"></a>		
+		</span>
+	</div>
+    <form action="#">
+    	<div class="mdl-textfield mdl-js-textfield reviewReply" style="width: 100%;"> 			        
+        	<textarea data-bind="textInput: reply" class="mdl-textfield__input js-autoresize-textarea" type="text" rows= "2" id="review" ></textarea>
+            <label class="mdl-textfield__label" for="review" data-bind="text: reply().length ? '' : '${ _strings.comment_reply_comment_help }...'"></label>
+        </div>
+    </form>
+	<div class="pull-right">
+	    <button data-bind="click: $parent.hideEditState.bind($parent)" class="mdl-button mdl-js-button mdl-js-ripple-effect">${ _strings.cancel }</button>
+	    <button data-bind="disable: isSaveDisabled, click: editSelf" class="mdl-button mdl-js-button mdl-button--colored mdl-js-ripple-effect mdl-button--raised">${ _strings.review_submit_review }</button>
+	</div>
+</li>

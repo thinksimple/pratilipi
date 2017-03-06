@@ -1,15 +1,16 @@
 function( params ) {
     var self = this;
     this.dataAccessor = new DataAccessor();
-    this.reviewCommentObject = params.value;
-    this.isGuest = ko.observable( appViewModel.user.isGuest() );    
+    this.reviewCommentObject = ko.mapping.fromJS( params.value, {}, self.reviewCommentObject );
+    this.isGuest = ko.observable( appViewModel.user.isGuest() ); 
+    this.isEditModeOn = ko.observable( true );   
 
-    this.likeCount = ko.observable( this.reviewCommentObject.likeCount );
-    this.isLiked = ko.observable( this.reviewCommentObject.isLiked );
-    this.userImageUrl = this.reviewCommentObject.user.profileImageUrl + "&width=40";
-    this.comment_date = convertDate( this.reviewCommentObject.creationDateMillis );
-    this.userProfilePageUrl = this.reviewCommentObject.user.profilePageUrl;
-    console.log( this.userImageUrl );
+    // this.likeCount = ko.observable( this.reviewCommentObject.likeCount );
+    // this.isLiked = ko.observable( this.reviewCommentObject.isLiked );
+    // this.userImageUrl = this.reviewCommentObject.user.profileImageUrl + "&width=40";
+    // this.comment_date = convertDate( this.reviewCommentObject.creationDateMillis );
+    // this.userProfilePageUrl = this.reviewCommentObject.user.profilePageUrl;
+//    console.log( this.userImageUrl );
     
     this.likeDislikeReview = function( item ) {
         if( self.isGuest() ) {
@@ -23,11 +24,13 @@ function( params ) {
     
     this.updateLikeCount = function() {
         if( this.isLiked() ) {
-            this.isLiked( false );
-            this.likeCount( this.likeCount() - 1 );
+            // this.isLiked( false );
+            var updatedLikeCount = this.reviewCommentObject.likeCount() - 1;
+            ko.mapping.fromJS( { isLiked: false, likeCount: updatedLikeCount }, {}, self.reviewCommentObject );
+            // this.likeCount( this.likeCount() - 1 );
         } else {
-            this.isLiked( true );
-            this.likeCount( this.likeCount() + 1 );
+            var updatedLikeCount = this.reviewCommentObject.likeCount() + 1;
+            ko.mapping.fromJS( { isLiked: true, likeCount: updatedLikeCount }, {}, self.reviewCommentObject );
         }
     };
 
@@ -40,7 +43,7 @@ function( params ) {
     };
 
     this.generateLikeAjaxRequest = function() {
-        this.dataAccessor.likeOrDislikeComment( self.reviewCommentObject.commentId, this.isLiked(), this.likeSuccessCallback, this.likeErrorCallback );      
+        this.dataAccessor.likeOrDislikeComment( self.reviewCommentObject.commentId(), this.reviewCommentObject.isLiked(), this.likeSuccessCallback, this.likeErrorCallback );      
     };
     
     this.deleteSuccessCallback = function() {
@@ -52,7 +55,25 @@ function( params ) {
     };    
     
     this.deleteSelf = function() {
-        this.dataAccessor.deleteComment( this.reviewCommentObject.commentId, this.deleteSuccessCallback.bind( this ), this.deleteErrorCallback.bind( this ) )
+        this.dataAccessor.deleteComment( this.reviewCommentObject.commentId(), this.deleteSuccessCallback.bind( this ), this.deleteErrorCallback.bind( this ) )
     };    
     componentHandler.upgradeDom();  
+
+    this.updateCommentObject = function( comment ) {
+        ko.mapping.fromJS( comment, {}, self.reviewCommentObject );
+    };
+
+    this.editComment = function( comment ) {
+        self.hideEditState();
+        this.updateCommentObject( comment );
+        //update comment object
+    };
+
+    this.showEditState = function() {
+        this.isEditModeOn( true );
+    };
+
+    this.hideEditState = function() {
+        this.isEditModeOn( false );
+    };    
 }

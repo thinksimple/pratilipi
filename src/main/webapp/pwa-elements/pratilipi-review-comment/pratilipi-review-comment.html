@@ -1,20 +1,20 @@
-<li class="mdl-list__item left-padding display-block">
+<li class="mdl-list__item left-padding display-block-unimportant" data-bind="visible: !isEditModeOn()">
 	<div class="mdl-list__item mdl-list__item--two-line padding-zero">
 		<span class="mdl-list__item-primary-content">
-			<img data-bind="attr: { src: userImageUrl }" class="mdl-list__item-avatar">
-			<a data-bind="attr: { href: userProfilePageUrl }, text: reviewCommentObject.user.displayName"></a>
-			<span data-bind="text: comment_date" class="mdl-list__item-sub-title"></span>
+			<img data-bind="attr: { src: getImageUrl( reviewCommentObject.user.profileImageUrl(), 40 ) }" class="mdl-list__item-avatar">
+			<a data-bind="attr: { href: reviewCommentObject.user.profilePageUrl() }, text: reviewCommentObject.user.displayName"></a>
+			<span data-bind="text: convertDate( reviewCommentObject.creationDateMillis() )" class="mdl-list__item-sub-title"></span>
 		</span>
 	</div>
-	<div class="mdl-list__item-text-body" data-bind="text: reviewCommentObject.content">
+	<div class="mdl-list__item-text-body" data-bind="text: reviewCommentObject.content()">
 	</div>
 	<div>
 		<span class="font-14">
-			<!-- ko if: likeCount -->
-				<span data-bind="text: likeCount"></span>
+			<!-- ko if: reviewCommentObject.likeCount() -->
+				<span data-bind="text: reviewCommentObject.likeCount()"></span>
 			<!-- /ko -->
 			<button  data-bind="click: likeDislikeReview" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-			    <i class="material-icons material-icons-16" role="presentation" data-bind="css: { pratilipiRed: isLiked() }">thumb_up</i><span class="visuallyhidden">like comment</span>
+			    <i class="material-icons material-icons-16" role="presentation" data-bind="css: { pratilipiRed: reviewCommentObject.isLiked() }">thumb_up</i><span class="visuallyhidden">like comment</span>
 			</button>
 			<span class="reply"></span>		
 			<button data-bind="click: $parents[1].showReplyState.bind( $parents[1] )" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
@@ -28,7 +28,7 @@
 							<i class="material-icons">more_vert</i>
 				      </button>
 				      <ul class="dropdown-menu" aria-labelledby="review-comment-access">
-				        	<li>${ _strings.review_edit_review }</li>
+				        	<li data-bind="click: showEditState">${ _strings.review_edit_review }</li>
 				        	<li data-bind="click: deleteSelf">${ _strings.review_delete_review }</li>
 				      </ul>
 				<!-- /ko -->			
@@ -36,3 +36,7 @@
 		</span>
 	</div>
 </li>
+<!-- ko if: isEditModeOn -->
+<pratilipi-edit-review-comment params="{ comment: reviewCommentObject, editComment: editComment }" > <#-- if has AccessToUpdate && editModeOn -->
+</pratilipi-edit-review-comment>
+<!-- /ko -->

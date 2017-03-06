@@ -61,7 +61,7 @@
         <form action="#">
             <div class="mdl-textfield mdl-js-textfield">
                 <textarea data-bind="textInput: newReviewContent" class="mdl-textfield__input" type="text" rows= "3" id="review" ></textarea>
-                <label class="mdl-textfield__label" for="review" data-bind="text: newReviewContent.length ? '' : '${ _strings.review_write_a_review }'"></label>
+                <label class="mdl-textfield__label" for="review" data-bind="text: newReviewContent().length ? '' : '${ _strings.review_write_a_review }'"></label>
             </div>
         </form>
     </div>
