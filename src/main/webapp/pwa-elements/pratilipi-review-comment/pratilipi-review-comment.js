@@ -23,7 +23,7 @@ function( params ) {
     }; 
     
     this.updateLikeCount = function() {
-        if( this.isLiked() ) {
+        if( this.reviewCommentObject.isLiked() ) {
             // this.isLiked( false );
             var updatedLikeCount = this.reviewCommentObject.likeCount() - 1;
             ko.mapping.fromJS( { isLiked: false, likeCount: updatedLikeCount }, {}, self.reviewCommentObject );
