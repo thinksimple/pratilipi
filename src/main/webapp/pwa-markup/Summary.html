@@ -6,18 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 		<title>Pratilipi Summary Page</title>
 
-		<script src="https://d3cwrmdwk8nw1j.cloudfront.net/resource-all/pwa/js/jquery.js"></script>
 		<script src="https://d3cwrmdwk8nw1j.cloudfront.net/resource-all/pwa/js/ko.ko_mapping.js"></script>
-		<link rel="stylesheet" href="https://d3cwrmdwk8nw1j.cloudfront.net/resource-all/pwa/css/material-icons.materialise.materialise_dropdown.bootstrap_modal.css"/>
-
-		<link rel="stylesheet" type="text/css" href="/pwa-stylesheets/css/dialog-polyfill.css" />
-		<link rel="stylesheet" type="text/css" href="/pwa-stylesheets/css/bootstrap-dropdown.css" />
-		<script src="/pwa-scripts/dialog-polyfill-${ lang }.js"></script>
-		<script src="/pwa-scripts/bootstrap-dropdown.min.js"></script>
-		<link rel="stylesheet" href="/pwa-stylesheets/css/styles-new.css?39" />
-
-		<#include "../pwa-ftl-files/googleAnalytics.ftl">
-		<#include "../pwa-ftl-files/font.ftl">
 
 		<#include "../pwa-ftl-files/functions.ftl">
 		<@register element="pratilipi-header-new" />
@@ -35,57 +24,52 @@
 		<@register element="pratilipi-review-reply" />
 		<@register element="pratilipi-edit-review-comment" />
 
+		<#include "../pwa-ftl-files/googleAnalytics.ftl">
+		<#include "../pwa-ftl-files/font.ftl">
 
-
-
-
-		<style>
-			.word-suggester {
-				position: absolute;
-				padding: 10px;
-				border: whitesmoke 1px solid;
-				display: inline-block;
-				min-width: 100px;
-				display: none;
-				background: white;
-				z-index: 65538;
-				font-size: 16px;
-			}
-			
-			.word-input {
-				border: none;
-				display: inline-block;
-				border-right: 2px grey solid;
-			}
-			.suggestion {
-				cursor: pointer;
-				line-height: 24px;
-			}
-			.highlight-suggestion {
-				background: lightgrey;
-				font-weight: 700;
-			}
-		</style>
 	</head>
 
-<body>
-	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-		<!-- ko component: "pratilipi-header-new" --><!-- /ko -->
-		<div class="mdl-layout__content" style="z-index: initial;">
-			<div class="mdl-components mdl-js-components">
-				<!-- ko component: "pratilipi-navigation-aside" --><!-- /ko -->
-				<div class="mdl-grid mobile-grid">
-					<!-- ko component: "pratilipi-pratilipi-page" --><!-- /ko -->
+	<body>
+		<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+			<!-- ko component: "pratilipi-header-new" --><!-- /ko -->
+			<div class="mdl-layout__content" style="z-index: initial;">
+				<div class="mdl-components mdl-js-components">
+					<!-- ko component: "pratilipi-navigation-aside" --><!-- /ko -->
+					<div class="mdl-grid mobile-grid">
+						<!-- ko component: "pratilipi-pratilipi-page" --><!-- /ko -->
+					</div>
 				</div>
+				<!-- ko component: "pratilipi-footer" --><!-- /ko -->
 			</div>
-			<!-- ko component: "pratilipi-footer" --><!-- /ko -->
 		</div>
-	</div>
+		<div class="word-suggester"><div class="word-input"></div><div class="suggestions"><div class="suggestion"></div></div></div>
+	</body>
 
-	<div class="word-suggester"><div class="word-input"></div><div class="suggestions"><div class="suggestion"></div></div></div>
-	<script src="https://d3cwrmdwk8nw1j.cloudfront.net/resource-all/rangy_core.rangy_selectionsaverestore.min.js"></script>
+	<#--
+		<script>
+		if( 'serviceWorker' in navigator ) {
+			navigator.serviceWorker.register( 'sw-precache.js' )
+				.then( function( registration ) {
+					console.log( 'Service Worker registration successful with scope: ', registration.scope );
+				})
+				.catch( function(err) {
+					console.log( 'Service Worker registration failed: ', err );
+				});
+		}
+		</script>
+	-->
+
+	<script src="https://d3cwrmdwk8nw1j.cloudfront.net/resource-all/pwa/js/jquery.js"></script>
+
 	<script src="/pwa-scripts/scripts-${ lang }.js?10"></script>
 	<script src="/pwa-scripts/app-${ lang }.js?10"></script>
+
+	<link rel="stylesheet" href="https://d3cwrmdwk8nw1j.cloudfront.net/resource-all/pwa/css/material-icons.materialise.materialise_dropdown.bootstrap_modal.css"/>
+	<link rel="stylesheet" type="text/css" href="/pwa-stylesheets/css/bootstrap-dropdown.css" />
+	<link rel="stylesheet" href="/pwa-stylesheets/css/styles-new.css?37" />
+
+	<script src="/pwa-scripts/bootstrap-dropdown.min.js"></script>
+	<script src="https://d3cwrmdwk8nw1j.cloudfront.net/resource-all/rangy_core.rangy_selectionsaverestore.min.js"></script>
 	<script src="/pwa-scripts/transliteration-suggester-${ lang }.js"></script>
 	<script src="/pwa-scripts/transliteration-app-${ lang }.js"></script>
 	<script>
@@ -95,18 +79,35 @@
 		this.content_transliteration_object.init();
 	});
 	</script>
+
 	<script src="https://d3cwrmdwk8nw1j.cloudfront.net/resource-all/pwa/js/materialise.materialise_dropdown.bootstrap_modal.js"></script>
-	<#--
-	<script>
-	if( 'serviceWorker' in navigator ) {
-		navigator.serviceWorker.register( 'sw-precache.js' )
-			.then( function( registration ) {
-				console.log( 'Service Worker registration successful with scope: ', registration.scope );
-			})
-			.catch( function(err) {
-				console.log( 'Service Worker registration failed: ', err );
-			});
-	}
-	</script> -->	
-</body>
+
+	<style>
+		.word-suggester {
+			position: absolute;
+			padding: 10px;
+			border: whitesmoke 1px solid;
+			display: inline-block;
+			min-width: 100px;
+			display: none;
+			background: white;
+			z-index: 65538;
+			font-size: 16px;
+		}
+		
+		.word-input {
+			border: none;
+			display: inline-block;
+			border-right: 2px grey solid;
+		}
+		.suggestion {
+			cursor: pointer;
+			line-height: 24px;
+		}
+		.highlight-suggestion {
+			background: lightgrey;
+			font-weight: 700;
+		}
+	</style>
+
 </html>
