@@ -11,6 +11,7 @@ function( params ) {
     
     var textarea = document.querySelector('textarea.js-autoresize-textarea');
 
+
     textarea.addEventListener('keydown', autosize);
                  
     function autosize(){
@@ -21,5 +22,10 @@ function( params ) {
         // el.style.cssText = '-moz-box-sizing:content-box';
         el.style.cssText = 'height:' + el.scrollHeight + 'px';
       },0);
-    }       
+    } 
+    $( "*[make-transliterable]" ).each( function() {
+        var $content_object = $( this );
+        this.content_transliteration_object = new transliterationApp( $content_object, "${ lang }" );
+        this.content_transliteration_object.init();
+    });          
 }

@@ -19,6 +19,12 @@ function( params ) {
     this.editSelf = function() {
         dataAccessor.createOrUpdateReviewComment(  null, this.comment.commentId() , this.reply(), this.editSuccessCallback.bind(this), null );
     };
+
+    $( "*[make-transliterable]" ).each( function() {
+        var $content_object = $( this );
+        this.content_transliteration_object = new transliterationApp( $content_object, "${ lang }" );
+        this.content_transliteration_object.init();
+    });     
     
     // var textarea = document.querySelector('textarea.js-autoresize-textarea');
 
