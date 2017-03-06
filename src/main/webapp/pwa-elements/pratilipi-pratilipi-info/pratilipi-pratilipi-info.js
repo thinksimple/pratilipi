@@ -155,7 +155,6 @@ function( params ) {
 	this.iframeLoaded = function( vm, evt ) {
 		if( ! self.imageUploaded() )
 			return;
-		self.imageUploaded( false );
 		var response = JSON.parse( evt.currentTarget.contentDocument.body.innerText );
 		if( response[ "coverImageUrl" ] != null ) {
 			/* Success Callback */
@@ -165,6 +164,8 @@ function( params ) {
 		} else if( response[ "message" ] != null ) {
 			ToastUtil.toast( response[ "message" ], 3000 );
 		}
+		self.imageUploaded( false );
+		document.getElementById( 'uploadPratilipiImageInput' ).value= null;
 	};
 
 
