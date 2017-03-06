@@ -50,14 +50,14 @@ function ViewModel() {
 			dataAccessor.loginGoogleUser( googleUser.getAuthResponse().id_token,
 				function( user ) {
 					ToastUtil.toastUp( "${ _strings.user_login_success }" );
-					window.location.href = isRegister ? response[ "profilePageUrl" ] : getRetUrl( true );
+					window.location.href = isRegister ? user[ "profilePageUrl" ] : getRetUrl( true );
 				}, function( error ) {
 					self.requestOnFlight( false );
 					var message = "${ _strings.server_error_message }";
-					if( response[ "googleIdToken" ] != null )
-						message = response[ "googleIdToken" ];
-					else if( response[ "message" ] != null )
-						message = response[ "message" ];
+					if( error[ "googleIdToken" ] != null )
+						message = error[ "googleIdToken" ];
+					else if( error[ "message" ] != null )
+						message = error[ "message" ];
 					ToastUtil.toast( message, 3000, true );
 			});
 		}, function( error ) {
@@ -78,14 +78,14 @@ function ViewModel() {
 			dataAccessor.loginFacebookUser( fbResponse.authResponse.accessToken,
 				function( user ) {
 					ToastUtil.toastUp( "${ _strings.user_login_success }" );
-					window.location.href = isRegister ? response[ "profilePageUrl" ] : getRetUrl( true );
+					window.location.href = isRegister ? user[ "profilePageUrl" ] : getRetUrl( true );
 				}, function( error ) {
 					self.requestOnFlight( false );
 					var message = "${ _strings.server_error_message }";
-					if( response[ "fbUserAccessToken" ] != null )
-						message = response[ "fbUserAccessToken" ];
-					else if( response[ "message" ] != null )
-						message = response[ "message" ];
+					if( error[ "fbUserAccessToken" ] != null )
+						message = error[ "fbUserAccessToken" ];
+					else if( error[ "message" ] != null )
+						message = error[ "message" ];
 					ToastUtil.toast( message, 3000, true );
 			});
 		}, { scope: 'public_profile,email,user_birthday' } );			
@@ -117,12 +117,12 @@ function ViewModel() {
 				self.requestOnFlight( false );
 				/* TODO: Multiple messages handling */
 				var message = "${ _strings.server_error_message }";
-				if( response[ "email" ] != null )
-					message = response[ "email" ];
-				else if( response[ "password" ] != null )
-					message = response[ "password" ];
-				else if( response[ "message" ] != null )
-					message = response[ "message" ];
+				if( error[ "email" ] != null )
+					message = error[ "email" ];
+				else if( error[ "password" ] != null )
+					message = error[ "password" ];
+				else if( error[ "message" ] != null )
+					message = error[ "message" ];
 				ToastUtil.toast( message, 3000, true );
 		});
 	};
@@ -155,19 +155,19 @@ function ViewModel() {
 		dataAccessor.registerUser( self.userName(), self.userEmail(), self.userPassword(), 
 			function( user ) {
 				ToastUtil.toastUp( "${ _strings.user_register_success }" );
-				window.location.href = response[ "profilePageUrl" ];
+				window.location.href = user[ "profilePageUrl" ];
 			}, function( error ) {
 				self.requestOnFlight( false );
 				/* TODO: Multiple messages handling */
 				var message = "${ _strings.server_error_message }";
-				if( response[ "name" ] != null )
-					message = response[ "name" ];
-				else if( response[ "email" ] != null )
-					message = response[ "email" ];
-				else if( response[ "password" ] != null )
-					message = response[ "password" ];
-				else if( response[ "message" ] != null )
-					message = response[ "message" ];
+				if( error[ "name" ] != null )
+					message = error[ "name" ];
+				else if( error[ "email" ] != null )
+					message = error[ "email" ];
+				else if( error[ "password" ] != null )
+					message = error[ "password" ];
+				else if( error[ "message" ] != null )
+					message = error[ "message" ];
 				ToastUtil.toast( message, 3000, true );
 		});
 	};

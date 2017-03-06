@@ -11,10 +11,10 @@ var DataAccessor = function() {
 	var AUTHOR_API = "/author";
 	var USER_AUTHOR_FOLLOW_API = "/userauthor/follow?_apiVer=2";
 	var USER_API = "/user";
-	var USER_LOGIN_API = "/api/user/login";
-	var USER_LOGIN_FACEBOOK_API = "/api/user/login/facebook";
-	var USER_LOGIN_GOOGLE_API = "/api/user/login/google";
-	var USER_REGISTER_API = "/api/user/register";
+	var USER_LOGIN_API = "/user/login";
+	var USER_LOGIN_FACEBOOK_API = "/user/login/facebook";
+	var USER_LOGIN_GOOGLE_API = "/user/login/google";
+	var USER_REGISTER_API = "/user/register";
 	var NOTIFICATION_LIST_API = "/notification/list";
 	var NAVIGATION_LIST_API = "/navigation/list";
 	var USER_PRATILIPI_REVIEW_LIST_API = "/userpratilipi/review/list";
