@@ -140,6 +140,7 @@ public class ConversationDataUtil {
 
 		ArrayList<String> cc = new ArrayList<>();
 		cc.add("ranjeet@pratilipi.com");
+		cc.add("rahul@pratilipi.com");
 
 		logger.log(Level.INFO, "CC : " + cc.toString());
 

@@ -36,7 +36,7 @@ public class EmailUtil {
 			// TODO: Uncomment when we migrate to other email service providers
 //			msg.addRecipient( Message.RecipientType.BCC, new InternetAddress( "mail-archive@pratilipi.com", "Mail Archive" ) );
 			msg.setSubject( MimeUtility.encodeText( subject, "UTF-8", "B" ) );
-			msg.setContent( body, "text/html" );
+			msg.setContent( body, "text/html; charset=UTF-8" );
 			Transport.send( msg );
 			logger.log( Level.INFO, "Successfully sent mail to " + recipientEmail + "." );
 		} catch ( UnsupportedEncodingException | MessagingException e ) {
