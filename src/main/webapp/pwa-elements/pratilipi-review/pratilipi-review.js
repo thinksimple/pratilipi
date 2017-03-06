@@ -11,7 +11,7 @@ function( params ) {
     this.maxRating = 5;
     this.filledStars = this.reviewObject.rating;
     this.emptyStars = this.maxRating - this.filledStars;
-    this.userImageUrl = this.reviewObject.userImageUrl + "&width=40";
+    this.userImageUrl = this.reviewObject.userImageUrl + "&width=48";
     this.review_date = convertDate( this.reviewObject.reviewDateMillis );
     this.isCommentsShown = ko.observable( false );
     this.isReplyStateOn = ko.observable( false );
