@@ -1,4 +1,7 @@
 .pratilipi-navigation-aside {
+	@media only screen and (max-width: 1024px) {
+		display: none;
+	}
 	.mdl-components__nav {
 		display: inline-block;
 		background: #fff;

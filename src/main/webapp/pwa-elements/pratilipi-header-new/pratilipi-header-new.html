@@ -127,12 +127,15 @@
 			</a>
 		</div>
 		<div class="header-icons-holder visible-xs">
-			<a data-bind="{ visible: appViewModel.user.isGuest(), 
+			<div data-bind="visible: appViewModel.user.userId() == null" style="margin: auto; padding-left: 8px;">
+				<span class="user-loading-spinner mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></span>
+			</div>
+			<a data-bind="{ visible: appViewModel.user.userId() != null && appViewModel.user.isGuest(), 
 						attr: { 'href': '/login?retUrl=' + encodeURIComponent( window.location.pathname ) } }" 
 				class="mdl-button mdl-js-button mdl-button--icon">
 				<i class="material-icons">account_circle</i>
 			</a>
-			<a data-bind="{ visible: ! appViewModel.user.isGuest(), 
+			<a data-bind="{ visible: appViewModel.user.userId() != null && !appViewModel.user.isGuest(), 
 						attr: { 'href': appViewModel.user.profilePageUrl() } }" 
 				class="mdl-button mdl-js-button mdl-button--icon">
 				<img class="img-circle user-dp" data-bind="attr: { 'src': getImageUrl( appViewModel.user.profileImageUrl(), 48 ) }" />
