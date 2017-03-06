@@ -484,3 +484,12 @@ facebook                        = Facebook
 twitter                        = Twitter
 google_plus                        = Google Plus
 whatsapp                        = Whatsapp
+
+
+
+# PWA
+logged_in_already = You are already logged in, please click here to go back!
+password_empty = Please Enter your Password.
+name_empty = Please Enter your Password.
+email_empty = Please Enter your Email.
+email_invalid = Please Enter a valid Email.

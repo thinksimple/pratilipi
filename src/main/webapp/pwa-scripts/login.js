@@ -94,17 +94,16 @@ function ViewModel() {
 	self.login = function() {
 		if( self.requestOnFlight() )
 			return;
-		/* TODO: i18n on error messages */
 		if( self.userEmail() == null || self.userEmail().trim() == "" ) {
-			ToastUtil.toast( "Please Enter your Email." );
+			ToastUtil.toast( "${ _strings.email_empty }." );
 			return;
 		}
 		if( self.userPassword() == null || self.userPassword().trim() == "" ) {
-			ToastUtil.toast( "Please Enter your Password." );
+			ToastUtil.toast( "${ _strings.password_empty }" );
 			return;
 		}
 		if( ! validateEmail( self.userEmail() ) ) {
-			ToastUtil.toast( "Please Enter a valid Email." );
+			ToastUtil.toast( "${ _strings.email_invalid }" );
 			return;
 		}
 		self.requestOnFlight( true );
@@ -130,21 +129,20 @@ function ViewModel() {
 	self.register = function() {
 		if( self.requestOnFlight() )
 			return;
-		/* TODO: i18n on error messages */
 		if( self.userName() == null || self.userName().trim() == "" ) {
-			ToastUtil.toast( "Please Enter your Name." );
+			ToastUtil.toast( "${ _strings.name_empty }" );
 			return;
 		}
 		if( self.userEmail() == null || self.userEmail().trim() == "" ) {
-			ToastUtil.toast( "Please Enter your Email." );
+			ToastUtil.toast( "${ _strings.email_empty }." );
 			return;
 		}
 		if( self.userPassword() == null || self.userPassword().trim() == "" ) {
-			ToastUtil.toast( "Please Enter your Password." );
+			ToastUtil.toast( "${ _strings.password_empty }" );
 			return;
 		}
 		if( ! validateEmail( self.userEmail() ) ) {
-			ToastUtil.toast( "Please Enter a valid Email." );
+			ToastUtil.toast( "${ _strings.email_invalid }" );
 			return;
 		}
 		if( ! self.agreedTerms() ) {
@@ -174,3 +172,10 @@ function ViewModel() {
 }
 
 ko.applyBindings( new ViewModel() );
+
+var dataAccessor = new DataAccessor();
+dataAccessor.getUser( function( user ) {
+	if( ! user.isGuest ) {
+		ToastUtil.toastUp( "<a href='" + getRetUrl( true ) + "'>${ _strings.logged_in_already }</a>" );
+	}
+});
