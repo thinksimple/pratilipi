@@ -2,10 +2,15 @@
     <div class="mdl-card mdl-card-border mdl-cell mdl-cell--8-col-tablet mdl-cell--9-col mobile-card">
         <div class="mdl-grid">
             <div class="mdl-card__media mdl-cell mdl-cell--4-col-phone mdl-cell--3-col-tablet mdl-cell--4-col-desktop alignCenter">
-                <picture>
-                    <source media="(min-width: 480px)"  data-bind="attr: { srcset: getImageUrl( pratilipi.coverImageUrl(), 200 ) }" />
-                    <img data-bind="attr: { src: getImageUrl( pratilipi.coverImageUrl(), 150 ) }" border="0">
-                </picture> 
+				<img data-bind="{ attr: { src: getImageUrl( pratilipi.coverImageUrl(), 150 ) },
+								visible: !imageUploaded() }" border="0">
+				<div data-bind="visible: imageUploaded()" style="width: 100%; height: 100%;">
+					<div style="border: 1px solid #d3d3d3; width: 200px; height: 300px; margin: auto; display: flex;">
+						<span class="image-uploaded-spinner mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active">
+						</span>
+					</div>
+				</div>
+
                 <button class="upload-image-button mdl-button mdl-js-button mdl-button--fab"
                         data-bind="{ click: chooseImageFile,
                                     visible: pratilipi.hasAccessToUpdate() }">
@@ -86,11 +91,11 @@
                 </div>
                 <div class="mdl-cell mdl-cell--12-col mdl-cell--order-2 mdl-cell--order-3-phone">
                     <div class="mdl-card__supporting-text">
-                        <p class="font-16 margin-bottom-8"> ${ _strings.pratilipi_listing_date }:
+                        <p class="font-16 margin-bottom-8"> ${ _strings.pratilipi_listing_date }:&nbsp;
                             <!--ko text:  convertDate( pratilipi.listingDateMillis() ) -->
                             <!--/ko-->
                         </p>
-                        <p class="font-16 margin-bottom-8"> ${ _strings.pratilipi_type }:
+                        <p class="font-16 margin-bottom-8"> ${ _strings.pratilipi_type }:&nbsp;
                             <!--ko text: getPratilipiTypeVernacular( pratilipi.type() ) -->
                             <!--/ko-->
                         </p>
