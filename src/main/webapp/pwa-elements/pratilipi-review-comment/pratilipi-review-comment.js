@@ -65,7 +65,7 @@ function( params ) {
 
     this.editComment = function( comment ) {
         self.hideEditState();
-        this.updateCommentObject( comment );
+        self.updateCommentObject( comment );
         //update comment object
     };
 
