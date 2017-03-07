@@ -1,7 +1,7 @@
 <div class="pratilipi-pratilipi-info">
     <div class="mdl-card mdl-card-border mdl-cell mdl-cell--8-col-tablet mdl-cell--9-col mobile-card">
         <div class="mdl-grid">
-            <div class="mdl-card__media mdl-cell mdl-cell--4-col-phone mdl-cell--3-col-tablet mdl-cell--4-col-desktop alignCenter">
+            <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--3-col-tablet mdl-cell--4-col-desktop alignCenter">
 				<img class="pratilipi-cover-image" data-bind="{ attr: { src: getImageUrl( pratilipi.coverImageUrl(), 200 ) },
 								visible: !imageUploaded() }" border="0">
 				<div data-bind="visible: imageUploaded()" class="image-uploaded-div">
@@ -20,7 +20,7 @@
                         style="position: absolute; top: -1000px;"
                         method="post" 
                         enctype="multipart/form-data"
-                        data-bind="attr: { 'action': '/api/pratilipi/cover?pratilipiId=' + pratilipi.pratilipiId() }" 
+                        data-bind="{ attr: { 'action': '/api/pratilipi/cover?pratilipiId=' + pratilipi.pratilipiId() }, uniqueName: true }" 
                         target="pratilipi_upload_target">
                     <input id="uploadPratilipiImageInput"
                             data-bind="{ event: { change: uploadPratilipiImage }, uniqueName: true }" 
@@ -70,19 +70,22 @@
                     <div class="mdl-card__actions">
                         <a data-bind="{ attr: { href: pratilipi.readPageUrl() }, 
                                         text: pratilipi.state() == 'PUBLISHED' ? '${ _strings.read }' : '${ _strings.writer_preview }' }" 
-                            class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+                            class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect"
+                            style="margin-right: 4px;">
                         </a>
-                        <button data-bind="{ text: userPratilipi.addedToLib() ? '${ _strings.remove_from_library }' : '${ _strings.add_to_library }', 
+                        <button data-bind="{ text: userPratilipi.addedToLib() ? '-' : '+' + ' ${ _strings.library }', 
                                             click: addToLibrary,
                                             disable: userPratilipiRequestOnFlight,
                                             visible: canAddToLibrary() }" 
-                                class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+                                class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect"
+                                style="margin-right: 4px;">
                         </button>
                         <button data-bind="{ visible: pratilipi.hasAccessToUpdate(), 
                                             text: ( pratilipi.state() == 'PUBLISHED' ? '${ _strings.pratilipi_move_to_drafts }' : '${ _strings.pratilipi_publish_it }' ), 
                                             click: togglePratilipiState,
                                             disable: pratilipiRequestOnFlight }" 
-                                class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+                                class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect"
+                                style="margin-right: 4px;">
                         </button>
                         <button data-bind="{ visible: canShare() }" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" data-toggle="modal" data-target="#pratilipi-share-dialog">
                             <i class="material-icons">share</i>

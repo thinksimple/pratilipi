@@ -140,6 +140,7 @@ function( params ) {
 	/* Image Upload */
 	this.imageUploaded = ko.observable( false );
 	this.chooseImageFile = function() {
+		document.getElementById( 'uploadPratilipiImageInput' ).value= null;
 		document.getElementById( "uploadPratilipiImageInput" ).click();
 	};
 
@@ -165,7 +166,6 @@ function( params ) {
 			ToastUtil.toast( response[ "message" ], 3000 );
 		}
 		self.imageUploaded( false );
-		document.getElementById( 'uploadPratilipiImageInput' ).value= null;
 	};
 
 
