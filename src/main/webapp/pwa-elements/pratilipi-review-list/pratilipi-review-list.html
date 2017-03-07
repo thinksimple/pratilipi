@@ -25,14 +25,14 @@
 
         <#--  when reviews have loaded and are equal 0 in number and user has access to review -->
         <!-- ko if: isReviewsLoaded() && reviewList().length == 0 && hasAccessToReview() -->
-	        <div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero">
+	        <div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero review-not-present">
 	            ${ _strings.pratilipi_no_reviews }
 	        </div>
         <!-- /ko -->
 
         <#--  when reviews have loaded and are equal 0 in number and user doesnt have access to review -->
         <!-- ko if: isReviewsLoaded() && reviewList().length == 0 && !hasAccessToReview() -->
-	        <div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero">
+	        <div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero review-not-present">
 	            ${ _strings.rating_be_first_one }
 	        </div> 
         <!-- /ko -->
