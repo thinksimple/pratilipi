@@ -18,12 +18,16 @@
 			padding: 0;
 		}
 		.pratilipi-title.mdl-card__title {
-			margin-bottom: 8px;
+			margin: 8px 0;
+			.mdl-card__title-text {
+				font-size: 20px !important;
+				line-height: 1.5em !important;
+			}
 		}
 		.author-name.mdl-card__title {
 			margin-bottom: 12px;
 			.mdl-card__title-text {
-				font-size: 20px !important;
+				font-size: 16px !important;
 			}
 		}
 		.pratilipi-card-meta-reads-rating-holder {
