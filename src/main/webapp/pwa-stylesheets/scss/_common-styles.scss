@@ -29,7 +29,7 @@ $pratilipi_red: #d0021b;
 .mobile-card {
   @media (max-width: 480px) {
     margin: 0;
-    width: 100%;
+    width: 100% !important;
   }		
 }
 

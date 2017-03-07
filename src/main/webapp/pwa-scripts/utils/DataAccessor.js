@@ -170,7 +170,7 @@ var DataAccessor = function() {
 	
 	this.getPratilipiListByListName = function( listName, cursor, offset, resultCount, aCallBack ) {
 		if( listName == null ) return;
-		var params = { "listName": listName, "state": "PUBLISHED" };
+		var params = { "listName": listName, "state": "PUBLISHED", "language": "${ language }" };
 		if( cursor != null ) params[ "cursor" ] = cursor;
 		if( offset != null ) params[ "offset" ] = offset;
 		if( resultCount != null ) params[ "resultCount" ] = resultCount;
