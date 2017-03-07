@@ -1,0 +1,31 @@
+<div class="pratilipi-pratilipi-card mdl-card mdl-shadow--2dp">
+	<div class="pratilipi-cover-image-holder">
+		<img data-bind="attr: { src: getImageUrl( pratilipi.coverImageUrl(), 150 ), title: pratilipi.title(), alt: pratilipi.title() }" />
+	</div>
+	<div class="pratilipi-meta-holder">
+		<div class="pratilipi-title mdl-card__title">
+			<h2 class="mdl-card__title-text" data-bind="text: pratilipi.title()"></h2>
+		</div>
+		<div class="author-name mdl-card__title">
+			<h4 class="mdl-card__title-text" data-bind="text: pratilipi.author.name()"></h4>
+		</div>
+		<div class="pratilipi-card-meta-reads-rating-holder">
+			<span class="meta-holder rating-holder">
+				<span data-bind="text: roundOffToOneDecimal( pratilipi.averageRating() )"></span>
+				<i class="material-icons">star_rate</i>
+			</span>
+			<span class="meta-holder reads-holder">
+				<span data-bind="text: formatReadCount( pratilipi.readCount() )"></span>
+				<i class="material-icons">remove_red_eye</i>
+			</span>
+		</div>
+		<div class="pratilipi-card-footer-icons-holder">
+			<button class="library-button mdl-button mdl-js-button">
+				<i class="material-icons">library_add</i>
+			</button>
+			<button class="share-button mdl-button mdl-js-button">
+				<i class="material-icons">share</i>
+			</button>
+		</div>
+	</div>
+</div>

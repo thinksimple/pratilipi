@@ -1,0 +1,57 @@
+.pratilipi-pratilipi-card {
+	-webkit-flex-direction: row;
+	-ms-flex-direction: row;
+	flex-direction: row;
+	width: 100%;
+	padding: 8px;
+	.pratilipi-cover-image-holder {
+		margin-right: 16px;
+		float: left;
+		img {
+			width: 150px;
+			height: 225px;
+		}
+	}
+	.pratilipi-meta-holder {
+		flex-grow: 1;
+		.mdl-card__title {
+			padding: 0;
+		}
+		.pratilipi-title.mdl-card__title {
+			margin-bottom: 8px;
+		}
+		.author-name.mdl-card__title {
+			margin-bottom: 12px;
+			.mdl-card__title-text {
+				font-size: 20px !important;
+			}
+		}
+		.pratilipi-card-meta-reads-rating-holder {
+			color: #666;
+			span.meta-holder {
+				float: left;
+				span {
+					line-height: 24px;
+					float: left;
+				}
+				i {
+					width: 24px;
+					height: 24px;
+					line-height: 24px;
+				}
+			}
+			span.rating-holder {
+				margin-right: 36px;
+			}
+		}
+		.pratilipi-card-footer-icons-holder {
+			position: absolute;
+			bottom: 8px; // padding: 8px;
+			right: 8px; // padding: 8px;
+			padding: 8px 0;
+			.mdl-button {
+				min-width: 24px;
+			}
+		}
+	}
+}
