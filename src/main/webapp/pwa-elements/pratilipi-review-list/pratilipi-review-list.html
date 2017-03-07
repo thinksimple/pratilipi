@@ -27,7 +27,7 @@
                 <pratilipi-review params="{ value: $data, deleteReview: $parent.deleteReview, pratilipiId: $parent.pratilipiId }"></pratilipi-review>                               
             </ul>
             <div data-bind="visible: areMoreReviesLoading()" 
-                style="margin: 25px auto;"  
+                style="margin: 25px auto;display: block;"  
                 class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active">
             </div>
             <li class="show-more" data-bind="if: areMoreReviews">
