@@ -70,22 +70,22 @@
                     <div class="mdl-card__actions">
                         <a data-bind="{ attr: { href: pratilipi.readPageUrl() }, 
                                         text: pratilipi.state() == 'PUBLISHED' ? '${ _strings.read }' : '${ _strings.writer_preview }' }" 
-                            class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect"
-                            style="margin-right: 4px;">
+                            class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-button-margin"
+                        >
                         </a>
                         <button data-bind="{ text: userPratilipi.addedToLib() ? '-' : '+' + ' ${ _strings.library }', 
                                             click: addToLibrary,
                                             disable: userPratilipiRequestOnFlight,
                                             visible: canAddToLibrary() }" 
-                                class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect"
-                                style="margin-right: 4px;">
+                                class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-button-margin"
+               			>
                         </button>
                         <button data-bind="{ visible: pratilipi.hasAccessToUpdate(), 
                                             text: ( pratilipi.state() == 'PUBLISHED' ? '${ _strings.pratilipi_move_to_drafts }' : '${ _strings.pratilipi_publish_it }' ), 
                                             click: togglePratilipiState,
                                             disable: pratilipiRequestOnFlight }" 
-                                class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect"
-                                style="margin-right: 4px;">
+                                class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-button-margin"
+                        >
                         </button>
                         <button data-bind="{ visible: canShare() }" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" data-toggle="modal" data-target="#pratilipi-share-dialog">
                             <i class="material-icons">share</i>
