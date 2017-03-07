@@ -24,14 +24,18 @@
         </div>  
 
         <#--  when reviews have loaded and are equal 0 in number and user has access to review -->
-        <div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero " data-bind="if: isReviewsLoaded() && reviewList().length == 0 && hasAccessToReview()">
-            ${ _strings.pratilipi_no_reviews }
-        </div>
+        <!-- ko if: isReviewsLoaded() && reviewList().length == 0 && hasAccessToReview() -->
+	        <div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero">
+	            ${ _strings.pratilipi_no_reviews }
+	        </div>
+        <!-- /ko -->
 
         <#--  when reviews have loaded and are equal 0 in number and user doesnt have access to review -->
-        <div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero " data-bind="if: isReviewsLoaded() && reviewList().length == 0 && !hasAccessToReview()">
-            ${ _strings.rating_be_first_one }
-        </div> 
+        <!-- ko if: isReviewsLoaded() && reviewList().length == 0 && !hasAccessToReview() -->
+	        <div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero">
+	            ${ _strings.rating_be_first_one }
+	        </div> 
+        <!-- /ko -->
 
         <#--  when reviews have loaded and are greater than 0 -->            
         <div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero " data-bind="visible: reviewList().length > 0">
