@@ -2,7 +2,7 @@
     <div class="mdl-list__item mdl-list__item--two-line padding-zero">
 		<span class="mdl-list__item-primary-content">
 			<img data-bind="attr: { src: getImageUrl( $root.user.profileImageUrl(), 48 ) }" class="mdl-list__item-avatar">
-			<a data-bind="attr: { href: $root.user.userProfilePageUrl }, text: $root.user.displayName"></a>	
+			<a data-bind="attr: { href: $root.user.userProfilePageUrl() }, text: $root.user.displayName"></a>	
 		</span>
 	</div>
     <form action="#">

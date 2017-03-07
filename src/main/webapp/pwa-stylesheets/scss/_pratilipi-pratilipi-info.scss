@@ -12,6 +12,26 @@
 		margin-bottom: 8px !important;
 	}
 
+	img.pratilipi-cover-image {
+		width: 200px;
+		height: 300px;
+	}
+
+	div.image-uploaded-div {
+		width: 100%; 
+		height: 100%;
+		.spinner-container {
+			border: 1px solid #d3d3d3; 
+			width: 200px; 
+			height: 300px; 
+			margin: auto; 
+			display: flex;
+			.image-uploaded-spinner {
+				margin: auto;
+			}
+		}
+	}
+
 	button.upload-image-button {
 		position: absolute;
 		margin-top: 248px;
@@ -20,16 +40,10 @@
 		height: 36px;
 		width: 36px;
 		min-width: 36px;
-		@media only screen and (max-width: 480px) {
-			margin-top: 176px;
-		}
     }
-    
+
    	i.icon-center {
 	    margin-bottom: 3px;
 	}
 
-	.image-uploaded-spinner {
-		margin: auto;
-	}
 }
