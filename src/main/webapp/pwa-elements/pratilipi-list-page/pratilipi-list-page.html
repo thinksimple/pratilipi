@@ -1,1 +1,15 @@
-pratilipi-list-page
+<div data-bind="visible: ! initialDataLoaded()" class="mdl-cell mdl-cell--8-col-tablet mdl-cell--9-col mobile-card" style="margin: 0;">
+	<span class="initial-data-loading-spinner mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></span>
+</div>
+
+<div class="mdl-cell mdl-cell--8-col-tablet mdl-cell--9-col mobile-card">
+	<div data-bind="{ foreach: { data: pratilipiList, as: 'pratilipi'}, visible: initialDataLoaded() }" class="mdl-grid" style="flex-grow: 1; padding: 0;">
+		<div class="mdl-cell mdl-cell--12-col-phone mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
+			<!-- ko component: {
+				name: "pratilipi-pratilipi-card",
+				params: { pratilipi: pratilipi }
+			} -->
+			<!-- /ko -->
+		</div>
+	</div>
+</div>

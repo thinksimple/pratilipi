@@ -1,21 +1,27 @@
 function() {
 	var self = this;
 	var cursor = null;
+	var resultCount = 20;
 
-	this.pratilipi = ko.mapping.fromJS( {}, {}, self.pratilipi );
+	this.pratilipiList = ko.mapping.fromJS( [], {}, self.pratilipi );
+	this.hasMoreContents = ko.observable( true );
 
-	this.updatePratilipi = function( pratilipi ) {
-		ko.mapping.fromJS( pratilipi, {}, self.pratilipi );
+
+	this.updatePratilipiList = function( pratilipiList ) {
+		ko.mapping.fromJS( pratilipiList, {}, self.pratilipiList );
 	};
 
 	this.initialDataLoaded = ko.observable( false );
+
 	this.fetchPratilipiList = function() {
 		var dataAccessor = new DataAccessor();
-		
-		dataAccessor.getPratilipiListByListName( window.location.pathname.substring(1), cursor, null, null ,
+		dataAccessor.getPratilipiListByListName( window.location.pathname.substring(1), cursor, null, resultCount,
 				function( pratilipiListResponse ) {
-					console.log( pratilipiListResponse.pratilipiList );
-					console.log( pratilipiListResponse.cursor );
+					var pratilipiList = pratilipiListResponse.pratilipiList;
+					self.updatePratilipiList( pratilipiList );
+					cursor = pratilipiListResponse.cursor;
+					self.initialDataLoaded( true );
+					self.hasMoreContents( pratilipiList.length == resultCount );
 		});
 	};
 
