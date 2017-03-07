@@ -1,6 +1,8 @@
-<p style="white-space:pre-wrap;" class="js-see-more"  data-bind="text: originalText, attr: { id: 'js-see-more-' + uniqueName }">
-</p>
-<div style="text-align:center;" data-bind="if: isSeeMoreRequired">
-    <button data-bind="text: buttonText, click: toggleSeeMore" class="mdl-button mdl-js-button mdl-button--accent mdl-js-ripple-effect">
-    </button>
+<div data-bind="seeMore: isMoreShown">
+	<p style="white-space:pre-wrap;line-height: 24px;" class="js-see-more" >
+	</p>
+	<div style="text-align:center;" data-bind="if: isSeeMoreRequired">
+	    <button data-bind="click: toggleSeeMore, text: isMoreShown() ? '${ _strings.show_less }' : '${ _strings.show_more }'" class="mdl-button mdl-js-button mdl-button--accent mdl-js-ripple-effect">
+	    </button>
+	</div>
 </div>
