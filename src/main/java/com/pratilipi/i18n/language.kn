@@ -478,3 +478,14 @@ seo_share_page					= ಇದನ್ನು ನಿಮ್ಮ ಸ್ನೇಹಿತರ
 seo_register_page				= ಪ್ರತಿಲಿಪಿಯಲ್ಲಿ ನಿಮ್ಮ ಖಾತೆ ತೆರೆಯಿರಿ 
 seo_login_page					= ಪ್ರತಿಲಿಪಿಗೆ ಲಾಗಿನ್ ಆಗಿ 
 seo_reset_password_page			= ನಿಮ್ಮ ಪಾಸ್ವರ್ಡ್ ರೀಸೆಟ್ ಮಾಡಿ 
+
+#PWA
+
+rate_and_review 				= ರೇಟಿಂಗ್ ಮತ್ತು ರಿವ್ಯೂ 
+hide_comments 					= ಕಾಮೆಂಟ್ಸ್ ಹೈಡ್ ಮಾಡಿ
+mobile_app 						= ಮೊಬೈಲ್ ಆ್ಯಪ್
+contact_us 						= ನಮ್ಮನ್ನು ಸಂಪರ್ಕಿಸಿ 
+facebook 						= ಫೇಸ್ಬುಕ್
+whatsapp 						= ವಾಟ್ಸಪ್
+twitter 						= ಟ್ವಿಟರ್
+google_plus 					= ಗೂಗಲ್ ಪ್ಲಸ್

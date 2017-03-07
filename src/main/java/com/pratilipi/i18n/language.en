@@ -479,17 +479,23 @@ seo_register_page				= Make your account on Pratilipi
 seo_login_page					= Login to Pratilipi
 seo_reset_password_page			= Reset Your Password - Pratilipi
 
-#Sharing platorm names
-facebook                        = Facebook
-twitter                        = Twitter
-google_plus                        = Google Plus
-whatsapp                        = Whatsapp
+#Sharing platform names
+
 
 
 
 # PWA
-logged_in_already = You are already logged in, please click here to go back!
-password_empty = Please Enter your Password.
-name_empty = Please Enter your Password.
-email_empty = Please Enter your Email.
-email_invalid = Please Enter a valid Email.
+logged_in_already 				= You are already logged in, please click here to go back!
+password_empty 					= Please Enter your Password.
+name_empty 						= Please Enter your Password.
+email_empty 					= Please Enter your Email.
+email_invalid 					= Please Enter a valid Email.
+
+rate_and_review 				= Rate and review 
+hide_comments 					= Hide Comments
+mobile_app    					= Mobile App
+contact_us	  					= Contact Us
+facebook                        = Facebook
+twitter                        	= Twitter
+google_plus                    	= Google Plus
+whatsapp                        = Whatsapp

@@ -477,3 +477,14 @@ seo_share_page					= உங்கள் நண்பர்களோடு பக
 seo_register_page				= பிரதிலிபியில் உங்களுக்கான கணக்கை தொடங்குங்கள்
 seo_login_page					= பிரதிலிபியில் உள்நுழையுங்கள்
 seo_reset_password_page			= கடவுச்சொல்லை மாற்றியமைக்க - பிரதிலிபி
+
+#PWA
+
+rate_and_review 				= மதிப்பிட்டு விமர்சிக்க
+hide_comments 					= பதில்களை மறைக்க
+mobile_app 						= கைபேசி செயலி
+contact_us 						= தொடர்புக்கு
+facebook 						= முகநூல்
+whatsapp 						= வாட்சாப்
+twitter 						= ட்விட்டர்
+google_plus 					= கூகிள்+
