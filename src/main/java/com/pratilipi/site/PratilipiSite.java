@@ -145,6 +145,11 @@ public class PratilipiSite extends HttpServlet {
 			deferredResourceList.add( ThirdPartyResource.GOOGLE_TRANSLITERATION.getTag() );
 		}
 
+		// Load PWA
+		Long uId = AccessTokenFilter.getAccessToken().getUserId();
+		boolean loadPWA = ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) || 
+				UserAccessUtil.hasUserAccess( uId, null, AccessType.USER_ADD );
+
 		// Data Model for FreeMarker
 		Map<String, Object> dataModel = null;
 		String templateName = null;
@@ -377,7 +382,7 @@ public class PratilipiSite extends HttpServlet {
 					dataModel = new HashMap<String, Object>();
 					dataModel.put( "title", "Register" );
 					templateName = "RegisterBasic.ftl";
-				} else if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) ) {
+				} else if( loadPWA ) {
 					dataModel = new HashMap<String, Object>();
 					templateName = "Register.ftl";
 				}
@@ -388,7 +393,7 @@ public class PratilipiSite extends HttpServlet {
 					dataModel = new HashMap<String, Object>();
 					dataModel.put( "title", "Login" );
 					templateName = "LoginBasic.ftl";
-				} else if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) ) {
+				} else if( loadPWA ) {
 					dataModel = new HashMap<String, Object>();
 					templateName = "Login.ftl";
 				}
@@ -399,7 +404,7 @@ public class PratilipiSite extends HttpServlet {
 					dataModel = new HashMap<String, Object>();
 					dataModel.put( "title", "Reset Password" );
 					templateName = "PasswordResetBasic.ftl";
-				} else if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) ) {
+				} else if( loadPWA ) {
 					dataModel = new HashMap<String, Object>();
 					templateName = "ForgotPassword.ftl";
 				}
@@ -476,12 +481,8 @@ public class PratilipiSite extends HttpServlet {
 
 			// Non - hardcoded links
 			} else if( page != null && page.getType() == PageType.PRATILIPI ) {
-				Long userId = AccessTokenFilter.getAccessToken().getUserId();
-				boolean loadPWA = ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD );
 				if( loadPWA ) {
 					dataModel = new HashMap<>();
-					// Hack: Not to minify the html file
-					dataModel.put( "stage", "pwa" );
 					templateName = "Knockout.ftl";
 				} else {
 					resourceList.addAll( createFbOpenGraphTags( page.getPrimaryContentId() ) );
@@ -614,9 +615,12 @@ public class PratilipiSite extends HttpServlet {
 		dataModel.put( "userJson", gson.toJson( userResponse ) );
 		dataModel.put( "pratilipiTypesJson", gson.toJson( pratilipiTypes ) );
 		dataModel.put( "navigationListJson", gson.toJson( navigationList ) );
-		if( ! dataModel.containsKey( "stage" ) ) // Hack : Remove it asap
-			dataModel.put( "stage", SystemProperty.STAGE );
+		dataModel.put( "stage", SystemProperty.STAGE );
 		dataModel.put( "basicMode", basicMode );
+
+		// Hack: Not to minify the html file
+		if( loadPWA )
+			dataModel.put( "stage", "pwa" );
 
 		if( basicMode ) {
 			StringBuffer requestUrl = new StringBuffer( request.getRequestURI() );
