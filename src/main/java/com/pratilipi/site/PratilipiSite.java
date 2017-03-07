@@ -483,7 +483,7 @@ public class PratilipiSite extends HttpServlet {
 			} else if( page != null && page.getType() == PageType.PRATILIPI ) {
 				if( loadPWA ) {
 					dataModel = new HashMap<>();
-					templateName = "Knockout.ftl";
+					templateName = "PratilipiPWA.ftl";
 				} else {
 					resourceList.addAll( createFbOpenGraphTags( page.getPrimaryContentId() ) );
 					dataModel = createDataModelForPratilipiPage( page.getPrimaryContentId(), filterLanguage, basicMode, request );
@@ -540,7 +540,12 @@ public class PratilipiSite extends HttpServlet {
 				templateName = ( basicMode ? "ReadBasic.ftl" : "Read.ftl" );
 
 			} else if( uri.matches( "^/[a-z0-9-]+$" ) && ( dataModel = createDataModelForListPage( uri.substring( 1 ), basicMode, displayLanguage, filterLanguage, request ) ) != null ) {
-				templateName = ( basicMode ? "ListBasic.ftl" : "List.ftl" );
+				if( loadPWA ) {
+					dataModel = new HashMap<>();
+					templateName = "ListPWA.ftl";
+				} else {
+					templateName = ( basicMode ? "ListBasic.ftl" : "List.ftl" );
+				}
 
 			} else if( uri.matches( "^/[a-z0-9-/]+$" ) && ( dataModel = createDataModelForStaticPage( uri.substring( 1 ).replaceAll( "/", "_" ), displayLanguage ) ) != null ) {
 				templateName = ( basicMode ? "StaticBasic.ftl" : "Static.ftl" );

@@ -7,6 +7,7 @@ var DataAccessor = function() {
 
 	var PAGE_API = "/page";
 	var PRATILIPI_API = "/pratilipi?_apiVer=2";
+	var PRATILIPI_LIST_API = "/pratilipi/list?_apiVer=2";
 	var USER_PRATILIPI_API = "/userpratilipi";
 	var AUTHOR_API = "/author";
 	var USER_AUTHOR_FOLLOW_API = "/userauthor/follow?_apiVer=2";
@@ -165,6 +166,17 @@ var DataAccessor = function() {
 		httpUtil.get( API_PREFIX + COMMENT_LIST_API, 
 						params, 
 						function( response, status ) { processGetResponse( response, status, aCallBack ) } );
+	};
+	
+	this.getPratilipiListByListName = function( listName, cursor, offset, resultCount, aCallBack ) {
+		if( listName == null ) return;
+		var params = { "listName": listName, "state": "PUBLISHED" };
+		if( cursor != null ) params[ "cursor" ] = cursor;
+		if( offset != null ) params[ "offset" ] = offset;
+		if( resultCount != null ) params[ "resultCount" ] = resultCount;
+		httpUtil.get( API_PREFIX + PRATILIPI_LIST_API, 
+				params, 
+				function( response, status ) { processGetResponse( response, status, aCallBack ) } );
 	};
 
 	this.createOrUpdateReview = function( pratilipiId, rating, review, successCallBack, errorCallBack ) {
