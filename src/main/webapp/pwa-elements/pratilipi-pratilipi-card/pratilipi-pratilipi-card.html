@@ -10,22 +10,32 @@
 			<span class="mdl-card__title-text" data-bind="text: pratilipi.author.name()"></span>
 		</span>
 		<span class="pratilipi-card-meta-reads-rating-holder">
-			<span class="meta-holder reads-holder">
+			<span class="meta-holder reads-holder" data-bind="visible: pratilipi.readCount() > 0">
 				<span data-bind="text: abbrNum( pratilipi.readCount(), 1 )"></span>
 				<i class="material-icons">remove_red_eye</i>
 			</span>
-			<span class="meta-holder rating-holder" data-bind="visible: pratilipi.averageRating() > 0" >
+			<span class="meta-holder rating-holder" data-bind="visible: pratilipi.averageRating() > 0">
 				<span data-bind="text: roundOffToOneDecimal( pratilipi.averageRating() )"></span>
 				<i class="material-icons">star_rate</i>
 			</span>
 		</span>
 		<span class="pratilipi-card-footer-icons-holder">
-			<button data-bind="click: test" class="library-button mdl-button mdl-js-button">
+			<button data-bind="click: test" class="share-button mdl-button mdl-js-button">
 				<i class="material-icons">library_add</i>
 			</button>
-			<button data-bind="click: test" class="share-button mdl-button mdl-js-button">
-				<i class="material-icons">share</i>
-			</button>
+			<span style="position: relative;">
+				<button data-bind="{ attr: { 'id': 'pratilipi-pratilipi-card-' + pratilipi.pratilipiId() }, 
+									click: test,
+									css: { 'library-button mdl-button mdl-js-button': true } }">
+					<i class="material-icons">share</i>
+				</button>
+				<ul class="mdl-menu mdl-menu--top-right mdl-js-menu mdl-js-ripple-effect"
+				data-bind="attr: { 'for': 'pratilipi-pratilipi-card-' + pratilipi.pratilipiId() }">
+				    <li class="mdl-menu__item">Facebook</li>
+					<li class="mdl-menu__item">Twitter</li>
+					<li class="mdl-menu__item">Google+</li>
+				</ul>
+			</span>
 		</span>
 	</span>
 </a>
