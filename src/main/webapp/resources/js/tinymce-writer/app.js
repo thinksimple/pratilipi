@@ -146,7 +146,7 @@ function getFirstRange() {
 
 transliterationApp.prototype.onSuggestionPickedInsideDiv = function( word, eng_word ) {
   if (window.getSelection) {
-    var text = ( word ? word : eng_word ) + "\u00A0";
+    var text = ( word ? word : eng_word ) + " ";
     sel = rangy.getSelection();
     var range = getFirstRange();
     if (range) {
