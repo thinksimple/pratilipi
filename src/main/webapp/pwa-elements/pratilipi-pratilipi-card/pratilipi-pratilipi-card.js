@@ -32,9 +32,13 @@ function( params ) {
 		});
 	};
 
+	var getShareUrl = function() {
+		return window.location.origin + self.pratilipi.pageUrl();
+	};
+
 	this.sharePratilipi = function( vm, evt ) {
 		evt.stopPropagation();
-		console.log( "sharePratilipi" );
+		ShareUtil.share( getShareUrl(), "WhatsAppText" );
 	};
 
 }
