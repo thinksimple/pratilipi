@@ -58,13 +58,15 @@
                     <div class="css-author-name mdl-card__title padding-bottom-zero">
                         <a style="margin: 0; color: #000; font-size: 20px;" data-bind="attr: { href: pratilipi.author.pageUrl() }, text: pratilipi.author.name()"></a>
                     </div>
-                    <div class="mdl-card__supporting-text font-16">
-                        <!--ko text: roundOffToOneDecimal( pratilipi.averageRating() ) -->
-                        <!--/ko-->
-                        <i class="material-icons material-icons-16 vertical-middle icon-center">star</i> (
-                        <!--ko text: pratilipi.ratingCount() -->
-                        <!--/ko-->
-                        )
+                    <div class="mdl-card__supporting-text font-16 padding-bottom-zero">
+                    	<p class="font-16 margin-bottom-8">
+	                        <!--ko text: roundOffToOneDecimal( pratilipi.averageRating() ) -->
+	                        <!--/ko-->
+	                        <i class="material-icons material-icons-16 vertical-middle icon-center">star</i> (
+	                        <!--ko text: pratilipi.ratingCount() -->
+	                        <!--/ko-->
+	                        )
+                        </p>
                         <p class="font-16 margin-bottom-8"> ${ _strings.pratilipi_count_reads }:&nbsp;
                             <!--ko text:  formatReadCount( pratilipi.readCount() ) -->
                             <!--/ko-->
@@ -98,7 +100,7 @@
                     </div>
                 </div>
                 <div class="mdl-cell mdl-cell--12-col mdl-cell--order-2 mdl-cell--order-3-phone">
-                    <div class="mdl-card__supporting-text">                    
+                    <div class="mdl-card__supporting-text padding-top-zero padding-bottom-zero">                    
                         <p class="font-16 margin-bottom-8"> ${ _strings.pratilipi_listing_date }:&nbsp;
                             <!--ko text:  convertDate( pratilipi.listingDateMillis() ) -->
                             <!--/ko-->
