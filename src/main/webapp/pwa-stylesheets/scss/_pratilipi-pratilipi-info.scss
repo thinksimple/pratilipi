@@ -17,6 +17,11 @@
 		height: 300px;
 	}
 	
+	.share-button {
+	    min-width: 36px;
+	    padding: 0;	
+	}
+	
 	.pratilipi-info-variable-width {
 	  	@media (max-width: 479px) {
 	    	width: 65%;

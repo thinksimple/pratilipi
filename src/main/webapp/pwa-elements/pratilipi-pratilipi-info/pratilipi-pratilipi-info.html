@@ -64,10 +64,7 @@
                         <i class="material-icons material-icons-16 vertical-middle icon-center">star</i> (
                         <!--ko text: pratilipi.ratingCount() -->
                         <!--/ko-->
-                        ) &nbsp;
-                        <!--ko text: formatReadCount( pratilipi.readCount() ) -->
-                        <!--/ko-->
-                        <i class="material-icons material-icons-16 vertical-middle icon-center">remove_red_eye</i>
+                        )
                     </div>
                 </div>
                 <div class="mdl-cell mdl-cell--12-col mdl-cell--order-3 mdl-cell--order-2-phone">
@@ -91,13 +88,17 @@
                                 class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-button-margin"
                         >
                         </button>
-                        <button data-bind="{ visible: canShare() }" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" data-toggle="modal" data-target="#pratilipi-share-dialog">
-                            <i class="material-icons">share</i>
+                        <button data-bind="{ visible: canShare() }" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect share-button" data-toggle="modal" data-target="#pratilipi-share-dialog">
+                            <i class="material-icons material-icons-16">share</i>
                         </button>
                     </div>
                 </div>
                 <div class="mdl-cell mdl-cell--12-col mdl-cell--order-2 mdl-cell--order-3-phone">
                     <div class="mdl-card__supporting-text">
+                        <p class="font-16 margin-bottom-8"> ${ _strings.pratilipi_count_reads }:&nbsp;
+                            <!--ko text:  formatReadCount( pratilipi.readCount() ) -->
+                            <!--/ko-->
+                        </p>                    
                         <p class="font-16 margin-bottom-8"> ${ _strings.pratilipi_listing_date }:&nbsp;
                             <!--ko text:  convertDate( pratilipi.listingDateMillis() ) -->
                             <!--/ko-->
