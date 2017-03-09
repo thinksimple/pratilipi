@@ -30,13 +30,18 @@ ko.components.register( 'pratilipi-share-dialog', {
     template: <@add_backslashes><#include "../../pwa-elements/pratilipi-share-dialog/pratilipi-share-dialog.html"></@add_backslashes>
 });
 
-var shareDialog = document.createElement( 'pratilipi-share-dialog' );
-shareDialog.style.zIndex = "1051";
-document.body.appendChild( shareDialog );
 
 var ShareUtil = (function() {
 	return {
+		initialise: function() {
+			if( document.getElementById( 'pratilipi-share-dialog' ) != null )
+				return;
+			var shareDialog = document.createElement( 'pratilipi-share-dialog' );
+			shareDialog.style.zIndex = "1051";
+			document.body.appendChild( shareDialog );
+		},
 		share: function( url, whatsappText, utmParams ) {
+			this.initialise();
 			shareUrl = encodeURIComponent( url + ( utmParams != null ? "?" + new HttpUtil().formatParams( utmParams ) : "" ) );
 			shareWhatsappText = whatsappText != null ? encodeURIComponent( whatsappText ) : null;
 			$( "#pratilipi-share-dialog" ).modal();
