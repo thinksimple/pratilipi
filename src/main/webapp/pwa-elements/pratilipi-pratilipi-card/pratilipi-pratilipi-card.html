@@ -1,6 +1,6 @@
 <a class="pratilipi-pratilipi-card mdl-card mdl-shadow--2dp" data-bind="attr: { href: pratilipi.pageUrl() }">
 	<span class="pratilipi-cover-image-holder">
-		<img data-bind="attr: { src: getImageUrl( pratilipi.coverImageUrl(), 150 ), title: pratilipi.title(), alt: pratilipi.title() }" />
+		<img data-bind="attr: { src: getImageUrl( pratilipi.coverImageUrl(), 120 ), title: pratilipi.title(), alt: pratilipi.title() }" />
 	</span>
 	<span class="pratilipi-meta-holder">
 		<span class="pratilipi-title mdl-card__title">
@@ -20,10 +20,10 @@
 			</span>
 		</span>
 		<span class="pratilipi-card-footer-icons-holder">
-			<button data-bind="{ disable: libraryRequestOnFlight(), click: addToLibrary }" class="share-button mdl-button mdl-js-button">
+			<button data-bind="{ disable: libraryRequestOnFlight(), click: addToLibrary }" class="share-button mdl-button mdl-js-button mdl-button--icon">
 				<i class="material-icons" data-bind="text: pratilipi.addedToLib() ? 'done' : 'library_add'"></i>
 			</button>
-			<button data-bind="click: sharePratilipi" class="library-button mdl-button mdl-js-button">
+			<button data-bind="click: sharePratilipi" class="library-button mdl-button mdl-js-button mdl-button--icon">
 				<i class="material-icons">share</i>
 			</button>
 		</span>
