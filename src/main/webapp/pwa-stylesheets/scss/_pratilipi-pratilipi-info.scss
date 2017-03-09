@@ -16,6 +16,15 @@
 		width: 200px;
 		height: 300px;
 	}
+	
+	.pratilipi-info-variable-width {
+	  	@media (max-width: 479px) {
+	    	width: 65%;
+	  	}	
+	  	@media (min-width: 480px) {
+	    	width: 50%;
+	  	}	
+	}
 
 	div.image-uploaded-div {
 		width: 100%; 
