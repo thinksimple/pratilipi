@@ -11,6 +11,10 @@ function( params ) {
 
 	this.addToLibrary = function( vm, evt ) {
 		evt.stopPropagation();
+		if( appViewModel.user.isGuest() ) {
+			goToLoginPage(); 
+			return;
+		}
 		self.libraryRequestOnFlight( true );
 		var addedToLib = self.pratilipi.addedToLib();
 		self.updatePratilipi( { "addedToLib": ! addedToLib } );
@@ -28,8 +32,9 @@ function( params ) {
 		});
 	};
 
-	this.test = function( vm, evt ) {
+	this.sharePratilipi = function( vm, evt ) {
 		evt.stopPropagation();
+		console.log( "sharePratilipi" );
 	};
 
 }

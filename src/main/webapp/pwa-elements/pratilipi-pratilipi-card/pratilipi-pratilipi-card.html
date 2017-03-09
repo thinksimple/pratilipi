@@ -23,19 +23,9 @@
 			<button data-bind="{ disable: libraryRequestOnFlight(), click: addToLibrary }" class="share-button mdl-button mdl-js-button">
 				<i class="material-icons" data-bind="text: pratilipi.addedToLib() ? 'done' : 'library_add'"></i>
 			</button>
-			<span style="position: relative;">
-				<button data-bind="{ attr: { 'id': 'pratilipi-pratilipi-card-' + pratilipi.pratilipiId() }, 
-									click: test,
-									css: { 'library-button mdl-button mdl-js-button': true } }">
-					<i class="material-icons">share</i>
-				</button>
-				<ul class="mdl-menu mdl-menu--top-right mdl-js-menu mdl-js-ripple-effect"
-				data-bind="attr: { 'for': 'pratilipi-pratilipi-card-' + pratilipi.pratilipiId() }">
-				    <li class="mdl-menu__item">Facebook</li>
-					<li class="mdl-menu__item">Twitter</li>
-					<li class="mdl-menu__item">Google+</li>
-				</ul>
-			</span>
+			<button data-bind="click: sharePratilipi" class="library-button mdl-button mdl-js-button">
+				<i class="material-icons">share</i>
+			</button>
 		</span>
 	</span>
 </a>
