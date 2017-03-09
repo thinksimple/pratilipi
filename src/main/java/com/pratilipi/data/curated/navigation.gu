@@ -19,6 +19,7 @@
 /non-fiction              લેખ                        Analytics#categoryName::articles       App#imageName::classic.jpg            App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "type":"ARTICLE" }
 /bal-sahitya              બાળસાહિત્ય                 Analytics#categoryName::children        App#imageName::children.jpg            App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"bal-sahitya" } 
 /hasya-killol             હાસ્ય-કિલ્લોલ                 Analytics#categoryName::comedy        App#imageName::comedy.jpg           App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"hasya-killol" }
+/arogya-sukh              આરોગ્ય                     Analytics#categoryName::arogya-sukh        App#imageName::health.jpg           App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"arogya-sukh" }
 /film-and-music           ફિલ્મ અને મ્યુઝીક            Analytics#categoryName::film-and-music         App#imageName::music.jpg           App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"film-and-music" }
 /aatmakatha               આત્મકથા                    Analytics#categoryName::biographies       App#imageName::biography.jpg            App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"aatmakatha" }
 /swa-vikas                સ્વ-વિકાસ                 Analytics#categoryName::self-help         App#imageName::selfhelp.jpg             App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"swa-vikas" }
