@@ -20,8 +20,8 @@
 			</span>
 		</span>
 		<span class="pratilipi-card-footer-icons-holder">
-			<button data-bind="click: test" class="share-button mdl-button mdl-js-button">
-				<i class="material-icons">library_add</i>
+			<button data-bind="{ disable: libraryRequestOnFlight(), click: addToLibrary }" class="share-button mdl-button mdl-js-button">
+				<i class="material-icons" data-bind="text: pratilipi.addedToLib() ? 'done' : 'library_add'"></i>
 			</button>
 			<span style="position: relative;">
 				<button data-bind="{ attr: { 'id': 'pratilipi-pratilipi-card-' + pratilipi.pratilipiId() }, 
