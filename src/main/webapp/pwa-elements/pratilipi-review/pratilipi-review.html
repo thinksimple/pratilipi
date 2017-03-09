@@ -58,7 +58,7 @@
 
 	</div>
 
-	<ul class="mdl-list sub-review" data-bind="visible: isSubreviewListVisible">
+	<ul class="mdl-list sub-review" data-bind="slideIn: isSubreviewListVisible">
 		<div data-bind="visible: isCommentsShown, foreach: comments">
 			<pratilipi-review-comment params="{ value: $data, deleteComment: $parent.deleteComment }"></pratilipi-review-comment>
 		</div>

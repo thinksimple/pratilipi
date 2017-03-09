@@ -65,6 +65,10 @@
                         <!--ko text: pratilipi.ratingCount() -->
                         <!--/ko-->
                         )
+                        <p class="font-16 margin-bottom-8"> ${ _strings.pratilipi_count_reads }:&nbsp;
+                            <!--ko text:  formatReadCount( pratilipi.readCount() ) -->
+                            <!--/ko-->
+                        </p>    
                     </div>
                 </div>
                 <div class="mdl-cell mdl-cell--12-col mdl-cell--order-3 mdl-cell--order-2-phone">
@@ -94,11 +98,7 @@
                     </div>
                 </div>
                 <div class="mdl-cell mdl-cell--12-col mdl-cell--order-2 mdl-cell--order-3-phone">
-                    <div class="mdl-card__supporting-text">
-                        <p class="font-16 margin-bottom-8"> ${ _strings.pratilipi_count_reads }:&nbsp;
-                            <!--ko text:  formatReadCount( pratilipi.readCount() ) -->
-                            <!--/ko-->
-                        </p>                    
+                    <div class="mdl-card__supporting-text">                    
                         <p class="font-16 margin-bottom-8"> ${ _strings.pratilipi_listing_date }:&nbsp;
                             <!--ko text:  convertDate( pratilipi.listingDateMillis() ) -->
                             <!--/ko-->
