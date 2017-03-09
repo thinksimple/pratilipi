@@ -6,10 +6,10 @@
             <div class="mdl-grid padding-zero">
                 <div class="mdl-cell--6-col mdl-cell--4-col-tablet padding-zero">
                     <!-- ko foreach: ko.utils.range( 1, selectedReviewRating ) -->
-                        <i class="material-icons material-icons-36 clickableElement" data-bind="click: $parent.openReviewModalWithRating.bind($data, $data)">star</i>
+                        <i class="material-icons material-icons-36 clickable-element" data-bind="click: $parent.openReviewModalWithRating.bind($data, $data)">star</i>
                     <!-- /ko -->
                     <!-- ko foreach: ko.utils.range( 1, emptyReviewRating ) -->
-                        <i class="material-icons material-icons-36 clickableElement" data-bind="click: $parent.openReviewModalWithRating.bind($data, $data + $parent.selectedReviewRating() )">star_border</i>
+                        <i class="material-icons material-icons-36 clickable-element" data-bind="click: $parent.openReviewModalWithRating.bind($data, $data + $parent.selectedReviewRating() )">star_border</i>
                     <!-- /ko -->
                 </div>
                 <div class="mdl-cell--6-col mdl-cell--4-col-tablet padding-zero">
@@ -69,10 +69,10 @@
       </div>
     <div class="modal-body">
         <!-- ko foreach: ko.utils.range( 1, selectedReviewRating ) -->
-            <i class="material-icons material-icons-36 clickableElement" data-bind="click: $parent.changeReviewRating.bind($data, $data)">star</i>
+            <i class="material-icons material-icons-36 clickable-element" data-bind="click: $parent.changeReviewRating.bind($data, $data)">star</i>
         <!-- /ko -->
         <!-- ko foreach: ko.utils.range( 1, emptyReviewRating ) -->
-            <i class="material-icons material-icons-36 clickableElement" data-bind="click: $parent.changeReviewRating.bind($data, $data + $parent.selectedReviewRating() )">star_border</i>
+            <i class="material-icons material-icons-36 clickable-element" data-bind="click: $parent.changeReviewRating.bind($data, $data + $parent.selectedReviewRating() )">star_border</i>
         <!-- /ko -->
         <form action="#">
             <div class="mdl-textfield mdl-js-textfield">
