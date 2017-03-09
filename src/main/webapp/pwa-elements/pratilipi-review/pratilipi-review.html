@@ -59,10 +59,10 @@
 	</div>
 
 	<ul class="mdl-list sub-review" data-bind="slideIn: isSubreviewListVisible">
-		<div data-bind="visible: isCommentsShown, foreach: comments">
+		<div data-bind="slideIn: isCommentsShown, foreach: comments">
 			<pratilipi-review-comment params="{ value: $data, deleteComment: $parent.deleteComment }"></pratilipi-review-comment>
 		</div>
-		<pratilipi-review-reply data-bind="visible: isReplyStateOn" params="parent: $parent"></pratilipi-review-reply>
+		<pratilipi-review-reply data-bind="slideIn: isReplyStateOn" params="parent: $parent"></pratilipi-review-reply>
 	</ul>
 </li>
 <li>
