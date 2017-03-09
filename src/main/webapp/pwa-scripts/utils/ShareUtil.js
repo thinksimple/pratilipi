@@ -1,7 +1,6 @@
 /* Global Variables */
 var shareUrl = null;
 var shareWhatsappText = null;
-var shareUtmParams = null;
 
 /* Share Modal */
 function viewModel() {
@@ -38,9 +37,8 @@ document.body.appendChild( shareDialog );
 var ShareUtil = (function() {
 	return {
 		share: function( url, whatsappText, utmParams ) {
-			shareUrl = encodeURIComponent( url );
-			shareWhatsappText = whatsappText;
-			shareUtmParams = utmParams;
+			shareUrl = encodeURIComponent( url + ( utmParams != null ? "?" + new HttpUtil().formatParams( utmParams ) : "" ) );
+			shareWhatsappText = whatsappText != null ? encodeURIComponent( whatsappText ) : null;
 			$( "#pratilipi-share-dialog" ).modal();
 		}
 	};

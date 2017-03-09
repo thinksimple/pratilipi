@@ -36,9 +36,13 @@ function( params ) {
 		return window.location.origin + self.pratilipi.pageUrl();
 	};
 
+	var getWhatsappText = function() {
+		return '"' + self.pratilipi.title() + '"${ _strings.whatsapp_read_story } ' + getShareUrl() +" ${ _strings.whatsapp_read_unlimited_stories }";
+	};
+
 	this.sharePratilipi = function( vm, evt ) {
 		evt.stopPropagation();
-		ShareUtil.share( getShareUrl(), "WhatsAppText" );
+		ShareUtil.share( getShareUrl(), getWhatsappText() );
 	};
 
 }
