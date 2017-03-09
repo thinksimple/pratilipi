@@ -2,8 +2,12 @@
     <div class="mdl-card mdl-card-border mdl-cell mdl-cell--8-col-tablet mdl-cell--9-col mobile-card">
         <div class="mdl-grid">
             <div class="" style="margin: 8px;background-color: rgba( 0, 0, 0, 0.27 );">
-				<img class="pratilipi-cover-image" data-bind="{ attr: { src: getImageUrl( pratilipi.coverImageUrl(), 200 ) },
-								visible: !imageUploaded() }" border="0">
+	    	    <picture data-bind="visible: !imageUploaded()">
+	                <source media="(min-width: 480px)"  data-bind="attr: { srcset: getImageUrl( pratilipi.coverImageUrl(), 200 ) }" />
+	                <img data-bind="attr: { src: getImageUrl( pratilipi.coverImageUrl(), 150 ) }" border="0" alt="">
+	            </picture> 
+				<#-- <img class="pratilipi-cover-image" data-bind="{ attr: { src: getImageUrl( pratilipi.coverImageUrl(), 200 ) },
+								visible: !imageUploaded() }" border="0"> -->
 				<div data-bind="visible: imageUploaded()" class="image-uploaded-div">
 					<div class="spinner-container">
 						<span class="image-uploaded-spinner mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active">
