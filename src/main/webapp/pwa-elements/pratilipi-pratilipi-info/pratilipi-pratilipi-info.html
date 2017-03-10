@@ -80,7 +80,7 @@
                             class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-button-margin"
                         >
                         </a>
-                        <button data-bind="{ text: userPratilipi.addedToLib() ? '-' : '+' + ' ${ _strings.library }', 
+                        <button data-bind="{ text: ( userPratilipi.addedToLib() ? '-' : '+' ) + ' ${ _strings.library }', 
                                             click: addToLibrary,
                                             disable: userPratilipiRequestOnFlight,
                                             visible: canAddToLibrary() }" 
