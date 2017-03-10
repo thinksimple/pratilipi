@@ -428,24 +428,23 @@ pratilipi_app_launched_website_strip = ಪ್ರತಿಲಿಪಿ ಆ್ಯಪ�
 pratilipi_app_click_download = ಆ್ಯಪ್ ಡೌನ್ಲೋಡ್ ಮಾಡಿಕೊಳ್ಳಿ 
 
 # Notification Settings
-notification_settings = Notification Settings
-email_frequency = Email Frequency
-email_frequency_immediate = Immediately
-email_frequency_daily = Daily
-email_frequency_weekly = Weekly
-email_frequency_monthly = Monthly
-email_frequency_never = Never
-notification_group_content = Content
-option_new_review =  New Review 
-option_new_comment =  New Comment 
-option_like_review =  Like on review 
-option_like_comment =  New Like on Comment 
-notification_group_network = Network
-option_new_follower = New Follower
-option_pratilipi_published_follower =  New Content by people you follow 
-option_pratilipi_updates =  Pratilipi Updates and Offers 
-notification_settings_save_changes = Save Changes
-
+notification_settings = Notification Settings = ನೋಟಿಫಿಕೇಶನ್ ಸೆಟ್ಟಿಂಗ್ಸ್ 
+email_frequency = Email Frequency             = ಇಮೇಲ್ ಫ್ರೀಕ್ವೆನ್ಸಿ
+email_frequency_immediate = Immediately       = ತಕ್ಷಣ 
+email_frequency_daily = Daily                 = ಪ್ರತಿನಿತ್ಯ  
+email_frequency_weekly = Weekly               = ವಾರಕ್ಕೊಮ್ಮೆ 
+email_frequency_monthly = Monthly             = ತಿಂಗಳಿಗೊಮ್ಮೆ 
+email_frequency_never = Never                 = ಬೇಡ 
+notification_group_content = Content          = ಬರಹ 
+option_new_review =  New Review               = ಹೊಸ ಪ್ರತಿಕ್ರಿಯೆ 
+option_new_comment =  New Comment             = ಹೊಸ ಕಾಮೆಂಟ್ 
+option_like_review =  Like on review          = ಪ್ರತಿಕ್ರಿಯೆಯ ಮೆಚ್ಚುಗೆ 
+option_like_comment =  New Like on Comment    = ಕಾಮೆಂಟಿಗೆ ಹೊಸ ಮೆಚ್ಚುಗೆ 
+notification_group_network = Network          = ನೆಟ್ವರ್ಕ್ 
+option_new_follower = New Follower            = ಹೊಸ ಹಿಂಬಾಲಕರು 
+option_pratilipi_published_follower =  New Content by people you follow = ನೀವು ಹಿಂಬಾಲಿಸುತ್ತಿರುವ ವ್ಯಕ್ತಿಯ ಹೊಸ ಬರಹ 
+option_pratilipi_updates =  Pratilipi Updates and Offers = ಪ್ರತಿಲಿಪಿ ಅಪ್ಡೇಟ್ಸ್ ಮತ್ತು ಆಫರ್ಸ್ 
+notification_settings_save_changes = Save Changes = ಬದಲಾವಣೆಗಳನ್ನು ಸಂರಕ್ಷಿಸಿ 
 #Whatsapp Share Messages
 whatsapp_read_unlimited_stories = ಅನಿಯಮಿತ ಕಥೆ, ಕವನ, ಲೇಖನಗಳನ್ನು ಭಾರತೀಯ ಭಾಷೆಗಳಲ್ಲಿ ಉಚಿತವಾಗಿ ಓದಿರಿ! 
 whatsapp_read_story = , ಪ್ರತಿಲಿಪಿಯಲ್ಲಿ ಓದಿರಿ : 
