@@ -7,7 +7,7 @@
 	</div>
     <form action="#">
     	<div class="mdl-textfield mdl-js-textfield reviewReply"> 			        
-        	<textarea data-bind="textInput: reply" class="mdl-textfield__input js-autoresize-textarea" type="text" rows= "2" id="review" ></textarea>
+        	<textarea data-bind="textInput: reply, transliterate: shouldTransliterate" class="mdl-textfield__input js-autoresize-textarea" type="text" rows= "2" id="review" ></textarea>
             <label class="mdl-textfield__label" for="review">${ _strings.comment_reply_comment_help }...</label>
         </div>
     </form>

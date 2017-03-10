@@ -4,7 +4,8 @@ function( params ) {
     /* populate logged in user's name and profile img etc*/
     this.reply = ko.observable("");
     this.saveInProgress = ko.observable( false );
-    
+    this.shouldTransliterate = true;
+
     this.isSaveDisabled = ko.computed( function() {
         return this.reply().trim().length == 0 ||  this.saveInProgress();
     }, this );    
@@ -23,7 +24,7 @@ function( params ) {
         el.style.cssText = 'height:' + el.scrollHeight + 'px';
       },0);
     } 
-    var $content_object = $( "#review" );
-    this.content_transliteration_object = new transliterationApp( $content_object, "${ lang }" );
-    this.content_transliteration_object.init();  
+    // var $content_object = $( "#review" );
+    // this.content_transliteration_object = new transliterationApp( $content_object, "${ lang }" );
+    // this.content_transliteration_object.init();  
 }

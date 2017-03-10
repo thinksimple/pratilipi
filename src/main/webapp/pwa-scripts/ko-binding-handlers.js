@@ -31,3 +31,11 @@ ko.bindingHandlers.slideIn = {
         value ? $(element).slideDown() : $(element).slideUp();
     }
 };
+
+ko.bindingHandlers.transliterate = {
+    init: function (element, valueAccessor) {
+        var $content_object = $( element );
+        var content_transliteration_object = new transliterationApp( $content_object, "${ lang }" );
+        content_transliteration_object.init();
+    },
+};
