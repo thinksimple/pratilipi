@@ -3,10 +3,10 @@
 <#assign font="Montserrat">
 
 <#assign font_xs="12">
-<#assign font_s="13">
-<#assign font_m="14">
-<#assign font_l="15">
-<#assign font_xl="16">
+<#assign font_s="14">
+<#assign font_m="16">
+<#assign font_l="20">
+<#assign font_xl="24">
 
 <#if language == "HINDI">
 	<#assign url="https://fonts.googleapis.com/css?family=Noto+Sans&subset=devanagari">
