@@ -59,7 +59,7 @@
                         <a style="margin: 0; color: #000; font-size: 20px;" data-bind="attr: { href: pratilipi.author.pageUrl() }, text: pratilipi.author.name()"></a>
                     </div>
                     <div class="mdl-card__supporting-text font-16 padding-bottom-zero">
-                    	<p class="font-16 margin-bottom-8">
+                    	<p class="font-16 margin-bottom-8" data-bind="visible: pratilipi.averageRating() > 0">
 	                        <!--ko text: roundOffToOneDecimal( pratilipi.averageRating() ) -->
 	                        <!--/ko-->
 	                        <i class="material-icons material-icons-16 vertical-middle icon-center">star</i> (
