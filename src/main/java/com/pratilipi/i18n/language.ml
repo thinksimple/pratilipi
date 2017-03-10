@@ -428,23 +428,23 @@ pratilipi_app_launched_website_strip = പ്രതിലിപി ആപ്പ�
 pratilipi_app_click_download = ആപ്പ് ഡൗണ്‍ലോഡ് ചെയ്യൂ 
 
 # Notification Settings
-notification_settings = Notification Settings
-email_frequency = Email Frequency
-email_frequency_immediate = Immediately
-email_frequency_daily = Daily
-email_frequency_weekly = Weekly
-email_frequency_monthly = Monthly
-email_frequency_never = Never
-notification_group_content = Content
-option_new_review =  New Review 
-option_new_comment =  New Comment 
-option_like_review =  Like on review 
-option_like_comment =  New Like on Comment 
-notification_group_network = Network
-option_new_follower = New Follower
-option_pratilipi_published_follower =  New Content by people you follow 
-option_pratilipi_updates =  Pratilipi Updates and Offers 
-notification_settings_save_changes = Save Changes
+notification_settings = നോട്ടിഫിക്കേഷന്‍ സെറ്റിംഗ്സ്
+email_frequency = ഇമെയില്‍ അയക്കേണ്ട രീതി
+email_frequency_immediate = ഉടനെ 
+email_frequency_daily = ദിവസത്തില്‍ ഒരിക്കല്‍ 
+email_frequency_weekly = ആഴ്ചയില്‍ ഒരിക്കല്‍ 
+email_frequency_monthly = മാസത്തില്‍ ഒരിക്കല്‍
+email_frequency_never = ഒരിക്കലും വേണ്ട
+notification_group_content = രചന 
+option_new_review =  പുതിയ റിവ്യൂ
+option_new_comment =  പുതിയ കമന്റ് 
+option_like_review =  റിവ്യൂയ്ക്ക് ലൈക്ക്
+option_like_comment =  കമന്റിന് പുതിയ ലൈക്ക് 
+notification_group_network = നെറ്റ് വര്‍ക്ക്
+option_new_follower = പുതിയ ഫോളോവര്‍
+option_pratilipi_published_follower =  നിങ്ങള്‍ ഫോളോ ചെയ്യുന്നവരില്‍ നിന്നും പുതിയ രചന 
+option_pratilipi_updates =  പ്രതിലിപിയുടെ അപ്ഡേറ്റുകളും ഓഫറുകളും
+notification_settings_save_changes = മാറ്റങ്ങള്‍ സേവ് ചെയ്യൂ  
 
 #Whatsapp Share Messages 
 whatsapp_read_unlimited_stories = ഇന്ത്യന്‍ ഭാഷകളിലുള്ള ഏറെ കഥകളും കവിതകളും ലേഖനങ്ങളുമെല്ലാം സൗജന്യമായി വായിക്കൂ !
