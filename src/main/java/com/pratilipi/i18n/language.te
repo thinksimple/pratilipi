@@ -428,24 +428,23 @@ pratilipi_app_launched_website_strip = ప్రతిలిపి యాప్ 
 pratilipi_app_click_download = యాప్ డౌన్లోడ్ చేసుకోండి
 
 # Notification Settings
-notification_settings = Notification Settings
-email_frequency = Email Frequency
-email_frequency_immediate = Immediately
-email_frequency_daily = Daily
-email_frequency_weekly = Weekly
-email_frequency_monthly = Monthly
-email_frequency_never = Never
-notification_group_content = Content
-option_new_review =  New Review 
-option_new_comment =  New Comment 
-option_like_review =  Like on review 
-option_like_comment =  New Like on Comment 
-notification_group_network = Network
-option_new_follower = New Follower
-option_pratilipi_published_follower =  New Content by people you follow 
-option_pratilipi_updates =  Pratilipi Updates and Offers 
-notification_settings_save_changes = Save Changes
-
+notification_settings = నోటిఫికేషన్ సెట్టింగ్స్ 
+email_frequency = ఈమెయిల్ ఫ్రీక్వెన్సీ 
+email_frequency_immediate = తక్షణము 
+email_frequency_daily = రోజు 
+email_frequency_weekly = వారం 
+email_frequency_monthly = నెల 
+email_frequency_never = ఎప్పటికి 
+notification_group_content = కంటెంట్ 
+option_new_review =  కొత్త రివ్యూ
+option_new_comment =  కొత్త కామెంట్ 
+option_like_review =  మీ రివ్యూ ని లైక్ చేసారు
+option_like_comment =  మీ రివ్యూ పై కామెంట్ చేసారు 
+notification_group_network = నెట్ వర్క్ 
+option_new_follower = కొత్త అనుచరుడు 
+option_pratilipi_published_follower =  మీరు అనుసరించే వారి కొత్త రచన  
+option_pratilipi_updates = ప్రతిలిపి అప్ డేట్స్ మరియు ఆఫర్స్  
+notification_settings_save_changes =మార్పులు సేవ్ చేయబడినవి
 #Whatsapp share messages
 whatsapp_read_unlimited_stories = ప్రతిలిపిలో మరెన్నో కథలు, కవితలు, వ్యాసాలను ఉచితంగా చదవండి
 whatsapp_read_story = , ప్రతిలిపిలో చదవండి: 
