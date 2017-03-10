@@ -65,6 +65,7 @@ function( params ) {
 			dataAccessor.addOrRemoveFromLibrary( self.pratilipi.pratilipiId(), ! addedToLib, 
 				function( userPratilipi ) {
 					self.userPratilipiRequestOnFlight( false );
+					ToastUtil.toast( !addedToLib ? "${ _strings.added_to_library }" : "${ _strings.removed_from_library }" );
 				}, function( error ) {
 					self.userPratilipiRequestOnFlight( false );
 					ToastUtil.toast( error[ "message" ] != null ? error[ "message" ] : "${ _strings.server_error_message }" );
