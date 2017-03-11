@@ -61,30 +61,30 @@
 <div class="modal common-modal fade" id="pratilipi-review-dialog" tabindex="-1" role="dialog" aria-labelledby="reviewLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-      	<button class="mdl-button mdl-js-button mdl-button--icon close" class="close" data-dismiss="modal" aria-label="Close">
-		  	<i class="material-icons">close</i>
-		</button>
-        <h4 class="modal-title" id="reviewLabel">${ _strings.rate_and_review }</h4>
-      </div>
-    <div class="modal-body">
-        <!-- ko foreach: ko.utils.range( 1, selectedReviewRating ) -->
-            <i class="material-icons material-icons-36 clickable-element" data-bind="click: $parent.changeReviewRating.bind($data, $data)">star</i>
-        <!-- /ko -->
-        <!-- ko foreach: ko.utils.range( 1, emptyReviewRating ) -->
-            <i class="material-icons material-icons-36 clickable-element" data-bind="click: $parent.changeReviewRating.bind($data, $data + $parent.selectedReviewRating() )">star_border</i>
-        <!-- /ko -->
-        <form action="#">
-            <div class="mdl-textfield mdl-js-textfield">
-                <textarea make-transliterable data-bind="textInput: newReviewContent" class="mdl-textfield__input" type="text" rows= "3" id="review" ></textarea>
-                <label class="mdl-textfield__label" for="review" data-bind="text: newReviewContent().length ? '' : '${ _strings.review_write_a_review }'"></label>
-            </div>
-        </form>
-    </div>
-    <div class="modal-footer">
-        <button data-bind="click: postNewReview, disable: isSaveDisabled" class="mdl-button mdl-js-button mdl-button--colored mdl-js-ripple-effect mdl-button--raised">${ _strings.review_submit_review }</button>
-        <button class="mdl-button mdl-js-button mdl-js-ripple-effect close"  data-dismiss="modal">${ _strings.cancel }</button>
-      </div>
+	    <div class="modal-header">
+	    	<button class="mdl-button mdl-js-button mdl-button--icon close" class="close" data-dismiss="modal" aria-label="Close">
+	  			<i class="material-icons">close</i>
+			</button>
+	      	<h4 class="modal-title" id="reviewLabel">${ _strings.rate_and_review }</h4>
+	    </div>
+	    <div class="modal-body">
+	        <!-- ko foreach: ko.utils.range( 1, selectedReviewRating ) -->
+	            <i class="material-icons material-icons-36 clickable-element" data-bind="click: $parent.changeReviewRating.bind($data, $data)">star</i>
+	        <!-- /ko -->
+	        <!-- ko foreach: ko.utils.range( 1, emptyReviewRating ) -->
+	            <i class="material-icons material-icons-36 clickable-element" data-bind="click: $parent.changeReviewRating.bind($data, $data + $parent.selectedReviewRating() )">star_border</i>
+	        <!-- /ko -->
+	        <form action="#">
+	            <div class="mdl-textfield mdl-js-textfield">
+	                <textarea make-transliterable data-bind="textInput: newReviewContent" class="mdl-textfield__input" type="text" rows= "3" id="review" ></textarea>
+	                <label class="mdl-textfield__label" for="review" data-bind="text: newReviewContent().length ? '' : '${ _strings.review_write_a_review }'"></label>
+	            </div>
+	        </form>
+	    </div>
+		<div class="modal-footer">
+		    <button class="mdl-button mdl-js-button mdl-js-ripple-effect close"  data-dismiss="modal">${ _strings.cancel }</button>
+			<button data-bind="click: postNewReview, disable: isSaveDisabled" class="mdl-button mdl-js-button mdl-button--colored mdl-js-ripple-effect mdl-button--raised">${ _strings.review_submit_review }</button>
+		</div>
     </div>
   </div>
 </div>  
