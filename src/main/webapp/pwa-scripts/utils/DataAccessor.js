@@ -135,9 +135,12 @@ var DataAccessor = function() {
 						function( response, status ) { processGetResponse( response, status, aCallBack ) } );
 	};
 
-	this.getNotificationList = function( resultCount, aCallBack ) {
+	this.getNotificationList = function( cursor, resultCount, aCallBack ) {
+		var params = {};
+		if( cursor != null ) params[ "cursor" ] = cursor;
+		if( resultCount != null ) params[ "resultCount" ] = resultCount;
 		httpUtil.get( API_PREFIX + NOTIFICATION_LIST_API, 
-						resultCount == null ? null : { "resultCount": resultCount }, 
+						params, 
 						function( response, status ) { processGetResponse( response, status, aCallBack ) } );
 	};
 

@@ -17,7 +17,7 @@ function( params ) {
 
 	this.fetchNotificationList = function() {
 		self.isLoading( true );
-		dataAccessor.getNotificationList( resultCount,
+		dataAccessor.getNotificationList( cursor, resultCount,
 				function( notificationListResponse ) {
 					var notificationList = notificationListResponse.notificationList;
 					self.updateNotificationList( notificationList );

@@ -44,7 +44,7 @@ function( params ) {
 		if( self.notificationsLoaded() == "LOADING" ) return;
 		self.notificationsLoaded( "LOADING" );
 		var resultCount = 9;
-		new DataAccessor().getNotificationList( resultCount, function( notificationResponse ) {
+		new DataAccessor().getNotificationList( null, resultCount, function( notificationResponse ) {
 			if( notificationResponse == null ) {
 				self.notificationsLoaded( "FAILED" );
 			} else {
