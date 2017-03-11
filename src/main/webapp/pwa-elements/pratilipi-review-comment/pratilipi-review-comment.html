@@ -14,7 +14,7 @@
 				<span data-bind="text: reviewCommentObject.likeCount()"></span>
 			<!-- /ko -->
 			<button  data-bind="click: likeDislikeReview" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-			    <i class="material-icons material-icons-16" role="presentation" data-bind="css: { pratilipiRed: reviewCommentObject.isLiked() }">thumb_up</i><span class="visuallyhidden">like comment</span>
+			    <i class="material-icons material-icons-16" role="presentation" data-bind="css: { mdl-color-text--primary: reviewCommentObject.isLiked() }">thumb_up</i><span class="visuallyhidden">like comment</span>
 			</button>
 			<span class="reply"></span>		
 			<button data-bind="click: $parents[1].showReplyState.bind( $parents[1] )" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">

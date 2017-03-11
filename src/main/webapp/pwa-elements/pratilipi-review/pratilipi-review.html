@@ -6,7 +6,7 @@
 			<a class="reviewer-name" data-bind="attr: { href: reviewObject.userProfilePageUrl }, text: reviewObject.user.displayName"></a>
 			<span data-bind="text: review_date" class="mdl-list__item-sub-title"></span>
 		</span>
-		<span class="mdl-list__item-secondary-content pratilipiRed" >
+		<span class="mdl-list__item-secondary-content mdl-color-text--primary" >
 			<span class="mdl-list__item-secondary-action" href="#">
 				<!-- ko foreach: ko.utils.range(1, filledStars) -->
 		  			<i class="material-icons material-icons-16">star</i>
@@ -27,7 +27,7 @@
 				<span data-bind="text: likeCount"></span>
 			<!-- /ko -->
 			<button  data-bind="click: likeDislikeReview" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-			  <i class="material-icons material-icons-16" role="presentation" data-bind="css: { pratilipiRed: isLiked() }">thumb_up</i><span class="visuallyhidden">like comment</span>
+			  <i class="material-icons material-icons-16" role="presentation" data-bind="css: { mdl-color-text--primary: isLiked() }">thumb_up</i><span class="visuallyhidden">like comment</span>
 			</button>
 			<span class="reply"></span>	
 			<!-- ko if: commentCount -->
