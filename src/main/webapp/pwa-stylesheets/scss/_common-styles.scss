@@ -100,15 +100,15 @@ body {
     /* fix problem when last visible word doesn't adjoin right side  */
     text-align: justify;
     /* place for '...' */
-    margin-right: -1em;
-    padding-right: 2em;
+   	/* margin-right: -1em; 
+    padding-right: 2em; */
 }
 
 /* create the ... */
 
 .see-more-text:before {
     /* points in the end */
-    content: '...';
+    /* content: '...'; */
     /* absolute position */
     position: absolute;
     /* set position to right bottom corner of block */
