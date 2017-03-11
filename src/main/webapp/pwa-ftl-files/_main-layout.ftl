@@ -11,4 +11,5 @@
 			<!-- ko component: "pratilipi-footer" --><!-- /ko -->
 		</div>
 	</div>
+	<div class="word-suggester"><div class="word-input"></div><div class="suggestions"><div class="suggestion"></div></div></div>
 </#macro>
