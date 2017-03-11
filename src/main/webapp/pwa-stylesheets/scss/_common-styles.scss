@@ -4,6 +4,11 @@ $pratilipi_red: #d0021b;
 * {
 	letter-spacing: 0 !important;
 }
+
+*:not(i) {
+	font-family: inherit !important;
+}
+
 .parent-container {
     padding: 0px;
     min-width: 300px;
