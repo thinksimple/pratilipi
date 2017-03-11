@@ -6,6 +6,7 @@
 
 	<link rel="stylesheet" href="https://d3cwrmdwk8nw1j.cloudfront.net/resource-all/pwa/css/material-icons.materialise.materialise_dropdown.bootstrap_modal.css"/>
 	<link rel="stylesheet" type="text/css" href="/pwa-stylesheets/css/bootstrap-dropdown.css" />
+	<link rel="stylesheet" type="text/css" href="/pwa-stylesheets/css/material.css" />
 	<link rel="stylesheet" href="/pwa-stylesheets/css/styles-new.css?58" />
 
 	<script src="/pwa-scripts/bootstrap-dropdown.min.js"></script>
