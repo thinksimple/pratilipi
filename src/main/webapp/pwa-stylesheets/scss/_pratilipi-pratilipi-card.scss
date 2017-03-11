@@ -48,7 +48,7 @@
 				i {
 					width: 20px;
 					height: 20px;
-					line-height: 16px;
+					line-height: 20px;
 				}
 			}
 			span.reads-holder {
@@ -62,10 +62,12 @@
 			padding: 8px 0;
 			color: #333;
 			.mdl-button {
-				min-width: 24px;
+				min-width: 40px;
+				height: 40px;
+				width: 40px;
 			}
 			.share-button {
-				margin-right: 16px;
+				margin-right: 8px;
 			}
 		}
 	}
