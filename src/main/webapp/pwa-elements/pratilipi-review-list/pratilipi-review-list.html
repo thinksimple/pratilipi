@@ -46,7 +46,7 @@
                 style="margin: 25px auto;"  
                 class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active display-block-unimportant">
             </div>
-            <li class="show-more" data-bind="if: areMoreReviews">
+            <li class="show-more" data-bind="visible: areMoreReviews() && !areMoreReviesLoading()">
                 <div>
                     <center>
                         <button data-bind="click: loadMoreReviews" class="mdl-button mdl-js-button mdl-button--accent mdl-js-ripple-effect">${ _strings.show_more }</button>
