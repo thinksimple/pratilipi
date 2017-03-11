@@ -1,93 +1,14 @@
+<#include "../pwa-ftl-files/functions.ftl">
+
 <!doctype html>
 <html lang="${ lang }">
 	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-		<title>Notifications</title>
-
-		<script src="https://d3cwrmdwk8nw1j.cloudfront.net/resource-all/pwa/js/ko.ko_mapping.js"></script>
-		<script src="/pwa-scripts/ko-binding-handlers-${ lang }.js"></script>
-
-		<#include "../pwa-ftl-files/functions.ftl">
-		<@register element="pratilipi-header-new" />
-		<@register element="pratilipi-write" />
-		<@register element="pratilipi-notification-list" />
-		<@register element="pratilipi-navigation-drawer" />
-		<@register element="pratilipi-navigation-aside" />
-		<@register element="pratilipi-footer" />
-
-
+		<@head_tags title="Notifications" />
+		<#include "../pwa-markup-meta/PratilipiAppShell.ftl" />
 		<@register element="pratilipi-notifications-page" />
-
-		<#include "../pwa-ftl-files/googleAnalytics.ftl">
-		<#include "../pwa-ftl-files/font.ftl">
 	</head>
-
 	<body>
-		<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-			<!-- ko component: "pratilipi-header-new" --><!-- /ko -->
-			<div class="mdl-layout__content" style="z-index: initial;">
-				<div class="mdl-components mdl-js-components">
-					<!-- ko component: "pratilipi-navigation-aside" --><!-- /ko -->
-					<div class="mdl-grid mobile-grid" style="flex-grow: 1;">
-						<!-- ko component: "pratilipi-notifications-page" --><!-- /ko -->
-					</div>
-				</div>
-				<!-- ko component: "pratilipi-footer" --><!-- /ko -->
-			</div>
-		</div>
+		<@pratilipi_main_layout element="pratilipi-notifications-page" />
 	</body>
-
-	<script src="https://d3cwrmdwk8nw1j.cloudfront.net/resource-all/pwa/js/jquery.js"></script>
-
-	<script src="/pwa-scripts/scripts-${ lang }.js?55"></script>
-	<script src="/pwa-scripts/app-${ lang }.js?48"></script>
-
-	<link rel="stylesheet" href="https://d3cwrmdwk8nw1j.cloudfront.net/resource-all/pwa/css/material-icons.materialise.materialise_dropdown.bootstrap_modal.css"/>
-	<link rel="stylesheet" type="text/css" href="/pwa-stylesheets/css/bootstrap-dropdown.css" />
-	<link rel="stylesheet" href="/pwa-stylesheets/css/styles-new.css?57" />
-
-	<script src="/pwa-scripts/bootstrap-dropdown.min.js"></script>
-	<script src="https://d3cwrmdwk8nw1j.cloudfront.net/resource-all/rangy_core.rangy_selectionsaverestore.min.js"></script>
-	<script src="/pwa-scripts/transliteration-suggester-${ lang }.js"></script>
-	<script src="/pwa-scripts/transliteration-app-${ lang }.js"></script>
-	<script>
-	$( "*[make-transliterable]" ).each( function() {
-		var $content_object = $( this );
-		this.content_transliteration_object = new transliterationApp( $content_object, "${ lang }" );
-		this.content_transliteration_object.init();
-	});
-	</script>
-
-	<script src="https://d3cwrmdwk8nw1j.cloudfront.net/resource-all/pwa/js/materialise.materialise_dropdown.bootstrap_modal.js"></script>
-
-	<style>
-		.word-suggester {
-			position: absolute;
-			padding: 10px;
-			border: whitesmoke 1px solid;
-			display: inline-block;
-			min-width: 100px;
-			display: none;
-			background: white;
-			z-index: 65538;
-			font-size: 16px;
-		}
-		
-		.word-input {
-			border: none;
-			display: inline-block;
-			border-right: 2px grey solid;
-		}
-		.suggestion {
-			cursor: pointer;
-			line-height: 24px;
-		}
-		.highlight-suggestion {
-			background: lightgrey;
-			font-weight: 700;
-		}
-	</style>
-
+	<@foot_tags />
 </html>
