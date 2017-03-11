@@ -111,7 +111,6 @@
 		.user-loading-spinner.mdl-spinner--single-color .mdl-spinner__layer-2,
 		.user-loading-spinner.mdl-spinner--single-color .mdl-spinner__layer-3,
 		.user-loading-spinner.mdl-spinner--single-color .mdl-spinner__layer-4 {
-			border-color: #d0021b;
 			.mdl-spinner__circle {
 				border-width: 2px !important;
 			}
@@ -209,58 +208,11 @@
 		}
 
 		#notificationsBody {
-
 			padding: 0px !important;
-
-			ul {
-				list-style: none;
-				top: 0;
-				left: 0;
-				height: auto;
-				width: auto;
-				min-width: 124px;
-				padding: 0;
-				margin: 0;
-				min-height: 50px;
-				max-height: 64vh;
-				overflow-y: scroll;
-				margin-top: -1px;
-
-				li {
-					opacity: 1!important;
-					height: auto;
-					line-height: 1.4em;
-					padding: 12px 16px;
-					border-top: 1px solid rgba(0,0,0,.12);
-
-					a.notification-message {
-						border-radius: 0px;
-						span.notification-display-image {
-							float: left; 
-							margin-right: 8px;
-							img {
-								width: 48px; 
-								height: 48px;
-							}
-						}
-						span.notification-message-holder {
-							float: left; 
-							margin-right: 8px;
-							span.notification-meta {
-								display: block; 
-								margin-top: 8px;
-								font-size: 13px;
-							}
-						}
-						span.notification-source-image {
-							float: right;
-							img {
-								width: 48px;
-							}
-						}
-					}
-				}
-			}
+			min-height: 50px;
+			max-height: 64vh;
+			overflow-y: scroll;
+			margin-top: -1px;
 		}
 
 		#notificationFooter {
