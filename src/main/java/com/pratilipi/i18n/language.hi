@@ -428,23 +428,23 @@ pratilipi_app_launched_website_strip = प्रतिलिपि का मो
 pratilipi_app_click_download = ऐप डाउनलोड करें
 
 # Notification Settings
-notification_settings = Notification Settings
-email_frequency = Email Frequency
-email_frequency_immediate = Immediately
-email_frequency_daily = Daily
-email_frequency_weekly = Weekly
-email_frequency_monthly = Monthly
-email_frequency_never = Never
-notification_group_content = Content
-option_new_review =  New Review 
-option_new_comment =  New Comment 
-option_like_review =  Like on review 
-option_like_comment =  New Like on Comment 
-notification_group_network = Network
-option_new_follower = New Follower
-option_pratilipi_published_follower =  New Content by people you follow 
-option_pratilipi_updates =  Pratilipi Updates and Offers 
-notification_settings_save_changes = Save Changes
+notification_settings = नोटिफिकेशन सेटिंग 
+email_frequency =  ईमेल प्राप्त करें
+email_frequency_immediate = तुरंत 
+email_frequency_daily = रोज 
+email_frequency_weekly =  साप्ताहिक 
+email_frequency_monthly = प्रति माह 
+email_frequency_never = कभी नहीं 
+notification_group_content =  रचना के बारे में 
+option_new_review = नयी टिप्पणी 
+option_new_comment =  नये जवाब 
+option_like_review =   टिप्पणी के पसंद होने पर 
+option_like_comment =  जवाब के पसंद होने पर 
+notification_group_network = मित्र मंडल संबंधित 
+option_new_follower = नये फॉलोवर के जुड़ने पर 
+option_pratilipi_published_follower =  फॉलोवर के द्वारा नयी रचना प्रकाशित करने पर 
+option_pratilipi_updates =  प्रतिलिपि की ओर से सुचना और सुझाव 
+notification_settings_save_changes = बदलाव सुरक्षित करें 
 
 #Whatsapp share messages
 whatsapp_read_unlimited_stories = भारतीय भाषाओँ में अनगिनत रचनाएं पढ़ें, लिखें और दोस्तों से साझा करें, पूर्णत: नि:शुल्क
