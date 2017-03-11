@@ -8,7 +8,7 @@
 	<#include "_google-analytics.ftl">
 	<#include "_font-styles.ftl">
 	<#if include_app_shell?? && include_app_shell>
-		<@register element="pratilipi-header-new" />
+		<@register element="pratilipi-header" />
 		<@register element="pratilipi-write" />
 		<@register element="pratilipi-notification-list" />
 		<@register element="pratilipi-navigation-drawer" />

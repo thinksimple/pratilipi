@@ -1,22 +1,6 @@
 function( params ) {
 	var self = this;
-	this.languageList = [
-		{ value: "TAMIL", text:  "தமிழ்"},
-		{ value: "MALAYALAM", text: "മലയാളം"},
-		{ value: "MARATHI", text: "मराठी"},
-		{ value: "BENGALI", text:  "বাংলা"},
-		{ value: "HINDI", text:  "हिंदी"},
-		{ value: "GUJARATI", text:  "ગુજરાતી"},
-		{ value: "TELUGU", text:  "తెలుగు"},
-		{ value: "KANNADA", text: "ಕನ್ನಡ"}
-	];
-	this.currentLanguage = ko.observable( "${ language }" );
 	this.searchQuery = ko.observable();
-
-	this.languageChangeHandler = function() {
-		window.location = ( "http://" + self.currentLanguage() + ".pratilipi.com" );
-	};
-
 	this.search = function( formElement ) {
 		 if( self.searchQuery() && self.searchQuery().trim().length ) {
 			  var search_url = "/search?q=" + self.searchQuery();
@@ -29,25 +13,21 @@ function( params ) {
 			componentHandler.upgradeAllRegistered();
 		}
 	  document.querySelector( '.mdl-layout' ).MaterialLayout.toggleDrawer();
-	}
+	};
 
-	/* Notifications */
+	/* Loading Notifications */
 	var notificationContainer = $( "header.pratilipi-header #notificationContainer" );
 	var notificationLink = $( "header.pratilipi-header #notificationLink" );
 	notificationLink.click( function() {
-		if( ! appViewModel.user.isGuest() ) {
-			notificationContainer.fadeToggle(50);
-			resetFbNotificationCount();
-		} else {
-			window.location.href = "/login?retUrl=" + encodeURIComponent( "/notifications" );
-		}
+		notificationContainer.fadeToggle(50);
+		resetFbNotificationCount();
 		return false;
 	});
 
 	$( document ).click( function() { notificationContainer.hide(); } );
 	notificationContainer.click( function(e) { e.stopPropagation(); } );
 
-	/* Loading Notifications */
+
 	this.notificationsLoaded = ko.observable( "INITIAL" );
 	this.notificationList = ko.observableArray( [] );
 	/*
@@ -61,26 +41,33 @@ function( params ) {
 	 * */
 
 	this.updateNotifications = function() {
-		if( (  ! appViewModel.user.isGuest() && appViewModel.notificationCount() != 0 ) 
-				|| ( self.notificationsLoaded() == "INITIAL" && appViewModel.notificationCount() == 0 ) ) {
-			if( self.notificationsLoaded() == "LOADING" ) return;
-			self.notificationsLoaded( "LOADING" );
-			var dataAccessor = new DataAccessor();
-			dataAccessor.getNotificationList( function( notificationResponse ) {
+		if( self.notificationsLoaded() == "LOADING" ) return;
+		self.notificationsLoaded( "LOADING" );
+		var resultCount = 9;
+		new DataAccessor().getNotificationList( null, resultCount, function( notificationResponse ) {
+			if( notificationResponse == null ) {
+				self.notificationsLoaded( "FAILED" );
+			} else {
 				var notificationList = notificationResponse.notificationList;
 				self.notificationList( notificationList );
-				self.notificationsLoaded( notificationResponse == null ? "FAILED" : ( notificationList.length > 0 ? "LOADED" : "LOADED_EMPTY" ) );
-			});
-		}
+				self.notificationsLoaded( notificationList.length > 0 ? "LOADED" : "LOADED_EMPTY" );
+			}
+		});
 	};
 
-	this.computedNotificationCount = ko.computed( function() {
-		setTimeout( self.updateNotifications, 0 );
-		if( appViewModel.notificationCount() < 1 ) {
-			notificationLink.removeClass( "mdl-badge" );
-			return "";
+	this.userObserver = ko.computed( function() {
+		if( ! appViewModel.user.isGuest() ) {
+			setTimeout( self.updateNotifications, 0 );
 		}
-		notificationLink.addClass( "mdl-badge" );
-		return appViewModel.notificationCount() < 100 ? appViewModel.notificationCount() : "99+";
+		if( ! appViewModel.user.isGuest() && getUrlParameter( 'action' ) == "write" ) {
+			$( '#pratilipiWrite' ).modal();
+		}
 	}, this );
+
+	this.notificationCountObserver = ko.computed( function() {
+		if( (  ! appViewModel.user.isGuest() && appViewModel.notificationCount() != 0 ) ) {
+			setTimeout( self.updateNotifications, 0 );
+		}
+	}, this );
+
 }

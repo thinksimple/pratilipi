@@ -1,121 +1,178 @@
-<div class="secondary-500" id="header-card">
-	<div class="parent-container">
-		<div class="vertical-align container">
-			<div class="pratilipi-logo">
-				<a href="/">
-					<span class="sprites-icon pratilipi-logo-icon"></span>
-				</a>
-			</div>
-			<div class="pratilipi-text">
-				<select data-bind="options: languageList,
-					value: currentLanguage,
-					optionsText: function(item) { return item.text },
-					optionsValue: function(item) { return item.value },
-					event:{ change: languageChangeHandler }" 
-					class="form-control focus-outline-none" 
-					id="select-language" 
-					style="box-shadow:none; padding:0px; border:none; color: #d0021b; height:30px; font-size: 18px; width: auto;">
-				</select>
-			</div>
-			<div class="search-bar">
-				<form action="javascript:void(0);" data-bind="submit: search" style="margin-bottom: 0;">
-					<button style="position: absolute; top: 10%; right: 0; z-index: 1; cursor: pointer;" class="mdl-button mdl-js-button mdl-button--icon">
-						<div class="sprites-icon header-sprite-icon search-sprite-icon" ></div>
-					</button>
-					<div data-bind="click: openMenuNavigationDrawer" class="sprites-icon header-sprite-icon menu-search-sprite-icon" style="position: absolute;top: 15%; z-index: 1;"></div>
-					<input class="form-control horizontal-form-input focus-outline-none" placeholder="${ _strings.search_bar_help }" data-bind="textInput: searchQuery">
-				</form>
-			</div>
-			<div style="cursor: pointer;" class="button-holder menu-icon" data-bind="click: openMenuNavigationDrawer">
-				<span class="sprites-icon header-sprite-icon menu-sprite-icon"></span>
-			</div>
-			<div style="cursor: pointer;" class="button-holder" data-toggle="modal" data-target="#pratilipiWrite">
-				<span class="sprites-icon header-sprite-icon edit-icon"></span>
-			</div>
-			<div class="button-holder">
-				<span class="sprites-icon header-sprite-icon library-books-icon"></span>
-			</div>
-			<div class="button-holder">
-				<span style="margin-right: 0;" 
-						id="notificationLink" 
-						class="material-icons mdl-badge mdl-badge--overlap mdl-badge--no-background"
-						data-bind="attr: { 'data-badge': computedNotificationCount }">notifications</span>
-				<div id="notificationContainer">
-					<div id="notificationTitle">${ _strings.notification_notifications }</div>
-					<div id="notificationsBody" class="notifications">
-						<!-- <div data-bind="visible: notificationsLoaded() == 'LOADING'"
-							class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></div> -->
-						<!-- <div data-bind="visible: notificationsLoaded() == 'LOADED_EMPTY'">
-								There are no notifications for you at this point of time. Please check later.
-							</div>  -->
-						<!-- <div data-bind="visible: notificationsLoaded == 'FAILED'">
-								Notifications failed to load. Please click here to re-load the notifications.
-							</div> -->
-						<ul data-bind="foreach: {data: notificationList, as: 'notification'}">
-							<li class="mdl-menu__item">
-								<a class="notification-message" data-bind="attr: {'href': sourceUrl}">
+<header class="pratilipi-header mdl-layout__header">
+	<div class="mdl-layout__header-row parent-container row-one">
+		<a href="/">
+			<span class="sprites-icon pratilipi-logo-icon"></span>
+		</a>
+		<span class="pratilipi-text hidden-xs">${ _strings.pratilipi }</span>
+		<button id="pratilipi-header-pratilipi-dropdown" class="mdl-button mdl-js-button mdl-button--icon hidden-xs">
+			<i class="material-icons">arrow_drop_down</i>
+		</button>
+		<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect language-ul" for="pratilipi-header-pratilipi-dropdown">
+			<#list languageList as aLang>
+				<#if aLang.value == language>
+					<li class="mdl-menu__item" style="background: #eee;">${ aLang.name }</li>
+				<#else>
+					<li class="mdl-menu__item" onclick="window.location = '${ aLang.hostName }'; return false;">${ aLang.name }</li>
+				</#if>
+			</#list>
+		</ul>
+
+		<div class="header-icons-holder menu-icon-holder">
+			<button data-bind="event: { click: openMenuNavigationDrawer }" class="mdl-button mdl-js-button mdl-button--icon">
+				<i class="material-icons">menu</i>
+			</button>
+		</div>
+		<div class="search-bar-holder hidden-xs">
+			<form action="javascript:void(0);" data-bind="submit: search">
+				<div class="mdl-textfield mdl-js-textfield">
+					<input class="mdl-textfield__input" type="text" id="pratilipi-header-search" data-bind="textInput: searchQuery" />
+					<div class="mdl-textfield__label" for="pratilipi-header-search">
+						${ _strings.search_bar_help }
+					</div>
+					<i data-bind="event: { click: search }" class="material-icons search">search</i>
+				</div>
+			</form>
+		</div>
+		<div class="header-icons-holder">
+			<button data-bind="visible: ! appViewModel.user.isGuest()"
+				data-toggle="modal" data-target="#pratilipiWrite" class="mdl-button mdl-js-button mdl-button--icon">
+				<i class="material-icons">create</i>
+			</button>
+			<a data-bind="{ visible: appViewModel.user.isGuest(), attr: { 'href': '/login?retUrl=' + encodeURIComponent( window.location.pathname + '?action=write' ) } }"
+				class="mdl-button mdl-js-button mdl-button--icon">
+				<i class="material-icons">create</i>
+			</a>
+		</div>
+		<div class="header-icons-holder">
+			<a data-bind="attr: { 'href': appViewModel.user.isGuest() ? '/login?retUrl=%2Flibrary' : '/library' }" 
+				class="mdl-button mdl-js-button mdl-button--icon">
+				<i class="material-icons">library_books</i>
+			</a>
+		</div>
+		<div class="header-icons-holder">
+			<a data-bind="{ attr: { 'href': '/login?retUrl=%2Fnotifications' },
+							visible: appViewModel.user.isGuest() }" 
+				class="mdl-button mdl-js-button mdl-button--icon">
+				<i class="material-icons">notifications</i>
+			</a>
+			<a data-bind="{ attr: { 'href': '/notifications' },
+							visible: ! appViewModel.user.isGuest() }" 
+				class="mdl-button mdl-js-button mdl-button--icon hidden-sm hidden-md hidden-lg">
+				<i class="material-icons">notifications</i>
+			</a>
+			<span id="notificationLink"
+					style="margin-top: 4px;" 
+					class="material-icons mdl-badge--overlap mdl-badge--no-background hidden-xs"
+					data-bind="{ attr: { 'data-badge': ( appViewModel.notificationCount() > 99 ? '99+' : appViewModel.notificationCount() ) }, 
+								css: { 'mdl-badge': ( appViewModel.notificationCount() > 0 ) },
+								visible: ! appViewModel.user.isGuest() }">
+				<i class="material-icons">notifications</i>
+			</span>
+			<div id="notificationContainer">
+				<div id="notificationTitle">${ _strings.notification_notifications }</div>
+				<div id="notificationsBody" class="notifications">
+					<div style="margin: 25px auto;" data-bind="visible: notificationsLoaded() == 'LOADING'"
+						class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></div>
+					<div style="margin: 25px 15px;" data-bind="visible: notificationsLoaded() == 'LOADED_EMPTY'">
+						${ _strings.notifications_no_notifications }
+					</div>
+					<div style="margin: 25px 15px;" data-bind="visible: notificationsLoaded() == 'FAILED'">
+						<a style="cursor: pointer;" data-bind="click: updateNotifications">
+							${ _strings.notifications_load_failed }
+						</a> 
+					</div>
+					<ul data-bind="{ foreach: {data: notificationList, as: 'notification'},
+									 visible: notificationsLoaded() == 'LOADED' }">
+						<!--ko if: notification.message -->
+							<li class="mdl-menu__item" 
+								data-bind="style: { 'background-color': notification.state == 'UNREAD' ? '#f7f7f7' : '#fff' }">
+								<a class="notification-message" data-bind="attr: { 'href': notification.sourceUrl }">
 									<span style="display: flex;">
 										<span class="notification-display-image">
-											<img class="img-circle" data-bind="attr: {src: displayImageUrl + ( displayImageUrl.indexOf('?') ? '&' : '?' ) + 'width=96'}" />
+											<img class="img-circle" data-bind="attr: { src: getImageUrl( notification.displayImageUrl, 48 ) }" />
 										</span>
 										<span class="notification-message-holder">
-											<span style="white-space: normal;" data-bind="html: message"></span>
+											<span style="white-space: normal; font-size: 13px;" data-bind="html: notification.message"></span>
 											<br/>
 											<span class="notification-meta">
 												<span class="material-icons md-18" style="float: left;">person</span>
-												<span class="text-muted" data-bind="text: convertDate( lastUpdatedMillis )"></span>
+												<span class="text-muted" data-bind="text: convertDate( notification.lastUpdatedMillis )"></span>
 											</span>
 										</span>
-										<span class="notification-source-image" data-bind="if: sourceImageUrl">
-											<img data-bind="attr: {src: sourceImageUrl + ( sourceImageUrl.indexOf('?') == -1 ? '?' : '&' ) + 'width=48'}" />
+										<span class="notification-source-image" data-bind="if: notification.sourceImageUrl">
+											<img data-bind="attr: { src: getImageUrl( notification.sourceImageUrl, 48 ) }" />
 										</span>
 									</span>
 								</a>
 							</li>
-						</ul>
-					</div>
-					<div id="notificationFooter"><a href="/notifications">${ _strings.view_more }</a></div>
+						<!--/ko-->
+					</ul>
 				</div>
-			</div>
-			<div class="sign-in-button button-inside-container">
-				<button class="btn btn-primary">
-					<div class="sprites-icon header-sprite-icon account-circle-icon"></div>
-					<span>${ _strings.user_sign_in }</span>
-				</button>
-			</div>
-			<div class="button-holder sign-in-text">
-				<span class="sprites-icon header-sprite-icon account-circle-icon"></span>
+				<div id="notificationFooter"><a href="/notifications">${ _strings.view_more }</a></div>
 			</div>
 		</div>
-		<div class="sign-in-button button-outside-container">
-			<button class="btn btn-primary">
-				<div class="sprites-icon header-sprite-icon account-circle-icon"></div>
+		<div class="desktop-signin-button-holder hidden-xs">
+			<div data-bind="visible: appViewModel.user.userId() == null" style="margin: auto; padding-left: 8px;">
+				<span class="user-loading-spinner mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></span>
+			</div>
+			<a data-bind="{ attr: { 'href': '/login?retUrl=' + encodeURIComponent( window.location.pathname ) }, 
+							visible: appViewModel.user.userId() != null && appViewModel.user.isGuest() }" 
+				class="sign-in-button mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect hidden-xs">
+				<i class="material-icons">account_circle</i>
 				<span>${ _strings.user_sign_in }</span>
-			</button>
+			</a>
+			<a data-bind="{ visible: appViewModel.user.userId() != null && !appViewModel.user.isGuest(),   
+							attr: { 'href': appViewModel.user.profilePageUrl() } }"
+				class="user-profile hidden-xs">
+				<img class="img-circle user-dp" 
+					data-bind="attr: { 'src': getImageUrl( appViewModel.user.profileImageUrl(), 48 ) }" />
+				<span data-bind="text: appViewModel.user.displayName()"></span>
+			</a>
+		</div>
+		<div class="header-icons-holder visible-xs">
+			<div data-bind="visible: appViewModel.user.userId() == null" style="margin: auto; padding-left: 8px;">
+				<span class="user-loading-spinner mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></span>
+			</div>
+			<a data-bind="{ visible: appViewModel.user.userId() != null && appViewModel.user.isGuest(), 
+						attr: { 'href': '/login?retUrl=' + encodeURIComponent( window.location.pathname ) } }" 
+				class="mdl-button mdl-js-button mdl-button--icon">
+				<i class="material-icons">account_circle</i>
+			</a>
+			<a data-bind="{ visible: appViewModel.user.userId() != null && !appViewModel.user.isGuest(), 
+						attr: { 'href': appViewModel.user.profilePageUrl() } }" 
+				class="mdl-button mdl-js-button mdl-button--icon">
+				<img class="img-circle user-dp" data-bind="attr: { 'src': getImageUrl( appViewModel.user.profileImageUrl(), 48 ) }" />
+			</a>
 		</div>
 	</div>
-</div>
-<div class="pratilipi-search-bar visible-xs">
-	<div class="flex-container">
-		<div class="" style="float: left; cursor: pointer; padding-top: 0; align-self: center; position: relative;">
-			<select data-bind="options: languageList,
-				value: currentLanguage,
-				optionsText: function(item) { return item.text },
-				optionsValue: function(item) { return item.value },
-				event:{ change: languageChangeHandler }" 
-				class="form-control focus-outline-none" 
-				id="select-language" 
-				style="box-shadow:none; padding:0px; border:none;color: #d0021b; height:30px; font-size: 18px;">
-			</select>
-		</div>
-		<form data-bind="submit: search" 
-				action="javascript:void(0);" 
-				style="position: relative; overflow: hidden; margin-bottom: 8px; flex-grow: 1; margin-left: 4px; margin-right: 8px;">
-			<button style="position: absolute;top: 10%;right: 0;z-index: 1;cursor: pointer;" class="mdl-button mdl-js-button mdl-button--icon">
-				<div class="sprites-icon header-sprite-icon search-sprite-icon" style="position: absolute; top: 15%; right: 0; z-index: 1;"></div>
-			</button>
-			<input class="form-control horizontal-form-input focus-outline-none" placeholder="Search for stories" data-bind="textInput: searchQuery">
+
+	<div class="mdl-layout__header-row parent-container row-two hidden-sm hidden-md hidden-lg">
+		<span class="pratilipi-text">${ _strings.pratilipi }</span>
+		<button id="pratilipi-header-pratilipi-dropdown-mobile" class="mdl-button mdl-js-button mdl-button--icon">
+			<i class="material-icons">arrow_drop_down</i>
+		</button>
+		<ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect language-ul" for="pratilipi-header-pratilipi-dropdown-mobile">
+			<#list languageList as aLang>
+				<#if aLang.value == language>
+					<li class="mdl-menu__item" style="background: #eee;">${ aLang.name }</li>
+				<#else>
+					<li class="mdl-menu__item" onclick="window.location = '${ aLang.hostName }'; return false;">${ aLang.name }</li>
+				</#if>
+			</#list>
+		</ul>
+		<form action="javascript:void(0);" data-bind="submit: search">
+			<div class="mdl-textfield mdl-js-textfield">
+				<input class="mdl-textfield__input" type="text" id="pratilipi-header-search-mobile" data-bind="textInput: searchQuery" />
+				<div class="mdl-textfield__label" for="pratilipi-header-search-mobile">
+					${ _strings.search }
+				</div>
+				<i data-bind="event: { click: search }" class="material-icons search">search</i>
+			</div>
 		</form>
-		<div style="clear: both"></div>
 	</div>
-</div>
+
+</header>
+
+<!-- ko component: "pratilipi-write" --><!-- /ko -->
+<!-- ko component: "pratilipi-navigation-drawer" --><!-- /ko -->
+

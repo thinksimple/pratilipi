@@ -1,6 +1,6 @@
 <#macro pratilipi_main_layout element>
 	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-		<!-- ko component: "pratilipi-header-new" --><!-- /ko -->
+		<!-- ko component: "pratilipi-header" --><!-- /ko -->
 		<div class="mdl-layout__content" style="z-index: initial;">
 			<div class="mdl-components mdl-js-components">
 				<!-- ko component: "pratilipi-navigation-aside" --><!-- /ko -->
