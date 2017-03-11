@@ -1,0 +1,25 @@
+<ul data-bind="foreach: { data: $parent.notificationList, as: 'notification' }">
+	<!--ko if: notification.message -->
+		<li class="mdl-menu__item" 
+			data-bind="style: { 'background-color': notification.state == 'UNREAD' ? '#f7f7f7' : '#fff' }">
+			<a class="notification-message" data-bind="attr: { 'href': notification.sourceUrl }">
+				<span style="display: flex;">
+					<span class="notification-display-image">
+						<img class="img-circle" data-bind="attr: { src: getImageUrl( notification.displayImageUrl, 48 ) }" />
+					</span>
+					<span class="notification-message-holder">
+						<span style="white-space: normal; font-size: 13px;" data-bind="html: notification.message"></span>
+						<br/>
+						<span class="notification-meta">
+							<span class="material-icons md-18" style="float: left;">person</span>
+							<span class="text-muted" data-bind="text: convertDate( notification.lastUpdatedMillis )"></span>
+						</span>
+					</span>
+					<span class="notification-source-image" data-bind="if: notification.sourceImageUrl">
+						<img data-bind="attr: { src: getImageUrl( notification.sourceImageUrl, 48 ) }" />
+					</span>
+				</span>
+			</a>
+		</li>
+	<!--/ko-->
+</ul>

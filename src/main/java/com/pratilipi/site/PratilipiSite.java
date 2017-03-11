@@ -195,10 +195,15 @@ public class PratilipiSite extends HttpServlet {
 				templateName = ( basicMode ? "LibraryBasic.ftl" : "Library.ftl" );
 
 			} else if( uri.equals( "/notifications" ) ) {
-				dataModel = createDataModelForNotificationsPage( filterLanguage, basicMode );
-				if( request.getParameter( "action" ) != null )
-					dataModel.put( "action", request.getParameter( "action" ) );
-				templateName = ( basicMode ? "NotificationBasic.ftl" : "Notification.ftl" );
+				if( loadPWA ) {
+					dataModel = new HashMap<>();
+					templateName = "NotificationsPWA.ftl";
+				} else {
+					dataModel = createDataModelForNotificationsPage( filterLanguage, basicMode );
+					if( request.getParameter( "action" ) != null )
+						dataModel.put( "action", request.getParameter( "action" ) );
+					templateName = ( basicMode ? "NotificationBasic.ftl" : "Notification.ftl" );	
+				}
 
 			} else if( uri.equals( "/search" ) ) {
 				if( request.getQueryString() != null ) {
