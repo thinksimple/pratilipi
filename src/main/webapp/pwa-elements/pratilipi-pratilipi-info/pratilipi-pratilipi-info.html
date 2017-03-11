@@ -56,7 +56,7 @@
                     </ul>
                     </div>
                     <div class="css-author-name mdl-card__title padding-bottom-zero">
-                        <a class="black-color" style="margin: 0; font-size: 20px;" data-bind="attr: { href: pratilipi.author.pageUrl() }, text: pratilipi.author.name()"></a>
+                        <a style="margin: 0; color: #000; font-size: 20px;" data-bind="attr: { href: pratilipi.author.pageUrl() }, text: pratilipi.author.name()"></a>
                     </div>
                     <div class="mdl-card__supporting-text font-16 padding-bottom-zero">
                     	<p class="font-16 margin-bottom-8" data-bind="visible: pratilipi.averageRating() > 0">
@@ -137,7 +137,7 @@
                 <div class="mdl-cell mdl-cell--12-col" style="display: flex; align-items: center; justify-content: space-between;">
                     <span style="display: flex; align-items: center;">
                         <img data-bind="attr: { src: getImageUrl( author.profileImageUrl(), 48 ) }" class="mdl-list__item-avatar">
-                        <a style="margin: 10px; font-weight: 700;" data-bind="attr: { href: author.pageUrl() }, text: author.name()"></a>
+                        <a class="black-color" style="margin: 10px; font-weight: 700;" data-bind="attr: { href: author.pageUrl() }, text: author.name()"></a>
                     </span>
                     <button data-bind="{ click: followAuthor, 
                                         text: userAuthor.following() ? '${ _strings.author_unfollow }': '${ _strings.author_follow }',
