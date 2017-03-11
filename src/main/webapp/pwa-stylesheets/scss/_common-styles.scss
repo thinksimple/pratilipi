@@ -98,7 +98,6 @@ body {
     /* max-height = line-height (1.2) * lines max number (3) */
     max-height: $line_height_p*3;
     /* fix problem when last visible word doesn't adjoin right side  */
-    text-align: justify;
     /* place for '...' */
    	/* margin-right: -1em; 
     padding-right: 2em; */

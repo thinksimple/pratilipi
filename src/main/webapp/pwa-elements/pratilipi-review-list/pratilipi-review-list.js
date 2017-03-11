@@ -119,7 +119,7 @@ function( params ) {
     this.postNewReview = function() {
         this.isSaveInProgress( true );
         this.dataAccessor.createOrUpdateReview( self.pratilipiId, self.selectedReviewRating(), self.newReviewContent(), this.postReviewSuccessCallback, this.postReviewErrorCallback );
-    }
+    };
     
     this.sendReviewPostAjaxRequest = function() { /* delete this after checking */
         
