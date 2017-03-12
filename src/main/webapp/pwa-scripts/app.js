@@ -15,7 +15,7 @@ var AppViewModel = function() {
 	};
 	this.user = ko.mapping.fromJS( defaultUser, {}, this.user );
 	this.notificationCount = ko.observable( -1 );
-	this.notificationSettings = ko.observable( {} );
+	this.userPreferences = ko.observable( {} );
 };
 
 var appViewModel = new AppViewModel();
@@ -42,7 +42,7 @@ var initFirebase = function() {
 				var userPreferencesNode = firebase.database().ref( "PREFERENCE" ).child( fbUser.uid );
 				userPreferencesNode.on( 'value', function( snapshot ) {
 					var userPreferences = snapshot.val() != null ? snapshot.val() : {};
-					appViewModel.notificationSettings( userPreferences );
+					appViewModel.userPreferences( userPreferences );
 				});
 			} else {
 				firebase.auth().signInWithCustomToken( appViewModel.user.firebaseToken() );
@@ -55,6 +55,15 @@ var initFirebase = function() {
 var resetFbNotificationCount = function() {
 	var node = firebase.database().ref( "NOTIFICATION" ).child( appViewModel.user.userId() ).child( "newNotificationCount" );
 	node.set( 0 );
+};
+
+var setNotificationPreferences = function( preferences ) {
+	var node = firebase.database().ref( "PREFERENCE" ).child( appViewModel.user.userId() );
+	node.set({
+		"emailFrequency": preferences[ "emailFrequency" ],
+		"notificationSubscriptions": preferences[ "notificationSubscriptions" ],
+		"lastUpdated": firebase.database.ServerValue.TIMESTAMP 
+	});
 };
 
 var updateUser = function() {
