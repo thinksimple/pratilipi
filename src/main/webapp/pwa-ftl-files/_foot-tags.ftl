@@ -2,7 +2,7 @@
 	<script src="https://d3cwrmdwk8nw1j.cloudfront.net/resource-all/pwa/js/jquery.js"></script>
 
 	<script src="/pwa-scripts/scripts-${ lang }.js?56"></script>
-	<script src="/pwa-scripts/app-${ lang }.js?48"></script>
+	<script src="/pwa-scripts/app-${ lang }.js?49"></script>
 
 	<link rel="stylesheet" href="https://d3cwrmdwk8nw1j.cloudfront.net/resource-all/pwa/css/material-icons.materialise.materialise_dropdown.bootstrap_modal.css"/>
 	<link rel="stylesheet" type="text/css" href="/pwa-stylesheets/css/bootstrap-dropdown.css" />
