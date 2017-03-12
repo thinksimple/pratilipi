@@ -1,25 +1,37 @@
-<ul class="pratilipi-notification-list" data-bind="foreach: { data: $parent.notificationList, as: 'notification' }">
-	<!--ko if: notification.message -->
-		<li class="mdl-menu__item" 
-			data-bind="style: { 'background-color': notification.state == 'UNREAD' ? '#f7f7f7' : '#fff' }">
-			<a class="notification-message" data-bind="attr: { 'href': notification.sourceUrl }">
-				<span style="display: flex;">
-					<span class="notification-display-image">
-						<img class="img-circle" data-bind="attr: { src: getImageUrl( notification.displayImageUrl, 48 ) }" />
-					</span>
-					<span class="notification-message-holder">
-						<span class="font-m" data-bind="html: notification.message"></span>
-						<br/>
-						<span class="notification-meta">
-							<!-- <span class="material-icons md-18" style="float: left;">person</span> -->
-							<span class="text-muted font-s" data-bind="text: convertDate( notification.lastUpdatedMillis )"></span>
+<div class="mobile-card" data-bind="visible: ! initialDataLoaded()" style="margin: 0;">
+	<span class="initial-data-loading-spinner mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></span>
+</div>
+<ul class="pratilipi-notification-list" data-bind="visible: initialDataLoaded()">
+	<!-- ko foreach: { data: notificationList, as: 'notification' } -->
+		<!--ko if: notification.message -->
+			<li class="mdl-menu__item"
+				data-bind="css: { 'notif-unread': ( notification.state == 'UNREAD' ) }">
+				<span class="notification-message">
+					<a data-bind="attr: { 'href': notification.sourceUrl }">
+						<span style="display: flex;">
+							<span class="notification-display-image">
+								<img class="img-circle" data-bind="attr: { src: getImageUrl( notification.displayImageUrl, 48 ) }" />
+							</span>
+							<span class="notification-message-holder">
+								<span class="font-m" data-bind="html: notification.message"></span>
+								<br/>
+								<span class="notification-meta">
+									<span class="text-muted font-s" data-bind="text: convertDate( notification.lastUpdatedMillis )"></span>
+								</span>
+							</span>
+							<span class="notification-source-image" data-bind="if: notification.sourceImageUrl">
+								<img data-bind="attr: { src: getImageUrl( notification.sourceImageUrl, 48 ) }" />
+							</span>
 						</span>
-					</span>
-					<span class="notification-source-image" data-bind="if: notification.sourceImageUrl">
-						<img data-bind="attr: { src: getImageUrl( notification.sourceImageUrl, 48 ) }" />
-					</span>
+					</a>
 				</span>
-			</a>
-		</li>
+			</li>
+		<!--/ko-->
 	<!--/ko-->
+	<li class="mdl-menu__item show-more">
+		<button data-bind="{ click: fetchNotificationList, visible: ! isLoading() }" class="mdl-button mdl-js-button">${ _strings.view_more }</button>
+		<div class="spinner-holder" data-bind="visible: isLoading()" >
+			<span class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></span>
+		</div>
+	</li>
 </ul>

@@ -1,9 +1,4 @@
-<div class="mdl-cell mdl-cell--8-col-tablet mdl-cell--9-col mobile-card" data-bind="visible: ! initialDataLoaded()" style="margin: 0;">
-	<span class="initial-data-loading-spinner mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></span>
-</div>
-
-<div class="mdl-cell mdl-cell--8-col-tablet mdl-cell--9-col mobile-grid" 
-	data-bind="visible: initialDataLoaded()">
+<div class="mdl-cell mdl-cell--8-col-tablet mdl-cell--9-col mobile-grid">
 	<div class="mdl-card mdl-card-border mobile-card pratilipi-notifications-page">
 		<div class="notifications-header">
 			<span class="font-xl notification-heading">${ _strings.notification_notifications }</span>
@@ -11,6 +6,11 @@
 				<i class="material-icons">settings</i>
 			</span>
 		</div>
-		<!-- ko component: "pratilipi-notification-list" --><!-- /ko -->
+		<!-- ko component: {
+			name: "pratilipi-notification-list",
+			params: { resultCount: 9, 
+						includeShowMore: true }
+		} -->
+		<!-- /ko -->
 	</div>
 </div>
