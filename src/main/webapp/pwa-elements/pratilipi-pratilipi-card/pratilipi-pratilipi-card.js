@@ -12,14 +12,17 @@ function( params ) {
 	this.switchLibraryState = function() {
 		var dataAccessor = new DataAccessor();
 		self.libraryRequestOnFlight( true );
-		dataAccessor.addOrRemoveFromLibrary( self.pratilipi.pratilipiId(), ! self.pratilipi.addedToLib(), 
+		var addedToLib = self.pratilipi.addedToLib();
+		self.updatePratilipi( { "addedToLib": ! addedToLib } );
+		if( self.libraryPageBehaviour && addedToLib ) /* Toast only for remove action */
+			ToastUtil.toastCallBack( "${ _strings.removed_from_library }", 5000, "UNDO", self.switchLibraryState );
+		dataAccessor.addOrRemoveFromLibrary( self.pratilipi.pratilipiId(), ! addedToLib, 
 			function( pratilipi ) {
 				self.updatePratilipi( pratilipi );
 				self.libraryRequestOnFlight( false );
-				if( self.libraryPageBehaviour )
-					ToastUtil.toastCallBack( "${ _strings.success_generic_message }", 5000, "UNDO", self.switchLibraryState );
 			}, function( error ) {
 				self.libraryRequestOnFlight( false );
+				self.updatePratilipi( { "addedToLib": addedToLib } );
 				var message = "${ _strings.server_error_message }";
 				if( error[ "message" ] != null )
 					message = error[ "message" ];
