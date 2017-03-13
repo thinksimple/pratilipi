@@ -2,7 +2,7 @@ function( params ) {
 	var self = this;
 
 	var dataAccessor = new DataAccessor();
-	var libraryPageBehaviour = params.libraryPageBehaviour != null ? params.libraryPageBehaviour : false;
+	this.libraryPageBehaviour = params.libraryPageBehaviour != null ? params.libraryPageBehaviour : false;
 	this.pratilipi = params.pratilipi;
 	this.libraryRequestOnFlight = ko.observable( false );
 
@@ -22,7 +22,7 @@ function( params ) {
 			function( pratilipi ) {
 				self.updatePratilipi( pratilipi );
 				self.libraryRequestOnFlight( false );
-				if( libraryRequestOnFlight )
+				if( self.libraryPageBehaviour )
 					ToastUtil.toastCallBack( "${ _strings.success_generic_message }", 5000, "UNDO", self.addToOrRemoveFromLibrary );
 			}, function( error ) {
 				self.libraryRequestOnFlight( false );
