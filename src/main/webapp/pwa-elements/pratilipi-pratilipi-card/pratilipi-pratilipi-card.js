@@ -1,7 +1,6 @@
 function( params ) { 
 	var self = this;
 
-	var dataAccessor = new DataAccessor();
 	this.libraryPageBehaviour = params.libraryPageBehaviour != null ? params.libraryPageBehaviour : false;
 	this.pratilipi = params.pratilipi;
 	this.libraryRequestOnFlight = ko.observable( false );
@@ -10,20 +9,15 @@ function( params ) {
 		ko.mapping.fromJS( pratilipi, {}, self.pratilipi );
 	};
 
-	this.addToOrRemoveFromLibrary = function( vm, evt ) {
-		evt.stopPropagation();
-		if( appViewModel.user.isGuest() ) {
-			goToLoginPage(); 
-			return;
-		}
+	this.switchLibraryState = function() {
+		var dataAccessor = new DataAccessor();
 		self.libraryRequestOnFlight( true );
-		var addedToLib = self.pratilipi.addedToLib();
-		dataAccessor.addOrRemoveFromLibrary( self.pratilipi.pratilipiId(), ! addedToLib, 
+		dataAccessor.addOrRemoveFromLibrary( self.pratilipi.pratilipiId(), ! self.pratilipi.addedToLib(), 
 			function( pratilipi ) {
 				self.updatePratilipi( pratilipi );
 				self.libraryRequestOnFlight( false );
 				if( self.libraryPageBehaviour )
-					ToastUtil.toastCallBack( "${ _strings.success_generic_message }", 5000, "UNDO", self.addToOrRemoveFromLibrary );
+					ToastUtil.toastCallBack( "${ _strings.success_generic_message }", 5000, "UNDO", self.switchLibraryState );
 			}, function( error ) {
 				self.libraryRequestOnFlight( false );
 				var message = "${ _strings.server_error_message }";
@@ -31,6 +25,15 @@ function( params ) {
 					message = error[ "message" ];
 				ToastUtil.toast( message, 3000, true );
 		});
+	};
+
+	this.addToOrRemoveFromLibrary = function( vm, evt ) {
+		evt.stopPropagation();
+		if( appViewModel.user.isGuest() ) {
+			goToLoginPage(); 
+			return;
+		}
+		self.switchLibraryState();
 	};
 
 	var getShareUrl = function() {
