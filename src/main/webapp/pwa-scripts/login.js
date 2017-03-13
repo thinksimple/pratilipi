@@ -28,6 +28,13 @@ window.fbAsyncInit = function() {
 	fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 
+if( getUrlParameter( "message" ) != null ) {
+	var type = getUrlParameter( "message" );
+	if( type == "NOTIFICATIONS" )
+		ToastUtil.toast( "${ _strings.user_login_to_view_notifications }", 5000 );
+	else if( type == "LIBRARY" )
+		ToastUtil.toast( "${ _strings.user_login_to_view_library }", 5000 );
+}
 
 function ViewModel() {
 

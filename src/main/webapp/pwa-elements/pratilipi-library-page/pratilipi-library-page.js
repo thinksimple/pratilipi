@@ -29,6 +29,12 @@ function() {
 		});
 	};
 
+	this.userObserver = ko.computed( function() {
+		if( appViewModel.user.isGuest() && appViewModel.user.userId() == 0 ) {
+			goToLoginPage( null, { "message": "LIBRARY" } );
+		}
+	}, this );
+
 	this.fetchUserLibraryList();
 
 }
