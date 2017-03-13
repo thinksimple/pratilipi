@@ -20,11 +20,15 @@ function( params ) {
 	this.notificationList = ko.observableArray();
 	this.hasMoreContents = ko.observable( true );
 
+	this.setNotificationList = function( notificationList ) {
+		self.notificationList( notificationList );
+	};
+
 	this.updateNotificationList = function( notificationList ) {
 		self.notificationList.push.apply( self.notificationList, notificationList );
 	};
 
-	this.fetchNotificationList = function() {
+	this.fetchNotificationList = function( setNotificationList ) {
 		if( self.notificationsLoaded() == "LOADING" ) return;
 		self.notificationsLoaded( "LOADING" );
 		dataAccessor.getNotificationList( cursor, resultCount,
@@ -35,10 +39,17 @@ function( params ) {
 					}
 					var notificationList = notificationListResponse["notificationList"];
 					cursor = notificationListResponse.cursor;
-					self.updateNotificationList( notificationList );
+					if( setNotificationList )
+						self.setNotificationList( notificationList );
+					else
+						self.updateNotificationList( notificationList );
 					self.notificationsLoaded( notificationList.length > 0 ? "LOADED" : "LOADED_EMPTY" );
 					self.hasMoreContents( notificationList.length == resultCount && includeShowMore );
 		});
+	};
+
+	this.resetNotificationList = function() {
+		self.fetchNotificationList( true );
 	};
 
 	this.userObserver = ko.computed( function() {
@@ -49,7 +60,7 @@ function( params ) {
 
 	this.notificationCountObserver = ko.computed( function() {
 		if( ! appViewModel.user.isGuest() && appViewModel.notificationCount() != 0 && listenToFirebase ) {
-			setTimeout( self.fetchNotificationList, 0 );
+			setTimeout( self.resetNotificationList, 0 );
 		}
 	}, this );
 
