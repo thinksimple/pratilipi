@@ -28,14 +28,6 @@ window.fbAsyncInit = function() {
 	fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 
-if( getUrlParameter( "message" ) != null ) {
-	var type = getUrlParameter( "message" );
-	if( type == "NOTIFICATIONS" )
-		ToastUtil.toast( "${ _strings.user_login_to_view_notifications }", 5000 );
-	else if( type == "LIBRARY" )
-		ToastUtil.toast( "${ _strings.user_login_to_view_library }", 5000 );
-}
-
 function ViewModel() {
 
 	var self = this;
@@ -176,6 +168,17 @@ function ViewModel() {
 				ToastUtil.toast( message, 3000, true );
 		});
 	};
+
+	if( getUrlParameter( "message" ) != null ) {
+		var type = getUrlParameter( "message" );
+		if( type == "NOTIFICATIONS" )
+			ToastUtil.toastUp( "${ _strings.user_login_to_view_notifications }" );
+		else if( type == "LIBRARY" )
+			ToastUtil.toastUp( "${ _strings.user_login_to_view_library }" );
+		setTimeout( function(){ ToastUtil.toastDown(); }, 5000 );
+		/* Hack: Mdl toast doesn't work properly when called toast function. */
+	}
+
 }
 
 ko.applyBindings( new ViewModel() );
