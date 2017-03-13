@@ -57,11 +57,11 @@ var resetFbNotificationCount = function() {
 	node.set( 0 );
 };
 
-var setNotificationPreferences = function( preferences ) {
+var setUserPreferences = function( userPreferences ) {
 	var node = firebase.database().ref( "PREFERENCE" ).child( appViewModel.user.userId() );
 	node.set({
-		"emailFrequency": preferences[ "emailFrequency" ],
-		"notificationSubscriptions": preferences[ "notificationSubscriptions" ],
+		"emailFrequency": userPreferences[ "emailFrequency" ],
+		"notificationSubscriptions": userPreferences[ "notificationSubscriptions" ],
 		"lastUpdated": firebase.database.ServerValue.TIMESTAMP 
 	});
 };

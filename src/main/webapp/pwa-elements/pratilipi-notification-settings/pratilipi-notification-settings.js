@@ -1,78 +1,51 @@
 function( params ) {
 	var self = this;
-	
+	var getEmailFrequencyVernacular = function( emailFrequency ) {
+		switch( emailFrequency ) {
+			case "IMMEDIATELY":
+				return "${ _strings.email_frequency_immediate }";
+			case "DAILY":
+				return "${ _strings.email_frequency_daily }";
+			case "WEEKLY":
+				return "${ _strings.email_frequency_weekly }";
+			case "MONTHLY":
+				return "${ _strings.email_frequency_monthly }";
+			case "NEVER":
+				return "${ _strings.email_frequency_never }";
+		}
+	};
+
 	this.canSaveChanges = ko.observable( false );
-	<#--
-	properties: {
-		selectedEmailFrequency: { type: Number },
-		message: { type: String },
-		: { type: Boolean }
-	},
 
-	stopUserInteraction: function() {
-		// Enable spinner and disable button
-		this.set( 'canSaveChanges', false );
-		this.set( 'spinnerActive', true );
-	},
-
-	resumeUserInteration: function() {
-		// Enable button and disable spinner
-		this.set( 'canSaveChanges', true );
-		this.set( 'spinnerActive', false );
-	},
-
-	open: function() {
-		jQuery( "#pratilipiNotificationSettings" ).modal();
-		this.stopUserInteraction();
-		getNotificationPreferences( firebaseCallback );
-	},
-
-	close: function() {
-		jQuery( "#pratilipiNotificationSettings" ).modal( 'hide' );
-	},
-
-	firebaseCallback: function( preferences ) {
-
-		var emailFrequency = preferences[ "emailFrequency" ] != null ? preferences[ "emailFrequency" ] : "IMMEDIATELY";
-		var i = 0;
-		$( "pratilipi-notification-settings #selectEmailFrequency paper-menu paper-item" ).each( function() {
-			if( $( this ).attr( "value" ) === emailFrequency ) {
-				return false;
-			} i++;
+	this.updateNotificationPreferences = function() {
+		var userPreferences = {};
+		userPreferences[ "emailFrequency" ] = document.querySelector( "#pratilipiNotificationSettings #emailFrequency" ).getAttribute( "data-val" );
+		userPreferences[ "notificationSubscriptions" ] = {};
+		$( '#pratilipiNotificationSettings .mdl-js-checkbox' ).each( function( index, element ) {
+			userPreferences[ "notificationSubscriptions" ][ element.firstChild.value ] = element.firstChild.checked;
 		});
-		this.set( 'selectedEmailFrequency', i );
+		setUserPreferences( userPreferences );
+		ToastUtil.toast( "${ _strings.success_generic_message }" );
+		$( "#pratilipiNotificationSettings" ).modal( 'hide' );
+	};
 
-		var notificationSubscriptions = preferences[ "notificationSubscriptions" ] != null ? 
-				preferences[ "notificationSubscriptions" ] : {};
-		$( "pratilipi-notification-settings #pratilipiNotificationSettings paper-checkbox" ).each( function() {
-			$( this ).prop( 'checked', notificationSubscriptions[ $( this ).val() ] != null ?
-					notificationSubscriptions[ $( this ).val() ] : true );
+	this.firebaseCallback = ko.computed( function() {
+		var userPreferences = appViewModel.userPreferences();
+		var emailFrequency = userPreferences[ "emailFrequency" ] != null ? userPreferences[ "emailFrequency" ] : "IMMEDIATELY";
+		var notificationSubscriptions = userPreferences[ "notificationSubscriptions" ] != null ? 
+				userPreferences[ "notificationSubscriptions" ] : {};
+
+		$( "#pratilipiNotificationSettings #emailFrequency" ).attr( 'data-val', emailFrequency );
+		$( "#pratilipiNotificationSettings #emailFrequency" ).attr( 'value', getEmailFrequencyVernacular( emailFrequency ) );
+		$( '#pratilipiNotificationSettings .mdl-js-checkbox' ).each( function( index, element ) {
+			if( element.MaterialCheckbox == null ) return;
+			var val = element.firstChild.value;
+			if( notificationSubscriptions[ val ] != null && ! notificationSubscriptions[ val ] )
+				element.MaterialCheckbox.uncheck();
+			else
+				element.MaterialCheckbox.check();
 		});
 
-		this.resumeUserInteration();
+	}, this );
 
-	},
-
-	onSubmit: function() {
-
-		var preferences = {};
-		preferences[ "emailFrequency" ] = this.$.selectEmailFrequency.selectedItem.getAttribute( "value" );
-		preferences[ "notificationSubscriptions" ] = {};
-
-		$( "pratilipi-notification-settings #pratilipiNotificationSettings paper-checkbox" ).each( function() {
-			preferences[ "notificationSubscriptions" ][ $( this ).val() ] = this.checked;
-		});
-
-		this.stopUserInteraction();
-		setNotificationPreferences( preferences );
-
-		// Feedback here
-		this.set( "message", "${ _strings.success_generic_message }" );
-		this.async( function() {
-			this.resumeUserInteration();
-			this.set( "message", null );
-			this.close();
-		}, 1000 );
-	}
-	-->
 }
