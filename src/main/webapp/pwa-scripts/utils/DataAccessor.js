@@ -9,6 +9,7 @@ var DataAccessor = function() {
 	var PRATILIPI_API = "/pratilipi?_apiVer=2";
 	var PRATILIPI_LIST_API = "/pratilipi/list?_apiVer=2";
 	var USER_PRATILIPI_API = "/userpratilipi";
+	var USER_PRATILIPI_LIBRARY_LIST_API = "/userpratilipi/library/list";
 	var AUTHOR_API = "/author";
 	var USER_AUTHOR_FOLLOW_API = "/userauthor/follow?_apiVer=2";
 	var USER_API = "/user";
@@ -178,6 +179,15 @@ var DataAccessor = function() {
 		if( offset != null ) params[ "offset" ] = offset;
 		if( resultCount != null ) params[ "resultCount" ] = resultCount;
 		httpUtil.get( API_PREFIX + PRATILIPI_LIST_API, 
+				params, 
+				function( response, status ) { processGetResponse( response, status, aCallBack ) } );
+	};
+
+	this.getUserLibraryList = function( cursor, resultCount, aCallBack ) {
+		var params = {};
+		if( cursor != null ) params[ "cursor" ] = cursor;
+		if( resultCount != null ) params[ "resultCount" ] = resultCount;
+		httpUtil.get( API_PREFIX + USER_PRATILIPI_LIBRARY_LIST_API, 
 				params, 
 				function( response, status ) { processGetResponse( response, status, aCallBack ) } );
 	};

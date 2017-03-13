@@ -191,8 +191,13 @@ public class PratilipiSite extends HttpServlet {
 				}
 
 			} else if( uri.equals( "/library" ) ) {
-				dataModel = createDataModelForLibraryPage( basicMode, filterLanguage );
-				templateName = ( basicMode ? "LibraryBasic.ftl" : "Library.ftl" );
+				if( loadPWA ) {
+					dataModel = new HashMap<>();
+					templateName = "LibraryPWA.ftl";
+				} else {
+					dataModel = createDataModelForLibraryPage( basicMode, filterLanguage );
+					templateName = ( basicMode ? "LibraryBasic.ftl" : "Library.ftl" );
+				}
 
 			} else if( uri.equals( "/notifications" ) ) {
 				if( loadPWA ) {
