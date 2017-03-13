@@ -55,14 +55,9 @@
 				class="mdl-button mdl-js-button mdl-button--icon">
 				<i class="material-icons">notifications</i>
 			</a>
-			<a data-bind="{ attr: { 'href': '/notifications' },
-							visible: ! appViewModel.user.isGuest() }" 
-				class="mdl-button mdl-js-button mdl-button--icon hidden-sm hidden-md hidden-lg">
-				<i class="material-icons">notifications</i>
-			</a>
 			<span id="notificationLink"
 					style="position: absolute; margin-left: -12px; margin-top: -12px;"
-					class="material-icons mdl-badge--overlap mdl-badge--no-background hidden-xs"
+					class="material-icons mdl-badge--overlap mdl-badge--no-background"
 					data-bind="{ attr: { 'data-badge': ( appViewModel.notificationCount() > 99 ? '99+' : appViewModel.notificationCount() ) }, 
 								css: { 'mdl-badge': ( appViewModel.notificationCount() > 0 ) },
 								visible: ! appViewModel.user.isGuest() }">

@@ -19,8 +19,13 @@ function( params ) {
 	var notificationContainer = $( "header.pratilipi-header #notificationContainer" );
 	var notificationLink = $( "header.pratilipi-header #notificationLink" );
 	notificationLink.click( function() {
-		notificationContainer.fadeToggle(50);
 		resetFbNotificationCount();
+		var windowsize = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+		if( windowsize < 768 ) {
+			window.location.href = "/notifications";
+		} else {
+			notificationContainer.fadeToggle(50);
+		}
 		return false;
 	});
 
