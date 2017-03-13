@@ -16,6 +16,8 @@ function( params ) {
 		self.updatePratilipi( { "addedToLib": ! addedToLib } );
 		if( self.libraryPageBehaviour && addedToLib ) /* Toast only for remove action */
 			ToastUtil.toastCallBack( "${ _strings.removed_from_library }", 5000, "UNDO", self.switchLibraryState );
+		if( self.libraryPageBehaviour && ! addedToLib ) /* Toast Down only for UNDO action */
+			ToastUtil.toastDown();
 		dataAccessor.addOrRemoveFromLibrary( self.pratilipi.pratilipiId(), ! addedToLib, 
 			function( pratilipi ) {
 				self.updatePratilipi( pratilipi );
