@@ -1,8 +1,6 @@
 <div class="mobile-card" data-bind="visible: notificationsLoaded() == 'INITIAL'" style="margin: 0;">
 	<span class="initial-data-loading-spinner mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></span>
 </div>
-<div style="margin: 25px auto;" data-bind="visible: notificationsLoaded() == 'LOADING'"
-	class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></div>
 <div style="margin: 25px 15px;" data-bind="visible: notificationsLoaded() == 'LOADED_EMPTY'">
 	${ _strings.notifications_no_notifications }
 </div>
@@ -11,7 +9,7 @@
 		${ _strings.notifications_load_failed }
 	</a> 
 </div>
-<ul class="pratilipi-notification-list" data-bind="visible: notificationsLoaded() == 'LOADED'">
+<ul class="pratilipi-notification-list" data-bind="visible: notificationsLoaded() == 'LOADED' || notificationsLoaded() == 'LOADING'">
 	<!-- ko foreach: { data: notificationList, as: 'notification' } -->
 		<!--ko if: notification.message -->
 			<li class="mdl-menu__item"
