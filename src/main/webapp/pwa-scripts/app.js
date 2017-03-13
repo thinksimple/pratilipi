@@ -1,5 +1,4 @@
 var AppViewModel = function() {
-
 	var defaultUser = {
 		"userId": null,
 		"author": { "authorId": null },

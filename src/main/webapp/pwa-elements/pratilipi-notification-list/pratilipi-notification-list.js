@@ -3,34 +3,54 @@ function( params ) {
 
 	var resultCount = params.resultCount;
 	var includeShowMore = params.includeShowMore;
+	var listenToFirebase = params.listenToFirebase != null ? params.listenToFirebase : false;
 	var dataAccessor = new DataAccessor();
+	var cursor = null;
 
+	/*
+	 * 5 Possible values for 'notificationsLoaded'
+	 * INITIAL
+	 * LOADING
+	 * LOADED_EMPTY
+	 * LOADED
+	 * FAILED
+	 * 
+	 * */
+	this.notificationsLoaded = ko.observable( "INITIAL" );
 	this.notificationList = ko.observableArray();
 	this.hasMoreContents = ko.observable( true );
-	this.isLoading = ko.observable( false );
-
-	var cursor = null;
 
 	this.updateNotificationList = function( notificationList ) {
 		self.notificationList.push.apply( self.notificationList, notificationList );
 	};
 
-	this.initialDataLoaded = ko.observable( false );
-
 	this.fetchNotificationList = function() {
-		if( self.isLoading() ) return;
-		self.isLoading( true );
+		if( self.notificationsLoaded() == "LOADING" ) return;
+		self.notificationsLoaded( "LOADING" );
 		dataAccessor.getNotificationList( cursor, resultCount,
 				function( notificationListResponse ) {
+					if( notificationListResponse == null ) {
+						self.notificationsLoaded( "FAILED" );
+						return;
+					}
 					var notificationList = notificationListResponse["notificationList"];
-					self.updateNotificationList( notificationList );
 					cursor = notificationListResponse.cursor;
-					self.initialDataLoaded( true );
-					self.isLoading( false );
+					self.updateNotificationList( notificationList );
+					self.notificationsLoaded( notificationList.length > 0 ? "LOADED" : "LOADED_EMPTY" );
 					self.hasMoreContents( notificationList.length == resultCount && includeShowMore );
 		});
 	};
 
-	this.fetchNotificationList();
+	this.userObserver = ko.computed( function() {
+		if( ! appViewModel.user.isGuest() ) {
+			setTimeout( self.fetchNotificationList, 0 );
+		}
+	}, this );
+
+	this.notificationCountObserver = ko.computed( function() {
+		if( ! appViewModel.user.isGuest() && appViewModel.notificationCount() != 0 && listenToFirebase ) {
+			setTimeout( self.fetchNotificationList, 0 );
+		}
+	}, this );
 
 }
