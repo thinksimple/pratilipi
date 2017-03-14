@@ -46,6 +46,7 @@ function ViewModel() {
 		var GoogleAuth = gapi.auth2.getAuthInstance();
 		GoogleAuth.signIn().then( function( googleUser ) {
 			self.requestOnFlight( true );
+			ToastUtil.toastUp( "${ _strings.working }" );
 			dataAccessor.loginGoogleUser( googleUser.getAuthResponse().id_token,
 				function( user ) {
 					ToastUtil.toastUp( "${ _strings.user_login_success }" );
@@ -74,6 +75,7 @@ function ViewModel() {
 				return;
 			}
 			self.requestOnFlight( true );
+			ToastUtil.toastUp( "${ _strings.working }" );
 			dataAccessor.loginFacebookUser( fbResponse.authResponse.accessToken,
 				function( user ) {
 					ToastUtil.toastUp( "${ _strings.user_login_success }" );
@@ -106,6 +108,7 @@ function ViewModel() {
 			return;
 		}
 		self.requestOnFlight( true );
+		ToastUtil.toastUp( "${ _strings.working }" );
 
 		dataAccessor.loginUser( self.userEmail(), self.userPassword(), 
 			function( user ) {
@@ -149,6 +152,7 @@ function ViewModel() {
 			return;
 		}
 		self.requestOnFlight( true );
+		ToastUtil.toastUp( "${ _strings.working }" );
 		dataAccessor.registerUser( self.userName(), self.userEmail(), self.userPassword(), 
 			function( user ) {
 				ToastUtil.toastUp( "${ _strings.user_register_success }" );

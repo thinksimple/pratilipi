@@ -35,7 +35,7 @@ function( params ) {
 	this.addToOrRemoveFromLibrary = function( vm, evt ) {
 		evt.stopPropagation();
 		if( appViewModel.user.isGuest() ) {
-			goToLoginPage(); 
+			goToLoginPage( null, { "message": "LIBRARY" } );
 			return;
 		}
 		self.switchLibraryState();
