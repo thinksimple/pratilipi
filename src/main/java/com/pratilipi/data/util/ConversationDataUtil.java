@@ -140,7 +140,6 @@ public class ConversationDataUtil {
 
 		ArrayList<String> cc = new ArrayList<>();
 		cc.add("ranjeet@pratilipi.com");
-		cc.add("rahul@pratilipi.com");
 
 		logger.log(Level.INFO, "CC : " + cc.toString());
 
@@ -159,6 +158,7 @@ public class ConversationDataUtil {
 		ArrayList<String> emailList = new ArrayList<>();
 		emailList.add("abhishek@pratilipi.com");
 		emailList.add("shreyans@pratilipi.com");
+		emailList.add("sankar@pratilipi.com");
 		if (teamName.contains(AEE) || teamName.contains(ISSUES)) {
 			// when contact team name is AEE_* or ANDROID_APP_ISSUES
 			if (language != null)
