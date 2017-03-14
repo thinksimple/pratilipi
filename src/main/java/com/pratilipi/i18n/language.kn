@@ -313,7 +313,7 @@ meridiem_am = AM
 meridiem_pm = PM 
 
 # Library
-library				= Library       = ಪುಸ್ತಕ ಭಂಡಾರ 
+library							 = ಪುಸ್ತಕ ಭಂಡಾರ 
 my_library			              = ನನ್ನ ಪುಸ್ತಕ ಭಂಡಾರ
 add_to_library		            = ಪುಸ್ತಕ ಭಂಡಾರಕ್ಕೆ ಸೇರಿಸಿ 
 added_to_library	            = ಯಶಸ್ವಿ! ಈ ಬರಹವನ್ನು ನೀವು ಪುಸ್ತಕ ಭಂಡಾರಕ್ಕೆ ಸೇರಿಸಿರುವಿರಿ!
