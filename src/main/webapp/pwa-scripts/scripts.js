@@ -7,4 +7,5 @@
 	<#include "utils/ShareUtil.js">
 	<#include "utils/Common.js">
 	<#include "utils/DataAccessor.js">
+	<#include "utils/KoBindingHandlers.js">
 </@compress_single_line>

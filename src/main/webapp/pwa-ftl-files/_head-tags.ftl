@@ -4,7 +4,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<title>${ title }</title>
 	<script src="https://d3cwrmdwk8nw1j.cloudfront.net/resource-all/pwa/js/ko.ko_mapping.js"></script>
-	<script src="/pwa-scripts/ko-binding-handlers-${ lang }.js"></script>
 	<#include "_google-analytics.ftl">
 	<#include "_font-styles.ftl">
 	<#if include_app_shell?? && include_app_shell>

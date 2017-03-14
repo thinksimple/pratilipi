@@ -6,7 +6,7 @@
 				<h6 class="modal-title">${ _strings.writer_add_content_title }</h6>
 			</div>
 			<div class="modal-body">
-				<div class="mdl-textfield mdl-js-textfield getmdl-select getmdl-select__fullwidth getmdl-select__fix-height">
+				<div class="mdl-textfield mdl-js-textfield getmdl-select getmdl-select__fullwidth getmdl-select__fix-height mdl-textfield--floating-label">
 					<#assign languageVernacular=_strings[ "language_" + lang ]>
 					<input class="mdl-textfield__input" 
 							id="pratilipi_write_language" 
@@ -24,10 +24,10 @@
 						</#list>
 					</ul>
 				</div>
-				<input class="title" data-bind="textInput: title" placeholder="${ _strings.writer_input_title } *" make-transliterable />
+				<input data-bind="mdlFloatingInput: { label: '${ _strings.writer_input_title } *', value: title }" make-transliterable />
 				<div class="clearfix"></div>
-				<input class="title" data-bind="textInput: titleEn" placeholder="${ _strings.writer_input_title_en }" />
-				<div class="mdl-textfield mdl-js-textfield getmdl-select getmdl-select__fullwidth getmdl-select__fix-height">
+				<input data-bind="mdlFloatingInput: { label: '${ _strings.writer_input_title_en } *', value: titleEn }" />
+				<div class="mdl-textfield mdl-js-textfield getmdl-select getmdl-select__fullwidth getmdl-select__fix-height mdl-textfield--floating-label">
 					<input class="mdl-textfield__input" 
 							id="pratilipi_write_type" 
 							type="text" readonly tabIndex="-1" />
