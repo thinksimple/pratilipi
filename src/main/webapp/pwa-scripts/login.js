@@ -173,6 +173,19 @@ function ViewModel() {
 		});
 	};
 
+	self.loginButtonEnabled = ko.computed( function() {
+		return self.userEmail() != null && self.userEmail().trim() != "" 
+			&& self.userPassword() != null && self.userPassword().trim() != ""
+			&& ! self.requestOnFlight();
+	}, self );
+
+	self.registerButtonEnabled = ko.computed( function() {
+		return self.userName() != null && self.userName().trim() != "" 
+			&& self.userEmail() != null && self.userEmail().trim() != "" 
+			&& self.userPassword() != null && self.userPassword().trim() != ""
+			&& self.agreedTerms() && ! self.requestOnFlight();
+	}, self );
+
 	if( getUrlParameter( "message" ) != null ) {
 		var type = getUrlParameter( "message" );
 		var message = null;
