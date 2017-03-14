@@ -3,7 +3,7 @@
 		<a href="/">
 			<span class="sprites-icon pratilipi-logo-icon"></span>
 		</a>
-		<span class="pratilipi-text hidden-xs">${ _strings.pratilipi }</span>
+		<span class="pratilipi-text font-m hidden-xs">${ _strings.pratilipi }</span>
 		<button id="pratilipi-header-pratilipi-dropdown" class="mdl-button mdl-js-button mdl-button--icon hidden-xs">
 			<i class="material-icons">arrow_drop_down</i>
 		</button>
@@ -26,7 +26,7 @@
 			<form action="javascript:void(0);" data-bind="submit: search">
 				<div class="mdl-textfield mdl-js-textfield">
 					<input class="mdl-textfield__input" type="text" id="pratilipi-header-search" data-bind="textInput: searchQuery" />
-					<div class="mdl-textfield__label" for="pratilipi-header-search">
+					<div class="mdl-textfield__label font-xs" for="pratilipi-header-search">
 						${ _strings.search_bar_help }
 					</div>
 					<i data-bind="event: { click: search }" class="material-icons search">search</i>
@@ -80,14 +80,14 @@
 							visible: appViewModel.user.userId() != null && appViewModel.user.isGuest() }" 
 				class="sign-in-button mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect hidden-xs">
 				<i class="material-icons">account_circle</i>
-				<span>${ _strings.user_sign_in }</span>
+				<span class="font-s">${ _strings.user_sign_in }</span>
 			</a>
 			<a data-bind="{ visible: appViewModel.user.userId() != null && !appViewModel.user.isGuest(),   
 							attr: { 'href': appViewModel.user.profilePageUrl() } }"
 				class="user-profile hidden-xs">
 				<img class="img-circle user-dp" 
 					data-bind="attr: { 'src': getImageUrl( appViewModel.user.profileImageUrl(), 48 ) }" />
-				<span data-bind="text: appViewModel.user.displayName()"></span>
+				<span class="font-s" data-bind="text: appViewModel.user.displayName()"></span>
 			</a>
 		</div>
 		<div class="header-icons-holder visible-xs">
@@ -108,7 +108,7 @@
 	</div>
 
 	<div class="mdl-layout__header-row parent-container row-two hidden-sm hidden-md hidden-lg">
-		<span class="pratilipi-text">${ _strings.pratilipi }</span>
+		<span class="pratilipi-text font-m">${ _strings.pratilipi }</span>
 		<button id="pratilipi-header-pratilipi-dropdown-mobile" class="mdl-button mdl-js-button mdl-button--icon">
 			<i class="material-icons">arrow_drop_down</i>
 		</button>
@@ -124,7 +124,7 @@
 		<form action="javascript:void(0);" data-bind="submit: search">
 			<div class="mdl-textfield mdl-js-textfield">
 				<input class="mdl-textfield__input" type="text" id="pratilipi-header-search-mobile" data-bind="textInput: searchQuery" />
-				<div class="mdl-textfield__label" for="pratilipi-header-search-mobile">
+				<div class="mdl-textfield__label font-xs" for="pratilipi-header-search-mobile">
 					${ _strings.search }
 				</div>
 				<i data-bind="event: { click: search }" class="material-icons search">search</i>

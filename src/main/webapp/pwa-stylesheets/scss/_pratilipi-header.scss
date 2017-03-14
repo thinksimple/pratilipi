@@ -14,8 +14,7 @@
 		height: 52px;
 		padding: 0 8px;
 		span.pratilipi-text {
-			color: #d0021b;
-			font-size: 18px;
+			color: #000;
 			margin-left: 6px;
 			font-weight: 700;
 			white-space: nowrap;
@@ -23,7 +22,7 @@
 		button#pratilipi-header-pratilipi-dropdown {
 			margin-right: 4px;
 			.material-icons {
-				color: #d0021b!important
+				color: #000!important
 			}
 		}
 		ul.language-ul {
@@ -50,8 +49,7 @@
 					width: 100%;
 					color: #333 !important;
 					* {
-						color: inherit !important;
-						opacity: .87;
+						color: rgba(0,0,0,0.27);
 					}
 					.search.material-icons {
 						position: absolute;
@@ -72,7 +70,7 @@
 		}
 		.desktop-signin-button-holder {
 			@media only screen and (min-width: 1200px) {
-				flex-basis: 150px;
+				flex-basis: 160px;
 			}
 			a.sign-in-button {
 				background: #107fe5!important;
@@ -89,7 +87,7 @@
 			a.user-profile {
 				white-space: nowrap;
 				text-overflow: ellipsis;
-				max-width: 150px;
+				max-width: 160px;
 				display: block;
 				overflow: hidden;
 				color: #333 !important;

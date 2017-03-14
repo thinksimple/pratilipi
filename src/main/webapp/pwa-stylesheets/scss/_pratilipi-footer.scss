@@ -3,6 +3,9 @@ footer {
 }
 
 footer {
+	* {
+		font-size: inherit !important;
+	}
 	.mdl-mega-footer__link-list li {
 	  @media (max-width: 480px) {
 	    line-height: 30px;
