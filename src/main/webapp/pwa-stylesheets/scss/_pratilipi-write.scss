@@ -13,6 +13,14 @@
 				width: 100% !important;
 				display: block;
 			}
+			i.dropdown-icon {
+				position: absolute;
+				right: 0px;
+				bottom: 18px;
+				width: 32px;
+				height: 32px;
+				font-size: 32px;
+			}
 			ul.dropdown-ul {
 				width: 100%;
 				-webkit-box-shadow: 0 3px 9px rgba(0,0,0,0.5);
