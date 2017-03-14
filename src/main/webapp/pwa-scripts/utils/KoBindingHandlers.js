@@ -38,6 +38,7 @@ ko.bindingHandlers.transliterate = {
 	},
 };
 
+/* http://stackoverflow.com/questions/32957407/material-design-lite-how-to-programatically-reset-a-floating-label-input-text#32958279 */
 ko.bindingHandlers.mdlFloatingInput = {
 	init: function( element, valueAccessor, allBindingsAccessor, data, context ) {
 		var $el = $(element),
