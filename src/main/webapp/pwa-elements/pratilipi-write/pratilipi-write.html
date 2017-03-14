@@ -14,7 +14,7 @@
 							value="${ languageVernacular }"
 							type="text" readonly tabIndex="-1" />
 					<label class="mdl-textfield__label" for="pratilipi_write_language">${ _strings.write_language }</label>
-					<ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu" for="pratilipi_write_language">
+					<ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu dropdown-ul" for="pratilipi_write_language">
 						<#list languageList as aLang>
 							<#if aLang.value == language>
 								<li class="mdl-menu__item" style="background: #eee;">${ aLang.name }</li>
@@ -32,7 +32,7 @@
 							id="pratilipi_write_type" 
 							type="text" readonly tabIndex="-1" />
 					<label class="mdl-textfield__label" for="pratilipi_write_type">${ _strings.write_type }</label>
-					<ul class="mdl-menu mdl-menu--top-left mdl-js-menu" for="pratilipi_write_type">
+					<ul class="mdl-menu mdl-menu--top-left mdl-js-menu dropdown-ul" for="pratilipi_write_type">
 						<#list pratilipiTypes as pratilipiType>
 							<li class="mdl-menu__item" data-val="${ pratilipiType.value }">${ pratilipiType.name }</li>
 						</#list>

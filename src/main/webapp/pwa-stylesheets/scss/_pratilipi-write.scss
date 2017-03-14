@@ -10,8 +10,19 @@
 		div.modal-body {
 			padding: 15px 30px;
 			.mdl-textfield {
-				width: 100%;
+				width: 100% !important;
 				display: block;
+			}
+			ul.dropdown-ul {
+				width: 100%;
+				-webkit-box-shadow: 0 3px 9px rgba(0,0,0,0.5);
+				box-shadow: 0 3px 9px rgba(0,0,0,0.5);
+				border: 1px solid #999;
+				border: 1px solid rgba(0,0,0,0.2);
+				border-radius: 4px;
+				.mdl-menu__item, .mdl-menu__item:hover {
+					color: #000;
+				}
 			}
 			.accept-terms a {
 				color: #333; 
