@@ -24,11 +24,12 @@
 						</#list>
 					</ul>
 				</div>
-				<input data-bind="mdlFloatingInput: { label: '${ _strings.writer_input_title } *', value: title, id: 'pratilipi_write_title_input' }" make-transliterable />
+				<input data-bind="{ mdlFloatingInput: { label: '${ _strings.writer_input_title } *', value: title, id: 'pratilipi_write_title_input' }, valueUpdate: ['input'] }" make-transliterable />
 				<div class="clearfix"></div>
-				<input data-bind="mdlFloatingInput: { label: '${ _strings.writer_input_title_en } *', value: titleEn, id: 'pratilipi_write_title_en_input' }" />
+				<input data-bind="mdlFloatingInput: { label: '${ _strings.writer_input_title_en }', value: titleEn, id: 'pratilipi_write_title_en_input' }" />
 				<div class="mdl-textfield mdl-js-textfield getmdl-select getmdl-select__fullwidth getmdl-select__fix-height mdl-textfield--floating-label">
-					<input class="mdl-textfield__input" 
+					<input data-bind="event: { change: updateType }"
+							class="mdl-textfield__input" 
 							id="pratilipi_write_type" 
 							type="text" readonly tabIndex="-1" />
 					<label class="mdl-textfield__label" for="pratilipi_write_type">${ _strings.write_type }</label>
@@ -47,7 +48,7 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button data-bind="{ click: submit, disable: requestOnFlight }" 
+				<button data-bind="{ click: submit, enable: canCreatePratilipi }" 
 						class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" 
 						type="button">${ _strings.writer_to_next_screen }</button>
 			</div>

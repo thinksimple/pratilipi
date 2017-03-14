@@ -2,6 +2,7 @@ function( params ) {
 	var self = this;
 	this.title = ko.observable( '' );
 	this.titleEn = ko.observable( '' );
+	this.type = ko.observable( null );
 	this.agreedTerms = ko.observable( false );
 	this.requestOnFlight = ko.observable( false );
 
@@ -9,17 +10,16 @@ function( params ) {
 
 		if( self.requestOnFlight() ) return;
 
-		var language = document.querySelector( '#pratilipiWrite #pratilipi_write_language' ).getAttribute( "data-val" );
-		var type = document.querySelector( '#pratilipiWrite #pratilipi_write_type' ).getAttribute( "data-val" );
-
 		if( self.title().trim() == "" ) {
 			ToastUtil.toast( "${ _strings.writer_error_title_required }" );
 			return;
 		}
-		if( type == null || type.trim() == "" ) {
+
+		if( self.type() == null || self.type().trim() == "" ) {
 			ToastUtil.toast( "${ _strings.writer_error_category_required }" );
 			return;
 		}
+
 		if( ! self.agreedTerms() ) {
 			ToastUtil.toast( "${ _strings.writer_error_copyright_required }" );
 			return;
@@ -40,8 +40,8 @@ function( params ) {
 		var pratilipi = { 
 				"title": self.title(),
 				"titleEn": self.titleEn(),
-				"language":  language,
-				"type": type,
+				"language":  "${ language }",
+				"type": self.type(),
 				"state": "DRAFTED"
 		};
 
@@ -49,5 +49,13 @@ function( params ) {
 		dataAccessor.createOrUpdatePratilipi( pratilipi, successCallBack, errorCallBack );
 
 	};
+
+	this.updateType = function() {
+		self.type( document.querySelector( '#pratilipiWrite #pratilipi_write_type' ).getAttribute( "data-val" ) );
+	};
+
+	this.canCreatePratilipi = ko.computed( function() {
+		return self.title() != null && self.title() != "" && self.agreedTerms() && self.type() != null && ! self.requestOnFlight();
+	}, this );
 
 }
