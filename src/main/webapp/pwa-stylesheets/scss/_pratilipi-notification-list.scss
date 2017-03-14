@@ -10,10 +10,12 @@ ul.pratilipi-notification-list {
 
 	li, li:hover {
 		background: #fff;
+		padding: 0;
 	}
 
 	li.notif-unread, li.notif-unread:hover {
-		background: rgba(208, 2, 27, 0.1) !important;
+		background-color: rgba(208, 2, 27, 0.1) !important;
+		background-color: #f7f7f7;
 	}
 
 	li.show-more {
@@ -43,7 +45,7 @@ ul.pratilipi-notification-list {
 		span.notification-message {
 			border-bottom: 1px solid rgba(0,0,0,.12);
 			line-height: 1.4em;
-			padding: 12px 16px;
+			padding: 10px 15px;
 			display: block;
 			a {
 				border-radius: 0px;

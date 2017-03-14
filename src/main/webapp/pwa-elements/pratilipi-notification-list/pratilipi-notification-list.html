@@ -21,10 +21,10 @@
 								<img class="img-circle" data-bind="attr: { src: getImageUrl( notification.displayImageUrl, 48 ) }" />
 							</span>
 							<span class="notification-message-holder">
-								<span class="font-m" data-bind="html: notification.message"></span>
+								<span class="font-s" data-bind="html: notification.message"></span>
 								<br/>
 								<span class="notification-meta">
-									<span class="text-muted font-s" data-bind="text: convertDate( notification.lastUpdatedMillis )"></span>
+									<span class="text-muted font-xs" data-bind="text: convertDate( notification.lastUpdatedMillis )"></span>
 								</span>
 							</span>
 							<span class="notification-source-image" data-bind="if: notification.sourceImageUrl">
