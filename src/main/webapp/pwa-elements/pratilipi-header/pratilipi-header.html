@@ -34,14 +34,9 @@
 			</form>
 		</div>
 		<div class="header-icons-holder">
-			<button data-bind="visible: ! appViewModel.user.isGuest()"
-				data-toggle="modal" data-target="#pratilipiWrite" class="mdl-button mdl-js-button mdl-button--icon">
+			<button data-bind="click: write" class="mdl-button mdl-js-button mdl-button--icon">
 				<i class="material-icons">create</i>
 			</button>
-			<a data-bind="{ visible: appViewModel.user.isGuest(), attr: { 'href': '/login?retUrl=' + encodeURIComponent( window.location.pathname + '?action=write' ) } }"
-				class="mdl-button mdl-js-button mdl-button--icon">
-				<i class="material-icons">create</i>
-			</a>
 		</div>
 		<div class="header-icons-holder">
 			<a data-bind="attr: { 'href': appViewModel.user.isGuest() ? '/login?retUrl=%2Flibrary&message=LIBRARY' : '/library' }" 

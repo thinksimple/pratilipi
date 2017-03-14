@@ -1,5 +1,14 @@
 function( params ) {
 	var self = this;
+
+	var openWriteDialog = function() {
+		$( "#pratilipiWrite" ).modal();
+	};
+
+	var closeWriteDialog = function() {
+		$( "#pratilipiWrite" ).modal( 'hide' );
+	};
+
 	this.searchQuery = ko.observable();
 	this.search = function( formElement ) {
 		 if( self.searchQuery() && self.searchQuery().trim().length ) {
@@ -13,6 +22,18 @@ function( params ) {
 			componentHandler.upgradeAllRegistered();
 		}
 	  document.querySelector( '.mdl-layout' ).MaterialLayout.toggleDrawer();
+	};
+
+	this.write = function() {
+		if( isMobile() ) {
+			ToastUtil.toast( "${ _strings.write_on_desktop_only }", 5000 );
+			return;
+		}
+		if( appViewModel.user.isGuest() ) {
+			goToLoginPage( { "action": "write" }, { "message": "WRITE" } );
+		} else {
+			openWriteDialog();
+		}
 	};
 
 	/* Loading Notifications */
@@ -34,7 +55,7 @@ function( params ) {
 
 	this.userObserver = ko.computed( function() {
 		if( ! appViewModel.user.isGuest() && getUrlParameter( 'action' ) == "write" ) {
-			$( '#pratilipiWrite' ).modal();
+			openWriteDialog();
 		}
 	}, this );
 

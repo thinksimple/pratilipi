@@ -171,10 +171,14 @@ function ViewModel() {
 
 	if( getUrlParameter( "message" ) != null ) {
 		var type = getUrlParameter( "message" );
+		var message = null;
 		if( type == "NOTIFICATIONS" )
-			ToastUtil.toastUp( "${ _strings.user_login_to_view_notifications }" );
+			message = "${ _strings.user_login_to_view_notifications }";
 		else if( type == "LIBRARY" )
-			ToastUtil.toastUp( "${ _strings.user_login_to_view_library }" );
+			message = "${ _strings.user_login_to_view_library }";
+		else if( type == "WRITE" )
+			message = "${ _strings.write_on_desktop_only }";
+		ToastUtil.toastUp( message );
 		setTimeout( function(){ ToastUtil.toastDown(); }, 5000 );
 		/* Hack: Mdl toast doesn't work properly when called toast function. */
 	}

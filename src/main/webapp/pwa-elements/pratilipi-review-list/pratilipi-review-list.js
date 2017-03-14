@@ -4,7 +4,6 @@ function( params ) {
     this.userPratilipi = params.userPratilipi;
     this.updatePratilipi = params.updatePratilipi;
     this.updateUserPratilipi = params.updateUserPratilipi;
-    // console.log( this.userpratilipi, this.pratilipi );
 
     /* Constants */
     this.maxRating = 5;    
@@ -219,7 +218,6 @@ function( params ) {
 
      
     this.pratilipiIdObserver = ko.computed( function() {
-        console.log("inside reviewws");
         if( this.pratilipi.pratilipiId() ) {
           this.pratilipiId = this.pratilipi.pratilipiId();
           this.getReviewList();
