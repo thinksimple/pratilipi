@@ -48,9 +48,6 @@
 				.mdl-textfield {
 					width: 100%;
 					color: #333 !important;
-					* {
-						color: rgba(0,0,0,0.27);
-					}
 					.search.material-icons {
 						position: absolute;
 						right: 0;
@@ -150,9 +147,6 @@
 			.mdl-textfield {
 				width: 100%;
 				color: #333 !important;
-				* {
-					color: inherit !important;
-				}
 				.search.material-icons {
 					position: absolute;
 					right: 0;
