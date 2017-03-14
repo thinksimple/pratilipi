@@ -57,7 +57,7 @@ function( params ) {
 	/* Add to Library */
 	this.addToLibrary = function() {
 		if( appViewModel.user.isGuest() ) {
-			goToLoginPage();
+			goToLoginPage( null, { "message": "LIBRARY" } );
 		} else {
 			var addedToLib = self.userPratilipi.addedToLib();
 			self.updateUserPratilipi( { "addedToLib": ! addedToLib } );

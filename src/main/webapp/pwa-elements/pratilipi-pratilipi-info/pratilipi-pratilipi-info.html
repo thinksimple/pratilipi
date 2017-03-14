@@ -77,8 +77,7 @@
                     <div class="mdl-card__actions padding-left-zero">
                         <a data-bind="{ attr: { href: pratilipi.readPageUrl() }, 
                                         text: pratilipi.state() == 'PUBLISHED' ? '${ _strings.read }' : '${ _strings.writer_preview }' }" 
-                            class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-button-margin"
-                        >
+                            class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-button-margin">
                         </a>
                         <button data-bind="{ text: ( userPratilipi.addedToLib() ? '-' : '+' ) + ' ${ _strings.library }', 
                                             click: addToLibrary,
