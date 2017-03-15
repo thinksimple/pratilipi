@@ -15,6 +15,10 @@
 	img.pratilipi-cover-image {
 		width: 200px;
 		height: 300px;
+		@media only screen and (max-width: 479px) {
+	    	width: 150px;
+			height: 225px;
+	  	}
 	}
 	
 	.share-button {

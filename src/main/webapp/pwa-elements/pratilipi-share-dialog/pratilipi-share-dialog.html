@@ -1,5 +1,5 @@
 <div class="modal common-modal fade" id="pratilipi-share-dialog" tabindex="-1" role="dialog" aria-labelledby="shareLabel">
-	<div class="modal-dialog" role="document">
+	<div class="modal-dialog" style="width: 350px;" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button class="mdl-button mdl-js-button mdl-button--icon close" class="close" data-dismiss="modal" aria-label="Close">
@@ -12,25 +12,25 @@
 					<li data-bind="click: shareOnFacebook" class="mdl-list__item clickable-element">
 						<span class="mdl-list__item-primary-content">
 							<span class="sprites-icon mdl-list__item-icon facebook-icon"></span>
-							${ _strings.facebook }
+							<span class="font-m">${ _strings.facebook }</span>
 						</span>
 					</li>
 					<li data-bind="click: shareOnTwitter" class="mdl-list__item clickable-element">
 						<span class="mdl-list__item-primary-content">
 							<span class="sprites-icon mdl-list__item-icon twitter-icon"></span>
-							${ _strings.twitter }
+							<span class="font-m">${ _strings.twitter }</span>
 						</span>
 					</li>
 					<li data-bind="click: shareOnGplus" class="mdl-list__item clickable-element">
 						<span class="mdl-list__item-primary-content">
 							<span class="sprites-icon mdl-list__item-icon google-plus-icon"></span>
-							${ _strings.google_plus }
+							<span class="font-m">${ _strings.google_plus }</span>
 						</span>
 					</li>
 					<li data-bind="{ click: shareOnWhatsapp, visible: isMobile() }" class="mdl-list__item clickable-element">
 						<span class="mdl-list__item-primary-content">
 							<span class="sprites-icon mdl-list__item-icon whatsapp-icon"></span>
-							${ _strings.whatsapp }
+							<span class="font-m">${ _strings.whatsapp }</span>
 						</span>
 					</li>
 				</ul>
