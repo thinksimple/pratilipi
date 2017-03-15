@@ -15,6 +15,8 @@ var AppViewModel = function() {
 	this.user = ko.mapping.fromJS( defaultUser, {}, this.user );
 	this.notificationCount = ko.observable( -1 );
 	this.userPreferences = ko.observable( {} );
+	this.metaTags = ko.observableArray();
+	this.pageTitle = ko.observable( "${ _strings.pratilipi } | Pratilipi" );
 };
 
 var appViewModel = new AppViewModel();
@@ -73,5 +75,5 @@ var updateUser = function() {
 	});
 };
 
-ko.applyBindings( appViewModel );
+ko.applyBindings( appViewModel, document.getElementsByTagName("html")[0] );
 updateUser();

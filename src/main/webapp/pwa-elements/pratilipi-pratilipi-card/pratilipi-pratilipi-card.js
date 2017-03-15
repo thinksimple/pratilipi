@@ -41,17 +41,9 @@ function( params ) {
 		self.switchLibraryState();
 	};
 
-	var getShareUrl = function() {
-		return window.location.origin + self.pratilipi.pageUrl();
-	};
-
-	var getWhatsappText = function() {
-		return '"' + self.pratilipi.title() + '"${ _strings.whatsapp_read_story } ' + getShareUrl() +" ${ _strings.whatsapp_read_unlimited_stories }";
-	};
-
 	this.sharePratilipi = function( vm, evt ) {
 		evt.stopPropagation();
-		ShareUtil.share( getShareUrl(), getWhatsappText() );
+		ShareUtil.sharePratilipi( ko.mapping.toJS( self.pratilipi ) );
 	};
 
 }

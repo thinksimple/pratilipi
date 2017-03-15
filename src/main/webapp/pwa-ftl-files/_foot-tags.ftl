@@ -1,8 +1,8 @@
 <#macro foot_tags>
 	<script src="https://d3cwrmdwk8nw1j.cloudfront.net/resource-all/pwa/js/jquery.js"></script>
 
-	<script src="/pwa-scripts/scripts-${ lang }.js?61"></script>
-	<script src="/pwa-scripts/app-${ lang }.js?50"></script>
+	<script src="/pwa-scripts/scripts-${ lang }.js?62"></script>
+	<script src="/pwa-scripts/app-${ lang }.js?51"></script>
 
 	<link rel="stylesheet" href="https://d3cwrmdwk8nw1j.cloudfront.net/resource-all/pwa/css/material-icons.materialise.materialise_dropdown.bootstrap_modal.css"/>
 	<link rel="stylesheet" type="text/css" href="/pwa-stylesheets/css/bootstrap-dropdown.css" />

@@ -4,6 +4,7 @@
 	<#include "utils/Helper.js">
 	<#include "utils/HttpUtil.js">
 	<#include "utils/ToastUtil.js">
+	<#include "utils/MetaTagUtil.js">
 	<#include "utils/ShareUtil.js">
 	<#include "utils/Common.js">
 	<#include "utils/DataAccessor.js">
