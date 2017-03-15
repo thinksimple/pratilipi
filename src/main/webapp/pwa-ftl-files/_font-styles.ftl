@@ -31,6 +31,15 @@
 	<#assign font_l_mob="21">
 	<#assign font_xl_mob="24">
 
+	<#assign material_heading="34">
+	<#assign material_title="30">
+	<#assign material_subtitle_1="26">
+	<#assign material_subtitle_2="30">
+	<#assign material_body_1="23">
+	<#assign material_body_2="26">
+	<#assign material_caption="20">
+	<#assign material_button="23">
+
 </#if>
 
 
@@ -50,6 +59,15 @@
 	<#assign font_m_mob="16">
 	<#assign font_l_mob="21">
 	<#assign font_xl_mob="24">
+
+	<#assign material_heading="34">
+	<#assign material_title="30">
+	<#assign material_subtitle_1="26">
+	<#assign material_subtitle_2="30">
+	<#assign material_body_1="23">
+	<#assign material_body_2="26">
+	<#assign material_caption="20">
+	<#assign material_button="23">
 
 </#if>
 
@@ -71,6 +89,15 @@
 	<#assign font_l_mob="21">
 	<#assign font_xl_mob="24">
 
+	<#assign material_heading="34">
+	<#assign material_title="30">
+	<#assign material_subtitle_1="26">
+	<#assign material_subtitle_2="30">
+	<#assign material_body_1="23">
+	<#assign material_body_2="26">
+	<#assign material_caption="20">
+	<#assign material_button="23">
+
 </#if>
 
 
@@ -90,6 +117,15 @@
 	<#assign font_m_mob="15">
 	<#assign font_l_mob="19">
 	<#assign font_xl_mob="22">
+
+	<#assign material_heading="32">
+	<#assign material_title="28">
+	<#assign material_subtitle_1="24">
+	<#assign material_subtitle_2="28">
+	<#assign material_body_1="21">
+	<#assign material_body_2="24">
+	<#assign material_caption="18">
+	<#assign material_button="21">
 
 </#if>
 
@@ -111,6 +147,15 @@
 	<#assign font_l_mob="19">
 	<#assign font_xl_mob="22">
 
+	<#assign material_heading="32">
+	<#assign material_title="28">
+	<#assign material_subtitle_1="24">
+	<#assign material_subtitle_2="28">
+	<#assign material_body_1="21">
+	<#assign material_body_2="24">
+	<#assign material_caption="18">
+	<#assign material_button="21">
+
 </#if>
 
 
@@ -130,6 +175,15 @@
 	<#assign font_m_mob="16">
 	<#assign font_l_mob="21">
 	<#assign font_xl_mob="24">
+
+	<#assign material_heading="34">
+	<#assign material_title="30">
+	<#assign material_subtitle_1="26">
+	<#assign material_subtitle_2="30">
+	<#assign material_body_1="23">
+	<#assign material_body_2="26">
+	<#assign material_caption="20">
+	<#assign material_button="23">
 
 </#if>
 
@@ -151,6 +205,15 @@
 	<#assign font_l_mob="21">
 	<#assign font_xl_mob="24">
 
+	<#assign material_heading="34">
+	<#assign material_title="30">
+	<#assign material_subtitle_1="26">
+	<#assign material_subtitle_2="30">
+	<#assign material_body_1="23">
+	<#assign material_body_2="26">
+	<#assign material_caption="20">
+	<#assign material_button="23">
+
 </#if>
 
 
@@ -171,6 +234,15 @@
 	<#assign font_l_mob="21">
 	<#assign font_xl_mob="24">
 
+	<#assign material_heading="34">
+	<#assign material_title="30">
+	<#assign material_subtitle_1="26">
+	<#assign material_subtitle_2="30">
+	<#assign material_body_1="23">
+	<#assign material_body_2="26">
+	<#assign material_caption="20">
+	<#assign material_button="23">
+
 </#if>
 
 <style>
@@ -178,6 +250,47 @@
 	*:not(.material-icons) { 
 		font-family: "${ font }", "Helvetica", "Arial", sans-serif !important;
 		letter-spacing: 0 !important;
+	}
+
+	.material-heading {
+		line-height: ${ material_heading }px !important;
+	}
+	.material-title {
+		line-height: ${ material_title }px !important;
+	}
+	.material-subtitle-1 {
+		line-height: ${ material_subtitle_1 }px !important;
+	}
+	.material-subtitle-2 {
+		line-height: ${ material_subtitle_2 }px !important;
+	}
+	.material-body-1 {
+		line-height: ${ material_body_1 }px !important;
+	}
+	.material-body-2 {
+		line-height: ${ material_body_2 }px !important;
+	}
+	.material-caption {
+		line-height: ${ material_caption }px !important;
+	}
+	.material-button {
+		line-height: ${ material_button }px !important;
+	}
+
+	.font-xs {
+		font-size: ${ font_xs }px !important;
+	}
+	.font-s {
+		font-size: ${ font_s }px !important;
+	}
+	.font-m {
+		font-size: ${ font_m }px !important;
+	}
+	.font-l {
+		font-size: ${ font_l }px !important;
+	}
+	.font-xl {
+		font-size: ${ font_xl }px !important;
 	}
 	@media only screen and (max-width: 767px) {
 		.font-xs {
@@ -196,21 +309,5 @@
 			font-size: ${ font_xl_mob }px !important;
 		}
 	}
-	@media only screen and (min-width: 768px) {
-		.font-xs {
-			font-size: ${ font_xs }px !important;
-		}
-		.font-s {
-			font-size: ${ font_s }px !important;
-		}
-		.font-m {
-			font-size: ${ font_m }px !important;
-		}
-		.font-l {
-			font-size: ${ font_l }px !important;
-		}
-		.font-xl {
-			font-size: ${ font_xl }px !important;
-		}
-	}	
+
 </style>
