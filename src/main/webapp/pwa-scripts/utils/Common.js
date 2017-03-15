@@ -66,6 +66,7 @@ function sharePratilipiOnWhatsapp( text ) {
 
 function getImageUrl( imageUrl, width ) {
 	if( imageUrl == null ) return null;
+	if( width == null ) return imageUrl;
 	return imageUrl + ( imageUrl.indexOf( "?" ) > -1 ? "&" : "?" ) + "width=" + width;
 }
 
