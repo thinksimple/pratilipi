@@ -93,7 +93,7 @@
                                 class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-button-margin"
                         >
                         </button>
-                        <button data-bind="{ visible: canShare() }" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect share-button" data-toggle="modal" data-target="#pratilipi-share-dialog">
+                        <button data-bind="{ visible: canShare(), click: share }" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect share-button">
                             <i class="material-icons material-icons-16">share</i>
                         </button>
                     </div>
@@ -156,44 +156,3 @@
        </div>
     </div>
 </div>
-
-<div class="modal common-modal fade" id="pratilipi-share-dialog" tabindex="-1" role="dialog" aria-labelledby="shareLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button class="mdl-button mdl-js-button mdl-button--icon close" class="close" data-dismiss="modal" aria-label="Close">
-                <i class="material-icons">close</i>
-                </button>
-                <h6 class="modal-title" id="shareLabel">${ _strings.share }</h6>
-            </div>
-            <div class="modal-body">
-                <ul class="demo-list-icon mdl-list">
-                    <li data-bind="click: shareOnSocialMedia" class="mdl-list__item clickable-element" data-share-platform="FACEBOOK">
-                        <span class="mdl-list__item-primary-content">
-                            <div class="sprites-icon mdl-list__item-icon facebook-icon"></div>
-                            ${ _strings.facebook }
-                        </span>
-                    </li>
-                    <li data-bind="click: shareOnSocialMedia" class="mdl-list__item clickable-element" data-share-platform="TWITTER">
-                        <span class="mdl-list__item-primary-content">
-                            <div class="sprites-icon mdl-list__item-icon twitter-icon"></div>
-                            ${ _strings.twitter }
-                        </span>
-                    </li>
-                    <li data-bind="click: shareOnSocialMedia" class="mdl-list__item clickable-element" data-share-platform="GPLUS">
-                        <span class="mdl-list__item-primary-content">
-                            <div class="sprites-icon mdl-list__item-icon google-plus-icon"></div>
-                            ${ _strings.google_plus }
-                        </span>
-                    </li>
-                    <li data-bind="click: shareOnSocialMedia" class="mdl-list__item clickable-element mdl-layout--small-screen-only" data-share-platform="WHATSAPP">
-                        <span class="mdl-list__item-primary-content">
-                            <div class="sprites-icon mdl-list__item-icon whatsapp-icon"></div>
-                            ${ _strings.whatsapp }
-                        </span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>  

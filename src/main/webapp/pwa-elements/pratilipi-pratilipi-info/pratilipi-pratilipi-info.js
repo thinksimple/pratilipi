@@ -115,26 +115,8 @@ function( params ) {
 
 
 	/* Share */
-	var dialog = $( '#pratilipi-share-dialog' );
-
-	this.hideShareModal = function() {
-		dialog.modal('hide');
-	};
-
-	this.getPratilipiShareUrl = function( platform ) {
-		var shareUrl = encodeURIComponent( window.location.origin + self.pratilipi.pageUrl() );
-		if( platform == "WHATSAPP" )
-			return "%22" + self.pratilipi.title() + "%22${ _strings.whatsapp_read_story }%20" + shareUrl +"%0A${ _strings.whatsapp_read_unlimited_stories }";
-
-		return shareUrl;
-	};
-
-	this.shareOnSocialMedia = function( item, event ) {
-		var platform = event.currentTarget.getAttribute( 'data-share-platform' );
-		var shareUrl = self.getPratilipiShareUrl( platform );
-		var functionToInvoke = "sharePratilipiOn" + capitalizeFirstLetter( platform );
-		window[ functionToInvoke ]( shareUrl );
-		self.hideShareModal();
+	this.share = function() {
+		ShareUtil.sharePratilipi( ko.mapping.toJS( self.pratilipi ) );
 	};
 
 
