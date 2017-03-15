@@ -14,6 +14,15 @@
 <#assign font_l_mob="20">
 <#assign font_xl_mob="24">
 
+<#assign material_heading="34">
+<#assign material_title="30">
+<#assign material_subtitle_1="26">
+<#assign material_subtitle_2="30">
+<#assign material_body_1="23">
+<#assign material_body_2="26">
+<#assign material_caption="20">
+<#assign material_button="23">
+
 <#if language == "HINDI">
 
 	<#assign url="https://fonts.googleapis.com/css?family=Noto+Sans&subset=devanagari">
