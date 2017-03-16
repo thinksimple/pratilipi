@@ -17,6 +17,7 @@ function() {
 	this.initialDataLoaded = ko.observable( false );
 
 	this.fetchPratilipiList = function() {
+		if( self.isLoading() ) return;
 		self.isLoading( true );
 		dataAccessor.getPratilipiListByListName( window.location.pathname.substring(1), cursor, null, resultCount,
 				function( pratilipiListResponse ) {

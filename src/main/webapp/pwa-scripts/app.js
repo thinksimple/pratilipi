@@ -17,6 +17,10 @@ var AppViewModel = function() {
 	this.userPreferences = ko.observable( {} );
 	this.metaTags = ko.observableArray();
 	this.pageTitle = ko.observable( "${ _strings.pratilipi } | Pratilipi" );
+	this.scrollTop = ko.observable();
+	this.notifyOfScrollEvent = function() {
+		this.scrollTop( $( ".mdl-layout__content" ).scrollTop() );
+	};
 };
 
 var appViewModel = new AppViewModel();
