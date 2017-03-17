@@ -34,7 +34,7 @@ _pratilipi_type_magazines	= पत्रिका
 # Author
 author_about				= संक्षिप्त परिचय
 author_language				= भाषा	
-author_since				= प्रतिलिपी सोबत   
+author_since				= प्रतिलिपि सोबत   
 author_count_works			= प्रकाशित साहित्य 
 author_count_reads			= वाचक संख्या
 author_count_likes			= आवड संख्या 
@@ -45,7 +45,7 @@ author_published_works		= प्रकाशित साहित्य
 author_add_new_content		= नवीन साहित्य लिहा
 author_no_contents_published	= साहित्यकारांच्या अकाउंट मध्ये अजून पर्यंत प्रकाशन कार्य चालू नाही झाले त्याबद्दल आम्ही क्षमस्व आहोत.
 author_activity					= कार्य
-author_about					= बद्दल
+author_about					=  लेखकांच्या बद्दल 
 author_biography				= चरित्र
 author_location					= ठिकाण 
 author_date_of_birth			= जन्म तारीख 
