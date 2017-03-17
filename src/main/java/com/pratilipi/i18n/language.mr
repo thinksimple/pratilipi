@@ -153,12 +153,12 @@ write_fill_title			=  शिर्षक
 write_select_type			= श्रेणी 
 
 # Common User Popups
-user_sign_in				= साइन इन करा
+user_sign_in				= साइन इन
 user_to_sign_in				= प्रारंभ करा
 user_sign_in_with_facebook	= फेसबुक साइन इन करा
 user_sign_in_with_google	= गूगल सह साइन इन
 user_sign_in_to_pratilipi	= साइन इन करा प्रतें
-user_sign_out				= साइन आउट करा
+user_sign_out				= साइन आउट
 user_sign_up				= नवीन खाते बनवा
 user_sign_up_for_pratilipi	= प्रतिलिपि वर नवीन अकाउंट बनवा
 user_sign_up_with_facebook	= फेसबुक साइन अप करा
