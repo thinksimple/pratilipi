@@ -153,12 +153,12 @@ write_fill_title			= শীর্ষক
 write_select_type			= শ্রেণী
 
 # Common User Popups
-user_sign_in			= সাইন ইন করুন
+user_sign_in			= সাইন ইন
 user_to_sign_in			= আরম্ভ  করুন
 user_sign_in_with_facebook	= ফেসবুকের সাথে সাইন ইন করুন
 user_sign_in_with_google	= গুগল সাইন ইন
 user_sign_in_to_pratilipi	= প্রতিলিপিতে সাইন ইন করুন
-user_sign_out			= সাইন আউট করুন
+user_sign_out			= সাইন আউট
 user_sign_up			= নতুন একাউন্ট বানান
 user_sign_up_for_pratilipi	=  প্রতিলিপিতে নতুন একাউন্ট বানান
 user_sign_up_with_facebook	= ফেসবুক দিয়ে সাইন আপ করুন
