@@ -5,7 +5,7 @@
 /events       ಸ್ಪರ್ಧೆಗಳು              Analytics#categoryName::online-events        App#imageName::events.jpg     App#EventList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"events" }
 
 ಪ್ರಭೇದಗಳು 
-/thriller  ಥ್ರಿಲ್ಲರ್/ಹಾರರ್      Analytics#categoryName::thriller    App#imageName::horror.jpg            App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"thriller" }
+/horror  ಹಾರರ್      Analytics#categoryName::horror    App#imageName::horror.jpg            App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"horror" }
 /relationship ಬಂಧುತ್ವ           Analytics#categoryName::family    App#imageName::event_friendship.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"relationship" }
 /love       ಪ್ರೀತಿ            Analytics#categoryName::romance        App#imageName::romance.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"love" }
 /women      ಮಹಿಳೆ          Analytics#categoryName::women        App#imageName::event_women.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"women" }
