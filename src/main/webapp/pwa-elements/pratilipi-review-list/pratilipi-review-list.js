@@ -10,7 +10,7 @@ function( params ) {
     this.firstLoadReviewCount = 5;
     this.subsequentLoadReviewCount = 10; 
     this.isReviewsLoaded = ko.observable( false );
-    this.areMoreReviesLoading = ko.observable( false );
+    this.areMoreReviewsLoading = ko.observable( false );
 
 
     this.reviewList = ko.observableArray( [] );
@@ -20,6 +20,7 @@ function( params ) {
     this.isSaveInProgress = ko.observable( false );
     this.totalReviewsPresent = ko.observable( 0 );
     this.selectedReviewRating = ko.observable( 0 ); /* init the initially until we get userpratiipi obj */
+    this.initialReviewRating = ko.observable( 0 );
     this.newReviewContent = ko.observable( "" ); /* init the initially until we get userpratiipi obj */
     this.hasUserAlreadyPostedReview = ko.observable( false );
    
@@ -41,6 +42,7 @@ function( params ) {
     this.isNewReviewRatingZero = function() {
       return this.selectedReviewRating() == 0;
     }; 
+    
     this.pushToReviewList = function( revList ) {
         for( var i=0; i< revList.length; i++ ) {
             this.reviewList.push( revList[i] );
@@ -54,8 +56,23 @@ function( params ) {
         this.reviewList.unshift( review );
         this.settotalReviewsPresent( this.totalReviewsPresent() + 1 );
     }; 
+    
     this.settotalReviewsPresent = function( count ) {
         this.totalReviewsPresent( count );
+    };
+    
+    this.updatePratilipiObject = function( review ) {
+      /* check if its a new Review or updated review, and calc av rating acc and send updated values.*/
+        var updatedPratilipiObject = {};
+        var newRating;
+        if( this.hasUserAlreadyPostedReview() ) { /* updated review*/
+            newRating = ( ( this.pratilipi.averageRating() * this.pratilipi.ratingCount() ) - this.initialReviewRating + this.selectedReviewRating() ) / this.pratilipi.ratingCount();
+        } else {
+            newRating = ( ( this.pratilipi.averageRating() * this.pratilipi.ratingCount() ) + this.selectedReviewRating() ) / ( this.pratilipi.ratingCount() + 1 );
+            updatedPratilipiObject["ratingCount"] = this.pratilipi.ratingCount() + 1;
+        }
+        updatedPratilipiObject["averageRating"] = newRating;
+        this.updatePratilipi( updatedPratilipiObject );
     };
 
     this.getReviewListCallback = function( response ) {
@@ -71,7 +88,7 @@ function( params ) {
         if( response ) {
             this.pushToReviewList( response[ "reviewList" ] );           
         }
-        this.areMoreReviesLoading( false );
+        this.areMoreReviewsLoading( false );
     };
     
     this.getReviewList = function() {
@@ -79,7 +96,7 @@ function( params ) {
     };
     
     this.loadMoreReviews = function() {
-        this.areMoreReviesLoading( true );
+        this.areMoreReviewsLoading( true );
         this.dataAccessor.getReviewList( this.pratilipiId, this.totalReviewsShown(), null, this.subsequentLoadReviewCount, this.loadMoreReviewsCallback.bind( this ) );
     };  
 
@@ -102,6 +119,7 @@ function( params ) {
 
     this.postReviewSuccessCallback = function( response ) {
         self.addToReviewList( response ); 
+        self.updatePratilipiObject( response );
         self.hasUserAlreadyPostedReview( true );
         self.postReviewCompleteCallback();
     };
@@ -226,7 +244,9 @@ function( params ) {
 
     this.userPratilipiRatingObserver = ko.computed( function() {
         if( this.userPratilipi.rating && this.userPratilipi.rating() ) { /* TODO CHnage this to 1 condn*/
+            /* TODO Use debugger here for updatePratilipi*/
             this.selectedReviewRating( this.userPratilipi.rating() );
+            this.initialReviewRating( this.userPratilipi.rating() );
         }
     }, this);
 
