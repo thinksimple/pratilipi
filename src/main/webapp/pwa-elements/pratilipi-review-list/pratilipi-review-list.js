@@ -75,6 +75,14 @@ function( params ) {
         this.updatePratilipi( updatedPratilipiObject );
     };
 
+    this.updateUserPratilipiObject = function( review ) {
+        var updatedUserPratilipiObject = {};
+        updatedUserPratilipiObject["rating"] = review.rating;
+        updatedUserPratilipiObject["review"] = review.review ? review.review.trim() : "";
+        this.updateUserPratilipi( updatedUserPratilipiObject );
+    };
+    
+
     this.getReviewListCallback = function( response ) {
         if( response ) {
             this.pushToReviewList( response[ "reviewList" ] );
@@ -120,7 +128,8 @@ function( params ) {
     this.postReviewSuccessCallback = function( response ) {
         self.addToReviewList( response ); 
         self.updatePratilipiObject( response );
-        self.hasUserAlreadyPostedReview( true );
+        self.updateUserPratilipiObject( response );
+//        self.hasUserAlreadyPostedReview( true );
         self.postReviewCompleteCallback();
     };
 
