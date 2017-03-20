@@ -2,7 +2,7 @@ function( params ) {
 	var self = this;
 
 	var resultCount = params.resultCount;
-	var notificationsPageBehaviour = params.notificationsPageBehaviour;
+	var notificationsPageBehaviour = params.notificationsPageBehaviour != null ? params.notificationsPageBehaviour : false;
 	var listenToFirebase = params.listenToFirebase != null ? params.listenToFirebase : false;
 	var dataAccessor = new DataAccessor();
 	var cursor = null;
@@ -38,12 +38,13 @@ function( params ) {
 						return;
 					}
 					var notificationList = notificationListResponse["notificationList"];
-					cursor = notificationListResponse.cursor;
-					if( notificationsPageBehaviour )
-						self.updateNotificationList( notificationList );
-					else
-						self.setNotificationList( notificationList );
 					self.notificationsLoaded( notificationList.length > 0 ? "LOADED" : "LOADED_EMPTY" );
+					if( ! notificationsPageBehaviour ) {
+						self.setNotificationList( notificationList );
+						return;
+					}
+					cursor = notificationListResponse.cursor;
+					self.updateNotificationList( notificationList );
 					self.hasMoreContents( notificationList.length == resultCount && notificationsPageBehaviour );
 		});
 	};
