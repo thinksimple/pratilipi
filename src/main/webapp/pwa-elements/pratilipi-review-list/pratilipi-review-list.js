@@ -115,6 +115,10 @@ function( params ) {
     this.changeReviewRating = function( rating1 ) {
         self.setSelectedReviewRating( rating1 );
     };
+
+    this.restoreRating = function() {
+        self.setSelectedReviewRating( self.initialReviewRating() );
+    };
     
     this.openReviewModalWithRating = function( rating ) {
         if( self.isGuest() ) {
