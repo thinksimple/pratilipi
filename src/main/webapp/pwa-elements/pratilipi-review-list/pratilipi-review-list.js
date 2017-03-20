@@ -66,7 +66,7 @@ function( params ) {
         var updatedPratilipiObject = {};
         var newRating;
         if( this.hasUserAlreadyPostedReview() ) { /* updated review*/
-            newRating = ( ( this.pratilipi.averageRating() * this.pratilipi.ratingCount() ) - this.initialReviewRating + this.selectedReviewRating() ) / this.pratilipi.ratingCount();
+            newRating = ( ( this.pratilipi.averageRating() * this.pratilipi.ratingCount() ) - this.initialReviewRating() + this.selectedReviewRating() ) / this.pratilipi.ratingCount();
         } else {
             newRating = ( ( this.pratilipi.averageRating() * this.pratilipi.ratingCount() ) + this.selectedReviewRating() ) / ( this.pratilipi.ratingCount() + 1 );
             updatedPratilipiObject["ratingCount"] = this.pratilipi.ratingCount() + 1;
