@@ -110,13 +110,7 @@ var suggesterMethods = {
   },
 
   getSuggestions: function() {
-
-    if( this.words_map[this.text] ) {
-      this.suggestFromWordsMap();
-    } else {
       this.suggestFromGoogleApi();
-    }
-
   },
 
   suggestFromWordsMap: function() {
@@ -139,7 +133,6 @@ var suggesterMethods = {
       self.suggestions = json[1][0][1];
       self.suggestions.push( self.text );
       self.suggest();
-      self.words_map[ self.text ] = self.suggestions;
     });
   },
 

@@ -1,8 +1,8 @@
 <#macro foot_tags>
 	<script src="https://d3cwrmdwk8nw1j.cloudfront.net/resource-all/pwa/js/jquery.js"></script>
 
-	<script src="/pwa-scripts/scripts-${ lang }.js?67"></script>
-	<script src="/pwa-scripts/app-${ lang }.js?52"></script>
+	<script src="/pwa-scripts/scripts-${ lang }.js?68"></script>
+	<script src="/pwa-scripts/app-${ lang }.js?53"></script>
 
 	<link rel="stylesheet" href="https://d3cwrmdwk8nw1j.cloudfront.net/resource-all/pwa/css/material-icons.materialise.materialise_dropdown.bootstrap_modal.css"/>
 	<link rel="stylesheet" type="text/css" href="/pwa-stylesheets/css/bootstrap-dropdown.css" />
@@ -11,7 +11,7 @@
 
 	<script src="/pwa-scripts/bootstrap-dropdown.min.js"></script>
 	<script src="https://d3cwrmdwk8nw1j.cloudfront.net/resource-all/rangy_core.rangy_selectionsaverestore.min.js"></script>
-	<script src="/pwa-scripts/transliteration-suggester-${ lang }.js"></script>
+	<script src="/pwa-scripts/transliteration-suggester-${ lang }.js?1"></script>
 	<script src="/pwa-scripts/transliteration-app-${ lang }.js?2"></script>
 	<script>
 	$( "*[make-transliterable]" ).each( function() {
