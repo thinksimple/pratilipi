@@ -44,7 +44,7 @@ function() {
 
 	this.updatePratilipi = function( pratilipi ) {
 		ko.mapping.fromJS( pratilipi, {}, self.pratilipi );
-		MetaTagUtil.setMetaTagsForPratilipi( pratilipi );
+		MetaTagUtil.setMetaTagsForPratilipi( self.pratilipi );
 	};
 
 	this.updateUserPratilipi = function( userPratilipi ) {
