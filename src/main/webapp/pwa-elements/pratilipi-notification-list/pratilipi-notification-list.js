@@ -18,7 +18,7 @@ function( params ) {
 	 * */
 	this.notificationsLoaded = ko.observable( "INITIAL" );
 	this.notificationList = ko.observableArray();
-	this.hasMoreContents = ko.observable( true );
+	this.hasMoreContents = ko.observable( false );
 
 	this.setNotificationList = function( notificationList ) {
 		self.notificationList( notificationList );
