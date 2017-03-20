@@ -120,7 +120,7 @@ if (typeof module != 'undefined' && typeof module.exports != 'undefined') {
 }());
 
 var transliterationApp = function( $transliterable_elem, lang ) {
-  this.$transliterable_elem = $transliterable_elem; 
+  this.$transliterable_elem = $transliterable_elem;
   this.lang = lang;
 };
 
@@ -128,7 +128,9 @@ transliterationApp.prototype.init = function() {
   var _this = this;
   this.setTransliterationElementType();
   this.setSuggestionResolveFunction();
-  this.suggester = new Suggester('.word-suggester', _this.onSuggestionPicked, _this.$transliterable_elem, _this.isTransliterationInputType(), _this.lang );
+  var $suggester_div = $('<div class="word-suggester"><div class="word-input"></div><div class="suggestions"><div class="suggestion"></div></div></div>');
+  document.body.appendChild(  $suggester_div.get(0) );
+  this.suggester = new Suggester( $suggester_div.get(0), _this.onSuggestionPicked, _this.$transliterable_elem, _this.isTransliterationInputType(), _this.lang );
   this.suggester.init();
   this.$transliterable_elem.on('keypress', _this.suppressKeypress.bind( _this ));
   this.$transliterable_elem.on('keydown', _this.suppressKeydown.bind( _this ));
@@ -136,7 +138,7 @@ transliterationApp.prototype.init = function() {
     if( _this.suggester.getMode() && ( !$(event.target).closest('.word-suggester').length ) ) {
       _this.suggester.clear();
     }
-  });   
+  });
 };
 
 function getFirstRange() {
@@ -161,7 +163,7 @@ transliterationApp.prototype.onSuggestionPickedInsideDiv = function( word, eng_w
 
 transliterationApp.prototype.onSuggestionPickedInsideInput = function(word, eng_word) {
   // console.log(':::::::Resolved with word ' + word + '::::::::')
-  var text = ( word ? word : eng_word ) + " "; 
+  var text = ( word ? word : eng_word ) + " ";
   var startPos = this.content_holder.get(0).selectionStart;
   var endPos = this.content_holder.get(0).selectionEnd;
   var positon_after_selection = startPos + text.length ;
@@ -248,5 +250,5 @@ transliterationApp.prototype.isKeydownActionKey = function( translation ) {
 window.onload = function() {
   if(screen.width > 480) {
     rangy.init();
-  } 
+  }
 };
