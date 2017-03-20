@@ -2,7 +2,7 @@ function( params ) {
 	var self = this;
 
 	var resultCount = params.resultCount;
-	var includeShowMore = params.includeShowMore;
+	var notificationsPageBehaviour = params.notificationsPageBehaviour;
 	var listenToFirebase = params.listenToFirebase != null ? params.listenToFirebase : false;
 	var dataAccessor = new DataAccessor();
 	var cursor = null;
@@ -28,7 +28,7 @@ function( params ) {
 		self.notificationList.push.apply( self.notificationList, notificationList );
 	};
 
-	this.fetchNotificationList = function( setNotificationList ) {
+	this.fetchNotificationList = function() {
 		if( self.notificationsLoaded() == "LOADING" ) return;
 		self.notificationsLoaded( "LOADING" );
 		dataAccessor.getNotificationList( cursor, resultCount,
@@ -39,12 +39,12 @@ function( params ) {
 					}
 					var notificationList = notificationListResponse["notificationList"];
 					cursor = notificationListResponse.cursor;
-					if( setNotificationList )
-						self.setNotificationList( notificationList );
-					else
+					if( notificationsPageBehaviour )
 						self.updateNotificationList( notificationList );
+					else
+						self.setNotificationList( notificationList );
 					self.notificationsLoaded( notificationList.length > 0 ? "LOADED" : "LOADED_EMPTY" );
-					self.hasMoreContents( notificationList.length == resultCount && includeShowMore );
+					self.hasMoreContents( notificationList.length == resultCount && notificationsPageBehaviour );
 		});
 	};
 
