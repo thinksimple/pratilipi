@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
 import com.pratilipi.api.annotation.Get;
+import com.pratilipi.api.annotation.Validate;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -25,8 +26,15 @@ public class TestApi extends GenericApi {
 
 	private static final Logger logger = Logger.getLogger( TestApi.class.getName() );
 
+	public static class GetRequest extends GenericRequest {
+
+		@Validate( required = true )
+		private Integer resultCount;
+
+	}
+
 	@Get
-	public static GenericResponse get( GenericRequest request ) throws UnexpectedServerException {
+	public static GenericResponse get( GetRequest request ) throws UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
@@ -34,7 +42,7 @@ public class TestApi extends GenericApi {
 		List<Email> emailList = new ArrayList<>();
 		while( it.hasNext() ) {
 			emailList.add( it.next() );
-			if( emailList.size() >= 1000 ) break;
+			if( emailList.size() >= request.resultCount ) break;
 		}
 
 		List<Email> emailListToBeDropped = new ArrayList<>();
