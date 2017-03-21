@@ -126,6 +126,7 @@
     		<span data-bind="text: $parents[1].user.isGuest()"></span>	
     		<span data-bind="text: $parents[1].user.author.authorId()"></span>
     		<span data-bind="text: author.authorId"></span>
+            <span data-bind="text: $parents[1].user.author.authorId() != author.authorId"></span>
     		<!-- ko if: ( $parents[1].user.isGuest() ) || ( $parents[1].user.author.authorId() != author.authorId ) -->
 	            <div class="mdl-cell mdl-cell--12-col padding-zero">
 	                <hr class="margin-zero">
