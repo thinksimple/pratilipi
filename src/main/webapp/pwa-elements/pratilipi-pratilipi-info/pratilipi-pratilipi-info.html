@@ -124,35 +124,37 @@
                 </div>
             <!-- /ko -->
     
-            <div class="mdl-cell mdl-cell--12-col padding-zero">
-                <hr class="margin-zero">
-            </div>
-            <h3 class="mdl-cell mdl-cell--12-col mdl-typography--headline">${ _strings.author_about }</h3>
-            <div data-bind="visible: ! authorLoaded()" 
-                style="margin: 25px auto;"  
-                class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active">
-            </div>
-            <div class="mdl-cell mdl-cell--12-col" style="display: flex; align-items: center; justify-content: space-between;" data-bind="visible: authorLoaded()">
-                <span>
-                    <img data-bind="attr: { src: getImageUrl( author.profileImageUrl(), 48 ) }" class="mdl-list__item-avatar">
-                    <a class="black-color" style="margin: 10px;" data-bind="attr: { href: author.pageUrl() }, text: author.name()"></a>
-                	<button data-bind="{ click: followAuthor, 
-                                    text: userAuthor.following() ? '${ _strings.author_unfollow }': '${ _strings.author_follow }',
-                                    visible: canFollowAuthor,
-                                    disable: userAuthorRequestOnFlight }" 
-                        class="mdl-button mdl-js-button mdl-button--primary mdl-layout--large-screen-only pull-right">
-                	</button>
-                 	<button data-bind="{ click: followAuthor,
-                                    visible: canFollowAuthor,
-                                    disable: userAuthorRequestOnFlight }" 
-                            class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored mdl-layout--small-screen-only pull-right">
-                    	<i class="material-icons" data-bind="text: ( userAuthor.following() ? 'done' : 'person_add' )"></i>
-                	</button>
-                </span>
-            </div>
-            <div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero " data-bind="if: author.summary() != null">
-                <pratilipi-see-more params="{ originalText: author.summary(), uniqueName: 'author-about' }"></pratilipi-see-more>
-            </div>
+    		<!-- ko if: ( $parents[1].user.isGuest() ) || ( $parents[1].user.author.authorId() != author.authorId ) -->
+	            <div class="mdl-cell mdl-cell--12-col padding-zero">
+	                <hr class="margin-zero">
+	            </div>
+	            <h3 class="mdl-cell mdl-cell--12-col mdl-typography--headline">${ _strings.author_about }</h3>
+	            <div data-bind="visible: ! authorLoaded()" 
+	                style="margin: 25px auto;"  
+	                class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active">
+	            </div>
+	            <div class="mdl-cell mdl-cell--12-col" style="display: flex; align-items: center; justify-content: space-between;" data-bind="visible: authorLoaded()">
+	                <span>
+	                    <img data-bind="attr: { src: getImageUrl( author.profileImageUrl(), 48 ) }" class="mdl-list__item-avatar">
+	                    <a class="black-color" style="margin: 10px;" data-bind="attr: { href: author.pageUrl() }, text: author.name()"></a>
+	                	<button data-bind="{ click: followAuthor, 
+	                                    text: userAuthor.following() ? '${ _strings.author_unfollow }': '${ _strings.author_follow }',
+	                                    visible: canFollowAuthor,
+	                                    disable: userAuthorRequestOnFlight }" 
+	                        class="mdl-button mdl-js-button mdl-button--primary mdl-layout--large-screen-only pull-right">
+	                	</button>
+	                 	<button data-bind="{ click: followAuthor,
+	                                    visible: canFollowAuthor,
+	                                    disable: userAuthorRequestOnFlight }" 
+	                            class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored mdl-layout--small-screen-only pull-right">
+	                    	<i class="material-icons" data-bind="text: ( userAuthor.following() ? 'done' : 'person_add' )"></i>
+	                	</button>
+	                </span>
+	            </div>
+	            <div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero " data-bind="if: author.summary() != null">
+	                <pratilipi-see-more params="{ originalText: author.summary(), uniqueName: 'author-about' }"></pratilipi-see-more>
+	            </div>
+            <!-- /ko -->
        </div>
     </div>
 </div>
