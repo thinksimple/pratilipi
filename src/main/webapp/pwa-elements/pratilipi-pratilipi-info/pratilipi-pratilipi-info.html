@@ -123,16 +123,16 @@
                     <pratilipi-see-more params="{ originalText: pratilipi.summary(), uniqueName: 'summary' }"></pratilipi-see-more>
                 </div>
             <!-- /ko -->
-
+            
+            <div data-bind="visible: ! authorLoaded()" 
+                style="margin: 25px auto;"  
+                class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active">
+            </div>
     		<!-- ko if: ( $parents[1].user.isGuest() ) || ( $parents[1].user.author.authorId() != author.authorId() ) -->
 	            <div class="mdl-cell mdl-cell--12-col padding-zero">
 	                <hr class="margin-zero">
 	            </div>
 	            <h3 class="mdl-cell mdl-cell--12-col mdl-typography--headline" data-bind="text: author.summary() ? '${ _strings.author_about }' : '${ _strings.author }'"></h3>
-	            <div data-bind="visible: ! authorLoaded()" 
-	                style="margin: 25px auto;"  
-	                class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active">
-	            </div>
 	            <div class="mdl-cell mdl-cell--12-col" style="display: flex; align-items: center; justify-content: space-between;" data-bind="visible: authorLoaded()">
 	                <span>
 	                    <img data-bind="attr: { src: getImageUrl( author.profileImageUrl(), 48 ) }" class="mdl-list__item-avatar">
