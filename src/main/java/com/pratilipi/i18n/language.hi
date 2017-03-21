@@ -75,7 +75,6 @@ pratilipi_update_cover		= अपलोड फोटो
 pratilipi_count_reads		= पाठक संख्या	
 pratilipi_count_reviews		= कुल टिप्पणी 
 pratilipi_count_likes		= कुल लाइक्स	
-pratilipi_no_reviews		= अपनी टिप्पणी दर्ज कर आप प्रथम समीक्षक बन सकते हैं।  
 pratilipi_confirm_move_to_drafts_title	= ड्राफ्ट में जाएँ
 pratilipi_confirm_move_to_drafts_body	= इस रचना का ड्राफ्ट में जाना सुनिश्चित करें
 pratilipi_confirm_move_to_drafts_true	= हाँ, ड्राफ्ट में जाएँ!
@@ -94,7 +93,6 @@ rating_rating				= रेटिंग
 rating_ratings				= रेटिंग
 rating_rate_this			= रेटिंग दें
 rating_your_rating			= आपकी रेटिंग
-rating_be_first_one			= अपनी रेटिंग दे
 rating_mandatory_message	= कृपया रेटिंग दे।
 rating_1_star				= १
 rating_2_star				= २
@@ -488,3 +486,8 @@ facebook						= फेसबुक
 whatsapp						= वाट्सअप
 twitter							= ट्वीटर
 google_plus						= गूगल+
+linkedin=लिंक्डइन
+
+rating_be_first_one				= अपनी टिप्पणी दर्ज कर आप प्रथम समीक्षक बन सकते हैं।
+pratilipi_no_reviews            = रचना पर कोई टिप्पणी नहीं है
+
