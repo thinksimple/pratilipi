@@ -130,7 +130,7 @@
 	            <div class="mdl-cell mdl-cell--12-col padding-zero">
 	                <hr class="margin-zero">
 	            </div>
-	            <h3 class="mdl-cell mdl-cell--12-col mdl-typography--headline">${ _strings.author_about }</h3>
+	            <h3 class="mdl-cell mdl-cell--12-col mdl-typography--headline" data-bind="text: author.summary() ? '${ _strings.author_about }' : '${ _strings.author }'"></h3>
 	            <div data-bind="visible: ! authorLoaded()" 
 	                style="margin: 25px auto;"  
 	                class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active">
