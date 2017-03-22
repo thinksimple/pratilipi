@@ -74,6 +74,9 @@ public class AuthorEntity implements Author {
 
 	@Index
 	private Date LAST_UPDATED;
+	
+	
+	private Date TIMESTAMP;
 
 	
 	@Index
@@ -323,6 +326,14 @@ public class AuthorEntity implements Author {
 	@Override
 	public void setLastUpdated( Date lastUpdated ) {
 		this.LAST_UPDATED = lastUpdated;
+	}
+	
+	public Date getTimestamp() {
+		return TIMESTAMP;
+	}
+
+	public void setTimestamp( Date timestamp) {
+		this.TIMESTAMP = timestamp;
 	}
 	
 	

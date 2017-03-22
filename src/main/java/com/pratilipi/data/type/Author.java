@@ -93,6 +93,10 @@ public interface Author extends GenericOfyType, Serializable {
 	Date getLastUpdated();
 	
 	void setLastUpdated( Date lastUpdated );
+	
+	Date getTimestamp();
+	
+	void setTimestamp( Date timestamp );
 
 	
 	Long getFollowCount();
