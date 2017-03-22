@@ -93,10 +93,6 @@ public interface Author extends GenericOfyType, Serializable {
 	Date getLastUpdated();
 	
 	void setLastUpdated( Date lastUpdated );
-	
-	Date getTimestamp();
-	
-	void setTimestamp( Date timestamp );
 
 	
 	Long getFollowCount();
@@ -119,5 +115,9 @@ public interface Author extends GenericOfyType, Serializable {
 	
 	void setTotalFbLikeShareCount( Long totalFbLikeShareCount );
 
+	
+	Date getTimestamp();
+	
+	void setTimestamp( Date timestamp );
 	
 }

@@ -1132,6 +1132,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 	@Override
 	public Author createOrUpdateAuthor( Author author, Page page, AuditLog auditLog ) {
+		author.setTimestamp( new Date() );
 		author = createOrUpdateEntity( author, page, auditLog );
 		if( author.getUserId() != null ) {
 			String memcacheId = _createAuthorEntityMemcacheId( author.getUserId() );
@@ -1140,7 +1141,6 @@ public class DataAccessorGaeImpl implements DataAccessor {
 			else
 				memcache.put( memcacheId, author );
 		}
-		author.setTimestamp( new Date() );
 		return author;
 	}
 

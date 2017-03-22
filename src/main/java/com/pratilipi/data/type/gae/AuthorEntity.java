@@ -76,9 +76,6 @@ public class AuthorEntity implements Author {
 	private Date LAST_UPDATED;
 	
 	
-	private Date TIMESTAMP;
-
-	
 	@Index
 	private Long FOLLOW_COUNT;
 
@@ -93,6 +90,10 @@ public class AuthorEntity implements Author {
 
 	@Index
 	private Long TOTAL_FB_LIKE_SHARE_COUNT;
+
+	
+	@Index
+	private Date _TIMESTAMP_;
 
 	
 	public AuthorEntity() {}
@@ -328,14 +329,6 @@ public class AuthorEntity implements Author {
 		this.LAST_UPDATED = lastUpdated;
 	}
 	
-	public Date getTimestamp() {
-		return TIMESTAMP;
-	}
-
-	public void setTimestamp( Date timestamp) {
-		this.TIMESTAMP = timestamp;
-	}
-	
 	
 	@Override
 	public Long getFollowCount() {
@@ -385,6 +378,17 @@ public class AuthorEntity implements Author {
 	@Override
 	public void setTotalFbLikeShareCount( Long totalFbLikeShareCount ) {
 		this.TOTAL_FB_LIKE_SHARE_COUNT = totalFbLikeShareCount;
+	}
+
+	
+	@Override
+	public Date getTimestamp() {
+		return _TIMESTAMP_;
+	}
+
+	@Override
+	public void setTimestamp( Date timestamp ) {
+		this._TIMESTAMP_ = timestamp;
 	}
 
 }
