@@ -33,6 +33,46 @@ function( params ) {
 	this.userPratilipiRequestOnFlight = ko.observable( false );
 	this.userAuthorRequestOnFlight = ko.observable( false );
 
+	/* Summary Input */
+	this.summaryInputValue = ko.observable();
+	this.summaryInputActive = ko.observable( false );
+	this.summaryInputRequestOnFlight = ko.observable( false );
+	this.openSummaryInput = function() {
+		self.summaryInputValue( self.pratilipi.summary() );
+		self.summaryInputActive( true );
+	};
+	this.closeSummaryInput = function() {
+		self.summaryInputActive( false );
+	};
+	this.toggleSummaryInput = function() {
+		if( self.summaryInputActive() )
+			self.closeSummaryInput();
+		else
+			self.openSummaryInput();
+	};
+	this.submitSummaryInput = function() {
+		ToastUtil.toastUp( "${ _strings.working }" );
+		var pratilipi = { 
+				"pratilipiId": self.pratilipi.pratilipiId(),
+				"summary": self.summaryInputValue()
+		};
+		self.summaryInputRequestOnFlight( true );
+		var dataAccessor = new DataAccessor();
+		dataAccessor.createOrUpdatePratilipi( pratilipi, 
+			function( pratilipi ) {
+				self.updatePratilipi( pratilipi );
+				self.summaryInputRequestOnFlight( false );
+				ToastUtil.toast( "${ _strings.updated_pratilipi_info_success }", 3000 );
+				self.closeSummaryInput();
+			}, function( error ) {
+				self.summaryInputRequestOnFlight( false );
+				var message = "${ _strings.server_error_message }";
+				if( error[ "message" ] != null )
+					message = error[ "message" ];
+				ToastUtil.toast( message, 3000 );
+		} );
+	};
+
 
 	/* Author */
 	this.updateAuthor = function( author ) {

@@ -109,15 +109,26 @@
                 </div>
     
             </div>
-            
-            
+
             <!-- ko if: pratilipi.summary -->
                 <div class="mdl-cell mdl-cell--12-col padding-zero">
                     <hr class="margin-zero">
                 </div>
-                <h3 class="mdl-cell mdl-cell--12-col mdl-typography--headline">${ _strings.pratilipi_summary }</h3>
+                <h3 class="mdl-cell mdl-cell--12-col mdl-typography--headline">
+                	${ _strings.pratilipi_summary }
+                	<button data-bind="{ visible: ! pratilipi.hasAccessToUpdate(), click: toggleSummaryInput }" class="mdl-button mdl-js-button mdl-button--icon" style="margin-left: 4px;">
+						<i style="font-size: 20px" class="material-icons">create</i>
+					</button>
+                </h3>
                 <div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero ">
-                    <pratilipi-see-more params="{ originalText: pratilipi.summary(), uniqueName: 'summary' }"></pratilipi-see-more>
+                    <pratilipi-see-more data-bind="visible: ! summaryInputActive()" params="{ originalText: pratilipi.summary(), uniqueName: 'summary' }"></pratilipi-see-more>
+                    <div data-bind="visible: summaryInputActive()" class="summary-input-div">
+                    	<textarea data-bind="{ mdlFloatingInput: { label: '', value: summaryInputValue, id: 'pratilipi_pratilipi_info_summary_input' }, valueUpdate: ['input'], transliterate: true }" rows= "4"></textarea>
+						<div class="summary-input-footer" style="text-align: right;">
+							<button data-bind="click: closeSummaryInput, disable: summaryInputRequestOnFlight()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button-margin">${ _strings.cancel }</button>
+							<button data-bind="click: submitSummaryInput, disable: summaryInputRequestOnFlight()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-button-margin">${ _strings.save_changes }</button>
+						</div>
+                    </div>
                 </div>
             <!-- /ko -->
 
