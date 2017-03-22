@@ -13,16 +13,22 @@
 		position: relative;
 		height: 52px;
 		padding: 0 8px;
-		span.pratilipi-text {
+		.pratilipi-text {
 			color: #000;
 			margin-left: 6px;
-			font-weight: 700;
-			white-space: nowrap;
-		}
-		button#pratilipi-header-pratilipi-dropdown {
 			margin-right: 4px;
-			.material-icons {
-				color: #000!important
+			white-space: nowrap;
+			outline: none;
+			border: none;
+			background: transparent;
+			padding: 0;
+			span {
+				font-weight: 700;
+				float: left;
+				line-height: 52px;
+			}
+			i {
+				line-height: 52px;
 			}
 		}
 		ul.language-ul {
@@ -110,6 +116,10 @@
 				border-width: 2px !important;
 			}
 		}
+		.mdl-badge.mdl-badge--no-background[data-badge]:after {
+			background: #d0021b !important;
+			color: #fff !important;
+		}
 
 	} /* End of row-one */
 
@@ -127,16 +137,21 @@
 		color: #333 !important;
 		height: 48px;
 		padding: 0 8px;
-		span.pratilipi-text {
-			color: #d0021b;
-			font-size: 14px;
-			font-weight: 700;
+		.pratilipi-text {
+			color: #000;
 			white-space: nowrap;
-		}
-		button#pratilipi-header-pratilipi-dropdown-mobile {
+			outline: none;
+			border: none;
+			background: transparent;
 			margin-right: 4px;
-			.material-icons {
-				color: #d0021b!important
+			padding: 0;
+			span {
+				font-weight: 700;
+				float: left;
+				line-height: 52px;
+			}
+			i {
+				line-height: 52px;
 			}
 		}
 		form {
