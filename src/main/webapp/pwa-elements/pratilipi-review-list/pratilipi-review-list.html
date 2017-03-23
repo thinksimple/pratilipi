@@ -2,7 +2,7 @@
     <div class="mdl-grid" style="margin: 0;">
         <h3 class="mdl-cell mdl-cell--12-col mdl-typography--headline">${ _strings.review_heading }</h3>
         <#--  if user is logged in or has access to review, then show add review section -->
-        <div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero " data-bind="if: hasAccessToReview">
+        <div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero " data-bind="visible: hasAccessToReview()">
             <div class="mdl-grid padding-zero mdl-grid--no-spacing">
                 <div class="mdl-cell--6-col mdl-cell--4-col-tablet padding-zero">
                     <!-- ko foreach: ko.utils.range( 1, selectedReviewRating ) -->

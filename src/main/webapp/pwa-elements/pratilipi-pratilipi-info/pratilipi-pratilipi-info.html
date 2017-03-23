@@ -36,7 +36,7 @@
             <div class="mdl-grid mdl-grid--no-spacing pratilipi-info-variable-width" style="flex-grow: 1;margin: 8px;">
                 <div class="mdl-cell mdl-cell--12-col mdl-cell--order-1 mdl-cell--order-1-phone">
                     <div class="mdl-card__title padding-bottom-zero padding-top-zero padding-left-zero">
-                        <h2 class="mdl-card__title-text" data-bind="text: pratilipi.title()"></h2>
+                        <h2 class="mdl-card__title-text font-xl material-heading" data-bind="text: pratilipi.title()"></h2>
                         <button data-bind="visible: pratilipi.hasAccessToUpdate()" 
                             id="pratilipi-info-edit-pratilipi"
                             class="mdl-button mdl-js-button mdl-button--icon">
@@ -53,10 +53,10 @@
                     	</ul>
                     </div>
                     <div class="css-author-name mdl-card__title padding-bottom-zero padding-left-zero">
-                        <a style="margin: 0; color: #000; font-size: 20px;" data-bind="attr: { href: pratilipi.author.pageUrl() }, text: pratilipi.author.name()"></a>
+                        <a style="margin: 0; color: #000;" class="font-l material-title" data-bind="attr: { href: pratilipi.author.pageUrl() }, text: pratilipi.author.name()"></a>
                     </div>
                     <div class="mdl-card__supporting-text font-16 padding-bottom-zero padding-left-zero">
-                    	<p class="font-16 margin-bottom-8" data-bind="visible: pratilipi.averageRating() > 0">
+                    	<p class="font-m material-subtitle-1 margin-bottom-8" data-bind="visible: pratilipi.averageRating() > 0">
 	                        <!--ko text: roundOffToOneDecimal( pratilipi.averageRating() ) -->
 	                        <!--/ko-->
 	                        <i class="material-icons material-icons-16 vertical-middle icon-center">star</i>
@@ -114,9 +114,9 @@
                 <div class="mdl-cell mdl-cell--12-col padding-zero">
                     <hr class="margin-zero">
                 </div>
-                <h3 class="mdl-cell mdl-cell--12-col mdl-typography--headline">
+                <h3 class="mdl-cell mdl-cell--12-col font-xl material-heading">
                 	${ _strings.pratilipi_summary }
-                	<button data-bind="{ visible: ! pratilipi.hasAccessToUpdate(), click: toggleSummaryInput }" class="mdl-button mdl-js-button mdl-button--icon" style="margin-left: 4px;">
+                	<button data-bind="{ visible: pratilipi.hasAccessToUpdate(), click: toggleSummaryInput }" class="mdl-button mdl-js-button mdl-button--icon" style="margin-left: 4px;">
 						<i style="font-size: 20px" class="material-icons">create</i>
 					</button>
                 </h3>
