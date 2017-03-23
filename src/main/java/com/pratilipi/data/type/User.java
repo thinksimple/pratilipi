@@ -76,5 +76,10 @@ public interface User extends GenericOfyType, Serializable {
 	Long getFollowCount();
 	
 	void setFollowCount( Long followCount );
+	
+	
+	Date getTimestamp();
+	
+	void setTimestamp( Date timestamp );	
 		
 }

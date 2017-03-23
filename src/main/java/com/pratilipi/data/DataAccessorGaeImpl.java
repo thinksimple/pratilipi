@@ -424,12 +424,14 @@ public class DataAccessorGaeImpl implements DataAccessor {
 
 	@Override
 	public User createOrUpdateUser( User user ) {
+		user.setTimestamp( new Date() );
 		return createOrUpdateUser( user, null );
 	}
 
 	@Override
 	public User createOrUpdateUser( User user, AuditLog auditLog ) {
 		
+		user.setTimestamp( new Date() );
 		user = auditLog == null // TODO: Remove this condition as soon as "User createOrUpdateUser( User user )" method is removed.
 				? createOrUpdateEntity( user )
 				: createOrUpdateEntity( user, auditLog );
@@ -928,11 +930,13 @@ public class DataAccessorGaeImpl implements DataAccessor {
 	
 	@Override
 	public Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi, AuditLog auditLog ) {
+		pratilipi.setTimestamp( new Date() );
 		return createOrUpdatePratilipi( pratilipi, null, auditLog );
 	}
 
 	@Override
 	public Pratilipi createOrUpdatePratilipi( Pratilipi pratilipi, Page page, AuditLog auditLog ) {
+		pratilipi.setTimestamp( new Date() );
 		pratilipi = createOrUpdateEntity( pratilipi, page, auditLog );
 		// Hack for backward compatibility with Mark-4.
 		// TODO: Remove it as soon as mark-4 is deprecated.

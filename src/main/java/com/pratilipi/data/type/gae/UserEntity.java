@@ -77,6 +77,9 @@ public class UserEntity implements User {
 	@Index
 	private Long FOLLOW_COUNT;
 	
+	@Index
+	private Date _TIMESTAMP_;
+	
 
 	
 	public UserEntity() {}
@@ -289,5 +292,16 @@ public class UserEntity implements User {
 	public void setFollowCount( Long followCount ) {
 		this.FOLLOW_COUNT = followCount;
 	}
+	
+	
+	@Override
+	public Date getTimestamp() {
+		return _TIMESTAMP_;
+	}
+
+	@Override
+	public void setTimestamp( Date timestamp ) {
+		this._TIMESTAMP_ = timestamp;
+	}	
 
 }

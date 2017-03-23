@@ -107,6 +107,9 @@ public class PratilipiEntity implements Pratilipi {
 
 
 	private Boolean OLD_CONTENT;
+	
+	@Index
+	private Date _TIMESTAMP_;	
 
 
 
@@ -381,5 +384,15 @@ public class PratilipiEntity implements Pratilipi {
 	public void setOldContent( Boolean oldContent ) {
 		this.OLD_CONTENT = oldContent;
 	}
+	
+	@Override
+	public Date getTimestamp() {
+		return _TIMESTAMP_;
+	}
+
+	@Override
+	public void setTimestamp( Date timestamp ) {
+		this._TIMESTAMP_ = timestamp;
+	}	
 
 }

@@ -116,4 +116,9 @@ public interface Pratilipi extends GenericOfyType {
 
 	void setOldContent( Boolean oldContent );
 
+	
+	Date getTimestamp();
+	
+	void setTimestamp( Date timestamp );
+
 }
