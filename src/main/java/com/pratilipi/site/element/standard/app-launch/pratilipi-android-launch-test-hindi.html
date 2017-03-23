@@ -1,46 +1,21 @@
 <#assign cookie_show_banner = "USER_NOTIFIED_APP_LAUNCHED">
 <dom-module id="pratilipi-android-launch-test-hindi">
 	<style>
-		.android-banner {
-			border-radius: 1px;
-			cursor: pointer;
-			padding: 0;
-			display: none;
-			color: #fff;
-			background-color: #1e1e1e;
-			border-color: #1e1e1e;
-			margin-bottom: 4px;
-		}
-		@media only screen and (max-width: 991px) {
-			.android-banner {
-				position: fixed;
-				z-index: 1049;
-				left: 0;
-				width: 100%;
-				margin: 0;
-				/* width: 98%;
-				margin-left: 1%;
-				margin-bottom: 0; */
-			}
-		}
 	</style>
 	<template>
-	    <div style="padding: 10px;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);" id="androidAlert" class="alert alert-dismissible fade in android-banner" role="alert">
-				<button style="outline: none; top:0;right: 0px; margin-top: 10px; opacity: 1;margin-right: 10px;" type="button" class="close pull-right" data-dismiss="alert" aria-label="Close" onclick="androidBannerCrossed();" on-click="hide">
-					<!-- <iron-icon style="color: #fff;" icon="icons:close"></iron-icon> -->
-	        		<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+	    <div style="display: none;background-color: white;padding: 10px;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);" id="androidAlert" class="alert alert-dismissible fade in android-banner" role="alert">
+				<button style="outline: none; top:0;right: 0px; opacity: 1;" type="button" class="close pull-right" data-dismiss="alert" aria-label="Close" onclick="androidBannerCrossed();" on-click="hide">
+					<iron-icon icon="icons:close"></iron-icon> 
 				</button>
 	      <div style="display: flex">
-	        <img style="width: 44px; height: 44px; align-self: center;" src="http://public.pratilipi.com/pratilipi-logo/png/Logo-2C-RGB-80px.png"/>
-	        <div class="" onclick="androidBannerClicked(); window.open( 'https://play.google.com/store/apps/details?id=com.pratilipi.mobile.android&referrer=utm_source%3Dpratilipi_main_web%26utm_medium%3Dweb_bottom_strip%26utm_campaign%3Dapp_download' );">
-	          <h4 style="margin-top: 5px;margin-bottom: 0;font-size: 20px;">प्रतिलिपि एंड्राइड एप्लीकेशन </h4>
+	        <img style="width: 44px; height: 44px; align-self: center;" onclick="androidBannerClicked(); window.open( 'https://play.google.com/store/apps/details?id=com.pratilipi.mobile.android&referrer=utm_source%3Dpratilipi_main_web%26utm_medium%3Dweb_bottom_strip%26utm_campaign%3Dapp_download' );" src="http://public.pratilipi.com/pratilipi-logo/png/Logo-2C-RGB-80px.png"/>
+	        <div class="">
+	          <h4 style="margin-top: 5px;margin-bottom: 0;font-size: 20px;" onclick="androidBannerClicked(); window.open( 'https://play.google.com/store/apps/details?id=com.pratilipi.mobile.android&referrer=utm_source%3Dpratilipi_main_web%26utm_medium%3Dweb_bottom_strip%26utm_campaign%3Dapp_download' );">प्रतिलिपि एंड्राइड एप्लीकेशन </h4>
 	          <img style="width: 90px;height: 18px;"  src="http://public.pratilipi.com/images/Stars-for-App-Install-Strip.png" alt="">
 	        </div>
 	      </div>
 	      <h5 style="color: rgba(0, 0, 0, 0.541);font-size: 16px;">बिना इन्टरनेट के भी अपनी मनपसंद कहानियां पढ़ें</h5>
-	      <div class="" style="text-align: center;">
-	        <button type="button" name="button" class="pratilipi-light-blue-button" style="width: 100%;font-size: 16px;">डाउनलोड करें</button>
-	      </div>
+          <button type="button" name="button" class="pratilipi-light-blue-button" style="width: 100%;font-size: 16px;" onclick="androidBannerClicked(); window.open( 'https://play.google.com/store/apps/details?id=com.pratilipi.mobile.android&referrer=utm_source%3Dpratilipi_main_web%26utm_medium%3Dweb_bottom_strip%26utm_campaign%3Dapp_download' );">डाउनलोड करें</button>
 	    </div>  		
 	</template>
 	<script>
@@ -89,9 +64,8 @@
 			if( $( androidSubscribeAlert ).css( "display" ) == "none" )
 				$( mainDiv ).css( "padding-top", 0 );
 			else
-				$( mainDiv ).css( "padding-top", $( androidSubscribeAlert ).height() );
+				$( mainDiv ).css( "padding-top", $( androidSubscribeAlert ).outerHeight() + 4 );
 			
-			$( button ).css( "line-height", $( androidSubscribeAlert ).height() + "px" );
 		},
 
 		hide: function() {
