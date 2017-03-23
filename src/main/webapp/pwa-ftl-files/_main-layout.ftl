@@ -1,15 +1,20 @@
 <#macro pratilipi_main_layout element>
-	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+	<div class="mdl-layout mdl-js-layout">
 		<!-- ko component: "pratilipi-header" --><!-- /ko -->
-		<div class="mdl-layout__content" style="z-index: initial;" data-bind="event: { scroll: appViewModel.notifyOfScrollEvent }">
-			<div class="mdl-components mdl-js-components">
-				<!-- ko component: "pratilipi-navigation-aside" --><!-- /ko -->
-				<div class="mdl-grid mobile-grid" style="flex-grow: 1;">
-					<!-- ko component: "${ element }" --><!-- /ko -->
+		<main class="mdl-layout__content" data-bind="event: { scroll: appViewModel.notifyOfScrollEvent }">
+			<div class="body-layout-row">
+				<div class="body-layout-nav">
+					<!-- ko component: "pratilipi-navigation-aside" --><!-- /ko -->
 				</div>
+				
+				<div class="body-layout-content">
+					<div class="mdl-grid mobile-grid" style="flex-grow: 1;">
+						<!-- ko component: "${ element }" --><!-- /ko -->
+					</div>
+				</div>
+				
 			</div>
 			<!-- ko component: "pratilipi-footer" --><!-- /ko -->
-		</div>
+		</main>
 	</div>
-	<div class="word-suggester"><div class="word-input"></div><div class="suggestions"><div class="suggestion"></div></div></div>
 </#macro>

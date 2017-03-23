@@ -1,0 +1,44 @@
+header {
+	position: fixed;
+	min-height: 52px !important;
+	max-height: 1000px;
+	z-index: 3;
+}
+main {
+	padding-top: 52px;
+	z-index: 1;
+	position: relative;
+	@media only screen and (max-width: 767px) {
+		padding-top: 100px;
+	}
+	.body-layout-row {
+		display: -webkit-flex;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-flex-direction: row;
+		-ms-flex-direction: row;
+		flex-direction: row;
+		-webkit-flex-wrap: nowrap;
+		-ms-flex-wrap: nowrap;
+		flex-wrap: nowrap;
+		.body-layout-nav {
+			background-color: white;
+			box-sizing: border-box;
+			padding: 8px;
+			border: 1px solid lightgrey;
+			flex-shrink: 1;
+			@media only screen and (max-width: 1024px) {
+				display: none !important;
+				visibility: hidden !important;
+			}
+		}
+		.body-layout-content {
+			flex-grow: 1;
+		}
+	}
+}
+
+.mdl-layout__drawer-button {
+	display: none !important;
+	visibility: hidden !important;
+}

@@ -1,27 +1,27 @@
 .pratilipi-navigation-aside {
-	@media only screen and (max-width: 1024px) {
-		display: none;
+
+	* {
+		white-space: nowrap;
 	}
-	.mdl-components__nav {
-		display: inline-block;
-		background: #fff;
-		min-width: 200px;
-		box-sizing: border-box;
-		padding: 10px;
-		-webkit-flex-shrink: 0;
-		-ms-flex-negative: 0;
-		flex-shrink: 0;
-		z-index: 1;
-	} 
+
    	h6 {
 		color: $pratilipi_red;
 		margin: 0px;
-		padding: 20px 20px 5px 20px;
+		padding: 20px 20px 5px 16px;
 	}
+
 	a {
 		color: #333;
 		text-decoration: none;
-		padding: 5px 20px 5px 20px;
+		padding: 16px 16px;
+		margin: 0;
 		display: block;
+		color: #757575;
 	}
+
+	a:hover {
+		background-color: #e0e0e0;
+		background-color: rgb(224,224,224);
+	}
+
 }
