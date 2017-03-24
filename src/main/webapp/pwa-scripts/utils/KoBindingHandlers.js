@@ -6,6 +6,9 @@ ko.bindingHandlers.seeMore = {
 		if( $target_p.height() / ( parseFloat( $target_p.css( "line-height" ) ) ) > 3 ) {
 			viewModel.isSeeMoreRequired( true );
 			viewModel.isMoreShown( false );
+		} else {
+			viewModel.isSeeMoreRequired( false );
+			viewModel.isMoreShown( false );
 		}
 		ko.utils.unwrapObservable( valueAccessor() );
 		var $target_p = $(element).find( "p" );
