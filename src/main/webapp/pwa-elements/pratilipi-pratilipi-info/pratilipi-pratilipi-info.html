@@ -107,7 +107,7 @@
 	
 			</div>
 
-			<!-- ko if: pratilipi.summary -->
+			<!-- ko if: pratilipi.summary() || pratilipi.hasAccessToUpdate() -->
 				<div class="mdl-cell mdl-cell--12-col padding-zero">
 					<hr class="margin-zero">
 				</div>
@@ -118,7 +118,10 @@
 					</button>
 				</h3>
 				<div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero ">
-					<pratilipi-see-more data-bind="visible: ! summaryInputActive()" params="{ originalText: pratilipi.summary(), uniqueName: 'pratilipi-summary' }"></pratilipi-see-more>
+					<pratilipi-see-more data-bind="visible: ! summaryInputActive() && pratilipi.summary() != null" params="{ originalText: pratilipi.summary(), uniqueName: 'pratilipi-summary' }"></pratilipi-see-more>
+					<button style="outline: none; background: none; border: none; padding: 0; margin: 0;" 
+							class="font-m"
+							data-bind="visible: pratilipi.summary() == null && ! summaryInputActive(), click: openSummaryInput">${ _strings.pratilipi_add_summary }</button>
 					<div data-bind="visible: summaryInputActive()" class="summary-input-div">
 						<textarea data-bind="{ mdlFloatingInput: { label: '', value: summaryInputValue, id: 'pratilipi_pratilipi_info_summary_input' }, valueUpdate: ['input'], transliterate: true }" rows= "4"></textarea>
 						<div class="summary-input-footer" style="text-align: right;">
