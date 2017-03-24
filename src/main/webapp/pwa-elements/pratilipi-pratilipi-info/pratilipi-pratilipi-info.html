@@ -147,7 +147,7 @@
 				<div class="mdl-cell mdl-cell--12-col" style="display: flex; align-items: center; justify-content: space-between;" data-bind="visible: authorLoaded()">
 					<span>
 						<img data-bind="attr: { src: getImageUrl( author.profileImageUrl(), 48 ) }" class="mdl-list__item-avatar">
-						<a class="black-color" style="margin: 10px;" data-bind="attr: { href: author.pageUrl() }, text: author.name()"></a>
+						<a class="black-color" style="margin: 10px;" data-bind="attr: { href: pratilipi.author.pageUrl() }, text: pratilipi.author.name()"></a>
 						<button data-bind="{ click: followAuthor, 
 										text: userAuthor.following() ? '${ _strings.author_unfollow }': '${ _strings.author_follow }',
 										disable: userAuthorRequestOnFlight }" 

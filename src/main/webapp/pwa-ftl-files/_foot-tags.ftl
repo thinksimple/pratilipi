@@ -18,7 +18,7 @@
 	});
 	</script>
 
-	<script src="/pwa-scripts/scripts-${ lang }.js?70"></script>
+	<script src="/pwa-scripts/scripts-${ lang }.js?71"></script>
 	<script src="/pwa-scripts/app-${ lang }.js?53"></script>
 
 	<script src="https://d3cwrmdwk8nw1j.cloudfront.net/resource-all/pwa/js/materialise.materialise_dropdown.bootstrap_modal.js"></script>
