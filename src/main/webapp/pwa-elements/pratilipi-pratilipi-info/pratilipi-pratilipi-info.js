@@ -195,8 +195,15 @@ function( params ) {
 
 	/* Computed observables - separate observers for ID and meta - performance optimization */
 	this.pratilipiIdObserver = ko.computed( function() {
-		self.fetchAuthorAndUserAuthor( self.pratilipi.pratilipiId() );
-	});
+		/* Check for the exact data. 
+		 * ko mapping updates properties in a different fashion
+		 * First it updates only the 'pratilipi' object
+		 * Then it updates the 'author' object inside 'pratilipi' object 
+		 * As a result, the function will be called 2 times if we check for pratilipiId */
+		if( self.pratilipi.author.authorId() == null )
+			return;
+		self.fetchAuthorAndUserAuthor();
+	}, this );
 
 	this.pratilipiMetaObserver = ko.computed( function() {
 		self.canAddToLibrary( self.pratilipi.state() == "PUBLISHED" 
