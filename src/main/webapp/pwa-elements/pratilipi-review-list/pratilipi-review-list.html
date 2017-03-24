@@ -1,6 +1,8 @@
-<div class="mdl-card mdl-card-border mdl-cell mdl-cell--8-col-tablet mdl-cell--9-col mobile-card pratilipi-review-list" >
+<div class="mdl-card mdl-card-border mdl-cell mdl-cell--8-col-tablet mdl-cell--9-col mobile-card pratilipi-review-list">
 	<div class="mdl-grid" style="margin: 0;">
+
 		<h3 class="mdl-cell mdl-cell--12-col mdl-typography--headline">${ _strings.review_heading }</h3>
+
 		<#--  if user is logged in or has access to review, then show add review section -->
 		<div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero " data-bind="visible: hasAccessToReview()">
 			<div class="mdl-grid padding-zero mdl-grid--no-spacing">
@@ -17,6 +19,7 @@
 				</div>
 			</div>
 		</div>
+
 		<#--  while waiting for ajax request for reviews -->
 		<div data-bind="visible: ! isReviewsLoaded()" 
 			style="margin: 25px auto;display: block;"  
@@ -25,7 +28,7 @@
 
 		<#--  when reviews have loaded and are equal 0 in number and user has access to review -->
 		<!-- ko if: isReviewsLoaded() && reviewList().length == 0 && hasAccessToReview() -->
-			<div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero review-not-present">
+			<div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero material-subtitle-2">
 				${ _strings.rating_be_first_one }
 			</div>
 		<!-- /ko -->
@@ -57,7 +60,7 @@
 	</div>
 </div>
 
-<!-- Modal -->
+<#-- Modal -->
 <div class="modal common-modal fade" id="pratilipi-review-dialog" tabindex="-1" role="dialog" aria-labelledby="reviewLabel">
   <div class="modal-dialog" role="document">
 	<div class="modal-content">
