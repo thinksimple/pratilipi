@@ -1,5 +1,5 @@
 ko.bindingHandlers.seeMore = {
-	init: function( element, valueAccessor, allBindings, viewModel, bindingContext ) {
+	update: function( element, valueAccessor, allBindings, viewModel, bindingContext ) {
 		var originalText = ( viewModel.originalText() );
 		var $target_p = $(element).find( "p" );
 		$target_p.text( originalText );
@@ -7,8 +7,6 @@ ko.bindingHandlers.seeMore = {
 			viewModel.isSeeMoreRequired( true );
 			viewModel.isMoreShown( false );
 		}
-	},
-	update: function( element, valueAccessor, allBindings, viewModel, bindingContext ) {
 		ko.utils.unwrapObservable( valueAccessor() );
 		var $target_p = $(element).find( "p" );
 		if( viewModel.isMoreShown() ) {

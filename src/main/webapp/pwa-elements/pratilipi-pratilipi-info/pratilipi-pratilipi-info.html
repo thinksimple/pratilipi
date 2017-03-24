@@ -118,7 +118,7 @@
 					</button>
 				</h3>
 				<div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero ">
-					<pratilipi-see-more data-bind="visible: ! summaryInputActive()" params="{ originalText: pratilipi.summary(), uniqueName: 'summary' }"></pratilipi-see-more>
+					<pratilipi-see-more data-bind="visible: ! summaryInputActive()" params="{ originalText: pratilipi.summary(), uniqueName: 'pratilipi-summary' }"></pratilipi-see-more>
 					<div data-bind="visible: summaryInputActive()" class="summary-input-div">
 						<textarea data-bind="{ mdlFloatingInput: { label: '', value: summaryInputValue, id: 'pratilipi_pratilipi_info_summary_input' }, valueUpdate: ['input'], transliterate: true }" rows= "4"></textarea>
 						<div class="summary-input-footer" style="text-align: right;">
@@ -133,7 +133,7 @@
 				<div class="mdl-cell mdl-cell--12-col padding-zero">
 					<hr class="margin-zero">
 				</div>
-				<h3 class="mdl-cell mdl-cell--12-col mdl-typography--headline" data-bind="text: author.summary() ? '${ _strings.author_about }' : '${ _strings.author }'"></h3>
+				<h3 class="mdl-cell mdl-cell--12-col mdl-typography--headline" data-bind="text: author.summary() != null ? '${ _strings.author_about }' : '${ _strings.author }'"></h3>
 				<div data-bind="visible: ! authorLoaded()" 
 					style="margin: 25px auto;"  
 					class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active">
@@ -155,7 +155,7 @@
 					</span>
 				</div>
 				<div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero " data-bind="visible: author.summary() != null">
-					<pratilipi-see-more params="{ originalText: author.summary(), uniqueName: 'author-about' }"></pratilipi-see-more>
+					<pratilipi-see-more params="{ originalText: author.summary(), uniqueName: 'author-summary' }"></pratilipi-see-more>
 				</div>
 			<!-- /ko -->
 	   </div>
