@@ -44,7 +44,7 @@
 		  	var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 		  	var windowsize = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 			var showBanner = getCookie( "${ cookie_show_banner }" ) == null || getCookie( "${ cookie_show_banner }" ) == "true";
-			if( showBanner && windowsize <= 991 && !iOS ) {
+			if( showBanner && isAndroid() ) {
 				$( this.querySelector( '#androidAlert' ) ).css( "display", "block" );
 				ga( 'send', 'event', 'app_download_strip', 'app_strip_show', 'android_app_download' );
 			}

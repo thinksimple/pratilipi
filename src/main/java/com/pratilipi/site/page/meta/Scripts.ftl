@@ -4,7 +4,7 @@
 	}
 	
 	function isAndroid() {
-		return /Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test( navigator.userAgent );
+		return /Android/i.test( navigator.userAgent );
 	}
 	function setCookie( name, value, days, path ) {
 		if( days ) {
