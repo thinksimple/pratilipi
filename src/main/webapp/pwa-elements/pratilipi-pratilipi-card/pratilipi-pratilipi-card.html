@@ -4,18 +4,18 @@
 	</span>
 	<span class="pratilipi-meta-holder">
 		<span class="pratilipi-title mdl-card__title ">
-			<span class="material-title font-l" data-bind="text: pratilipi.title()"></span>
+			<span class="font-l" data-bind="text: pratilipi.title()"></span>
 		</span>
 		<span class="author-name mdl-card__title">
-			<span class="material-subtitle-2 font-m" data-bind="text: pratilipi.author.name()"></span>
+			<span class="material-subtitle-2" data-bind="text: pratilipi.author.name()"></span>
 		</span>
 		<span class="pratilipi-card-meta-reads-rating-holder">
 			<span class="meta-holder reads-holder" data-bind="visible: pratilipi.readCount() > 0">
-				<span class="material-body-1 font-s" data-bind="text: abbrNum( pratilipi.readCount(), 1 )"></span>
+				<span class="material-body-1" data-bind="text: abbrNum( pratilipi.readCount(), 1 )"></span>
 				<i class="material-icons">remove_red_eye</i>
 			</span>
 			<span class="meta-holder rating-holder" data-bind="visible: pratilipi.averageRating() > 0">
-				<span class="material-body-1 font-s" data-bind="text: roundOffToOneDecimal( pratilipi.averageRating() )"></span>
+				<span class="material-body-1" data-bind="text: roundOffToOneDecimal( pratilipi.averageRating() )"></span>
 				<i class="material-icons">star_rate</i>
 			</span>
 		</span>
