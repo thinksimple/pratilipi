@@ -26,12 +26,13 @@ function( params ) {
 	this.authorLoaded = ko.observable( false );
 
 	this.canAddToLibrary = ko.observable( false );
-	this.canFollowAuthor = ko.observable( false );
 	this.canShare = ko.observable( false );
 
 	this.pratilipiRequestOnFlight = ko.observable( false );
 	this.userPratilipiRequestOnFlight = ko.observable( false );
 	this.userAuthorRequestOnFlight = ko.observable( false );
+
+	this.authorIsUser = ko.observable( false );
 
 	/* Summary Input */
 	this.summaryInputValue = ko.observable();
@@ -192,7 +193,7 @@ function( params ) {
 	};
 
 
-	/* Computed observables */
+	/* Computed observables - separate observers for ID and meta - performance optimization */
 	this.pratilipiIdObserver = ko.computed( function() {
 		self.fetchAuthorAndUserAuthor( self.pratilipi.pratilipiId() );
 	});
@@ -200,8 +201,8 @@ function( params ) {
 	this.pratilipiMetaObserver = ko.computed( function() {
 		self.canAddToLibrary( self.pratilipi.state() == "PUBLISHED" 
 			&& ( appViewModel.user.isGuest() || self.pratilipi.author.authorId() != appViewModel.user.author.authorId() ) );
-		self.canFollowAuthor( self.pratilipi.author.authorId() != appViewModel.user.author.authorId() );
 		self.canShare( self.pratilipi.state() == "PUBLISHED" );
+		self.authorIsUser( self.pratilipi.author.authorId() == appViewModel.user.author.authorId() );
 	}, this );
 
 }
