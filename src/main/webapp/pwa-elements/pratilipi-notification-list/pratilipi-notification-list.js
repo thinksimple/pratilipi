@@ -8,15 +8,14 @@ function( params ) {
 	var cursor = null;
 
 	/*
-	 * 5 Possible values for 'notificationsLoaded'
-	 * INITIAL
+	 * 4 Possible values for 'notificationsLoaded'
 	 * LOADING
 	 * LOADED_EMPTY
 	 * LOADED
 	 * FAILED
 	 * 
 	 * */
-	this.notificationsLoaded = ko.observable( "INITIAL" );
+	this.notificationsLoaded = ko.observable();
 	this.notificationList = ko.observableArray();
 	this.hasMoreContents = ko.observable( false );
 

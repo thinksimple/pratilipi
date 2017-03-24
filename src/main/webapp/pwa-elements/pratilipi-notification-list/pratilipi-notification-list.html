@@ -1,15 +1,4 @@
-<div class="mobile-card" data-bind="visible: notificationsLoaded() == 'INITIAL'" style="margin: 0;">
-	<span class="initial-data-loading-spinner mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></span>
-</div>
-<div style="margin: 25px 15px;" data-bind="visible: notificationsLoaded() == 'LOADED_EMPTY'">
-	${ _strings.notifications_no_notifications }
-</div>
-<div style="margin: 25px 15px;" data-bind="visible: notificationsLoaded() == 'FAILED'">
-	<a style="cursor: pointer;" data-bind="click: fetchNotificationList">
-		${ _strings.notifications_load_failed }
-	</a> 
-</div>
-<ul class="pratilipi-notification-list" data-bind="visible: notificationsLoaded() == 'LOADED' || notificationsLoaded() == 'LOADING'">
+<ul class="pratilipi-notification-list">
 	<!-- ko foreach: { data: notificationList, as: 'notification' } -->
 		<!--ko if: notification.message -->
 			<li class="mdl-menu__item"
@@ -39,9 +28,17 @@
 	<li class="mdl-menu__item show-more" data-bind="visible: hasMoreContents()">
 		<button data-bind="{ click: fetchNotificationList, visible: notificationsLoaded() != 'LOADING' }" 
 				class="mdl-button mdl-js-button">${ _strings.view_more }</button>
-		<div data-bind="visible: notificationsLoaded() == 'LOADING'"
-				class="spinner-holder">
-			<span class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></span>
-		</div>
 	</li>
 </ul>
+<div data-bind="visible: notificationsLoaded() == 'LOADING'"
+		class="spinner-holder">
+	<span class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></span>
+</div>
+<div style="margin: 25px 15px;" data-bind="visible: notificationsLoaded() == 'LOADED_EMPTY'">
+	${ _strings.notifications_no_notifications }
+</div>
+<div style="margin: 25px 15px;" data-bind="visible: notificationsLoaded() == 'FAILED'">
+	<a style="cursor: pointer; color: #555;" data-bind="click: fetchNotificationList">
+		${ _strings.notifications_load_failed }
+	</a> 
+</div>
