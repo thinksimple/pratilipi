@@ -1,6 +1,11 @@
 <#assign cookie_show_banner = "USER_NOTIFIED_APP_LAUNCHED">
 <dom-module id="pratilipi-android-launch-test-hindi">
 	<style>
+		@media only screen and (min-width: 991px) {
+			.android-alert {
+				display: none !important;
+			}
+		}	
 	</style>
 	<template>
 	    <div style="display: none;background-color: white;padding: 10px;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);" id="androidAlert" class="alert alert-dismissible fade in android-banner" role="alert">
@@ -36,8 +41,10 @@
 		},
 
 		ready: function() {
+		  	var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+		  	var windowsize = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 			var showBanner = getCookie( "${ cookie_show_banner }" ) == null || getCookie( "${ cookie_show_banner }" ) == "true";
-			if( showBanner ) {
+			if( showBanner && windowsize <= 991 && !iOS ) {
 				$( this.querySelector( '#androidAlert' ) ).css( "display", "block" );
 				ga( 'send', 'event', 'app_download_strip', 'app_strip_show', 'android_app_download' );
 			}
@@ -56,10 +63,13 @@
 					$( elem ).css( "padding-top", $( this.querySelector( '#androidAlert' ) ).height() + 8 );
 			}
 			-->
+			
+
 
 			var mainDiv = document.getElementsByTagName( "main" );
 			var androidSubscribeAlert = $( this.querySelector( '#androidAlert' ) );
 			var button = $( this.querySelector( '#androidAlert button' ) );
+			
 
 			if( $( androidSubscribeAlert ).css( "display" ) == "none" )
 				$( mainDiv ).css( "padding-top", 0 );
