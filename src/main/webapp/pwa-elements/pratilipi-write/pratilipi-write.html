@@ -27,7 +27,7 @@
 						</#list>
 					</ul>
 				</div>
-				<input data-bind="{ mdlFloatingInput: { label: '${ _strings.writer_input_title } *', value: title, id: 'pratilipi_write_title_input' }, valueUpdate: ['input'] }" make-transliterable />
+				<input data-bind="{ mdlFloatingInput: { label: '${ _strings.writer_input_title } *', value: title, id: 'pratilipi_write_title_input' }, valueUpdate: ['input'], transliterate: true }" />
 				<div class="clearfix"></div>
 				<input data-bind="mdlFloatingInput: { label: '${ _strings.writer_input_title_en }', value: titleEn, id: 'pratilipi_write_title_en_input' }" />
 				<div class="mdl-textfield mdl-js-textfield getmdl-select getmdl-select__fullwidth getmdl-select__fix-height mdl-textfield--floating-label">
