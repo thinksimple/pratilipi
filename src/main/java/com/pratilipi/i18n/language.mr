@@ -32,6 +32,7 @@ _pratilipi_type_magazine	= पत्रिका
 _pratilipi_type_magazines	= पत्रिका 
 
 # Author
+author_author					= Author
 author_about				= संक्षिप्त परिचय
 author_language				= भाषा	
 author_since				= प्रतिलिपि सोबत   

@@ -32,6 +32,7 @@ _pratilipi_type_magazine	= മാഗസിന്‍
 _pratilipi_type_magazines	= മാഗസിനുകള്‍ 
 
 # Author
+author_author					= Author
 author_about					= രചയിതാവിനെക്കുറിച്ച്
 author_language					= ഭാഷ
 author_since					= പ്രതിലിപിയില്‍ 

@@ -32,7 +32,7 @@ _pratilipi_type_magazine	= Magazine
 _pratilipi_type_magazines	= Magazines
 
 # Author
-author                          = Author
+author_author					= Author
 author_about					= About the Author
 author_language					= Language
 author_since					= Author Since

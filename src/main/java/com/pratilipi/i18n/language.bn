@@ -32,6 +32,7 @@ _pratilipi_type_magazine	=   পত্রিকা
 _pratilipi_type_magazines	=   পত্রিকাসমূহ
 
 # Author
+author_author					= Author
 author_about				=  সংক্ষিপ্ত পরিচয়
 author_language		  =  ভাষা
 author_since				=  প্রতিলিপির সঙ্গে
