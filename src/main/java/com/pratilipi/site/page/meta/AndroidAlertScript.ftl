@@ -4,11 +4,11 @@
 <#assign cookie_banner_crossed = "APP_LAUNCHED_CROSSED">
 
 <script>
-	var showBanner = getCookie( "${ cookie_show_banner }" ) == null || getCookie( "${ cookie_show_banner }" ) == "true";
 	var click_count = getCookie( "${ cookie_banner_clicked }" ) == null ? 0 : parseInt( getCookie( "${ cookie_banner_clicked }" ) );
 	var cross_count = getCookie( "${ cookie_banner_crossed }" ) == null ? 0 : parseInt( getCookie( "${ cookie_banner_crossed }" ) );
 
 	<#if basicMode>
+		var showBanner = getCookie( "${ cookie_show_banner }" ) == null || getCookie( "${ cookie_show_banner }" ) == "true";
 		$( document ).ready( function() {
 			if( showBanner ) {
 				if( document.getElementById( 'androidSubsribeAlert' ) != null ) {

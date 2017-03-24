@@ -2,6 +2,10 @@
 	function isMobile() {
 		return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test( navigator.userAgent );
 	}
+	
+	function isAndroid() {
+		return /Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test( navigator.userAgent );
+	}
 	function setCookie( name, value, days, path ) {
 		if( days ) {
 			var date = new Date();
