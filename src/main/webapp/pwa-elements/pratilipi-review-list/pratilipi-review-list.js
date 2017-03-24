@@ -111,7 +111,7 @@ function( params ) {
 	};
 	
 	this.openReviewModalWithRating = function( rating ) {
-		if( self.isGuest() ) {
+		if( appViewModel.user.isGuest() ) {
 			goToLoginPage();
 			return;
 		}	  
@@ -152,13 +152,13 @@ function( params ) {
 	var dialog = $( '#pratilipi-review-dialog' );
 
 	this.openReviewModal = function() {		
-		if( self.isGuest() ) {
+		if( appViewModel.user.isGuest() ) {
 			goToLoginPage();
 			return;
 		}
 		else {
 			componentHandler.upgradeDom();
-			dialog.modal('show');
+			dialog.modal( 'show' );
 		}
 	};
 
