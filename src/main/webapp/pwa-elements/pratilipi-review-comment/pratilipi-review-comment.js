@@ -5,7 +5,7 @@ function( params ) {
     this.isGuest = ko.observable( appViewModel.user.isGuest() ); 
     this.isEditModeOn = ko.observable( false );   
 
-    // this.likeCount = ko.observable( this.reviewCommentObject.likeCount );
+     this.likeCount = ko.observable( this.reviewCommentObject.likeCount );
     // this.isLiked = ko.observable( this.reviewCommentObject.isLiked );
     // this.userImageUrl = this.reviewCommentObject.user.profileImageUrl + "&width=40";
     // this.comment_date = convertDate( this.reviewCommentObject.creationDateMillis );
@@ -27,7 +27,7 @@ function( params ) {
             // this.isLiked( false );
             var updatedLikeCount = this.reviewCommentObject.likeCount() - 1;
             ko.mapping.fromJS( { isLiked: false, likeCount: updatedLikeCount }, {}, self.reviewCommentObject );
-            // this.likeCount( this.likeCount() - 1 );
+             this.likeCount( this.likeCount() - 1 );
         } else {
             var updatedLikeCount = this.reviewCommentObject.likeCount() + 1;
             ko.mapping.fromJS( { isLiked: true, likeCount: updatedLikeCount }, {}, self.reviewCommentObject );

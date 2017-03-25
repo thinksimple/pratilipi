@@ -5,12 +5,7 @@
 			<a class="black-color" data-bind="attr: { href: $root.user.profilePageUrl() }, text: $root.user.displayName()"></a>
 		</span>
 	</div>
-    <form action="#">
-    	<div class="mdl-textfield mdl-js-textfield reviewReply"> 			        
-        	<textarea data-bind="textInput: reply, transliterate: shouldTransliterate" class="mdl-textfield__input js-autoresize-textarea" type="text" rows= "2" id="review" ></textarea>
-            <label class="mdl-textfield__label" for="review">${ _strings.comment_reply_comment_help }...</label>
-        </div>
-    </form>
+	<textarea data-bind="{ mdlFloatingInput: { label: '${ _strings.comment_reply_comment_help }', value: reply, id: 'pratilipi_review_reply_reply_input' }, valueUpdate: ['input'], transliterate: true }" rows= "2"></textarea>
 	<div class="pull-right">
 	    <button data-bind="click: $parent.hideReplyState.bind($parent)" class="mdl-button mdl-js-button mdl-js-ripple-effect">${ _strings.cancel }</button>
 	    <button data-bind="disable: isSaveDisabled, click: $parent.addComment.bind( $parent )" class="mdl-button mdl-js-button mdl-button--colored mdl-js-ripple-effect mdl-button--raised">${ _strings.review_submit_review }</button>

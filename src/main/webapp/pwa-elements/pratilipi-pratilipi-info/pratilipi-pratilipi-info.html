@@ -126,7 +126,7 @@
 							class="material-subtitle-1"
 							data-bind="visible: pratilipi.summary() == null && ! summaryInputActive(), click: openSummaryInput">${ _strings.pratilipi_add_summary }</button>
 					<div data-bind="visible: summaryInputActive()" class="summary-input-div">
-						<textarea data-bind="{ mdlFloatingInput: { label: '', value: summaryInputValue, id: 'pratilipi_pratilipi_info_summary_input' }, valueUpdate: ['input'], transliterate: true }" rows= "4"></textarea>
+						<textarea data-bind="{ mdlFloatingInput: { label: '', value: summaryInputValue, id: 'pratilipi_pratilipi_info_summary_input' }, valueUpdate: ['input'], transliterate: true }" rows= "3"></textarea>
 						<div class="summary-input-footer" style="text-align: right;">
 							<button data-bind="click: closeSummaryInput, disable: summaryInputRequestOnFlight()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button-margin">${ _strings.cancel }</button>
 							<button data-bind="click: submitSummaryInput, disable: summaryInputRequestOnFlight()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-button-margin">${ _strings.save_changes }</button>

@@ -77,12 +77,7 @@
 			<!-- ko foreach: ko.utils.range( 1, emptyReviewRating ) -->
 				<i class="material-icons material-icons-36 clickable-element" data-bind="click: $parent.changeReviewRating.bind($data, $data + $parent.selectedReviewRating() )">star_border</i>
 			<!-- /ko -->
-			<form action="#">
-				<div class="mdl-textfield mdl-js-textfield">
-					<textarea make-transliterable data-bind="textInput: newReviewContent" class="mdl-textfield__input" type="text" rows= "3" id="review" ></textarea>
-					<label class="mdl-textfield__label" for="review" data-bind="text: newReviewContent().length ? '' : '${ _strings.review_write_a_review }'"></label>
-				</div>
-			</form>
+			<textarea data-bind="{ mdlFloatingInput: { label: '${ _strings.review_write_a_review }', value: newReviewContent, id: 'pratilipi_review_list_review_input' }, valueUpdate: ['input'], transliterate: true }" rows= "3"></textarea>
 		</div>
 		<div class="modal-footer">
 			<button data-bind="click: restoreRating" class="mdl-button mdl-js-button mdl-js-ripple-effect close"  data-dismiss="modal">${ _strings.cancel }</button>
