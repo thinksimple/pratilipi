@@ -90,7 +90,7 @@ function( params ) {
 	};
 
 	this.generateLikeAjaxRequest = function() {
-		dataAccessor.likeOrDislikeReview( self.review.userPratilipiId, this.isLiked(), this.likeSuccessCallback, this.likeErrorCallback );	
+		dataAccessor.likeOrDislikeReview( self.review.userPratilipiId(), this.isLiked(), this.likeSuccessCallback, this.likeErrorCallback );	
 	}
 
 	this.getCommentsCallback = function( response ) {
@@ -100,7 +100,7 @@ function( params ) {
 	};
 
 	this.generateGetCommentsAjaxRequest = function() {
-		dataAccessor.getReviewCommentList( this.review.userPratilipiId, null, null, this.getCommentsCallback.bind( this ) );			
+		dataAccessor.getReviewCommentList( this.review.userPratilipiId(), null, null, this.getCommentsCallback.bind( this ) );			
 	};
 
 	this.postCommentSuccessCallback = function( response ) {
@@ -115,7 +115,7 @@ function( params ) {
 		  url: '/api/comment',
 		  data: {
 			  parentType: "REVIEW",
-			  parentId: self.review.userPratilipiId,
+			  parentId: self.review.userPratilipiId(),
 			  content: comment.reply()
 		  }, 
 		  success: function( response ) {
