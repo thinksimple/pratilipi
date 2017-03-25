@@ -3,8 +3,8 @@
 	<div class="mdl-list__item mdl-list__item--two-line padding-zero">
 		<span class="mdl-list__item-primary-content">
 			<img data-bind="attr: { src: userImageUrl }" class="mdl-list__item-avatar">
-			<a class="reviewer-name" data-bind="attr: { href: reviewObject.userProfilePageUrl }, text: reviewObject.user.displayName"></a>
-			<span data-bind="text: review_date" class="mdl-list__item-sub-title"></span>
+			<a class="reviewer-name" data-bind="attr: { href: review.userProfilePageUrl() }, text: review.user.displayName()"></a>
+			<span data-bind="text: reviewDate" class="mdl-list__item-sub-title"></span>
 		</span>
 		<span class="mdl-list__item-secondary-content mdl-color-text--primary" >
 			<span class="mdl-list__item-secondary-action" href="#">
@@ -18,7 +18,7 @@
 		</span>
 	</div>
 
-	<div class="mdl-list__item-text-body review-text" data-bind="text: reviewObject.review">
+	<div class="mdl-list__item-text-body review-text" data-bind="text: review.review()">
 	</div>
 	<div>
 
@@ -43,7 +43,7 @@
 			<#-- <span data-bind="text: $parents[1].pratilipiObj.pratilipiId"></span> -->
 			<span class="dropup pull-right" data-bind="ifnot: $root.user.isGuest"> <#-- change to ifnot -->
 				<#-- if: $parents[1].userPratilipi.userPratilipiId == userPratilipiId change condition -->
-				<!-- ko if: $parents[1].userPratilipi.userPratilipiId == reviewObject.userPratilipiId -->
+				<!-- ko if: $parents[1].userPratilipi.userPratilipiId == review.userPratilipiId() -->
 				      <button class="mdl-button mdl-js-button mdl-button--icon" type="button" id="review-access" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 							<i class="material-icons">more_vert</i>
 				      </button>
@@ -66,7 +66,7 @@
 	</ul>
 </li>
 <li>
-	<div data-bind="if: $index() != ( $parents[1].totalReviewsPresent() - 1 ) ">
+	<div data-bind="if: $index() != ( $parents[1].totalReviewCount() - 1 ) ">
 		<hr />
 	</div>
 </li>
