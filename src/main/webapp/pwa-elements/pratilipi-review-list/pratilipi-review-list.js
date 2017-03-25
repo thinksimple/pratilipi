@@ -87,14 +87,15 @@ function( params ) {
 	};
 
 	this.closeReviewModal = function() {
-		console.log( "close" );
 		reviewInputDialog.modal( 'hide' );
-		self.ratingInput( self.userPratilipi.rating() );
+		self.ratingInput( self.userPratilipi.rating() != null ? self.userPratilipi.rating() : 0 );
+		self.reviewInput( self.userPratilipi.state == "PUBLISHED" && self.userPratilipi.review() != null ? self.userPratilipi.review() : null );
 	};
 
 	/* Clicking anywhere outside the screen */
-	$( document ).click( function() { self.closeReviewModal(); } );
-	reviewInputDialog.click( function(e) { e.stopPropagation(); } );
+	reviewInputDialog.on( 'hidden.bs.modal', function(e) {
+		self.closeReviewModal();
+	});
 
 
 	/* Update Pratilipi and UserPratilipi Objects */
@@ -124,8 +125,8 @@ function( params ) {
 
 	/* Add Review */
 	this.addReview = function() {
-		if( self.addOrDeleteRequestOnFlight() ) return;
-		self.addOrDeleteRequestOnFlight( true );
+		if( self.addOrDeleteReviewRequestOnFlight() ) return;
+		self.addOrDeleteReviewRequestOnFlight( true );
 		dataAccessor.createOrUpdateReview( self.pratilipi.pratilipiId(), self.ratingInput(), self.reviewInput(), 
 			function( review ) {
 				self.addToReviewList( review );
@@ -134,11 +135,11 @@ function( params ) {
 				 *  */
 				self.updatePratilipiObject( review );
 				self.updateUserPratilipiObject( review );
-				self.addOrDeleteRequestOnFlight( false );
+				self.addOrDeleteReviewRequestOnFlight( false );
 				self.hideReviewModal();
 				ToastUtil.toast( "${ _strings.updated_review }" );
 			}, function( error ) {
-				self.addOrDeleteRequestOnFlight( false );
+				self.addOrDeleteReviewRequestOnFlight( false );
 				ToastUtil.toast( "${ _strings.server_error_message }" );
 		});
 	};
@@ -146,15 +147,15 @@ function( params ) {
 
 	/* Delete Review */
 	this.deleteReview = function( review ) {
-		if( self.addOrDeleteRequestOnFlight() ) return;
-		self.addOrDeleteRequestOnFlight( true );
+		if( self.addOrDeleteReviewRequestOnFlight() ) return;
+		self.addOrDeleteReviewRequestOnFlight( true );
 		dataAccessor.deleteReview( self.pratilipi.pratilipiId(), 
 			function( review ) {
 				self.deleteFromReviewList( review );
 				self.updateUserPratilipiObject( review );
-				self.addOrDeleteRequestOnFlight( false );
+				self.addOrDeleteReviewRequestOnFlight( false );
 			}, function( error ) {
-				self.addOrDeleteRequestOnFlight( false );
+				self.addOrDeleteReviewRequestOnFlight( false );
 				ToastUtil.toast( "${ _strings.server_error_message }" );
 		} );
 	};   
@@ -179,19 +180,22 @@ function( params ) {
 
 	this.userPratilipiMetaObserver = ko.computed( function() {
 		self.ratingInput( self.userPratilipi.rating() != null ? self.userPratilipi.rating() : 0 );
-		self.reviewInput( self.userPratilipi.review() != null ? self.userPratilipi.review() : null );
+		self.reviewInput( self.userPratilipi.state == "PUBLISHED" && self.userPratilipi.review() != null ? self.userPratilipi.review() : null );
 	}, this );
 
-	this.raingInputObserver = ko.computed( function() {
+	this.ratingInputObserver = ko.computed( function() {
 		if( self.ratingInput() == 0 ) return;
 		self.openReviewModal();
 	}, this );
 
 	this.userObserver = ko.computed( function() {
 		if( ! appViewModel.user.isGuest() && getUrlParameter( 'action' ) == "openReviewModal" ) {
-			if( getUrlParameter( "ratingInput" ) != null && getUrlParameter( "ratingInput" ) > 0 )
-				self.ratingInput( getUrlParameter( "ratingInput" ) );
-			self.openReviewModal();
+			if( getUrlParameter( "ratingInput" ) != null && getUrlParameter( "ratingInput" ) > 0 ) {
+				self.ratingInput( parseInt( getUrlParameter( "ratingInput" ) ) );
+				/* This will inturn open the modal */
+			} else {
+				self.openReviewModal();
+			}
 		}
 	}, this );
 
