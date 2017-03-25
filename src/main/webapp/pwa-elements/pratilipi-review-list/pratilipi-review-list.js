@@ -163,7 +163,7 @@ function( params ) {
 
 	/* Computed Observables */
 	this.hasMoreReviews = ko.computed( function() {
-		return self.reviewList().length < self.totalReviewCount();
+		return self.reviewList().length < self.totalReviewCount() && self.loadingState() == "LOADED";
 	}, this );
 
 	this.hasAccessToReview = ko.computed( function() {

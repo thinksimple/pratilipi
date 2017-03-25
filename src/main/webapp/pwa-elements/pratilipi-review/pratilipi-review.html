@@ -3,7 +3,7 @@
 	<div class="mdl-list__item mdl-list__item--two-line padding-zero">
 		<span class="mdl-list__item-primary-content">
 			<img data-bind="attr: { src: userImageUrl }" class="mdl-list__item-avatar">
-			<a class="reviewer-name" data-bind="attr: { href: review.userProfilePageUrl() }, text: review.user.displayName()"></a>
+			<a class="reviewer-name material-subtitle-1" data-bind="attr: { href: review.userProfilePageUrl() }, text: review.user.displayName()"></a>
 			<span data-bind="text: reviewDate" class="mdl-list__item-sub-title"></span>
 		</span>
 		<span class="mdl-list__item-secondary-content mdl-color-text--primary" >
@@ -18,9 +18,7 @@
 		</span>
 	</div>
 
-	<div class="mdl-list__item-text-body review-text" data-bind="text: review.review()">
-	</div>
-	<div>
+	<div class="mdl-list__item-text-body material-subtitle-1" data-bind="text: review.review()"></div><div>
 
 		<span class="font-14">	
 			<!-- ko if: likeCount -->
