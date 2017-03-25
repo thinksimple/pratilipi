@@ -194,7 +194,7 @@ function( params ) {
 
 
 	/* Computed observables - separate observers for ID and meta - performance optimization */
-	this.pratilipiIdObserver = ko.computed( function() {
+	this.authorIdObserver = ko.computed( function() {
 		/* Check for the exact data. 
 		 * ko mapping updates properties in a different fashion
 		 * First it updates only the 'pratilipi' object

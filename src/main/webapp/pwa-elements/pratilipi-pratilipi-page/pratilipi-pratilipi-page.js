@@ -32,10 +32,10 @@ function() {
 			"userImageUrl": null,
 			"userProfilePageUrl": null,
 			"rating": 0,
-			"review": "",
+			"review": null,
 			"reviewState": null,
 			"addedToLib": false, 
-			"hasAccessToReview": false, 
+			"hasAccessToReview": true, 
 			"isLiked": false,
 	};
 
