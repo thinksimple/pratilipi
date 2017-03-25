@@ -8,7 +8,7 @@ function( params ) {
 	this.isLiked = ko.observable( this.review.isLiked() );
 
 	this.maxRating = 5;
-	this.filledStars = this.review.rating();
+	this.filledStars = this.review.rating != null ? this.review.rating() : 0;
 	this.emptyStars = this.maxRating - this.filledStars;
 
 	this.userImageUrl = getImageUrl( this.review.userImageUrl(), 48 );

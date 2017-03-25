@@ -56,12 +56,10 @@ function( params ) {
 			self.reviewList.push( ko.mapping.fromJS( revList[i] ) );
 	};
 
-	this.fetchReviewList = function( firstLoad ) {
+	this._fetchReviewList = function( reviewCount ) {
 		if( self.loadingState() == "LOADING" ) return;
 		self.loadingState( "LOADING" );
-		if( firstLoad && self.reviewList().length > 0 )
-			self.reviewList( [] );
-		dataAccessor.getReviewList( self.pratilipi.pratilipiId(), cursor, null, firstLoad ? firstLoadReviewCount : subsequentLoadReviewCount,
+		dataAccessor.getReviewList( self.pratilipi.pratilipiId(), cursor, null, reviewCount,
 				function( reviewListResponse ) {
 					if( reviewListResponse == null ) {
 						self.loadingState( "FAILED" );
@@ -75,6 +73,16 @@ function( params ) {
 		});
 	};
 
+	this.loadInitialReviews = function() {
+		self.reviewList( [] );
+		self.totalReviewCount( 0 );
+		self._fetchReviewList( firstLoadReviewCount );
+	};
+
+	this.loadMoreReviews = function() {
+		self._fetchReviewList( subsequentLoadReviewCount );
+	};
+	
 
 	/* Review Modal */
 	var reviewInputDialog = $( '#pratilipi-review-input-dialog' );
@@ -151,7 +159,7 @@ function( params ) {
 				self.addOrDeleteReviewRequestOnFlight( false );
 				ToastUtil.toast( "${ _strings.server_error_message }" );
 		} );
-	};   
+	};
 
 	/* Computed Observables */
 	this.hasMoreReviews = ko.computed( function() {
@@ -168,7 +176,9 @@ function( params ) {
 
 	this.pratilipiIdObserver = ko.computed( function() {
 		if( self.pratilipi.pratilipiId() == null ) return;
-			self.fetchReviewList( true );
+		setTimeout( function() {
+			self.loadInitialReviews();
+		}, 0 );
 	}, this );
 
 	this.userPratilipiMetaObserver = ko.computed( function() {
