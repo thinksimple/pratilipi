@@ -3,209 +3,196 @@ function( params ) {
 	var self = this;
 	var dataAccessor = new DataAccessor();
 
-	/* Constants */
-	var maxRating = 5;	
-	var firstLoadReviewCount = 5;
-	var subsequentLoadReviewCount = 10;
-
-	/* Variables */
+	/* Params */
 	this.pratilipi = params.pratilipi;
 	this.userPratilipi = params.userPratilipi;
 	this.updatePratilipi = params.updatePratilipi;
 	this.updateUserPratilipi = params.updateUserPratilipi;
 
-	this.reviewList = ko.observableArray( [] );
+	/* Constants */
+	var firstLoadReviewCount = 5;
+	var subsequentLoadReviewCount = 10;
 
-	this.isReviewsLoaded = ko.observable( false );
-	this.areMoreReviewsLoading = ko.observable( false );
-	this.isSaveInProgress = ko.observable( false );
-	this.totalReviewsPresent = ko.observable( 0 );
-	this.selectedReviewRating = ko.observable( 0 ); /* init the initially until we get userpratiipi object */
-	this.initialReviewRating = ko.observable( 0 );
-	this.newReviewContent = ko.observable( "" ); /* init the initially until we get userpratiipi object */
-	this.hasUserAlreadyPostedReview = ko.observable( false );
+	/* ReviewList and LoadingState */
+	this.reviewList = ko.observableArray();
+	this.totalReviewCount = ko.observable();
+	var cursor = null;
+
+	/*
+	 * 4 Possible values for 'loadingState'
+	 * LOADING
+	 * LOADED_EMPTY
+	 * LOADED
+	 * FAILED
+	 * 
+	 * */
+	this.loadingState = ko.observable();
+
+	/* Booleans */
+	this.addOrDeleteReviewRequestOnFlight = ko.observable( false );
+
+	/* User Inputs */
+	this.ratingInput = ko.observable();
+	this.reviewInput = ko.observable();
 
 
-	/* helper functions */
-	this.areMoreReviews = ko.computed( function() {
-		return this.reviewList().length < this.totalReviewsPresent();
-	}, this);
+	/* Functions */
 
-	this.isNewReviewRatingZero = function() {
-	  return this.selectedReviewRating() == 0;
-	}; 
+	/* Review List */
+	this.addToReviewList = function( review ) {
+		self.reviewList.unshift( review );
+		self.totalReviewCount( self.totalReviewCount() + 1 );
+	};
+
+	this.deleteFromReviewList = function( review ) {
+		self.reviewList.remove( function( item ) {
+			return item.userPratilipiId == self.userPratilipi.userPratilipiId();		   
+		});
+		self.totalReviewCount( self.totalReviewCount() - 1 );
+	};
 
 	this.pushToReviewList = function( revList ) {
-		for( var i = 0; i < revList.length; i++ ) {
-			this.reviewList.push( revList[i] );
-		}
+		for( var i = 0; i < revList.length; i++ )
+			self.reviewList.push( ko.mapping.fromJS( revList[i] ) );
 	};
 
-	this.addToReviewList = function( review ) {
-		if( this.hasUserAlreadyPostedReview() ) {
-			this.deleteAlreadyPostedReview();
-		}
-		this.reviewList.unshift( review );
-		this.setTotalReviewsPresent( this.totalReviewsPresent() + 1 );
-	}; 
-
-	this.setTotalReviewsPresent = function( count ) {
-		this.totalReviewsPresent( count );
+	this.fetchReviewList = function( firstLoad ) {
+		if( self.loadingState() == "LOADING" ) return;
+		self.loadingState( "LOADING" );
+		if( firstLoad && self.reviewList().length > 0 )
+			self.reviewList( [] );
+		dataAccessor.getReviewList( self.pratilipi.pratilipiId(), cursor, null, firstLoad ? firstLoadReviewCount : subsequentLoadReviewCount,
+				function( reviewListResponse ) {
+					if( reviewListResponse == null ) {
+						self.loadingState( "FAILED" );
+						return;
+					}
+					var reviewList = reviewListResponse[ "reviewList" ];
+					cursor = reviewListResponse[ "cursor" ];
+					self.pushToReviewList( reviewList );
+					self.loadingState( self.reviewList().length > 0 ? "LOADED" : "LOADED_EMPTY" );
+					self.totalReviewCount( reviewListResponse[ "numberFound" ] );
+		});
 	};
 
-	this.updatePratilipiObject = function( review ) {
-	  /* check if its a new Review or updated review, and calculate average rating accordingly and send updated values.*/
-		var updatedPratilipiObject = {};
-		var newRating;
-		if( this.hasUserAlreadyPostedReview() ) { /* updated review*/
-			newRating = ( ( this.pratilipi.averageRating() * this.pratilipi.ratingCount() ) - this.initialReviewRating() + this.selectedReviewRating() ) / this.pratilipi.ratingCount();
-		} else {
-			newRating = ( ( this.pratilipi.averageRating() * this.pratilipi.ratingCount() ) + this.selectedReviewRating() ) / ( this.pratilipi.ratingCount() + 1 );
-			updatedPratilipiObject[ "ratingCount" ] = this.pratilipi.ratingCount() + 1;
+
+	/* Review Modal */
+	var reviewInputDialog = $( '#pratilipi-review-input-dialog' );
+	this.openReviewModal = function() {		
+		if( appViewModel.user.isGuest() ) {
+			goToLoginPage( { "action": "openReviewModal", "ratingInput": self.ratingInput() } );
+			return;
 		}
-		updatedPratilipiObject[ "averageRating" ] = newRating;
-		this.updatePratilipi( updatedPratilipiObject );
+		reviewInputDialog.modal( 'show' );
+	};
+
+	this.closeReviewModal = function() {
+		console.log( "close" );
+		reviewInputDialog.modal( 'hide' );
+		self.ratingInput( self.userPratilipi.rating() );
+	};
+
+	/* Clicking anywhere outside the screen */
+	$( document ).click( function() { self.closeReviewModal(); } );
+	reviewInputDialog.click( function(e) { e.stopPropagation(); } );
+
+
+	/* Update Pratilipi and UserPratilipi Objects */
+	this.updatePratilipiObject = function( userPratilipi ) {
+		/* check if its a new Review or updated review, and calculate average rating accordingly and update values.*/
+		var pratilipi = {};
+
+		var oldRating = self.userPratilipi.rating() != null ? self.userPratilipi.rating() : 0;
+		var newRating = userPratilipi.rating;
+		var ratingCount = self.pratilipi.ratingCount();
+		var totalRating = self.pratilipi.averageRating() * self.pratilipi.ratingCount();
+
+		if( self.userPratilipi.rating() == null ) { /* Added a review */
+			pratilipi[ "ratingCount" ] = ++ratingCount;
+		}
+
+		pratilipi[ "averageRating" ] = ( totalRating - oldRating + newRating ) / ratingCount;
+		self.updatePratilipi( updatedPratilipiObject );
 	};
 
 	this.updateUserPratilipiObject = function( review ) {
-		var updatedUserPratilipiObject = {};
-		updatedUserPratilipiObject[ "rating" ] = review.rating;
-		updatedUserPratilipiObject[ "review" ] = review.review ? review.review.trim() : "";
-		this.updateUserPratilipi( updatedUserPratilipiObject );
+		var userPratilipi = {};
+		userPratilipi[ "rating" ] = review.rating;
+		userPratilipi[ "review" ] = review.state == "PUBLISHED" && review.review != null ? review.review : null;
+		self.updateUserPratilipi( userPratilipi );
 	};
 
-	this.getReviewListCallback = function( response ) {
-		if( response ) {
-			this.pushToReviewList( response[ "reviewList" ] );
-			this.setTotalReviewsPresent( response[ "numberFound" ] );			
-		}
-		this.isReviewsLoaded( true );
+	/* Add Review */
+	this.addReview = function() {
+		if( self.addOrDeleteRequestOnFlight() ) return;
+		self.addOrDeleteRequestOnFlight( true );
+		dataAccessor.createOrUpdateReview( self.pratilipi.pratilipiId(), self.ratingInput(), self.reviewInput(), 
+			function( review ) {
+				self.addToReviewList( review );
+				/* Update Pratilipi Object first and then userPratilipi Object
+				 * We need old rating to update in Pratilipi object
+				 *  */
+				self.updatePratilipiObject( review );
+				self.updateUserPratilipiObject( review );
+				self.addOrDeleteRequestOnFlight( false );
+				self.hideReviewModal();
+				ToastUtil.toast( "${ _strings.updated_review }" );
+			}, function( error ) {
+				self.addOrDeleteRequestOnFlight( false );
+				ToastUtil.toast( "${ _strings.server_error_message }" );
+		});
 	};
 
-	this.loadMoreReviewsCallback = function( response ) {
-		if( response ) {
-			this.pushToReviewList( response[ "reviewList" ] );		   
-		}
-		this.areMoreReviewsLoading( false );
-	};
 
-	this.getReviewList = function() {
-		dataAccessor.getReviewList( this.pratilipiId, null, null, firstLoadReviewCount, this.getReviewListCallback.bind( this ) );
-	};
-
-	this.loadMoreReviews = function() {
-		this.areMoreReviewsLoading( true );
-		dataAccessor.getReviewList( this.pratilipiId, this.reviewList().length, null, subsequentLoadReviewCount, this.loadMoreReviewsCallback.bind( this ) );
-	};  
-
-	this.setSelectedReviewRating = function ( rating ) {
-		this.selectedReviewRating( rating );
-	};   
-	
-	this.changeReviewRating = function( rating1 ) {
-		self.setSelectedReviewRating( rating1 );
-	};
-
-	this.restoreRating = function() {
-		self.setSelectedReviewRating( self.initialReviewRating() );
-	};
-	
-	this.openReviewModalWithRating = function( rating ) {
-		if( appViewModel.user.isGuest() ) {
-			goToLoginPage();
-			return;
-		}	  
-		self.setSelectedReviewRating( rating );
-		self.openReviewModal();
-	};
-
-	this.postReviewSuccessCallback = function( response ) {
-		self.addToReviewList( response ); 
-		self.updatePratilipiObject( response );
-		self.updateUserPratilipiObject( response );
-		/* self.hasUserAlreadyPostedReview( true ); */
-		self.postReviewCompleteCallback();
-	};
-
-	this.postReviewErrorCallback = function() {
-		self.postReviewCompleteCallback();
-	};
-
-	this.postReviewCompleteCallback = function() {
-		self.isSaveInProgress( false );
-		self.hideReviewModal();
-	};		
-	
-	this.postNewReview = function() {
-		this.isSaveInProgress( true );
-		dataAccessor.createOrUpdateReview( self.pratilipiId, self.selectedReviewRating(), self.newReviewContent(), this.postReviewSuccessCallback, this.postReviewErrorCallback );
-	};
-
-	this.emptyReviewRating = ko.computed(function() {  /* TODO change its name to remptyReviewSTars*/
-		return ( maxRating - this.selectedReviewRating() );
-	}, this);
-	
-	this.isSaveDisabled = ko.computed( function() {
-		return this.isNewReviewRatingZero() ||  this.isSaveInProgress();
-	}, this );
-
-	var dialog = $( '#pratilipi-review-dialog' );
-
-	this.openReviewModal = function() {		
-		if( appViewModel.user.isGuest() ) {
-			goToLoginPage();
-			return;
-		}
-		else {
-			componentHandler.upgradeDom();
-			dialog.modal( 'show' );
-		}
-	};
-
-	this.hideReviewModal = function() {
-		dialog.modal( 'hide' );
-	};	
-
-	this.hasAccessToReview = ko.computed( function() { /* can be true if person has already reviewed */
-		if( appViewModel.user.isGuest() )
-			return  true;
-		/* else if( !isEmpty( this.userpratilipi ) ) /* if user is not guest, this will never be empty */
-		else
-			return this.userPratilipi.hasAccessToReview(); /* whenever userPratilipi has accessToReview Changes this will change */
-	}, this);
-
-	 
-	this.pratilipiIdObserver = ko.computed( function() {
-		if( this.pratilipi.pratilipiId() ) {
-		  this.pratilipiId = this.pratilipi.pratilipiId();
-		  this.getReviewList();
-		}
-	}, this );
-
-	this.userPratilipiRatingObserver = ko.computed( function() {
-		if( this.userPratilipi.rating && this.userPratilipi.rating() ) { /* TODO CHnage this to 1 condition */
-			this.selectedReviewRating( this.userPratilipi.rating() );
-			this.initialReviewRating( this.userPratilipi.rating() );
-		}
-	}, this);
-
-	this.userPratilipiReviewContentObserver = ko.computed( function() {
-		if( this.userPratilipi.review && this.userPratilipi.review() ) {
-			this.newReviewContent( this.userPratilipi.review() );
-			this.hasUserAlreadyPostedReview( true );
-		}
-	}, this);	  
-
+	/* Delete Review */
 	this.deleteReview = function( review ) {
-		self.reviewList.remove( review );
-		self.setTotalReviewsPresent( self.totalReviewsPresent() - 1 );
+		if( self.addOrDeleteRequestOnFlight() ) return;
+		self.addOrDeleteRequestOnFlight( true );
+		dataAccessor.deleteReview( self.pratilipi.pratilipiId(), 
+			function( review ) {
+				self.deleteFromReviewList( review );
+				self.updateUserPratilipiObject( review );
+				self.addOrDeleteRequestOnFlight( false );
+			}, function( error ) {
+				self.addOrDeleteRequestOnFlight( false );
+				ToastUtil.toast( "${ _strings.server_error_message }" );
+		} );
 	};   
 
-	this.deleteAlreadyPostedReview = function() {
-		self.reviewList.remove(  function(item) {
-			return item.userPratilipiId == self.userPratilipi.userPratilipiId();		   
-		} ); 
-		self.setTotalReviewsPresent( self.totalReviewsPresent() - 1 );
-	};
+	/* Computed Observables */
+	this.hasMoreReviews = ko.computed( function() {
+		return self.reviewList().length < self.totalReviewCount();
+	}, this );
+
+	this.hasAccessToReview = ko.computed( function() {
+		return appViewModel.user.isGuest() || self.userPratilipi.hasAccessToReview();  
+	}, this );
+
+	this.canAddReview = ko.computed( function() {
+		return self.ratingInput() != 0 && ! self.addOrDeleteReviewRequestOnFlight();
+	}, this );
+
+	this.pratilipiIdObserver = ko.computed( function() {
+		if( self.pratilipi.pratilipiId() == null ) return;
+			self.fetchReviewList( true );
+	}, this );
+
+	this.userPratilipiMetaObserver = ko.computed( function() {
+		self.ratingInput( self.userPratilipi.rating() != null ? self.userPratilipi.rating() : 0 );
+		self.reviewInput( self.userPratilipi.review() != null ? self.userPratilipi.review() : null );
+	}, this );
+
+	this.raingInputObserver = ko.computed( function() {
+		if( self.ratingInput() == 0 ) return;
+		self.openReviewModal();
+	}, this );
+
+	this.userObserver = ko.computed( function() {
+		if( ! appViewModel.user.isGuest() && getUrlParameter( 'action' ) == "openReviewModal" ) {
+			if( getUrlParameter( "ratingInput" ) != null && getUrlParameter( "ratingInput" ) > 0 )
+				self.ratingInput( getUrlParameter( "ratingInput" ) );
+			self.openReviewModal();
+		}
+	}, this );
 
 }
