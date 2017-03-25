@@ -26,18 +26,18 @@
 		<!--/ko-->
 	<!--/ko-->
 	<li class="mdl-menu__item show-more" data-bind="visible: hasMoreContents()">
-		<button data-bind="{ click: fetchNotificationList, visible: notificationsLoaded() != 'LOADING' }" 
+		<button data-bind="{ click: fetchNotificationList, visible: loadingState() != 'LOADING' }" 
 				class="mdl-button mdl-js-button">${ _strings.view_more }</button>
 	</li>
 </ul>
-<div data-bind="visible: notificationsLoaded() == 'LOADING'"
+<div data-bind="visible: loadingState() == 'LOADING'"
 		class="spinner-holder">
 	<span class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></span>
 </div>
-<div style="margin: 25px 15px;" data-bind="visible: notificationsLoaded() == 'LOADED_EMPTY'">
+<div style="margin: 25px 15px;" data-bind="visible: loadingState() == 'LOADED_EMPTY'">
 	${ _strings.notifications_no_notifications }
 </div>
-<div style="margin: 25px 15px;" data-bind="visible: notificationsLoaded() == 'FAILED'">
+<div style="margin: 25px 15px;" data-bind="visible: loadingState() == 'FAILED'">
 	<a style="cursor: pointer; color: #555;" data-bind="click: fetchNotificationList">
 		${ _strings.notifications_load_failed }
 	</a> 

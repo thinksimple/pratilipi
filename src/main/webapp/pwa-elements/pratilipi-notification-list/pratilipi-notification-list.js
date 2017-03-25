@@ -7,15 +7,16 @@ function( params ) {
 	var dataAccessor = new DataAccessor();
 	var cursor = null;
 
+	/* Loading state */
 	/*
-	 * 4 Possible values for 'notificationsLoaded'
+	 * 4 Possible values for 'loadingState'
 	 * LOADING
 	 * LOADED_EMPTY
 	 * LOADED
 	 * FAILED
 	 * 
 	 * */
-	this.notificationsLoaded = ko.observable();
+	this.loadingState = ko.observable();
 	this.notificationList = ko.observableArray();
 	this.hasMoreContents = ko.observable( false );
 
@@ -28,16 +29,16 @@ function( params ) {
 	};
 
 	this.fetchNotificationList = function() {
-		if( self.notificationsLoaded() == "LOADING" ) return;
-		self.notificationsLoaded( "LOADING" );
+		if( self.loadingState() == "LOADING" ) return;
+		self.loadingState( "LOADING" );
 		dataAccessor.getNotificationList( cursor, resultCount,
 				function( notificationListResponse ) {
 					if( notificationListResponse == null ) {
-						self.notificationsLoaded( "FAILED" );
+						self.loadingState( "FAILED" );
 						return;
 					}
-					var notificationList = notificationListResponse["notificationList"];
-					self.notificationsLoaded( notificationList.length > 0 ? "LOADED" : "LOADED_EMPTY" );
+					var notificationList = notificationListResponse[ "notificationList" ];
+					self.loadingState( self.notificationList().length > 0 || notificationList.length > 0 ? "LOADED" : "LOADED_EMPTY" );
 					if( ! notificationsPageBehaviour ) {
 						self.setNotificationList( notificationList );
 						return;
