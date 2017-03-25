@@ -98,33 +98,33 @@ public class InitDataUtil {
 		
 		initBannerDocs = new InitBannerDoc[] {
 
+				docAccessor.newInitBannerDoc( "காதல்", 
+						"pratilipi-tamil-carousel-30.png", 
+						"pratilipi-tamil-carousel-30-small.png", 
+						"/romance",
+						"PratilipiListApi",
+						gson.fromJson( "{ \"language\":\"TAMIL\", \"state\":\"PUBLISHED\", \"listName\":\"romance\" }", JsonElement.class ).getAsJsonObject() ),
+
+				docAccessor.newInitBannerDoc( "சினிமா", 
+						"pratilipi-tamil-carousel-31.png", 
+						"pratilipi-tamil-carousel-31-small.png", 
+						"/cinema",
+						"PratilipiListApi",
+						gson.fromJson( "{ \"language\":\"TAMIL\", \"state\":\"PUBLISHED\", \"listName\":\"cinema\" }", JsonElement.class ).getAsJsonObject() ),
+
+				docAccessor.newInitBannerDoc( "அறிவியல் புனைவு", 
+						"pratilipi-tamil-carousel-32.png", 
+						"pratilipi-tamil-carousel-32-small.png", 
+						"/science-fiction",
+						"PratilipiListApi",
+						gson.fromJson( "{ \"language\":\"TAMIL\", \"state\":\"PUBLISHED\", \"listName\":\"science-fiction\" }", JsonElement.class ).getAsJsonObject() ),
+
 				docAccessor.newInitBannerDoc( "குடும்பம்", 
 						"pratilipi-tamil-carousel-26.jpg", 
 						"pratilipi-tamil-carousel-26-small.jpg", 
 						"/family",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"TAMIL\", \"state\":\"PUBLISHED\", \"listName\":\"family\" }", JsonElement.class ).getAsJsonObject() ),
-
-				docAccessor.newInitBannerDoc( "இணையப் போட்டிகள்", 
-						"pratilipi-tamil-carousel-29.jpg", 
-						"pratilipi-tamil-carousel-29-small.jpg", 
-						"/events",
-						"EventListApi",
-						gson.fromJson( "{ \"language\":\"TAMIL\" }", JsonElement.class ).getAsJsonObject() ),
-
-				docAccessor.newInitBannerDoc( "நகைச்சுவை", 
-						"pratilipi-tamil-carousel-27.jpg", 
-						"pratilipi-tamil-carousel-27-small.jpg", 
-						"/humour",
-						"PratilipiListApi",
-						gson.fromJson( "{ \"language\":\"TAMIL\", \"state\":\"PUBLISHED\", \"listName\":\"humour\" }", JsonElement.class ).getAsJsonObject() ),
-
-				docAccessor.newInitBannerDoc( "ஆன்மிகம்", 
-						"pratilipi-tamil-carousel-28.jpg", 
-						"pratilipi-tamil-carousel-28-small.jpg", 
-						"/spiritual",
-						"PratilipiListApi",
-						gson.fromJson( "{ \"language\":\"TAMIL\", \"state\":\"PUBLISHED\", \"listName\":\"spiritual\" }", JsonElement.class ).getAsJsonObject() ),
 
 		};
 			
@@ -262,19 +262,19 @@ public class InitDataUtil {
 		
 		initBannerDocs = new InitBannerDoc[] {
 
-				docAccessor.newInitBannerDoc( "ಥ್ರಿಲ್ಲರ್/ಹಾರರ್ ", 
-						"pratilipi-kannada-carousel-22.jpg", 
-						"pratilipi-kannada-carousel-22-small.jpg", 
-						"/thriller",
+				docAccessor.newInitBannerDoc( "ಪ್ರೀತಿ", 
+						"pratilipi-kannada-carousel-24.png", 
+						"pratilipi-kannada-carousel-24-small.png", 
+						"/love",
 						"PratilipiListApi",
-						gson.fromJson( "{ \"language\":\"KANNADA\", \"state\":\"PUBLISHED\", \"listName\":\"thriller\" }", JsonElement.class ).getAsJsonObject() ),
+						gson.fromJson( "{ \"language\":\"KANNADA\", \"state\":\"PUBLISHED\", \"listName\":\"love\" }", JsonElement.class ).getAsJsonObject() ),
 
-				docAccessor.newInitBannerDoc( "ಸ್ನೇಹ", 
-						"pratilipi-kannada-carousel-19.jpg", 
-						"pratilipi-kannada-carousel-19-small.jpg", 
-						"/friendship",
+				docAccessor.newInitBannerDoc( "ಕವಿತೆಗಳು", 
+						"pratilipi-kannada-carousel-25.png", 
+						"pratilipi-kannada-carousel-25-small.png", 
+						"/poems",
 						"PratilipiListApi",
-						gson.fromJson( "{ \"language\":\"KANNADA\", \"state\":\"PUBLISHED\", \"listName\":\"friendship\" }", JsonElement.class ).getAsJsonObject() ),
+						gson.fromJson( "{ \"language\":\"KANNADA\", \"state\":\"PUBLISHED\", \"listName\":\"poems\" }", JsonElement.class ).getAsJsonObject() ),
 
 				docAccessor.newInitBannerDoc( "ಪ್ರತಿಲಿಪಿ ಕಥಾ ಸ್ಪರ್ಧೆ-2017", 
 						"pratilipi-kannada-carousel-23.jpg", 
@@ -282,6 +282,13 @@ public class InitDataUtil {
 						"/event/pks",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"KANNADA\", \"state\":\"PUBLISHED\", \"eventId\":6058375333806080 }", JsonElement.class ).getAsJsonObject() ),
+
+				docAccessor.newInitBannerDoc( "ಮಹಿಳೆ", 
+						"pratilipi-kannada-carousel-26.png", 
+						"pratilipi-kannada-carousel-26-small.png", 
+						"/women",
+						"PratilipiListApi",
+						gson.fromJson( "{ \"language\":\"KANNADA\", \"state\":\"PUBLISHED\", \"listName\":\"women\" }", JsonElement.class ).getAsJsonObject() ),
 
 		};
 			
