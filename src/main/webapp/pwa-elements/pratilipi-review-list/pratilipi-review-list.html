@@ -19,9 +19,11 @@
 		<div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero ">
 			<ul class="demo-list-three mdl-list" style="margin: 0;" data-bind="visible: reviewList().length > 0">
 				<!-- ko foreach: reviewList -->
-					<pratilipi-review params="{ review: $data, deleteReview: $parent.deleteReview, pratilipiId: $parent.pratilipi.pratilipiId() }"
-										data-bind="visible: $data.review != null && $data.review() != null && $data.review().trim() != ''">
-					</pratilipi-review>
+					<li data-bind="component: {
+							name: 'pratilipi-review',
+							params: { review: $data, deleteReview: $parent.deleteReview, pratilipiId: $parent.pratilipi.pratilipiId() } }, 
+							visible: $data.review != null && $data.review() != null && $data.review().trim() != ''"
+							class="mdl-list__item padding-zero display-block"></li>
 				<!-- /ko -->
 				<li data-bind="visible: hasMoreReviews()">
 					<div class="show-more text-center">

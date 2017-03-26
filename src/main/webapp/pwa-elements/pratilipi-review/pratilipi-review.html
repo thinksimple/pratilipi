@@ -1,70 +1,65 @@
-<li class="mdl-list__item padding-zero display-block">
+<div class="mdl-list__item mdl-list__item--two-line padding-zero">
+	<span class="mdl-list__item-primary-content">
+		<img data-bind="attr: { src: userImageUrl }" class="mdl-list__item-avatar">
+		<a class="reviewer-name material-subtitle-1" data-bind="attr: { href: review.userProfilePageUrl() }, text: review.user.displayName()"></a>
+		<span data-bind="text: reviewDate" class="mdl-list__item-sub-title"></span>
+	</span>
+	<span class="mdl-list__item-secondary-content mdl-color-text--primary" >
+		<span class="mdl-list__item-secondary-action" href="#">
+			<!-- ko foreach: ko.utils.range(1, filledStars) -->
+	  			<i class="material-icons material-icons-16">star</i>
+	  		<!-- /ko -->
+	  		<!-- ko foreach: ko.utils.range(1, emptyStars) -->
+	  			<i class="material-icons material-icons-16">star_border</i>
+	  		<!-- /ko -->
+  		</span>
+	</span>
+</div>
 
-	<div class="mdl-list__item mdl-list__item--two-line padding-zero">
-		<span class="mdl-list__item-primary-content">
-			<img data-bind="attr: { src: userImageUrl }" class="mdl-list__item-avatar">
-			<a class="reviewer-name material-subtitle-1" data-bind="attr: { href: review.userProfilePageUrl() }, text: review.user.displayName()"></a>
-			<span data-bind="text: reviewDate" class="mdl-list__item-sub-title"></span>
-		</span>
-		<span class="mdl-list__item-secondary-content mdl-color-text--primary" >
-			<span class="mdl-list__item-secondary-action" href="#">
-				<!-- ko foreach: ko.utils.range(1, filledStars) -->
-		  			<i class="material-icons material-icons-16">star</i>
-		  		<!-- /ko -->
-		  		<!-- ko foreach: ko.utils.range(1, emptyStars) -->
-		  			<i class="material-icons material-icons-16">star_border</i>
-		  		<!-- /ko -->
-	  		</span>
-		</span>
-	</div>
+<div class="mdl-list__item-text-body material-subtitle-1" data-bind="text: review.review()"></div><div>
 
-	<div class="mdl-list__item-text-body material-subtitle-1" data-bind="text: review.review()"></div><div>
+	<span class="font-14">	
+		<!-- ko if: likeCount -->
+			<span data-bind="text: likeCount"></span>
+		<!-- /ko -->
+		<button  data-bind="click: likeDislikeReview" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+		  <i class="material-icons material-icons-16" role="presentation" data-bind="css: { 'mdl-color-text--primary': isLiked() }">thumb_up</i><span class="visuallyhidden">like comment</span>
+		</button>
+		<span class="reply"></span>	
+		<!-- ko if: commentCount -->
+			<span data-bind="text: commentCount"></span>
+		<!-- /ko -->				
+		<button data-bind="click: showReplyState" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+		  <i class="material-icons material-icons-16" role="presentation">message</i><span class="visuallyhidden">comment</span>
+		</button>	
+															
+		<!-- ko if: commentCount -->
+			<span class="viewAllReplies clickable-element" data-bind="click: toggleShowRepliesState, text: showRepliesText"></span>
+		<!-- /ko -->
 
-		<span class="font-14">	
-			<!-- ko if: likeCount -->
-				<span data-bind="text: likeCount"></span>
+		<span class="dropup pull-right" data-bind="ifnot: $root.user.isGuest">
+			<#-- if: $parents[1].userPratilipi.userPratilipiId == userPratilipiId change condition -->
+			<!-- ko if: $parents[1].userPratilipi.userPratilipiId == review.userPratilipiId() -->
+			      <button class="mdl-button mdl-js-button mdl-button--icon" type="button" id="review-access" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						<i class="material-icons">more_vert</i>
+			      </button>
+			      <ul class="dropdown-menu" aria-labelledby="review-access">
+			        <li>${ _strings.review_edit_review }</li>
+			        <li data-bind="click: deleteSelf">${ _strings.review_delete_review }</li>
+			      </ul>
 			<!-- /ko -->
-			<button  data-bind="click: likeDislikeReview" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-			  <i class="material-icons material-icons-16" role="presentation" data-bind="css: { 'mdl-color-text--primary': isLiked() }">thumb_up</i><span class="visuallyhidden">like comment</span>
-			</button>
-			<span class="reply"></span>	
-			<!-- ko if: commentCount -->
-				<span data-bind="text: commentCount"></span>
-			<!-- /ko -->				
-			<button data-bind="click: showReplyState" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-			  <i class="material-icons material-icons-16" role="presentation">message</i><span class="visuallyhidden">comment</span>
-			</button>	
-																
-			<!-- ko if: commentCount -->
-				<span class="viewAllReplies clickable-element" data-bind="click: toggleShowRepliesState, text: showRepliesText"></span>
-			<!-- /ko -->
-			<#-- <span data-bind="text: $parents[1].pratilipiObj.pratilipiId"></span> -->
-			<span class="dropup pull-right" data-bind="ifnot: $root.user.isGuest"> <#-- change to ifnot -->
-				<#-- if: $parents[1].userPratilipi.userPratilipiId == userPratilipiId change condition -->
-				<!-- ko if: $parents[1].userPratilipi.userPratilipiId == review.userPratilipiId() -->
-				      <button class="mdl-button mdl-js-button mdl-button--icon" type="button" id="review-access" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-							<i class="material-icons">more_vert</i>
-				      </button>
-				      <ul class="dropdown-menu" aria-labelledby="review-access">
-				        <li>${ _strings.review_edit_review }</li>
-				        <li data-bind="click: deleteSelf">${ _strings.review_delete_review }</li>
-				      </ul>
-				<!-- /ko -->			
-			</span>
-
 		</span>
 
-	</div>
+	</span>
 
-	<ul class="mdl-list sub-review" data-bind="visible: isSubreviewListVisible">
-		<div data-bind="visible: isCommentsShown, foreach: comments">
-			<pratilipi-review-comment params="{ value: $data, deleteComment: $parent.deleteComment }"></pratilipi-review-comment>
-		</div>
-		<pratilipi-review-reply data-bind="visible: isReplyStateOn" params="parent: $parent"></pratilipi-review-reply>
-	</ul>
-</li>
-<li>
-	<div data-bind="if: $index() != ( $parents[1].totalReviewCount() - 1 ) ">
-		<hr />
+</div>
+
+<ul class="mdl-list sub-review" data-bind="visible: isSubreviewListVisible">
+	<div data-bind="visible: isCommentsShown, foreach: comments">
+		<pratilipi-review-comment params="{ value: $data, deleteComment: $parent.deleteComment }"></pratilipi-review-comment>
 	</div>
-</li>
+	<pratilipi-review-reply data-bind="visible: isReplyStateOn" params="parent: $parent"></pratilipi-review-reply>
+</ul>
+<div data-bind="visible: $index() != ( $parents[1].totalReviewCount() - 1 ) ">
+	<hr />
+</div>
