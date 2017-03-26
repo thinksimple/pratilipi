@@ -40,8 +40,20 @@ function( params ) {
 
 	/* Review List */
 	this.addToReviewList = function( review ) {
-		self.reviewList.unshift( ko.mapping.fromJS( review ) );
-		self.totalReviewCount( self.totalReviewCount() + 1 );
+		/* Updating review doesn't change the reviewDate. Going date-wise chronological order, update the same review if already present  */
+		var hasUpdatedReview = review.userPratilipiId == self.userPratilipi.userPratilipiId() && self.userPratilipi.review() != null;
+		if( hasUpdatedReview ) {
+			for( var i = 0; i < self.reviewList().length; i++ ) {
+				if( review.userPratilipiId == self.reviewList()[i].userPratilipiId() ) {
+					self.reviewList()[i].rating( review.rating );
+					self.reviewList()[i].review( review.review );
+					break;
+				}
+			}
+		} else {
+			self.reviewList.unshift( ko.mapping.fromJS( review ) );
+			self.totalReviewCount( self.totalReviewCount() + 1 );
+		}
 	};
 
 	this.deleteFromReviewList = function( review ) {
@@ -130,6 +142,11 @@ function( params ) {
 		self.addOrDeleteReviewRequestOnFlight( true );
 		dataAccessor.createOrUpdateReview( self.pratilipi.pratilipiId(), self.ratingInput(), self.reviewInput(), 
 			function( review ) {
+				if( review.rating == null ) review.rating = 0;
+				if( review.reviewState != "PUBLISHED" || review.review == null || review.review.trim() == "" ) review.review = null;
+				/* Update reviewList Array first and then userPratilipi Object
+				 * We need to know whether user has added/edited his/her review
+				 *  */
 				self.addToReviewList( review );
 				/* Update Pratilipi Object first and then userPratilipi Object
 				 * We need old rating to update in Pratilipi object

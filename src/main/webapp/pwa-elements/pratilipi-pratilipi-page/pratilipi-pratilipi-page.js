@@ -43,11 +43,15 @@ function() {
 	this.userPratilipi = ko.mapping.fromJS( defaultUserPratilipi, {}, self.userPratilipi );
 
 	this.updatePratilipi = function( pratilipi ) {
+		if( pratilipi != null && pratilipi.summary != null && pratilipi.summary.trim() == "" )
+			pratilipi.summary = null;
 		ko.mapping.fromJS( pratilipi, {}, self.pratilipi );
 		MetaTagUtil.setMetaTagsForPratilipi( ko.mapping.toJS( self.pratilipi ) );
 	};
 
 	this.updateUserPratilipi = function( userPratilipi ) {
+		if( userPratilipi != null && userPratilipi.review != null && userPratilipi.review.trim() == "" )
+			userPratilipi.review = null;
 		ko.mapping.fromJS( userPratilipi, {}, self.userPratilipi );
 	};
 
