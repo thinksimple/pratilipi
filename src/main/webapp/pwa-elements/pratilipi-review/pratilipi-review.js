@@ -8,13 +8,18 @@ function( params ) {
 	this.isLiked = ko.observable( this.review.isLiked ? this.review.isLiked() : false );
 
 	this.maxRating = 5;
-	this.filledStars = this.review.rating != null ? this.review.rating() : 0;
-	this.emptyStars = this.maxRating - this.filledStars;
+	this.filledStars = ko.observable();
+	this.emptyStars = ko.observable();
 
 	this.userImageUrl = getImageUrl( this.review.userImageUrl(), 48 );
 	this.reviewDate = convertDate( this.review.reviewDateMillis() );
 	this.isCommentsShown = ko.observable( false );
 	this.isReplyStateOn = ko.observable( false );
+
+	this.ratingObserver = ko.computed( function() {
+		self.filledStars( self.review.rating != null ? self.review.rating() : 0 );
+		self.emptyStars( self.maxRating - self.filledStars() );
+	}, this );
 
 	this.isSubreviewListVisible = ko.computed( function() {
 		return ( this.isCommentsShown() && this.comments().length ) || this.isReplyStateOn(); /* test */
