@@ -26,6 +26,8 @@ var DataAccessor = function() {
 	var USER_PRATILIPI_LIBRARY_API = "/userpratilipi/library";
 	var COMMENT_API = "/comment";
 	var VOTE_API = "/vote";
+	var INIT_API = "/init?_apiVer=2";
+	var INIT_BANNER_LIST_API = "/init/banner/list";
 
 	var request = function( name, api, params ) {
 		return {
@@ -189,6 +191,18 @@ var DataAccessor = function() {
 		if( resultCount != null ) params[ "resultCount" ] = resultCount;
 		httpUtil.get( API_PREFIX + USER_PRATILIPI_LIBRARY_LIST_API, 
 				params, 
+				function( response, status ) { processGetResponse( response, status, aCallBack ) } );
+	};
+
+	this.getHomePageSections = function( aCallBack ) {
+		httpUtil.get( API_PREFIX + INIT_API, 
+				{ "language": "${ language }" },
+				function( response, status ) { processGetResponse( response, status, aCallBack ) } );
+	};
+
+	this.getHomePageBanners = function( aCallBack ) {
+		httpUtil.get( API_PREFIX + INIT_BANNER_LIST_API, 
+				{ "language": "${ language }" },
 				function( response, status ) { processGetResponse( response, status, aCallBack ) } );
 	};
 
