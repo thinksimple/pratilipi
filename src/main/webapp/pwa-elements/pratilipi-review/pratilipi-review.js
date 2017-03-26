@@ -3,9 +3,9 @@ function( params ) {
 	var dataAccessor = new DataAccessor();
 
 	this.review = params.review;
-	this.likeCount = ko.observable( this.review.likeCount() );
-	this.commentCount = ko.observable( this.review.commentCount() );
-	this.isLiked = ko.observable( this.review.isLiked() );
+	this.likeCount = ko.observable( this.review.likeCount ? this.review.likeCount() : 0 );
+	this.commentCount = ko.observable( this.review.commentCount ? this.review.commentCount() : 0 );
+	this.isLiked = ko.observable( this.review.isLiked ? this.review.isLiked() : false );
 
 	this.maxRating = 5;
 	this.filledStars = this.review.rating != null ? this.review.rating() : 0;

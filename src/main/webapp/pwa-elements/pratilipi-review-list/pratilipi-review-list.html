@@ -4,11 +4,7 @@
 		<div data-bind="visible: hasAccessToReview()" class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero">
 			<div class="mdl-grid padding-zero mdl-grid--no-spacing">
 				<div class="mdl-cell--6-col mdl-cell--4-col-tablet padding-zero">
-					<!-- ko component: {
-						name: "pratilipi-rating-input",
-						params: { rating: ratingInput }
-					} -->
-					<!-- /ko -->
+					<pratilipi-rating-input params="{ rating: ratingInput }" data-bind="click: openReviewModal"></pratilipi-rating-input>
 				</div>
 				<div class="mdl-cell--6-col mdl-cell--4-col-tablet padding-zero">
 					<button data-bind="click: openReviewModal" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect pull-right write-review-button">${ _strings.review_write_a_review }</button>
@@ -54,11 +50,7 @@
 		  	<h6 class="modal-title" id="reviewLabel">${ _strings.rate_and_review }</h6>
 		</div>
 		<div class="modal-body">
-			<!-- ko component: {
-				name: "pratilipi-rating-input",
-				params: { rating: ratingInput }
-			} -->
-			<!-- /ko -->
+			<pratilipi-rating-input params="{ rating: ratingInput }"></pratilipi-rating-input>
 			<textarea data-bind="{ mdlFloatingInput: { label: '${ _strings.review_write_a_review }', value: reviewInput, id: 'pratilipi_review_list_review_input' }, valueUpdate: ['input'], transliterate: true }" rows= "3"></textarea>
 		</div>
 		<div class="modal-footer">

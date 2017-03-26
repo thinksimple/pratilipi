@@ -40,13 +40,13 @@ function( params ) {
 
 	/* Review List */
 	this.addToReviewList = function( review ) {
-		self.reviewList.unshift( review );
+		self.reviewList.unshift( ko.mapping.fromJS( review ) );
 		self.totalReviewCount( self.totalReviewCount() + 1 );
 	};
 
 	this.deleteFromReviewList = function( review ) {
 		self.reviewList.remove( function( item ) {
-			return item.userPratilipiId == self.userPratilipi.userPratilipiId();		   
+			return item.userPratilipiId() == self.userPratilipi.userPratilipiId();		   
 		});
 		self.totalReviewCount( self.totalReviewCount() - 1 );
 	};
@@ -186,20 +186,12 @@ function( params ) {
 		self.reviewInput( self.userPratilipi.reviewState() == "PUBLISHED" && self.userPratilipi.review() != null ? self.userPratilipi.review() : null );
 	}, this );
 
-	this.ratingInputObserver = ko.computed( function() {
-		if( self.ratingInput() == 0 ) return;
-		if( self.ratingInput() == self.userPratilipi.rating() ) return;
-		self.openReviewModal();
-	}, this );
-
 	this.userObserver = ko.computed( function() {
 		if( ! appViewModel.user.isGuest() && getUrlParameter( 'action' ) == "openReviewModal" ) {
 			if( getUrlParameter( "ratingInput" ) != null && getUrlParameter( "ratingInput" ) > 0 ) {
 				self.ratingInput( parseInt( getUrlParameter( "ratingInput" ) ) );
-				/* This will inturn open the modal */
-			} else {
-				self.openReviewModal();
 			}
+			self.openReviewModal();
 		}
 	}, this );
 
