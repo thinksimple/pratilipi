@@ -220,8 +220,13 @@ public class PratilipiSite extends HttpServlet {
 					canonicalUrl = canonicalUrl + "?" + request.getQueryString();
 					alternateUrl = alternateUrl + "?" + request.getQueryString();
 				}
-				dataModel = createDataModelForSearchPage( basicMode, filterLanguage, request );
-				templateName = ( basicMode ? "SearchBasic.ftl" : "Search.ftl" );
+				if( loadPWA ) {
+					dataModel = new HashMap<>();
+					templateName = "SearchPWA.ftl";
+				} else {
+					dataModel = createDataModelForSearchPage( basicMode, filterLanguage, request );
+					templateName = ( basicMode ? "SearchBasic.ftl" : "Search.ftl" );
+				}
 
 			} else if( uri.equals( "/events" ) ) {
 				dataModel = createDataModelForEventsPage( filterLanguage, basicMode );

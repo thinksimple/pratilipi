@@ -9,12 +9,9 @@ function( params ) {
 		$( "#pratilipiWrite" ).modal( 'hide' );
 	};
 
-	this.searchQuery = ko.observable();
 	this.search = function( formElement ) {
-		 if( self.searchQuery() && self.searchQuery().trim().length ) {
-			  var search_url = "/search?q=" + self.searchQuery();
-			  window.location.href = search_url;
-		 }
+		if( appViewModel.searchQuery() && appViewModel.searchQuery().trim().length && window.location.pathname != "/search" )
+			window.location.href = "/search?q=" + appViewModel.searchQuery();
 	};
 
 	this.openMenuNavigationDrawer = function() {

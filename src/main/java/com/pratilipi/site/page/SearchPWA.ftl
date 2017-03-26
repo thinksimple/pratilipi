@@ -1,0 +1,1 @@
+<#include "/Search-${lang}.html">

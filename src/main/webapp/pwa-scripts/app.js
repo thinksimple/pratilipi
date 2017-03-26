@@ -14,6 +14,7 @@ var AppViewModel = function() {
 	};
 	this.user = ko.mapping.fromJS( defaultUser, {}, this.user );
 	this.notificationCount = ko.observable( -1 );
+	this.searchQuery = ko.observable( window.location.pathname == "/search" ? decodeURI( getUrlParameter( "q" ) ) : null );
 	this.userPreferences = ko.observable( {} );
 	this.metaTags = ko.observableArray();
 	this.pageTitle = ko.observable( "${ _strings.pratilipi } | Pratilipi" );

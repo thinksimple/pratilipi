@@ -137,6 +137,7 @@ search 						= Search
 search_bar_help				= Search for books, stories, poems and more ...
 search_results				= Search Results
 search_no_results_found		= Sorry! No Search Results found for your search query. Try searching for different search query!
+search_load_failed			= Failed to load search results! Please click here to try again!
 
 # Write
 write_heading				= Add New Content

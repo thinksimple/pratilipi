@@ -185,6 +185,17 @@ var DataAccessor = function() {
 				function( response, status ) { processGetResponse( response, status, aCallBack ) } );
 	};
 
+	this.getPratilipiListBySearchQuery = function( searchQuery, cursor, offset, resultCount, aCallBack ) {
+		if( searchQuery == null ) return;
+		var params = { "searchQuery": searchQuery, "state": "PUBLISHED", "language": "${ language }" };
+		if( cursor != null ) params[ "cursor" ] = cursor;
+		if( offset != null ) params[ "offset" ] = offset;
+		if( resultCount != null ) params[ "resultCount" ] = resultCount;
+		httpUtil.get( API_PREFIX + PRATILIPI_LIST_API, 
+				params, 
+				function( response, status ) { processGetResponse( response, status, aCallBack ) } );
+	};
+
 	this.getUserLibraryList = function( cursor, resultCount, aCallBack ) {
 		var params = {};
 		if( cursor != null ) params[ "cursor" ] = cursor;

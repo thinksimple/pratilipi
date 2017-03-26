@@ -25,7 +25,7 @@
 		<div class="search-bar-holder hidden-xs">
 			<form action="javascript:void(0);" data-bind="submit: search">
 				<div class="mdl-textfield mdl-js-textfield">
-					<input class="mdl-textfield__input" type="text" id="pratilipi-header-search" data-bind="textInput: searchQuery" />
+					<input class="mdl-textfield__input" type="text" id="pratilipi-header-search" data-bind="value: appViewModel.searchQuery" />
 					<div class="mdl-textfield__label font-xs" for="pratilipi-header-search">
 						${ _strings.search_bar_help }
 					</div>
@@ -123,7 +123,7 @@
 		</ul>
 		<form action="javascript:void(0);" data-bind="submit: search">
 			<div class="mdl-textfield mdl-js-textfield">
-				<input class="mdl-textfield__input" type="text" id="pratilipi-header-search-mobile" data-bind="textInput: searchQuery" />
+				<input class="mdl-textfield__input" type="text" id="pratilipi-header-search-mobile" data-bind="value: appViewModel.searchQuery" />
 				<div class="mdl-textfield__label font-xs" for="pratilipi-header-search-mobile">
 					${ _strings.search }
 				</div>
