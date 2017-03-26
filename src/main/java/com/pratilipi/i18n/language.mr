@@ -137,6 +137,7 @@ search 						= शोध
 search_bar_help				= लेखकाचे नाव, कथा, कविता, पुस्तक शिर्षक, प्रकार
 search_results				= शोध परिणाम
 search_no_results_found = आपले शोध परिणाम प्रतिलिपि वर सध्या उपलब्ध नाही आहेत. त्याबद्दल आम्ही क्षमस्व आहोत. पण अन्य रोचक व रहस्यमय कथा तुम्ही वाचू शकता.
+search_load_failed			= Failed to load search results! Please click here to try again!
 
 # Write
 write_heading				= लिहा                                                                                                                                                                                                                                                                                  

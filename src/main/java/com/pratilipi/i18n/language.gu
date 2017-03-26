@@ -137,6 +137,7 @@ search 			= શોધો
 search_bar_help	= લેખકનું નામ અથવા વાર્તા, કવિતા, પુસ્તકનું શીર્ષક ટાઈપ કરો  
 search_results		= શોધના પરિણામો
 search_no_results_found		= માફ કરશો, આપે કરેલ શોધનું પરિણામ શૂન્ય છે. પ્રતિલિપિ પર અન્ય રોમાંસ, હોરર અને રહસ્યકથાઓ માણો.  
+search_load_failed			= Failed to load search results! Please click here to try again!
 
 # Write
 write_heading		= લખો

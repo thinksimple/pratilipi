@@ -137,6 +137,7 @@ search 						        = వెతకండి
 search_bar_help				    = పుస్తకాలు, కథలు, కవితలు మొదలైన వాటి కొరకు వెతకండి...
 search_results				    = ఫలితాలను వెతకండి 
 search_no_results_found		= క్షమించండి.. మీరు కోరిన ఫలితాలేవి అందుబాటులో లేవు. మరో మారు ప్రయత్నించండి! 
+search_load_failed			= Failed to load search results! Please click here to try again!
 
 # Write
 write_heading				        = కొత్త రచనను జత చేయండి 

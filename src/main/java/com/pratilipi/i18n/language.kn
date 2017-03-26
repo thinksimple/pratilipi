@@ -137,6 +137,7 @@ search 						                          = ಹುಡುಕಿ
 search_bar_help				                      = ಪುಸ್ತಕಗಳು, ಕಥೆಗಳು, ಕವಿತೆಗಳು ಮತ್ತು ಇನ್ನಿತರ ಪ್ರಕಾರದ ಬರಹಗಳಿಗಾಗಿ ಹುಡುಕಾಟ ನಡೆಸಿ
 search_results				                      = ಹುಡುಕಾಟದ ಫಲಿತಾಂಶಗಳು 
 search_no_results_found		                  = ಕ್ಷಮಿಸಿ! ನಿಮ್ಮ ಹುಡುಕಾಟದ ಪ್ರಶ್ನೆಗಳಿಗೆ ಯಾವುದೇ ಫಲಿತಾಂಶ ಲಭ್ಯವಿಲ್ಲ.
+search_load_failed			= Failed to load search results! Please click here to try again!
 
 # Write
 write_heading				                          = ಹೊಸ ಬರಹವನ್ನು ಸೇರಿಸಿ 

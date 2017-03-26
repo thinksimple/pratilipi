@@ -137,6 +137,7 @@ search 	=  খুঁজুন
 search_bar_help =  লেখকের নাম বা কাহিনী,কবিতা,পুস্তকের শিরোনাম টাইপ করুন
 search_results	=  সার্চ রেজাল্ট
 search_no_results_found =  আমরা ক্ষমাপ্রার্থী , আপনার দ্বারা যে অনুসন্ধান করা হয়েছে তা প্রতিলিপিতে উপলব্ধ নয়। অন্য রোমাঞ্চক অথবা রহস্য কাহিনী আপনি পাঠ করতে পারেন।
+search_load_failed			= Failed to load search results! Please click here to try again!
 
 # Write
 write_heading	= লিখুন                                                                                                                                                                                                                                                                        

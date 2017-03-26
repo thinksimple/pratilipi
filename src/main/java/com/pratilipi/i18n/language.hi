@@ -137,6 +137,7 @@ search 						= खोजिए
 search_bar_help				= लेखक का नाम या कहानी,कविता,पुस्तक का शीर्षक टाइप करें 
 search_results				= खोज के परिणाम
 search_no_results_found = हम माफ़ी चाहते है, आपके द्वारा की गई खोज का परिणाम प्रतिलिप पर फ़िलहाल उपलब्ध नहीं है | अन्य रोमांचक और रहस्य कथाएँ आप पढ़ सकते है |
+search_load_failed			= Failed to load search results! Please click here to try again!
 
 # Write
 write_heading				= लिखिए                                                                                                                                                                                                                                                                                   

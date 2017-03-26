@@ -137,6 +137,7 @@ search 						= തിരയൂ
 search_bar_help				= പുസ്തകങ്ങള്‍,കഥകള്‍,കവിതകള്‍ തുടങ്ങിയവയ്ക്കായി തിരയൂ ...
 search_results				= തിരച്ചിലിന്റെ ഫലം
 search_no_results_found		= ക്ഷമിക്കണം! താങ്കളുടെ തിരച്ചിലിന് യോജിക്കുന്ന ഫലങ്ങള്‍ ഒന്നും കണ്ടെത്താനായില്ല. ദയവായി തിരച്ചിലിന് മറ്റൊരു വാക്ക് ഉപയോഗിക്കുക!
+search_load_failed			= Failed to load search results! Please click here to try again!
 
 # Write
 write_heading				= പുതിയ രചന ചേര്‍ക്കൂ

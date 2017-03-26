@@ -137,6 +137,7 @@ search 						= தேட
 search_bar_help				= தேட - கவிதை, கதை, புத்தகம், கட்டுரை மற்றும் பல  ...
 search_results				= தேடல் முடிவுகள்
 search_no_results_found		= மன்னிக்கவும்! உங்கள் தேடலுக்குத் தகுந்த எந்த முடிவுகளும் இல்லை. வேறு தேடலை மேற்கொள்ளவும்.
+search_load_failed			= Failed to load search results! Please click here to try again!
 
 # Write
 write_heading				= படைப்பை சேர்க்க                                                                                                                                                                                                                                                                                     
