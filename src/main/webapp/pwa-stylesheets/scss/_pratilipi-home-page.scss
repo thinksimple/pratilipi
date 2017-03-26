@@ -1,14 +1,17 @@
+.carousel-indicators li { 
+	visibility: hidden; 
+}
 .section-list .section-container {
 	margin-bottom: 20px;
 	.section-title {
-		margin: 0 8px;
+		margin: 0;
 		background: #fff;
 		padding: 16px 20px;
 		color: #333;
 	}
 	.list-grid {
 		flex-grow: 1;
-		padding: 0 8px;
+		padding: 0;
 		@media only screen and (max-width: 480px) {
 			padding: 0;
 		} 
@@ -50,6 +53,10 @@
 			.pratilipi-pratilipi-card {
 				padding: 20px;
 				margin-top: -1px !important;
+				.pratilipi-meta-holder .pratilipi-card-footer-icons-holder {
+					bottom: 20px;
+					right: 20px;
+				}
 			}
 		}
 	}
