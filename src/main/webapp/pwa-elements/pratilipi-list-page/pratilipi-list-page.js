@@ -15,10 +15,14 @@ function() {
 	};
 
 	this.fetchPratilipiList = function() {
-		if( self.isLoading() ) return;
+		if( self.isLoading() || ! self.hasMoreContents() ) return;
 		self.isLoading( true );
 		dataAccessor.getPratilipiListByListName( window.location.pathname.substring(1), cursor, null, resultCount,
 				function( pratilipiListResponse ) {
+					if( pratilipiListResponse == null ) {
+						self.isLoading( false );
+						return;
+					}
 					var pratilipiList = pratilipiListResponse.pratilipiList;
 					self.updatePratilipiList( pratilipiList );
 					cursor = pratilipiListResponse.cursor;
@@ -26,6 +30,14 @@ function() {
 					self.hasMoreContents( pratilipiList.length == resultCount );
 		});
 	};
+
+	this.pageScrollObserver = ko.computed( function() {
+		if( ( appViewModel.scrollTop() / $( ".js-pratilipi-list-grid" ).height() ) > 0.7 ) {
+			setTimeout( function() {
+				self.fetchPratilipiList();
+			}, 0 );
+		}
+	}, this ); 
 
 	this.fetchPratilipiList();
 

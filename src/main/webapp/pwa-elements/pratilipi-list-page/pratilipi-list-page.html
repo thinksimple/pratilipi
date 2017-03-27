@@ -1,5 +1,5 @@
 <div class="mdl-cell mdl-cell--8-col-tablet mdl-cell--9-col mobile-card">
-	<div data-bind="foreach: { data: pratilipiList, as: 'pratilipi' }" class="mdl-grid pratilipi-list-grid mobile-card">
+	<div data-bind="foreach: { data: pratilipiList, as: 'pratilipi' }" class="mdl-grid pratilipi-list-grid js-pratilipi-list-grid mobile-card">
 		<div class="mdl-cell mdl-cell--12-col-phone mdl-cell--12-col-tablet mdl-cell--12-col-desktop mobile-card pratilipi-list-card">
 			<!-- ko component: {
 				name: "pratilipi-pratilipi-card",
@@ -8,11 +8,13 @@
 			<!-- /ko -->
 		</div>
 	</div>
-	<div class="load-more-container mdl-card-border text-center" data-bind="visible: hasMoreContents()">
+	<div class="load-more-container mdl-card-border" data-bind="visible: hasMoreContents()">
 		<button data-bind="{ visible: ! isLoading(), click: fetchPratilipiList }" 
 			class="mdl-button mdl-js-button mdl-button--accent mdl-js-ripple-effect">
 			${ _strings.load_more_contents }
 		</button>
-		<span data-bind="visible: isLoading()" class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></span>
+		<div data-bind="visible: isLoading()" class="text-center">
+			<span class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></span>
+		</div>
 	</div>
 </div>
