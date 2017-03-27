@@ -16,7 +16,7 @@ function( params ) {
 
 	this.switchLibraryState = function() {
 
-		if( ! self.canRemoveFromLibrary() && self.pratilipi.addedToLib() ) 
+		if( ! self.canRemoveFromLibrary && self.pratilipi.addedToLib() ) 
 			return;
 
 		self.libraryRequestOnFlight( true );
