@@ -21,10 +21,14 @@ function( params ) {
 
 		self.libraryRequestOnFlight( true );
 
+		var getTruncatedTitle = function( title ) {
+			return title.substring( 0, 10 ) + ( title.length > 10 ? "... " : " " );
+		};
+
 		if( self.pratilipi.addedToLib() ) /* Toast only for remove action */
-			ToastUtil.toastCallBack( "${ _strings.removed_from_library }", 5000, "UNDO", self.switchLibraryState );
+			ToastUtil.toastCallBack( getTruncatedTitle( self.pratilipi.title() ) + "${ _strings.removed_from_library }", 5000, "UNDO", self.switchLibraryState );
 		else 
-			ToastUtil.toast( "${ _strings.added_to_library }", 2000 );
+			ToastUtil.toast( getTruncatedTitle( self.pratilipi.title() ) + "${ _strings.added_to_library }", 2000 );
 
 		var addedToLib = self.pratilipi.addedToLib();
 		self.updatePratilipi( { "addedToLib": ! addedToLib } );
