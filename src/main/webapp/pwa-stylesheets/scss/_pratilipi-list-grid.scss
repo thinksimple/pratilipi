@@ -1,0 +1,65 @@
+
+
+.pratilipi-list-grid {
+	flex-grow: 1;
+	padding: 0;
+	@media only screen and (max-width: 480px) {
+		padding: 0;
+	} 
+	@media only screen and (min-width: 481px) and (max-width: 767px) {
+		width: 100% !important;
+	}
+	@media only screen and (min-width: 768px) and (max-width: 839px) {
+		margin-left: 1px;
+		margin-right: -2px;
+	}
+	@media only screen and (min-width: 840px) and (max-width: 959px) {
+		width: 100% !important;
+	}
+	@media only screen and (min-width: 960px) and (max-width: 1024px) {
+		margin-left: 1px;
+		margin-right: -2px;
+	}
+	@media only screen and (min-width: 1025px) and (max-width: 1199px) {
+		width: 100% !important;
+	}
+	@media only screen and (min-width: 1200px) {
+		margin-left: 1px;
+		margin-right: -2px;
+	}
+	.pratilipi-list-card {
+		margin: 0;
+		@media only screen and (min-width: 481px) and (max-width: 767px) {
+			max-width: 100% !important;
+			width: 100%;
+		}
+		@media only screen and (min-width: 768px) and (max-width: 839px) {
+			max-width: 50% !important;
+			margin-left: -1px !important;
+		}
+		@media only screen and (min-width: 840px) and (max-width: 959px) {
+			max-width: 100% !important;
+			width: 100%;
+		}
+		@media only screen and (min-width: 960px) and (max-width: 1024px) {
+			max-width: 50% !important;
+			margin-left: -1px !important;
+		}
+		@media only screen and (min-width: 1025px) and (max-width: 1199px) {
+			max-width: 100% !important;
+			width: 100%;
+		}
+		@media only screen and (min-width: 1200px) {
+			max-width: 50% !important;
+			margin-left: -1px !important;
+		}
+		.pratilipi-pratilipi-card {
+			padding: 8px;
+			margin-top: -1px !important;
+			.pratilipi-meta-holder .pratilipi-card-footer-icons-holder {
+				bottom: 8px;
+				right: 8px;
+			}
+		}
+	}
+}
