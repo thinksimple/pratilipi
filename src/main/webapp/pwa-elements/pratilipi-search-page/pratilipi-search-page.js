@@ -5,7 +5,7 @@ function() {
 	var dataAccessor = new DataAccessor();
 
 	this.pratilipiList = ko.observableArray();
-	this.hasMoreContents = ko.observable( false );
+	this.hasMoreContents = ko.observable( true );
 	
 	/* Loading state */
 	/*
@@ -24,7 +24,7 @@ function() {
 	};
 
 	this.fetchPratilipiList = function() {
-		if( self.loadingState() == "LOADING" ) return;
+		if( self.loadingState() == "LOADING" || ! self.hasMoreContents() ) return;
 		self.loadingState( "LOADING" );
 		dataAccessor.getPratilipiListBySearchQuery( appViewModel.searchQuery(), cursor, null, resultCount,
 				function( pratilipiListResponse ) {
@@ -52,6 +52,14 @@ function() {
 		setTimeout( function() {
 			self.searchQueryUpdated( appViewModel.searchQuery() );
 		}, 0 );
+	}, this );
+
+	this.pageScrollObserver = ko.computed( function() {
+		if( ( appViewModel.scrollTop() / $( ".js-pratilipi-list-grid" ).height() ) > 0.7 ) {
+			setTimeout( function() {
+				self.fetchPratilipiList();
+			}, 0 );
+		}
 	}, this );
 
 }
