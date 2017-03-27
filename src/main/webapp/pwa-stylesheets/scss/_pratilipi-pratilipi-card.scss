@@ -12,8 +12,8 @@
 			width: 100px;
 			height: 150px;
 			@media only screen and (max-width: 480px) {
-				width: 80px;
-				height: 120px;
+				width: 70px;
+				height: 105px;
 			}
 		}
 	}
@@ -23,10 +23,10 @@
 			padding: 0;
 		}
 		.pratilipi-title.mdl-card__title {
-			margin: 8px 0;
+			margin: 0; 
 		}
 		.author-name {
-			margin-bottom: 12px;
+			margin-bottom: 8px;
 		}
 		.pratilipi-card-meta-reads-rating-holder {
 			color: rgba(0,0,0,0.54);
@@ -39,8 +39,8 @@
 				i {
 					width: 16px;
 					height: 16px;
-					line-height: 17px;
-					font-size: 20px;
+					line-height: 16px;
+					font-size: 16px;
 				}
 			}
 			span.reads-holder {
@@ -53,13 +53,13 @@
 			right: 8px; // padding: 8px;
 			color: #333;
 			.mdl-button {
-				min-width: 40px;
-				height: 40px;
-				width: 40px;
+				min-width: 32px;
+				height: 32px;
+				width: 32px;
 				.material-icons {
-					width: 20px;
-					height: 20px;
-					font-size: 20px;
+					width: 16px;
+					height: 16px;
+					font-size: 16px;
 				}
 			}
 			.share-button {

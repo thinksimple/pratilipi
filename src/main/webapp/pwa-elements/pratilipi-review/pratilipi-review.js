@@ -13,6 +13,7 @@ function( params ) {
 
 	this.userImageUrl = getImageUrl( this.review.userImageUrl(), 48 );
 	this.reviewDate = convertDate( this.review.reviewDateMillis() );
+
 	this.isCommentsShown = ko.observable( false );
 	this.isReplyStateOn = ko.observable( false );
 
@@ -154,18 +155,18 @@ function( params ) {
 	};
 	
 	this.deleteErrorCallback = function() {
-		//params.deleteReview( params.value ); <#-- only  localhost -->
+		/* params.deleteReview( params.value ); */
 	};
 	
 	this.deleteSelf = function() {
 		dataAccessor.deleteReview( params.pratilipiId, this.deleteSuccessCallback.bind( this ), this.deleteErrorCallback.bind( this ) )
 	};
-	
+
 	this.deleteComment = function( review ) {
 	  self.comments.remove( review );
 	  self.commentCount( self.commentCount() - 1 )
 	};
 
-	componentHandler.upgradeDom();
+	/* componentHandler.upgradeDom(); */
 
 }
