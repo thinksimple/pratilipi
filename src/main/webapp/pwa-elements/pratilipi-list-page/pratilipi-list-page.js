@@ -14,8 +14,6 @@ function() {
 			self.pratilipiList.push( ko.mapping.fromJS( pratilipiList[i] ) );
 	};
 
-	this.initialDataLoaded = ko.observable( false );
-
 	this.fetchPratilipiList = function() {
 		if( self.isLoading() ) return;
 		self.isLoading( true );
@@ -24,7 +22,6 @@ function() {
 					var pratilipiList = pratilipiListResponse.pratilipiList;
 					self.updatePratilipiList( pratilipiList );
 					cursor = pratilipiListResponse.cursor;
-					self.initialDataLoaded( true );
 					self.isLoading( false );
 					self.hasMoreContents( pratilipiList.length == resultCount );
 		});
