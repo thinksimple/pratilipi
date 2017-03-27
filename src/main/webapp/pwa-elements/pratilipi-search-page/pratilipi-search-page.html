@@ -1,9 +1,9 @@
 <div class="mdl-cell mdl-cell--8-col-tablet mdl-cell--9-col mobile-card">
-	<div class="message-holder mdl-card-border material-heading" style="margin-top: 0;">
+	<div class="load-more-container mdl-card-border material-heading" style="margin-top: 0;">
 		${ _strings.search_results }
 	</div>
-	<div data-bind="foreach: { data: pratilipiList, as: 'pratilipi' }" class="mdl-grid" style="flex-grow: 1; padding: 0;">
-		<div class="mdl-cell mdl-cell--12-col-phone mdl-cell--12-col-tablet mdl-cell--12-col-desktop mobile-card list-card">
+	<div data-bind="foreach: { data: pratilipiList, as: 'pratilipi' }" class="mdl-grid pratilipi-list-grid mobile-card">
+		<div class="mdl-cell mdl-cell--12-col-phone mdl-cell--12-col-tablet mdl-cell--12-col-desktop mobile-card pratilipi-list-card">
 			<!-- ko component: {
 				name: "pratilipi-pratilipi-card",
 				params: { pratilipi: pratilipi }
@@ -11,19 +11,19 @@
 			<!-- /ko -->
 		</div>
 	</div>
-	<div data-bind="visible: loadingState() == 'LOADING'" style="margin: auto;">
+	<div class="load-more-container mdl-card-border" data-bind="visible: loadingState() == 'LOADING'">
 		<span class="initial-data-loading-spinner mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></span>
 	</div>
-	<div class="load-more-container" data-bind="visible: hasMoreContents() && loadingState() == 'LOADED'">
+	<div class="load-more-container text-center mdl-card-border" data-bind="visible: hasMoreContents() && loadingState() == 'LOADED'">
 		<button data-bind="{ click: fetchPratilipiList }" 
-			class="view-more-button mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-button-margin">
+			class="mdl-button mdl-js-button mdl-button--accent mdl-js-ripple-effect">
 			${ _strings.load_more_contents }
 		</button>
 	</div>
-	<div class="message-holder mdl-card-border material-subtitle-1" data-bind="visible: loadingState() == 'LOADED_EMPTY'">
+	<div class="load-more-container mdl-card-border material-subtitle-1" data-bind="visible: loadingState() == 'LOADED_EMPTY'">
 		${ _strings.search_no_results_found }
 	</div>
-	<div class="message-holder mdl-card-border material-subtitle-1" data-bind="visible: loadingState() == 'FAILED'">
+	<div class="load-more-container mdl-card-border material-subtitle-1" data-bind="visible: loadingState() == 'FAILED'">
 		<a style="cursor: pointer; color: #555;" data-bind="click: fetchPratilipiList">
 			${ _strings.search_load_failed }
 		</a> 

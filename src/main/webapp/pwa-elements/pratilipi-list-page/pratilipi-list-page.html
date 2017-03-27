@@ -8,9 +8,9 @@
 			<!-- /ko -->
 		</div>
 	</div>
-	<div class="load-more-container mdl-card-border" data-bind="visible: hasMoreContents()">
+	<div class="load-more-container mdl-card-border text-center" data-bind="visible: hasMoreContents()">
 		<button data-bind="{ visible: ! isLoading(), click: fetchPratilipiList }" 
-			class="view-more-button mdl-button mdl-js-button mdl-button--accent mdl-js-ripple-effect">
+			class="mdl-button mdl-js-button mdl-button--accent mdl-js-ripple-effect">
 			${ _strings.load_more_contents }
 		</button>
 		<span data-bind="visible: isLoading()" class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></span>

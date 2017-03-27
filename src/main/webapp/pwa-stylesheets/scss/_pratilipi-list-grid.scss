@@ -1,4 +1,13 @@
-
+.load-more-container {
+	display: block;
+	padding: 20px 16px;
+	background: #fff;
+	margin-top: -1px;
+	height: 40px;
+	span.mdl-spinner {
+		margin: 1px auto;
+	}
+}
 
 .pratilipi-list-grid {
 	flex-grow: 1;
