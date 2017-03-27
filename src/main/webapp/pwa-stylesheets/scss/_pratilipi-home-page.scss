@@ -6,7 +6,17 @@
 	.section-title {
 		margin: 0;
 		background: #fff;
-		padding: 16px 20px;
+		padding: 16px 8px;
 		color: #333;
+	}
+	@media only screen and (max-width: 480px) {
+		.view-more-holder {
+			padding: 0;
+			a {
+				display: block;
+				width: 100%;
+				padding: 12px 8px;
+			}
+		}
 	}
 }
