@@ -1,4 +1,4 @@
-<a class="pratilipi-pratilipi-card mdl-card mdl-card-border" data-bind="attr: { href: pratilipi.pageUrl() }">
+<a class="pratilipi-pratilipi-card mdl-card mdl-card-border" data-bind="attr: { href: redirectToReaderOnClick ? pratilipi.readPageUrl() : pratilipi.pageUrl() }">
 	<span class="pratilipi-cover-image-holder">
 		<img data-bind="attr: { src: getImageUrl( pratilipi.coverImageUrl(), 100 ), title: pratilipi.title(), alt: pratilipi.title() }" />
 	</span>
@@ -20,10 +20,12 @@
 			</span>
 		</span>
 		<span class="pratilipi-card-footer-icons-holder">
-			<button data-bind="{ disable: libraryRequestOnFlight(), click: addToOrRemoveFromLibrary }" class="share-button mdl-button mdl-js-button mdl-button--icon">
-				<i class="material-icons" data-bind="css: { 'pratilipi-red': pratilipi.addedToLib() } ">bookmark_border</i>
+			<button data-bind="{ disable: libraryRequestOnFlight(), click: addToOrRemoveFromLibrary, visible: libraryButtonVisible() }" 
+					class="share-button mdl-button mdl-js-button mdl-button--icon">
+				<i class="material-icons" data-bind="{ text: pratilipi.addedToLib() ? 'bookmark' : 'bookmark_border', 
+						css: { 'pratilipi-red': pratilipi.addedToLib() } }"></i>
 			</button>
-			<button data-bind="click: sharePratilipi" class="library-button mdl-button mdl-js-button mdl-button--icon">
+			<button data-bind="click: sharePratilipi, visible: shareButtonVisible()" class="library-button mdl-button mdl-js-button mdl-button--icon">
 				<i class="material-icons">share</i>
 			</button>
 		</span>
