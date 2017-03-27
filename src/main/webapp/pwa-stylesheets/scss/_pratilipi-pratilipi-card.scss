@@ -33,6 +33,7 @@
 			span.meta-holder {
 				float: left;
 				span {
+					font-family: Helvetica, Arial !important;
 					float: left;
 					margin-right: 2px;
 				}
@@ -40,6 +41,7 @@
 					width: 16px;
 					height: 16px;
 					font-size: 16px !important;
+					position: absolute;
 				}
 			}
 			span.reads-holder {
