@@ -3,12 +3,10 @@ nav.pratilipi-navigation-drawer {
 	h6 {
 		margin: 0px;
 		padding: 16px 0 8px 16px;
-		color: #D0021B;
+		color: $pratilipi-red;
 	}
-	a.mdl-navigation__link {
-		color: #333;
+	a {
+		color: #000 !important;
 		text-decoration: none;
-		padding: 5px 20px 5px 20px;
-		display: block;
 	}
 }

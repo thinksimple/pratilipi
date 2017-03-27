@@ -32,7 +32,7 @@ function() {
 	};
 
 	this.pageScrollObserver = ko.computed( function() {
-		if( ( appViewModel.scrollTop() / $( ".js-pratilipi-list-grid" ).height() ) > 0.7 ) {
+		if( ( appViewModel.scrollTop() / $( ".js-pratilipi-list-grid" ).height() ) > 0.6 ) {
 			setTimeout( function() {
 				self.fetchPratilipiList();
 			}, 0 );
