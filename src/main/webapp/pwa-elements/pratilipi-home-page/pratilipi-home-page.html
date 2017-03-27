@@ -1,6 +1,6 @@
 <!-- ko if: bannerList().length > 0 -->
 	<div class="mdl-cell mdl-cell--8-col-tablet mdl-cell--9-col">
-		<div id="home-page-carousel" class="carousel slide" data-ride="carousel" data-interval="6000">
+		<div id="home-page-carousel" class="carousel slide" data-ride="carousel">
 			<ol data-bind="foreach: bannerList" class="carousel-indicators">
 				<li data-target="#carousel"
 					data-bind="attr: { 'data-slide-to': $index }, css: { 'active': $index() == 0 }"></li>

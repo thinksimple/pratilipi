@@ -7,7 +7,10 @@ function() {
 
 	dataAccessor.getHomePageBanners( function( response ) {
 		self.bannerList( response.bannerList );
-		$( '#home-page-carousel' ).carousel();
+		$( '#home-page-carousel' ).carousel({
+			interval: 6000,
+			pause: "hover"
+		});
 	});
 
 	dataAccessor.getHomePageSections( function( response ) {

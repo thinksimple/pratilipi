@@ -2,9 +2,14 @@
 	div.modal-content {
 		border-radius: 1px;
 		div.modal-header {
+			h6.material-title {
+				padding-left: 15px;
+				margin: 0;
+			}
 			span.close {
 				float: right !important;
 				cursor: pointer;
+				margin-top: 2px;
 			}
 		}
 		div.modal-body {
