@@ -1,11 +1,10 @@
-<div class="mdl-cell mdl-cell--8-col-tablet mdl-cell--9-col mobile-card" data-bind="visible: ! initialDataLoaded()" style="margin: 0;">
-	<span class="initial-data-loading-spinner mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></span>
-</div>
-
-<div class="mdl-cell mdl-cell--8-col-tablet mdl-cell--9-col mobile-card" data-bind="visible: initialDataLoaded()">
-	<div data-bind="foreach: { data: pratilipiList, as: 'pratilipi' }" class="mdl-grid" style="flex-grow: 1; padding: 0;">
+<div class="mdl-cell mdl-cell--8-col-tablet mdl-cell--9-col mobile-card">
+	<div class="load-more-container mdl-card-border material-heading" style="margin-top: 0;">
+		${ _strings.my_library }
+	</div>
+	<div data-bind="foreach: { data: pratilipiList, as: 'pratilipi' }" class="mdl-grid pratilipi-list-grid js-pratilipi-list-grid mobile-card">
 		<div data-bind="visible: pratilipi.addedToLib()" 
-			class="mdl-cell mdl-cell--12-col-phone mdl-cell--12-col-tablet mdl-cell--12-col-desktop mobile-card list-card">
+			class="mdl-cell mdl-cell--12-col-phone mdl-cell--12-col-tablet mdl-cell--12-col-desktop mobile-card pratilipi-list-card">
 			<!-- ko component: {
 				name: "pratilipi-pratilipi-card",
 				params: { pratilipi: pratilipi, canRemoveFromLibrary: true, redirectToReaderOnClick: true }
@@ -13,13 +12,16 @@
 			<!-- /ko -->
 		</div>
 	</div>
-
-	<div class="load-more-container" data-bind="visible: hasMoreContents()">
-		<button data-bind="{ visible: ! isLoading(), click: fetchUserLibraryList }" 
-			class="view-more-button mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-button-margin">
+	<div class="load-more-container mdl-card-border material-subtitle-1" data-bind="visible: loadingState() == 'LOADED_EMPTY'">
+		${ _strings.empty_library }
+	</div>
+	<div class="load-more-container mdl-card-border" data-bind="visible: hasMoreContents()">
+		<button data-bind="{ visible: loadingState() != 'LOADING', click: fetchUserLibraryList }" 
+			class="mdl-button mdl-js-button mdl-button--accent mdl-js-ripple-effect">
 			${ _strings.load_more_contents }
 		</button>
-		<span data-bind="visible: isLoading()" class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></span>
+		<div class="text-center" data-bind="visible: loadingState() == 'LOADING'">
+			<span class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></span>
+		</div>
 	</div>
-
 </div>

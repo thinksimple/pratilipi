@@ -6,28 +6,41 @@ function() {
 
 	this.pratilipiList = ko.observableArray();
 	this.hasMoreContents = ko.observable( true );
-	this.isLoading = ko.observable( false );
-
+	
+	/* Loading state */
+	/*
+	 * 4 Possible values for 'loadingState'
+	 * LOADING
+	 * LOADED_EMPTY
+	 * LOADED
+	 * FAILED
+	 * 
+	 * */
+	this.loadingState = ko.observable();
 
 	this.updatePratilipiList = function( pratilipiList ) {
 		for( var i = 0; i < pratilipiList.length; i++ )
 			self.pratilipiList.push( ko.mapping.fromJS( pratilipiList[i] ) );
 	};
 
-	this.initialDataLoaded = ko.observable( false );
-
 	this.fetchUserLibraryList = function() {
-		self.isLoading( true );
+		if( self.loadingState() == "LOADING" || ! self.hasMoreContents() ) return;
+		self.loadingState( "LOADING" );
 		dataAccessor.getUserLibraryList( cursor, resultCount,
 				function( pratilipiListResponse ) {
+					if( pratilipiListResponse == null ) {
+						self.loadingState( "FAILED" );
+						return;
+					}
 					var pratilipiList = pratilipiListResponse.pratilipiList;
 					self.updatePratilipiList( pratilipiList );
 					cursor = pratilipiListResponse.cursor;
-					self.initialDataLoaded( true );
-					self.isLoading( false );
+					self.loadingState( self.pratilipiList().length > 0 || pratilipiList.length > 0 ? "LOADED" : "LOADED_EMPTY" );
 					self.hasMoreContents( pratilipiList.length == resultCount );
 		});
 	};
+
+	this.fetchUserLibraryList();
 
 	this.userObserver = ko.computed( function() {
 		if( appViewModel.user.isGuest() && appViewModel.user.userId() == 0 ) {
@@ -35,6 +48,12 @@ function() {
 		}
 	}, this );
 
-	this.fetchUserLibraryList();
+	this.pageScrollObserver = ko.computed( function() {
+		if( ( appViewModel.scrollTop() / $( ".js-pratilipi-list-grid" ).height() ) > 0.7 ) {
+			setTimeout( function() {
+				self.fetchUserLibraryList();
+			}, 0 );
+		}
+	}, this );
 
 }

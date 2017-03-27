@@ -22,7 +22,7 @@ function( params ) {
 		self.libraryRequestOnFlight( true );
 
 		if( self.pratilipi.addedToLib() ) /* Toast only for remove action */
-			ToastUtil.toastCallBack( "${ _strings.removed_from_library }", 3000, "UNDO", self.switchLibraryState );
+			ToastUtil.toastCallBack( "${ _strings.removed_from_library }", 5000, "UNDO", self.switchLibraryState );
 		else 
 			ToastUtil.toast( "${ _strings.added_to_library }", 2000 );
 
