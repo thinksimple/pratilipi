@@ -58,7 +58,7 @@ function() {
 			userPratilipi.rating = 0;
 		if( userPratilipi != null && userPratilipi.review != null && userPratilipi.review.trim() == "" )
 			userPratilipi.review = null;
-		if( userPratilipi.reviewState != null && userPratilipi.reviewState() != "PUBLISHED" )
+		if( userPratilipi.reviewState != null && userPratilipi.reviewState != "PUBLISHED" )
 			userPratilipi.review = null;
 		ko.mapping.fromJS( userPratilipi, {}, self.userPratilipi );
 	};
