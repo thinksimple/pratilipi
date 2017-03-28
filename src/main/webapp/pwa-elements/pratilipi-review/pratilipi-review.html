@@ -1,46 +1,41 @@
-<div class="mdl-list__item mdl-list__item--two-line padding-zero">
-	<span class="mdl-list__item-primary-content">
-		<img data-bind="attr: { src: userImageUrl }" class="mdl-list__item-avatar">
-		<a class="reviewer-name material-subtitle-1" data-bind="attr: { href: review.userProfilePageUrl() }, text: review.user.displayName()"></a>
-		<span data-bind="text: reviewDate" class="mdl-list__item-sub-title"></span>
-	</span>
-	<span class="mdl-list__item-secondary-content mdl-color-text--primary" >
-		<span class="mdl-list__item-secondary-action" href="#">
-			<pratilipi-rating params="rating: review.rating()">
-  		</span>
-	</span>
-</div>
+<div class="pratilipi-review">
+	<div class="review-header">
+		<div class="user-info">
+			<img data-bind="attr: { src: getImageUrl( review.userImageUrl(), 48 ) }" class="mdl-list__item-avatar">
+			<div style="padding: 0 8px;">
+				<a class="reviewer-name font-m" data-bind="attr: { href: review.userProfilePageUrl() }, text: review.user.displayName()"></a>
+				<br/>
+				<span class="font-s review-date" data-bind="text: convertDate( review.reviewDateMillis() )"></span>
+			</div>
+		</div>
+		<span class="user-rating">
+			<pratilipi-rating params="rating: review.rating()"></pratilipi-rating>
+		</span>
+	</div>
 
-<div class="mdl-list__item-text-body material-subtitle-1" data-bind="text: review.review()"></div><div>
+	<div class="review-container material-subtitle-1" data-bind="text: review.review()"></div>
 
-	<span class="font-14">	
-		<!-- ko if: likeCount -->
-			<span data-bind="text: likeCount"></span>
-		<!-- /ko -->
-		<button  data-bind="click: likeDislikeReview" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-		  <i class="material-icons material-icons-16" role="presentation" data-bind="css: { 'mdl-color-text--primary': isLiked() }">thumb_up</i><span class="visuallyhidden">like comment</span>
+	<div class="review-footer font-14">
+		<span data-bind="visible: likeCount() > 0, text: likeCount()"></span>
+		<button data-bind="click: likeDislikeReview" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+			<i class="material-icons material-icons-16" data-bind="css: { 'mdl-color-text--primary': isLiked() }">thumb_up</i>
 		</button>
 		<span class="reply"></span>	
-		<!-- ko if: commentCount -->
-			<span data-bind="text: commentCount"></span>
-		<!-- /ko -->				
+		<span data-bind="visible: commentCount() > 0, text: commentCount()"></span>
 		<button data-bind="click: showReplyState" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-		  <i class="material-icons material-icons-16" role="presentation">message</i><span class="visuallyhidden">comment</span>
+			<i class="material-icons material-icons-16" role="presentation">message</i>
 		</button>	
-															
-		<!-- ko if: commentCount -->
-			<span class="viewAllReplies clickable-element" data-bind="click: toggleShowRepliesState, text: showRepliesText"></span>
-		<!-- /ko -->
-	</span>
-
-</div>
-
-<ul class="mdl-list sub-review" data-bind="visible: isSubreviewListVisible">
-	<div data-bind="visible: isCommentsShown, foreach: comments">
-		<pratilipi-review-comment params="{ value: $data, deleteComment: $parent.deleteComment }"></pratilipi-review-comment>
+		<span class="view-all-replies clickable-element" data-bind="visible: commentCount() > 0, click: toggleShowRepliesState, text: showRepliesText"></span>
 	</div>
-	<pratilipi-review-reply data-bind="visible: isReplyStateOn" params="parent: $parent"></pratilipi-review-reply>
-</ul>
-<div data-bind="visible: $index() != ( $parents[1].totalReviewCount() - 1 ) ">
-	<hr />
+
+	<ul class="mdl-list sub-review" data-bind="visible: isSubreviewListVisible">
+		<div data-bind="visible: isCommentsShown, foreach: comments">
+			<pratilipi-review-comment params="{ value: $data, deleteComment: $parent.deleteComment }"></pratilipi-review-comment>
+		</div>
+		<pratilipi-review-reply data-bind="visible: isReplyStateOn" params="parent: $parent"></pratilipi-review-reply>
+	</ul>
+
+	<div data-bind="visible: $index() != ( $parents[1].totalReviewCount() - 1 ) ">
+		<hr />
+	</div>
 </div>

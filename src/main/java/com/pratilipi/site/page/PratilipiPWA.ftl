@@ -1,1 +1,1 @@
-<#include "/Summary-${lang}.html">
+<#include "/Pratilipi-${lang}.html">
