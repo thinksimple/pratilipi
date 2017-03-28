@@ -12,7 +12,7 @@
 श्रेणी
 /lovestories             प्रेम कहानियाँ                   Analytics#categoryName::romance        App#imageName::romance.jpg              App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"lovestories" }
 /suspense-aur-thriller   सस्पेंस और थ्रिलर कहानियाँ         Analytics#categoryName::mystery        App#imageName::suspence.jpg              App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"suspense-aur-thriller" }
-/horror                  हॉरर कथाएं                  Analytics#categoryName::horror        App#imageName::horror.jpg                App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"horror" }
+/horror                  हॉरर कहानियाँ                 Analytics#categoryName::horror        App#imageName::horror.jpg                App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"horror" }
 /search?q=stories        अन्य कहानियाँ               Analytics#categoryName::other-stories        App#imageName::shortstories.jpg         App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "searchQuery":"stories" }
 /upanyas                 उपन्यास                     Analytics#categoryName::books        App#imageName::novels.jpg              App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"upanyas" }
 /samajik-kahaniya        सामाजिक कहानियाँ            Analytics#categoryName::social        App#imageName::social.jpg              App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"samajik-kahaniya" }     
