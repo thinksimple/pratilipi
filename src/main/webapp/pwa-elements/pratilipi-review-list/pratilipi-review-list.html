@@ -64,7 +64,7 @@
 					<span class="material-button">${ _strings.review_delete_review }</span>
 				</button>
 				<button data-bind="click: closeReviewModal" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button-margin">${ _strings.cancel }</button>
-				<button data-bind="click: addReview, enable: canAddReview" class="mdl-button mdl-js-button mdl-button--colored mdl-js-ripple-effect mdl-button--raised">${ _strings.review_submit_review }</button>
+				<button data-bind="click: submitReview, enable: canSubmitReview" class="mdl-button mdl-js-button mdl-button--colored mdl-js-ripple-effect mdl-button--raised">${ _strings.review_submit_review }</button>
 			</div>
 		</div>
 	</div>
@@ -75,7 +75,7 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button data-bind="click: closeReviewModal" class="mdl-button mdl-js-button mdl-button--icon close">
+				<button data-bind="click: closeDeleteReviewModal" class="mdl-button mdl-js-button mdl-button--icon close">
 					<i class="material-icons">close</i>
 				</button>
 				<h6 class="modal-title">${ _strings.review_delete_review }</h6>

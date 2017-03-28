@@ -137,7 +137,7 @@ function( params ) {
 	};
 
 	/* Add Review */
-	this.addReview = function() {
+	this.submitReview = function() {
 		if( self.addOrDeleteReviewRequestOnFlight() ) return;
 		self.addOrDeleteReviewRequestOnFlight( true );
 		dataAccessor.createOrUpdateReview( self.pratilipi.pratilipiId(), self.ratingInput(), self.reviewInput(), 
@@ -206,7 +206,7 @@ function( params ) {
 		return appViewModel.user.isGuest() || self.userPratilipi.hasAccessToReview();  
 	}, this );
 
-	this.canAddReview = ko.computed( function() {
+	this.canSubmitReview = ko.computed( function() {
 		return self.ratingInput() != 0 && ! self.addOrDeleteReviewRequestOnFlight();
 	}, this );
 
