@@ -43,6 +43,8 @@ function() {
 	this.userPratilipi = ko.mapping.fromJS( defaultUserPratilipi, {}, self.userPratilipi );
 
 	this.updatePratilipi = function( pratilipi ) {
+		if( pratilipi == null )
+			pratilipi = defaultPratilipi;
 		if( pratilipi != null && pratilipi.summary != null && pratilipi.summary.trim() == "" )
 			pratilipi.summary = null;
 		ko.mapping.fromJS( pratilipi, {}, self.pratilipi );
@@ -50,7 +52,13 @@ function() {
 	};
 
 	this.updateUserPratilipi = function( userPratilipi ) {
+		if( userPratilipi == null )
+			userPratilipi = defaultUserPratilipi;
+		if( userPratilipi.rating == null )
+			userPratilipi.rating = 0;
 		if( userPratilipi != null && userPratilipi.review != null && userPratilipi.review.trim() == "" )
+			userPratilipi.review = null;
+		if( userPratilipi.reviewState != null && userPratilipi.reviewState() != "PUBLISHED" )
 			userPratilipi.review = null;
 		ko.mapping.fromJS( userPratilipi, {}, self.userPratilipi );
 	};

@@ -8,8 +8,7 @@
 				</div>
 				<div class="mdl-cell--6-col mdl-cell--4-col-tablet padding-zero">
 					<button data-bind="{ click: openReviewModal, 
-						text: userPratilipi.review != null && userPratilipi.review() != null ? 
-								'${ _strings.review_edit_review }' : '${ _strings.review_write_a_review }' }" 
+						text: userPratilipi.review() != null ? '${ _strings.review_edit_review }' : '${ _strings.review_write_a_review }' }" 
 						class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect pull-right write-review-button">
 					</button>
 				</div>
@@ -21,8 +20,7 @@
 				<!-- ko foreach: reviewList -->
 					<li data-bind="component: {
 							name: 'pratilipi-review',
-							params: { review: $data, deleteReview: $parent.deleteReview, pratilipiId: $parent.pratilipi.pratilipiId() } }, 
-							visible: $data.review != null && $data.review() != null && $data.review().trim() != ''"
+							params: { review: $data, pratilipiId: $parent.pratilipi.pratilipiId() } }"
 							class="mdl-list__item padding-zero display-block"></li>
 				<!-- /ko -->
 				<li data-bind="visible: hasMoreReviews()">

@@ -31,20 +31,6 @@
 		<!-- ko if: commentCount -->
 			<span class="viewAllReplies clickable-element" data-bind="click: toggleShowRepliesState, text: showRepliesText"></span>
 		<!-- /ko -->
-
-		<span class="dropup pull-right" data-bind="ifnot: $root.user.isGuest">
-			<#-- if: $parents[1].userPratilipi.userPratilipiId == userPratilipiId change condition -->
-			<!-- ko if: $parents[1].userPratilipi.userPratilipiId == review.userPratilipiId() -->
-			      <button class="mdl-button mdl-js-button mdl-button--icon" type="button" id="review-access" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-						<i class="material-icons">more_vert</i>
-			      </button>
-			      <ul class="dropdown-menu" aria-labelledby="review-access">
-			        <li>${ _strings.review_edit_review }</li>
-			        <li data-bind="click: deleteSelf">${ _strings.review_delete_review }</li>
-			      </ul>
-			<!-- /ko -->
-		</span>
-
 	</span>
 
 </div>

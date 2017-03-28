@@ -50,7 +50,7 @@ function( params ) {
 					break;
 				}
 			}
-		} else {
+		} else if( review.review != null ) {
 			self.reviewList.unshift( ko.mapping.fromJS( review ) );
 			self.totalReviewCount( self.totalReviewCount() + 1 );
 		}
@@ -94,7 +94,8 @@ function( params ) {
 	this.loadMoreReviews = function() {
 		self._fetchReviewList( subsequentLoadReviewCount );
 	};
-	
+
+
 
 	/* Add/Edit Review Modal */
 	var reviewInputDialog = $( '#pratilipi-review-input-dialog' );
@@ -117,10 +118,28 @@ function( params ) {
 		self.closeReviewModal();
 	});
 
+	/* Delete Review Modal */
+	var deleteReviewConfirmationDialog = $( '#pratilipi-review-delete-confirmation-dialog' );
+	this.openDeleteReviewModal = function() {
+		self.closeReviewModal();
+		deleteReviewConfirmationDialog.modal( 'show' );
+	};
 
-	/* Update Pratilipi and UserPratilipi Objects */
+	this.closeDeleteReviewModal = function() {
+		deleteReviewConfirmationDialog.modal( 'hide' );
+		self.openReviewModal();
+	};
+
+	/* Clicking anywhere outside the screen */
+	deleteReviewConfirmationDialog.on( 'hidden.bs.modal', function(e) {
+		self.closeDeleteReviewModal();
+	});
+
+
+
+	/* Update Pratilipi Objects */
 	this.updatePratilipiObject = function( userPratilipi ) {
-		/* check if its a new Review or updated review, and calculate average rating accordingly and update values.*/
+		/* check if its a new rating or updated rating, and calculate average rating accordingly and update values.*/
 		var pratilipi = {};
 
 		var oldRating = self.userPratilipi.rating() != null ? self.userPratilipi.rating() : 0;
@@ -128,7 +147,7 @@ function( params ) {
 		var ratingCount = self.pratilipi.ratingCount();
 		var totalRating = self.pratilipi.averageRating() * self.pratilipi.ratingCount();
 
-		if( self.userPratilipi.rating() == null ) { /* Added a review */
+		if( self.userPratilipi.rating() == null ) { /* Added a rating */
 			pratilipi[ "ratingCount" ] = ++ratingCount;
 		}
 
@@ -136,8 +155,10 @@ function( params ) {
 		self.updatePratilipi( pratilipi );
 	};
 
-	/* Add Review */
-	this.submitReview = function() {
+
+
+	/* Create/Update Review */
+	this.createOrUpdateReview = function() {
 		if( self.addOrDeleteReviewRequestOnFlight() ) return;
 		self.addOrDeleteReviewRequestOnFlight( true );
 		dataAccessor.createOrUpdateReview( self.pratilipi.pratilipiId(), self.ratingInput(), self.reviewInput(), 
@@ -162,29 +183,11 @@ function( params ) {
 		});
 	};
 
-
-	/* Delete Review Modal */
-	var deleteReviewConfirmationDialog = $( '#pratilipi-review-delete-confirmation-dialog' );
-	this.openDeleteReviewModal = function() {
-		self.closeReviewModal();
-		deleteReviewConfirmationDialog.modal( 'show' );
-	};
-
-	this.closeDeleteReviewModal = function() {
-		deleteReviewConfirmationDialog.modal( 'hide' );
-		self.openReviewModal();
-	};
-
-	/* Clicking anywhere outside the screen */
-	deleteReviewConfirmationDialog.on( 'hidden.bs.modal', function(e) {
-		self.closeDeleteReviewModal();
-	});
-
 	/* Delete Review */
 	this.deleteReview = function( review ) {
 		if( self.addOrDeleteReviewRequestOnFlight() ) return;
 		self.addOrDeleteReviewRequestOnFlight( true );
-		dataAccessor.deleteReview( self.pratilipi.pratilipiId(), 
+		dataAccessor.deleteReview( self.pratilipi.pratilipiId(), self.rating(), 
 			function( review ) {
 				self.deleteFromReviewList( review );
 				self.updateUserPratilipi( review );
@@ -196,6 +199,11 @@ function( params ) {
 				ToastUtil.toast( "${ _strings.server_error_message }" );
 		} );
 	};
+
+	this.submitReview = function() {
+		self.reviewInput().trim().length > 0 ? self.createOrUpdateReview() : self.deleteReview();
+	};
+
 
 	/* Computed Observables */
 	this.hasMoreReviews = ko.computed( function() {

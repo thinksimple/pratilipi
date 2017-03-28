@@ -149,18 +149,6 @@ function( params ) {
 	this.addToCommentsList = function( comment ) {
 		this.comments.push( comment );
 	};
-	
-	this.deleteSuccessCallback = function() {
-		params.deleteReview( params.value );
-	};
-	
-	this.deleteErrorCallback = function() {
-		/* params.deleteReview( params.value ); */
-	};
-	
-	this.deleteSelf = function() {
-		dataAccessor.deleteReview( params.pratilipiId, this.deleteSuccessCallback.bind( this ), this.deleteErrorCallback.bind( this ) )
-	};
 
 	this.deleteComment = function( review ) {
 	  self.comments.remove( review );

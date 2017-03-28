@@ -222,12 +222,8 @@ var DataAccessor = function() {
 		var params = { "pratilipiId": pratilipiId };
 		if( rating != null ) params[ "rating" ] = rating;
 		if( review != null ) {
-			if( review.trim().length > 0 ) {
-				params[ "review" ] = review; 
-				params[ "reviewState" ]= "PUBLISHED";
-			} else {
-				params[ "reviewState" ]= "DELETED";
-			}
+			params[ "review" ] = review; 
+			params[ "reviewState" ]= "PUBLISHED";
 		}
 		httpUtil.post( API_PREFIX + USER_PRATILIPI_REVIEW_API, 
 				params, 
@@ -273,10 +269,12 @@ var DataAccessor = function() {
 				function( response, status ) { processPostResponse( response, status, successCallBack, errorCallBack ) } );
 	},
 
-	this.deleteReview = function( pratilipiId, successCallBack, errorCallBack ) {
+	this.deleteReview = function( pratilipiId, rating, successCallBack, errorCallBack ) {
 		if( pratilipiId == null ) return;
+		var userPratilipi = { "pratilipiId": pratilipiId, "reviewState": "DELETED" };
+		if( rating != null ) userPratilipi.rating = rating;
 		httpUtil.post( API_PREFIX + USER_PRATILIPI_REVIEW_API, 
-				{ "pratilipiId": pratilipiId, "reviewState": "DELETED" }, 
+				userPratilipi,
 				function( response, status ) { processPostResponse( response, status, successCallBack, errorCallBack ) } );
 	},
 
