@@ -1,5 +1,9 @@
 package com.pratilipi.api.impl.userpratilipi;
 
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.Locale;
+
 import com.google.gson.JsonObject;
 import com.pratilipi.api.GenericApi;
 import com.pratilipi.api.annotation.Bind;
@@ -33,28 +37,22 @@ public class UserPratilipiBackfillApi extends GenericApi {
 
 		@Validate(required = true)
 		private JsonObject lastPageOpened;
+		
+		@Validate(required = true)
+		private String lastPageOpenedDate;
 
-	}
-	
-	public static class PostResponse extends GenericResponse {
-		
-		private UserPratilipiData userPratilipiData;
-		
-		public PostResponse(UserPratilipiData userPratilipiData) {
-			this.userPratilipiData = userPratilipiData;
-		}
 	}
 
 	@Post
-	public PostResponse post(PostRequest request) throws InsufficientAccessException, UnexpectedServerException {
+	public GenericResponse post(PostRequest request) throws InsufficientAccessException, UnexpectedServerException {
 
 		if (!hasAccess())
 			throw new InsufficientAccessException();
 
-		UserPratilipiData userPratilipiData = updateUserPratilipi(request.userId, request.pratilipiId,
-				request.lastPageOpened.toString());
+		updateUserPratilipi(request.userId, request.pratilipiId,
+				request.lastPageOpened.toString(), request.lastPageOpenedDate);
 
-		return new PostResponse(userPratilipiData);
+		return new GenericResponse();
 	}
 
 	private boolean hasAccess() throws InsufficientAccessException {
@@ -66,7 +64,7 @@ public class UserPratilipiBackfillApi extends GenericApi {
 		return true;
 	}
 
-	private UserPratilipiData updateUserPratilipi(Long userId, Long pratilipiId, String lastPageOpened)
+	private UserPratilipiData updateUserPratilipi(Long userId, Long pratilipiId, String lastPageOpened, String lastOpenedDate)
 			throws UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -80,6 +78,11 @@ public class UserPratilipiBackfillApi extends GenericApi {
 
 		// update lastPageOpened
 		userPratilipi.setLastOpenedPage(lastPageOpened);
+		
+		// update lastPageOpenedDate
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy", Locale.ENGLISH);
+		Date date = (Date) formatter.parse(lastOpenedDate);
+		userPratilipi.setLastOpenedDate(date);
 
 		AuditLog auditLog = dataAccessor.newAuditLog(AccessTokenFilter.getAccessToken(),
 				AccessType.USER_PRATILIPI_REVIEW, userPratilipi);
