@@ -6,10 +6,9 @@
 					<source media="(min-width: 480px)" data-bind="attr: { srcset: getImageUrl( pratilipi.coverImageUrl(), 200 ) }" />
 					<img class="pratilipi-cover-image" data-bind="attr: { src: getImageUrl( pratilipi.coverImageUrl(), 150 ) }" border="0">
 				</picture> 
-				<div data-bind="visible: imageUploaded()" class="image-uploaded-div">
-					<div class="spinner-container">
-						<span class="image-uploaded-spinner mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active">
-						</span>
+				<div data-bind="visible: imageUploaded()" class="pratilipi-cover-image image-uploaded-div mdl-card-border">
+					<div class="pratilipi-cover-image spinner-container">
+						<span class="image-uploaded-spinner mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></span>
 					</div>
 				</div>
 				<button class="upload-image-button mdl-button mdl-js-button mdl-button--fab"
@@ -38,22 +37,10 @@
 					<div class="mdl-card__title padding-bottom-zero padding-top-zero padding-left-zero">
 						<h2 class="mdl-card__title-text material-heading" data-bind="text: pratilipi.title()"></h2>
 						<button data-bind="visible: pratilipi.hasAccessToUpdate()" 
-							id="pratilipi-info-edit-pratilipi"
-							class="mdl-button mdl-js-button mdl-button--icon">
+							class="mdl-button mdl-js-button mdl-button--icon"
+							data-toggle="modal" data-target="#pratilipi_edit_pratilipi">
 							<i class="material-icons">create</i>
 						</button>
-						<ul data-bind="css: { 'mdl-menu--bottom-right': !isMobile() }"
-								style="min-width: 200px;"
-								class="mdl-menu mdl-js-menu mdl-js-ripple-effect"
-								for="pratilipi-info-edit-pratilipi">
-							<li class="mdl-menu__item" data-toggle="modal" data-target="#pratilipi_edit_pratilipi">${ _strings.pratilipi_edit_info }</li>
-							<li class="mdl-menu__item">
-								<a data-bind="attr: { 'href': pratilipi.writePageUrl() }"
-									style="color: #333; display: block;">
-									${ _strings.pratilipi_edit_content }
-								</a>
-							</li>
-						</ul>
 					</div>
 					<div class="css-author-name mdl-card__title padding-bottom-zero padding-left-zero">
 						<a style="margin: 0; color: #000;" class="material-title" data-bind="attr: { href: pratilipi.author.pageUrl() }, text: pratilipi.author.name()"></a>
@@ -83,17 +70,20 @@
 											click: addToLibrary,
 											disable: userPratilipiRequestOnFlight,
 											visible: canAddToLibrary() }" 
-								class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-button-margin"
-			   			>
+								class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-button-margin">
 						</button>
 						<button data-bind="{ visible: pratilipi.hasAccessToUpdate(), 
 											text: ( pratilipi.state() == 'PUBLISHED' ? '${ _strings.pratilipi_move_to_drafts }' : '${ _strings.pratilipi_publish_it }' ), 
 											click: togglePratilipiState,
 											disable: pratilipiRequestOnFlight }" 
-								class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-button-margin"
-						>
+								class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-button-margin">
 						</button>
-						<button data-bind="{ visible: canShare(), click: share }" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect share-button">
+						<a data-bind="{ visible: pratilipi.hasAccessToUpdate() && ! isMobile(), attr: { 'href': pratilipi.writePageUrl() } }" 
+							class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-button-margin small-button">
+							<i class="material-icons material-icons-16">create</i>
+						</a>
+						<button data-bind="{ visible: canShare(), click: share }" 
+							class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-button-margin small-button">
 							<i class="material-icons material-icons-16">share</i>
 						</button>
 					</div>
