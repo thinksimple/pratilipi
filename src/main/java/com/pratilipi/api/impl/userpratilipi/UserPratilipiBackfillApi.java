@@ -1,8 +1,8 @@
 package com.pratilipi.api.impl.userpratilipi;
 
-import java.time.format.DateTimeFormatter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 import com.google.gson.JsonObject;
 import com.pratilipi.api.GenericApi;
@@ -44,7 +44,7 @@ public class UserPratilipiBackfillApi extends GenericApi {
 	}
 
 	@Post
-	public GenericResponse post(PostRequest request) throws InsufficientAccessException, UnexpectedServerException {
+	public GenericResponse post(PostRequest request) throws InsufficientAccessException, UnexpectedServerException, ParseException {
 
 		if (!hasAccess())
 			throw new InsufficientAccessException();
@@ -65,7 +65,7 @@ public class UserPratilipiBackfillApi extends GenericApi {
 	}
 
 	private UserPratilipiData updateUserPratilipi(Long userId, Long pratilipiId, String lastPageOpened, String lastOpenedDate)
-			throws UnexpectedServerException {
+			throws UnexpectedServerException, ParseException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		UserPratilipi userPratilipi = dataAccessor.getUserPratilipi(userId, pratilipiId);
@@ -80,7 +80,7 @@ public class UserPratilipiBackfillApi extends GenericApi {
 		userPratilipi.setLastOpenedPage(lastPageOpened);
 		
 		// update lastPageOpenedDate
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy", Locale.ENGLISH);
+		SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy");
 		Date date = (Date) formatter.parse(lastOpenedDate);
 		userPratilipi.setLastOpenedDate(date);
 
