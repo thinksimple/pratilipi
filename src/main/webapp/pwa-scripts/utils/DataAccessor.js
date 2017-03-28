@@ -219,9 +219,16 @@ var DataAccessor = function() {
 
 	this.createOrUpdateReview = function( pratilipiId, rating, review, successCallBack, errorCallBack ) {
 		if( pratilipiId == null ) return;
-		var params = { "pratilipiId": pratilipiId, "reviewState": "PUBLISHED" };
+		var params = { "pratilipiId": pratilipiId };
 		if( rating != null ) params[ "rating" ] = rating;
-		if( review != null ) params[ "review" ] = review;
+		if( review != null ) {
+			if( review.trim().length > 0 ) {
+				params[ "review" ] = review; 
+				params[ "reviewState" ]= "PUBLISHED";
+			} else {
+				params[ "reviewState" ]= "DELETED";
+			}
+		}
 		httpUtil.post( API_PREFIX + USER_PRATILIPI_REVIEW_API, 
 				params, 
 				function( response, status ) { processPostResponse( response, status, successCallBack, errorCallBack ) } );

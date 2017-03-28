@@ -189,6 +189,7 @@ function( params ) {
 				self.deleteFromReviewList( review );
 				self.updateUserPratilipi( review );
 				self.addOrDeleteReviewRequestOnFlight( false );
+				deleteReviewConfirmationDialog.modal( 'hide' );
 				ToastUtil.toast( "${ _strings.success_generic_message }" );
 			}, function( error ) {
 				self.addOrDeleteReviewRequestOnFlight( false );
