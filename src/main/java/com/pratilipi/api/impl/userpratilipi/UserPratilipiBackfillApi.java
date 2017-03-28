@@ -3,6 +3,7 @@ package com.pratilipi.api.impl.userpratilipi;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 import com.google.gson.JsonObject;
 import com.pratilipi.api.GenericApi;
@@ -81,6 +82,7 @@ public class UserPratilipiBackfillApi extends GenericApi {
 		
 		// update lastPageOpenedDate
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+		formatter.setTimeZone(TimeZone.getTimeZone("IST"));
 		Date date = (Date) formatter.parse(lastOpenedDate);
 		userPratilipi.setLastOpenedDate(date);
 
