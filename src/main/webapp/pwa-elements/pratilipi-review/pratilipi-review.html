@@ -6,12 +6,7 @@
 	</span>
 	<span class="mdl-list__item-secondary-content mdl-color-text--primary" >
 		<span class="mdl-list__item-secondary-action" href="#">
-			<!-- ko foreach: ko.utils.range(1, filledStars) -->
-	  			<i class="material-icons material-icons-16">star</i>
-	  		<!-- /ko -->
-	  		<!-- ko foreach: ko.utils.range(1, emptyStars) -->
-	  			<i class="material-icons material-icons-16">star_border</i>
-	  		<!-- /ko -->
+			<pratilipi-rating params="rating: review.rating()">
   		</span>
 	</span>
 </div>

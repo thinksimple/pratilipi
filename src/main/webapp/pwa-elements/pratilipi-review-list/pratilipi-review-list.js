@@ -96,7 +96,7 @@ function( params ) {
 	};
 	
 
-	/* Review Modal */
+	/* Add/Edit Review Modal */
 	var reviewInputDialog = $( '#pratilipi-review-input-dialog' );
 	this.openReviewModal = function() {		
 		if( appViewModel.user.isGuest() ) {
@@ -163,6 +163,23 @@ function( params ) {
 	};
 
 
+	/* Delete Review Modal */
+	var deleteReviewConfirmationDialog = $( '#pratilipi-review-delete-confirmation-dialog' );
+	this.openDeleteReviewModal = function() {
+		self.closeReviewModal();
+		deleteReviewConfirmationDialog.modal( 'show' );
+	};
+
+	this.closeDeleteReviewModal = function() {
+		deleteReviewConfirmationDialog.modal( 'hide' );
+		self.openReviewModal();
+	};
+
+	/* Clicking anywhere outside the screen */
+	deleteReviewConfirmationDialog.on( 'hidden.bs.modal', function(e) {
+		self.closeDeleteReviewModal();
+	});
+
 	/* Delete Review */
 	this.deleteReview = function( review ) {
 		if( self.addOrDeleteReviewRequestOnFlight() ) return;
@@ -172,6 +189,7 @@ function( params ) {
 				self.deleteFromReviewList( review );
 				self.updateUserPratilipi( review );
 				self.addOrDeleteReviewRequestOnFlight( false );
+				ToastUtil.toast( "${ _strings.success_generic_message }" );
 			}, function( error ) {
 				self.addOrDeleteReviewRequestOnFlight( false );
 				ToastUtil.toast( "${ _strings.server_error_message }" );

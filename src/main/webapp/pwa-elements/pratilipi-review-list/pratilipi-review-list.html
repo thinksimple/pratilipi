@@ -43,24 +43,50 @@
 	</div>
 </div>
 
-<#-- Modal -->
-<div class="modal common-modal fade" id="pratilipi-review-input-dialog" tabindex="-1" role="dialog" aria-labelledby="reviewLabel">
-  <div class="modal-dialog" role="document">
-	<div class="modal-content">
-		<div class="modal-header">
-			<button data-bind="click: closeReviewModal" class="mdl-button mdl-js-button mdl-button--icon close">
-	  			<i class="material-icons">close</i>
-			</button>
-		  	<h6 class="modal-title" id="reviewLabel">${ _strings.rate_and_review }</h6>
-		</div>
-		<div class="modal-body">
-			<pratilipi-rating-input params="{ rating: ratingInput }"></pratilipi-rating-input>
-			<textarea data-bind="{ mdlFloatingInput: { label: '${ _strings.review_write_a_review }', value: reviewInput, id: 'pratilipi_review_list_review_input' }, valueUpdate: ['input'], transliterate: true }" rows= "3"></textarea>
-		</div>
-		<div class="modal-footer">
-			<button data-bind="click: closeReviewModal" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button-margin"  data-dismiss="modal">${ _strings.cancel }</button>
-			<button data-bind="click: addReview, enable: canAddReview" class="mdl-button mdl-js-button mdl-button--colored mdl-js-ripple-effect mdl-button--raised">${ _strings.review_submit_review }</button>
+<#-- Add Review Modal -->
+<div class="modal common-modal fade" id="pratilipi-review-input-dialog" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button data-bind="click: closeReviewModal" class="mdl-button mdl-js-button mdl-button--icon close">
+					<i class="material-icons">close</i>
+				</button>
+				<h6 class="modal-title">${ _strings.rate_and_review }</h6>
+			</div>
+			<div class="modal-body">
+				<pratilipi-rating-input params="{ rating: ratingInput }"></pratilipi-rating-input>
+				<textarea data-bind="{ mdlFloatingInput: { label: '${ _strings.review_write_a_review }', value: reviewInput, id: 'pratilipi_review_list_review_input' }, valueUpdate: ['input'], transliterate: true }" rows= "3"></textarea>
+			</div>
+			<div class="modal-footer">
+				<button data-bind="click: openDeleteReviewModal, visible: userPratilipi.review() != null && userPratilipi.reviewState() != 'DELETED'" 
+						class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button-margin pull-left">
+					<i style="font-size: 20px; margin-right: 4px;" class="material-icons">delete</i>
+					<span class="material-button">${ _strings.review_delete_review }</span>
+				</button>
+				<button data-bind="click: closeReviewModal" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button-margin">${ _strings.cancel }</button>
+				<button data-bind="click: addReview, enable: canAddReview" class="mdl-button mdl-js-button mdl-button--colored mdl-js-ripple-effect mdl-button--raised">${ _strings.review_submit_review }</button>
+			</div>
 		</div>
 	</div>
-  </div>
-</div> 
+</div>
+
+<#-- Delete Review Modal -->
+<div class="modal common-modal fade" id="pratilipi-review-delete-confirmation-dialog" tabindex="-1" role="dialog" aria-labelledby="pratilipi-review-delete-confirmation-dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button data-bind="click: closeReviewModal" class="mdl-button mdl-js-button mdl-button--icon close">
+					<i class="material-icons">close</i>
+				</button>
+				<h6 class="modal-title">${ _strings.review_delete_review }</h6>
+			</div>
+			<div class="modal-body">
+				<div class="material-subtitle-2">${ _strings.review_delete_review_confirm }</div>
+			</div>
+			<div class="modal-footer">
+				<button data-bind="click: deleteReview" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button-margin pull-left">${ _strings.review_delete_okay }</button>
+				<button data-bind="click: closeDeleteReviewModal" class="mdl-button mdl-js-button mdl-button--colored mdl-js-ripple-effect mdl-button--raised">${ _strings.review_delete_cancel }</button>
+			</div>
+		</div>
+	</div>
+</div>
