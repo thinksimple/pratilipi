@@ -80,7 +80,7 @@ public class UserPratilipiBackfillApi extends GenericApi {
 		userPratilipi.setLastOpenedPage(lastPageOpened);
 		
 		// update lastPageOpenedDate
-		SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy");
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
 		Date date = (Date) formatter.parse(lastOpenedDate);
 		userPratilipi.setLastOpenedDate(date);
 
