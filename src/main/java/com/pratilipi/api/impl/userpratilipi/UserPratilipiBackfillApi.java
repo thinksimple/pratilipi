@@ -4,6 +4,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.google.gson.JsonObject;
 import com.pratilipi.api.GenericApi;
@@ -27,6 +29,8 @@ import com.pratilipi.filter.AccessTokenFilter;
 @SuppressWarnings("serial")
 @Bind(uri = "/userpratilipi/backfill")
 public class UserPratilipiBackfillApi extends GenericApi {
+	
+	private Logger logger = Logger.getLogger(UserPratilipiBackfillApi.class.getSimpleName());
 
 	public static class PostRequest extends GenericRequest {
 
@@ -45,7 +49,7 @@ public class UserPratilipiBackfillApi extends GenericApi {
 	}
 
 	@Post
-	public GenericResponse post(PostRequest request) throws InsufficientAccessException, UnexpectedServerException, ParseException {
+	public GenericResponse post(PostRequest request) throws InsufficientAccessException, UnexpectedServerException {
 
 		if (!hasAccess())
 			throw new InsufficientAccessException();
@@ -66,7 +70,7 @@ public class UserPratilipiBackfillApi extends GenericApi {
 	}
 
 	private UserPratilipiData updateUserPratilipi(Long userId, Long pratilipiId, String lastPageOpened, String lastOpenedDate)
-			throws UnexpectedServerException, ParseException {
+			throws UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 		UserPratilipi userPratilipi = dataAccessor.getUserPratilipi(userId, pratilipiId);
@@ -77,19 +81,26 @@ public class UserPratilipiBackfillApi extends GenericApi {
 			userPratilipi.setPratilipiId(pratilipiId);
 		}
 
+		// Creating Auditlog entity
+		AuditLog auditLog = dataAccessor.newAuditLog(AccessTokenFilter.getAccessToken(),
+				AccessType.USER_PRATILIPI_REVIEW, userPratilipi);
+		
 		// update lastPageOpened
 		userPratilipi.setLastOpenedPage(lastPageOpened);
 		
-		// update lastPageOpenedDate
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
-		formatter.setTimeZone(TimeZone.getTimeZone("IST"));
-		Date date = (Date) formatter.parse(lastOpenedDate);
-		userPratilipi.setLastOpenedDate(date);
-
-		AuditLog auditLog = dataAccessor.newAuditLog(AccessTokenFilter.getAccessToken(),
-				AccessType.USER_PRATILIPI_REVIEW, userPratilipi);
-
-		userPratilipi = dataAccessor.createOrUpdateUserPratilipi(userPratilipi, auditLog);
+		try {
+			// update lastPageOpenedDate
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+			formatter.setTimeZone(TimeZone.getTimeZone("IST"));
+			Date date = (Date) formatter.parse(lastOpenedDate);
+			userPratilipi.setLastOpenedDate(date);
+			userPratilipi = dataAccessor.createOrUpdateUserPratilipi(userPratilipi, auditLog);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			logger.log(Level.SEVERE, "Event Date : " + lastOpenedDate);
+			throw new UnexpectedServerException("Error while parsing date.");
+		}
 
 		return UserPratilipiDataUtil.createUserPratilipiData(userPratilipi);
 	}
