@@ -1,2 +1,38 @@
 .pratilipi-author-info {
+	.author-meta-holder {
+		min-height: 200px;
+		width: 100%;
+		margin-top: -100px;
+		@include css-prefix( 'display', 'flex' );
+		@include css-prefix( 'flex-direction', 'row' );
+		.author-profile-image-holder {
+			padding: 0 16px;
+			img.author-profile-image {
+				@include css-prefix( 'border-radius', 50% );
+				width: 200px;
+				height: 200px;
+			}
+		}
+		.author-meta {
+			flex-grow: 1;
+			margin-right: 16px;
+			margin-top: 100px;
+			.first-line {
+				height: 36px;
+				padding: 8px 0;
+				.author-name {
+					display: inline-block;
+				}
+				.small-button {
+				    min-width: 36px;
+				    padding: 0;	
+				}
+			}
+		}
+	}
+	.author-stats-holder {
+		min-height: 64px;
+		height: 64px;
+		width: 100%;
+	}
 }

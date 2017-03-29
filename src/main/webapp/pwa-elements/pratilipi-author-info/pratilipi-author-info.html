@@ -1,2 +1,26 @@
 <div class="pratilipi-author-info">
+	<div class="mdl-card mdl-card-border mdl-cell mdl-cell--8-col-tablet mdl-cell--9-col mobile-card">
+		<img class="author-cover-image" data-bind="attr: { 'src': author.coverImageUrl(), 'alt': author.name() }" />
+		<div class="author-meta-holder">
+			<div class="author-profile-image-holder">
+				<img class="author-profile-image" data-bind="attr: { 'src': getImageUrl( author.profileImageUrl(), 200 ), 'alt': author.name() }" />
+			</div>
+			<div class="author-meta">
+				<div class="first-line">
+					<div class="material-heading author-name" data-bind="text: author.name()"></div>
+					<div class="pull-right">
+						<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-button-margin">Follow</button>
+						<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-button-margin small-button">
+							<i class="material-icons material-icons-16">share</i>
+						</button>
+					</div>
+				</div>
+				<div class="second-line material-subtitle-1" data-bind="text: author.penName(), visible: author.summary() != null"></div>
+			</div>
+		</div>
+		<div class="mdl-cell mdl-cell--12-col padding-zero"><hr class="margin-zero"></div>
+		<div class="author-stats-holder">
+			
+		</div>
+	</div>
 </div>
