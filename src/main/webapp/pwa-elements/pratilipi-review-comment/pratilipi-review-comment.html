@@ -1,42 +1,75 @@
-<li class="mdl-list__item left-padding display-block-unimportant" data-bind="visible: !isEditModeOn()">
-	<div class="mdl-list__item mdl-list__item--two-line padding-zero">
-		<span class="mdl-list__item-primary-content">
-			<img data-bind="attr: { src: getImageUrl( reviewCommentObject.user.profileImageUrl(), 48 ) }" class="mdl-list__item-avatar">
-			<a class="black-color" data-bind="attr: { href: reviewCommentObject.user.profilePageUrl() }, text: reviewCommentObject.user.displayName"></a>
-			<span data-bind="text: convertDate( reviewCommentObject.creationDateMillis() )" class="mdl-list__item-sub-title"></span>
-		</span>
+<div class="pratilipi-review-comment">
+	<div class="comment-header">
+		<div class="user-info">
+			<img data-bind="attr: { src: getImageUrl( comment.user.profileImageUrl(), 48 ) }" class="mdl-list__item-avatar">
+			<div style="padding: 0 8px;">
+				<a class="commentor-name font-m" data-bind="attr: { href: comment.user.profilePageUrl() }, text: comment.user.displayName()"></a>
+				<br/>
+				<span class="font-s comment-date" data-bind="text: convertDate( comment.creationDateMillis() )"></span>
+			</div>
+		</div>
 	</div>
-	<div class="mdl-list__item-text-body" data-bind="text: reviewCommentObject.content()">
+	<div data-bind="visible: ! editCommentVisible()">
+		<div class="comment-container material-subtitle-1" data-bind="text: comment.content()"></div>
+		<div class="comment-footer font-14">
+			<span class="like-holder">
+				<span data-bind="visible: likeCount() > 0, text: likeCount()"></span>
+				<button data-bind="click: likeOrDislikeComment, disable: voteRequestOnFlight" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+					<i class="material-icons material-icons-16" data-bind="css: { 'mdl-color-text--primary': isLiked() }">thumb_up</i>
+				</button>
+			</span>
+			<span class="separator"></span>
+			<span class="comment-holder">
+				<button data-bind="click: toggleCommentInput" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+					<i class="material-icons material-icons-16">message</i>
+				</button>
+			</span>
+			<div data-bind="visible: comment.hasAccessToUpdate()" class="dropup pull-right">
+				<button class="mdl-button mdl-js-button mdl-button--icon" data-bind="attr: { 'id': 'pratilipi-review-comment-' + comment.commentId() }">
+					<i class="material-icons">more_vert</i>
+				</button>
+				<ul class="mdl-menu mdl-menu--top-right mdl-js-menu mdl-js-ripple-effect" 
+					data-bind="attr: { 'data-mdl-for': 'pratilipi-review-comment-' + comment.commentId() }">
+					<li data-bind="click: openEditComment" class="mdl-menu__item">${ _strings.comment_edit_comment }</li>
+					<li data-toggle="modal"
+						data-bind="attr: { 'data-target': '#pratilipi-comment-delete-confirmation-' + comment.commentId() }" 
+						class="mdl-menu__item">${ _strings.comment_delete_comment }</li>
+				</ul>
+			</div>
+		</div>
 	</div>
-	<div>
-		<span class="font-14">
-			<!-- ko if: reviewCommentObject.likeCount() -->
-				<span data-bind="text: reviewCommentObject.likeCount()"></span>
-			<!-- /ko -->
-			<button  data-bind="click: likeDislikeReview" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-			    <i class="material-icons material-icons-16" role="presentation" data-bind="css: { 'mdl-color-text--primary': reviewCommentObject.isLiked() }">thumb_up</i><span class="visuallyhidden">like comment</span>
-			</button>
-			<span class="reply"></span>		
-			<button data-bind="click: $parents[1].showReplyState.bind( $parents[1] )" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-			    <i class="material-icons material-icons-16" role="presentation">message</i><span class="visuallyhidden">comment</span>
-			</button>
-			
-			<span data-bind="ifnot: $root.user.isGuest" class="dropup pull-right"> <#-- change to ifnot -->
-				<#-- if: reviewCommentObject.hasAccessToUpdate -->
-				<!-- ko if: reviewCommentObject.hasAccessToUpdate -->
-				      <button class="mdl-button mdl-js-button mdl-button--icon" type="button" id="review-comment-access" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-							<i class="material-icons">more_vert</i>
-				      </button>
-				      <ul class="dropdown-menu" aria-labelledby="review-comment-access">
-				        	<li data-bind="click: showEditState">${ _strings.review_edit_review }</li>
-				        	<li data-bind="click: deleteSelf">${ _strings.review_delete_review }</li>
-				      </ul>
-				<!-- /ko -->			
-			</span>							
-		</span>
+	<div class="comment-container" data-bind="visible: editCommentVisible()">
+		<textarea data-bind="{ mdlFloatingInput: { label: '${ _strings.comment_reply_comment_help }', 
+			value: editCommentInput, id: 'pratilipi-review-comment-input-' + comment.commentId() }, 
+			valueUpdate: ['input'], 
+			transliterate: true }"></textarea>
+		<div style="height: 36px;">
+			<div class="pull-right">
+				<button data-bind="click: closeEditComment" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button-margin">${ _strings.comment_cancel_comment }</button>
+				<button data-bind="enable: canSubmitEditComment, click: submitEditComment" class="mdl-button mdl-js-button mdl-button--colored mdl-js-ripple-effect mdl-button--raised">${ _strings.comment_submit_comment }</button>
+			</div>
+		</div>
 	</div>
-</li>
-<!-- ko if: isEditModeOn -->
-<pratilipi-edit-review-comment params="{ comment: reviewCommentObject, editComment: editComment }" > <#-- if has AccessToUpdate && editModeOn -->
-</pratilipi-edit-review-comment>
-<!-- /ko -->
+</div>
+
+
+<#-- Delete Comment Modal -->
+<div class="modal common-modal fade" tabindex="-1" role="dialog" data-bind="attr: { 'id': 'pratilipi-comment-delete-confirmation-' + comment.commentId() }">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button data-dismiss="modal" class="mdl-button mdl-js-button mdl-button--icon close">
+					<i class="material-icons">close</i>
+				</button>
+				<h6 class="modal-title">${ _strings.comment_delete_comment }</h6>
+			</div>
+			<div class="modal-body">
+				<div class="material-subtitle-2">${ _strings.comment_confirm_delete_comment }</div>
+			</div>
+			<div class="modal-footer">
+				<button data-bind="click: deleteComment" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button-margin pull-left">${ _strings.comment_confirm_delete_comment_yes }</button>
+				<button class="mdl-button mdl-js-button mdl-button--colored mdl-js-ripple-effect mdl-button--raised" data-dismiss="modal">${ _strings.comment_confirm_delete_comment_no }</button>
+			</div>
+		</div>
+	</div>
+</div>

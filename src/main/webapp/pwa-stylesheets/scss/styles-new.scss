@@ -1,8 +1,7 @@
-// styles.scss
+@import 'css-mixins';
 @import 'sprites-file';
 @import 'common-styles';
 @import 'bootstrap-styles';
-@import 'css-mixins';
 @import 'main-layout';
 @import 'pratilipi-header';
 @import 'pratilipi-notification-list';
@@ -15,8 +14,8 @@
 @import 'pratilipi-pratilipi-info';
 @import 'pratilipi-review-list';
 @import 'pratilipi-review';
+@import 'pratilipi-review-comment';
 @import 'pratilipi-login';
-@import 'pratilipi-review-reply';
 @import 'pratilipi-pratilipi-card';
 @import 'pratilipi-notifications-page';
 @import 'pratilipi-home-page';

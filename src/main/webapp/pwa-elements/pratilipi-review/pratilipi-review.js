@@ -3,146 +3,162 @@ function( params ) {
 	var dataAccessor = new DataAccessor();
 
 	this.review = params.review;
-	this.likeCount = ko.observable( this.review.likeCount ? this.review.likeCount() : 0 );
-	this.commentCount = ko.observable( this.review.commentCount ? this.review.commentCount() : 0 );
-	this.isLiked = ko.observable( this.review.isLiked ? this.review.isLiked() : false );
+	this.isLiked = ko.observable( self.review.isLiked ? self.review.isLiked() : false );
+	this.likeCount = ko.observable( self.review.likeCount ? self.review.likeCount() : 0 );
+	this.totalCommentCount = ko.observable( self.review.commentCount ? self.review.commentCount() : 0 );
 
-	this.isCommentsShown = ko.observable( false );
-	this.isReplyStateOn = ko.observable( false );
-
-	this.isSubreviewListVisible = ko.computed( function() {
-		return ( this.isCommentsShown() && this.comments().length ) || this.isReplyStateOn(); /* test */
-	}, this );
-
-	this.showRepliesText = ko.computed( function() {
-		return this.isCommentsShown() ? "${ _strings.hide_comments }" : "${ _strings.review_see_all_reviews }";
-	}, this );
-
-	this.comments = ko.observableArray([]);
-
-	this.isCommentsLoaded = ko.computed( function() {
-		return this.comments().length ? true : false;
-	}, this );
-
-
-	this.likeDislikeReview = function() {
+	/* Like / Dislike Review */
+	this.voteRequestOnFlight = ko.observable( false );
+	this.likeOrDislikeReview = function() {
 		if( appViewModel.user.isGuest() ) {
 			goToLoginPage();
 			return;
 		}
-	  /* increase or decrease like count and change boolean and also change the like button*/
-		this.updateLikeCount();
-		this.generateLikeAjaxRequest();
+		if( self.voteRequestOnFlight() ) return;
+		self.voteRequestOnFlight( true );
+		var toggleIsLiked = function() {
+			self.likeCount( self.isLiked() ? self.likeCount() - 1 : self.likeCount() + 1 );
+			self.isLiked( ! self.isLiked() );
+		};
+		toggleIsLiked();
+		dataAccessor.likeOrDislikeReview( self.review.userPratilipiId(), self.isLiked(), 
+			function( vote ) { 
+				self.voteRequestOnFlight( false ); 
+			}, function( error ) {
+				toggleIsLiked();
+				self.voteRequestOnFlight( false );
+				ToastUtil.toast( error.message != null ? error.message : "${ _strings.server_error_message }" );
+		});
 	};
 
-	this.addComment = function( comment ) {
-		this.generatePostCommentAjaxRequest( comment );
-	};
 
-	this.showReplyState = function( item ) {
-		if( appViewModel.user.isGuest() ) {
-			goToLoginPage();
-			return;
-		}
-	   else {
-		   this.isReplyStateOn( true );
-		   componentHandler.upgradeDom();
-	   }
-	};
 
-	this.hideReplyState = function() {
-	  this.isReplyStateOn( false );
-	}
-
-	this.updateLikeCount = function() {
-		if( this.isLiked() ) {
-			this.isLiked( false );
-			this.likeCount( this.likeCount() - 1 );
-		} else {
-			this.isLiked( true );
-			this.likeCount( this.likeCount() + 1 );
-		}
-	}
-
-	this.toggleShowRepliesState = function() {
-		this.isCommentsShown( !this.isCommentsShown() );
-		if( this.isCommentsLoaded() == false && this.isCommentsShown() ) {
-		  this.generateGetCommentsAjaxRequest();
-		}
-	};
-
-	this.getLikeParam = function() {
-		return this.isLiked() ? "LIKE" : "NONE";
-	}
-
-	this.likeSuccessCallback = function() {
-
-	};
-
-	this.likeErrorCallback = function() {
-		self.updateLikeCount();
-	};
-
-	this.generateLikeAjaxRequest = function() {
-		dataAccessor.likeOrDislikeReview( self.review.userPratilipiId(), this.isLiked(), this.likeSuccessCallback, this.likeErrorCallback );	
-	}
-
-	this.getCommentsCallback = function( response ) {
-		if( response ) {
-			this.populateCommentsList( response["commentList"] );
-		}
-	};
-
-	this.generateGetCommentsAjaxRequest = function() {
-		dataAccessor.getReviewCommentList( this.review.userPratilipiId(), null, null, this.getCommentsCallback.bind( this ) );			
-	};
-
-	this.postCommentSuccessCallback = function( response ) {
-		comment.reply("");
-		self.addToCommentsList( response );
-	}; 
-
-	this.generatePostCommentAjaxRequest = function( comment ) {
-	  comment.saveInProgress( true );
-	  $.ajax({
-		  type: 'post',
-		  url: '/api/comment',
-		  data: {
-			  parentType: "REVIEW",
-			  parentId: self.review.userPratilipiId(),
-			  content: comment.reply()
-		  }, 
-		  success: function( response ) {
-			  var res = response;   
-			  comment.reply("");
-			  self.addToCommentsList( response );
-
-		  },
-		  error: function( response ) {
-		  },
-		  complete: function() {
-			  comment.saveInProgress( false );
-			  self.hideReplyState();
-			  self.isCommentsShown( true );
-		  }
-	  });
-   };	
-	
-	this.populateCommentsList = function( commentList ) {
-		for(var i = 0; i < commentList.length; i++) {
-			this.comments.push( commentList[i] );
-		}
-	}; 
-	
+	/* CommentList */
+	this.commentList = ko.observableArray();
 	this.addToCommentsList = function( comment ) {
-		this.comments.push( comment );
+		self.commentList.push( ko.mapping.fromJS( comment ) );
+	};
+	this.updateCommentList = function( commentList ) {
+		for( var i = 0; i < commentList.length; i++ )
+			self.commentList.push( ko.mapping.fromJS( commentList[i] ) );
 	};
 
-	this.deleteComment = function( review ) {
-	  self.comments.remove( review );
-	  self.commentCount( self.commentCount() - 1 )
+	var cursor = null;
+	this.isCommentsLoading = ko.observable();
+	this.hasMoreContents = ko.observable( false );
+
+	/* Constants */
+	var firstLoadCommentCount = 5;
+	var subsequentLoadCommentCount = 10;
+
+	this._fetchCommentList = function( resultCount ) {
+		if( self.isCommentsLoading() ) return;
+		self.isCommentsLoading( true );
+		dataAccessor.getReviewCommentList( self.review.userPratilipiId(), cursor, resultCount, 
+			function( commentListResponse ) {
+				if( commentListResponse == null ) {
+					self.hasMoreContents( true );
+					self.isCommentsLoading( false );
+					return;
+				}
+				var commentList = commentListResponse.commentList;
+				cursor = commentListResponse.cursor;
+				self.updateCommentList( commentList );
+				self.isCommentsLoading( false );
+				self.hasMoreContents( resultCount == commentList.length );
+				setTimeout( function() {
+					componentHandler.upgradeDom();
+				}, 0 );
+		});
 	};
 
-	/* componentHandler.upgradeDom(); */
+	this.loadMoreComments = function() {
+		self._fetchCommentList( subsequentLoadCommentCount );
+	};
+
+
+	/* Show / Hide Comments */
+	this.commentSectionVisible = ko.observable( false );
+
+	this.showCommentSection = function() {
+		self.commentSectionVisible( true );
+		if( self.commentList().length == 0 )
+			self._fetchCommentList( firstLoadCommentCount );
+	};
+
+	this.hideCommentSection = function() {
+		self.commentSectionVisible( false );
+	};
+
+	this.toggleCommentSection = function() {
+		self.commentSectionVisible() ? self.hideCommentSection() : self.showCommentSection();
+	};
+
+
+	/* Comment Input */
+	this.addCommentInput = ko.observable();
+	this.addCommentInputVisible = ko.observable( false );
+
+	this.openAddCommentInput = function() {
+		if( appViewModel.user.isGuest() ) {
+			goToLoginPage();
+			return;
+		}
+		self.showCommentSection();
+		self.addCommentInputVisible( true );
+	};
+
+	this.closeAddCommentInput = function() {
+		self.addCommentInputVisible( false );
+	};
+
+	this.toggleAddCommentInput = function() {
+		self.addCommentInputVisible() ? self.closeAddCommentInput() : self.openAddCommentInput();
+	};
+
+
+	/* Add Comment */
+	this.addCommentRequestOnFlight = ko.observable( false );
+	this.submitAddComment = function() {
+		if( self.addCommentRequestOnFlight() ) return;
+		self.addCommentRequestOnFlight( true );
+		ToastUtil.toastUp( "${ _strings.working }" );
+		dataAccessor.createOrUpdateReviewComment( self.review.userPratilipiId(), null, self.addCommentInput(), 
+			function( comment ) {
+				self.addToCommentsList( comment );
+				self.closeAddCommentInput();
+				self.addCommentRequestOnFlight( false );
+				ToastUtil.toast( "${ _strings.success_generic_message }" );
+			}, function( error ) {
+				self.addCommentRequestOnFlight( false );
+				ToastUtil.toast( error.message != null ? error.message : "${ _strings.server_error_message }" );
+		});
+	};
+
+
+	/* Delete Comment */
+	this.deleteComment = function( viewModel ) {
+		var commentId = viewModel.comment.commentId();
+		ToastUtil.toastUp( "${ _strings.working }" );
+		dataAccessor.deleteComment( commentId, 
+			function( comment ) {
+				ToastUtil.toast( "${ _strings.success_generic_message }" );
+				/* Hack remove delete modal forcibly */
+				$( '.modal' ).modal( 'hide' );
+				$( 'body' ).removeClass( 'modal-open' );
+				$( '.modal-backdrop' ).remove();
+				self.commentList.remove( function( item ) {
+					return item.commentId() == comment.commentId;		   
+				});
+				self.totalCommentCount( self.totalCommentCount() - 1 )
+			}, function( error ) {
+				ToastUtil.toast( error.message != null ? error.message : "${ _strings.server_error_message }" );
+		});
+	};
+
+	/* Computed observables */
+	this.canSubmitAddComment = ko.computed( function() {
+		return self.addCommentInputVisible() && self.addCommentInput() != null && self.addCommentInput().trim() != "" && ! self.addCommentRequestOnFlight();
+	}, this );
 
 }

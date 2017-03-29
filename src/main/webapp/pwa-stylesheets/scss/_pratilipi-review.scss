@@ -3,20 +3,20 @@
 		@include css-prefix( 'display', 'flex' );
 		@include css-prefix( 'flex-direction', 'row' );
 		padding: 0;
-		.user-info {
-			flex-grow: 1;
-			@include css-prefix( 'display', 'flex' );
-			a.reviewer-name	{
-				text-decoration: none;
-				color: #000 !important;
-			}
-			.review-date {
-				display: block;
-				margin-top: 8px;
-			}
-		}
 		.user-rating {
 			align-self: center;
+		}
+	}
+	.user-info { // Used in adding comment
+		flex-grow: 1;
+		@include css-prefix( 'display', 'flex' );
+		a.reviewer-name	{
+			text-decoration: none;
+			color: #000 !important;
+		}
+		.review-date {
+			display: block;
+			margin-top: 8px;
 		}
 	}
 	.review-container {
@@ -26,18 +26,32 @@
 		.font-14 * {
 			font-size: 14px !important;
 		}
-		.reply:before {
+		.separator:before {
 			content: "\002022";
 		}
-		.view-all-replies:before {
-			content: "\002022";
-			margin-right: 5px;
+		.like-holder {
+			margin-right: 4px;
 		}
-		ul.sub-review {
-			border-left: 2px solid grey;
+		.comment-holder {
+			margin-left: 4px;
+			margin-right: 4px;
 		}
-		.left-padding {
-			padding: 0 0 0 30px;
+		.view-comments-holder {
+			margin-left: 4px;
+		}
+	}
+	.pratilipi-comment-list {
+		margin-left: 4px;
+		border-left: 2px solid grey;
+		ul.comment-list-ul {
+			padding: 0;
+			.mdl-textfield {
+				width: 100%;
+				line-height: 1.5em;
+			}
+			li {
+				overflow: visible;
+			}
 		}
 	}
 }

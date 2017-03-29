@@ -1,79 +1,72 @@
 function( params ) {
-    var self = this;
-    this.dataAccessor = new DataAccessor();
-    this.reviewCommentObject = ko.mapping.fromJS( params.value, {}, self.reviewCommentObject );
-    this.isGuest = ko.observable( appViewModel.user.isGuest() ); 
-    this.isEditModeOn = ko.observable( false );   
+	var self = this;
+	var dataAccessor = new DataAccessor();
 
-     this.likeCount = ko.observable( this.reviewCommentObject.likeCount );
-    // this.isLiked = ko.observable( this.reviewCommentObject.isLiked );
-    // this.userImageUrl = this.reviewCommentObject.user.profileImageUrl + "&width=40";
-    // this.comment_date = convertDate( this.reviewCommentObject.creationDateMillis );
-    // this.userProfilePageUrl = this.reviewCommentObject.user.profilePageUrl;
-//    console.log( this.userImageUrl );
-    
-    this.likeDislikeReview = function( item ) {
-        if( self.isGuest() ) {
-            goToLoginPage();
-        } else {
-            this.updateLikeCount();
-            this.generateLikeAjaxRequest();
-        }
-        /* increase or decrease like count and change boolean and also change the like button*/     
-    }; 
-    
-    this.updateLikeCount = function() {
-        if( this.reviewCommentObject.isLiked() ) {
-            // this.isLiked( false );
-            var updatedLikeCount = this.reviewCommentObject.likeCount() - 1;
-            ko.mapping.fromJS( { isLiked: false, likeCount: updatedLikeCount }, {}, self.reviewCommentObject );
-             this.likeCount( this.likeCount() - 1 );
-        } else {
-            var updatedLikeCount = this.reviewCommentObject.likeCount() + 1;
-            ko.mapping.fromJS( { isLiked: true, likeCount: updatedLikeCount }, {}, self.reviewCommentObject );
-        }
-    };
+	this.comment = params.comment;
+	this.deleteComment = params.deleteComment;
+	this.toggleCommentInput = params.toggleCommentInput;
 
-    this.likeSuccessCallback = function() {
+	this.isLiked = ko.observable( self.comment.isLiked ? self.comment.isLiked() : false );
+	this.likeCount = ko.observable( self.comment.likeCount ? self.comment.likeCount() : 0 );
 
-    };
+	/* Like / Dislike Comment */
+	this.voteRequestOnFlight = ko.observable( false );
+	this.likeOrDislikeComment = function() {
+		if( appViewModel.user.isGuest() ) {
+			goToLoginPage();
+			return;
+		}
+		if( self.voteRequestOnFlight() ) return;
+		self.voteRequestOnFlight( true );
+		var toggleIsLiked = function() {
+			self.likeCount( self.isLiked() ? self.likeCount() - 1 : self.likeCount() + 1 );
+			self.isLiked( ! self.isLiked() );
+		};
+		toggleIsLiked();
+		dataAccessor.likeOrDislikeComment( self.comment.commentId(), self.isLiked(), 
+			function( vote ) { 
+				self.voteRequestOnFlight( false );
+			}, function( error ) {
+				toggleIsLiked();
+				self.voteRequestOnFlight( false );
+				ToastUtil.toast( error.message != null ? error.message : "${ _strings.server_error_message }" );
+		});
+	};
 
-    this.likeErrorCallback = function() {
-        self.updateLikeCount();
-    };
+	/* Edit Comment - Input */
+	this.editCommentInput = ko.observable();
+	this.editCommentVisible = ko.observable( false );
 
-    this.generateLikeAjaxRequest = function() {
-        this.dataAccessor.likeOrDislikeComment( self.reviewCommentObject.commentId(), this.reviewCommentObject.isLiked(), this.likeSuccessCallback, this.likeErrorCallback );      
-    };
-    
-    this.deleteSuccessCallback = function() {
-      params.deleteComment( params.value );
-    };
-    
-    this.deleteErrorCallback = function() {
-      //  params.deleteComment( params.value ); <#-- only  localhost -->
-    };    
-    
-    this.deleteSelf = function() {
-        this.dataAccessor.deleteComment( this.reviewCommentObject.commentId(), this.deleteSuccessCallback.bind( this ), this.deleteErrorCallback.bind( this ) )
-    };    
-    componentHandler.upgradeDom();  
+	this.openEditComment = function() {
+		self.editCommentInput( self.comment.content() );
+		self.editCommentVisible( true );
+	};
 
-    this.updateCommentObject = function( comment ) {
-        ko.mapping.fromJS( comment, {}, self.reviewCommentObject );
-    };
+	this.closeEditComment = function() {
+		self.editCommentVisible( false );
+	};
 
-    this.editComment = function( comment ) {
-        self.hideEditState();
-        self.updateCommentObject( comment );
-        //update comment object
-    };
+	/* Edit Comment - Submit */
+	this.editCommentRequestOnFlight = ko.observable( false );
+	this.submitEditComment = function() {
+		if( self.editCommentRequestOnFlight() ) return;
+		self.editCommentRequestOnFlight( true );
+		ToastUtil.toastUp( "${ _strings.working }" );
+		dataAccessor.createOrUpdateReviewComment( null, self.comment.commentId(), self.editCommentInput(), 
+			function( comment ) {
+				self.comment.content( comment.content );
+				self.closeEditComment();
+				self.editCommentRequestOnFlight( false );
+				ToastUtil.toast( "${ _strings.success_generic_message }" );
+			}, function( error ) {
+				self.editCommentRequestOnFlight( false );
+				ToastUtil.toast( error.message != null ? error.message : "${ _strings.server_error_message }" );
+		});
+	};
 
-    this.showEditState = function() {
-        this.isEditModeOn( true );
-    };
+	/* Computed observables */
+	this.canSubmitEditComment = ko.computed( function() {
+		return self.editCommentVisible() && self.editCommentInput() != null && self.editCommentInput().trim() != "" && ! self.editCommentRequestOnFlight();
+	}, this );
 
-    this.hideEditState = function() {
-        this.isEditModeOn( false );
-    };    
 }
