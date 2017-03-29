@@ -104,6 +104,7 @@ function( params ) {
 			goToLoginPage();
 			return;
 		}
+		self.addCommentInput( null );
 		self.showCommentSection();
 		self.addCommentInputVisible( true );
 	};
