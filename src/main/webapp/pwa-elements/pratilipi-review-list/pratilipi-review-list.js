@@ -109,8 +109,8 @@ function( params ) {
 
 	this.closeReviewModal = function() {
 		reviewInputDialog.modal( 'hide' );
-		self.ratingInput( self.userPratilipi.rating() != null ? self.userPratilipi.rating() : 0 );
-		self.reviewInput( self.userPratilipi.reviewState() == "PUBLISHED" && self.userPratilipi.review() != null ? self.userPratilipi.review() : null );
+		self.ratingInput( self.userPratilipi.rating() );
+		self.reviewInput( self.userPratilipi.review() );
 	};
 
 	/* Clicking anywhere outside the screen */
@@ -142,7 +142,7 @@ function( params ) {
 		/* check if its a new rating or updated rating, and calculate average rating accordingly and update values.*/
 		var pratilipi = {};
 
-		var oldRating = self.userPratilipi.rating() != null ? self.userPratilipi.rating() : 0;
+		var oldRating = self.userPratilipi.rating();
 		var newRating = userPratilipi.rating;
 		var ratingCount = self.pratilipi.ratingCount();
 		var totalRating = self.pratilipi.averageRating() * self.pratilipi.ratingCount();
@@ -161,6 +161,7 @@ function( params ) {
 	this.createOrUpdateReview = function() {
 		if( self.addOrDeleteReviewRequestOnFlight() ) return;
 		self.addOrDeleteReviewRequestOnFlight( true );
+		ToastUtil.toastUp( "${ _strings.working }" );
 		dataAccessor.createOrUpdateReview( self.pratilipi.pratilipiId(), self.ratingInput(), self.reviewInput(), 
 			function( review ) {
 				if( review.rating == null ) review.rating = 0;
@@ -187,7 +188,8 @@ function( params ) {
 	this.deleteReview = function( review ) {
 		if( self.addOrDeleteReviewRequestOnFlight() ) return;
 		self.addOrDeleteReviewRequestOnFlight( true );
-		dataAccessor.deleteReview( self.pratilipi.pratilipiId(), self.rating(), 
+		ToastUtil.toastUp( "${ _strings.working }" );
+		dataAccessor.deleteReview( self.pratilipi.pratilipiId(), 
 			function( review ) {
 				self.deleteFromReviewList( review );
 				self.updateUserPratilipi( review );
@@ -226,8 +228,8 @@ function( params ) {
 	}, this );
 
 	this.userPratilipiMetaObserver = ko.computed( function() {
-		self.ratingInput( self.userPratilipi.rating() != null ? self.userPratilipi.rating() : 0 );
-		self.reviewInput( self.userPratilipi.reviewState() == "PUBLISHED" && self.userPratilipi.review() != null ? self.userPratilipi.review() : null );
+		self.ratingInput( self.userPratilipi.rating() );
+		self.reviewInput( self.userPratilipi.review() );
 	}, this );
 
 	this.userObserver = ko.computed( function() {

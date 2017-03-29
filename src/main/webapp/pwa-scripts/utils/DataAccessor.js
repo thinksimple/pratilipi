@@ -168,7 +168,7 @@ var DataAccessor = function() {
 		if( userPratilipiId == null ) return;
 		var params = { "parentType": "REVIEW", "parentId": userPratilipiId };
 		if( cursor != null ) params[ "cursor" ] = cursor;
-		if( resultCount != null ) params[ "resultcount" ] = resultcount;
+		if( resultCount != null ) params[ "resultCount" ] = resultCount;
 		httpUtil.get( API_PREFIX + COMMENT_LIST_API, 
 						params, 
 						function( response, status ) { processGetResponse( response, status, aCallBack ) } );
@@ -269,10 +269,9 @@ var DataAccessor = function() {
 				function( response, status ) { processPostResponse( response, status, successCallBack, errorCallBack ) } );
 	},
 
-	this.deleteReview = function( pratilipiId, rating, successCallBack, errorCallBack ) {
+	this.deleteReview = function( pratilipiId, successCallBack, errorCallBack ) {
 		if( pratilipiId == null ) return;
 		var userPratilipi = { "pratilipiId": pratilipiId, "reviewState": "DELETED" };
-		if( rating != null ) userPratilipi.rating = rating;
 		httpUtil.post( API_PREFIX + USER_PRATILIPI_REVIEW_API, 
 				userPratilipi,
 				function( response, status ) { processPostResponse( response, status, successCallBack, errorCallBack ) } );
