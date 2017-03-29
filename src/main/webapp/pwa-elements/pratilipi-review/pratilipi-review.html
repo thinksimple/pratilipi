@@ -4,7 +4,7 @@
 			<div class="user-info">
 				<img data-bind="attr: { src: getImageUrl( review.userImageUrl(), 48 ) }" class="mdl-list__item-avatar">
 				<div style="padding: 0 8px;">
-					<a class="reviewer-name font-m" data-bind="attr: { href: review.userProfilePageUrl() }, text: review.user.displayName()"></a>
+					<a class="reviewer-name material-subtitle-1" data-bind="attr: { href: review.userProfilePageUrl() }, text: review.user.displayName()"></a>
 					<br/>
 					<span class="font-s review-date" data-bind="text: convertDate( review.reviewDateMillis() )"></span>
 				</div>
@@ -54,7 +54,7 @@
 				<div class="user-info">
 					<img data-bind="attr: { src: getImageUrl( appViewModel.user.profileImageUrl(), 48 ) }" class="mdl-list__item-avatar">
 					<div style="padding: 0 8px;">
-						<a class="reviewer-name font-m" data-bind="attr: { href: appViewModel.user.profilePageUrl() }, text: appViewModel.user.displayName()"></a>
+						<a class="reviewer-name material-subtitle-1" data-bind="attr: { href: appViewModel.user.profilePageUrl() }, text: appViewModel.user.displayName()"></a>
 						<br/>
 						<span class="font-s review-date" data-bind="text: convertDate( new Date() )"></span>
 					</div>

@@ -3,7 +3,7 @@
 		<div class="user-info">
 			<img data-bind="attr: { src: getImageUrl( comment.user.profileImageUrl(), 48 ) }" class="mdl-list__item-avatar">
 			<div style="padding: 0 8px;">
-				<a class="commentor-name font-m" data-bind="attr: { href: comment.user.profilePageUrl() }, text: comment.user.displayName()"></a>
+				<a class="commentor-name material-subtitle-1" data-bind="attr: { href: comment.user.profilePageUrl() }, text: comment.user.displayName()"></a>
 				<br/>
 				<span class="font-s comment-date" data-bind="text: convertDate( comment.creationDateMillis() )"></span>
 			</div>

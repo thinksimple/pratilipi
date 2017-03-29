@@ -82,7 +82,7 @@ function( params ) {
 
 	this.showCommentSection = function() {
 		self.commentSectionVisible( true );
-		if( self.commentList().length == 0 )
+		if( self.commentList().length == 0 && self.totalCommentCount() > 0 )
 			self._fetchCommentList( firstLoadCommentCount );
 	};
 
