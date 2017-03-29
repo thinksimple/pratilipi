@@ -511,8 +511,13 @@ public class PratilipiSite extends HttpServlet {
 				}
 
 			} else if( page != null && page.getType() == PageType.AUTHOR ) {
-				dataModel = createDataModelForAuthorPage( page.getPrimaryContentId(), filterLanguage, basicMode, request );
-				templateName = ( basicMode ? "AuthorBasic.ftl" : "Author.ftl" );
+				if( loadPWA ) {
+					dataModel = new HashMap<>();
+					templateName = "AuthorPWA.ftl";
+				} else {
+					dataModel = createDataModelForAuthorPage( page.getPrimaryContentId(), filterLanguage, basicMode, request );
+					templateName = ( basicMode ? "AuthorBasic.ftl" : "Author.ftl" );					
+				}
 
 			} else if( page != null && page.getType() == PageType.EVENT ) {
 				dataModel = createDataModelForEventPage( page.getPrimaryContentId(), filterLanguage, basicMode, request );

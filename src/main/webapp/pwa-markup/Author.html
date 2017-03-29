@@ -1,0 +1,15 @@
+<#include "../pwa-ftl-files/functions.ftl">
+
+<!doctype html>
+<html lang="${ lang }">
+	<head>
+		<@head_tags title="Pratilipi Author Page" include_app_shell=true />
+		<@register element="pratilipi-author-page" />
+		<@register element="pratilipi-author-info" />
+		<@register element="pratilipi-pratilipi-card" />
+	</head>
+	<body>
+		<@pratilipi_main_layout element="pratilipi-author-page" />
+	</body>
+	<@foot_tags />
+</html>
