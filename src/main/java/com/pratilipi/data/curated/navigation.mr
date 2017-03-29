@@ -8,18 +8,18 @@
 /author-interviews          साहित्यकारांची मुलाखत        Analytics#categoryName::author-interviews       App#imageName::authorinterviews.jpg     App#BlogPostList::{ "language":"MARATHI", "blogId":5197509039226880 }
 
 श्रेणी 
-/lovestories       प्रेम कथा      Analytics#categoryName::romance       App#imageName::romance.jpg         App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"lovestories" }
-/horror            थरार कथा    Analytics#categoryName::horror        App#imageName::horror.jpg           App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"horror" }
-/search?q=stories  लघु कथा       Analytics#categoryName::other-stories       App#imageName::shortstories.jpg       App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "searchQuery":"stories" }
+/lovestories       प्रेमकथा      Analytics#categoryName::romance       App#imageName::romance.jpg         App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"lovestories" }
+/horror            भयकथा    Analytics#categoryName::horror        App#imageName::horror.jpg           App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"horror" }
+/search?q=stories  अन्य कथा        Analytics#categoryName::other-stories       App#imageName::shortstories.jpg       App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "searchQuery":"stories" }
 /rahasyakatha      रहस्य कथा      Analytics#categoryName::mystery       App#imageName::suspence.jpg       App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"rahasyakatha" }
-/bodhkatha         बोध कथा       Analytics#categoryName::inspirational       App#imageName::inspirational.jpg     App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"bodhkatha" }
-/baalkatha         बाल कथा       Analytics#categoryName::children       App#imageName::children.jpg         App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"baalkatha" }
+/bodhkatha         बोधकथा       Analytics#categoryName::inspirational       App#imageName::inspirational.jpg     App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"bodhkatha" }
+/baalkatha         बालकथा       Analytics#categoryName::children       App#imageName::children.jpg         App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"baalkatha" }
 /hasyakatha        हास्य कथा       Analytics#categoryName::comedy       App#imageName::comedy.jpg           App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"hasyakatha" }
-/navalkatha        नवल कथा     Analytics#categoryName::novels        App#imageName::novels.jpg         App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"navalkatha" }
+/kadambari         कादंबरी     Analytics#categoryName::novels        App#imageName::novels.jpg         App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"kadambari" }
 /search?q=poems    कविता        Analytics#categoryName::poetry        App#imageName::poems.jpg         App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "searchQuery":"poems" }
 /search?q=articles लेख           Analytics#categoryName::articles       App#imageName::articles.jpg      App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "searchQuery":"articles" }
 /jivancharitra     जीवन-चरित्र     Analytics#categoryName::biographies        App#imageName::biography.jpg     App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"jivancharitra" }
-/sair-sapata       भटकंती         Analytics#categoryName::travel       App#imageName::travel.jpg       App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"sair-sapata" }
+/pravas-varnan     प्रवास वर्णन          Analytics#categoryName::travel       App#imageName::travel.jpg       App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"pravas-varnan" }
 /samaj-prabodhan   समाज प्रबोधन    Analytics#categoryName::social        App#imageName::social.jpg       App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"samaj-prabodhan" }
 /swadishta-pakkala पाककला        Analytics#categoryName::cooking       App#imageName::cooking.jpg     App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"swadishta-pakkala" }
 /bhavishya         भविष्य        Analytics#categoryName::astrology         App#imageName::astronomy.jpg     App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"bhavishya" }
