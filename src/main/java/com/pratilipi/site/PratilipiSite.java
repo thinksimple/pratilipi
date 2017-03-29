@@ -501,14 +501,14 @@ public class PratilipiSite extends HttpServlet {
 
 			// Non - hardcoded links
 			} else if( page != null && page.getType() == PageType.PRATILIPI ) {
-//				if( loadPWA ) {
-//					dataModel = new HashMap<>();
-//					templateName = "PratilipiPWA.ftl";
-//				} else {
+				if( loadPWA ) {
+					dataModel = new HashMap<>();
+					templateName = "PratilipiPWA.ftl";
+				} else {
 					resourceList.addAll( createFbOpenGraphTags( page.getPrimaryContentId() ) );
 					dataModel = createDataModelForPratilipiPage( page.getPrimaryContentId(), filterLanguage, basicMode, request );
 					templateName = ( basicMode ? "PratilipiBasic.ftl" : "Pratilipi.ftl" );					
-//				}
+				}
 
 			} else if( page != null && page.getType() == PageType.AUTHOR ) {
 				dataModel = createDataModelForAuthorPage( page.getPrimaryContentId(), filterLanguage, basicMode, request );
