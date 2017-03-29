@@ -128,7 +128,13 @@ transliterationApp.prototype.init = function() {
   var _this = this;
   this.setTransliterationElementType();
   this.setSuggestionResolveFunction();
-  var $suggester_div = $('<div class="word-suggester"><div class="word-input"></div><div class="suggestions"><div class="suggestion"></div></div></div>');
+  if( $( ".word-suggester" ).length == 0 ) {
+	  var suggesDiv = document.createElement( 'div' );
+	  suggesDiv.className = "word-suggester";
+	  suggesDiv.innerHTML = "<div class='word-input'></div><div class='suggestions'><div class='suggestion'></div></div>"; 
+	  document.body.appendChild( suggesDiv );
+  }
+  var $suggester_div = $( ".word-suggester" );
   document.body.appendChild(  $suggester_div.get(0) );
   this.suggester = new Suggester( $suggester_div.get(0), _this.onSuggestionPicked, _this.$transliterable_elem, _this.isTransliterationInputType(), _this.lang );
   this.suggester.init();

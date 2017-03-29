@@ -8,14 +8,7 @@
 
 	<script src="https://d3cwrmdwk8nw1j.cloudfront.net/resource-all/rangy_core.rangy_selectionsaverestore.min.js"></script>
 	<script src="/pwa-scripts/transliteration-suggester-${ lang }.js?1"></script>
-	<script src="/pwa-scripts/transliteration-app-${ lang }.js?2"></script>
-	<script>
-	$( "*[make-transliterable]" ).each( function() {
-		var $content_object = $( this );
-		this.content_transliteration_object = new transliterationApp( $content_object, "${ lang }" );
-		this.content_transliteration_object.init();
-	});
-	</script>
+	<script src="/pwa-scripts/transliteration-app-${ lang }.js?3"></script>
 
 	<script src="/pwa-scripts/scripts-${ lang }.js?77"></script>
 	<script src="/pwa-scripts/app-${ lang }.js?54"></script>
