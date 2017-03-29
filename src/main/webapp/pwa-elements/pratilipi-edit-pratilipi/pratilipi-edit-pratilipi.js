@@ -7,14 +7,12 @@ function( params ) {
 	this.title = ko.observable();
 	this.titleEn = ko.observable();
 	this.type = ko.observable();
-	this.summary = ko.observable();
 
 	this.pratilipiObserver = ko.computed( function() {
 		self.pratilipiId( self.pratilipi.pratilipiId() );
 		self.title( self.pratilipi.title() );
 		self.titleEn( self.pratilipi.titleEn() );
 		self.type( self.pratilipi.type() );
-		self.summary( self.pratilipi.summary() );
 		$( "#pratilipi_edit_pratilipi #pratilipi_edit_pratilipi_type" ).attr( 'data-val', self.pratilipi.type() );
 		$( "#pratilipi_edit_pratilipi #pratilipi_edit_pratilipi_type" ).attr( 'value', getPratilipiTypeVernacular( self.pratilipi.type() ) );
 	}, this );
@@ -52,8 +50,7 @@ function( params ) {
 				"pratilipiId": self.pratilipiId(),
 				"title": self.title(),
 				"titleEn": self.titleEn(),
-				"type": self.type(),
-				/* "summary": self.summary() */
+				"type": self.type()
 		};
 
 		self.requestOnFlight( true );
