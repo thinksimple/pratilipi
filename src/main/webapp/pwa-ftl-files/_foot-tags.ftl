@@ -17,7 +17,7 @@
 	});
 	</script>
 
-	<script src="/pwa-scripts/scripts-${ lang }.js?76"></script>
+	<script src="/pwa-scripts/scripts-${ lang }.js?77"></script>
 	<script src="/pwa-scripts/app-${ lang }.js?54"></script>
 
 	<script src="http://public.pratilipi.com/resource-pwa/js/bootstrap.min.js"></script>

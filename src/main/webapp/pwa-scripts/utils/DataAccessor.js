@@ -233,7 +233,7 @@ var DataAccessor = function() {
 	this.createOrUpdateReviewComment = function( userPratilipiId, commentId, content, successCallBack, errorCallBack ) {
 		if( userPratilipiId == null && commentId == null ) return;
 		var params = { "state": "ACTIVE" };
-		if( userPratilipiId != null ) params[ "parentId" ] = userPratilipiId;
+		if( userPratilipiId != null ) { params[ "parentId" ] = userPratilipiId; params[ "parentType" ] = "REVIEW"; }
 		if( commentId != null ) params[ "commentId" ] = commentId;
 		if( content != null ) params[ "content" ] = content;
 		httpUtil.post( API_PREFIX + COMMENT_API, 
