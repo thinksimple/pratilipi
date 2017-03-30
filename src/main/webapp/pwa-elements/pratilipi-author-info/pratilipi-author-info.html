@@ -9,7 +9,11 @@
 				<div class="first-line">
 					<div class="material-heading author-name" data-bind="text: author.name()"></div>
 					<div class="pull-right">
-						<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-button-margin">Follow</button>
+						<button data-bind="{ text: userAuthor.following() ? '${ _strings.author_unfollow }' : '${ _strings.author_follow }',
+												click: followOrUnfollowAuthor,
+												disable: followRequestOnFlight() }" 
+								class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-button-margin">
+						</button>
 						<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-button-margin small-button">
 							<i class="material-icons material-icons-16">share</i>
 						</button>
@@ -21,8 +25,23 @@
 			</div>
 		</div>
 		<div class="mdl-cell mdl-cell--12-col padding-zero"><hr class="margin-zero"></div>
-		<div class="author-stats-holder">
-			
+		<div class="mdl-cell mdl-cell--12-col padding-zero mdl-grid author-stats-holder text-center">
+			<div class="mdl-cell mdl-cell--3-col">
+				<div class="material-title" data-bind="text: author.contentPublished()"></div>
+				<div class="material-subtitle-2">${ _strings.author_published_works }</div>
+			</div>
+			<div class="mdl-cell mdl-cell--3-col">
+				<div class="material-title" data-bind="text: author.totalReadCount()"></div>
+				<div class="material-subtitle-2">${ _strings.author_count_reads }</div>
+			</div>
+			<div class="mdl-cell mdl-cell--3-col">
+				<div class="material-title" data-bind="text: author.followCount()"></div>
+				<div class="material-subtitle-2">${ _strings.author_followers_count }</div>
+			</div>
+			<div class="mdl-cell mdl-cell--3-col">
+				<div class="material-title">&nbsp;</div>
+				<div class="material-subtitle-2">${ _strings.author_following_count }</div>
+			</div>
 		</div>
 	</div>
 </div>

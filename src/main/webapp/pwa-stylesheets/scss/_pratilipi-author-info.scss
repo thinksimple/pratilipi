@@ -1,4 +1,7 @@
 .pratilipi-author-info {
+	.author-cover-image {
+		max-width: 100%;
+	}
 	.author-meta-holder {
 		min-height: 200px;
 		width: 100%;
@@ -32,7 +35,5 @@
 	}
 	.author-stats-holder {
 		min-height: 64px;
-		height: 64px;
-		width: 100%;
 	}
 }
