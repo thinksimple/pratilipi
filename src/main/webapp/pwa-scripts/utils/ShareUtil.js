@@ -47,6 +47,16 @@ var ShareUtil = (function() {
 			MetaTagUtil.setMetaTagsForPratilipi( pratilipi );
 			this.share( getShareUrl(), getWhatsappText(), utmParams );
 		},
+		shareAuthor: function( author, utmParams ) {
+			var getShareUrl = function() {
+				return window.location.origin + author.pageUrl;
+			};
+			var getWhatsappText = function() {
+				return '"' + author.name + '"${ _strings.whatsapp_read_story } ' + getShareUrl() +" ${ _strings.whatsapp_read_unlimited_stories }";
+			};
+			MetaTagUtil.setMetaTagsForAuthor( author );
+			this.share( getShareUrl(), getWhatsappText(), utmParams );
+		},
 		share: function( url, whatsappText, utmParams ) {
 			shareDialog.style.display = "block";
 			shareUrl = encodeURIComponent( url + ( utmParams != null ? "?" + new HttpUtil().formatParams( utmParams ) : "" ) );

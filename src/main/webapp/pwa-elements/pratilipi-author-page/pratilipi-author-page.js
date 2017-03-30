@@ -43,7 +43,7 @@ function() {
 		if( author.summary != null && author.summary.trim() == "" )
 			author.summary = null;
 		ko.mapping.fromJS( author, {}, self.author );
-		/* MetaTagUtil.setMetaTagsForAuthor( ko.mapping.toJS( self.author ) ); */
+		MetaTagUtil.setMetaTagsForAuthor( ko.mapping.toJS( self.author ) );
 	};
 
 	this.updateUserAuthor = function( userAuthor ) {

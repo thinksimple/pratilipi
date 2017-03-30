@@ -35,7 +35,7 @@ function( params ) {
 
 	/* Share Author */
 	this.shareAuthor = function() {
-		/* */
+		ShareUtil.shareAuthor( ko.mapping.toJS( self.author ) );
 	};
 
 }

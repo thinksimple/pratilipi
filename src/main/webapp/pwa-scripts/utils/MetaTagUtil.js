@@ -19,6 +19,11 @@ var MetaTagUtil = (function() {
 			metaTagArray.push( new metaTag( "books:isbn", pratilipi.pratilipiId ) );
 			metaTagArray.push( new metaTag( "books:author", "http://" + ( pratilipi.language != null ? pratilipi.language.toLowerCase() : "${ language?lower_case }" ) + ".pratilipi.com" + pratilipi.author.pageUrl ) );
 			appViewModel.metaTags( metaTagArray );
+		},
+		setMetaTagsForAuthor: function( author ) {
+			var metaTagArray = [];
+			metaTagArray.push( new metaTag( "fb:app_id", "${ fbAppId }" ) );
+			appViewModel.metaTags( metaTagArray );
 		}
 	};
 })();
