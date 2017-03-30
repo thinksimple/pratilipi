@@ -15,7 +15,9 @@
 						</button>
 					</div>
 				</div>
-				<div class="second-line material-subtitle-1" data-bind="text: author.penName(), visible: author.summary() != null"></div>
+				<div class="second-line material-subtitle-1" data-bind="visible: author.summary() != null">
+					<pratilipi-see-more params="{ originalText: author.summary(), uniqueName: 'author-summary' }"></pratilipi-see-more>
+				</div>
 			</div>
 		</div>
 		<div class="mdl-cell mdl-cell--12-col padding-zero"><hr class="margin-zero"></div>

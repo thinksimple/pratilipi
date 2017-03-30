@@ -1,19 +1,14 @@
 ko.bindingHandlers.seeMore = {
 	update: function( element, valueAccessor, allBindings, viewModel, bindingContext ) {
-		var originalText = ( viewModel.originalText() );
-		var $target_p = $(element).find( "p" );
-		$target_p.text( originalText );
-		if( $target_p.height() / ( parseFloat( $target_p.css( "line-height" ) ) ) > 3 ) {
-			viewModel.isSeeMoreRequired( true );
-			viewModel.isMoreShown( false );
-		}
-		ko.utils.unwrapObservable( valueAccessor() );
-		var $target_p = $(element).find( "p" );
-		if( viewModel.isMoreShown() ) {
-			$target_p.removeClass( "see-more-text" );
-		} else {
-			$target_p.addClass( "see-more-text" );
-		}
+		var p = $( element ).find( "p" );
+		p.text( viewModel.originalText() );
+		setTimeout( function() {
+			var pHeight = p.height();
+			var pAllowedLineHeight = parseFloat( p.css( "line-height" ) ) * 3;
+			var isViewMoreVisible = pHeight > pAllowedLineHeight;
+			viewModel.isViewMoreVisible( isViewMoreVisible );
+			viewModel.maxHeightPx( isViewMoreVisible ? pAllowedLineHeight + 'px' : 'initial' );
+		}, 0 );
 	}
 };
 
