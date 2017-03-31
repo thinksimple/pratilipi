@@ -1,19 +1,26 @@
-function() {
+function( params ) {
 	var self = this;
+	var dataAccessor = new DataAccessor();
 
 	this.author = params.author;
 
-	this.publishedPratilipiList = ko.observalbleArray();
-	this.draftedPratilipiList = ko.observalbleArray();
+	this.publishedPratilipiList = ko.observableArray();
+	this.draftedPratilipiList = ko.observableArray();
 
 	this.updatePublishedPratilipiList = function( pratilipiList ) {
-		for( var i = 0; i < pratilipiList.length; i++ )
-			self.publishedPratilipiList.push( ko.mapping.fromJS( pratilipiList[i] ) );
+		for( var i = 0; i < pratilipiList.length; i++ ) {
+			var pratilipi = pratilipiList[i];
+			pratilipi[ "author" ] = { "authorId": self.author.authorId(), "name": "" };
+			self.publishedPratilipiList.push( ko.mapping.fromJS( pratilipi ) );
+		}
 	};
 
 	this.updateDraftedPratilipiList = function( pratilipiList ) {
-		for( var i = 0; i < pratilipiList.length; i++ )
-			self.draftedPratilipiList.push( ko.mapping.fromJS( pratilipiList[i] ) );
+		for( var i = 0; i < pratilipiList.length; i++ ) {
+			var pratilipi = pratilipiList[i];
+			pratilipi[ "author" ] = { "authorId": self.author.authorId(), "name": "" };
+			self.draftedPratilipiList.push( ko.mapping.fromJS( pratilipi ) );
+		}
 	};
 
 

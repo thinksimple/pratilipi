@@ -1,54 +1,52 @@
-<div class="pratilipi-author-info">
-	<div class="mdl-card mdl-card-border mdl-cell mdl-cell--8-col-tablet mdl-cell--9-col mobile-card">
-		<img class="author-cover-image" data-bind="attr: { 'src': author.coverImageUrl(), 'alt': author.name() }" />
-		<div class="author-meta-holder">
-			<div class="author-profile-image-holder">
-				<img class="author-profile-image" data-bind="attr: { 'src': getImageUrl( author.profileImageUrl(), 200 ), 'alt': author.name() }" />
-			</div>
-			<div class="author-meta">
-				<div class="first-line">
-					<div class="author-name-desktop material-heading" data-bind="text: author.name()"></div>
-					<div class="pull-right">
-						<button data-bind="{ text: userAuthor.following() ? '${ _strings.author_unfollow }' : '${ _strings.author_follow }',
-												click: followOrUnfollowAuthor,
-												disable: followRequestOnFlight() }" 
-								class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-button-margin">
-						</button>
-						<button data-bind="click: shareAuthor"
-								class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-button-margin small-button">
-							<i class="material-icons material-icons-16">share</i>
-						</button>
-					</div>
-				</div>
-				<div class="author-summary-desktop" data-bind="visible: author.summary() != null">
-					<pratilipi-see-more params="{ originalText: author.summary() }"></pratilipi-see-more>
-				</div>
-			</div>
+<div class="pratilipi-author-info mdl-card mdl-card-border mdl-cell mdl-cell--8-col-tablet mdl-cell--9-col mobile-card">
+	<img class="author-cover-image" data-bind="attr: { 'src': author.coverImageUrl(), 'alt': author.name() }" />
+	<div class="author-meta-holder">
+		<div class="author-profile-image-holder">
+			<img class="author-profile-image" data-bind="attr: { 'src': getImageUrl( author.profileImageUrl(), 200 ), 'alt': author.name() }" />
 		</div>
-		<div class="author-meta-holder-mobile">
-			<div class="author-name-mobile material-heading" data-bind="text: author.name()"></div>
-			<div class="author-summary-mobile" data-bind="visible: author.summary() != null">
+		<div class="author-meta">
+			<div class="first-line">
+				<div class="author-name-desktop material-heading" data-bind="text: author.name()"></div>
+				<div class="pull-right">
+					<button data-bind="{ text: userAuthor.following() ? '${ _strings.author_unfollow }' : '${ _strings.author_follow }',
+											click: followOrUnfollowAuthor,
+											disable: followRequestOnFlight() }" 
+							class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-button-margin">
+					</button>
+					<button data-bind="click: shareAuthor"
+							class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-button-margin small-button">
+						<i class="material-icons material-icons-16">share</i>
+					</button>
+				</div>
+			</div>
+			<div class="author-summary-desktop" data-bind="visible: author.summary() != null">
 				<pratilipi-see-more params="{ originalText: author.summary() }"></pratilipi-see-more>
+				<div class="author-read-count-holder material-subtitle-1"
+					data-bind="text: formatReadCount( author.totalReadCount() ) + ' ' + '${ _strings.author_count_reads }'"></div>
 			</div>
 		</div>
-		<div class="mdl-cell mdl-cell--12-col padding-zero"><hr class="margin-zero"></div>
-		<div class="mdl-cell mdl-cell--12-col padding-zero mdl-grid author-stats-holder text-center">
-			<div class="mdl-cell mdl-cell--3-col">
-				<div class="material-body-1" data-bind="text: author.contentPublished()"></div>
-				<div class="material-body-2">${ _strings.author_published_works }</div>
-			</div>
-			<div class="mdl-cell mdl-cell--3-col">
-				<div class="material-body-1" data-bind="text: formatReadCount( author.totalReadCount() )"></div>
-				<div class="material-body-2">${ _strings.author_count_reads }</div>
-			</div>
-			<div class="mdl-cell mdl-cell--3-col">
-				<div class="material-body-1" data-bind="text: author.followCount()"></div>
-				<div class="material-body-2">${ _strings.author_followers_count }</div>
-			</div>
-			<div class="mdl-cell mdl-cell--3-col">
-				<div class="material-body-1">&nbsp;</div>
-				<div class="material-body-2">${ _strings.author_following_count }</div>
-			</div>
+	</div>
+	<div class="author-meta-holder-mobile">
+		<div class="author-name-mobile material-heading" data-bind="text: author.name()"></div>
+		<div class="author-summary-mobile" data-bind="visible: author.summary() != null">
+			<pratilipi-see-more params="{ originalText: author.summary() }"></pratilipi-see-more>
+			<div class="author-read-count-holder material-subtitle-1"
+					data-bind="text: formatReadCount( author.totalReadCount() ) + ' ' + '${ _strings.author_count_reads }'"></div>
+		</div>
+	</div>
+	<div class="mdl-cell mdl-cell--12-col padding-zero"><hr class="margin-zero"></div>
+	<div class="mdl-cell mdl-cell--12-col padding-zero mdl-grid author-stats-holder text-center">
+		<div class="mdl-cell mdl-cell--4-col">
+			<div class="material-body-1" data-bind="text: author.contentPublished()"></div>
+			<div class="material-body-2">${ _strings.author_published_works }</div>
+		</div>
+		<div class="mdl-cell mdl-cell--4-col">
+			<div class="material-body-1" data-bind="text: author.followCount()"></div>
+			<div class="material-body-2">${ _strings.author_followers_count }</div>
+		</div>
+		<div class="mdl-cell mdl-cell--4-col">
+			<div class="material-body-1">&nbsp;</div>
+			<div class="material-body-2">${ _strings.author_following_count }</div>
 		</div>
 	</div>
 </div>
