@@ -7,7 +7,7 @@
 			</div>
 			<div class="author-meta">
 				<div class="first-line">
-					<div class="material-heading author-name" data-bind="text: author.name()"></div>
+					<div class="author-name-desktop material-heading" data-bind="text: author.name()"></div>
 					<div class="pull-right">
 						<button data-bind="{ text: userAuthor.following() ? '${ _strings.author_unfollow }' : '${ _strings.author_follow }',
 												click: followOrUnfollowAuthor,
@@ -20,28 +20,34 @@
 						</button>
 					</div>
 				</div>
-				<div class="second-line material-subtitle-1" data-bind="visible: author.summary() != null">
-					<pratilipi-see-more params="{ originalText: author.summary(), uniqueName: 'author-summary' }"></pratilipi-see-more>
+				<div class="author-summary-desktop" data-bind="visible: author.summary() != null">
+					<pratilipi-see-more params="{ originalText: author.summary() }"></pratilipi-see-more>
 				</div>
+			</div>
+		</div>
+		<div class="author-meta-holder-mobile">
+			<div class="author-name-mobile material-heading" data-bind="text: author.name()"></div>
+			<div class="author-summary-mobile" data-bind="visible: author.summary() != null">
+				<pratilipi-see-more params="{ originalText: author.summary() }"></pratilipi-see-more>
 			</div>
 		</div>
 		<div class="mdl-cell mdl-cell--12-col padding-zero"><hr class="margin-zero"></div>
 		<div class="mdl-cell mdl-cell--12-col padding-zero mdl-grid author-stats-holder text-center">
 			<div class="mdl-cell mdl-cell--3-col">
-				<div class="material-title" data-bind="text: author.contentPublished()"></div>
-				<div class="material-subtitle-2">${ _strings.author_published_works }</div>
+				<div class="material-body-1" data-bind="text: author.contentPublished()"></div>
+				<div class="material-body-2">${ _strings.author_published_works }</div>
 			</div>
 			<div class="mdl-cell mdl-cell--3-col">
-				<div class="material-title" data-bind="text: author.totalReadCount()"></div>
-				<div class="material-subtitle-2">${ _strings.author_count_reads }</div>
+				<div class="material-body-1" data-bind="text: formatReadCount( author.totalReadCount() )"></div>
+				<div class="material-body-2">${ _strings.author_count_reads }</div>
 			</div>
 			<div class="mdl-cell mdl-cell--3-col">
-				<div class="material-title" data-bind="text: author.followCount()"></div>
-				<div class="material-subtitle-2">${ _strings.author_followers_count }</div>
+				<div class="material-body-1" data-bind="text: author.followCount()"></div>
+				<div class="material-body-2">${ _strings.author_followers_count }</div>
 			</div>
 			<div class="mdl-cell mdl-cell--3-col">
-				<div class="material-title">&nbsp;</div>
-				<div class="material-subtitle-2">${ _strings.author_following_count }</div>
+				<div class="material-body-1">&nbsp;</div>
+				<div class="material-body-2">${ _strings.author_following_count }</div>
 			</div>
 		</div>
 	</div>

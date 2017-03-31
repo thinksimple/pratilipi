@@ -11,12 +11,15 @@ function( params ) {
 	/* Follow/Unfollow Author */
 	this.followRequestOnFlight = ko.observable( false );
 	this.followOrUnfollowAuthor = function() {
+		if( appViewModel.user.isGuest() ) {
+			goToLoginPage( "action", "FOLLOW" );
+			return;
+		}
 		if( self.followRequestOnFlight() ) 
 			return;
 		self.followRequestOnFlight( true );
 
 		ToastUtil.toast( "${ _strings.success_generic_message }" );
-
 		var switchState = function() {
 			self.updateAuthor( { "followCount": self.userAuthor.following() ? self.author.followCount() - 1 : self.author.followCount() + 1 } );
 			self.updateUserAuthor( { "following": ! self.userAuthor.following() } );

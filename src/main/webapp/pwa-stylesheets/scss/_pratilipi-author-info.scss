@@ -1,30 +1,55 @@
 .pratilipi-author-info {
+
+	$author_image_desktop_dimension: 200;
+	$author_image_mobile_dimension: 120;
+
 	.author-cover-image {
 		max-width: 100%;
 	}
+
 	.author-meta-holder {
-		min-height: 200px;
-		width: 100%;
-		margin-top: -100px;
+
 		@include css-prefix( 'display', 'flex' );
 		@include css-prefix( 'flex-direction', 'row' );
+		width: 100%;
+
+		min-height: $author_image_desktop_dimension + px;
+		margin-top: -($author_image_desktop_dimension/2) + px;
+
+		@media only screen and (max-width: 1024px) {
+			min-height: $author_image_mobile_dimension + px;
+			margin-top: -($author_image_mobile_dimension/2) + px;
+		}
+
 		.author-profile-image-holder {
 			padding: 0 16px;
 			img.author-profile-image {
 				@include css-prefix( 'border-radius', 50% );
-				width: 200px;
-				height: 200px;
+				width: $author_image_desktop_dimension + px;
+				height: $author_image_desktop_dimension + px;
+				@media only screen and (max-width: 1024px) {
+					width: $author_image_mobile_dimension + px;
+					height: $author_image_mobile_dimension + px;
+				}
 			}
 		}
+
 		.author-meta {
 			flex-grow: 1;
 			margin-right: 16px;
-			margin-top: 100px;
+			margin-top: ($author_image_desktop_dimension/2) + px;
+			@media only screen and (max-width: 1024px) {
+				margin-top: ($author_image_mobile_dimension/2) + px;
+				margin-right: 0;
+			}
 			.first-line {
 				height: 36px;
 				padding: 8px 0;
-				.author-name {
+				.author-name-desktop {
 					display: inline-block;
+					@media only screen and (max-width: 1024px) {
+						display: none;
+					}
 				}
 				.small-button {
 				    min-width: 36px;
@@ -33,7 +58,30 @@
 			}
 		}
 	}
+
+	.author-meta-holder-mobile {
+		@media only screen and (min-width: 1025px) {
+			display: none;
+		}
+		padding: 8px 16px;
+		.author-name-mobile {
+			margin-bottom: 16px;
+		}
+		.author-summary-mobile {
+		}
+	}
+
+	.author-summary-desktop {
+		@media only screen and (max-width: 1024px) {
+			display: none;
+		}
+	}
+
 	.author-stats-holder {
 		min-height: 64px;
+		div {
+			@include css-prefix( 'flex-grow', '1' );
+		}
 	}
+
 }
