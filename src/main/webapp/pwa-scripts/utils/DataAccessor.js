@@ -28,6 +28,7 @@ var DataAccessor = function() {
 	var VOTE_API = "/vote";
 	var INIT_API = "/init?_apiVer=2";
 	var INIT_BANNER_LIST_API = "/init/banner/list";
+	var USER_AUTHOR_FOLLOW_LIST_API = "/userauthor/follow/list";
 
 	var request = function( name, api, params ) {
 		return {
@@ -225,6 +226,28 @@ var DataAccessor = function() {
 	this.getHomePageBanners = function( aCallBack ) {
 		httpUtil.get( API_PREFIX + INIT_BANNER_LIST_API, 
 				{ "language": "${ language }" },
+				function( response, status ) { processGetResponse( response, status, aCallBack ) } );
+	};
+
+	this.getAuthorFollowers = function( authorId, cursor, offset, resultCount, aCallBack ) {
+		if( authorId == null ) return;
+		var params = { "authorId": authorId };
+		if( cursor != null ) params[ "cursor" ] = cursor;
+		if( offset != null ) params[ "offset" ] = offset;
+		if( resultCount != null ) params[ "resultCount" ] = resultCount;
+		httpUtil.get( API_PREFIX + USER_AUTHOR_FOLLOW_LIST_API, 
+				params,
+				function( response, status ) { processGetResponse( response, status, aCallBack ) } );
+	};
+
+	this.getUserFollowing = function( userId, cursor, offset, resultCount, aCallBack ) {
+		if( userId == null ) return;
+		var params = { "userId": userId };
+		if( cursor != null ) params[ "cursor" ] = cursor;
+		if( offset != null ) params[ "offset" ] = offset;
+		if( resultCount != null ) params[ "resultCount" ] = resultCount;
+		httpUtil.get( API_PREFIX + USER_AUTHOR_FOLLOW_LIST_API, 
+				params,
 				function( response, status ) { processGetResponse( response, status, aCallBack ) } );
 	};
 

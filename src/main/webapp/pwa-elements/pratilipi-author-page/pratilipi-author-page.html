@@ -4,6 +4,11 @@
 
 <div data-bind="visible: initialDataLoaded()" style="flex-grow: 1;">
 	<!-- ko component: {
+		name: "pratilipi-author-follows",
+		params: { author: author } 
+	} -->
+	<!-- /ko -->
+	<!-- ko component: {
 		name: "pratilipi-author-info",
 		params: { author: author, 
 					updateAuthor: $data.updateAuthor,
