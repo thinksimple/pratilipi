@@ -14,7 +14,7 @@
 /friendship    സൗഹൃദം             Analytics#categoryName::friendship      App#imageName::event_friendship.jpg          App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"friendship" }
 /love          പ്രണയം                  Analytics#categoryName::romance         App#imageName::romance.jpg          App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"love" }
 /mystery       ദുരൂഹം                 Analytics#categoryName::mystery   App#imageName::suspence.jpg         App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"mystery" }
-/satire        ആക്ഷേപഹാസ്യം        Analytics#categoryName::satire        App#imageName::satire.jpg          App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"satire" }  
+/satire-humour നര്‍മം / ആക്ഷേപ ഹാസ്യം        Analytics#categoryName::humour        App#imageName::comedy.jpg          App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"satire-humour" }  
 /lives         ജീവിതങ്ങള്‍              Analytics#categoryName::life        App#imageName::life.jpg           App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"lives" }
 /women         സ്ത്രീ                   Analytics#categoryName::women       App#imageName::women.jpg             App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"women" }
 /series        തുടര്‍ക്കഥകള്‍           Analytics#categoryName::series        App#imageName::series.jpg         App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"series" }
