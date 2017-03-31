@@ -48,7 +48,7 @@ function() {
 	};
 
 	this.searchQueryObserver = ko.computed( function() {
-		appViewModel.searchQuery()
+		appViewModel.searchQuery();
 		setTimeout( function() {
 			self.searchQueryUpdated( appViewModel.searchQuery() );
 		}, 0 );
