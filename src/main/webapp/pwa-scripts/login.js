@@ -195,9 +195,13 @@ function ViewModel() {
 			message = "${ _strings.user_login_to_view_library }";
 		else if( type == "WRITE" )
 			message = "${ _strings.write_on_desktop_only }";
-		ToastUtil.toastUp( message );
-		setTimeout( function(){ ToastUtil.toastDown(); }, 5000 );
-		/* Hack: Mdl toast doesn't work properly when called toast function. */
+		else if( type == "FOLLOW" )
+			message = "${ _strings.user_login_to_follow }";
+		if( message != null ) {
+			ToastUtil.toastUp( message );
+			setTimeout( function(){ ToastUtil.toastDown(); }, 5000 );
+			/* Hack: Mdl toast doesn't work properly when called toast function. */
+		}
 	}
 
 }

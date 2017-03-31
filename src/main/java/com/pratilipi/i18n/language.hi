@@ -186,6 +186,7 @@ user_no_following			= फ़िलहाल आप किसी को फॉलो
 user_login_to_view_following = आपने जिनको फॉलो किया उन्हें देखने के लिए कृपया लॉग इन करें। 
 user_login_to_view_library = अपनी लाइब्रेरी में अनगिनत किताबें जोड़ने के लिए कृपया लॉग-इन करें  
 user_login_to_view_notifications = आप जिन लोगों को फॉलो करते हैं, उनकी सूचनायें पाने के लिए कृपया लॉग-इन करें  
+user_login_to_follow		= Please login to follow this author 
 
 # My Account popup
 edit_account_heading		= आपका अकाउंट 

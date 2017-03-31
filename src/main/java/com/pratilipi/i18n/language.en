@@ -185,7 +185,8 @@ user_login_to_view_followers = Please login to view your followers!
 user_no_following			= Sorry! You're not following anyone!
 user_login_to_view_following = Please login to view the people you're following!
 user_login_to_view_library = Please login to save unlimited books to your Library!
-user_login_to_view_notifications = Please login to get Notifications from people you Follow! 
+user_login_to_view_notifications = Please login to get Notifications from people you Follow!
+user_login_to_follow		= Please login to follow this author 
 
 # My Account popup
 edit_account_heading		= Edit My Account

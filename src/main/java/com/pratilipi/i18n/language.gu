@@ -186,6 +186,7 @@ user_no_following			= અત્યારે  આપ કોઈને ફોલો
 user_login_to_view_following = આપ જેમને ફોલો કરી રહ્યા છો તેમના વિશે જાણવા લોગ ઇન કરો!
 user_login_to_view_library = આપની  લાઈબ્રેરીમાં અગણિત પુસ્તકો ઉમેરવા માટે લોગ ઇન કરો 
 user_login_to_view_notifications = આપ જેમને ફોલો કરી રહ્યા છો,તેની સૂચનાઓ જોવા માટે લોગ ઇન કરો   
+user_login_to_follow		= Please login to follow this author 
 
 # My Account popup
 edit_account_heading		= પ્રોફાઈલમાં બદલાવ ઈચ્છો છો? 

@@ -186,6 +186,7 @@ user_no_following			= দুঃখিত! আপনি কাউকে অনু
 user_login_to_view_following = আপনার অনুসরণকারীদের দেখার জন্য দয়াকরে লগ ইন করুন।
 user_login_to_view_library = অসংখ্য বই লাইব্রেরীতে যোগ করার জন্য দয়াকরে লগ-ইন করুন 
 user_login_to_view_notifications = বআপনি যাদের অনুসরণ করছেন ,তাদের তথ্য পাওয়ার জন্য দয়াকরে লগ-ইন করুন 
+user_login_to_follow		= Please login to follow this author 
 
 # My Account popup
 edit_account_heading		=  আপনার একাউন্ট
