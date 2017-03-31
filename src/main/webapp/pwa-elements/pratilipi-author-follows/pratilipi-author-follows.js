@@ -48,14 +48,14 @@ function( params ) {
 
 	this.updateFollowersList = function( userList ) {
 		var processedUserList = processUserList( userList );
-		for( var i = 0; i < processedUserList; i++ )
+		for( var i = 0; i < processedUserList.length; i++ )
 			self.followersList.push( ko.mapping.fromJS( processedUserList[i] ) );
 	};
 
 	this.updateFollowingList = function( authorList ) {
 		var processedAuthorList = processAuthorList( authorList );
-		for( var i = 0; i < processedAuthorList; i++ )
-			self.followersList.push( ko.mapping.fromJS( processedAuthorList[i] ) );
+		for( var i = 0; i < processedAuthorList.length; i++ )
+			self.followingList.push( ko.mapping.fromJS( processedAuthorList[i] ) );
 	};
 
 
@@ -137,14 +137,14 @@ function( params ) {
 	this.authorIdObserver = ko.computed( function() {
 		if( self.author.authorId() == null ) return;
 		setTimeout( function() {
-			console.log( self.author.authorId() );
+			self.loadInitialFollowers();
 		}, 0 );
 	}, this );
 
 	this.authorUserIdObserver = ko.computed( function() {
 		if( self.author.user.userId() == null ) return;
 		setTimeout( function() {
-			console.log( self.author.user.userId() );
+			self.loadInitialFollowing();
 		}, 0 );
 	}, this );
 

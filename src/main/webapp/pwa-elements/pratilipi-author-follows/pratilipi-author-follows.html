@@ -1,1 +1,40 @@
-<div></div>
+<div class="modal common-modal fade" id="pratilipi-author-follows-followers" tabindex="-1" role="dialog" aria-labelledby="pratilipi-author-follows-followers">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button class="mdl-button mdl-js-button mdl-button--icon close" class="close" data-dismiss="modal" aria-label="Close">
+					<i class="material-icons">close</i>
+				</button>
+				<h6 style="margin: 0;" class="material-title">${ _strings.author_followers_heading }</h6>
+			</div>
+			<div class="modal-body" style="padding: 15px;">
+				<ul class="mdl-list" data-bind="foreach: { data: followersList, as: 'follow' }">
+					<li class="mdl-list__item">
+						<div data-bind="text: follow.name()"></div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal common-modal fade" id="pratilipi-author-follows-following" tabindex="-1" role="dialog" aria-labelledby="pratilipi-author-follows-following">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button class="mdl-button mdl-js-button mdl-button--icon close" class="close" data-dismiss="modal" aria-label="Close">
+					<i class="material-icons">close</i>
+				</button>
+				<h6 style="margin: 0;" class="material-title">${ _strings.author_following_heading }</h6>
+			</div>
+			<div class="modal-body" style="padding: 15px;">
+				<ul class="mdl-list" data-bind="foreach: { data: followingList, as: 'follow' }">
+					<li class="mdl-list__item">
+						<div data-bind="text: follow.name()"></div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
