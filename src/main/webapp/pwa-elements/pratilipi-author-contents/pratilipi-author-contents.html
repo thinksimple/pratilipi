@@ -9,7 +9,7 @@
 		</div>
 	</div>
 	<div class="load-more-container mdl-card-border" data-bind="visible: hasMorePublishedContents()">
-		<button data-bind="{ visible: loadingStatePublished() != 'LOADING', click: loadPublishedContents }" 
+		<button data-bind="{ visible: loadingStatePublished() != 'LOADING', click: loadMorePublishedContents }" 
 			class="mdl-button mdl-js-button mdl-button--accent mdl-js-ripple-effect">
 			${ _strings.load_more_contents }
 		</button>

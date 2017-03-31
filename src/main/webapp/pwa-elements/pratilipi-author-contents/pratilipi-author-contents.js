@@ -27,8 +27,6 @@ function( params ) {
 	/* Load Drafted and Published Contents */
 	var publishedCursor = null;
 	var draftedCursor = null;
-	var publishedResultCount = 6;
-	var draftedResultCount = 5;
 
 	/* Loading state */
 	/*
@@ -46,10 +44,10 @@ function( params ) {
 	this.hasMoreDraftedContents = ko.observable( true );
 
 
-	this.loadPublishedContents = function() {
+	this._loadPublishedContents = function( resultCount ) {
 		if( self.loadingStatePublished() == "LOADING" ) return;
 		self.loadingStatePublished( "LOADING" );
-		dataAccessor.getPratilipiListByAuthor( self.author.authorId(), "PUBLISHED", publishedCursor, null, publishedResultCount,
+		dataAccessor.getPratilipiListByAuthor( self.author.authorId(), "PUBLISHED", publishedCursor, null, resultCount,
 				function( pratilipiListResponse ) {
 					if( pratilipiListResponse == null ) {
 						self.loadingStatePublished( "FAILED" );
@@ -59,14 +57,14 @@ function( params ) {
 					self.updatePublishedPratilipiList( pratilipiList );
 					publishedCursor = pratilipiListResponse.cursor;
 					self.loadingStatePublished( self.publishedPratilipiList().length > 0 || pratilipiList.length > 0 ? "LOADED" : "LOADED_EMPTY" );
-					self.hasMorePublishedContents( pratilipiList.length == publishedResultCount );
+					self.hasMorePublishedContents( pratilipiList.length == resultCount );
 		});
 	};
 
-	this.loadDraftedContents = function() {
+	this._loadDraftedContents = function( resultCount ) {
 		if( self.loadingStateDrafted() == "LOADING" ) return;
 		self.loadingStateDrafted( "LOADING" );
-		dataAccessor.getPratilipiListByAuthor( self.author.authorId(), "DRAFTED", draftedCursor, null, draftedResultCount,
+		dataAccessor.getPratilipiListByAuthor( self.author.authorId(), "DRAFTED", draftedCursor, null, resultCount,
 				function( pratilipiListResponse ) {
 					if( pratilipiListResponse == null ) {
 						self.loadingStateDrafted( "FAILED" );
@@ -76,8 +74,31 @@ function( params ) {
 					self.updateDraftedPratilipiList( pratilipiList );
 					draftedCursor = pratilipiListResponse.cursor;
 					self.loadingStateDrafted( self.draftedPratilipiList().length > 0 || pratilipiList.length > 0 ? "LOADED" : "LOADED_EMPTY" );
-					self.hasMoreDraftedContents( pratilipiList.length == publishedResultCount );
+					self.hasMoreDraftedContents( pratilipiList.length == resultCount );
 		});
+	};
+
+
+	/* Constants */
+	var initialPublishedResultCount = 6;
+	var subsequentPublishedResultCount = 6;
+	var initialDraftedResultCount = 5;
+	var subsequentDraftedResultCount = 6;
+
+	this.loadInitialPublishedContents = function() {
+		self._loadPublishedContents( initialPublishedResultCount );
+	};
+
+	this.loadMorePublishedContents =  function() {
+		self._loadPublishedContents( subsequentPublishedResultCount );
+	};
+
+	this.loadInitialDraftedContents = function() {
+		self._loadDraftedContents( initialDraftedResultCount );
+	};
+
+	this.loadMoreDraftedContents =  function() {
+		self._loadDraftedContents( subsequentDraftedResultCount );
 	};
 
 
@@ -86,9 +107,9 @@ function( params ) {
 		if( self.author.authorId() == null ) return;
 		setTimeout( function() {
 			if( self.author.hasAccessToUpdate() ) {
-				self.loadDraftedContents();
+				self.loadInitialDraftedContents();
 			}
-			self.loadPublishedContents();
+			self.loadInitialPublishedContents();
 		}, 0 );
 	}, this );
 
