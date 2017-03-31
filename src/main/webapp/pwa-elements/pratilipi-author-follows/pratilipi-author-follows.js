@@ -60,12 +60,52 @@ function( params ) {
 
 
 	/* Fetching followers and following list */
+	var followersCursor = null;
+	var followingCursor = null;
+
+	this.isLoadingFollowers = ko.observable( false );
+	this.isLoadingFollowing = ko.observable( false );
+
+	this.hasMoreFollowers = ko.observable( true );
+	this.hasMoreFollowing = ko.observable( true );
+
+	this.numberFoundFollowers = ko.observable();
+	this.numberFoundFollowing = ko.observable();
+
 	this._loadFollowersList = function( resultCount ) {
-		
+		if( self.isLoadingFollowers() ) return;
+		self.isLoadingFollowers( true );
+		dataAccessor.getAuthorFollowers( self.author.authorId(), followersCursor, null, resultCount,
+			function( followersListResponse ) {
+				if( followersListResponse == null ) {
+					self.isLoadingFollowers( false );
+					return;
+				}
+				var userList = followersListResponse.userList;
+				self.updateFollowersList( userList );
+				followersCursor = followersListResponse.cursor;
+				self.numberFoundFollowers( followersListResponse.numberFound );
+				self.isLoadingFollowers( false );
+				self.hasMoreFollowers( userList.length == resultCount );
+		});
 	};
 
 	this._loadFollowingList = function( resultCount ) {
-		
+		if( self.isLoadingFollowing() ) return;
+		self.isLoadingFollowing( true );
+		dataAccessor.getUserFollowing( self.author.user.userId(), followingCursor, null, resultCount,
+				function( followingListResponse ) {
+					if( followingListResponse == null ) {
+						self.isLoadingFollowing( false );
+						return;
+					}
+					var authorList = followingListResponse.authorList;
+					self.updateFollowingList( authorList );
+					followingCursor = followingListResponse.cursor;
+					self.numberFoundFollowing( followingListResponse.numberFound );
+					self.isLoadingFollowing( false );
+					self.hasMoreFollowing( authorList.length == resultCount );
+			});
 	};
 
 
