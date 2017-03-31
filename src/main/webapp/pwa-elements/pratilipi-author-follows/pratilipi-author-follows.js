@@ -16,7 +16,8 @@ function( params ) {
 				followCount: user.author.followCount,
 				imageUrl: user.profileImageUrl,
 				following: user.author.following,
-				canFollow: user.userId != appViewModel.user.userId() 
+				canFollow: user.userId != appViewModel.user.userId(),
+				requestOnFlight: false /* Hack: To manipulate */
 			};
 			followList.push( follow );
 		}
@@ -35,7 +36,8 @@ function( params ) {
 					followCount: author.followCount,
 					imageUrl: author.imageUrl,
 					following: author.following,
-					canFollow: author.user.userId != appViewModel.user.userId()
+					canFollow: author.user.userId != appViewModel.user.userId(),
+					requestOnFlight: false /* Hack: To manipulate */
 			};
 			followList.push( follow );
 		}
@@ -120,7 +122,7 @@ function( params ) {
 		self._loadFollowersList( initialFollowersResultCount );
 	};
 
-	this.loadMoreFollowers =  function() {
+	this.loadMoreFollowers = function() {
 		self._loadFollowersList( subsequentFollowersResultCount );
 	};
 
@@ -132,6 +134,35 @@ function( params ) {
 		self._loadFollowingList( subsequentFollowingResultCount );
 	};
 
+
+	/* Follow / UnFollow Author */
+	this.followOrUnfollowAuthor = function( vm ) {
+		if( appViewModel.user.isGuest() ) {
+			goToLoginPage( null, { "message": "FOLLOW" } );
+			return;
+		}
+		if( ! vm.canFollow() ) 
+			return;
+		if( vm.requestOnFlight() ) 
+			return;
+		vm.requestOnFlight( true );
+
+		ToastUtil.toast( "${ _strings.success_generic_message }" );
+		var switchState = function() {
+			vm.followCount( vm.following() ? vm.followCount() - 1 : vm.followCount() + 1 );
+			vm.following( ! vm.following() );
+		};
+
+		switchState();
+		dataAccessor.followOrUnfollowAuthor( vm.authorId(), vm.following(), 
+			function( userAuthor ) {
+				vm.requestOnFlight( false );
+			}, function( error ) {
+				vm.requestOnFlight( false );
+				switchState();
+				ToastUtil.toast( error[ "message" ] != null ? error[ "message" ] : "${ _strings.server_error_message }", 3000, true );
+		});
+	};
 
 	/* Computed Observables */
 	this.authorIdObserver = ko.computed( function() {
