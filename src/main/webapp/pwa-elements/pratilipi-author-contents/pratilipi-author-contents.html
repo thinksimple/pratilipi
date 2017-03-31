@@ -1,0 +1,28 @@
+<div class="mdl-cell mdl-cell--8-col-tablet mdl-cell--9-col mobile-card">
+	<div data-bind="foreach: { data: publishedPratilipiList, as: 'pratilipi' }" class="mdl-grid pratilipi-list-grid js-pratilipi-list-grid mobile-card">
+		<div class="mdl-cell mdl-cell--12-col-phone mdl-cell--12-col-tablet mdl-cell--12-col-desktop mobile-card pratilipi-list-card">
+			<!-- ko component: {
+				name: "pratilipi-pratilipi-card",
+				params: { pratilipi: pratilipi }
+			} -->
+			<!-- /ko -->
+		</div>
+	</div>
+	<div class="load-more-container mdl-card-border" data-bind="visible: hasMorePublishedContents()">
+		<button data-bind="{ visible: loadingStatePublished() != 'LOADING', click: loadPublishedContents }" 
+			class="mdl-button mdl-js-button mdl-button--accent mdl-js-ripple-effect">
+			${ _strings.load_more_contents }
+		</button>
+		<div data-bind="visible: loadingStatePublished() == 'LOADING'" class="text-center">
+			<span class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></span>
+		</div>
+		<div data-bind="visible: loadingStatePublished() == 'LOADED_EMPTY'">
+			${ _strings.author_no_contents_published }
+		</div>
+		<div style="margin: 25px 15px;" data-bind="visible: loadingState() == 'FAILED'">
+			<a style="cursor: pointer; color: #555;" data-bind="click: loadPublishedContents">
+				Failed to load! Click here to load more!
+			</a> 
+		</div>
+	</div>
+</div>
