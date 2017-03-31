@@ -119,7 +119,7 @@ function( params ) {
 	/* Follow Author */
 	this.followAuthor = function() {
 		if( appViewModel.user.isGuest() ) {
-			goToLoginPage();
+			goToLoginPage( null, { "message": "FOLLOW" } );
 		} else {
 			var following = self.userAuthor.following();
 			self.updateUserAuthor( { "following": ! following } );

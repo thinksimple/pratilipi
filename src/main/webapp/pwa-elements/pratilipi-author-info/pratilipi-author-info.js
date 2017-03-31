@@ -12,7 +12,7 @@ function( params ) {
 	this.followRequestOnFlight = ko.observable( false );
 	this.followOrUnfollowAuthor = function() {
 		if( appViewModel.user.isGuest() ) {
-			goToLoginPage( "action", "FOLLOW" );
+			goToLoginPage( null, { "message": "FOLLOW" } );
 			return;
 		}
 		if( self.followRequestOnFlight() ) 
