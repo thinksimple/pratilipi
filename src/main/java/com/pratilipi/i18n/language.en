@@ -429,6 +429,10 @@ android_banner_profile_3 = Manage your contents and network
 pratilipi_app_launched_website_strip = Pratilipi App Launched : Download unlimited books.
 pratilipi_app_click_download = Download the App
 
+pratilipi_android_application = Pratilipi Android Application
+read_stories_without_internet = Read your favorite stories without the internet
+android_download = Download
+
 # Notification Settings
 notification_settings = Notification Settings
 email_frequency = Email Frequency

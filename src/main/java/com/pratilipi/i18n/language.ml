@@ -428,6 +428,10 @@ android_banner_profile_3 = നിങ്ങളുടെ രചനകളും ന
 pratilipi_app_launched_website_strip = പ്രതിലിപി ആപ്പ് പുറത്തിറങ്ങിയിരിക്കുന്നു: ഒട്ടേറെ രചനകള്‍ ഡൌണ്‍ലോഡ് ചെയ്യൂ. 
 pratilipi_app_click_download = ആപ്പ് ഡൗണ്‍ലോഡ് ചെയ്യൂ 
 
+pratilipi_android_application = പ്രതിലിപി ആന്‍ഡ്രോയിഡ് ആപ്പ്
+read_stories_without_internet = വായിക്കൂ, നിങ്ങളുടെ പ്രിയ കഥകള്‍...
+android_download = ഡൗണ്‍ലോഡ് ചെയ്യൂ
+
 # Notification Settings
 notification_settings = നോട്ടിഫിക്കേഷന്‍ സെറ്റിംഗ്സ്
 email_frequency = ഇമെയില്‍ അയക്കേണ്ട രീതി

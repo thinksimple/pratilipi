@@ -428,6 +428,10 @@ android_banner_profile_3 = உங்கள் படைப்புகள் ம
 pratilipi_app_launched_website_strip = பிரதிலிபியின் கைபேசி செயலி வெளியாகிவிட்டது : எண்ணிலடங்கா புத்தகங்களை டவுன்லோட் செய்யலாம்.
 pratilipi_app_click_download = செயலியை தரவிறக்கம் செய்யுங்கள்
 
+pratilipi_android_application = பிரதிலிபி கைபேசி செயலி
+read_stories_without_internet = எண்ணிலடங்கா கதைகளை இலவசமாகப் படிக்க
+android_download = டவுண்லோட் செய்ய
+
 # Notification Settings
 notification_settings = அறிவிப்புகள் செட்டிங்ஸ்
 email_frequency = மின்னஞ்சல் எப்போதெல்லாம் அனுப்பலாம்?
