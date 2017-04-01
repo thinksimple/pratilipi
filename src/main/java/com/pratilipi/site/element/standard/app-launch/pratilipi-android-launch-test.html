@@ -15,11 +15,11 @@
 	      <div style="display: flex">
 	        <img style="width: 44px; height: 44px; align-self: center;" onclick="androidBannerClicked(); window.open( 'https://play.google.com/store/apps/details?id=com.pratilipi.mobile.android&referrer=utm_source%3Dpratilipi_main_web%26utm_medium%3Dweb_bottom_strip%26utm_campaign%3Dapp_download' );" src="http://public.pratilipi.com/pratilipi-logo/png/Logo-2C-RGB-80px.png"/>
 	        <div class="">
-	          <h4 style="margin-top: 5px;margin-bottom: 0;font-size: 20px;" onclick="androidBannerClicked(); window.open( 'https://play.google.com/store/apps/details?id=com.pratilipi.mobile.android&referrer=utm_source%3Dpratilipi_main_web%26utm_medium%3Dweb_bottom_strip%26utm_campaign%3Dapp_download' );">${ _strings.pratilipi_android_application }</h4>
+	          <h4 style="margin-top: 5px;margin-bottom: 0;font-size: <#if language == "TAMIL" || language == "MALAYALAM">16px;<#else>20px;</#if>" onclick="androidBannerClicked(); window.open( 'https://play.google.com/store/apps/details?id=com.pratilipi.mobile.android&referrer=utm_source%3Dpratilipi_main_web%26utm_medium%3Dweb_bottom_strip%26utm_campaign%3Dapp_download' );">${ _strings.pratilipi_android_application }</h4>
 	          <img style="width: 90px;height: 18px;"  src="http://public.pratilipi.com/images/Stars-for-App-Install-Strip.png" alt="">
 	        </div>
 	      </div>
-	      <h5 style="color: rgba(0, 0, 0, 0.541);font-size: 16px;">${ _strings.read_stories_without_internet }</h5>
+	      <h5 style="color: rgba(0, 0, 0, 0.541);font-size: <#if language == "TAMIL">13px;<#else>16px;</#if>">${ _strings.read_stories_without_internet }</h5>
           <button type="button" name="button" class="pratilipi-light-blue-button" style="width: 100%;font-size: 16px;border: 0;background: #00a651;color: white;text-shadow: none;" onclick="androidBannerClicked(); window.open( 'https://play.google.com/store/apps/details?id=com.pratilipi.mobile.android&referrer=utm_source%3Dpratilipi_main_web%26utm_medium%3Dweb_bottom_strip%26utm_campaign%3Dapp_download' );">${ _strings.android_download }</button>
 	    </div>  		
 	</template>
