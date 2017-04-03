@@ -1,13 +1,19 @@
 function( params ) {
 	var self = this;
 
+	var pratilipiWriteDialog = $( "#pratilipiWrite" );
 	var openWriteDialog = function() {
-		$( "#pratilipiWrite" ).modal();
+		pratilipiWriteDialog.modal();
 	};
 
 	var closeWriteDialog = function() {
-		$( "#pratilipiWrite" ).modal( 'hide' );
+		appViewModel.pratilipiWriteAuthorId( null );
+		pratilipiWriteDialog.modal( 'hide' );
 	};
+
+	pratilipiWriteDialog.on( 'hidden.bs.modal', function(e) {
+		closeWriteDialog();
+	});
 
 	this.search = function( formElement ) {
 		if( appViewModel.searchQuery() && appViewModel.searchQuery().trim().length && window.location.pathname != "/search" )

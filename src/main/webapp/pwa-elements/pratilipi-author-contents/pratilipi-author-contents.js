@@ -102,6 +102,12 @@ function( params ) {
 	};
 
 
+	/* Create new Draft */
+	this.createNewPratilipi = function() {
+		appViewModel.pratilipiWriteAuthorId( self.author.authorId() );
+		$( "#pratilipiWrite" ).modal();
+	};
+
 	/* Computed Observables */
 	this.authorIdObserver = ko.computed( function() {
 		if( self.author.authorId() == null ) return;
