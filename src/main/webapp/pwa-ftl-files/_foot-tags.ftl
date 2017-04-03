@@ -10,7 +10,7 @@
 	<script src="/pwa-scripts/transliteration-suggester-${ lang }.js?1"></script>
 	<script src="/pwa-scripts/transliteration-app-${ lang }.js?3"></script>
 
-	<script src="/pwa-scripts/scripts-${ lang }.js?81"></script>
+	<script src="/pwa-scripts/scripts-${ lang }.js?82"></script>
 	<script src="/pwa-scripts/app-${ lang }.js?55"></script>
 
 	<script src="http://public.pratilipi.com/resource-pwa/js/bootstrap.min.js"></script>

@@ -1,14 +1,25 @@
 ko.bindingHandlers.seeMore = {
+	init: function( element, valueAccessor, allBindings, viewModel, bindingContext ) {
+		var p = $( element ).find( "p" );
+        p.text( viewModel.originalText() );
+        setTimeout( function() {
+            var pHeight = p.height();
+            var pAllowedLineHeight = parseFloat( p.css( "line-height" ) ) * 3;
+            var isViewMoreVisible = pHeight > pAllowedLineHeight;
+            viewModel.isViewMoreVisible( isViewMoreVisible );
+            viewModel.maxHeightPx( isViewMoreVisible ? pAllowedLineHeight + 'px' : 'initial' );
+        }, 0 );
+	},
 	update: function( element, valueAccessor, allBindings, viewModel, bindingContext ) {
 		var p = $( element ).find( "p" );
-		p.text( viewModel.originalText() );
-		setTimeout( function() {
-			var pHeight = p.height();
-			var pAllowedLineHeight = parseFloat( p.css( "line-height" ) ) * 3;
-			var isViewMoreVisible = pHeight > pAllowedLineHeight;
-			viewModel.isViewMoreVisible( isViewMoreVisible );
-			viewModel.maxHeightPx( isViewMoreVisible ? pAllowedLineHeight + 'px' : 'initial' );
-		}, 0 );
+        p.text( viewModel.originalText() );
+        setTimeout( function() {
+            var pHeight = p.height();
+            var pAllowedLineHeight = parseFloat( p.css( "line-height" ) ) * 3;
+            var isViewMoreVisible = pHeight > pAllowedLineHeight;
+            viewModel.isViewMoreVisible( isViewMoreVisible );
+            viewModel.maxHeightPx( isViewMoreVisible ? pAllowedLineHeight + 'px' : 'initial' );
+        }, 0 );
 	}
 };
 
