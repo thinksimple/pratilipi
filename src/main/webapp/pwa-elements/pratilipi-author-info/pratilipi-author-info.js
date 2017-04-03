@@ -36,6 +36,13 @@ function( params ) {
 		});
 	};
 
+	/* Can Follow */
+	this.canFollow = ko.observable( false );
+	this.authorIdObserver = ko.computed( function() {
+	    if( self.author.authorId() == null ) return;
+    		self.canFollow( appViewModel.user.isGuest() != self.author.authorId() );
+    	}, this );
+
 	/* Share Author */
 	this.shareAuthor = function() {
 		ShareUtil.shareAuthor( ko.mapping.toJS( self.author ) );

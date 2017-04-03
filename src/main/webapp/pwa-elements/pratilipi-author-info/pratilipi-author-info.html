@@ -10,9 +10,14 @@
 				<div class="pull-right">
 					<button data-bind="{ text: userAuthor.following() ? '${ _strings.author_unfollow }' : '${ _strings.author_follow }',
 											click: followOrUnfollowAuthor,
+											visible: canFollow(),
 											disable: followRequestOnFlight() }" 
 							class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-button-margin">
 					</button>
+					<a href="/settings" data-bind="visible: author.hasAccessToUpdate()"
+							class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-button-margin small-button">
+						<i class="material-icons material-icons-16">settings</i>
+					</a>
 					<button data-bind="click: shareAuthor"
 							class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-button-margin small-button">
 						<i class="material-icons material-icons-16">share</i>
