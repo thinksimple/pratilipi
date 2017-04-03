@@ -144,10 +144,11 @@ function( params ) {
 
 		var oldRating = self.userPratilipi.rating();
 		var newRating = userPratilipi.rating;
-		var ratingCount = self.pratilipi.ratingCount();
-		var totalRating = self.pratilipi.averageRating() * self.pratilipi.ratingCount();
+		var ratingCount = self.pratilipi.ratingCount() != null ? self.pratilipi.ratingCount() : 0;
+		var averageRating = self.pratilipi.averageRating() != null ? self.pratilipi.averageRating() : 0;
+		var totalRating =  ratingCount * averageRating;
 
-		if( self.userPratilipi.rating() == null ) { /* Added a rating */
+		if( self.userPratilipi.rating() == 0 ) { /* Added a rating */
 			pratilipi[ "ratingCount" ] = ++ratingCount;
 		}
 
@@ -203,7 +204,15 @@ function( params ) {
 	};
 
 	this.submitReview = function() {
-		self.reviewInput().trim().length > 0 ? self.createOrUpdateReview() : self.deleteReview();
+		/* Not Updated rating, just cleared the review */
+		if( self.ratingInput() == self.userPratilipi.rating() &&
+				self.userPratilipi.review() != null &&
+				self.userPratilipi.review().trim() != "" &&
+				self.reviewInput() != null &&
+				self.reviewInput().trim() == "" )
+			self.deleteReview();
+		else
+			self.createOrUpdateReview();
 	};
 
 
