@@ -45,7 +45,7 @@ function( params ) {
 				"state": "DRAFTED"
 		};
 
-		if( appViewModel.pratilipiWriteAuthorId() != null && appViewModel.pratilipiWriteAuthorId().length > 0 )
+		if( appViewModel.pratilipiWriteAuthorId() != null )
 			pratilipi[ "authorId" ] = appViewModel.pratilipiWriteAuthorId();
 
 		var dataAccessor = new DataAccessor();
