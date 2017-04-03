@@ -28,7 +28,7 @@
 					<i class="material-icons material-icons-16">message</i>
 				</button>
 			</span>
-			<span class="separator"></span>
+			<span class="separator" data-bind="visible: totalCommentCount() > 0"></span>
 			<span class="view-comments-holder">
 				<span class="material-subtitle-2 clickable-element" 
 						data-bind="visible: totalCommentCount() > 0,

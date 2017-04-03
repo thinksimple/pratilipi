@@ -12,7 +12,7 @@
 											click: followOrUnfollowAuthor,
 											visible: canFollow(),
 											disable: followRequestOnFlight() }" 
-							class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-button-margin">
+							class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-button-margin font-m">
 					</button>
 					<a href="/settings" data-bind="visible: author.hasAccessToUpdate()"
 							class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-button-margin small-button">
@@ -42,16 +42,16 @@
 	<div class="mdl-cell mdl-cell--12-col padding-zero"><hr class="margin-zero"></div>
 	<div class="mdl-cell mdl-cell--12-col padding-zero mdl-grid author-stats-holder text-center">
 		<div class="mdl-cell mdl-cell--4-col">
-			<div class="material-body-1" data-bind="text: author.contentPublished()"></div>
-			<div class="material-body-2">${ _strings.author_published_works }</div>
+			<div class="material-subtitle-1" data-bind="text: author.contentPublished()"></div>
+			<div class="material-body-1">${ _strings.author_published_works }</div>
 		</div>
 		<div class="mdl-cell mdl-cell--4-col clickable-element" data-toggle="modal" data-target="#pratilipi-author-follows-followers">
-			<div class="material-body-1" data-bind="text: author.followCount()"></div>
-			<div class="material-body-2">${ _strings.author_followers_count }</div>
+			<div class="material-subtitle-1" data-bind="text: author.followCount()"></div>
+			<div class="material-body-1">${ _strings.author_followers_count }</div>
 		</div>
 		<div class="mdl-cell mdl-cell--4-col clickable-element" data-toggle="modal" data-target="#pratilipi-author-follows-following">
-			<div class="material-body-1">&nbsp;</div>
-			<div class="material-body-2">${ _strings.author_following_count }</div>
+			<div class="material-subtitle-1">&nbsp;</div>
+			<div class="material-body-1">${ _strings.author_following_count }</div>
 		</div>
 	</div>
 </div>

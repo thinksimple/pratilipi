@@ -9,6 +9,10 @@
 		max-width: 100%;
 	}
 
+	.author-read-count-holder {
+		color: rgba(0,0,0,0.54);
+	}
+
 	.author-meta-holder {
 
 		@include css-prefix( 'display', 'flex' );

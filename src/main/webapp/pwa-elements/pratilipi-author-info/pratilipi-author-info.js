@@ -39,9 +39,9 @@ function( params ) {
 	/* Can Follow */
 	this.canFollow = ko.observable( false );
 	this.authorIdObserver = ko.computed( function() {
-	    if( self.author.authorId() == null ) return;
-    		self.canFollow( appViewModel.user.isGuest() != self.author.authorId() );
-    	}, this );
+	    if( self.author.user.userId() == null ) return;
+    	self.canFollow( appViewModel.user.userId() != self.author.user.userId() );
+    }, this );
 
 	/* Share Author */
 	this.shareAuthor = function() {
