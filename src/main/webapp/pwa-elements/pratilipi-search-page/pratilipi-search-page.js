@@ -44,6 +44,7 @@ function() {
 		self.pratilipiList( [] );
 		cursor = null;
 		self.loadingState( null );
+		self.hasMoreContents( true );
 		self.fetchPratilipiList();
 	};
 

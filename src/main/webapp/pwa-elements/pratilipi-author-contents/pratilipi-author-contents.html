@@ -1,14 +1,15 @@
 <div class="pratilipi-author-contents">
 	<div class="mdl-cell mdl-cell--8-col-tablet mdl-cell--9-col mobile-card" style=" margin-top: 0px;">
 		<div class="author-drafted-contents" data-bind="visible: author.hasAccessToUpdate()">
-			<div class="mdl-card-border material-title" style="padding: 14px 8px; background-color: #fff;">
+			<div class="load-more-container mdl-card-border material-title" style="padding: 14px 8px; background-color: #fff;">
 				${ _strings.author_drafts }
 			</div>
-			<div class="mdl-grid pratilipi-list-grid js-pratilipi-list-grid mobile-card">
+			<div data-bind="visible: draftedPratilipiList().length > 0"
+			     class="mdl-grid pratilipi-list-grid js-pratilipi-list-grid mobile-card">
 				<div data-bind="visible: loadingStateDrafted() != 'LOADING' || draftedPratilipiList().length != 0"
 				     class="mdl-cell mdl-cell--12-col-phone mdl-cell--12-col-tablet mdl-cell--12-col-desktop mobile-card pratilipi-list-card">
 					<!-- Add New Content Card -->
-					<a class="pratilipi-pratilipi-card mdl-card mdl-card-border clickable-element create-pratilipi" data-bind="click: createNewPratilipi">
+					<a class="pratilipi-pratilipi-card mdl-card clickable-element create-pratilipi" data-bind="click: createNewPratilipi">
 						<span class="create-pratilipi-icon-holder">
 							<i class="material-icons">note_add</i>
 						</span>
@@ -19,7 +20,7 @@
 				</div>
 				<!-- ko foreach: { data: draftedPratilipiList, as: 'pratilipi' } -->
 				<div class="mdl-cell mdl-cell--12-col-phone mdl-cell--12-col-tablet mdl-cell--12-col-desktop mobile-card pratilipi-list-card drafted-card">
-					<a class="pratilipi-pratilipi-card mdl-card mdl-card-border" data-bind="attr: { href: pratilipi.pageUrl() }">
+					<a class="pratilipi-pratilipi-card mdl-card" data-bind="attr: { href: pratilipi.pageUrl() }">
 						<span class="pratilipi-cover-image-holder">
 							<img data-bind="attr: { src: getImageUrl( pratilipi.coverImageUrl(), 32 ), title: pratilipi.title(), alt: pratilipi.title() }" />
 						</span>
@@ -43,10 +44,10 @@
 			</div>
 		</div>
 		<div class="author-published-contents" data-bind="css: { 'margin-top--1': !author.hasAccessToUpdate() }">
-			<div class="mdl-card-border material-title" style="padding: 14px 8px; background-color: #fff;" data-bind="visible: author.hasAccessToUpdate()">
+			<div class="load-more-container mdl-card-border material-title" style="padding: 14px 8px; background-color: #fff;" data-bind="visible: author.hasAccessToUpdate()">
 				${ _strings.author_published_works }
 			</div>
-			<div data-bind="foreach: { data: publishedPratilipiList, as: 'pratilipi' }"
+			<div data-bind="foreach: { data: publishedPratilipiList, as: 'pratilipi' }, visible: publishedPratilipiList().length > 0"
 				 class="mdl-grid pratilipi-list-grid js-pratilipi-list-grid mobile-card">
 				<div class="mdl-cell mdl-cell--12-col-phone mdl-cell--12-col-tablet mdl-cell--12-col-desktop mobile-card pratilipi-list-card">
 					<!-- ko component: {
