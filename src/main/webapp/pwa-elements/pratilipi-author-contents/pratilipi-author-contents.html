@@ -5,7 +5,8 @@
 				${ _strings.author_drafts }
 			</div>
 			<div class="mdl-grid pratilipi-list-grid js-pratilipi-list-grid mobile-card">
-				<div class="mdl-cell mdl-cell--12-col-phone mdl-cell--12-col-tablet mdl-cell--12-col-desktop mobile-card pratilipi-list-card">
+				<div data-bind="visible: loadingStateDrafted() != 'LOADING' || draftedPratilipiList().length != 0"
+				     class="mdl-cell mdl-cell--12-col-phone mdl-cell--12-col-tablet mdl-cell--12-col-desktop mobile-card pratilipi-list-card">
 					<!-- Add New Content Card -->
 					<a class="pratilipi-pratilipi-card mdl-card mdl-card-border clickable-element create-pratilipi" data-bind="click: createNewPratilipi">
 						<span class="create-pratilipi-icon-holder">
