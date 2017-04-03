@@ -61,4 +61,9 @@ function( params ) {
 		return self.title() != null && self.title() != "" && self.agreedTerms() && self.type() != null && ! self.requestOnFlight();
 	}, this );
 
+
+	$( "#pratilipiWrite" ).on( 'hidden.bs.modal', function(e) {
+		appViewModel.pratilipiWriteAuthorId( null );
+	});
+
 }
