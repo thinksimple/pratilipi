@@ -80,7 +80,8 @@
 	}
 
 	.author-stats-holder {
-		min-height: 64px;
+        margin: 0;
+        width: 100%;
 		div {
 			@include css-prefix( 'flex-grow', '1' );
 		}
