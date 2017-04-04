@@ -34,7 +34,7 @@ var DataAccessor = function() {
 		return {
 			"name": name,
 			"api": api,
-			"params": encodeURIComponent( httpUtil.formatParams( params ) )
+			"params": params != null ? encodeURIComponent( httpUtil.formatParams( params ) ) : null
 		};
 	};
 
@@ -42,7 +42,9 @@ var DataAccessor = function() {
 		var params = {};
 		for( var i = 0; i < requests.length; i++ ) {
 			var request = requests[i];
-			params[ request.name ] = request.api + encodeURIComponent( request.api.indexOf( "?" ) > -1 ? "&" : "?" ) + request.params;
+			params[ request.name ] = request.api;
+			if( request.params != null )
+				params[ request.name ] += encodeURIComponent( request.api.indexOf( "?" ) > -1 ? "&" : "?" ) + request.params;
 		}
 		return JSON.stringify( params );
 	};
@@ -131,6 +133,22 @@ var DataAccessor = function() {
 					aCallBack( author, userauthor );
 				}
 		});
+	};
+
+	this.getUserAndAuthor = function( aCallBack ) {
+		var requests = [];
+		requests.push( new request( "req1", USER_API, null ) );
+		requests.push( new request( "req2", AUTHOR_API, { "authorId": "$req1.authorId" } ) );
+
+		httpUtil.get( API_PREFIX, { "requests": processRequests( requests ) },
+			function( response, status ) {
+				if( aCallBack != null ) {
+					var user = response.req1.status == 200 ? response.req1.response : null;
+					var author = response.req2.status == 200 ? response.req2.response : null;
+					aCallBack( user, author );
+				}
+		});
+
 	};
 
 	this.getUser = function( aCallBack ) {
