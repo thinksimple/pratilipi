@@ -1,12 +1,3 @@
-नवीन 
-/readers-top-choice         वाचकांची सर्वात जास्त आवड    Analytics#categoryName::most-read       App#imageName::mostpopular.jpg           App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"readers-top-choice" }
-/newly-published-content    नवीन प्रकाशित साहित्य        Analytics#categoryName::newly-published       App#imageName::newpublished.jpg          App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"newly-published-content" }
-/sane-guruji-kathamala      साने गुरुजी कथामाला         Analytics#categoryName::sane-guruji-kathamala       App#imageName::event_generic2.jpg        App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"sane-guruji-kathamala" }
-/event/online-laghukatha-spardha    ऑनलाईन लघुकथा स्पर्धा     Analytics#categoryName::event-online-laghukatha-spardha        App#imageName::event_generic7.jpg        App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "eventId":5517022237556736 }
-/events                     ऑनलाइन स्पर्धा             Analytics#categoryName::online-events       App#imageName::events.jpg                App#EventList::{ "language":"MARATHI" }
-/blog                       संपादकीय                 Analytics#categoryName::blogs       App#imageName::blog.jpg                  App#BlogPostList::{ "language":"MARATHI", "blogId":5683739602452480 }
-/author-interviews          साहित्यकारांची मुलाखत        Analytics#categoryName::author-interviews       App#imageName::authorinterviews.jpg     App#BlogPostList::{ "language":"MARATHI", "blogId":5197509039226880 }
-
 श्रेणी 
 /lovestories       प्रेमकथा      Analytics#categoryName::romance       App#imageName::romance.jpg         App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"lovestories" }
 /horror            भयकथा    Analytics#categoryName::horror        App#imageName::horror.jpg           App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"horror" }
@@ -23,3 +14,12 @@
 /samaj-prabodhan   समाज प्रबोधन    Analytics#categoryName::social        App#imageName::social.jpg       App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"samaj-prabodhan" }
 /swadishta-pakkala पाककला        Analytics#categoryName::cooking       App#imageName::cooking.jpg     App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"swadishta-pakkala" }
 /bhavishya         भविष्य        Analytics#categoryName::astrology         App#imageName::astronomy.jpg     App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"bhavishya" }
+
+नवीन 
+/readers-top-choice         वाचकांची सर्वात जास्त आवड    Analytics#categoryName::most-read       App#imageName::mostpopular.jpg           App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"readers-top-choice" }
+/newly-published-content    नवीन प्रकाशित साहित्य        Analytics#categoryName::newly-published       App#imageName::newpublished.jpg          App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"newly-published-content" }
+/sane-guruji-kathamala      साने गुरुजी कथामाला         Analytics#categoryName::sane-guruji-kathamala       App#imageName::event_generic2.jpg        App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "listName":"sane-guruji-kathamala" }
+/event/online-laghukatha-spardha    ऑनलाईन लघुकथा स्पर्धा     Analytics#categoryName::event-online-laghukatha-spardha        App#imageName::event_generic7.jpg        App#PratilipiList::{ "language":"MARATHI", "state":"PUBLISHED", "eventId":5517022237556736 }
+/events                     ऑनलाइन स्पर्धा             Analytics#categoryName::online-events       App#imageName::events.jpg                App#EventList::{ "language":"MARATHI" }
+/blog                       संपादकीय                 Analytics#categoryName::blogs       App#imageName::blog.jpg                  App#BlogPostList::{ "language":"MARATHI", "blogId":5683739602452480 }
+/author-interviews          साहित्यकारांची मुलाखत        Analytics#categoryName::author-interviews       App#imageName::authorinterviews.jpg     App#BlogPostList::{ "language":"MARATHI", "blogId":5197509039226880 }
