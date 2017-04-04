@@ -4,8 +4,8 @@
 			<div class="load-more-container mdl-card-border material-title" style="padding: 14px 8px; background-color: #fff;">
 				${ _strings.author_drafts }
 			</div>
-			<div data-bind="visible: draftedPratilipiList().length > 0"
-			     class="mdl-grid pratilipi-list-grid js-pratilipi-list-grid mobile-card">
+			<div data-bind="visible: draftedPratilipiList().length > 0 || loadingStateDrafted() == 'LOADED_EMPTY'"
+				class="mdl-grid pratilipi-list-grid js-pratilipi-list-grid mobile-card">
 				<div data-bind="visible: loadingStateDrafted() != 'LOADING' || draftedPratilipiList().length != 0"
 				     class="mdl-cell mdl-cell--12-col-phone mdl-cell--12-col-tablet mdl-cell--12-col-desktop mobile-card pratilipi-list-card">
 					<!-- Add New Content Card -->
