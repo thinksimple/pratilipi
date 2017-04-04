@@ -5,7 +5,7 @@
 /classic                      क्लासिक               Analytics#categoryName::classics        App#imageName::classic.jpg            App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "listName":"classic" }
 /search?q=magazines           पत्रिकाएं                Analytics#categoryName::magazines        App#imageName::magazines.jpg           App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "searchQuery":"magazines" }
 /blog                         संपादकीय              Analytics#categoryName::blogs        App#imageName::blog.jpg                App#BlogPostList::{ "language":"HINDI", "blogId":5683739602452480 }
-/event/na-jaane-kyo           न जाने क्यों...!          Analytics#categoryName::event-na-jaane-kyo        App#imageName::event_generic7.jpg        App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "eventId":5615627304697856 }     
+/event/purush-na-to-mahaamaanav-na-hi-daanav           पुरुष न तो महामानव न ही दानव          Analytics#categoryName::event-purush-na-to-mahaamaanav-na-hi-daanav        App#imageName::event_generic7.jpg        App#PratilipiList::{ "language":"HINDI", "state":"PUBLISHED", "eventId":6611443016269824 }     
 /events                       ऑनलाइन  स्पर्धाएं        Analytics#categoryName::online-events        App#imageName::events.jpg                App#EventList::{ "language":"HINDI" }
 /author-interviews            लेखकों के साक्षात्कार      Analytics#categoryName::author-interviews        App#imageName::authorinterviews.jpg      App#BlogPostList::{ "language":"HINDI", "blogId":5197509039226880 }
 
