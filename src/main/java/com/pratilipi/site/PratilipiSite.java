@@ -429,6 +429,9 @@ public class PratilipiSite extends HttpServlet {
 					templateName = "ForgotPassword.ftl";
 				}
 
+			} else if( uri.equals( "/settings" ) && loadPWA ) {
+					dataModel = new HashMap<String, Object>();
+					templateName = "SettingsPWA.ftl";
 
 			// Internal links - Standard Version only
 			} else if( ! basicMode && uri.startsWith( "/admin" ) ) {
@@ -511,7 +514,7 @@ public class PratilipiSite extends HttpServlet {
 				}
 
 			} else if( page != null && page.getType() == PageType.AUTHOR ) {
-				if( loadPWA ) {
+				if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) ) {
 					dataModel = new HashMap<>();
 					templateName = "AuthorPWA.ftl";
 				} else {
