@@ -46,7 +46,8 @@
 									   class="mdl-textfield__input"
 									   id="pratilipi-settings-language"
 									   type="text" readonly />
-								<label class="mdl-textfield__label" for="pratilipi-settings-language">
+								<label style="top: 4px; font-size: 12px; visibility: visible;"
+									   class="mdl-textfield__label" for="pratilipi-settings-language">
 									${ _strings.language_choose_language } *
 									<i class="material-icons dropdown-icon">arrow_drop_down</i>
 								</label>
@@ -81,7 +82,8 @@
 										   class="mdl-textfield__input"
 										   id="pratilipi-settings-gender"
 										   type="text" readonly />
-									<label class="mdl-textfield__label" for="pratilipi-settings-gender">
+									<label style="top: 4px; font-size: 12px; visibility: visible;"
+											class="mdl-textfield__label" for="pratilipi-settings-gender">
 										${ _strings.gender }
 										<i class="material-icons dropdown-icon">arrow_drop_down</i>
 									</label>
@@ -95,26 +97,112 @@
 							<div class="mdl-cell mdl-cell--6-col">
 								<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 									<input data-bind="value: dateOfBirth, valueUpdate: ['input']"
-									       type="date"
-									       class="mdl-textfield__input"
-									       id="pratilipi-settings-dateOfBirth">
+										   type="date"
+										   class="mdl-textfield__input"
+										   id="pratilipi-settings-dateOfBirth">
 									<label style="top: 4px; font-size: 12px; visibility: visible;"
-									       class="mdl-textfield__label" for="pratilipi-settings-dateOfBirth">
+										   class="mdl-textfield__label" for="pratilipi-settings-dateOfBirth">
 										${ _strings.author_date_of_birth }
 									</label>
 								</div>
 							</div>
 						</div>
 					</div>
+
 					<div class="save-button-holder">
 						<button data-bind="enable: canSaveProfileSettings(), click: updateProfileSettings"
-						        class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">Save</button>
+								class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">Save</button>
 					</div>
+
 				</div>
 
+
 				<div class="mdl-tabs__panel" id="notification-settings">
-					Content 2
+
+					<div class="mdl-textfield mdl-js-textfield getmdl-select getmdl-select__fullwidth getmdl-select__fix-height mdl-textfield--floating-label">
+						<input class="mdl-textfield__input"
+							   id="pratilipi-settings-email-frequency"
+							   data-val="IMMEDIATELY"
+							   value="${ _strings.email_frequency_immediate }"
+							   type="text" tabIndex="-1" />
+						<label class="mdl-textfield__label" for="pratilipi-settings-email-frequency">
+							${ _strings.email_frequency }
+							<i class="material-icons dropdown-icon">arrow_drop_down</i>
+						</label>
+						<ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu dropdown-ul" for="pratilipi-settings-email-frequency">
+							<li class="mdl-menu__item" data-val="IMMEDIATELY">${ _strings.email_frequency_immediate }</li>
+							<li class="mdl-menu__item" data-val="DAILY">${ _strings.email_frequency_daily }</li>
+							<li class="mdl-menu__item" data-val="WEEKLY">${ _strings.email_frequency_weekly }</li>
+							<li class="mdl-menu__item" data-val="MONTHLY">${ _strings.email_frequency_monthly }</li>
+							<li class="mdl-menu__item" data-val="NEVER">${ _strings.email_frequency_never }</li>
+						</ul>
+					</div>
+
+					<div class="settings-group">
+						<h6>${ _strings.notification_group_content }</h6>
+						<div class="mdl-grid">
+							<div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-phone">
+								<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="notif_option_new_review">
+									<input value="USER_PRATILIPI_REVIEW" type="checkbox" id="notif_option_new_review" class="mdl-checkbox__input" />
+									<span class="mdl-checkbox__label">${ _strings.option_new_review }</span>
+								</label>
+							</div>
+							<div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-phone">
+								<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="notif_option_new_comment">
+									<input value="COMMENT_REVIEW_REVIEWER" type="checkbox" id="notif_option_new_comment" class="mdl-checkbox__input" />
+									<span class="mdl-checkbox__label">${ _strings.option_new_comment }</span>
+								</label>
+							</div>
+						</div>
+						<div class="mdl-grid">
+							<div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-phone">
+								<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="notif_option_like_review">
+									<input value="VOTE_REVIEW_REVIEWER" type="checkbox" id="notif_option_like_review" class="mdl-checkbox__input" />
+									<span class="mdl-checkbox__label">${ _strings.option_like_review }</span>
+								</label>
+							</div>
+							<div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-phone">
+								<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="notif_option_like_comment">
+									<input value="VOTE_COMMENT_REVIEW_COMMENTOR" type="checkbox" id="notif_option_like_comment" class="mdl-checkbox__input" />
+									<span class="mdl-checkbox__label">${ _strings.option_like_comment }</span>
+								</label>
+							</div>
+						</div>
+					</div>
+
+					<div class="settings-group">
+						<h6>${ _strings.notification_group_network }</h6>
+						<div class="mdl-grid">
+							<div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-phone">
+								<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="notif_option_new_follower">
+									<input value="AUTHOR_FOLLOW" type="checkbox" id="notif_option_new_follower" class="mdl-checkbox__input" />
+									<span class="mdl-checkbox__label">${ _strings.option_new_follower }</span>
+								</label>
+							</div>
+							<div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-phone">
+								<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="notif_option_pratilipi_published_follower">
+									<input value="PRATILIPI_PUBLISHED_FOLLOWER" type="checkbox" id="notif_option_pratilipi_published_follower" class="mdl-checkbox__input" />
+									<span class="mdl-checkbox__label">${ _strings.option_pratilipi_published_follower }</span>
+								</label>
+							</div>
+						</div>
+						<div class="mdl-grid">
+							<div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-phone">
+								<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="notif_option_pratilipi_updates">
+									<input value="GENERIC" type="checkbox" id="notif_option_pratilipi_updates" class="mdl-checkbox__input" />
+									<span class="mdl-checkbox__label">${ _strings.option_pratilipi_updates }</span>
+								</label>
+							</div>
+						</div>
+					</div>
+
+					<div class="save-button-holder">
+						<button data-bind="click: updateNotificationPreferences"
+						        class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">Save</button>
+					</div>
+
 				</div>
+
 
 				<div class="mdl-tabs__panel" id="password-settings">
 					Content 3
@@ -125,5 +213,5 @@
 		</div>
 	</div>
 	<div data-bind="visible: isLoading()"
-	     class="page-loading-spinner mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></div>
+		 class="page-loading-spinner mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></div>
 </div>

@@ -15,8 +15,6 @@ function( params ) {
 		}
 	};
 
-	this.canSaveChanges = ko.observable( false );
-
 	this.updateNotificationPreferences = function() {
 		var userPreferences = {};
 		userPreferences[ "emailFrequency" ] = document.querySelector( "#pratilipiNotificationSettings #emailFrequency" ).getAttribute( "data-val" );

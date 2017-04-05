@@ -2,8 +2,7 @@ function( params ) {
 	var self = this;
 	var dataAccessor = new DataAccessor();
 
-	/* Profile Settings */
-	/* Variables */
+	/* PROFILE SETTINGS */
 	this.firstName = ko.observable();
 	this.lastName = ko.observable();
 	this.firstNameEn = ko.observable();
@@ -18,7 +17,6 @@ function( params ) {
 	this.dateOfBirth = ko.observable();
 	this.isLoading = ko.observable();
 
-	/* Helper Functions */
 	this.updateLanguage = function() {
 		self.language( document.querySelector( '#pratilipi-settings-language' ).getAttribute( "data-val" ) );
 	};
@@ -129,7 +127,6 @@ function( params ) {
 				! self.isLoading();
 	}, this );
 
-	/* Observers */
 	this.userObserver = ko.computed( function() {
 		if( appViewModel.user.userId() == null ) return;
 		if( appViewModel.user.isGuest() && appViewModel.user.userId() == 0 )
@@ -143,4 +140,53 @@ function( params ) {
 		}, 0 );
 
 	}, this );
+
+
+	/* NOTIFICATION SETTINGS */
+	var getEmailFrequencyVernacular = function( emailFrequency ) {
+        switch( emailFrequency ) {
+            case "IMMEDIATELY":
+                return "${ _strings.email_frequency_immediate }";
+            case "DAILY":
+                return "${ _strings.email_frequency_daily }";
+            case "WEEKLY":
+                return "${ _strings.email_frequency_weekly }";
+            case "MONTHLY":
+                return "${ _strings.email_frequency_monthly }";
+            case "NEVER":
+                return "${ _strings.email_frequency_never }";
+        }
+    };
+
+    this.updateNotificationPreferences = function() {
+        var userPreferences = {};
+        userPreferences[ "emailFrequency" ] = document.querySelector( "#pratilipi-settings-email-frequency" ).getAttribute( "data-val" );
+        userPreferences[ "notificationSubscriptions" ] = {};
+        $( '#notification-settings .mdl-js-checkbox' ).each( function( index, element ) {
+            userPreferences[ "notificationSubscriptions" ][ element.firstChild.value ] = element.firstChild.checked;
+        });
+        console.log( userPreferences );
+        setUserPreferences( userPreferences );
+        ToastUtil.toast( "${ _strings.success_generic_message }" );
+    };
+
+    this.firebaseCallback = ko.computed( function() {
+        var userPreferences = appViewModel.userPreferences();
+        var emailFrequency = userPreferences[ "emailFrequency" ] != null ? userPreferences[ "emailFrequency" ] : "IMMEDIATELY";
+        var notificationSubscriptions = userPreferences[ "notificationSubscriptions" ] != null ?
+                userPreferences[ "notificationSubscriptions" ] : {};
+
+        $( "#pratilipi-settings-email-frequency" ).attr( 'data-val', emailFrequency );
+        $( "#pratilipi-settings-email-frequency" ).attr( 'value', getEmailFrequencyVernacular( emailFrequency ) );
+        $( '#notification-settings .mdl-js-checkbox' ).each( function( index, element ) {
+            if( element.MaterialCheckbox == null ) return;
+            var val = element.firstChild.value;
+            if( notificationSubscriptions[ val ] != null && ! notificationSubscriptions[ val ] )
+                element.MaterialCheckbox.uncheck();
+            else
+                element.MaterialCheckbox.check();
+        });
+
+    }, this );
+
 }
