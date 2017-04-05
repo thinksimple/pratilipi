@@ -1,9 +1,3 @@
-ಪ್ರಖ್ಯಾತ ಬರಹಗಳು 
-/event/pks   ಪ್ರತಿಲಿಪಿ ಕಥಾ ಸ್ಪರ್ಧೆ-2017     Analytics#categoryName::event-pks        App#imageName::event_generic2.jpg       App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "eventId":6058375333806080 }
-/most-read   ಓದುಗರ ಆಯ್ಕೆ            Analytics#categoryName::most-read        App#imageName::mostpopular.jpg      App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"most-read" }
-/new         ಹೊಸ  ಬರಹಗಳು         Analytics#categoryName::newly-published        App#imageName::newpublished.jpg     App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"new" } 
-/events       ಸ್ಪರ್ಧೆಗಳು              Analytics#categoryName::online-events        App#imageName::events.jpg     App#EventList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"events" }
-
 ಪ್ರಭೇದಗಳು 
 /horror  ಹಾರರ್      Analytics#categoryName::horror    App#imageName::horror.jpg            App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"horror" }
 /relationship ಬಂಧುತ್ವ           Analytics#categoryName::family    App#imageName::event_friendship.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"relationship" }
@@ -18,3 +12,8 @@
 /otherstories   ಇತರೆ ಕಥೆಗಳು Analytics#categoryName::other-stories        App#imageName::fiction.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"otherstories" } 
 /nonfiction ಅಕಲ್ಪಿತ         Analytics#categoryName::articles        App#imageName::articles.jpg              App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"nonfiction" } 
 
+ಪ್ರಖ್ಯಾತ ಬರಹಗಳು 
+/event/pks   ಪ್ರತಿಲಿಪಿ ಕಥಾ ಸ್ಪರ್ಧೆ-2017     Analytics#categoryName::event-pks        App#imageName::event_generic2.jpg       App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "eventId":6058375333806080 }
+/most-read   ಓದುಗರ ಆಯ್ಕೆ            Analytics#categoryName::most-read        App#imageName::mostpopular.jpg      App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"most-read" }
+/new         ಹೊಸ  ಬರಹಗಳು         Analytics#categoryName::newly-published        App#imageName::newpublished.jpg     App#PratilipiList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"new" } 
+/events       ಸ್ಪರ್ಧೆಗಳು              Analytics#categoryName::online-events        App#imageName::events.jpg     App#EventList::{ "language":"KANNADA", "state":"PUBLISHED", "listName":"events" }
