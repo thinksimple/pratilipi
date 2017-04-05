@@ -25,10 +25,18 @@ function( params ) {
 		self.gender( document.querySelector( '#pratilipi-settings-gender' ).getAttribute( "data-val" ) );
 	};
 
+	var getAuthorId = function() {
+		return getUrlParameter( "authorId" ) != null ? getUrlParameter( "authorId" ) : appViewModel.user.author.authorId();
+	};
+
+	var getUserId = function() {
+		return getUrlParameter( "userId" ) != null ? getUrlParameter( "userId" ) : appViewModel.user.userId();
+	};
+
 	this.loadUserAndAuthor = function() {
 		if( self.isLoading() ) return;
 		self.isLoading( true );
-		dataAccessor.getAuthorById( appViewModel.user.author.authorId(), false,
+		dataAccessor.getAuthorById( getAuthorId(), false,
 			function( author ) {
 				self.firstName( author.firstName );
 				self.lastName( author.lastName );
@@ -74,7 +82,7 @@ function( params ) {
 			if (day.length < 2) day = '0' + day;
 			return [ day, month, year ].join( '-' );
 		};
-		var author = { "authorId": appViewModel.user.author.authorId(), "firstName": self.firstName(), "language": self.language() };
+		var author = { "authorId": getAuthorId(), "firstName": self.firstName(), "language": self.language() };
 		if( self.lastName() ) author[ "lastName" ] = self.lastName();
 		if( self.firstNameEn() ) author[ "firstNameEn" ] = self.firstNameEn();
 		if( self.lastNameEn() ) author[ "lastNameEn" ] = self.lastNameEn();
@@ -104,11 +112,9 @@ function( params ) {
 		ToastUtil.toastUp( "${ _strings.working }" );
 
 		self.userApiCallState( "LOADING" );
-		dataAccessor.createOrUpdateUser( appViewModel.user.userId(), self.email(), self.phone(),
+		dataAccessor.createOrUpdateUser( getUserId(), self.email(), self.phone(),
 			function( user ) {
 				self.userApiCallState( "SUCCESS" );
-				appViewModel.user.email( user.email );
-				appViewModel.user.phone( user.phone );
 			}, function( error ) {
 				self.userApiCallState( "FAILED" );
 		});
