@@ -36,11 +36,17 @@ function( params ) {
 		});
 	};
 
-	/* Can Follow */
+	/* Can Follow and Settings Link */
 	this.canFollow = ko.observable( false );
-	this.authorIdObserver = ko.computed( function() {
+	this.settingsLink = ko.observable( "/settings" );
+
+	this.authorObserver = ko.computed( function() {
 	    if( self.author.user.userId() == null ) return;
     	self.canFollow( appViewModel.user.userId() != self.author.user.userId() );
+		if( self.author.hasAccessToUpdate() && appViewModel.user.userId() != self.author.user.userId() ) /* AEEs */
+			self.settingsLink( "/settings?authorId=" + self.author.authorId() + "&userId=" + self.author.user.userId() );
+		else
+			self.settingsLink( "/settings" );
     }, this );
 
 	/* Share Author */

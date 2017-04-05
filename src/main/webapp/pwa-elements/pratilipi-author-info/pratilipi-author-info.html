@@ -14,7 +14,7 @@
 											disable: followRequestOnFlight() }" 
 							class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-button-margin font-m">
 					</button>
-					<a href="/settings" data-bind="visible: author.hasAccessToUpdate()"
+					<a data-bind="visible: author.hasAccessToUpdate(), attr: { 'href': settingsLink() }"
 							class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-button-margin small-button">
 						<i class="material-icons material-icons-16">settings</i>
 					</a>
