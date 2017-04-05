@@ -80,6 +80,16 @@ function getPratilipiTypeVernacular( pratilipiType ) {
 	return pratilipiTypes[ pratilipiType ];
 }
 
+function getLanguageVernacular( language ) {
+	if( language == null ) return null;
+	var languages = {
+		<#list languageList as aLang>
+			"${ aLang.value }": "${ aLang.name }",
+		</#list>
+	};
+	return languages[ language ];
+}
+
 function formatReadCount( readCount ) {
 	if( readCount == null ) return null;
 	if( isMobile() )

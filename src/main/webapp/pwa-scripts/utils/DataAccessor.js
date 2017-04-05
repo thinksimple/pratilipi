@@ -269,6 +269,23 @@ var DataAccessor = function() {
 				function( response, status ) { processGetResponse( response, status, aCallBack ) } );
 	};
 
+	this.createOrUpdateUser = function( userId, email, phone, successCallBack, errorCallBack ) {
+		if( userId == null ) return;
+		var params = { "userId": userId };
+		if( email != null ) params[ "email" ] = email;
+		if( phone != null ) params[ "phone" ] = phone;
+		httpUtil.post( API_PREFIX + USER_API,
+        				params,
+        				function( response, status ) { processPostResponse( response, status, successCallBack, errorCallBack ) } );
+	};
+
+	this.createOrUpdateAuthor = function( author, successCallBack, errorCallBack ) {
+        if( author == null || isEmpty( author ) || author.authorId == null ) return;
+        httpUtil.post( API_PREFIX + AUTHOR_API,
+                        author,
+                        function( response, status ) { processPostResponse( response, status, successCallBack, errorCallBack ) } );
+    };
+
 	this.createOrUpdateReview = function( pratilipiId, rating, review, successCallBack, errorCallBack ) {
 		if( pratilipiId == null ) return;
 		var params = { "pratilipiId": pratilipiId };
