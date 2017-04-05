@@ -68,12 +68,21 @@
 						margin-top: 30px;
 					}
 				}
+				#notification-settings {
+					.settings-group {
+						.group-title {
+							margin-top: 20px;
+						}
+						.mdl-cell {
+                            padding: 16px 0;
+                        }
+					}
+				}
 				.save-button-holder {
 					margin-top: 12px;
                     text-align: right;
                 }
                 .width-50 {
-                    text-align: center;
 					.mdl-textfield {
 						min-width: initial;
 						width: 96% !important;

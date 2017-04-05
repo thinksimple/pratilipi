@@ -56,28 +56,28 @@
 				<div class="mdl-tabs__panel is-active" data-name="Profile Settings" id="profile-settings">
 
 					<div class="mdl-grid mdl-grid--no-spacing">
-						<div class="mdl-cell width-50 js-width-50">
+						<div class="mdl-cell width-50 js-width-50 text-center">
 							<input data-bind="{ mdlFloatingInput: { label: '${ _strings.edit_author_first_name } *', value: firstName, id: 'pratilipi-settings-first-name' }, valueUpdate: ['input'], transliterate: true }" />
 						</div>
-						<div class="mdl-cell width-50 js-width-50">
+						<div class="mdl-cell width-50 js-width-50 text-center">
 							<input data-bind="{ mdlFloatingInput: { label: '${ _strings.edit_author_last_name }', value: lastName, id: 'pratilipi-settings-last-name' }, valueUpdate: ['input'], transliterate: true }" />
 						</div>
 					</div>
 
 					<div class="mdl-grid mdl-grid--no-spacing">
-						<div class="mdl-cell width-50 js-width-50">
+						<div class="mdl-cell width-50 js-width-50 text-center">
 							<input data-bind="{ mdlFloatingInput: { label: '${ _strings.edit_author_first_name_en }', value: firstNameEn, id: 'pratilipi-settings-first-name-en' }, valueUpdate: ['input'] }" />
 						</div>
-						<div class="mdl-cell width-50 js-width-50">
+						<div class="mdl-cell width-50 js-width-50 text-center">
 							<input data-bind="{ mdlFloatingInput: { label: '${ _strings.edit_author_last_name_en }', value: lastNameEn, id: 'pratilipi-settings-last-name-en' }, valueUpdate: ['input'] }" />
 						</div>
 					</div>
 
 					<div class="mdl-grid mdl-grid--no-spacing">
-						<div class="mdl-cell width-50 js-width-50">
+						<div class="mdl-cell width-50 js-width-50 text-center">
 							<input data-bind="{ mdlFloatingInput: { label: '${ _strings.edit_author_pen_name }', value: penName, id: 'pratilipi-settings-pen-name' }, valueUpdate: ['input'], transliterate: true }" />
 						</div>
-						<div class="mdl-cell width-50 js-width-50">
+						<div class="mdl-cell width-50 js-width-50 text-center">
 							<div class="mdl-textfield mdl-js-textfield getmdl-select getmdl-select__fullwidth getmdl-select__fix-height mdl-textfield--floating-label">
 								<input data-bind="event: { change: updateLanguage }"
 									   class="mdl-textfield__input"
@@ -104,16 +104,16 @@
 					<div class="private-information">
 						<span class="material-title">Private Information</span>
 						<div class="mdl-grid mdl-grid--no-spacing">
-							<div class="mdl-cell width-50 js-width-50">
+							<div class="mdl-cell width-50 js-width-50 text-center">
 								<input data-bind="{ mdlFloatingInput: { label: '${ _strings.user_email }', value: email, id: 'pratilipi-settings-email' }, valueUpdate: ['input'] }" />
 							</div>
-							<div class="mdl-cell width-50 js-width-50">
+							<div class="mdl-cell width-50 js-width-50 text-center">
 								<input data-bind="{ mdlFloatingInput: { label: '${ _strings.user_phone }', value: phone, id: 'pratilipi-settings-phone' }, valueUpdate: ['input'] }" />
 							</div>
 						</div>
 
 						<div class="mdl-grid mdl-grid--no-spacing">
-							<div class="mdl-cell width-50 js-width-50">
+							<div class="mdl-cell width-50 js-width-50 text-center">
 								<div class="mdl-textfield mdl-js-textfield getmdl-select getmdl-select__fullwidth getmdl-select__fix-height mdl-textfield--floating-label">
 									<input data-bind="event: { change: updateGender }"
 										   class="mdl-textfield__input"
@@ -131,7 +131,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="mdl-cell width-50 js-width-50">
+							<div class="mdl-cell width-50 js-width-50 text-center">
 								<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 									<input data-bind="value: dateOfBirth, valueUpdate: ['input']"
 										   type="date"
@@ -176,29 +176,29 @@
 					</div>
 
 					<div class="settings-group">
-						<h6>${ _strings.notification_group_content }</h6>
-						<div class="mdl-grid">
-							<div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-phone">
+						<div class="material-subtitle-1 group-title">${ _strings.notification_group_content }</div>
+						<div class="mdl-grid mdl-grid--no-spacing">
+							<div class="mdl-cell width-50 js-width-50">
 								<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="notif_option_new_review">
 									<input value="USER_PRATILIPI_REVIEW" type="checkbox" id="notif_option_new_review" class="mdl-checkbox__input" />
 									<span class="mdl-checkbox__label">${ _strings.option_new_review }</span>
 								</label>
 							</div>
-							<div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-phone">
+							<div class="mdl-cell width-50 js-width-50">
 								<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="notif_option_new_comment">
 									<input value="COMMENT_REVIEW_REVIEWER" type="checkbox" id="notif_option_new_comment" class="mdl-checkbox__input" />
 									<span class="mdl-checkbox__label">${ _strings.option_new_comment }</span>
 								</label>
 							</div>
 						</div>
-						<div class="mdl-grid">
-							<div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-phone">
+						<div class="mdl-grid mdl-grid--no-spacing">
+							<div class="mdl-cell width-50 js-width-50">
 								<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="notif_option_like_review">
 									<input value="VOTE_REVIEW_REVIEWER" type="checkbox" id="notif_option_like_review" class="mdl-checkbox__input" />
 									<span class="mdl-checkbox__label">${ _strings.option_like_review }</span>
 								</label>
 							</div>
-							<div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-phone">
+							<div class="mdl-cell width-50 js-width-50">
 								<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="notif_option_like_comment">
 									<input value="VOTE_COMMENT_REVIEW_COMMENTOR" type="checkbox" id="notif_option_like_comment" class="mdl-checkbox__input" />
 									<span class="mdl-checkbox__label">${ _strings.option_like_comment }</span>
@@ -208,23 +208,23 @@
 					</div>
 
 					<div class="settings-group">
-						<h6>${ _strings.notification_group_network }</h6>
-						<div class="mdl-grid">
-							<div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-phone">
+						<div class="material-subtitle-1 group-title">${ _strings.notification_group_network }</div>
+						<div class="mdl-grid mdl-grid--no-spacing">
+							<div class="mdl-cell width-50 js-width-50">
 								<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="notif_option_new_follower">
 									<input value="AUTHOR_FOLLOW" type="checkbox" id="notif_option_new_follower" class="mdl-checkbox__input" />
 									<span class="mdl-checkbox__label">${ _strings.option_new_follower }</span>
 								</label>
 							</div>
-							<div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-phone">
+							<div class="mdl-cell width-50 js-width-50">
 								<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="notif_option_pratilipi_published_follower">
 									<input value="PRATILIPI_PUBLISHED_FOLLOWER" type="checkbox" id="notif_option_pratilipi_published_follower" class="mdl-checkbox__input" />
 									<span class="mdl-checkbox__label">${ _strings.option_pratilipi_published_follower }</span>
 								</label>
 							</div>
 						</div>
-						<div class="mdl-grid">
-							<div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-phone">
+						<div class="mdl-grid mdl-grid--no-spacing">
+							<div class="mdl-cell width-50 js-width-50">
 								<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="notif_option_pratilipi_updates">
 									<input value="GENERIC" type="checkbox" id="notif_option_pratilipi_updates" class="mdl-checkbox__input" />
 									<span class="mdl-checkbox__label">${ _strings.option_pratilipi_updates }</span>
