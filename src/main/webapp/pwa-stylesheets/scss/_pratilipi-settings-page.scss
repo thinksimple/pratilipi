@@ -2,7 +2,7 @@
 	.vertical-mdl-tabs {
 		background: #fff;
 		.settings-grid {
-			min-height: 70vh;
+			min-height: 80vh;
 			.tabs-left-pane {
 				border-right: 1px solid lightgrey;
 				.mdl-tabs__tab-bar {
@@ -46,6 +46,7 @@
 					}
 				}
 				.save-button-holder {
+					margin-top: 12px;
                     text-align: right;
                 }
 			}

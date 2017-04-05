@@ -12,6 +12,9 @@
 					<a href="#password-settings" class="mdl-tabs__tab">
 						<span class="tab-text">Change Password</span>
 					</a>
+					<a data-bind="click: logoutUser" class="mdl-tabs__tab clickable-element">
+						<span class="tab-text">Logout</span>
+					</a>
 				</div>
 			</div>
 			<div class="tabs-right-pane">
@@ -205,13 +208,35 @@
 
 
 				<div class="mdl-tabs__panel" id="password-settings">
-					Content 3
+
+					<div class="mdl-grid mdl-grid--no-spacing">
+						<div class="mdl-cell mdl-cell--12-col">
+							<input type="password" data-bind="{ mdlFloatingInput: { label: '${ _strings.user_current_password } *', value: currentPassword, id: 'pratilipi-settings-current-password' }, valueUpdate: ['input'] }" />
+						</div>
+						<div class="mdl-cell mdl-cell--12-col">
+							<input type="password" data-bind="{ mdlFloatingInput: { label: '${ _strings.user_new_password } *', value: newPassword, id: 'pratilipi-settings-new-password' }, valueUpdate: ['input'] }" />
+						</div>
+					</div>
+
+					<div class="mdl-grid mdl-grid--no-spacing">
+						<div class="mdl-cell mdl-cell--12-col">
+							<input type="password" data-bind="{ mdlFloatingInput: { label: '${ _strings.user_confirm_password } *', value: confirmPassword, id: 'pratilipi-settings-confirm-password' }, valueUpdate: ['input'] }" />
+						</div>
+					</div>
+
+					<div class="save-button-holder">
+						<button data-bind="enable: canUpdatePassword(), click: updatePassword"
+						        class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">Save</button>
+					</div>
+
 				</div>
 
 
 			</div>
 		</div>
 	</div>
+
 	<div data-bind="visible: isLoading()"
 		 class="page-loading-spinner mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></div>
+
 </div>

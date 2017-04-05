@@ -67,12 +67,12 @@ function( params ) {
 		var formatDateOfBirth = function( inputDate ) {
 			if( inputDate == null ) return null;
 			var d = new Date( inputDate ),
-                month = '' + ( d.getMonth() + 1 ),
-                day = '' + d.getDate(),
-                year = d.getFullYear();
-            if (month.length < 2) month = '0' + month;
-            if (day.length < 2) day = '0' + day;
-            return [ day, month, year ].join( '-' );
+				month = '' + ( d.getMonth() + 1 ),
+				day = '' + d.getDate(),
+				year = d.getFullYear();
+			if (month.length < 2) month = '0' + month;
+			if (day.length < 2) day = '0' + day;
+			return [ day, month, year ].join( '-' );
 		};
 		var author = { "authorId": appViewModel.user.author.authorId(), "firstName": self.firstName(), "language": self.language() };
 		if( self.lastName() ) author[ "lastName" ] = self.lastName();
@@ -101,6 +101,7 @@ function( params ) {
 		}, self );
 
 		self.isLoading( true );
+		ToastUtil.toastUp( "${ _strings.working }" );
 
 		self.userApiCallState( "LOADING" );
 		dataAccessor.createOrUpdateUser( appViewModel.user.userId(), self.email(), self.phone(),
@@ -144,49 +145,102 @@ function( params ) {
 
 	/* NOTIFICATION SETTINGS */
 	var getEmailFrequencyVernacular = function( emailFrequency ) {
-        switch( emailFrequency ) {
-            case "IMMEDIATELY":
-                return "${ _strings.email_frequency_immediate }";
-            case "DAILY":
-                return "${ _strings.email_frequency_daily }";
-            case "WEEKLY":
-                return "${ _strings.email_frequency_weekly }";
-            case "MONTHLY":
-                return "${ _strings.email_frequency_monthly }";
-            case "NEVER":
-                return "${ _strings.email_frequency_never }";
-        }
-    };
+		switch( emailFrequency ) {
+			case "IMMEDIATELY":
+				return "${ _strings.email_frequency_immediate }";
+			case "DAILY":
+				return "${ _strings.email_frequency_daily }";
+			case "WEEKLY":
+				return "${ _strings.email_frequency_weekly }";
+			case "MONTHLY":
+				return "${ _strings.email_frequency_monthly }";
+			case "NEVER":
+				return "${ _strings.email_frequency_never }";
+		}
+	};
 
-    this.updateNotificationPreferences = function() {
-        var userPreferences = {};
-        userPreferences[ "emailFrequency" ] = document.querySelector( "#pratilipi-settings-email-frequency" ).getAttribute( "data-val" );
-        userPreferences[ "notificationSubscriptions" ] = {};
-        $( '#notification-settings .mdl-js-checkbox' ).each( function( index, element ) {
-            userPreferences[ "notificationSubscriptions" ][ element.firstChild.value ] = element.firstChild.checked;
-        });
-        console.log( userPreferences );
-        setUserPreferences( userPreferences );
-        ToastUtil.toast( "${ _strings.success_generic_message }" );
-    };
+	this.updateNotificationPreferences = function() {
+		var userPreferences = {};
+		userPreferences[ "emailFrequency" ] = document.querySelector( "#pratilipi-settings-email-frequency" ).getAttribute( "data-val" );
+		userPreferences[ "notificationSubscriptions" ] = {};
+		$( '#notification-settings .mdl-js-checkbox' ).each( function( index, element ) {
+			userPreferences[ "notificationSubscriptions" ][ element.firstChild.value ] = element.firstChild.checked;
+		});
+		setUserPreferences( userPreferences );
+		ToastUtil.toast( "${ _strings.success_generic_message }" );
+	};
 
-    this.firebaseCallback = ko.computed( function() {
-        var userPreferences = appViewModel.userPreferences();
-        var emailFrequency = userPreferences[ "emailFrequency" ] != null ? userPreferences[ "emailFrequency" ] : "IMMEDIATELY";
-        var notificationSubscriptions = userPreferences[ "notificationSubscriptions" ] != null ?
-                userPreferences[ "notificationSubscriptions" ] : {};
+	this.firebaseCallback = ko.computed( function() {
+		var userPreferences = appViewModel.userPreferences();
+		var emailFrequency = userPreferences[ "emailFrequency" ] != null ? userPreferences[ "emailFrequency" ] : "IMMEDIATELY";
+		var notificationSubscriptions = userPreferences[ "notificationSubscriptions" ] != null ?
+				userPreferences[ "notificationSubscriptions" ] : {};
 
-        $( "#pratilipi-settings-email-frequency" ).attr( 'data-val', emailFrequency );
-        $( "#pratilipi-settings-email-frequency" ).attr( 'value', getEmailFrequencyVernacular( emailFrequency ) );
-        $( '#notification-settings .mdl-js-checkbox' ).each( function( index, element ) {
-            if( element.MaterialCheckbox == null ) return;
-            var val = element.firstChild.value;
-            if( notificationSubscriptions[ val ] != null && ! notificationSubscriptions[ val ] )
-                element.MaterialCheckbox.uncheck();
-            else
-                element.MaterialCheckbox.check();
-        });
+		$( "#pratilipi-settings-email-frequency" ).attr( 'data-val', emailFrequency );
+		$( "#pratilipi-settings-email-frequency" ).attr( 'value', getEmailFrequencyVernacular( emailFrequency ) );
+		$( '#notification-settings .mdl-js-checkbox' ).each( function( index, element ) {
+			if( element.MaterialCheckbox == null ) return;
+			var val = element.firstChild.value;
+			if( notificationSubscriptions[ val ] != null && ! notificationSubscriptions[ val ] )
+				element.MaterialCheckbox.uncheck();
+			else
+				element.MaterialCheckbox.check();
+		});
 
-    }, this );
+	}, this );
+
+
+	/* PASSWORD SETTINGS */
+	this.currentPassword = ko.observable();
+	this.newPassword = ko.observable();
+	this.confirmPassword = ko.observable();
+
+	this.updatePassword = function() {
+		if( self.newPassword() != self.confirmPassword() ) {
+			ToastUtil.toast( "Passwords doesn't match!" );
+			return;
+		}
+		if( self.isLoading() ) return;
+		self.isLoading( true );
+		ToastUtil.toastUp( "${ _strings.working }" );
+		dataAccessor.updateUserPassword( self.currentPassword(), self.newPassword(),
+			function( user ) {
+				self.currentPassword( null );
+				self.newPassword( null );
+				self.confirmPassword( null );
+				self.isLoading( false );
+				ToastUtil.toast( "${ _strings.success_generic_message }" );
+			}, function( error ) {
+				self.isLoading( false );
+				var message = "${ _strings.server_error_message }";
+				if( error[ "password" ] != null ) message = error[ "password" ];
+				if( error[ "newPassword" ] != null ) message = error[ "newPassword" ];
+				if( error[ "message" ] != null ) message = error[ "message" ];
+				ToastUtil.toast( message );
+		});
+	};
+
+	this.canUpdatePassword = ko.computed( function() {
+		return self.currentPassword() != null && self.currentPassword() != "" &&
+				self.newPassword() != null && self.newPassword() != "" &&
+				self.confirmPassword() != null && self.confirmPassword() != "" &&
+				! self.isLoading();
+	}, this );
+
+
+	/* LOGOUT */
+	this.logoutUser = function() {
+		if( self.isLoading() ) return;
+		self.isLoading( true );
+		ToastUtil.toastUp( "${ _strings.working }" );
+		dataAccessor.logoutUser(
+			function( user ) {
+				ToastUtil.toastUp( "${ _strings.success_generic_message }" );
+				window.location.href = "/";
+			}, function( error ) {
+				self.isLoading( false );
+				ToastUtil.toast( error[ "message" ] != null ? error[ "message" ] : "${ _strings.server_error_message }" );
+		});
+	};
 
 }

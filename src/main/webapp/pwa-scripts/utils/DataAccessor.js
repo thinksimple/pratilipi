@@ -17,6 +17,8 @@ var DataAccessor = function() {
 	var USER_LOGIN_FACEBOOK_API = "/user/login/facebook";
 	var USER_LOGIN_GOOGLE_API = "/user/login/google";
 	var USER_REGISTER_API = "/user/register";
+	var USER_PASSWORD_UPDATE_API = "/user/passwordupdate";
+	var USER_LOGOUT_API = "/user/logout";
 	var NOTIFICATION_LIST_API = "/notification/list";
 	var NAVIGATION_LIST_API = "/navigation/list";
 	var USER_PRATILIPI_REVIEW_LIST_API = "/userpratilipi/review/list";
@@ -275,16 +277,16 @@ var DataAccessor = function() {
 		if( email != null ) params[ "email" ] = email;
 		if( phone != null ) params[ "phone" ] = phone;
 		httpUtil.post( API_PREFIX + USER_API,
-        				params,
-        				function( response, status ) { processPostResponse( response, status, successCallBack, errorCallBack ) } );
+						params,
+						function( response, status ) { processPostResponse( response, status, successCallBack, errorCallBack ) } );
 	};
 
 	this.createOrUpdateAuthor = function( author, successCallBack, errorCallBack ) {
-        if( author == null || isEmpty( author ) || author.authorId == null ) return;
-        httpUtil.post( API_PREFIX + AUTHOR_API,
-                        author,
-                        function( response, status ) { processPostResponse( response, status, successCallBack, errorCallBack ) } );
-    };
+		if( author == null || isEmpty( author ) || author.authorId == null ) return;
+		httpUtil.post( API_PREFIX + AUTHOR_API,
+						author,
+						function( response, status ) { processPostResponse( response, status, successCallBack, errorCallBack ) } );
+	};
 
 	this.createOrUpdateReview = function( pratilipiId, rating, review, successCallBack, errorCallBack ) {
 		if( pratilipiId == null ) return;
@@ -387,6 +389,21 @@ var DataAccessor = function() {
 		httpUtil.post( API_PREFIX + USER_REGISTER_API, 
 				{ "name": name, "email": email, "password": password },
 				function( response, status ) { processPostResponse( response, status, successCallBack, errorCallBack ) } );
+	},
+
+	this.updateUserPassword = function( password, newPassword, successCallBack, errorCallBack ) {
+		if( password == null || newPassword == null ) return;
+		httpUtil.post( API_PREFIX + USER_PASSWORD_UPDATE_API,
+				{ "password": password, "newPassword": newPassword },
+				function( response, status ) { processPostResponse( response, status, successCallBack, errorCallBack ) } );
+	},
+
+	this.logoutUser = function( successCallBack, errorCallBack ) {
+		httpUtil.get( API_PREFIX + USER_LOGOUT_API,
+				null,
+				function( response, status ) {
+					status == 200 ? successCallBack( response ) : errorCallBack( response );
+		});
 	}
 
 };
