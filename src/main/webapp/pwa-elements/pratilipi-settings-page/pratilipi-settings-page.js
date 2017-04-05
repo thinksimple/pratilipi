@@ -243,7 +243,7 @@ function( params ) {
 		});
 	};
 
-
+	/* Helpers */
 	var alignRightPane = function() {
 		var element = $( ".js-tabs-right-pane" );
 		var width = element.width() - parseInt( element.css( "margin-left" ) ) - parseInt( element.css( "margin-right" ) );
@@ -265,8 +265,6 @@ function( params ) {
 
 	$( ".mdl-tabs__tab" ).on( 'click', function() { setTabTitle(); });
 
-
 	$( document ).ready( function() { alignRightPane();	setTabTitle(); });
-
 
 }
