@@ -243,4 +243,30 @@ function( params ) {
 		});
 	};
 
+
+	var alignRightPane = function() {
+		var element = $( ".js-tabs-right-pane" );
+		var width = element.width() - parseInt( element.css( "margin-left" ) ) - parseInt( element.css( "margin-right" ) );
+		$( '.js-width-50' ).css( 'width', ( width / 2 ) > 300 ? '50%' : '100%' );
+	};
+
+	$( window ).resize( function() { alignRightPane(); });
+
+
+	this.tabTitle = ko.observable();
+	var setTabTitle = function() {
+		setTimeout( function() {
+			$( ".mdl-tabs__panel" ).each( function( index, element ) {
+				if( $( element ).hasClass( "is-active" ) )
+					self.tabTitle( $( element ).attr( 'data-name' ) );
+			});
+		}, 0 );
+	};
+
+	$( ".mdl-tabs__tab" ).on( 'click', function() { setTabTitle(); });
+
+
+	$( document ).ready( function() { alignRightPane();	setTabTitle(); });
+
+
 }

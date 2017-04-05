@@ -1,49 +1,88 @@
 <div class="mdl-cell mdl-cell--8-col-tablet mdl-cell--9-col pratilipi-settings-page">
 	<div class="mdl-tabs vertical-mdl-tabs mdl-js-tabs mdl-js-ripple-effect mdl-card-border">
+
+		<div class="tabs-mobile-bar">
+			<span class="material-subtitle-1" data-bind="text: tabTitle()"></span>
+
+
+			<!-- Right aligned menu below button -->
+			<span class="pull-right">
+				<button id="demo-menu-lower-right"
+					class="mdl-button mdl-js-button mdl-button--icon">
+					<i class="material-icons">menu</i>
+				</button>
+				<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+					    for="demo-menu-lower-right">
+					<li class="mdl-menu__item">
+						<a href="#profile-settings" class="mdl-tabs__tab is-active">
+							<span>Profile Settings</span>
+						</a>
+					</li>
+					<li class="mdl-menu__item">
+						<a href="#notification-settings" class="mdl-tabs__tab">
+							<span>Notification Settings</span>
+						</a>
+					</li>
+					<li class="mdl-menu__item">
+						<a href="#password-settings" class="mdl-tabs__tab">
+							<span>Change Password</span>
+						</a>
+					</li>
+					<li class="mdl-menu__item">
+						<a data-bind="click: logoutUser" class="mdl-tabs__tab clickable-element">
+							<span>Logout</span>
+						</a>
+					</li>
+				</ul>
+			</span>
+
+
+		</div>
+
 		<div class="mdl-grid mdl-grid--no-spacing settings-grid">
 			<div class="tabs-left-pane">
 				<div class="mdl-tabs__tab-bar">
 					<a href="#profile-settings" class="mdl-tabs__tab is-active">
-						<span class="tab-text">Profile Settings</span>
+						<span>Profile Settings</span>
 					</a>
 					<a href="#notification-settings" class="mdl-tabs__tab">
-						<span class="tab-text">Notification Settings</span>
+						<span>Notification Settings</span>
 					</a>
 					<a href="#password-settings" class="mdl-tabs__tab">
-						<span class="tab-text">Change Password</span>
+						<span>Change Password</span>
 					</a>
 					<a data-bind="click: logoutUser" class="mdl-tabs__tab clickable-element">
-						<span class="tab-text">Logout</span>
+						<span>Logout</span>
 					</a>
 				</div>
 			</div>
-			<div class="tabs-right-pane">
+			<div class="tabs-right-pane js-tabs-right-pane">
 
-				<div class="mdl-tabs__panel is-active" id="profile-settings">
+				<div class="mdl-tabs__panel is-active" data-name="Profile Settings" id="profile-settings">
 
 					<div class="mdl-grid mdl-grid--no-spacing">
-						<div class="mdl-cell mdl-cell--6-col">
+						<div class="mdl-cell width-50 js-width-50">
 							<input data-bind="{ mdlFloatingInput: { label: '${ _strings.edit_author_first_name } *', value: firstName, id: 'pratilipi-settings-first-name' }, valueUpdate: ['input'], transliterate: true }" />
 						</div>
-						<div class="mdl-cell mdl-cell--6-col">
+						<div class="mdl-cell width-50 js-width-50">
 							<input data-bind="{ mdlFloatingInput: { label: '${ _strings.edit_author_last_name }', value: lastName, id: 'pratilipi-settings-last-name' }, valueUpdate: ['input'], transliterate: true }" />
 						</div>
 					</div>
 
 					<div class="mdl-grid mdl-grid--no-spacing">
-						<div class="mdl-cell mdl-cell--6-col">
+						<div class="mdl-cell width-50 js-width-50">
 							<input data-bind="{ mdlFloatingInput: { label: '${ _strings.edit_author_first_name_en }', value: firstNameEn, id: 'pratilipi-settings-first-name-en' }, valueUpdate: ['input'] }" />
 						</div>
-						<div class="mdl-cell mdl-cell--6-col">
+						<div class="mdl-cell width-50 js-width-50">
 							<input data-bind="{ mdlFloatingInput: { label: '${ _strings.edit_author_last_name_en }', value: lastNameEn, id: 'pratilipi-settings-last-name-en' }, valueUpdate: ['input'] }" />
 						</div>
 					</div>
 
 					<div class="mdl-grid mdl-grid--no-spacing">
-						<div class="mdl-cell mdl-cell--6-col">
+						<div class="mdl-cell width-50 js-width-50">
 							<input data-bind="{ mdlFloatingInput: { label: '${ _strings.edit_author_pen_name }', value: penName, id: 'pratilipi-settings-pen-name' }, valueUpdate: ['input'], transliterate: true }" />
 						</div>
-						<div class="mdl-cell mdl-cell--6-col">
+						<div class="mdl-cell width-50 js-width-50">
 							<div class="mdl-textfield mdl-js-textfield getmdl-select getmdl-select__fullwidth getmdl-select__fix-height mdl-textfield--floating-label">
 								<input data-bind="event: { change: updateLanguage }"
 									   class="mdl-textfield__input"
@@ -64,22 +103,22 @@
 					</div>
 
 					<div class="summary-holder">
-						<textarea data-bind="{ mdlFloatingInput: { label: '${ _strings.edit_author_summary }', value: summary, id: 'pratilipi-settings-summary' }, valueUpdate: ['input'], transliterate: true }" rows= "2"></textarea>
+						<textarea data-bind="{ mdlFloatingInput: { label: '${ _strings.edit_author_summary }', value: summary, id: 'pratilipi-settings-summary' }, valueUpdate: ['input'], transliterate: true }" rows= "3"></textarea>
 					</div>
 
 					<div class="private-information">
 						<span class="material-title">Private Information</span>
 						<div class="mdl-grid mdl-grid--no-spacing">
-							<div class="mdl-cell mdl-cell--6-col">
+							<div class="mdl-cell width-50 js-width-50">
 								<input data-bind="{ mdlFloatingInput: { label: '${ _strings.user_email }', value: email, id: 'pratilipi-settings-email' }, valueUpdate: ['input'] }" />
 							</div>
-							<div class="mdl-cell mdl-cell--6-col">
+							<div class="mdl-cell width-50 js-width-50">
 								<input data-bind="{ mdlFloatingInput: { label: '${ _strings.user_phone }', value: phone, id: 'pratilipi-settings-phone' }, valueUpdate: ['input'] }" />
 							</div>
 						</div>
 
 						<div class="mdl-grid mdl-grid--no-spacing">
-							<div class="mdl-cell mdl-cell--6-col">
+							<div class="mdl-cell width-50 js-width-50">
 								<div class="mdl-textfield mdl-js-textfield getmdl-select getmdl-select__fullwidth getmdl-select__fix-height mdl-textfield--floating-label">
 									<input data-bind="event: { change: updateGender }"
 										   class="mdl-textfield__input"
@@ -97,7 +136,7 @@
 									</ul>
 								</div>
 							</div>
-							<div class="mdl-cell mdl-cell--6-col">
+							<div class="mdl-cell width-50 js-width-50">
 								<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 									<input data-bind="value: dateOfBirth, valueUpdate: ['input']"
 										   type="date"
@@ -120,7 +159,7 @@
 				</div>
 
 
-				<div class="mdl-tabs__panel" id="notification-settings">
+				<div class="mdl-tabs__panel" data-name="Notification Settings" id="notification-settings">
 
 					<div class="mdl-textfield mdl-js-textfield getmdl-select getmdl-select__fullwidth getmdl-select__fix-height mdl-textfield--floating-label">
 						<input class="mdl-textfield__input"
@@ -207,7 +246,7 @@
 				</div>
 
 
-				<div class="mdl-tabs__panel" id="password-settings">
+				<div class="mdl-tabs__panel" data-name="Password Settings" id="password-settings">
 
 					<div class="mdl-grid mdl-grid--no-spacing">
 						<div class="mdl-cell mdl-cell--12-col">
