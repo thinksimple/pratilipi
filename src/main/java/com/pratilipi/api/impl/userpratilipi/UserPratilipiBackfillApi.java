@@ -66,7 +66,7 @@ public class UserPratilipiBackfillApi extends GenericApi {
 		if(accessToken == null) 
 			logger.log(Level.SEVERE, "Access Token is null");
 		else
-			logger.log(Level.SEVERE, "Access Token : " + accessToken);
+			logger.log(Level.SEVERE, "Access Token : " + accessToken.getUserId());
 		
 		if (accessToken == null || accessToken.getUserId() != 5073076857339904L)
 			throw new InsufficientAccessException();
