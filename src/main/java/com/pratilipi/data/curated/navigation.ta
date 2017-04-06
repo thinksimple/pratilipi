@@ -1,3 +1,11 @@
+பிரபலமானவை    
+/event/kavidhai-saalai       கவிதைச் சாலை - போட்டி  Analytics#categoryName::event-kavidhai-salai App#imageName::classic.jpg        App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "eventId":5030784946667520 } 
+/fiveminstories              ஐந்து நிமிடக்கதைகள்  Analytics#categoryName::short-stories      App#imageName::5minread.jpg        App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"fiveminstories" } 
+/most-read                   வாசகர் தேர்வு           Analytics#categoryName::most-read        App#imageName::mostpopular.jpg     App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"most-read" }
+/ministories                 குட்டிக்கதைகள்         Analytics#categoryName::two-min         App#imageName::shortstories.jpg        App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"ministories" } 
+/new                         புதியவை               Analytics#categoryName::newly-published   App#imageName::newpublished.jpg         App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"new" }
+/events                      போட்டிகள்               Analytics#categoryName::online-events     App#imageName::events.jpg               App#EventList::{ "language":"TAMIL" }
+
 பிரிவுகள்
 /romance                     காதல்                    Analytics#categoryName::romance                 App#imageName::romance.jpg            App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"romance" }  
 /cinema                      சினிமா                  Analytics#categoryName::cinema               App#imageName::movies.jpg             App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"cinema" }         
@@ -18,11 +26,3 @@
 /nationalised-books          நாட்டுடைமை நூல்கள்    Analytics#categoryName::classics        App#imageName::india.jpg              App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"nationalised-books" }
 /magazines                   இதழ்கள்           Analytics#categoryName::magazines            App#imageName::magazines.jpg        App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"magazines" }
 /blog                        வலைப்பதிவுகள்   Analytics#categoryName:: blogs                App#imageName::blog.jpg                App#BlogPostList::{ "language":"TAMIL", "blogId":5683739602452480 }
-
-பிரபலமானவை    
-/event/kavidhai-saalai       கவிதைச் சாலை - போட்டி  Analytics#categoryName::event-kavidhai-salai App#imageName::classic.jpg        App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "eventId":5030784946667520 } 
-/fiveminstories              ஐந்து நிமிடக்கதைகள்  Analytics#categoryName::short-stories      App#imageName::5minread.jpg        App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"fiveminstories" } 
-/most-read                   வாசகர் தேர்வு           Analytics#categoryName::most-read        App#imageName::mostpopular.jpg     App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"most-read" }
-/ministories                 குட்டிக்கதைகள்         Analytics#categoryName::two-min         App#imageName::shortstories.jpg        App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"ministories" } 
-/new                         புதியவை               Analytics#categoryName::newly-published   App#imageName::newpublished.jpg         App#PratilipiList::{ "language":"TAMIL", "state":"PUBLISHED", "listName":"new" }
-/events                      போட்டிகள்               Analytics#categoryName::online-events     App#imageName::events.jpg               App#EventList::{ "language":"TAMIL" }
