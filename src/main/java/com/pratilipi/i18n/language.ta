@@ -509,8 +509,7 @@ pratilipi_review_hide_comments 	= பதில்களை மறைக்க
 pratilipi_no_reviews			    = இந்த படைப்புக்கு விமர்சனங்கள் இல்லை
 rating_be_first_one		            = படைப்புகளை முதல் ஆளாய் விமர்சனம் செய்யுங்கள்
 
-author_readby_count                 = படித்தவர்கள் $read_count people
-
+author_readby_count                 = படித்தவர்கள் $read_count பேர்
 settings_profile_settings       = ப்ரொபைல் செட்டிங்க்ஸ்
 settings_notification_settings  = நோட்டிஃபிக்கேசன் செட்டிங்க்ஸ்
 settings_update_password        = கடவுச்சொல்லை மாற்ற
