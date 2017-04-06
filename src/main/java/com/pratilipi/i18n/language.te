@@ -497,12 +497,12 @@ footer_mobile_app    				= మొబైల్ యాప్
 footer_contact_us	  				= మమ్ములను సంప్రదించండి
 
 # PWA
-user_logged_in_already              = You are already logged in, please click here to go back!
-user_email_empty 					= Please Enter your Email
-user_password_empty                 = Please Enter your Password
-user_name_empty 					= Please Enter your Name
-user_email_invalid 					= Please Enter a valid Email
-user_login_to_follow		        = Please login to follow this author
+user_logged_in_already              =మీరు ఇప్పటికే లాగిన్ అయ్యారు,తిరిగి వెళ్ళడానికి ఇక్కడ క్లిక్ చేయండి!
+user_email_empty 					= దయచేసి మీ ఇమెయిల్ ఎంటర్ చేయండి.
+user_password_empty                 = దయచేసి మీ పాస్వర్డ్ ఎంటర్ చేయండి.
+user_name_empty 					= దయచేసి మీ పేరు నమోదు చేయండి
+user_email_invalid 					= దయచేసి సరైన ఇమెయిల్ ఎంటర్ చేయండి.
+user_login_to_follow		        =ఈ రచయితను అనుసరించడానికి లాగిన్ అవ్వండి
 
 pratilipi_rate_and_review 			= రేటింగ్ మరియు సమీక్ష
 pratilipi_review_hide_comments 	= హైడ్ కామెంట్స్
