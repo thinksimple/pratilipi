@@ -517,3 +517,4 @@ settings_update_password        = Update Password
 
 search_load_failed			= Failed to load search results! Please click here to try again!
 notifications_load_failed = Notifications failed to load. Please click here to re-load the notifications.
+image_type_not_supported = Image type not supported! Please select another image. Supported Types: .png, .jpg, .jpeg

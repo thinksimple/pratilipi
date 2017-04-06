@@ -174,7 +174,9 @@ function( params ) {
 		if( file != null && ( file.name.match( ".*\.jpg" ) || file.name.match( ".*\.png" ) || file.name.match( ".*\.jpeg" ) ) ) {
 			self.imageUploaded( true );
 			document.getElementById( "uploadPratilipiImageForm" ).submit();
-		}
+		} else {
+        	ToastUtil.toast( "${ _strings.image_type_not_supported }" );
+        }
 	};
 
 	this.iframeLoaded = function( vm, evt ) {

@@ -69,6 +69,8 @@ function( params ) {
         if( file != null && ( file.name.match( ".*\.jpg" ) || file.name.match( ".*\.png" ) || file.name.match( ".*\.jpeg" ) ) ) {
             self.imageUploaded( true );
             document.getElementById( "uploadAuthorImageForm" ).submit();
+        } else {
+        	ToastUtil.toast( "${ _strings.image_type_not_supported }" );
         }
     };
 
@@ -99,6 +101,8 @@ function( params ) {
         if( file != null && ( file.name.match( ".*\.jpg" ) || file.name.match( ".*\.png" ) || file.name.match( ".*\.jpeg" ) ) ) {
             self.coverUploaded( true );
             document.getElementById( "uploadAuthorCoverForm" ).submit();
+        } else {
+        	ToastUtil.toast( "${ _strings.image_type_not_supported }" );
         }
     };
 
