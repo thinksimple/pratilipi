@@ -5,21 +5,35 @@
 
 	margin-bottom: 0;
 
-	.author-cover-image {
-		max-width: 100%;
+	.image-loading {
+		@include css-prefix( 'opacity', '0.8' );
+		@include css-prefix( 'transition', '0.3s opacity' );
 	}
 
-	.upload-cover-button {
-		position: absolute;
-		right: 10px;
-		top: 10px;
-		width: 36px;
-		height: 36px;
-		background: #fff;
-	}
+	.author-cover-image-holder {
+		@include css-prefix( 'display', 'flex' );
+		@include css-prefix( 'flex-direction', 'row' );
+		align-items: center;
 
-	.author-read-count-holder {
-		color: rgba(0,0,0,0.54);
+		img.author-cover-image {
+			max-width: 100%;
+			width: 100%;
+		}
+
+		.upload-cover-button {
+			position: absolute;
+			right: 10px;
+			top: 10px;
+			width: 36px;
+			height: 36px;
+			background: #fff;
+		}
+
+		.cover-spinner-container {
+			position: absolute;
+			width: 100%;
+			text-align: center;
+		}
 	}
 
 	.author-meta-holder {
@@ -27,6 +41,7 @@
 		@include css-prefix( 'display', 'flex' );
 		@include css-prefix( 'flex-direction', 'row' );
 		width: 100%;
+		z-index: 1;
 
 		min-height: $author_image_desktop_dimension + px;
 		margin-top: -($author_image_desktop_dimension/2) + px;
@@ -46,10 +61,6 @@
 					width: $author_image_mobile_dimension + px;
 					height: $author_image_mobile_dimension + px;
 				}
-			}
-			img.author-profile-image.image-loading {
-				@include css-prefix( 'opacity', '0.8' );
-				@include css-prefix( 'transition', '0.3s opacity' );
 			}
 			.spinner-container {
 				position: absolute;
@@ -99,6 +110,10 @@
 				}
 			}
 		}
+	}
+
+	.author-read-count-holder {
+		color: rgba(0,0,0,0.54);
 	}
 
 	.author-meta-holder-mobile {

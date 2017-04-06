@@ -13,7 +13,7 @@
 				</div>
 				<button class="upload-image-button mdl-button mdl-js-button mdl-button--fab"
 						data-bind="{ click: chooseImageFile,
-									visible: pratilipi.hasAccessToUpdate() && imageUploaded() }">
+									visible: pratilipi.hasAccessToUpdate() && ! imageUploaded() }">
 					<i class="material-icons">camera_alt</i>
 				</button>
 				<form id="uploadPratilipiImageForm" 
