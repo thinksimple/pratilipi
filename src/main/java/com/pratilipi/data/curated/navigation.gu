@@ -1,3 +1,14 @@
+અવનવું
+/vachakoni-top-pasand     વાચકોની ટોપ પસંદ         Analytics#categoryName::most-read       App#imageName::mostpopular.jpg         App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"vachakoni-top-pasand" } 
+/navi-prakashit-rachnao   નવી પ્રકાશિત રચનાઓ          Analytics#categoryName::newly-published       App#imageName::newpublished.jpg       App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"navi-prakashit-rachnao" }
+/meghanino-vartavaibhav   મેઘાણીનો વાર્તાવૈભવ            Analytics#categoryName::meghanino-vartavaibhav       App#imageName::event_generic2.jpg        App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"meghanino-vartavaibhav" }
+/classic-sahitya          ક્લાસિક સાહિત્ય            Analytics#categoryName::classics        App#imageName::classic.jpg            App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"classic-sahitya" }
+/event/anu-nam-laghukatha  આનું નામ-લઘુ કથા!     Analytics#categoryName::event-anu-nam-laghukatha          App#imageName::event_generic7.jpg        App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "eventId":5045072440590336 }
+/events                   ઓનલાઈન સ્પર્ધાઓ           Analytics#categoryName::online-events    App#imageName::events.jpg         App#EventList::{ "language":"GUJARATI" }
+/gujarati-samayiko        ગુજરાતી સામયિકો             Analytics#categoryName::gujarati-samayiko       App#imageName::magazines.jpg         App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"gujarati-samayiko" }
+/blog                     બ્લોગ                      Analytics#categoryName::blogs       App#imageName::blog.jpg         App#BlogPostList::{ "language":"GUJARATI", "blogId":5683739602452480 }
+/author-interviews        લેખકો સાથે વાર્તાલાપ         Analytics#categoryName::author-interviews         App#imageName::authorinterviews.jpg         App#BlogPostList::{ "language":"GUJARATI", "blogId":5197509039226880 }
+
 શ્રેણી
 /romance                  રોમાંસ વાર્તાઓ                Analytics#categoryName::romance       App#imageName::romance.jpg          App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"romance" }
 /rahasyamay-ane-romanchak રહસ્યમય અને રોમાંચક વાર્તાઓ    Analytics#categoryName::mystery       App#imageName::suspence.jpg           App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"rahasyamay-ane-romanchak" }
@@ -17,14 +28,3 @@
 /spiritual                પૌરાણીક                    Analytics#categoryName::spiritual       App#imageName::spirituality.jpg            App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"spiritual" }
 /rasthaal                 રસથાળ                    Analytics#categoryName::cooking        App#imageName::cooking.jpg            App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"rasthaal" }
 /yangistaan               યંગિસ્તાન                  Analytics#categoryName::yangistaan         App#imageName::youth.jpg           App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"yangistaan" }
-
-અવનવું
-/vachakoni-top-pasand     વાચકોની ટોપ પસંદ         Analytics#categoryName::most-read       App#imageName::mostpopular.jpg         App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"vachakoni-top-pasand" } 
-/navi-prakashit-rachnao   નવી પ્રકાશિત રચનાઓ          Analytics#categoryName::newly-published       App#imageName::newpublished.jpg       App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"navi-prakashit-rachnao" }
-/meghanino-vartavaibhav   મેઘાણીનો વાર્તાવૈભવ            Analytics#categoryName::meghanino-vartavaibhav       App#imageName::event_generic2.jpg        App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"meghanino-vartavaibhav" }
-/classic-sahitya          ક્લાસિક સાહિત્ય            Analytics#categoryName::classics        App#imageName::classic.jpg            App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"classic-sahitya" }
-/event/anu-nam-laghukatha  આનું નામ-લઘુ કથા!     Analytics#categoryName::event-anu-nam-laghukatha          App#imageName::event_generic7.jpg        App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "eventId":5045072440590336 }
-/events                   ઓનલાઈન સ્પર્ધાઓ           Analytics#categoryName::online-events    App#imageName::events.jpg         App#EventList::{ "language":"GUJARATI" }
-/gujarati-samayiko        ગુજરાતી સામયિકો             Analytics#categoryName::gujarati-samayiko       App#imageName::magazines.jpg         App#PratilipiList::{ "language":"GUJARATI", "state":"PUBLISHED", "listName":"gujarati-samayiko" }
-/blog                     બ્લોગ                      Analytics#categoryName::blogs       App#imageName::blog.jpg         App#BlogPostList::{ "language":"GUJARATI", "blogId":5683739602452480 }
-/author-interviews        લેખકો સાથે વાર્તાલાપ         Analytics#categoryName::author-interviews         App#imageName::authorinterviews.jpg         App#BlogPostList::{ "language":"GUJARATI", "blogId":5197509039226880 }
