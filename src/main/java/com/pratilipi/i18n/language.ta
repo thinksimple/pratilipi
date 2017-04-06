@@ -497,12 +497,12 @@ footer_mobile_app    				= கைபேசி செயலி
 footer_contact_us	  				= தொடர்புக்கு
 
 # PWA
-user_logged_in_already              = You are already logged in, please click here to go back!
-user_email_empty 					= Please Enter your Email
-user_password_empty                 = Please Enter your Password
-user_name_empty 					= Please Enter your Name
-user_email_invalid 					= Please Enter a valid Email
-user_login_to_follow		        = Please login to follow this author
+user_logged_in_already              = நீங்கள் ஏற்கனவே லாக் இன் செய்துவிட்டீர்கள். பின்னே செல்ல இங்கே க்ளிக் செய்யவும்!
+user_email_empty 					= உங்களது மின்னஞ்சல் முகவரியை எழுதவும்
+user_password_empty                 = உங்களது கடவுச்சொல்லை எழுதவும்
+user_name_empty 					= உங்களது பெயரை எழுதவும்
+user_email_invalid 					= சரியான மின்னஞ்சல் முகவரியை எழுதவும்
+user_login_to_follow		        = இந்த எழுத்தாளரை ஃபாலோ செய்ய லாக் இன் செய்யவும்
 
 pratilipi_rate_and_review 			= மதிப்பிட்டு விமர்சிக்க
 pratilipi_review_hide_comments 	= பதில்களை மறைக்க
