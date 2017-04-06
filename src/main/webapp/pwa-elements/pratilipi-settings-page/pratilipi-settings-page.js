@@ -2,6 +2,8 @@ function( params ) {
 	var self = this;
 	var dataAccessor = new DataAccessor();
 
+	this.isAdmin = getUrlParameter( "authorId" ) != null && getUrlParameter( "userId" ) != null;
+
 	/* PROFILE SETTINGS */
 	this.firstName = ko.observable();
 	this.lastName = ko.observable();

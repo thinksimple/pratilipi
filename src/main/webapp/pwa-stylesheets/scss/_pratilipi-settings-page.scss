@@ -8,6 +8,9 @@
 			position: relative;
             padding: 16px 20px;
             border-bottom: 1px solid lightgrey;
+            .mdl-menu__container {
+            	z-index: 2;
+            }
             li.mdl-menu__item {
                 display: flex;
                 padding: 0;
