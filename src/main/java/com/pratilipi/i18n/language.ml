@@ -497,23 +497,23 @@ footer_mobile_app    				= മൊബൈല്‍ ആപ്പ്
 footer_contact_us	  				= ഞങ്ങളെ ബന്ധപ്പെടൂ
 
 # PWA
-user_logged_in_already              = You are already logged in, please click here to go back!
-user_email_empty 					= Please Enter your Email
-user_password_empty                 = Please Enter your Password
-user_name_empty 					= Please Enter your Name
-user_email_invalid 					= Please Enter a valid Email
-user_login_to_follow		        = Please login to follow this author
+user_logged_in_already              = താങ്കള്‍ ഇപ്പോള്‍ത്തന്നെ ലോഗ് ഇന്‍ ചെയ്തിട്ടുണ്ട് , പുറകിലേക്ക് പോകാന്‍ ഇവിടെ ക്ലിക്ക് ചെയ്യൂ ! 
+user_email_empty 					= താങ്കളുടെ ഇ മെയില്‍ ഐഡി ടൈപ്പ് ചെയ്യൂ 
+user_password_empty                 = താങ്കളുടെ പാസ്സ്‌വേര്‍ഡ്‌ ടൈപ്പ് ചെയ്യൂ 
+user_name_empty 					= താങ്കളുടെ പേര് ചേര്‍ക്കൂ 
+user_email_invalid 					= ദയവായി ഒരു ശരിയായ ഇ മെയില്‍ ഐഡി ചേര്‍ക്കൂ 
+user_login_to_follow		        = ഈ രചയിതാവിനെ ഫോളോ ചെയ്യാന്‍ ലോഗിന്‍ ചെയ്യൂ 
 
 pratilipi_rate_and_review 			= റേറ്റും റിവ്യൂവും ചെയ്യൂ
 pratilipi_review_hide_comments 	= കമന്റുകള്‍ ഹൈഡ് ചെയ്യൂ
 pratilipi_no_reviews			    = ഈ രചനയ്ക്ക് ഇത് വരെ റിവ്യൂസ് ഒന്നും ഇല്ല
 rating_be_first_one		            = റിവ്യൂ ചെയ്യുന്ന ആദ്യത്തെ ആളാവൂ
 
-author_readby_count                 = Read by $read_count people
+author_readby_count                 = വായിച്ചവര്‍ $read_count പേര്‍
 
-settings_profile_settings       = Profile Settings
-settings_notification_settings  = Notification Settings
-settings_update_password        = Update Password
+settings_profile_settings       = പ്രൊഫൈല്‍ സെറ്റിംഗ്സ് 
+settings_notification_settings  = നോട്ടിഫിക്കേഷന്‍ സെറ്റിംഗ്സ് 
+settings_update_password        = പാസ്സ്‌വേര്‍ഡ്‌ അപ്ഡേറ്റ് ചെയ്യൂ
 
-search_load_failed			= Failed to load search results! Please click here to try again!
-notifications_load_failed = Notifications failed to load. Please click here to re-load the notifications.
+search_load_failed			= ഫലങ്ങള്‍ ലോഡ് ചെയ്യാന്‍ സാധിക്കുന്നില്ല ! വീണ്ടും ശ്രമിക്കാന്‍ ഇവിടെ ക്ലിക്ക് ചെയ്യൂ !
+notifications_load_failed = നോട്ടിഫിക്കേഷനുകള്‍ ലോഡ് ചെയ്യാന്‍ സാധിക്കുന്നില്ല .വീണ്ടും ശ്രമിക്കാന്‍ ഇവിടെ ക്ലിക്ക് ചെയ്യൂ !
