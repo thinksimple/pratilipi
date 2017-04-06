@@ -2,7 +2,7 @@
 	<div class="author-cover-image-holder">
 		<img class="author-cover-image" 
 				data-bind="attr: { 'src': author.coverImageUrl(), 'alt': author.name() },
-							css: { 'image-loading': imageUploaded() }" />
+							css: { 'image-loading': coverUploaded() }" />
 		<div data-bind="visible: coverUploaded()" class="cover-spinner-container">
 			<span class="image-uploaded-spinner mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></span>
 		</div>
