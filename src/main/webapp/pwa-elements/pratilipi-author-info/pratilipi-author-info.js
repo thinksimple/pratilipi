@@ -78,13 +78,42 @@ function( params ) {
         var response = JSON.parse( evt.currentTarget.contentDocument.body.innerText );
         if( response[ "coverImageUrl" ] != null ) {
             /* Success Callback */
-            var profileImageUrl = response[ "coverImageUrl" ];
-            self.updatePratilipi( { "profileImageUrl": profileImageUrl } );
+            self.updateAuthor( { "profileImageUrl": response[ "coverImageUrl" ] } );
             ToastUtil.toast( "${ _strings.success_generic_message }", 3000 );
         } else if( response[ "message" ] != null ) {
             ToastUtil.toast( response[ "message" ], 3000 );
         }
         self.imageUploaded( false );
+    };
+    
+    /* Cover Upload */
+    this.coverUploaded = ko.observable( false );
+    this.chooseCoverFile = function() {
+        document.getElementById( 'uploadAuthorCoverInput' ).value= null;
+        document.getElementById( "uploadAuthorCoverInput" ).click();
+    };
+
+    this.uploadAuthorCover = function( vm, evt ) {
+        var files = evt.target.files;
+        var file = files[0];
+        if( file != null && ( file.name.match( ".*\.jpg" ) || file.name.match( ".*\.png" ) || file.name.match( ".*\.jpeg" ) ) ) {
+            self.coverUploaded( true );
+            document.getElementById( "uploadAuthorCoverForm" ).submit();
+        }
+    };
+
+    this.coverIframeLoaded = function( vm, evt ) {
+        if( ! self.coverUploaded() )
+            return;
+        var response = JSON.parse( evt.currentTarget.contentDocument.body.innerText );
+        if( response[ "coverImageUrl" ] != null ) {
+            /* Success Callback */
+            self.updateAuthor( { "coverImageUrl": response[ "coverImageUrl" ] } );
+            ToastUtil.toast( "${ _strings.success_generic_message }", 3000 );
+        } else if( response[ "message" ] != null ) {
+            ToastUtil.toast( response[ "message" ], 3000 );
+        }
+        self.coverUploaded( false );
     };
 
 }
