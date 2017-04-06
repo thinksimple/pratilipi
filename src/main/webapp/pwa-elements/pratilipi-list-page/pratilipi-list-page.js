@@ -4,6 +4,7 @@ function() {
 	var resultCount = 20;
 	var dataAccessor = new DataAccessor();
 
+	this.listTitle = ko.observable();
 	this.pratilipiList = ko.observableArray();
 	this.hasMoreContents = ko.observable( true );
 	this.isLoading = ko.observable( false );
@@ -40,5 +41,18 @@ function() {
 	}, this ); 
 
 	this.fetchPratilipiList();
+
+	/* Hack: Setting listTitle */
+	var getListTitle = function() {
+		var listListTitleMap = {
+			<#list navigationList as navigation>
+				<#list navigation.linkList as link>
+				"${ link.url }": "${ link.name }",
+				</#list>
+            </#list>
+		};
+		return listListTitleMap[ window.location.pathname ] != null ? listListTitleMap[ window.location.pathname ] : null;
+	};
+	self.listTitle( getListTitle() );
 
 }

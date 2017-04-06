@@ -1,4 +1,8 @@
 <div class="mdl-cell mdl-cell--8-col-tablet mdl-cell--9-col mobile-card">
+	<div data-bind="visible: listTitle() != null, text: listTitle()"
+	     class="load-more-container mdl-card-border material-heading"
+	     style="margin-top: 0;">
+	</div>
 	<div data-bind="foreach: { data: pratilipiList, as: 'pratilipi' }, visible: pratilipiList().length > 0"
 	     class="mdl-grid pratilipi-list-grid js-pratilipi-list-grid mobile-card">
 		<div class="mdl-cell mdl-cell--12-col-phone mdl-cell--12-col-tablet mdl-cell--12-col-desktop mobile-card pratilipi-list-card">
