@@ -171,7 +171,7 @@ function( params ) {
 	this.uploadPratilipiImage = function( vm, evt ) {
 		var files = evt.target.files;
 		var file = files[0];
-		if( file != null && ( file.name.match( ".*\.jpg" ) || file.name.match( ".*\.png" ) ) ) {
+		if( file != null && ( file.name.match( ".*\.jpg" ) || file.name.match( ".*\.png" ) || file.name.match( ".*\.jpeg" ) ) ) {
 			self.imageUploaded( true );
 			document.getElementById( "uploadPratilipiImageForm" ).submit();
 		}

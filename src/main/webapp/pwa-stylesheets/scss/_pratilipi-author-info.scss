@@ -38,6 +38,33 @@
 					height: $author_image_mobile_dimension + px;
 				}
 			}
+			img.author-profile-image.image-loading {
+				@include css-prefix( 'opacity', '0.8' );
+				@include css-prefix( 'transition', '0.3s opacity' );
+			}
+			.spinner-container {
+				position: absolute;
+				left: 100px;
+				margin-top: -116px;
+				@media only screen and (max-width: 1024px) {
+					left: 60px;
+                    margin-top: -72px;
+                }
+			}
+			button.upload-image-button {
+				position: absolute;
+				left: 140px;
+				margin-top: 140px;
+				background: white;
+				height: 36px;
+				width: 36px;
+				@media only screen and (max-width: 1024px) {
+					left: 80px;
+					margin-top: 80px;
+					height: 30px;
+					width: 30px;
+				}
+			}
 		}
 
 		.author-meta {
@@ -58,8 +85,8 @@
 					}
 				}
 				.small-button {
-				    min-width: 36px;
-				    padding: 0;	
+					min-width: 36px;
+					padding: 0;
 				}
 			}
 		}
@@ -85,10 +112,10 @@
 
 	.author-stats-holder {
 		@include css-prefix( 'display', 'flex' );
-        @include css-prefix( 'flex-direction', 'row' );
-        width: 100%;
-        text-align: center;
-        padding: 0;
+		@include css-prefix( 'flex-direction', 'row' );
+		width: 100%;
+		text-align: center;
+		padding: 0;
 		div {
 			@include css-prefix( 'flex-grow', '1' );
 		}
