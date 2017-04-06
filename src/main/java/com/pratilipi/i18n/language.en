@@ -457,6 +457,7 @@ whatsapp_read_unlimited_stories = Read unlimited stories, poems, articles in Ind
 whatsapp_read_story = , read it on Pratilipi : 
 whatsapp_follow_author = , Follow on Pratilipi : 
 
+
 # SEO Titles
 seo_root_domain					= Pratilipi - Read, Write and Share Stories in your own mother tongue
 seo_pratilipi_page				= ${ authorNameEn }'s content ${ pratilipiTitleEn } Summary
@@ -484,27 +485,35 @@ seo_register_page				= Make your account on Pratilipi
 seo_login_page					= Login to Pratilipi
 seo_reset_password_page			= Reset Your Password - Pratilipi
 
-#Sharing platform names
-
-
-
-
-# PWA
-logged_in_already 				= You are already logged in, please click here to go back!
-password_empty 					= Please Enter your Password.
-name_empty 						= Please Enter your Password.
-email_empty 					= Please Enter your Email.
-email_invalid 					= Please Enter a valid Email.
-
-rate_and_review 				= Rate and review 
-hide_comments 					= Hide Comments
-mobile_app    					= Mobile App
-contact_us	  					= Contact Us
+# Social
 facebook                        = Facebook
 twitter                        	= Twitter
 google_plus                    	= Google Plus
-whatsapp                        = Whatsapp
 linkedin                        = Linkedin
+whatsapp                        = Whatsapp
 
-pratilipi_no_reviews			= Sorry! No Reviews found for this content!
-rating_be_first_one				= Be the first one to rate it!
+# Footer
+footer_mobile_app    				= Mobile App
+footer_contact_us	  				= Contact Us
+
+# PWA
+user_logged_in_already              = You are already logged in, please click here to go back!
+user_email_empty 					= Please Enter your Email
+user_password_empty                 = Please Enter your Password
+user_name_empty 					= Please Enter your Name
+user_email_invalid 					= Please Enter a valid Email
+user_login_to_follow		        = Please login to follow this author
+
+pratilipi_rate_and_review 			= Rate and review
+pratilipi_review_hide_comments 	= Hide Comments
+pratilipi_no_reviews			    = Sorry! No Reviews found for this content!
+rating_be_first_one		            = Be the first one to rate it!
+
+author_readby_count                 = Read by $read_count people
+
+settings_profile_settings       = Profile Settings
+settings_notification_settings  = Notification Settings
+settings_update_password        = Update Password
+
+search_load_failed			= Failed to load search results! Please click here to try again!
+notifications_load_failed = Notifications failed to load. Please click here to re-load the notifications.

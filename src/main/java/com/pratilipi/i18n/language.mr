@@ -32,7 +32,7 @@ _pratilipi_type_magazine	= पत्रिका
 _pratilipi_type_magazines	= पत्रिका 
 
 # Author
-author_author					= Author
+author_author				= लेखक
 author_about				= संक्षिप्त परिचय
 author_language				= भाषा	
 author_since				= प्रतिलिपि सोबत   
@@ -327,10 +327,10 @@ library_content_in_library	= ग्रंथालय सामग्री ज�
 reader_goto_content_page	= साहित्याच्या सामग्री पुष्ठावर जा 
 reader_goto_author_profile = लेखकाच्या पुष्ठावर जा
 reader_goto_home_page	=  मुखपुष्ठावर जा
-share_on_facebook		= फेसबुक वर सामायिक करा
-share_on_twitter		=  ट्विटर वर सामायिक करा
-share_on_gplus			= गूगल प्लस वर सामायिक करा
-share_on_whatsapp       = वाट्सअप वर सामायिक करा
+share_on_facebook		= फेसबुक वर शेयर करा
+share_on_twitter		= ट्वीटर वर शेयर करा
+share_on_gplus			= गूगल + वर शेयर करा
+share_on_whatsapp       = वाट्सअप वर शेयर करा
 increase_font_size		= फॉन्ट आकार वाढवा
 decrease_font_size		= फॉन्ट आकार कमी करा
 increase_image_size		= प्रतिमा आकार वाढवा
@@ -345,6 +345,7 @@ reader_enjoyed_reading_part2	= सामायिक करा
 # Notifications
 notification_notifications = सूचनाएँ 
 notifications_no_notifications = क्षमस्व! सध्या आपल्या करीता कोणत्याही सूचना नाही. कृपया नंतर पहा. 
+notifications_load_failed = Notifications failed to load. Please click here to re-load the notifications.
 
 # Writer Panel
 writer_add_content_title = शिर्षक जोडा 
@@ -484,20 +485,35 @@ seo_register_page				= प्रतिलिपि वर आपले अका
 seo_login_page					= प्रतिलिपि वर लॉग-इन करा 
 seo_reset_password_page			= आपला पासवर्ड रीसेट करा
 
-#PWA
-
-rate_and_review 				= रेटिंग द्या तसेच टिप्पणी लिहा
-hide_comments 					= टिप्पणी लपवा
-share_on_facebook 				= फेसबुक वर शेयर करा
-share_on_whatapp 				= वाट्सअप वर शेयर करा
-share_on_twitter 				= ट्वीटर वर शेयर करा
-share_on_Google 				= गूगल + वर शेयर करा
-mobile_app 						= मोबाइल ऍप 
-contact_us 						= आम्हांला सम्पर्क करा
+# Social
 facebook 						= फेसबुक
-whatsapp 						= वाट्सअप
 twitter 						= ट्वीटर
 google_plus 					= गूगल +
 linkedin						= लिंक्डइन
-rating_be_first_one				= आपली टिप्पणी प्रविष्ट करा व आपण प्रथम समीक्षक बनु शकता. 
-pratilipi_no_reviews			= साहित्य रचनावर काही टिप्पणी नाही. 
+whatsapp 						= वाट्सअप
+
+# Footer
+footer_mobile_app    				= मोबाइल ऍप
+footer_contact_us	  				= आम्हांला सम्पर्क करा
+
+# PWA
+user_logged_in_already              = You are already logged in, please click here to go back!
+user_email_empty 					= Please Enter your Email
+user_password_empty                 = Please Enter your Password
+user_name_empty 					= Please Enter your Name
+user_email_invalid 					= Please Enter a valid Email
+user_login_to_follow		        = Please login to follow this author
+
+pratilipi_rate_and_review 			= रेटिंग द्या तसेच टिप्पणी लिहा
+pratilipi_review_hide_comments 	= टिप्पणी लपवा
+pratilipi_no_reviews			    = साहित्य रचनावर काही टिप्पणी नाही.
+rating_be_first_one		            = आपली टिप्पणी प्रविष्ट करा व आपण प्रथम समीक्षक बनु शकता.
+
+author_readby_count                 = Read by $read_count people
+
+settings_profile_settings       = Profile Settings
+settings_notification_settings  = Notification Settings
+settings_update_password        = Update Password
+
+search_load_failed			= Failed to load search results! Please click here to try again!
+notifications_load_failed = Notifications failed to load. Please click here to re-load the notifications.

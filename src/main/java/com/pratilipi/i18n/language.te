@@ -32,7 +32,7 @@ _pratilipi_type_magazine	= పత్రిక
 _pratilipi_type_magazines	= పత్రికలు
 
 # Author
-author_author					= Author
+author_author					= రచయిత
 author_about					      = రచయిత గురించి
 author_language				    	= భాష
 author_since					      = తొలి రచన పోస్టు చేసిన తేదీ
@@ -345,6 +345,7 @@ reader_enjoyed_reading_part2	      = షేర్ చేయండి
 # Notifications
 notification_notifications          = నోటిఫికేషన్లు
 notifications_no_notifications      = క్షమించండి.. ప్రస్తుతం మీకు ఎలాంటి నోటిఫికేషన్లు లేవు. దయచేసి మరల ప్రయత్నించండి
+notifications_load_failed = Notifications failed to load. Please click here to re-load the notifications.
 
 # Writer Panel
 writer_add_content_title = శీర్షికను జత చేయండి
@@ -450,6 +451,7 @@ option_new_follower = కొత్త అనుచరుడు
 option_pratilipi_published_follower =  మీరు అనుసరించే వారి కొత్త రచన  
 option_pratilipi_updates = ప్రతిలిపి అప్ డేట్స్ మరియు ఆఫర్స్  
 notification_settings_save_changes =మార్పులు సేవ్ చేయబడినవి
+
 #Whatsapp share messages
 whatsapp_read_unlimited_stories = ప్రతిలిపిలో మరెన్నో కథలు, కవితలు, వ్యాసాలను ఉచితంగా చదవండి
 whatsapp_read_story = , ప్రతిలిపిలో చదవండి: 
@@ -483,16 +485,35 @@ seo_register_page				= ప్రతిలిపిలో మీ ఖాతాన�
 seo_login_page					= ప్రతిలిపిలోకి లాగ్ఇన్ 
 seo_reset_password_page			= మీ పాస్వర్డ్ రీసెట్ చేసుకోండి 
 
-#PWA
-
-rate_and_review 				= రేటింగ్ మరియు సమీక్ష
-hide_comments 					= హైడ్ కామెంట్స్ 
-mobile_app 						= మొబైల్ యాప్ 
-contact_us 						= మమ్ములను సంప్రదించండి 
+# Social
 facebook 						= ఫేస్ బుక్
-whatsapp 						= వాట్స్ అప్
 twitter 						= ట్విట్టర్
 google_plus 					= గూగుల్ ప్లస్
-linkedin						= లింకుడ్ ఇన్ 
-rating_be_first_one				= మొదట మీరే సమీక్షించండి.
-pratilipi_no_reviews			= ఈ కంటెంట్ పై సమీక్షలు లేవు.
+linkedin						= లింకుడ్ ఇన్
+whatsapp 						= వాట్స్ అప్
+
+# Footer
+footer_mobile_app    				= మొబైల్ యాప్
+footer_contact_us	  				= మమ్ములను సంప్రదించండి
+
+# PWA
+user_logged_in_already              = You are already logged in, please click here to go back!
+user_email_empty 					= Please Enter your Email
+user_password_empty                 = Please Enter your Password
+user_name_empty 					= Please Enter your Name
+user_email_invalid 					= Please Enter a valid Email
+user_login_to_follow		        = Please login to follow this author
+
+pratilipi_rate_and_review 			= రేటింగ్ మరియు సమీక్ష
+pratilipi_review_hide_comments 	= హైడ్ కామెంట్స్
+pratilipi_no_reviews			    = ఈ కంటెంట్ పై సమీక్షలు లేవు.
+rating_be_first_one		            = మొదట మీరే సమీక్షించండి.
+
+author_readby_count                 = Read by $read_count people
+
+settings_profile_settings       = Profile Settings
+settings_notification_settings  = Notification Settings
+settings_update_password        = Update Password
+
+search_load_failed			= Failed to load search results! Please click here to try again!
+notifications_load_failed = Notifications failed to load. Please click here to re-load the notifications.

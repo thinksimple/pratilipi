@@ -49,7 +49,7 @@ function() {
 				<#list navigation.linkList as link>
 				"${ link.url }": "${ link.name }",
 				</#list>
-            </#list>
+			</#list>
 		};
 		return listListTitleMap[ window.location.pathname ] != null ? listListTitleMap[ window.location.pathname ] : null;
 	};

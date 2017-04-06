@@ -96,15 +96,15 @@ function ViewModel() {
 		if( self.requestOnFlight() )
 			return;
 		if( self.userEmail() == null || self.userEmail().trim() == "" ) {
-			ToastUtil.toast( "${ _strings.email_empty }." );
+			ToastUtil.toast( "${ _strings.user_email_empty }." );
 			return;
 		}
 		if( self.userPassword() == null || self.userPassword().trim() == "" ) {
-			ToastUtil.toast( "${ _strings.password_empty }" );
+			ToastUtil.toast( "${ _strings.user_password_empty }" );
 			return;
 		}
 		if( ! validateEmail( self.userEmail() ) ) {
-			ToastUtil.toast( "${ _strings.email_invalid }" );
+			ToastUtil.toast( "${ _strings.user_email_invalid }" );
 			return;
 		}
 		self.requestOnFlight( true );
@@ -132,19 +132,19 @@ function ViewModel() {
 		if( self.requestOnFlight() )
 			return;
 		if( self.userName() == null || self.userName().trim() == "" ) {
-			ToastUtil.toast( "${ _strings.name_empty }" );
+			ToastUtil.toast( "${ _strings.user_name_empty }" );
 			return;
 		}
 		if( self.userEmail() == null || self.userEmail().trim() == "" ) {
-			ToastUtil.toast( "${ _strings.email_empty }." );
+			ToastUtil.toast( "${ _strings.user_email_empty }." );
 			return;
 		}
 		if( self.userPassword() == null || self.userPassword().trim() == "" ) {
-			ToastUtil.toast( "${ _strings.password_empty }" );
+			ToastUtil.toast( "${ _strings.user_password_empty }" );
 			return;
 		}
 		if( ! validateEmail( self.userEmail() ) ) {
-			ToastUtil.toast( "${ _strings.email_invalid }" );
+			ToastUtil.toast( "${ _strings.user_email_invalid }" );
 			return;
 		}
 		if( ! self.agreedTerms() ) {
@@ -211,6 +211,6 @@ ko.applyBindings( new ViewModel() );
 var dataAccessor = new DataAccessor();
 dataAccessor.getUser( function( user ) {
 	if( ! user.isGuest ) {
-		ToastUtil.toastUp( "<a href='" + getRetUrl( true ) + "'>${ _strings.logged_in_already }</a>" );
+		ToastUtil.toastUp( "<a href='" + getRetUrl( true ) + "'>${ _strings.user_logged_in_already }</a>" );
 	}
 });

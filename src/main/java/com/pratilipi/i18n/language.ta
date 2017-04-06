@@ -32,7 +32,7 @@ _pratilipi_type_magazine	= இதழ்
 _pratilipi_type_magazines	= இதழ்கள்
 
 # Author
-author_author					= Author
+author_author					= எழுத்தாளர்
 author_about					= எழுத்தாளரைப் பற்றி
 author_language					= மொழி	
 author_since					=  பிரதிலிபியுடன்
@@ -186,7 +186,7 @@ user_no_following			= மன்னிக்கவும். நீங்கள�
 user_login_to_view_following = நீங்கள் பின்தொடர்பவர்களைக் காண, லாக்-இன் செய்யவும்.
 user_login_to_view_library = எண்ணிலடங்கா படைப்புகளை உங்கள் நூலகத்தில் சேர்க்க லாக் இன் செய்யவும்
 user_login_to_view_notifications = நீங்கள் பின்தொடரும் நபர்களின் செயல்பாடுகளை அறிய லாக் இன் செய்யவும்
-user_login_to_follow		= Please login to follow this author 
+user_login_to_follow		= Please login to follow this author
 
 # My Account popup
 edit_account_heading		= என் கணக்கை திருத்த	
@@ -344,7 +344,8 @@ reader_enjoyed_reading_part2	= பகிர
 
 # Notifications
 notification_notifications = அறிவிப்புகள்
-notifications_no_notifications = மன்னிக்கவும். இப்பொழுது புதிய அறிவிப்புகள் ஏதும் இல்லை. 
+notifications_no_notifications = மன்னிக்கவும். இப்பொழுது புதிய அறிவிப்புகள் ஏதும் இல்லை.
+notifications_load_failed = Notifications failed to load. Please click here to re-load the notifications.
 
 # Writer Panel
 writer_add_content_title = தலைப்பை சேர்க்க
@@ -456,6 +457,7 @@ whatsapp_read_unlimited_stories = எண்ணிலடங்கா கதைக
 whatsapp_read_story = , பிரதிலிபியில் படிக்க:
 whatsapp_follow_author = , பிரதிலிபியில் இவரை ஃபாலோ செய்ய :
 
+
 # SEO Titles
 seo_root_domain					= Pratilipi - Read, Write and Share Stories in your own mother tongue
 seo_pratilipi_page				= ${ authorName } எழுதிய ${ pratilipiTitle } படைப்பின் குறிப்பு
@@ -483,17 +485,35 @@ seo_register_page				= பிரதிலிபியில் உங்கள�
 seo_login_page					= பிரதிலிபியில் உள்நுழையுங்கள்
 seo_reset_password_page			= கடவுச்சொல்லை மாற்றியமைக்க - பிரதிலிபி
 
-#PWA
-
-rate_and_review 				= மதிப்பிட்டு விமர்சிக்க
-hide_comments 					= பதில்களை மறைக்க
-mobile_app 						= கைபேசி செயலி
-contact_us 						= தொடர்புக்கு
+# Social
 facebook 						= முகநூல்
-whatsapp 						= வாட்சாப்
 twitter 						= ட்விட்டர்
 google_plus 					= கூகிள்+
-
 linkedin						= லிங்க்டின்
-rating_be_first_one				= படைப்புகளை முதல் ஆளாய் விமர்சனம் செய்யுங்கள்
-pratilipi_no_reviews			= இந்த படைப்புக்கு விமர்சனங்கள் இல்லை
+whatsapp 						= வாட்சாப்
+
+# Footer
+footer_mobile_app    				= கைபேசி செயலி
+footer_contact_us	  				= தொடர்புக்கு
+
+# PWA
+user_logged_in_already              = You are already logged in, please click here to go back!
+user_email_empty 					= Please Enter your Email
+user_password_empty                 = Please Enter your Password
+user_name_empty 					= Please Enter your Name
+user_email_invalid 					= Please Enter a valid Email
+user_login_to_follow		        = Please login to follow this author
+
+pratilipi_rate_and_review 			= மதிப்பிட்டு விமர்சிக்க
+pratilipi_review_hide_comments 	= பதில்களை மறைக்க
+pratilipi_no_reviews			    = இந்த படைப்புக்கு விமர்சனங்கள் இல்லை
+rating_be_first_one		            = படைப்புகளை முதல் ஆளாய் விமர்சனம் செய்யுங்கள்
+
+author_readby_count                 = Read by $read_count people
+
+settings_profile_settings       = Profile Settings
+settings_notification_settings  = Notification Settings
+settings_update_password        = Update Password
+
+search_load_failed			= Failed to load search results! Please click here to try again!
+notifications_load_failed = Notifications failed to load. Please click here to re-load the notifications.

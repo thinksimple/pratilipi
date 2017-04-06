@@ -32,7 +32,7 @@ _pratilipi_type_magazine	= മാഗസിന്‍
 _pratilipi_type_magazines	= മാഗസിനുകള്‍ 
 
 # Author
-author_author					= Author
+author_author					= രചയിതാവ്
 author_about					= രചയിതാവിനെക്കുറിച്ച്
 author_language					= ഭാഷ
 author_since					= പ്രതിലിപിയില്‍ 
@@ -345,6 +345,7 @@ reader_enjoyed_reading_part2	= ഷെയര്‍ ചെയ്യൂ
 # Notifications
 notification_notifications = നോട്ടിഫിക്കേഷന്‍സ്
 notifications_no_notifications = ക്ഷമിക്കണം, താങ്കള്‍ക്ക് ഇപ്പോള്‍ നോട്ടിഫിക്കേഷന്‍സ് ഒന്നുമില്ല! പിന്നീട് നോക്കൂ!
+notifications_load_failed = Notifications failed to load. Please click here to re-load the notifications.
 
 # Writer Panel
 writer_add_content_title = തലവാചകം ചേര്‍ക്കൂ
@@ -484,16 +485,35 @@ seo_register_page				= പ്രതിലിപിയില്‍ താങ്�
 seo_login_page					= പ്രതിലിപിയില്‍ ലോഗിന്‍ ചെയ്യൂ 
 seo_reset_password_page			= പാസ്സ്‌വേര്‍ഡ്‌ റീസെറ്റ് ചെയ്യൂ 
 
-# PWA
-
-rate_and_review 				= റേറ്റും റിവ്യൂവും ചെയ്യൂ 
-hide_comments 					= കമന്റുകള്‍ ഹൈഡ് ചെയ്യൂ 
-mobile_app 						= മൊബൈല്‍ ആപ്പ്  
-contact_us 						= ഞങ്ങളെ ബന്ധപ്പെടൂ
+# Social
 facebook 						= ഫേസ്ബുക്ക്
-whatsapp 						= വാട്ട്സാപ്പ് 
 twitter 						= ട്വിറ്റര്‍
 google_plus 					= ഗൂഗിള്‍ പ്ലസ്
 linkedin						= ലിങ്ക്ഡ് ഇന്‍
-rating_be_first_one				= റിവ്യൂ ചെയ്യുന്ന ആദ്യത്തെ ആളാവൂ
-pratilipi_no_reviews			= ഈ രചനയ്ക്ക് ഇത് വരെ റിവ്യൂസ് ഒന്നും ഇല്ല  
+whatsapp 						= വാട്ട്സാപ്പ്
+
+# Footer
+footer_mobile_app    				= മൊബൈല്‍ ആപ്പ്
+footer_contact_us	  				= ഞങ്ങളെ ബന്ധപ്പെടൂ
+
+# PWA
+user_logged_in_already              = You are already logged in, please click here to go back!
+user_email_empty 					= Please Enter your Email
+user_password_empty                 = Please Enter your Password
+user_name_empty 					= Please Enter your Name
+user_email_invalid 					= Please Enter a valid Email
+user_login_to_follow		        = Please login to follow this author
+
+pratilipi_rate_and_review 			= റേറ്റും റിവ്യൂവും ചെയ്യൂ
+pratilipi_review_hide_comments 	= കമന്റുകള്‍ ഹൈഡ് ചെയ്യൂ
+pratilipi_no_reviews			    = ഈ രചനയ്ക്ക് ഇത് വരെ റിവ്യൂസ് ഒന്നും ഇല്ല
+rating_be_first_one		            = റിവ്യൂ ചെയ്യുന്ന ആദ്യത്തെ ആളാവൂ
+
+author_readby_count                 = Read by $read_count people
+
+settings_profile_settings       = Profile Settings
+settings_notification_settings  = Notification Settings
+settings_update_password        = Update Password
+
+search_load_failed			= Failed to load search results! Please click here to try again!
+notifications_load_failed = Notifications failed to load. Please click here to re-load the notifications.

@@ -32,7 +32,7 @@ _pratilipi_type_magazine	                  = ನಿಯತಕಾಲಿಕೆ
 _pratilipi_type_magazines	                  = ನಿಯತಕಾಲಿಕೆಗಳು 
 
 # Author  
-author_author									= Author
+author_author									= ಲೇಖಕ
 author_about				                        = ಲೇಖಕರ ಕುರಿತು  
 author_language					                    = ಭಾಷೆ 
 author_since					                      = ಪ್ರತಿಲಿಪಿಯೊಂದಿಗೆ 
@@ -345,6 +345,7 @@ reader_enjoyed_reading_part2	            = ಶೇರ್ ಮಾಡಿ
 # Notifications
 notification_notifications                = ಸೂಚನೆ 
 notifications_no_notifications            = ಕ್ಷಮಿಸಿ!ಸದ್ಯ ನಿಮಗೆ ಯಾವ ಸೂಚನೆಗಳೂ ಇಲ್ಲ! ದಯವಿಟ್ಟು ನಂತರ ಪರಿಶೀಲಿಸಿ!
+notifications_load_failed = Notifications failed to load. Please click here to re-load the notifications.
 
 # Writer Panel
 writer_add_content_title = ಶೀರ್ಷಿಕೆ ಸೇರಿಸಿ 
@@ -450,6 +451,7 @@ option_new_follower = New Follower            = ಹೊಸ ಹಿಂಬಾಲಕ�
 option_pratilipi_published_follower =  New Content by people you follow = ನೀವು ಹಿಂಬಾಲಿಸುತ್ತಿರುವ ವ್ಯಕ್ತಿಯ ಹೊಸ ಬರಹ 
 option_pratilipi_updates =  Pratilipi Updates and Offers = ಪ್ರತಿಲಿಪಿ ಅಪ್ಡೇಟ್ಸ್ ಮತ್ತು ಆಫರ್ಸ್ 
 notification_settings_save_changes = Save Changes = ಬದಲಾವಣೆಗಳನ್ನು ಸಂರಕ್ಷಿಸಿ 
+
 #Whatsapp Share Messages
 whatsapp_read_unlimited_stories = ಅನಿಯಮಿತ ಕಥೆ, ಕವನ, ಲೇಖನಗಳನ್ನು ಭಾರತೀಯ ಭಾಷೆಗಳಲ್ಲಿ ಉಚಿತವಾಗಿ ಓದಿರಿ! 
 whatsapp_read_story = , ಪ್ರತಿಲಿಪಿಯಲ್ಲಿ ಓದಿರಿ : 
@@ -483,16 +485,35 @@ seo_register_page				= ಪ್ರತಿಲಿಪಿಯಲ್ಲಿ ನಿಮ್�
 seo_login_page					= ಪ್ರತಿಲಿಪಿಗೆ ಲಾಗಿನ್ ಆಗಿ 
 seo_reset_password_page			= ನಿಮ್ಮ ಪಾಸ್ವರ್ಡ್ ರೀಸೆಟ್ ಮಾಡಿ 
 
-#PWA
-
-rate_and_review 				= ರೇಟಿಂಗ್ ಮತ್ತು ರಿವ್ಯೂ 
-hide_comments 					= ಕಾಮೆಂಟ್ಸ್ ಹೈಡ್ ಮಾಡಿ
-mobile_app 						= ಮೊಬೈಲ್ ಆ್ಯಪ್
-contact_us 						= ನಮ್ಮನ್ನು ಸಂಪರ್ಕಿಸಿ 
+# Social
 facebook 						= ಫೇಸ್ಬುಕ್
-whatsapp 						= ವಾಟ್ಸಪ್
 twitter 						= ಟ್ವಿಟರ್
 google_plus 					= ಗೂಗಲ್ ಪ್ಲಸ್
-linkedin						=  ಲಿಂಕ್ಡ್ ಇನ್ 
-rating_be_first_one				= ಪ್ರತಿಕ್ರಿಯೆ ಬರೆಯಲು ಮೊದಲಿಗರಾಗಿ 
-pratilipi_no_reviews			= ಈ ಬರಹಕ್ಕೆ ಯಾವ ಪ್ರತಿಕ್ರಿಯೆಗಳೂ ಇಲ್ಲ 
+linkedin						=  ಲಿಂಕ್ಡ್ ಇನ್
+whatsapp 						= ವಾಟ್ಸಪ್
+
+# Footer
+footer_mobile_app    				= ಮೊಬೈಲ್ ಆ್ಯಪ್
+footer_contact_us	  				= ನಮ್ಮನ್ನು ಸಂಪರ್ಕಿಸಿ
+
+# PWA
+user_logged_in_already              = You are already logged in, please click here to go back!
+user_email_empty 					= Please Enter your Email
+user_password_empty                 = Please Enter your Password
+user_name_empty 					= Please Enter your Name
+user_email_invalid 					= Please Enter a valid Email
+user_login_to_follow		        = Please login to follow this author
+
+pratilipi_rate_and_review 			= ರೇಟಿಂಗ್ ಮತ್ತು ರಿವ್ಯೂ
+pratilipi_review_hide_comments 	= ಕಾಮೆಂಟ್ಸ್ ಹೈಡ್ ಮಾಡಿ
+pratilipi_no_reviews			    = ಈ ಬರಹಕ್ಕೆ ಯಾವ ಪ್ರತಿಕ್ರಿಯೆಗಳೂ ಇಲ್ಲ
+rating_be_first_one		            = ಪ್ರತಿಕ್ರಿಯೆ ಬರೆಯಲು ಮೊದಲಿಗರಾಗಿ
+
+author_readby_count                 = Read by $read_count people
+
+settings_profile_settings       = Profile Settings
+settings_notification_settings  = Notification Settings
+settings_update_password        = Update Password
+
+search_load_failed			= Failed to load search results! Please click here to try again!
+notifications_load_failed = Notifications failed to load. Please click here to re-load the notifications.

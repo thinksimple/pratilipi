@@ -25,23 +25,23 @@ _pratilipi_type_books		=   গ্রন্থসমূহ
 _pratilipi_type_poem		=   কবিতা
 _pratilipi_type_poems		=   কবিতাগুচ্ছ
 _pratilipi_type_story		=   গল্প
-_pratilipi_type_stories	=   গল্পসমূহ
-_pratilipi_type_article	= প্রবন্ধ
-_pratilipi_type_articles	 =   প্রবন্ধসমূহ
+_pratilipi_type_stories	    =   গল্পসমূহ
+_pratilipi_type_article	    =   প্রবন্ধ
+_pratilipi_type_articles	=   প্রবন্ধসমূহ
 _pratilipi_type_magazine	=   পত্রিকা
 _pratilipi_type_magazines	=   পত্রিকাসমূহ
 
 # Author
-author_author					= Author
+author_author				= লেখক
 author_about				=  সংক্ষিপ্ত পরিচয়
-author_language		  =  ভাষা
+author_language		        =  ভাষা
 author_since				=  প্রতিলিপির সঙ্গে
 author_count_works			=  প্রকাশিত সাহিত্য
 author_count_reads			=  পাঠক সংখ্যা
 author_count_likes			=  পছন্দ করেছেন
 author_edit_profile			=  প্রোফাইল সম্পাদনা
-author_update_image				= চিত্র আপলোড
-author_drafts			=  অপ্রকাশিত রচনাসমূহ
+author_update_image			= চিত্র আপলোড
+author_drafts			    =  অপ্রকাশিত রচনাসমূহ
 author_published_works		=  প্রকাশিত রচনাসমূহ
 author_add_new_content		=  নতুন রচনা লিখুন
 author_no_contents_published	= আমরা ক্ষমাপ্রার্থী , এই লেখকের একাউন্টে এখনো পর্যন্ত প্রকাশন কার্য শুরু হয় নি।
@@ -64,15 +64,15 @@ author_settings_require_first_name	= দয়াকরে আপনার প্�
 author_settings_require_language	= দয়াকরে আপনার ভাষা লিখুন
 
 # Pratilipi
-pratilipi_type		=   প্রকার
+pratilipi_type		        =   প্রকার
 pratilipi_listing_date		=   প্রকাশনার তারিখ
-pratilipi_last_updated_date	= সর্বশেষ আপডেট তারিখ
-pratilipi_published		=   প্রকাশিত
+pratilipi_last_updated_date	=   সর্বশেষ আপডেট তারিখ
+pratilipi_published		    =   প্রকাশিত
 pratilipi_published_year	=   প্রকাশনার সাল
-pratilipi_summary		=   সারাংশ লিখুন
-pratilipi_edit_info		=   সম্বন্ধিত জ্ঞাতব্য সম্পাদিত করুন    
+pratilipi_summary		    =   সারাংশ লিখুন
+pratilipi_edit_info		    =   সম্বন্ধিত জ্ঞাতব্য সম্পাদিত করুন
 pratilipi_edit_content		=   রচনা সম্পাদনা করুন
-pratilipi_update_cover		=  ফটো আপলোড করুন
+pratilipi_update_cover		=   ফটো আপলোড করুন
 pratilipi_count_reads		=   পাঠক সংখ্যা
 pratilipi_count_reviews		=   মোট রিভিউ
 pratilipi_count_likes		=   মোট লাইক্স
@@ -80,8 +80,8 @@ pratilipi_confirm_move_to_drafts_title	= ড্রাফ্টে সরান�
 pratilipi_confirm_move_to_drafts_body	= ড্রাফ্টে এই বিষয়বস্তু সরিয়ে ফেলার ব্যাপারে আপনি নিশ্চিত?
 pratilipi_confirm_move_to_drafts_true	= হ্যাঁ, ড্রাফ্টে সরানো হোক!
 pratilipi_confirm_move_to_drafts_false	= না, এটা অপ্রকাশিত করবেন না।
-pratilipi_move_to_drafts				=   অপ্রকাশিত করুন
-pratilipi_publish_it					=   প্রকাশিত করুন
+pratilipi_move_to_drafts				= অপ্রকাশিত করুন
+pratilipi_publish_it					= প্রকাশিত করুন
 pratilipi_delete_content				= ডিলিট 
 pratilipi_confirm_move_to_drafts		= আপনি কি এটি ড্রাফটে স্থানান্তরিত করতে চান ?
 pratilipi_confirm_move_to_drafts_okay	= ঠিক আছে
@@ -90,9 +90,9 @@ pratilipi_confirm_delete_content_okay	= ঠিক আছে
 pratilipi_deleted_successfully			= বিষয়বস্তু সফলভাবে মুছে ফেলা হয়েছে!
 
 # Rating
-rating_rating	=   রেটিং
-rating_ratings	=   রেটিং
-rating_rate_this		=  রেটিং দিন
+rating_rating	    =   রেটিং
+rating_ratings	    =   রেটিং
+rating_rate_this	=  রেটিং দিন
 rating_your_rating	=  আপনার রেটিং
 rating_mandatory_message	= দয়াকরে আপনার রেটিং দিন।
 rating_1_star	=  ১
@@ -102,19 +102,19 @@ rating_4_star	=  ৪
 rating_5_star	=  ৫
 
 # Review
-review_heading =  রিভিউসমূহ
-review_write_a_review	 =  রিভিউ দিন
-review_title	=  রিভিউ শীর্ষক
-review_title_help	=  উদাহরণস্বরূপ – এক অদ্ভুত কাহিনী বা এক সাধারণ কাহিনী
-review_content	 = আপনার রিভিউ
-review_content_help	=     
-review_submit_review	=  জমা দিন
-review_edit_review	=  সম্পাদিত করুন
-review_delete_review	= ডিলিট  রিভিউ 
+review_heading              =  রিভিউসমূহ
+review_write_a_review       =  রিভিউ দিন
+review_title                =  রিভিউ শীর্ষক
+review_title_help           =  উদাহরণস্বরূপ – এক অদ্ভুত কাহিনী বা এক সাধারণ কাহিনী
+review_content              =  আপনার রিভিউ
+review_content_help	        =
+review_submit_review	    =  জমা দিন
+review_edit_review          =  সম্পাদিত করুন
+review_delete_review	    = ডিলিট  রিভিউ
 review_delete_review_confirm	=  ডিলিট রিভিউ অনুমোদন করুন
-review_delete_okay	= ওকে
-review_delete_cancel	= ক্যান্সেল
-review_helpful	 =  এই রিভিউ কি সহায়ক ছিল?
+review_delete_okay	        = ওকে
+review_delete_cancel	    = ক্যান্সেল
+review_helpful	            =  এই রিভিউ কি সহায়ক ছিল?
 review_see_all_reviews		= সকল টিপ্পনী দেখুন
 
 # Comments
@@ -345,6 +345,7 @@ reader_enjoyed_reading_part2	= এটি শেয়ার করুন
 # Notifications
 notification_notifications = প্রজ্ঞাপন
 notifications_no_notifications = দুঃখিত! এই মুহুর্তে আপনার জন্য কোন বিজ্ঞপ্তি নেই।
+notifications_load_failed = Notifications failed to load. Please click here to re-load the notifications.
 
 # Writer Panel
 writer_add_content_title = শিরোনাম যুক্ত করুন
@@ -484,16 +485,35 @@ seo_register_page				= প্রতিলিপিতে আপনার অ্�
 seo_login_page					= প্রতিলিপিতে লগ-ইন করুন
 seo_reset_password_page			= আপনার পাসওয়ার্ড রিসেট করুন 
 
-#PWA
-
-rate_and_review 				= রেটিং এবং মন্তব্য লিখুন
-hide_comments 					= মন্তব্য সরিয়ে ফেলুন
-mobile_app 						= মোবাইল অ্যাপ
-contact_us 						= আমাদের সাথে যোগাযোগ করুন
+# Social
 facebook 						= ফেসবুক
-whatsapp 						= হোয়াটস আপ
 twitter 						= টুইটার
 google_plus 					= গুগল +
 linkedin						= লিঙ্কডইন
-rating_be_first_one				= আপনার পূর্বাপর বিবেচনা লিপিবদ্ধ করে আপনি প্রথম সমীক্ষক হতে পারেন।
-pratilipi_no_reviews			= রচনাতে কোন মন্তব্য নেই
+whatsapp 						= হোয়াটস আপ
+
+# Footer
+footer_mobile_app    				= মোবাইল অ্যাপ
+footer_contact_us	  				= আমাদের সাথে যোগাযোগ করুন
+
+# PWA
+user_logged_in_already              = You are already logged in, please click here to go back!
+user_email_empty 					= Please Enter your Email
+user_password_empty                 = Please Enter your Password
+user_name_empty 					= Please Enter your Name
+user_email_invalid 					= Please Enter a valid Email
+user_login_to_follow		        = Please login to follow this author
+
+pratilipi_rate_and_review 			= রেটিং এবং মন্তব্য লিখুন
+pratilipi_review_hide_comments 	= মন্তব্য সরিয়ে ফেলুন
+pratilipi_no_reviews			    = রচনাতে কোন মন্তব্য নেই
+rating_be_first_one		            = আপনার পূর্বাপর বিবেচনা লিপিবদ্ধ করে আপনি প্রথম সমীক্ষক হতে পারেন।
+
+author_readby_count                 = Read by $read_count people
+
+settings_profile_settings       = Profile Settings
+settings_notification_settings  = Notification Settings
+settings_update_password        = Update Password
+
+search_load_failed			= Failed to load search results! Please click here to try again!
+notifications_load_failed = Notifications failed to load. Please click here to re-load the notifications.

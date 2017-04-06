@@ -32,7 +32,7 @@ _pratilipi_type_magazine	= पत्रिका
 _pratilipi_type_magazines	= पत्रिका 
 
 # Author
-author_author				= Author
+author_author				= लेखक
 author_about				= संक्षिप्त परिचय
 author_language				= भाषा	
 author_since				= प्रतिलिपि के साथ   
@@ -345,6 +345,7 @@ reader_enjoyed_reading_part2	= शेयर करे
 # Notifications
 notification_notifications = सूचनाएँ
 notifications_no_notifications = फ़िलहाल आपके लिए कोई सूचना उपलब्ध नहीं है।  
+notifications_load_failed = Notifications failed to load. Please click here to re-load the notifications.
 
 # Writer Panel
 writer_add_content_title = शीर्षक जोड़ें
@@ -484,17 +485,35 @@ seo_register_page				= प्रतिलिपि पर अपना अका
 seo_login_page					= प्रतिलिपि पर लॉग-इन करें
 seo_reset_password_page			= अपना पासवर्ड रीसेट करें 
 
-# PWA
-rate_and_review                 = रेटिंग दे एवं टिप्पणी लिखें
-hide_comments					= टिप्पणी छुपायें
-mobile_app						= मोबाइल ऐप
-contact_us						= हमें सम्पर्क करें
+# Social
 facebook						= फेसबुक
-whatsapp						= वाट्सअप
 twitter							= ट्वीटर
 google_plus						= गूगल+
-linkedin=लिंक्डइन
+linkedin                        = लिंक्डइन
+whatsapp						= वाट्सअप
 
-rating_be_first_one				= अपनी टिप्पणी दर्ज कर आप प्रथम समीक्षक बन सकते हैं।
-pratilipi_no_reviews            = रचना पर कोई टिप्पणी नहीं है
+# Footer
+footer_mobile_app    				= मोबाइल ऐप
+footer_contact_us	  				= हमें सम्पर्क करें
 
+# PWA
+user_logged_in_already              = You are already logged in, please click here to go back!
+user_email_empty 					= Please Enter your Email
+user_password_empty                 = Please Enter your Password
+user_name_empty 					= Please Enter your Name
+user_email_invalid 					= Please Enter a valid Email
+user_login_to_follow	        	= Please login to follow this author
+
+pratilipi_rate_and_review 			= रेटिंग दे एवं टिप्पणी लिखें
+pratilipi_review_hide_comments 	= टिप्पणी छुपायें
+pratilipi_no_reviews			    = रचना पर कोई टिप्पणी नहीं है
+rating_be_first_one		= अपनी टिप्पणी दर्ज कर आप प्रथम समीक्षक बन सकते हैं।
+
+author_readby_count                 = Read by $read_count people
+
+settings_profile_settings       = Profile Settings
+settings_notification_settings  = Notification Settings
+settings_update_password        = Update Password
+
+search_load_failed			= Failed to load search results! Please click here to try again!
+notifications_load_failed = Notifications failed to load. Please click here to re-load the notifications.
