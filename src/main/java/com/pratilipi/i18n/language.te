@@ -511,9 +511,9 @@ rating_be_first_one		            = మొదట మీరే సమీక్ష�
 
 author_readby_count                 = Read by $read_count people
 
-settings_profile_settings       = Profile Settings
-settings_notification_settings  = Notification Settings
-settings_update_password        = Update Password
+settings_profile_settings       =ప్రొఫైల్ సెట్టింగ్స్ 
+settings_notification_settings  =నోటిఫికేషన్ సెట్టింగ్స్
+settings_update_password        =అప్ డేట్ పాస్వర్డ్ 
 
-search_load_failed			= Failed to load search results! Please click here to try again!
-notifications_load_failed = Notifications failed to load. Please click here to re-load the notifications.
+search_load_failed			=శోధించిన ఫలితాలు లోడ్ అవ్వలేదు,దయచేసి ఇక్కడ క్లిక్ చేసి మళ్ళి ప్రయత్నించండి.
+notifications_load_failed = నోటిఫికేషన్లు లోడ్ అవ్వలేదు,రీలోడ్ కొరకు ఇక్కడ క్లిక్ చేసి మళ్ళి ప్రయత్నిచండి.
