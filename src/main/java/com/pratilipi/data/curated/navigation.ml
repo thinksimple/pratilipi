@@ -1,3 +1,14 @@
+പ്രസിദ്ധമായവ 
+/event/herstory  അവളുടെ കഥകള്‍ 	Analytics#categoryName::event-herstory        App#imageName::women.jpg        App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "eventId":5746638655062016 }
+/event/memory  ഓര്‍മ്മകള്‍ മരിക്കുമോ? 	Analytics#categoryName::event-memory        App#imageName::event_experiences.jpg        App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "eventId":5735460574855168 }
+/most-read     നിര്‍ദ്ദേശിക്കപ്പെട്ടവ        Analytics#categoryName::most-read        App#imageName::mostpopular.jpg       App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"most-read" }
+/fiveminute    5 മിനിറ്റ് കഥകള്‍         Analytics#categoryName::short-stories        App#imageName::5minread.jpg        App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"fiveminute" } 
+/new           പുതിയവ                Analytics#categoryName::newly-published        App#imageName::newpublished.jpg       App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"new" } 
+/two-minute    കുഞ്ഞിക്കഥകള്‍        Analytics#categoryName::two-min        App#imageName::events.jpg           App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"two-minute" }
+/classics      ക്ലാസ്സിക്സ്                 Analytics#categoryName::classics        App#imageName::classic.jpg        App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"classics" }
+/events        മത്സരങ്ങള്‍              Analytics#categoryName::online-events        App#imageName::festival.jpg           App#EventList::{ "language":"MALAYALAM" }
+/blog          ബ്ലോഗുകള്‍              Analytics#categoryName::blogs        App#imageName::blog.jpg              App#BlogPostList::{ "language":"MALAYALAM", "blogId":5683739602452480 } 
+
 വിഭാഗങ്ങൾ 
 /friendship    സൗഹൃദം             Analytics#categoryName::friendship      App#imageName::event_friendship.jpg          App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"friendship" }
 /love          പ്രണയം                  Analytics#categoryName::romance         App#imageName::romance.jpg          App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"love" }
@@ -12,14 +23,3 @@
 /stories       മറ്റു കഥകള്‍              Analytics#categoryName::other-stories         App#imageName::event_generic3.jpg      App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"stories" } 
 /poems         കവിതകൾ         Analytics#categoryName::poetry            App#imageName::poems.jpg             App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"poems" }
 /non-fiction   നോണ്‍ ഫിക്ഷന്‍      Analytics#categoryName::articles     App#imageName::shortstories.jpg     App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"non-fiction" }
-
-പ്രസിദ്ധമായവ 
-/event/herstory  അവളുടെ കഥകള്‍ 	Analytics#categoryName::event-herstory        App#imageName::women.jpg        App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "eventId":5746638655062016 }
-/event/memory  ഓര്‍മ്മകള്‍ മരിക്കുമോ? 	Analytics#categoryName::event-memory        App#imageName::event_experiences.jpg        App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "eventId":5735460574855168 }
-/most-read     നിര്‍ദ്ദേശിക്കപ്പെട്ടവ        Analytics#categoryName::most-read        App#imageName::mostpopular.jpg       App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"most-read" }
-/fiveminute    5 മിനിറ്റ് കഥകള്‍         Analytics#categoryName::short-stories        App#imageName::5minread.jpg        App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"fiveminute" } 
-/new           പുതിയവ                Analytics#categoryName::newly-published        App#imageName::newpublished.jpg       App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"new" } 
-/two-minute    കുഞ്ഞിക്കഥകള്‍        Analytics#categoryName::two-min        App#imageName::events.jpg           App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"two-minute" }
-/classics      ക്ലാസ്സിക്സ്                 Analytics#categoryName::classics        App#imageName::classic.jpg        App#PratilipiList::{ "language":"MALAYALAM", "state":"PUBLISHED", "listName":"classics" }
-/events        മത്സരങ്ങള്‍              Analytics#categoryName::online-events        App#imageName::festival.jpg           App#EventList::{ "language":"MALAYALAM" }
-/blog          ബ്ലോഗുകള്‍              Analytics#categoryName::blogs        App#imageName::blog.jpg              App#BlogPostList::{ "language":"MALAYALAM", "blogId":5683739602452480 } 
