@@ -52,6 +52,7 @@
 			.tabs-right-pane {
 				flex-grow: 1;
 				margin: 16px;
+				width: 0;
 				.mdl-tabs__panel {
                     flex-grow: 1;
 				}
@@ -76,8 +77,8 @@
 						.group-title {
 							margin-top: 20px;
 						}
-						.mdl-cell {
-                            padding: 16px 0;
+						.mdl-checkbox {
+							margin: 20px 0;
                         }
 					}
 				}
@@ -86,6 +87,7 @@
                     text-align: right;
                 }
                 .width-50 {
+                	display: inline-block;
 					.mdl-textfield {
 						min-width: initial;
 						width: 96% !important;
