@@ -27,6 +27,9 @@ public class UserAuthorEntity implements UserAuthor {
 	@Index
 	private Date FOLLOW_DATE;
 	
+	@Index
+	private Date _TIMESTAMP_;	
+	
 	
 	public UserAuthorEntity() {}
 	
@@ -98,5 +101,15 @@ public class UserAuthorEntity implements UserAuthor {
 	public void setFollowDate( Date date ) {
 		this.FOLLOW_DATE = date;
 	}
+	
+	@Override
+	public Date getTimestamp() {
+		return _TIMESTAMP_;
+	}
+
+	@Override
+	public void setTimestamp( Date timestamp ) {
+		this._TIMESTAMP_ = timestamp;
+	}	
 
 }

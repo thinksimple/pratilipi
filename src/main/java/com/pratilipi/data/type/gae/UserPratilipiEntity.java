@@ -58,6 +58,9 @@ public class UserPratilipiEntity implements UserPratilipi {
 	@Index( IfNotNull.class )
 	private Long COMMENT_COUNT;
 	
+	@Index
+	private Date _TIMESTAMP_;	
+	
 	
 	public UserPratilipiEntity() {}
 	
@@ -221,5 +224,15 @@ public class UserPratilipiEntity implements UserPratilipi {
 	public void setCommentCount( Long count ) {
 		this.COMMENT_COUNT = count;
 	}
+	
+	@Override
+	public Date getTimestamp() {
+		return _TIMESTAMP_;
+	}
+
+	@Override
+	public void setTimestamp( Date timestamp ) {
+		this._TIMESTAMP_ = timestamp;
+	}	
 	
 }

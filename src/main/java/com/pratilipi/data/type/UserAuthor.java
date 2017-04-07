@@ -26,4 +26,8 @@ public interface UserAuthor extends GenericOfyType {
 	
 	void setFollowDate( Date date );
 	
+	Date getTimestamp();
+	
+	void setTimestamp( Date timestamp );	
+	
 }

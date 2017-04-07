@@ -65,4 +65,8 @@ public interface UserPratilipi extends GenericOfyType {
 	
 	void setAddedToLibDate( Date addedToLibDate );
 	
+	Date getTimestamp();
+	
+	void setTimestamp( Date timestamp );	
+	
 }
