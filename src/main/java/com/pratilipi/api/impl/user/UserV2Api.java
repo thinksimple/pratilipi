@@ -18,6 +18,7 @@ import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.UserState;
 import com.pratilipi.common.util.UserAccessUtil;
 import com.pratilipi.data.DataAccessorFactory;
+import com.pratilipi.data.client.AuthorData;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.util.UserDataUtil;
 import com.pratilipi.filter.UxModeFilter;
@@ -192,6 +193,8 @@ public class UserV2Api extends UserV1Api {
 			throw new InsufficientAccessException();
 
 		UserData userData = UserDataUtil.createUserData( DataAccessorFactory.getDataAccessor().getUser( request.userId ), null );
+		userData.setAuthor( new AuthorData() );
+
 		return new Response( userData, UserV2Api.class );
 
 	}
