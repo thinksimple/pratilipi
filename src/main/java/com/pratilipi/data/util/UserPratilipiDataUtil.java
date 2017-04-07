@@ -1,6 +1,7 @@
 package com.pratilipi.data.util;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -172,29 +173,50 @@ public class UserPratilipiDataUtil {
 	
 	public static DataListCursorTuple<UserPratilipiData> getPratilipiReviewList( Long pratilipiId, String cursor, Integer offset, Integer resultCount )
 			throws UnexpectedServerException {
-		
+
 		DocAccessor docAccessor = DataAccessorFactory.getDocAccessor();
-		
+
 		PratilipiReviewsDoc reviewsDoc = docAccessor.getPratilipiReviewsDoc( pratilipiId );
 		List<UserPratilipiDoc> reviewDocList = reviewsDoc.getReviews();
-		
-		
-		int fromIndex = ( cursor == null ? 0 : Integer.parseInt( cursor ) ) + ( offset == null ? 0 : offset );
-		int toIndex = resultCount == null ? reviewDocList.size() : fromIndex + resultCount;
-		
-		reviewDocList = reviewDocList.subList(
-				Math.min( fromIndex, reviewDocList.size() ),
-				Math.min( toIndex, reviewDocList.size() ) );
-		
-		
+
+		// Reverse Sort
+		Collections.reverse( reviewDocList );
+
+		// Using next UserPratilipiId as the cursor
+		int fromIndex = 0;
+		if( cursor != null && ! cursor.equals("-1") ) {
+			for( int i = 0; i < reviewDocList.size(); i++ ) {
+				if( reviewDocList.get(i).getId().equals( cursor ) ) {
+					fromIndex = i;
+					break;
+				}
+			}
+			if( offset != null )
+				fromIndex = fromIndex + offset;
+		}
+
+		if( fromIndex >= reviewDocList.size() || ( cursor != null && cursor.equals("-1") ) ) {
+			return new DataListCursorTuple<UserPratilipiData>(
+					new ArrayList<UserPratilipiData>(),
+					"-1",
+					(long) (int) reviewsDoc.getReviews().size() );
+		}
+
+		int toIndex = resultCount == null ? reviewDocList.size() : Math.min( fromIndex + resultCount, reviewDocList.size() );
+
+		// Next cursor
+		cursor = toIndex == reviewDocList.size() ? "-1" : reviewDocList.get( toIndex ).getId();
+
+		reviewDocList = reviewDocList.subList( fromIndex, toIndex );
+
 		List<UserPratilipiData> userPratilipiDataList = new ArrayList<>( reviewDocList.size() );
 		for( UserPratilipiDoc review : reviewDocList )
 			userPratilipiDataList.add( createUserPratilipiData( review ) );
-		
-		
+
+
 		return new DataListCursorTuple<UserPratilipiData>(
 				userPratilipiDataList,
-				toIndex + "",
+				cursor,
 				(long) (int) reviewsDoc.getReviews().size() );
 		
 	}
