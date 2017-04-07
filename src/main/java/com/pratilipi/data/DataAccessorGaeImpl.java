@@ -902,6 +902,8 @@ public class DataAccessorGaeImpl implements DataAccessor {
 						pratilipiIdList.add( page.getPrimaryContentId() );
 				}
 	
+				logger.log(Level.INFO, "INITIAL PRATILIPI LIST : " + pratilipiIdList);
+				
 				// TODO : create user specific pratilipi list.
 				
 				// fetch Read content list.
@@ -911,15 +913,16 @@ public class DataAccessorGaeImpl implements DataAccessor {
 				for(UserPratilipi userPratilipi : userPratilipiList) {
 					if(userPratilipi.getLastOpenedDate() != null) {
 						contentsReadList.add(userPratilipi.getPratilipiId());
-						logger.log(Level.INFO, "PRATILIPI ID : " + userPratilipi.getPratilipiId());
 					}
 						
 				}
 				
 				// move all read contents to bottom of the list.
 				contentsReadList.retainAll(pratilipiIdList);		// Find all read contents in the list
+				logger.log(Level.INFO, "PRATILIPI Read list : " + contentsReadList);
 				pratilipiIdList.removeAll(contentsReadList);		// Remove already read content from the list
 				pratilipiIdList.addAll(contentsReadList);		// Append read content at end of the list
+				logger.log(Level.INFO, "FINAL PRATILIPI LIST : " + pratilipiIdList);
 				
 				// Shuffling and saving in Memcache
 //				Collections.shuffle( pratilipiIdList );
