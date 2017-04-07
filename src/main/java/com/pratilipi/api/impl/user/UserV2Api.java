@@ -185,7 +185,7 @@ public class UserV2Api extends UserV1Api {
 	@Get
 	public Response get( GetRequest request ) throws InsufficientAccessException {
 
-		if( request.userId == null )
+		if( request.userId == null || request.userId.equals( UserDataUtil.getCurrentUser().getId() ) )
 			return new Response( UserDataUtil.getCurrentUser(), UserV2Api.class );
 
 		if( ! UserAccessUtil.hasUserAccess( UserDataUtil.getCurrentUser().getId(), UxModeFilter.getWebsite().getFilterLanguage(), AccessType.AUTHOR_ADD ) )
