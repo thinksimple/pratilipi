@@ -41,7 +41,8 @@ function( params ) {
 	this.settingsLink = ko.observable( "/settings" );
 
 	this.authorObserver = ko.computed( function() {
-	    if( self.author.user.userId() == null ) return;
+	    if( self.author.authorId() == null && self.author.user.userId() == null ) return;
+	    /* self.author.user.userId() => null for fictional Authors */
     	self.canFollow( appViewModel.user.userId() != self.author.user.userId() );
 		if( self.author.hasAccessToUpdate() && appViewModel.user.userId() != self.author.user.userId() ) /* AEEs */
 			self.settingsLink( "/settings?authorId=" + self.author.authorId() + "&userId=" + self.author.user.userId() );
