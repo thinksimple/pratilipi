@@ -217,14 +217,20 @@ public class AuthorDataUtil {
 	}
 	
 	public static AuthorData createAuthorData( Author author, Page authorPage, User user ) {
+
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+
 		if( authorPage == null )
-			authorPage = DataAccessorFactory.getDataAccessor().getPage( PageType.AUTHOR, author.getId() );
+			authorPage = dataAccessor.getPage( PageType.AUTHOR, author.getId() );
+
 		AuthorData authorData = createAuthorData( author, authorPage );
 		if( user == null )
-			authorData.setUser( new UserData( author.getUserId() ) );
+			authorData.setUser( UserDataUtil.createUserData( dataAccessor.getUser( author.getUserId() ), null ) );
 		else
 			authorData.setUser( UserDataUtil.createUserData( user, null ) );
+
 		return authorData;
+
 	}
 	
 	public static List<AuthorData> createAuthorDataList( List<Long> authorIdList, boolean includeUserData ) {

@@ -111,6 +111,7 @@ public class UserV1Api extends GenericApi {
 			} else if( clazz == AuthorApi.class ) {
 				
 				this.userId = userData.getId();
+				this.followCount = userData.getFollowCount();
 				
 			} else if( clazz == AuthorListApi.class ) {
 				
