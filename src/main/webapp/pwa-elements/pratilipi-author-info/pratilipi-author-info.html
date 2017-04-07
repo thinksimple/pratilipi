@@ -104,7 +104,7 @@
 			<div class="material-body-1">${ _strings.author_followers_count }</div>
 		</div>
 		<div class="mdl-cell mdl-cell--4-col clickable-element" data-toggle="modal" data-target="#pratilipi-author-follows-following">
-			<div class="material-subtitle-1">&nbsp;</div>
+			<div class="material-subtitle-1" data-bind="text: author.user.followCount()"></div>
 			<div class="material-body-1">${ _strings.author_following_count }</div>
 		</div>
 	</div>
