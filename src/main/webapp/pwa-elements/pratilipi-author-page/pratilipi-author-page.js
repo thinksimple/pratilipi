@@ -3,7 +3,7 @@ function() {
 
 	var defaultAuthor = {
 			"authorId": null,
-			"user": { "userId": null },
+			"user": { "userId": null, "followCount": 0 },
 			"firstName": null,
 			"lastName": null,
 			"name": null,
