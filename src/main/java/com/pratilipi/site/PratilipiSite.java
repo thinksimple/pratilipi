@@ -514,7 +514,7 @@ public class PratilipiSite extends HttpServlet {
 				}
 
 			} else if( page != null && page.getType() == PageType.AUTHOR ) {
-				if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) ) {
+				if( loadPWA ) {
 					dataModel = new HashMap<>();
 					templateName = "AuthorPWA.ftl";
 				} else {
