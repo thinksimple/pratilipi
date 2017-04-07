@@ -497,23 +497,23 @@ footer_mobile_app    				= মোবাইল অ্যাপ
 footer_contact_us	  				= আমাদের সাথে যোগাযোগ করুন
 
 # PWA
-user_logged_in_already              = You are already logged in, please click here to go back!
-user_email_empty 					= Please Enter your Email
-user_password_empty                 = Please Enter your Password
-user_name_empty 					= Please Enter your Name
-user_email_invalid 					= Please Enter a valid Email
-user_login_to_follow		        = Please login to follow this author
+user_logged_in_already              = আপনি লগ ইন আছেন,পিছনে যেতে হলে অনুগ্রহ করে এখানে ক্লিক করুন
+user_email_empty 					= অনুগ্রহ করে আপনার ই-মেল লিখুন
+user_password_empty                 = অনুুগ্রহ করে আপনার পাসওয়ার্ড লিখুন
+user_name_empty 					= অনুগ্র্রহ করে আপনার নাম লিখুন
+user_email_invalid 					= অনুগ্রহ করে আপনার ই-মেল লিখুন
+user_login_to_follow		        = অনুগ্রহ করে লেখককে অনুসরণ করতে লগ ইন করুন
 
 pratilipi_rate_and_review 			= রেটিং এবং মন্তব্য লিখুন
 pratilipi_review_hide_comments 	= মন্তব্য সরিয়ে ফেলুন
 pratilipi_no_reviews			    = রচনাতে কোন মন্তব্য নেই
 rating_be_first_one		            = আপনার পূর্বাপর বিবেচনা লিপিবদ্ধ করে আপনি প্রথম সমীক্ষক হতে পারেন।
 
-author_readby_count                 = Read by $read_count people
+author_readby_count                 = $read_count জন পড়েছেন
 
-settings_profile_settings       = Profile Settings
-settings_notification_settings  = Notification Settings
-settings_update_password        = Update Password
+settings_profile_settings       = প্রোফাইল সেটিং
+settings_notification_settings  = নোটিফিকেশন সেটিং
+settings_update_password        = পাসওয়ার্ড আপডেট
 
-search_load_failed			= Failed to load search results! Please click here to try again!
-notifications_load_failed = Notifications failed to load. Please click here to re-load the notifications.
+search_load_failed			= সার্চ রেজাল্ট লোড করতে অসমর্থ ; অনুগ্রহ করে পুনরায় চেষ্টা করুন
+notifications_load_failed =  নোটিফিকেশন লোড করতে অসমর্থ ; অনুগ্রহ করে নোটিফিকেশন পুনরায় লোড করতে এখানে ক্লিক করুন
