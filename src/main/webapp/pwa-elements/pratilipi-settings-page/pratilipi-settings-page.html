@@ -177,7 +177,6 @@
 								<span class="mdl-checkbox__label">${ _strings.option_new_comment }</span>
 							</label>
 						</div>
-					
 						<div class="width-50 js-width-50">
 							<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="notif_option_like_review">
 								<input value="VOTE_REVIEW_REVIEWER" type="checkbox" id="notif_option_like_review" class="mdl-checkbox__input" />
@@ -232,6 +231,7 @@
 					<div class="mdl-cell mdl-cell--12-col">
 						<input type="password" data-bind="{ mdlFloatingInput: { label: '${ _strings.user_confirm_password } *', value: confirmPassword, id: 'pratilipi-settings-confirm-password' }, valueUpdate: ['input'] }" />
 					</div>
+
 					<div class="save-button-holder">
 						<button data-bind="enable: canUpdatePassword(), click: updatePassword"
 						        class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">Save</button>
