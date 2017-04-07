@@ -13,7 +13,11 @@ import com.pratilipi.api.impl.userpratilipi.UserPratilipiApi;
 import com.pratilipi.api.impl.userpratilipi.UserPratilipiReviewListApi;
 import com.pratilipi.api.shared.GenericRequest;
 import com.pratilipi.api.shared.GenericResponse;
+import com.pratilipi.common.exception.InsufficientAccessException;
+import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.UserState;
+import com.pratilipi.common.util.UserAccessUtil;
+import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.client.UserData;
 import com.pratilipi.data.util.UserDataUtil;
 import com.pratilipi.filter.UxModeFilter;
@@ -22,7 +26,9 @@ import com.pratilipi.filter.UxModeFilter;
 @Bind( uri= "/user", ver = "2" )
 public class UserV2Api extends UserV1Api {
 
-	public static class GetRequest extends GenericRequest {}
+	public static class GetRequest extends GenericRequest {
+		private Long userId;
+	}
 
 	
 	@SuppressWarnings("unused")
@@ -177,8 +183,17 @@ public class UserV2Api extends UserV1Api {
 
 
 	@Get
-	public Response get( GetRequest request ) {
-		return new Response( UserDataUtil.getCurrentUser(), UserV2Api.class );
+	public Response get( GetRequest request ) throws InsufficientAccessException {
+
+		if( request.userId == null )
+			return new Response( UserDataUtil.getCurrentUser(), UserV2Api.class );
+
+		if( ! UserAccessUtil.hasUserAccess( UserDataUtil.getCurrentUser().getId(), UxModeFilter.getWebsite().getFilterLanguage(), AccessType.AUTHOR_ADD ) )
+			throw new InsufficientAccessException();
+
+		UserData userData = UserDataUtil.createUserData( DataAccessorFactory.getDataAccessor().getUser( request.userId ), null );
+		return new Response( userData, UserV2Api.class );
+
 	}
 	
 }
