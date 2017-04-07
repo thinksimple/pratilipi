@@ -509,8 +509,7 @@ pratilipi_review_hide_comments 	= ಕಾಮೆಂಟ್ಸ್ ಹೈಡ್ ಮ�
 pratilipi_no_reviews			    = ಈ ಬರಹಕ್ಕೆ ಯಾವ ಪ್ರತಿಕ್ರಿಯೆಗಳೂ ಇಲ್ಲ
 rating_be_first_one		            = ಪ್ರತಿಕ್ರಿಯೆ ಬರೆಯಲು ಮೊದಲಿಗರಾಗಿ
 
-author_readby_count                 = Read by $read_count people
-
+author_readby_count                 = Read by $read_count people $read_count ಜನರಿಂದ ಓದಲ್ಪಟ್ಟಿದೆ 
 settings_profile_settings       = Profile Settings ಪ್ರೊಫೈಲ್ ಸೆಟ್ಟಿಂಗ್ಸ್ 
 settings_notification_settings  = Notification Settings ನೋಟಿಫಿಕೇಶನ್ ಸೆಟ್ಟಿಂಗ್ಸ್ 
 settings_update_password        = Update Password ಅಪ್ಡೇಟ್ ಪಾಸ್ವರ್ಡ್ 
