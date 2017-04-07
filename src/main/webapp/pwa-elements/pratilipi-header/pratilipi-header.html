@@ -3,7 +3,8 @@
 		<a href="/">
 			<span class="sprites-icon pratilipi-logo-icon"></span>
 		</a>
-		<button id="pratilipi-header-pratilipi-dropdown" class="pratilipi-text hidden-xs">
+		<button onclick="ga_CA( 'Header', 'Get Languages' )"
+				id="pratilipi-header-pratilipi-dropdown" class="pratilipi-text hidden-xs">
 			<span class="font-m">${ _strings.pratilipi }</span>
 			<i class="material-icons">arrow_drop_down</i>
 		</button>
@@ -12,7 +13,7 @@
 				<#if aLang.value == language>
 					<li class="mdl-menu__item" style="background: #eee;">${ aLang.name }</li>
 				<#else>
-					<li class="mdl-menu__item" onclick="window.location = '${ aLang.hostName }'; return false;">${ aLang.name }</li>
+					<li class="mdl-menu__item" onclick="ga_CA( 'Header', 'Change Language' ); window.location = '${ aLang.hostName }'; return false;">${ aLang.name }</li>
 				</#if>
 			</#list>
 		</ul>
@@ -34,23 +35,28 @@
 			</form>
 		</div>
 		<div class="header-icons-holder">
-			<button data-bind="click: write" class="mdl-button mdl-js-button mdl-button--icon">
+			<button onclick="ga_CA( 'Header', 'Write' )" 
+					data-bind="click: write" 
+					class="mdl-button mdl-js-button mdl-button--icon">
 				<i class="material-icons">create</i>
 			</button>
 		</div>
 		<div class="header-icons-holder">
-			<a data-bind="attr: { 'href': appViewModel.user.isGuest() ? '/login?retUrl=%2Flibrary&message=LIBRARY' : '/library' }" 
+			<a onclick="ga_CA( 'Header', 'Library' )"
+				data-bind="attr: { 'href': appViewModel.user.isGuest() ? '/login?retUrl=%2Flibrary&message=LIBRARY' : '/library' }" 
 				class="mdl-button mdl-js-button mdl-button--icon">
 				<i class="material-icons">library_books</i>
 			</a>
 		</div>
 		<div class="header-icons-holder">
-			<a data-bind="{ attr: { 'href': '/login?retUrl=%2Fnotifications&message=NOTIFICATIONS' },
+			<a onclick="ga_CA( 'Header', 'Notification' )"
+				data-bind="{ attr: { 'href': '/login?retUrl=%2Fnotifications&message=NOTIFICATIONS' },
 							visible: appViewModel.user.isGuest() }" 
 				class="mdl-button mdl-js-button mdl-button--icon">
 				<i class="material-icons">notifications</i>
 			</a>
-			<span id="notificationLink"
+			<span onclick="ga_CA( 'Header', 'Notification' )"
+					id="notificationLink"
 					style="position: absolute; margin-left: -12px; margin-top: -12px;"
 					class="material-icons mdl-badge--overlap mdl-badge--no-background"
 					data-bind="{ attr: { 'data-badge': ( appViewModel.notificationCount() > 99 ? '99+' : appViewModel.notificationCount() ) }, 
@@ -76,13 +82,15 @@
 			<div data-bind="visible: appViewModel.user.userId() == null" style="margin: auto; padding-left: 8px;">
 				<span class="user-loading-spinner mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></span>
 			</div>
-			<a data-bind="{ attr: { 'href': '/login?retUrl=' + encodeURIComponent( window.location.pathname ) }, 
+			<a onclick="ga_CA( 'Header', 'Login' )"
+				data-bind="{ attr: { 'href': '/login?retUrl=' + encodeURIComponent( window.location.pathname ) }, 
 							visible: appViewModel.user.userId() != null && appViewModel.user.isGuest() }" 
 				class="sign-in-button mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect hidden-xs">
 				<i class="material-icons">account_circle</i>
 				<span class="font-s">${ _strings.user_sign_in }</span>
 			</a>
-			<a data-bind="{ visible: appViewModel.user.userId() != null && !appViewModel.user.isGuest(),   
+			<a onclick="ga_CA( 'Header', 'User' )"
+				data-bind="{ visible: appViewModel.user.userId() != null && !appViewModel.user.isGuest(),   
 							attr: { 'href': appViewModel.user.profilePageUrl() } }"
 				class="user-profile hidden-xs">
 				<img class="img-circle user-dp" 
@@ -94,12 +102,14 @@
 			<div data-bind="visible: appViewModel.user.userId() == null" style="margin: auto; padding-left: 8px;">
 				<span class="user-loading-spinner mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></span>
 			</div>
-			<a data-bind="{ visible: appViewModel.user.userId() != null && appViewModel.user.isGuest(), 
+			<a onclick="ga_CA( 'Header', 'Login' )"
+				data-bind="{ visible: appViewModel.user.userId() != null && appViewModel.user.isGuest(), 
 						attr: { 'href': '/login?retUrl=' + encodeURIComponent( window.location.pathname ) } }" 
 				class="mdl-button mdl-js-button mdl-button--icon">
 				<i class="material-icons">account_circle</i>
 			</a>
-			<a data-bind="{ visible: appViewModel.user.userId() != null && !appViewModel.user.isGuest(), 
+			<a onclick="ga_CA( 'Header', 'User' )"
+				data-bind="{ visible: appViewModel.user.userId() != null && !appViewModel.user.isGuest(), 
 						attr: { 'href': appViewModel.user.profilePageUrl() } }" 
 				class="mdl-button mdl-js-button mdl-button--icon">
 				<img class="img-circle user-dp" data-bind="attr: { 'src': getImageUrl( appViewModel.user.profileImageUrl(), 48 ) }" />
@@ -108,7 +118,9 @@
 	</div>
 
 	<div class="mdl-layout__header-row parent-container row-two hidden-sm hidden-md hidden-lg">
-		<button id="pratilipi-header-pratilipi-dropdown-mobile" class="pratilipi-text">
+		<button onclick="ga_CA( 'Header', 'Get Languages' )"
+				id="pratilipi-header-pratilipi-dropdown-mobile" 
+				class="pratilipi-text">
 			<span class="font-m">${ _strings.pratilipi }</span>
 			<i class="material-icons">arrow_drop_down</i>
 		</button>
@@ -117,7 +129,7 @@
 				<#if aLang.value == language>
 					<li class="mdl-menu__item" style="background: #eee;">${ aLang.name }</li>
 				<#else>
-					<li class="mdl-menu__item" onclick="window.location = '${ aLang.hostName }'; return false;">${ aLang.name }</li>
+					<li class="mdl-menu__item" onclick="ga_CA( 'Header', 'Change Language' ); window.location = '${ aLang.hostName }'; return false;">${ aLang.name }</li>
 				</#if>
 			</#list>
 		</ul>

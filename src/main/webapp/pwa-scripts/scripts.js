@@ -9,4 +9,5 @@
 	<#include "utils/Common.js">
 	<#include "utils/DataAccessor.js">
 	<#include "utils/KoBindingHandlers.js">
+	<#include "utils/GAEvents.js">
 </@compress_single_line>

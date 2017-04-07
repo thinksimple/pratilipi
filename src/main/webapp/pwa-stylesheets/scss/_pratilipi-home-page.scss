@@ -1,6 +1,17 @@
-.carousel-indicators li { 
-	visibility: hidden; 
+.carousel-indicators li {
+	width: 4px;
+	height: 4px;
+	
 }
+.carousel-indicators li.active {
+	width: 6px;
+	height: 6px;
+}
+
+.carousel-indicators {
+	bottom: -16px; 
+}
+
 .section-list .section-container {
 	margin-bottom: 20px;
 	.section-title {
@@ -14,8 +25,7 @@
 			padding: 0;
 			a {
 				display: block;
-				width: 100%;
-				padding: 12px 8px;
+				margin: 12px 8px;
 			}
 		}
 	}

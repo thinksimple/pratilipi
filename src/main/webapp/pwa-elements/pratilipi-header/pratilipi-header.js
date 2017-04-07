@@ -6,6 +6,7 @@ function( params ) {
 	};
 
 	this.search = function( formElement ) {
+		ga_CA( 'Header', 'Search' );
 		if( appViewModel.searchQuery() && appViewModel.searchQuery().trim().length && window.location.pathname != "/search" )
 			window.location.href = "/search?q=" + appViewModel.searchQuery();
 	};

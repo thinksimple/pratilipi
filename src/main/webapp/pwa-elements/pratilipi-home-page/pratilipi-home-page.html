@@ -1,5 +1,5 @@
 <!-- ko if: bannerList().length > 0 -->
-	<div class="mdl-cell mdl-cell--8-col-tablet mdl-cell--9-col">
+	<div class="mdl-cell mdl-cell--8-col-tablet mdl-cell--9-col mobile-card">
 		<div id="home-page-carousel" class="carousel slide" data-ride="carousel">
 			<ol data-bind="foreach: bannerList" class="carousel-indicators">
 				<li data-target="#carousel"
@@ -40,7 +40,11 @@
 			</div>
 		</div>
 		<div class="section-title view-more-holder material-subtitle-1 mdl-card-border mobile-card" style="margin-top: -1px;">
-			<a class="material-subheading-1" style="opacity: 0.8;" data-bind="attr: { 'href': listPageUrl }">${ _strings.view_more }...</a>
+			<a class="material-subheading-1" style="opacity: 0.8;" data-bind="attr: { 'href': listPageUrl }">
+				${ _strings.view_more }...
+				<i class="material-icons pull-right mdl-layout--small-screen-only">navigate_next</i>
+			</a>
+			<a data-bind="attr: { 'href': listPageUrl }"><i class="material-icons pull-right mdl-layout--large-screen-only">navigate_next</i></a>
 		</div>
 	</div>
 </div>
