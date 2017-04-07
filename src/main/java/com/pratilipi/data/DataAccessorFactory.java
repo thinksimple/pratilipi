@@ -18,7 +18,6 @@ public class DataAccessorFactory {
 	private static final Memcache cacheL2 = new MemcacheGaeImpl();
 	
 	private static final ThreadLocal<DataAccessor> threadLocalDataAccessor = new ThreadLocal<>();
-	private static final ThreadLocal<RtdbAccessor> threadLocalRtdbAccessor = new ThreadLocal<>();
 	private static final SearchAccessor searchAccessor = datasource.equals( "gae" )	 
 														? new SearchAccessorGaeImpl( indexName ) 
 														: new SearchAccessorMockImpl( indexName );
@@ -47,17 +46,12 @@ public class DataAccessorFactory {
 	}
 
 	public static RtdbAccessor getRtdbAccessor() throws UnexpectedServerException {
-		RtdbAccessor rtdbAccessor = threadLocalRtdbAccessor.get();
-		if( rtdbAccessor == null ) {
-			String googleApiAccessToken = GoogleApi.getAccessToken( Arrays.asList(
-					"https://www.googleapis.com/auth/firebase.database",
-					"https://www.googleapis.com/auth/userinfo.email" ) );
-			rtdbAccessor = new RtdbAccessorWithMemcache(
-					new RtdbAccessorFirebaseImpl( googleApiAccessToken ),
-					new MemcacheWrapper( cacheL1, cacheL2 ) );
-			threadLocalRtdbAccessor.set( rtdbAccessor );
-		}
-		return rtdbAccessor;
+		String googleApiAccessToken = GoogleApi.getAccessToken( Arrays.asList(
+				"https://www.googleapis.com/auth/firebase.database",
+				"https://www.googleapis.com/auth/userinfo.email" ) );
+		return new RtdbAccessorWithMemcache(
+				new RtdbAccessorFirebaseImpl( googleApiAccessToken ),
+				new MemcacheWrapper( cacheL1, cacheL2 ) );
 	}
 	
 	public static SearchAccessor getSearchAccessor() {
