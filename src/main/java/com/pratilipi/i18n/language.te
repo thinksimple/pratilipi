@@ -509,7 +509,7 @@ pratilipi_review_hide_comments 	= హైడ్ కామెంట్స్
 pratilipi_no_reviews			    = ఈ కంటెంట్ పై సమీక్షలు లేవు.
 rating_be_first_one		            = మొదట మీరే సమీక్షించండి.
 
-author_readby_count                 = Read by $read_count people
+author_readby_count                 = $read_count పాఠకుల సంఖ్య
 
 settings_profile_settings       =ప్రొఫైల్ సెట్టింగ్స్ 
 settings_notification_settings  =నోటిఫికేషన్ సెట్టింగ్స్
