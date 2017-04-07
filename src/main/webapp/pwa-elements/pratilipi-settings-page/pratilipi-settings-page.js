@@ -38,7 +38,7 @@ function( params ) {
 	this.loadUserAndAuthor = function() {
 		if( self.isLoading() ) return;
 		self.isLoading( true );
-		dataAccessor.getAuthorAndUser( getAuthorId(),
+		dataAccessor.getAuthorById( getAuthorId(), false,
 			function( author, user ) {
 				self.firstName( author.firstName );
 				self.lastName( author.lastName );
@@ -69,8 +69,16 @@ function( params ) {
 						return [ year, month, day ].join( '-' );
 				};
 				self.dateOfBirth( getDateOfBirthValue( author.dateOfBirth ) );
-				self.email( user.email );
-				self.phone( user.phone );
+				if( self.isAdmin ) {
+					dataAccessor.getUserById( author.user.userId,
+						function( user ) {
+							self.email( user.email );
+							self.phone( user.phone );
+					});
+				} else {
+					self.email( appViewModel.user.email() );
+					self.phone( appViewModel.user.phone() );
+				}
 				self.isLoading( false );
 		});
 	};

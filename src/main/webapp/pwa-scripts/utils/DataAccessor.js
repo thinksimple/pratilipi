@@ -137,27 +137,17 @@ var DataAccessor = function() {
 		});
 	};
 
-	this.getAuthorAndUser = function( authorId, aCallBack ) {
-		if( authorId == null ) return;
-		var requests = [];
-		requests.push( new request( "req1", AUTHOR_API, { "authorId": authorId } ) );
-		requests.push( new request( "req2", USER_API, { "userId": "$req1.userId" } ) );
-
-		httpUtil.get( API_PREFIX, { "requests": processRequests( requests ) },
-			function( response, status ) {
-				if( aCallBack != null ) {
-					var author = response.req1.status == 200 ? response.req1.response : null;
-					var user = response.req2.status == 200 ? response.req2.response : null;
-					aCallBack( author, user );
-				}
-		});
-
-	};
-
 	this.getUser = function( aCallBack ) {
 		httpUtil.get( API_PREFIX + USER_API, 
 						null, 
 						function( response, status ) { processGetResponse( response, status, aCallBack ) } );
+	};
+
+	this.getUserById = function( userId, aCallBack ) {
+		if( userId == null ) return;
+		httpUtil.get( API_PREFIX + USER_API, 
+				{ "userId": userId }, 
+				function( response, status ) { processGetResponse( response, status, aCallBack ) } );
 	};
 
 	this.getNotificationList = function( cursor, resultCount, aCallBack ) {
