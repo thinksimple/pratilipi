@@ -23,7 +23,8 @@ function( params ) {
 		toggleIsLiked();
 		dataAccessor.likeOrDislikeReview( self.review.userPratilipiId(), self.isLiked(), 
 			function( vote ) { 
-				self.voteRequestOnFlight( false ); 
+				self.voteRequestOnFlight( false );
+				ga_CA( 'Review', vote.isLiked ? 'Review Like' : 'Review UnLike' );
 			}, function( error ) {
 				toggleIsLiked();
 				self.voteRequestOnFlight( false );

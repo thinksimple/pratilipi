@@ -16,13 +16,15 @@
 		<span class="sprites-icon pratilipi-logo-icon"></span>
 		<h5 class="pratilipi-heading">${ _strings.user_sign_in }</h5>
 		<div class="pratilipi-content-container">
-			<button data-bind="{ click: facebookLogin, disable: requestOnFlight }" 
+			<button onclick="ga_CA( 'Login', 'FB-Login' )"
+					data-bind="{ click: facebookLogin, disable: requestOnFlight }" 
 					type="submit" 
 					class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored pratilipi-fb-blue-button login-button">
 				<div class="sprites-icon login-sprite-icon-24 facebook-login-icon"></div>
 				${ _strings.user_sign_in_with_facebook }
 			</button>
-			<button data-bind="{ click: googleLogin, disable: requestOnFlight }" 
+			<button onclick="ga_CA( 'Login', 'G-Login' )"
+					data-bind="{ click: googleLogin, disable: requestOnFlight }" 
 					type="submit" 
 					class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect pratilipi-white-button pratilipi-fb-blue-button login-button">
 				<div class="sprites-icon login-sprite-icon-24 google-login-icon"></div>
@@ -43,7 +45,8 @@
 				${ _strings.user_forgot_password }
 			</a>
 			<div class="clearfix"></div>
-			<button data-bind="{ click: login, enable: loginButtonEnabled }" 
+			<button onclick="ga_CA( 'Login', 'Email-Login' )"
+					data-bind="{ click: login, enable: loginButtonEnabled }" 
 					type="submit" 
 					class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored pratilipi-red-button login-button">${ _strings.user_to_sign_in }</button>
 		</form>

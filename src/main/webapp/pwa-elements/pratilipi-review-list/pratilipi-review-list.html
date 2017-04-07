@@ -4,11 +4,15 @@
 		<div data-bind="visible: hasAccessToReview()" class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero">
 			<div class="mdl-grid padding-zero mdl-grid--no-spacing">
 				<div class="mdl-cell--6-col mdl-cell--4-col-tablet padding-zero">
-					<pratilipi-rating-input params="{ rating: ratingInput }" data-bind="click: openReviewModal"></pratilipi-rating-input>
+					<pratilipi-rating-input 
+						onclick="ga_CA( 'Review', 'Rating Init' )"
+						params="{ rating: ratingInput }" 
+						data-bind="click: openReviewModal"></pratilipi-rating-input>
 				</div>
 				<div class="mdl-cell--6-col mdl-cell--4-col-tablet padding-zero">
-					<button data-bind="{ click: openReviewModal, 
-						text: userPratilipi.review() != null ? '${ _strings.review_edit_review }' : '${ _strings.review_write_a_review }' }" 
+					<button onclick="ga_CA( 'Review', 'Review Init' )"
+						data-bind="{ click: openReviewModal, 
+							text: userPratilipi.review() != null ? '${ _strings.review_edit_review }' : '${ _strings.review_write_a_review }' }" 
 						class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect pull-right write-review-button">
 					</button>
 				</div>
@@ -25,7 +29,11 @@
 				<!-- /ko -->
 				<li data-bind="visible: hasMoreReviews()">
 					<div class="show-more">
-						<button data-bind="click: loadMoreReviews" class="mdl-button mdl-js-button mdl-button--accent mdl-js-ripple-effect">${ _strings.show_more }</button>
+						<button onclick="ga_CA( 'Review', 'Load Reviews' )"
+								data-bind="click: loadMoreReviews" 
+								class="mdl-button mdl-js-button mdl-button--accent mdl-js-ripple-effect">
+								${ _strings.show_more }
+						</button>
 					</div>
 				</li>
 			</ul>
@@ -61,8 +69,16 @@
 					<i style="font-size: 20px; margin-right: 4px;" class="material-icons">delete</i>
 					<span class="material-button">${ _strings.review_delete_review }</span>
 				</button>
-				<button data-bind="click: closeReviewModal" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button-margin">${ _strings.cancel }</button>
-				<button data-bind="click: submitReview, enable: canSubmitReview" class="mdl-button mdl-js-button mdl-button--colored mdl-js-ripple-effect mdl-button--raised">${ _strings.review_submit_review }</button>
+				<button onclick="ga_CA( 'Review', 'Cancel Rating' )" 
+						data-bind="click: closeReviewModal" 
+						class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button-margin">
+							${ _strings.cancel }
+				</button>
+				<button onclick="ga_CA( 'Review', 'Add Rating' )" 
+						data-bind="click: submitReview, enable: canSubmitReview" 
+						class="mdl-button mdl-js-button mdl-button--colored mdl-js-ripple-effect mdl-button--raised">
+							${ _strings.review_submit_review }
+				</button>
 			</div>
 		</div>
 	</div>

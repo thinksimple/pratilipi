@@ -9,6 +9,7 @@ function( params ) {
 		if( rating < 0 ) self.rating( 0 );
 		if( rating > 5 ) self.rating( 5 );
 		self.rating( rating );
+		ga_CA( 'Review', 'Star Rating' );
 	}
 
 }

@@ -9,25 +9,29 @@
 			</div>
 			<div class="modal-body" style="padding: 15px;">
 				<ul class="mdl-list">
-					<li data-bind="click: shareOnFacebook" class="mdl-list__item clickable-element">
+					<li onclick="ga_CA( 'Pratilipi', 'FB-Share' )"
+						data-bind="click: shareOnFacebook" class="mdl-list__item clickable-element">
 						<span class="mdl-list__item-primary-content">
 							<span class="sprites-icon mdl-list__item-icon facebook-icon"></span>
 							<span class="font-m">${ _strings.facebook }</span>
 						</span>
 					</li>
-					<li data-bind="click: shareOnTwitter" class="mdl-list__item clickable-element">
+					<li onclick="ga_CA( 'Pratilipi', 'Twitter-Share' )"
+						data-bind="click: shareOnTwitter" class="mdl-list__item clickable-element">
 						<span class="mdl-list__item-primary-content">
 							<span class="sprites-icon mdl-list__item-icon twitter-icon"></span>
 							<span class="font-m">${ _strings.twitter }</span>
 						</span>
 					</li>
-					<li data-bind="click: shareOnGplus" class="mdl-list__item clickable-element">
+					<li onclick="ga_CA( 'Pratilipi', 'G+-Share' )"
+						data-bind="click: shareOnGplus" class="mdl-list__item clickable-element">
 						<span class="mdl-list__item-primary-content">
 							<span class="sprites-icon mdl-list__item-icon google-plus-icon"></span>
 							<span class="font-m">${ _strings.google_plus }</span>
 						</span>
 					</li>
-					<li data-bind="{ click: shareOnWhatsapp, visible: isMobile() }" class="mdl-list__item clickable-element">
+					<li onclick="ga_CA( 'Pratilipi', 'Whatsapp-Share' )"
+						data-bind="{ click: shareOnWhatsapp, visible: isMobile() }" class="mdl-list__item clickable-element">
 						<span class="mdl-list__item-primary-content">
 							<span class="sprites-icon mdl-list__item-icon whatsapp-icon"></span>
 							<span class="font-m">${ _strings.whatsapp }</span>

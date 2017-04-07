@@ -127,6 +127,7 @@ function( params ) {
 			dataAccessor.followOrUnfollowAuthor( self.author.authorId(), ! following, 
 				function( userAuthor ) {
 				self.userAuthorRequestOnFlight( false );
+				ga_CA( 'Author', userAuthor.following ? 'Follow' : 'UnFollow' );
 				}, function( error ) {
 					self.userAuthorRequestOnFlight( false );
 					ToastUtil.toast( error[ "message" ] != null ? error[ "message" ] : "${ _strings.server_error_message }" );

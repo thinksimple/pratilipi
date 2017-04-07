@@ -24,7 +24,9 @@
 			<span class="separator"></span>
 			<span class="comment-holder">
 				<span data-bind="visible: totalCommentCount() > 0, text: totalCommentCount()"></span>
-				<button data-bind="click: toggleAddCommentInput" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+				<button onclick="ga_CA( 'Review', 'Add Comment' )"
+						data-bind="click: toggleAddCommentInput" 
+						class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
 					<i class="material-icons material-icons-16">message</i>
 				</button>
 			</span>
@@ -65,8 +67,16 @@
 					transliterate: true }"></textarea>
 				<div style="height: 36px;">
 					<div class="pull-right">
-						<button data-bind="click: closeAddCommentInput" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button-margin">${ _strings.comment_cancel_comment }</button>
-						<button data-bind="enable: canSubmitAddComment, click: submitAddComment" class="mdl-button mdl-js-button mdl-button--colored mdl-js-ripple-effect mdl-button--raised">${ _strings.comment_submit_comment }</button>
+						<button onclick="ga_CA( 'Review', 'Cancel Comment' )"
+							data-bind="click: closeAddCommentInput" 
+							class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button-margin">
+							${ _strings.comment_cancel_comment }
+						</button>
+						<button onclick="ga_CA( 'Review', 'Cancel Comment' )"
+							data-bind="enable: canSubmitAddComment, click: submitAddComment" 
+							class="mdl-button mdl-js-button mdl-button--colored mdl-js-ripple-effect mdl-button--raised">
+							${ _strings.comment_submit_comment }
+						</button>
 					</div>
 				</div>
 			</li>
