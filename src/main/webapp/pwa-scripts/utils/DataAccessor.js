@@ -140,7 +140,7 @@ var DataAccessor = function() {
 	this.getAuthorAndUser = function( authorId, aCallBack ) {
 		if( authorId == null ) return;
 		var requests = [];
-		requests.push( new request( "req1", AUTHOR_API, null ) );
+		requests.push( new request( "req1", AUTHOR_API, { "authorId": authorId } ) );
 		requests.push( new request( "req2", USER_API, { "userId": "$req1.userId" } ) );
 
 		httpUtil.get( API_PREFIX, { "requests": processRequests( requests ) },
