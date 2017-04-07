@@ -104,6 +104,10 @@ function( params ) {
 
 	/* Create new Draft */
 	this.createNewPratilipi = function() {
+		if( isMobile() ) {
+			ToastUtil.toast( "${ _strings.write_on_desktop_only }", 5000 );
+			return;
+		}
 		appViewModel.pratilipiWriteAuthorId( self.author.authorId() );
 		$( "#pratilipiWrite" ).modal();
 	};
