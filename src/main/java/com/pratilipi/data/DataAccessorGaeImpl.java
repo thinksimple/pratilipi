@@ -93,6 +93,7 @@ import com.pratilipi.data.type.gae.UserAuthorEntity;
 import com.pratilipi.data.type.gae.UserEntity;
 import com.pratilipi.data.type.gae.UserPratilipiEntity;
 import com.pratilipi.data.type.gae.VoteEntity;
+import com.pratilipi.filter.AccessTokenFilter;
 import com.pratilipi.filter.UxModeFilter;
 
 public class DataAccessorGaeImpl implements DataAccessor {
@@ -856,7 +857,10 @@ public class DataAccessorGaeImpl implements DataAccessor {
 			
 		} else {
 			
-			String memcacheId = "DataStore.Pratilipi-list." + pratilipiFilter.getLanguage().getCode() + "." + pratilipiFilter.getListName() + "?" + SystemProperty.STAGE;
+			AccessToken accessToken = AccessTokenFilter.getAccessToken();
+			Long userId = accessToken.getUserId();
+			String memcacheId = "DataStore.Pratilipi-list." + userId + "." + pratilipiFilter.getLanguage().getCode() + "." + pratilipiFilter.getListName() + "?" + SystemProperty.STAGE;
+			logger.log(Level.INFO, "Memcache Id : " + memcacheId);
 			ArrayList<Long> pratilipiIdList = memcache.get( memcacheId );
 
 			if( pratilipiIdList == null ) {
@@ -898,13 +902,31 @@ public class DataAccessorGaeImpl implements DataAccessor {
 						pratilipiIdList.add( page.getPrimaryContentId() );
 				}
 	
+				// TODO : create user specific pratilipi list.
+				
+				// fetch Read content list.
+				// For better performance, new index is required with userId and lastOpenedDate filters.
+				List<UserPratilipi> userPratilipiList = getUserPratilipiList(userId, null, null, null).getDataList();
+				List<Long> contentsReadList = new ArrayList<>();
+				for(UserPratilipi userPratilipi : userPratilipiList) {
+					if(userPratilipi.getLastOpenedDate() != null) {
+						contentsReadList.add(userPratilipi.getPratilipiId());
+						logger.log(Level.INFO, "PRATILIPI ID : " + userPratilipi.getPratilipiId());
+					}
+						
+				}
+				
+				// move all read contents to bottom of the list.
+				contentsReadList.retainAll(pratilipiIdList);		// Find all read contents in the list
+				pratilipiIdList.removeAll(contentsReadList);		// Remove already read content from the list
+				pratilipiIdList.addAll(contentsReadList);		// Append read content at end of the list
 				
 				// Shuffling and saving in Memcache
 //				Collections.shuffle( pratilipiIdList );
 				memcache.put(
 						memcacheId,
 						(ArrayList<Long>) pratilipiIdList,
-						SystemProperty.STAGE == SystemProperty.STAGE_PROD ? 60 : 5 );
+						SystemProperty.STAGE == SystemProperty.STAGE_PROD ? 5 : 360 );
 				
 			}			
 

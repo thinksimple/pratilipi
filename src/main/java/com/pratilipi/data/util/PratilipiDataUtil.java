@@ -418,6 +418,15 @@ public class PratilipiDataUtil {
 		if( eventId != null ) {
 
 			List<Long> pratilipiIdList = dataAccessor.getEvent( eventId ).getPratilipiIdList();
+			// move read content to end of the list.
+			List<Long> contentsReadList = UserPratilipiDataUtil.getContentsReadList(AccessTokenFilter.getAccessToken().getUserId());
+			// move all read contents to bottom of the list.
+			if(contentsReadList != null) {
+				contentsReadList.retainAll(pratilipiIdList);		// Find all read contents in the list
+				pratilipiIdList.removeAll(contentsReadList);		// Remove already read content from the list
+				pratilipiIdList.addAll(contentsReadList);		// Append read content at end of the list
+			}
+			
 			offset = ( cursor == null ? 0 : Integer.parseInt( cursor ) )
 					+ ( offset == null || offset < 0 ? 0 : offset );
 			offset = Math.min( offset, pratilipiIdList.size() );

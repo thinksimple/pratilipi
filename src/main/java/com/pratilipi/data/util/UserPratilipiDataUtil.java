@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.pratilipi.common.exception.InsufficientAccessException;
 import com.pratilipi.common.exception.UnexpectedServerException;
@@ -219,6 +221,31 @@ public class UserPratilipiDataUtil {
 				cursor,
 				(long) (int) reviewsDoc.getReviews().size() );
 		
+	}
+	
+	/**
+	 * @param userId
+	 * @return List of pratilipi Ids read (completed) by the user
+	 */
+	public static List<Long> getContentsReadList(Long userId) {
+		Logger logger = Logger.getLogger(UserPratilipiDataUtil.class.getSimpleName());
+
+		List<Long> contentsReadList = new ArrayList<>();
+		
+		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
+		List<UserPratilipi> userPratilipiList = dataAccessor.getUserPratilipiList(userId, null, null, null).getDataList();
+		if(userPratilipiList == null || userPratilipiList.size() == 0)
+			return null;
+		
+		logger.log(Level.INFO, "LIST OF READ CONTENTS");
+		for(UserPratilipi userPratilipi : userPratilipiList) {
+			if(userPratilipi.getLastOpenedDate() != null) {
+				contentsReadList.add(userPratilipi.getPratilipiId());
+				logger.log(Level.INFO, "PRATILIPI ID : " + userPratilipi.getPratilipiId());
+			}
+				
+		}
+		return contentsReadList;
 	}
 	
 	public static UserPratilipiData saveUserPratilipiAddToLibrary( Long userId, Long pratilipiId, String lastOpenedPage, Boolean addedToLibrary )
