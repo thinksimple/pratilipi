@@ -38,8 +38,8 @@ function( params ) {
 	this.loadUserAndAuthor = function() {
 		if( self.isLoading() ) return;
 		self.isLoading( true );
-		dataAccessor.getAuthorById( getAuthorId(), false,
-			function( author ) {
+		dataAccessor.getAuthorAndUser( getAuthorId(),
+			function( author, user ) {
 				self.firstName( author.firstName );
 				self.lastName( author.lastName );
 				self.firstNameEn( author.firstNameEn );
@@ -69,6 +69,8 @@ function( params ) {
 						return [ year, month, day ].join( '-' );
 				};
 				self.dateOfBirth( getDateOfBirthValue( author.dateOfBirth ) );
+				self.email( user.email );
+				self.phone( user.phone );
 				self.isLoading( false );
 		});
 	};
@@ -140,9 +142,6 @@ function( params ) {
 		if( appViewModel.user.userId() == null ) return;
 		if( appViewModel.user.isGuest() && appViewModel.user.userId() == 0 )
 			goToLoginPage();
-
-		self.email( appViewModel.user.email() );
-		self.phone( appViewModel.user.phone() );
 
 		setTimeout( function() {
 			self.loadUserAndAuthor();

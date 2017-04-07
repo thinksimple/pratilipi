@@ -137,17 +137,18 @@ var DataAccessor = function() {
 		});
 	};
 
-	this.getUserAndAuthor = function( aCallBack ) {
+	this.getAuthorAndUser = function( authorId, aCallBack ) {
+		if( authorId == null ) return;
 		var requests = [];
-		requests.push( new request( "req1", USER_API, null ) );
-		requests.push( new request( "req2", AUTHOR_API, { "authorId": "$req1.authorId" } ) );
+		requests.push( new request( "req1", AUTHOR_API, null ) );
+		requests.push( new request( "req2", USER_API, { "userId": "$req1.userId" } ) );
 
 		httpUtil.get( API_PREFIX, { "requests": processRequests( requests ) },
 			function( response, status ) {
 				if( aCallBack != null ) {
-					var user = response.req1.status == 200 ? response.req1.response : null;
-					var author = response.req2.status == 200 ? response.req2.response : null;
-					aCallBack( user, author );
+					var author = response.req1.status == 200 ? response.req1.response : null;
+					var user = response.req2.status == 200 ? response.req2.response : null;
+					aCallBack( author, user );
 				}
 		});
 

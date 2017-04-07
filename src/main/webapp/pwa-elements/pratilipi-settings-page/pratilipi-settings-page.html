@@ -46,7 +46,7 @@
 					<a href="#password-settings" class="mdl-tabs__tab" data-bind="visible: !isAdmin">
 						<span>${ _strings.settings_update_password }</span>
 					</a>
-					<a data-bind="click: logoutUser" class="mdl-tabs__tab clickable-element" data-bind="visible: !isAdmin">
+					<a data-bind="click: logoutUser, visible: !isAdmin" class="mdl-tabs__tab clickable-element">
 						<span>${ _strings.user_sign_out }</span>
 					</a>
 				</div>
