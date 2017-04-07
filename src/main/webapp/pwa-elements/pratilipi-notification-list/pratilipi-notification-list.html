@@ -4,7 +4,8 @@
 			<li class="mdl-menu__item"
 				data-bind="css: { 'notif-unread': ( notification.state == 'UNREAD' ) }">
 				<span class="notification-message">
-					<a data-bind="attr: { 'href': notification.sourceUrl }">
+					<a onclick="ga_CA( 'Notification', 'Open' )"
+						data-bind="attr: { 'href': notification.sourceUrl }">
 						<span style="display: flex;">
 							<span class="notification-display-image">
 								<img class="img-circle" data-bind="attr: { src: getImageUrl( notification.displayImageUrl, 48 ) }" />
@@ -26,7 +27,8 @@
 		<!--/ko-->
 	<!--/ko-->
 	<li class="mdl-menu__item show-more" data-bind="visible: hasMoreContents()">
-		<button data-bind="{ click: fetchNotificationList, visible: loadingState() != 'LOADING' }" 
+		<button onclick="ga_CA( 'Notification', 'Load More' )"
+				data-bind="{ click: fetchNotificationList, visible: loadingState() != 'LOADING' }" 
 				class="mdl-button mdl-js-button">${ _strings.view_more }</button>
 	</li>
 </ul>

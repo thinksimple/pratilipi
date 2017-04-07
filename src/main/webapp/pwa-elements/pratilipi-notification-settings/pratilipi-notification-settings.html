@@ -78,7 +78,8 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button data-bind="click: updateNotificationPreferences" 
+				<button onclick="ga_CA( 'Notification', 'Update' )"
+					data-bind="click: updateNotificationPreferences" 
 					class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-button-margin" 
 					type="button">${ _strings.notification_settings_save_changes }</button>
 			</div>

@@ -54,7 +54,8 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button data-bind="{ click: submit, enable: canCreatePratilipi }" 
+				<button onclick="ga_CA( 'Pratilipi', 'Open' )"
+						data-bind="{ click: submit, enable: canCreatePratilipi }" 
 						class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect font-m" 
 						type="button">${ _strings.writer_to_next_screen }</button>
 			</div>

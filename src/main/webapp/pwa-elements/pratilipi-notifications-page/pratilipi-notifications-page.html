@@ -4,7 +4,8 @@
 	<div class="mdl-card mdl-card-border mobile-card pratilipi-notifications-page">
 		<div class="notifications-header">
 			<span class="font-xl notification-heading">${ _strings.notification_notifications }</span>
-			<button class="mdl-button mdl-js-button mdl-button--icon pull-right" data-toggle="modal" data-target="#pratilipiNotificationSettings">
+			<button onclick="ga_CA( 'Notification', 'Settings' )"
+				class="mdl-button mdl-js-button mdl-button--icon pull-right" data-toggle="modal" data-target="#pratilipiNotificationSettings">
 				<i class="material-icons">settings</i>
 			</button>
 		</div>
