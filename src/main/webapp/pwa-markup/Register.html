@@ -16,13 +16,15 @@
 		<span class="sprites-icon pratilipi-logo-icon"></span>
 		<h5 class="pratilipi-heading">${ _strings.user_sign_up_for_pratilipi }</h5>
 		<div class="pratilipi-content-container">
-			<button data-bind="{ click: function(){ facebookLogin( true ); }, disable: requestOnFlight }" 
+			<button onclick="ga_CA( 'Signup', 'FB-signup' )"
+					data-bind="{ click: function(){ facebookLogin( true ); }, disable: requestOnFlight }" 
 					type="submit" 
 					class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored pratilipi-fb-blue-button login-button">
 				<div class="sprites-icon login-sprite-icon-24 facebook-login-icon"></div>
 				${ _strings.user_sign_in_with_facebook }
 			</button>
-			<button data-bind="{ click: function(){ googleLogin( true ); }, disable: requestOnFlight }" 
+			<button onclick="ga_CA( 'Signup', 'G-signup' )"
+					data-bind="{ click: function(){ googleLogin( true ); }, disable: requestOnFlight }" 
 					type="submit" 
 					class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect pratilipi-white-button pratilipi-fb-blue-button login-button">
 				<div class="sprites-icon login-sprite-icon-24 google-login-icon"></div>
@@ -53,7 +55,8 @@
 					<a href="/terms-of-service" target="_blank">${ _strings.footer_terms_of_service }</a>
 					&nbsp;${ _strings.register_part_3 }</span>
 			</label>
-			<button data-bind="{ click: register, enable: registerButtonEnabled }" 
+			<button onclick="ga_CA( 'Signup', 'Email-signup' )"
+					data-bind="{ click: register, enable: registerButtonEnabled }" 
 					type="submit" 
 					class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored pratilipi-red-button login-button">${ _strings.user_sign_up }</button>
 			<div class="member-login">
