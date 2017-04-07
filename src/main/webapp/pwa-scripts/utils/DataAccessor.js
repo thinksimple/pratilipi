@@ -12,7 +12,7 @@ var DataAccessor = function() {
 	var USER_PRATILIPI_LIBRARY_LIST_API = "/userpratilipi/library/list";
 	var AUTHOR_API = "/author";
 	var USER_AUTHOR_FOLLOW_API = "/userauthor/follow?_apiVer=2";
-	var USER_API = "/user";
+	var USER_API = "/user?_apiVer=2";
 	var USER_LOGIN_API = "/user/login";
 	var USER_LOGIN_FACEBOOK_API = "/user/login/facebook";
 	var USER_LOGIN_GOOGLE_API = "/user/login/google";
