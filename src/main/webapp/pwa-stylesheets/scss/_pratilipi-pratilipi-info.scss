@@ -17,7 +17,7 @@
 	.pratilipi-cover-image {
 		width: 200px;
 		height: 300px;
-		@media only screen and (max-width: 479px) {
+		@media only screen and (max-width: 459px) {
 	    	width: 150px;
 			height: 225px;
 	  	}
@@ -31,15 +31,58 @@
 	    min-width: 36px;
 	    padding: 0;	
 	}
-	
+
+	.pratilipi-cover-image-container {
+		margin: 8px; 
+		position: relative;
+		@media (max-width: 459px) {
+			margin: 8px auto;
+		}
+	}
+
+	.mdl-card__title {
+		padding: 0 !important;
+		margin-bottom: 4px;
+		@media (max-width: 459px) {
+	    	margin: auto;
+	    	padding: 0!important;
+	  	}
+	}
+	.pratilipi-title, .author-name {
+		margin: 0; 
+		color: #000;
+		@media (max-width: 459px) {
+	    	margin: auto;
+	    	padding: 0;
+	  	}
+	}
+
 	.pratilipi-info-variable-width {
-	  	@media (max-width: 479px) {
+		flex-grow: 1;
+		margin: 8px;
+		@media (max-width: 459px) {
+			text-align: center;
 	    	width: 100%;
 	  	}	
-	  	@media (min-width: 480px) {
+	  	@media (min-width: 460px) {
 	    	width: 50%;
 	  	}	
 	}
+
+	.mdl-card__supporting-text {
+		margin: 8px 0;
+		padding: 0;
+		width: initial;
+		@media (max-width: 459px) {
+	    	margin: 4px auto;
+	    	padding: 0;
+	  	}
+	}
+	
+	.author-summary {
+		color: rgba( 0,0,0,0.54 );
+	}
+	
 
 	div.image-uploaded-div {
 		.spinner-container {
@@ -59,6 +102,17 @@
 		height: 36px;
 		width: 36px;
 		min-width: 36px;
+    }
+    
+    .button-holders {
+    	@media (min-width: 460px) {
+			padding: 0;
+			margin: 0;
+			height: initial;
+			display: flex;
+			min-height: initial;
+			align-items: flex-end;
+    	}
     }
 
    	i.icon-center {
