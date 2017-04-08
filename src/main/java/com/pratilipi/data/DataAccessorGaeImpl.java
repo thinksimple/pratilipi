@@ -860,10 +860,12 @@ public class DataAccessorGaeImpl implements DataAccessor {
 			AccessToken accessToken = AccessTokenFilter.getAccessToken();
 			Long userId = accessToken.getUserId();
 			String memcacheId = "DataStore.Pratilipi-list." + userId + "." + pratilipiFilter.getLanguage().getCode() + "." + pratilipiFilter.getListName() + "?" + SystemProperty.STAGE;
-			logger.log(Level.INFO, "Memcache Id : " + memcacheId);
+			logger.log(Level.INFO, "Memcache Id / Time : " + memcacheId + "/" + System.currentTimeMillis());
 			ArrayList<Long> pratilipiIdList = memcache.get( memcacheId );
 
 			if( pratilipiIdList == null ) {
+				
+				logger.log(Level.INFO, "CACHE MISS");
 				
 				List<String> uriList = null;
 				try {
@@ -931,7 +933,9 @@ public class DataAccessorGaeImpl implements DataAccessor {
 						(ArrayList<Long>) pratilipiIdList,
 						SystemProperty.STAGE == SystemProperty.STAGE_PROD ? 5 : 360 );
 				
-			}			
+			} else {
+				logger.log(Level.INFO, "CAHCE HIT. List size : " + pratilipiIdList.size());
+			}
 
 			
 			offset = ( cursorStr == null ? 0 : Integer.parseInt( cursorStr ) )
