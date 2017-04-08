@@ -517,3 +517,8 @@ settings_update_password        = पासवर्ड अपडेट
 
 search_load_failed			= शोध परिणाम लोड करण्यास अक्षम ; कृपया पुन्हा प्रयत्न करा
 notifications_load_failed = सूचना लोड करण्यास अक्षम ; कृपया सूचना पुन्हा लोड करण्यासाठी येथे क्लिक करा
+image_type_not_supported = Image type not supported! Please select another image. Supported Types: .png, .jpg, .jpeg
+
+author_published_contents = प्रकाशित साहित्य
+author_followers		= अनुयायी
+author_following		= अनुसरण

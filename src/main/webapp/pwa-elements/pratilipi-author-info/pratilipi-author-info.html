@@ -79,7 +79,7 @@
 			<div class="author-summary-desktop" data-bind="visible: author.summary() != null">
 				<pratilipi-see-more params="{ originalText: author.summary() }"></pratilipi-see-more>
 				<div class="author-read-count-holder material-subtitle-1"
-					data-bind="text: formatReadCount( author.totalReadCount() ) + ' ' + '${ _strings.author_count_reads }'"></div>
+					data-bind="text: getReadCountText()"></div>
 			</div>
 		</div>
 	</div>
@@ -97,15 +97,15 @@
 	<div class="author-stats-holder">
 		<div class="mdl-cell mdl-cell--4-col">
 			<div class="material-subtitle-1" data-bind="text: author.contentPublished()"></div>
-			<div class="material-body-1">${ _strings.author_published_works }</div>
+			<div class="material-body-1">${ _strings.author_published_contents }</div>
 		</div>
 		<div class="mdl-cell mdl-cell--4-col clickable-element" data-toggle="modal" data-target="#pratilipi-author-follows-followers">
 			<div class="material-subtitle-1" data-bind="text: author.followCount()"></div>
-			<div class="material-body-1">${ _strings.author_followers_count }</div>
+			<div class="material-body-1">${ _strings.author_followers }</div>
 		</div>
 		<div class="mdl-cell mdl-cell--4-col clickable-element" data-toggle="modal" data-target="#pratilipi-author-follows-following">
 			<div class="material-subtitle-1" data-bind="text: author.user.followCount()"></div>
-			<div class="material-body-1">${ _strings.author_following_count }</div>
+			<div class="material-body-1">${ _strings.author_following }</div>
 		</div>
 	</div>
 

@@ -121,4 +121,8 @@ function( params ) {
         self.coverUploaded( false );
     };
 
+    this.getReadCountText = ko.computed( function() {
+    	return "${ _strings.author_readby_count }".replace( "$read_count", formatReadCount( self.author.totalReadCount() ) );
+    }, this );
+
 }

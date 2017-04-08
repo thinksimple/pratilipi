@@ -517,3 +517,8 @@ settings_update_password        = പാസ്സ്‌വേര്‍ഡ്‌ 
 
 search_load_failed			= ഫലങ്ങള്‍ ലോഡ് ചെയ്യാന്‍ സാധിക്കുന്നില്ല ! വീണ്ടും ശ്രമിക്കാന്‍ ഇവിടെ ക്ലിക്ക് ചെയ്യൂ !
 notifications_load_failed = നോട്ടിഫിക്കേഷനുകള്‍ ലോഡ് ചെയ്യാന്‍ സാധിക്കുന്നില്ല .വീണ്ടും ശ്രമിക്കാന്‍ ഇവിടെ ക്ലിക്ക് ചെയ്യൂ !
+image_type_not_supported = Image type not supported! Please select another image. Supported Types: .png, .jpg, .jpeg
+
+author_published_contents = രചനകള്‍ 
+author_followers		= ഫോളോവേഴ്സ്
+author_following		= ഫോളോയിംഗ്

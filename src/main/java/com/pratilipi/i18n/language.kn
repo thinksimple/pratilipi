@@ -509,10 +509,16 @@ pratilipi_review_hide_comments 	= ಕಾಮೆಂಟ್ಸ್ ಹೈಡ್ ಮ�
 pratilipi_no_reviews			    = ಈ ಬರಹಕ್ಕೆ ಯಾವ ಪ್ರತಿಕ್ರಿಯೆಗಳೂ ಇಲ್ಲ
 rating_be_first_one		            = ಪ್ರತಿಕ್ರಿಯೆ ಬರೆಯಲು ಮೊದಲಿಗರಾಗಿ
 
-author_readby_count                 = $read_count ಜನರಿಂದ ಓದಲ್ಪಟ್ಟಿದೆ 
+author_readby_count                 = $read_count ಜನರಿಂದ ಓದಲ್ಪಟ್ಟಿದೆ
+ 
 settings_profile_settings       = Profile Settings ಪ್ರೊಫೈಲ್ ಸೆಟ್ಟಿಂಗ್ಸ್ 
 settings_notification_settings  = Notification Settings ನೋಟಿಫಿಕೇಶನ್ ಸೆಟ್ಟಿಂಗ್ಸ್ 
 settings_update_password        = Update Password ಅಪ್ಡೇಟ್ ಪಾಸ್ವರ್ಡ್ 
 search_load_failed			= Failed to load search results! Please click here to try again! ಹುಡುಕಾಟದ ಫಲಿತಾಂಶಗಳು ಲೋಡ್ ಆಗುವಲ್ಲಿ ವಿಫಲಗೊಂಡಿವೆ! ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಲು ದಯವಿಟ್ಟು ಇಲ್ಲಿ ಕ್ಲಿಕ್ ಮಾಡಿ!
 notifications_load_failed = Notifications failed to load. Please click here to re-load the notifications. ನೋಟಿಫಿಕೇಶನ್ಸ್ ಲೋಡ್ ಆಗುವಲ್ಲಿ ವಿಫಲಗೊಂಡಿವೆ. ನೋಟಿಫಿಕೇಶನ್ಸ್ ರೀ-ಲೋಡ್ ಮಾಡಲು ದಯವಿಟ್ಟು ಇಲ್ಲಿ ಕ್ಲಿಕ್ ಮಾಡಿ!
 
+image_type_not_supported = Image type not supported! Please select another image. Supported Types: .png, .jpg, .jpeg
+
+author_published_contents = ಪ್ರಕಟಿತ  
+author_followers		= ಹಿಂಬಾಲಕರು 
+author_following		= ಹಿಂಬಾಲಿಸುತ್ತಿರುವಿರಿ 

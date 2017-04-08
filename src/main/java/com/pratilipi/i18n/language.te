@@ -517,3 +517,8 @@ settings_update_password        =అప్ డేట్ పాస్వర్డ
 
 search_load_failed			=శోధించిన ఫలితాలు లోడ్ అవ్వలేదు,దయచేసి ఇక్కడ క్లిక్ చేసి మళ్ళి ప్రయత్నించండి.
 notifications_load_failed = నోటిఫికేషన్లు లోడ్ అవ్వలేదు,రీలోడ్ కొరకు ఇక్కడ క్లిక్ చేసి మళ్ళి ప్రయత్నిచండి.
+image_type_not_supported = Image type not supported! Please select another image. Supported Types: .png, .jpg, .jpeg
+
+author_published_contents = ప్రచురితమైనవి 
+author_followers		= అనుచరులు
+author_following		= అనుసరిస్తున్నారు
