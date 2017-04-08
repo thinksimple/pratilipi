@@ -49,7 +49,7 @@ function ViewModel() {
 			ToastUtil.toastUp( "${ _strings.working }" );
 			dataAccessor.loginGoogleUser( googleUser.getAuthResponse().id_token,
 				function( user ) {
-					ToastUtil.toastUp( "${ _strings.user_login_success }" );
+					ToastUtil.toast( "${ _strings.user_login_success }" );
 					window.location.href = isRegister ? user[ "profilePageUrl" ] : getRetUrl( true );
 				}, function( error ) {
 					self.requestOnFlight( false );
@@ -78,7 +78,7 @@ function ViewModel() {
 			ToastUtil.toastUp( "${ _strings.working }" );
 			dataAccessor.loginFacebookUser( fbResponse.authResponse.accessToken,
 				function( user ) {
-					ToastUtil.toastUp( "${ _strings.user_login_success }" );
+					ToastUtil.toast( "${ _strings.user_login_success }" );
 					window.location.href = isRegister ? user[ "profilePageUrl" ] : getRetUrl( true );
 				}, function( error ) {
 					self.requestOnFlight( false );
@@ -112,7 +112,7 @@ function ViewModel() {
 
 		dataAccessor.loginUser( self.userEmail(), self.userPassword(), 
 			function( user ) {
-				ToastUtil.toastUp( "${ _strings.user_login_success }" );
+				ToastUtil.toast( "${ _strings.user_login_success }" );
 				window.location.href = getRetUrl( true );
 			}, function( error ) {
 				self.requestOnFlight( false );
@@ -155,7 +155,7 @@ function ViewModel() {
 		ToastUtil.toastUp( "${ _strings.working }" );
 		dataAccessor.registerUser( self.userName(), self.userEmail(), self.userPassword(), 
 			function( user ) {
-				ToastUtil.toastUp( "${ _strings.user_register_success }" );
+				ToastUtil.toast( "${ _strings.user_register_success }" );
 				window.location.href = user[ "profilePageUrl" ];
 			}, function( error ) {
 				self.requestOnFlight( false );
@@ -199,7 +199,7 @@ function ViewModel() {
 			message = "${ _strings.user_login_to_follow }";
 		if( message != null ) {
 			ToastUtil.toastUp( message );
-			setTimeout( function(){ ToastUtil.toastDown(); }, 5000 );
+			setTimeout( function(){ ToastUtil.toastDown(); }, 4000 );
 			/* Hack: Mdl toast doesn't work properly when called toast function. */
 		}
 	}
