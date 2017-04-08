@@ -127,4 +127,12 @@ function( params ) {
     	return "${ _strings.author_readby_count }".replace( "$read_count", formatReadCount( self.author.totalReadCount() ) );
     }, this );
 
+    /* UI Helpers */
+    this.focusPublishedContentSection = function() {
+    	var targetDiv = $( '.js-pratilipi-author-info' );
+    	$( ".mdl-layout__content" ).animate({
+    		scrollTop: targetDiv.height() + ( $(document).width() < 480 ? 1 : 16 )
+    	}, 200 );
+    };
+
 }

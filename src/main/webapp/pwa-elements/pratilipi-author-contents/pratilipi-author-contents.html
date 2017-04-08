@@ -46,7 +46,9 @@
 			</div>
 		</div>
 		<div class="author-published-contents" data-bind="css: { 'margin-top--1': !author.hasAccessToUpdate() }">
-			<div class="load-more-container mdl-card-border material-title" style="padding: 14px 8px; background-color: #fff;" data-bind="visible: author.hasAccessToUpdate()">
+			<div class="load-more-container mdl-card-border material-title" 
+					style="padding: 14px 8px; background-color: #fff;" 
+					data-bind="visible: author.hasAccessToUpdate()">
 				${ _strings.author_published_works }
 			</div>
 			<div data-bind="foreach: { data: publishedPratilipiList, as: 'pratilipi' }, visible: publishedPratilipiList().length > 0"
