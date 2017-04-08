@@ -26,7 +26,7 @@
 			top: 10px;
 			width: 36px;
 			height: 36px;
-			background: #fff;
+			background: rgba( 255, 255, 255, 0.5 );
 		}
 
 		.cover-spinner-container {
@@ -75,7 +75,7 @@
 				position: absolute;
 				left: 140px;
 				margin-top: 140px;
-				background: white;
+				background: rgba( 255, 255, 255, 0.5 );
 				height: 36px;
 				width: 36px;
 				@media only screen and (max-width: 1024px) {

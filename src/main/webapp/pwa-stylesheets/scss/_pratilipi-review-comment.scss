@@ -11,8 +11,9 @@
 				color: #000 !important;
 			}
 			.comment-date {
+				color: rgba(0,0,0,0.54);
 				display: block;
-				margin-top: 8px;
+				margin-top: 2px;
 			}
 		}
 	}
@@ -20,9 +21,6 @@
 		padding: 16px 0 8px 0;
 	}
 	.comment-footer {
-		.font-14 * {
-			font-size: 14px !important;
-		}
 		.separator:before {
 			content: "\002022";
 		}

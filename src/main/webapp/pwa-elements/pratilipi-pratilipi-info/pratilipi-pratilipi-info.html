@@ -43,7 +43,10 @@
 						</button>
 					</div>
 					<div class="css-author-name mdl-card__title padding-bottom-zero padding-left-zero">
-						<a style="margin: 0; color: #000;" class="material-title" data-bind="attr: { href: pratilipi.author.pageUrl() }, text: pratilipi.author.name()"></a>
+						<a style="margin: 0; color: #000;" 
+							class="material-title" 
+							data-bind="attr: { href: pratilipi.author.pageUrl(), 'target': isMobile() ? '' : '_blank' }, 
+										text: pratilipi.author.name()"></a>
 					</div>
 					<div class="mdl-card__supporting-text font-16 padding-bottom-zero padding-left-zero">
 						<p class="material-subtitle-1 margin-bottom-8" data-bind="visible: pratilipi.averageRating() > 0">

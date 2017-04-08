@@ -15,17 +15,15 @@
 			color: #000 !important;
 		}
 		.review-date {
+			color: rgba(0,0,0,0.54);
 			display: block;
-			margin-top: 4px;
+			margin-top: 2px;
 		}
 	}
 	.review-container {
 		padding: 16px 0 8px 0;
 	}
 	.review-footer {
-		.font-14 * {
-			font-size: 14px !important;
-		}
 		.separator:before {
 			content: "\002022";
 		}

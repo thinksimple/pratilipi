@@ -6,7 +6,7 @@
 				<div style="padding: 0 8px;">
 					<a class="reviewer-name material-subtitle-1" data-bind="attr: { href: review.userProfilePageUrl() }, text: review.user.displayName()"></a>
 					<br/>
-					<span class="font-s review-date" data-bind="text: convertDate( review.reviewDateMillis() )"></span>
+					<span class="font-xs review-date" data-bind="text: convertDate( review.reviewDateMillis() )"></span>
 				</div>
 			</div>
 			<span class="user-rating">
@@ -14,16 +14,16 @@
 			</span>
 		</div>
 		<div class="review-container material-subtitle-1" data-bind="text: review.review()"></div>
-		<div class="review-footer font-14">
+		<div class="review-footer">
 			<span class="like-holder">
-				<span data-bind="visible: likeCount() > 0, text: likeCount()"></span>
+				<span class="font-s" data-bind="visible: likeCount() > 0, text: likeCount()"></span>
 				<button data-bind="click: likeOrDislikeReview, disable: voteRequestOnFlight" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
 					<i class="material-icons material-icons-16" data-bind="css: { 'mdl-color-text--primary': isLiked() }">thumb_up</i>
 				</button>
 			</span>
 			<span class="separator"></span>
 			<span class="comment-holder">
-				<span data-bind="visible: totalCommentCount() > 0, text: totalCommentCount()"></span>
+				<span class="font-s"  data-bind="visible: totalCommentCount() > 0, text: totalCommentCount()"></span>
 				<button onclick="ga_CA( 'Review', 'Add Comment' )"
 						data-bind="click: toggleAddCommentInput" 
 						class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
@@ -32,7 +32,7 @@
 			</span>
 			<span class="separator" data-bind="visible: totalCommentCount() > 0"></span>
 			<span class="view-comments-holder">
-				<span class="material-subtitle-2 clickable-element" 
+				<span class="font-s clickable-element" 
 						data-bind="visible: totalCommentCount() > 0,
 							click: toggleCommentSection,
 							text: commentSectionVisible() ? '${ _strings.pratilipi_review_hide_comments }' : '${ _strings.review_see_all_reviews }'">
