@@ -52,6 +52,9 @@ public class SiteElementUtil {
 				navigationEntry.put( "url", line.substring( 0, line.indexOf( ' ' ) ).trim() );
 				line = line.substring( line.indexOf( ' ' ) ).trim();
 				navigationEntry.put( "name", line.substring( 0, line.indexOf( "Analytics#" ) ).trim() );
+				String analyticsInfo = line.substring( line.indexOf( "Analytics#categoryName::" ) + "Analytics#categoryName::".length(), 
+						line.indexOf( "App#" ) ).trim();
+				navigationEntry.put( "analytics", analyticsInfo );
 				linkList.add( navigationEntry );
 			}
 			else {
