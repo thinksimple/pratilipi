@@ -4,13 +4,10 @@
 		<div data-bind="visible: hasAccessToReview()" class="mdl-cell mdl-cell--12-col mdl-card__supporting-text padding-zero">
 			<div class="mdl-grid padding-zero mdl-grid--no-spacing">
 				<div class="mdl-cell--6-col mdl-cell--4-col-tablet padding-zero">
-					<pratilipi-rating-input 
-						onclick="ga_CA( 'Review', 'Rating Init' )"
-						params="{ rating: ratingInput }" 
-						data-bind="click: openReviewModal"></pratilipi-rating-input>
+					<pratilipi-rating-input onclick="ga_CA( 'Review', 'Rating Init' )" params="{ rating: ratingInput }" data-bind="click: openReviewModal"></pratilipi-rating-input>
 				</div>
 				<div class="mdl-cell--6-col mdl-cell--4-col-tablet padding-zero">
-					<button onclick="ga_CA( 'Review', 'Review Init' )"
+					<button 
 						data-bind="{ click: openReviewModal, 
 							text: userPratilipi.review() != null ? '${ _strings.review_edit_review }' : '${ _strings.review_write_a_review }' }" 
 						class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect pull-right write-review-button">
