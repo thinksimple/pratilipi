@@ -23,6 +23,9 @@ var AppViewModel = function() {
 	this.notifyOfScrollEvent = function() {
 		this.scrollTop( $( ".mdl-layout__content" ).scrollTop() );
 	};
+
+	this.isUserPage = ko.observable(); /* Used for GA tracking -> When Author is visiting his/her own page. */
+
 };
 
 var appViewModel = new AppViewModel();

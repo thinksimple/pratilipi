@@ -20,7 +20,8 @@
 				</div>
 				<!-- ko foreach: { data: draftedPratilipiList, as: 'pratilipi' } -->
 				<div class="mdl-cell mdl-cell--12-col-phone mdl-cell--12-col-tablet mdl-cell--12-col-desktop mobile-card pratilipi-list-card drafted-card">
-					<a class="pratilipi-pratilipi-card mdl-card" data-bind="attr: { href: pratilipi.pageUrl() }">
+					<a 	onclick="ga_CA( 'Pratilipi', 'OpenDraft' )"
+						class="pratilipi-pratilipi-card mdl-card" data-bind="attr: { href: pratilipi.pageUrl() }">
 						<span class="pratilipi-cover-image-holder">
 							<img data-bind="attr: { src: getImageUrl( pratilipi.coverImageUrl(), 32 ), title: pratilipi.title(), alt: pratilipi.title() }" />
 						</span>
@@ -34,7 +35,8 @@
 				<!--/ko-->
 			</div>
 			<div class="load-more-container mdl-card-border" data-bind="visible: hasMoreDraftedContents()">
-				<button data-bind="{ visible: loadingStateDrafted() != 'LOADING', click: loadMoreDraftedContents }"
+				<button onclick="ga_CA( 'Pratilipi', 'LoadMore' )"
+						data-bind="{ visible: loadingStateDrafted() != 'LOADING', click: loadMoreDraftedContents }"
 						class="mdl-button mdl-js-button mdl-button--accent mdl-js-ripple-effect">
 					${ _strings.load_more_contents }
 				</button>
@@ -58,7 +60,8 @@
 				</div>
 			</div>
 			<div class="load-more-container mdl-card-border" data-bind="visible: hasMorePublishedContents()">
-				<button data-bind="{ visible: loadingStatePublished() != 'LOADING', click: loadMorePublishedContents }"
+				<button onclick="ga_CA( 'Pratilipi', 'LoadMore' )"
+						data-bind="{ visible: loadingStatePublished() != 'LOADING', click: loadMorePublishedContents }"
 						class="mdl-button mdl-js-button mdl-button--accent mdl-js-ripple-effect">
 					${ _strings.load_more_contents }
 				</button>

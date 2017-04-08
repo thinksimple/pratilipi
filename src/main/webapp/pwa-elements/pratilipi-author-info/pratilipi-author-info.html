@@ -6,7 +6,8 @@
 		<div data-bind="visible: coverUploaded()" class="cover-spinner-container">
 			<span class="image-uploaded-spinner mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></span>
 		</div>
-		<button class="upload-cover-button mdl-button mdl-js-button mdl-button--fab"
+		<button onclick="ga_CA( 'User', 'UserCoverImageChange' )"
+				class="upload-cover-button mdl-button mdl-js-button mdl-button--fab"
 		        data-bind="{ click: chooseCoverFile,
 								visible: author.hasAccessToUpdate() && ! coverUploaded() }">
 			<i class="material-icons">camera_alt</i>
@@ -35,7 +36,8 @@
 			<div data-bind="visible: imageUploaded()" class="spinner-container">
 				<span class="image-uploaded-spinner mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></span>
 			</div>
-			<button class="upload-image-button mdl-button mdl-js-button mdl-button--fab"
+			<button onclick="ga_CA( 'User', 'UserProfileImageChange' )"
+					class="upload-image-button mdl-button mdl-js-button mdl-button--fab"
 			        data-bind="{ click: chooseImageFile,
 									visible: author.hasAccessToUpdate() && ! imageUploaded() }">
 				<i class="material-icons">camera_alt</i>
@@ -66,10 +68,12 @@
 											disable: followRequestOnFlight() }" 
 							class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-button-margin font-m">
 					</button>
-					<a data-bind="visible: author.hasAccessToUpdate(), attr: { 'href': settingsLink() }"
+					<a onclick="ga_CA( 'User', 'Settings' )"
+							data-bind="visible: author.hasAccessToUpdate(), attr: { 'href': settingsLink() }"
 							class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-button-margin small-button">
 						<i class="material-icons material-icons-16">settings</i>
 					</a>
+					<!-- GA events sent from Js for sharing -->
 					<button data-bind="click: shareAuthor"
 							class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-button-margin small-button">
 						<i class="material-icons material-icons-16">share</i>
@@ -77,7 +81,7 @@
 				</div>
 			</div>
 			<div class="author-summary-desktop" data-bind="visible: author.summary() != null">
-				<pratilipi-see-more params="{ originalText: author.summary() }"></pratilipi-see-more>
+				<pratilipi-see-more onclick="ga_CA( 'Author', 'LoadMore' )" params="{ originalText: author.summary() }"></pratilipi-see-more>
 				<div class="author-read-count-holder material-subtitle-1"
 					data-bind="text: getReadCountText()"></div>
 			</div>

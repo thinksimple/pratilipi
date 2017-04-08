@@ -44,6 +44,7 @@ function() {
 			author.summary = null;
 		ko.mapping.fromJS( author, {}, self.author );
 		MetaTagUtil.setMetaTagsForAuthor( ko.mapping.toJS( self.author ) );
+		appViewModel.isUserPage( author.authorId == appViewModel.user.author.authorId() );
 	};
 
 	this.updateUserAuthor = function( userAuthor ) {

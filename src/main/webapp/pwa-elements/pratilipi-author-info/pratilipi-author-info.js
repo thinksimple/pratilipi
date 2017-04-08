@@ -29,6 +29,7 @@ function( params ) {
 		dataAccessor.followOrUnfollowAuthor( self.author.authorId(), self.userAuthor.following(), 
 			function( userAuthor ) {
 				self.followRequestOnFlight( false );
+				ga_CA( 'Author', userAuthor.following ? 'Follow' : 'UnFollow' );
 			}, function( error ) {
 				self.followRequestOnFlight( false );
 				switchState();
@@ -54,6 +55,7 @@ function( params ) {
 	/* Share Author */
 	this.shareAuthor = function() {
 		ShareUtil.shareAuthor( ko.mapping.toJS( self.author ) );
+		ga_CA( appViewModel.isUserPage() ? 'User' : 'Author', 'Share' );
 	};
 
 

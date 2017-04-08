@@ -10,8 +10,8 @@
 	<script src="/pwa-scripts/transliteration-suggester-${ lang }.js?1"></script>
 	<script src="/pwa-scripts/transliteration-app-${ lang }.js?3"></script>
 
-	<script src="/pwa-scripts/scripts-${ lang }.js?90"></script>
-	<script src="/pwa-scripts/app-${ lang }.js?55"></script>
+	<script src="/pwa-scripts/scripts-${ lang }.js?91"></script>
+	<script src="/pwa-scripts/app-${ lang }.js?56"></script>
 
 	<script src="http://public.pratilipi.com/resource-pwa/js/bootstrap.min.js"></script>
 	<script src="http://public.pratilipi.com/resource-pwa/js/material.getmdlselect.min.js"></script>

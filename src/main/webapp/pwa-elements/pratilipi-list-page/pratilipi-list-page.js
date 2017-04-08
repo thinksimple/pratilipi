@@ -24,11 +24,13 @@ function() {
 						self.isLoading( false );
 						return;
 					}
+					var loadMore = self.pratilipiList().length != 0;
 					var pratilipiList = pratilipiListResponse.pratilipiList;
 					self.updatePratilipiList( pratilipiList );
 					cursor = pratilipiListResponse.cursor;
 					self.isLoading( false );
 					self.hasMoreContents( pratilipiList.length == resultCount );
+					if( loadMore ) ga_CA( 'Pratilipi', 'LoadMore' );
 		});
 	};
 

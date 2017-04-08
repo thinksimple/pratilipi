@@ -32,11 +32,13 @@ function() {
 						self.loadingState( "FAILED" );
 						return;
 					}
+					var loadMore = self.pratilipiList().length != 0;
 					var pratilipiList = pratilipiListResponse.pratilipiList;
 					self.updatePratilipiList( pratilipiList );
 					cursor = pratilipiListResponse.cursor;
 					self.loadingState( self.pratilipiList().length > 0 || pratilipiList.length > 0 ? "LOADED" : "LOADED_EMPTY" );
 					self.hasMoreContents( pratilipiList.length == resultCount );
+					if( loadMore ) ga_CA( 'Pratilipi', 'LoadMore' );
 		});
 	};
 

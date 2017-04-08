@@ -11,22 +11,26 @@
 				<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
 					    for="pratilipi-settings-mobile-icon">
 					<li class="mdl-menu__item">
-						<a href="#profile-settings" class="mdl-tabs__tab is-active">
+						<a onclick="ga_CA( 'User', 'Profile' )"
+							href="#profile-settings" class="mdl-tabs__tab is-active">
 							<span>${ _strings.settings_profile_settings }</span>
 						</a>
 					</li>
 					<li class="mdl-menu__item" data-bind="visible: !isAdmin">
-						<a href="#notification-settings" class="mdl-tabs__tab">
+						<a onclick="ga_CA( 'User', 'Notification' )"
+							href="#notification-settings" class="mdl-tabs__tab">
 							<span>${ _strings.settings_notification_settings }</span>
 						</a>
 					</li>
 					<li class="mdl-menu__item" data-bind="visible: !isAdmin">
-						<a href="#password-settings" class="mdl-tabs__tab">
+						<a onclick="ga_CA( 'User', 'Password' )"
+							href="#password-settings" class="mdl-tabs__tab">
 							<span>${ _strings.settings_update_password }</span>
 						</a>
 					</li>
 					<li class="mdl-menu__item" data-bind="visible: !isAdmin">
-						<a data-bind="click: logoutUser" class="mdl-tabs__tab clickable-element">
+						<a onclick="ga_CA( 'User', 'Logout' )"
+							data-bind="click: logoutUser" class="mdl-tabs__tab clickable-element">
 							<span>${ _strings.user_sign_out }</span>
 						</a>
 					</li>
@@ -37,16 +41,20 @@
 		<div class="mdl-grid mdl-grid--no-spacing settings-grid">
 			<div class="tabs-left-pane">
 				<div class="mdl-tabs__tab-bar">
-					<a href="#profile-settings" class="mdl-tabs__tab is-active">
+					<a onclick="ga_CA( 'User', 'Profile' )"
+						href="#profile-settings" class="mdl-tabs__tab is-active">
 						<span>${ _strings.settings_profile_settings }</span>
 					</a>
-					<a href="#notification-settings" class="mdl-tabs__tab" data-bind="visible: !isAdmin">
+					<a onclick="ga_CA( 'User', 'Notification' )"
+						href="#notification-settings" class="mdl-tabs__tab" data-bind="visible: !isAdmin">
 						<span>${ _strings.settings_notification_settings }</span>
 					</a>
-					<a href="#password-settings" class="mdl-tabs__tab" data-bind="visible: !isAdmin">
+					<a onclick="ga_CA( 'User', 'Password' )"
+						href="#password-settings" class="mdl-tabs__tab" data-bind="visible: !isAdmin">
 						<span>${ _strings.settings_update_password }</span>
 					</a>
-					<a data-bind="click: logoutUser, visible: !isAdmin" class="mdl-tabs__tab clickable-element">
+					<a onclick="ga_CA( 'User', 'Logout' )"
+						data-bind="click: logoutUser, visible: !isAdmin" class="mdl-tabs__tab clickable-element">
 						<span>${ _strings.user_sign_out }</span>
 					</a>
 				</div>
@@ -135,8 +143,9 @@
 					</div>
 
 					<div class="save-button-holder">
-						<button data-bind="enable: canSaveProfileSettings(), click: updateProfileSettings"
-								class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">Save</button>
+						<button onclick="ga_CA( 'User', 'SubmitProfile' )"
+								data-bind="enable: canSaveProfileSettings(), click: updateProfileSettings"
+								class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">${ _strings.save_changes }</button>
 					</div>
 
 				</div>
@@ -214,8 +223,9 @@
 					</div>
 
 					<div class="save-button-holder">
-						<button data-bind="click: updateNotificationPreferences"
-						        class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">Save</button>
+						<button onclick="ga_CA( 'User', 'SubmitNotification' )"
+								data-bind="click: updateNotificationPreferences"
+						        class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">${ _strings.save_changes }</button>
 					</div>
 
 				</div>
@@ -233,8 +243,9 @@
 					</div>
 
 					<div class="save-button-holder">
-						<button data-bind="enable: canUpdatePassword(), click: updatePassword"
-						        class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">Save</button>
+						<button onclick="ga_CA( 'User', 'SubmitPassword' )"
+								data-bind="enable: canUpdatePassword(), click: updatePassword"
+						        class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">${ _strings.save_changes }</button>
 					</div>
 
 				</div>
