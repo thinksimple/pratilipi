@@ -9,10 +9,5 @@
 
 	ga('create', 'UA-53742841-2', 'pratilipi.com');
 	ga('require', 'displayfeatures');
-	ga('set', 'dimension2', '${ ga_website }');
-	ga('set', 'dimension3', '${ ga_websiteMode }');
-	ga('set', 'dimension4', '${ ga_websiteVersion }');
-
-	ga('send', 'pageview');
 
 </script>
