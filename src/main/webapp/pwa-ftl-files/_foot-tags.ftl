@@ -11,7 +11,7 @@
 	<script src="/pwa-scripts/transliteration-app-${ lang }.js?3"></script>
 
 	<script src="/pwa-scripts/scripts-${ lang }.js?92"></script>
-	<script src="/pwa-scripts/app-${ lang }.js?57"></script>
+	<script src="/pwa-scripts/app-${ lang }.js?58"></script>
 
 	<script src="http://public.pratilipi.com/resource-pwa/js/bootstrap.min.js"></script>
 	<script src="http://public.pratilipi.com/resource-pwa/js/material.getmdlselect.min.js"></script>

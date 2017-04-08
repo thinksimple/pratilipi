@@ -80,16 +80,16 @@ var updateUser = function() {
 	var dataAccessor = new DataAccessor();
 	dataAccessor.getUser( function( user ) {
 		ko.mapping.fromJS( user, {}, appViewModel.user );
-		initFirebase();
-		/* Sending GA Pageview */
-		if( ! user.isGuest ) {
+		/* GoogleAnalytics Pageview */
+		if( ! user.isGuest )
 			ga( 'set', 'userId', user.userId );
-		}
 		ga( 'set', 'dimension1', user.userId );
 		ga( 'set', 'dimension2', '${ ga_website }' );
 		ga( 'set', 'dimension3', '${ ga_websiteMode }' );
 		ga( 'set', 'dimension4', '${ ga_websiteVersion }' );
 		ga( 'send', 'pageview' );
+
+		initFirebase();
 	});
 };
 
