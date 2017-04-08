@@ -1,4 +1,5 @@
 /* Global Variables */
+var ga_category = null;
 var shareUrl = null;
 var shareWhatsappText = null;
 
@@ -8,18 +9,22 @@ function viewModel() {
 	var self = this;
 
 	self.shareOnFacebook = function() {
+		ga_CA( ga_category, 'FB-Share' );
 		window.open( "http://www.facebook.com/sharer.php?u=" + shareUrl, "share", "width=1100,height=500,left=70px,top=60px" );
 	};
 
 	self.shareOnTwitter = function() {
+		ga_CA( ga_category, 'Twitter-Share' );
 		window.open( "http://twitter.com/share?url=" + shareUrl, "share", "width=1100,height=500,left=70px,top=60px" );
 	};
 
 	self.shareOnGplus = function() {
+		ga_CA( ga_category, 'G+-Share' );
 		window.open( "https://plus.google.com/share?url=" + shareUrl, "share", "width=1100,height=500,left=70px,top=60px" );
 	};
 
 	self.shareOnWhatsapp = function() {
+		ga_CA( ga_category, 'Whatsapp-Share' );
 		window.open( "whatsapp://send?text=" + shareWhatsappText );
 	};
 
@@ -45,6 +50,7 @@ var ShareUtil = (function() {
 				return '"' + pratilipi.title + '"${ _strings.whatsapp_read_story } ' + getShareUrl() +" ${ _strings.whatsapp_read_unlimited_stories }";
 			};
 			MetaTagUtil.setMetaTagsForPratilipi( pratilipi );
+			ga_category = "Pratilipi";
 			this.share( getShareUrl(), getWhatsappText(), utmParams );
 		},
 		shareAuthor: function( author, utmParams ) {
@@ -55,6 +61,7 @@ var ShareUtil = (function() {
 				return '"' + author.name + '"${ _strings.whatsapp_read_story } ' + getShareUrl() +" ${ _strings.whatsapp_read_unlimited_stories }";
 			};
 			MetaTagUtil.setMetaTagsForAuthor( author );
+			ga_category = "Author";
 			this.share( getShareUrl(), getWhatsappText(), utmParams );
 		},
 		share: function( url, whatsappText, utmParams ) {
