@@ -122,6 +122,9 @@ public class PratilipiSite extends HttpServlet {
 		String canonicalUrl = "http://" + UxModeFilter.getWebsite().getHostName() + uri;
 		String alternateUrl = "http://" + UxModeFilter.getWebsite().getMobileHostName() + uri;
 
+		// User
+		UserData userData = UserDataUtil.getCurrentUser();
+
 		// BasicMode
 		boolean basicMode = UxModeFilter.isBasicMode();
 
@@ -148,7 +151,8 @@ public class PratilipiSite extends HttpServlet {
 		// Load PWA
 		Long uId = AccessTokenFilter.getAccessToken().getUserId();
 		boolean loadPWA = ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) || 
-				UserAccessUtil.hasUserAccess( uId, null, AccessType.USER_ADD );
+				UserAccessUtil.hasUserAccess( uId, null, AccessType.USER_ADD ) ||
+				isEligibleForPWA( userData.getEmail(), filterLanguage );
 
 		// Data Model for FreeMarker
 		Map<String, Object> dataModel = null;
@@ -608,7 +612,6 @@ public class PratilipiSite extends HttpServlet {
 
 		// Adding common data to the Data Model
 		Gson gson = new Gson();
-		UserData userData = UserDataUtil.getCurrentUser();
 		UserV1Api.Response userResponse = new UserV1Api.Response( userData, UserV1Api.class );
 
 		Map<PratilipiType, Map<String, String>> pratilipiTypes = new HashMap<>();
@@ -1663,6 +1666,31 @@ public class PratilipiSite extends HttpServlet {
 		for( PratilipiData pratilipiData : pratilipiDataList )
 			pratilipiList.add( new PratilipiV2Api.Response( pratilipiData, true ) );
 		return pratilipiList;
+	}
+
+
+	public boolean isEligibleForPWA( String email, Language language ) {
+		if( email == null )
+			return false;
+
+		List<String> lines = new ArrayList<>();
+		String fileName = "data/pwa-user-list." + language.getCode();
+		try {
+			File file = new File( getClass().getResource( fileName ).toURI() );
+			LineIterator it = FileUtils.lineIterator( file, "UTF-8" );
+			while( it.hasNext() ) lines.add( it.next().trim() );
+			LineIterator.closeQuietly( it );
+		} catch( URISyntaxException | IOException e ) {
+			logger.log( Level.SEVERE, "Exception in reading file: " + fileName, e );
+		}
+
+		for( String line : lines ) {
+			if( line.isEmpty() ) continue;
+			if( email.equals( line ) ) return true;
+		}
+
+		return false;
+
 	}
 
 }
