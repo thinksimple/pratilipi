@@ -15,7 +15,9 @@
 								<img class="mdl-list__item-avatar" data-bind="attr: { 'src': getImageUrl( follow.imageUrl(), 48 ) }"/>
 							</a>
 						</div>
-						<div class="author-name" class="font-m" data-bind="text: follow.name()"></div>
+						<div class="author-name">
+							<a class="font-m" data-bind="text: follow.name(), attr: { 'href': follow.pageUrl() }"></a>
+						</div>
 						<div data-bind="visible: follow.canFollow()">
 							<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button-margin small-button"
 								data-bind="{ click: $parent.followOrUnfollowAuthor, 
@@ -58,7 +60,9 @@
 								<img class="mdl-list__item-avatar" data-bind="attr: { 'src': getImageUrl( follow.imageUrl(), 48 ) }"/>
 							</a>
 						</div>
-						<div class="author-name" class="font-m" data-bind="text: follow.name()"></div>
+						<div class="author-name">
+							<a class="font-m" data-bind="text: follow.name(), attr: { 'href': follow.pageUrl() }"></a>
+						</div>
 						<div data-bind="visible: follow.canFollow()">
 							<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button-margin small-button"
 								data-bind="{ click: $parent.followOrUnfollowAuthor, 
