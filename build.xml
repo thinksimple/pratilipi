@@ -18,6 +18,7 @@
 			<fileset dir="${src.dir}" includes="**/*.json"/>
 			<fileset dir="${src.dir}" includes="**/list.*"/>
 			<fileset dir="${src.dir}" includes="**/static.*"/>
+			<fileset dir="${src.dir}" includes="**/pwa-user-list.*"/>
 		</copy>
 	</target>
 
