@@ -526,8 +526,13 @@ public class PratilipiSite extends HttpServlet {
 				}
 
 			} else if( page != null && page.getType() == PageType.EVENT ) {
-				dataModel = createDataModelForEventPage( page.getPrimaryContentId(), filterLanguage, basicMode, request );
-				templateName = ( basicMode ? "EventBasic.ftl" : "Event.ftl" );
+				if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) ) {
+					dataModel = new HashMap<>();
+					templateName = "EventPWA.ftl";
+				} else {
+					dataModel = createDataModelForEventPage(page.getPrimaryContentId(), filterLanguage, basicMode, request);
+					templateName = (basicMode ? "EventBasic.ftl" : "Event.ftl");
+				}
 
 			} else if( page != null && page.getType() == PageType.BLOG ) {
 				dataModel = createDataModelForBlogPage( page.getPrimaryContentId(), filterLanguage, basicMode );
@@ -1670,9 +1675,7 @@ public class PratilipiSite extends HttpServlet {
 
 
 	public boolean isEligibleForPWA( String email, Language language ) {
-		if( email == null )
-			return false;
-
+		if( email == null )  return false;
 		List<String> lines = new ArrayList<>();
 		String fileName = "data/pwa-user-list." + language.getCode();
 		try {
@@ -1683,14 +1686,11 @@ public class PratilipiSite extends HttpServlet {
 		} catch( URISyntaxException | IOException e ) {
 			logger.log( Level.SEVERE, "Exception in reading file: " + fileName, e );
 		}
-
 		for( String line : lines ) {
 			if( line.isEmpty() ) continue;
 			if( email.equals( line ) ) return true;
 		}
-
 		return false;
-
 	}
 
 }
