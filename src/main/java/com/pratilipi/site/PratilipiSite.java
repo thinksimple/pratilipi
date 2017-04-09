@@ -681,6 +681,7 @@ public class PratilipiSite extends HttpServlet {
 		}
 
 		// Dispatching response
+		logger.log( Level.INFO, "Appengine Version : " + SystemProperty.VERSION_ID );
 		_dispatchResponse( html, "text/html", "UTF-8", response );
 
 	}

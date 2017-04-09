@@ -11,7 +11,8 @@ public class SystemProperty {
 	public static final String BLOBSERVICE_GCS_BUCKET_BACKUP;
 	public static final String CDN;
 	public static final String STAGE;
-	
+	public static final String VERSION_ID;
+
 	public static final String STAGE_ALPHA	= "alpha";
 	public static final String STAGE_BETA	= "beta";
 	public static final String STAGE_GAMMA	= "gamma";
@@ -20,6 +21,8 @@ public class SystemProperty {
 	static {
 		String appId = ApiProxy.getCurrentEnvironment().getAppId();
 		String moduleId = ApiProxy.getCurrentEnvironment().getModuleId();
+		String versionId = ApiProxy.getCurrentEnvironment().getVersionId();
+
 		if( appId.equals( "prod-pratilipi" ) || appId.equals( "s~prod-pratilipi" ) ) {
 			DATASOURCE = "gae";
 			BLOBSERVICE_GCS_BUCKET = "static.pratilipi.com";
@@ -27,18 +30,22 @@ public class SystemProperty {
 			// TODO: Update this as soon as https support is added
 			CDN = moduleId.equals( "gamma" ) ? "https://d3cwrmdwk8nw1j.cloudfront.net" : "http://*.ptlp.co";
 			STAGE = moduleId.equals( "gamma" ) || moduleId.equals( "gamma-android" ) ? STAGE_GAMMA : STAGE_PROD;
+			VERSION_ID = versionId;
+
 		} else if( appId.equals( "devo-pratilipi" ) || appId.equals( "s~devo-pratilipi" ) ) {
 			DATASOURCE = "gae";
 			BLOBSERVICE_GCS_BUCKET = "devo-pratilipi.appspot.com";
 			BLOBSERVICE_GCS_BUCKET_BACKUP = "devo-pratilipi.appspot.com";
 			CDN = "http://*.devo.ptlp.co";
 			STAGE = STAGE_BETA;
+			VERSION_ID = versionId;
 		} else {
 			DATASOURCE = "mock";
 			BLOBSERVICE_GCS_BUCKET = "localhost";
 			BLOBSERVICE_GCS_BUCKET_BACKUP = "localhost";
 			CDN = null;
 			STAGE = STAGE_ALPHA;
+			VERSION_ID = null;
 		}
 	}
 	
