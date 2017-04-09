@@ -74,7 +74,17 @@ do
 		git clone -b master https://github.com/Pratilipi/pratilipi.git          2>&1 | logger -t update-gamma
 	fi
 
-	
+
+	if [ -d "/root/gamma-mark-7" ]; then
+		cd /root/gamma-mark-7/pratilipi
+		bash $scripts/continuous-deployment-update-gamma-mark-7.sh                     2>&1 | logger -t update-gamma-mark-7
+	else
+		mkdir -p /root/gamma-mark-7
+		cd /root/gamma-mark-7
+		git clone -b master https://github.com/Pratilipi/pratilipi.git          2>&1 | logger -t update-gamma-mark-7
+	fi
+
+
 	sleep 60
 
 done
