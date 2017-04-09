@@ -31,6 +31,7 @@ var DataAccessor = function() {
 	var INIT_API = "/init?_apiVer=2";
 	var INIT_BANNER_LIST_API = "/init/banner/list";
 	var USER_AUTHOR_FOLLOW_LIST_API = "/userauthor/follow/list";
+	var EVENT_API = "/event";
 
 	var request = function( name, api, params ) {
 		return {
@@ -136,6 +137,21 @@ var DataAccessor = function() {
 				}
 		});
 	};
+
+	this.getEventByUri = function( pageUri, aCallBack ) {
+
+        var requests = [];
+        requests.push( new request( "req1", PAGE_API, { "uri": pageUri } ) );
+        requests.push( new request( "req2", EVENT_API, { "eventId": "$req1.primaryContentId" } ) );
+
+        httpUtil.get( API_PREFIX, { "requests": processRequests( requests ) },
+            function( response, status ) {
+                if( aCallBack != null ) {
+                    var event = response.req2.status == 200 ? response.req2.response : null;
+                    aCallBack( event );
+                }
+        });
+    };
 
 	this.getUser = function( aCallBack ) {
 		httpUtil.get( API_PREFIX + USER_API, 
@@ -261,6 +277,7 @@ var DataAccessor = function() {
 				params,
 				function( response, status ) { processGetResponse( response, status, aCallBack ) } );
 	};
+
 
 	this.createOrUpdateUser = function( userId, email, phone, successCallBack, errorCallBack ) {
 		if( userId == null ) return;

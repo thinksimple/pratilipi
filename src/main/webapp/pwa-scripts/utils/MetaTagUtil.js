@@ -24,6 +24,11 @@ var MetaTagUtil = (function() {
 			var metaTagArray = [];
 			metaTagArray.push( new metaTag( "fb:app_id", "${ fbAppId }" ) );
 			appViewModel.metaTags( metaTagArray );
-		}
+		},
+		setMetaTagsForEvent: function( event ) {
+            var metaTagArray = [];
+            metaTagArray.push( new metaTag( "fb:app_id", "${ fbAppId }" ) );
+            appViewModel.metaTags( metaTagArray );
+        }
 	};
 })();
