@@ -150,8 +150,9 @@ public class PratilipiSite extends HttpServlet {
 
 		// Load PWA
 		Long uId = AccessTokenFilter.getAccessToken().getUserId();
-		boolean loadPWA = ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) || 
-				UserAccessUtil.hasUserAccess( uId, null, AccessType.USER_ADD );
+//		boolean loadPWA = UserAccessUtil.hasUserAccess( uId, null, AccessType.USER_ADD );
+		boolean loadPWA = ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) ||
+					isEligibleForPWA( userData.getEmail(), filterLanguage );
 
 		// Data Model for FreeMarker
 		Map<String, Object> dataModel = null;
