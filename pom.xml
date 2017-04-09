@@ -288,7 +288,7 @@
 							<source>
 								<directory>${basedir}/src/main/webapp/pwa-stylesheets/scss</directory>
 							</source>
-							<destination>${project.build.directory}/mark-6/pwa-stylesheets/css</destination>
+							<destination>${project.build.directory}/${app.version}/pwa-stylesheets/css</destination>
 						</resource>
 					</resources>
 					<sassOptions>
