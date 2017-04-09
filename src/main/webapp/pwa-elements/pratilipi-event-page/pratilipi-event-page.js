@@ -1,5 +1,6 @@
 function() {
 	var self = this;
+	var dataAccessor = new DataAccessor();
 
 	var defaultEvent = {
 			"eventId": null,
@@ -24,7 +25,6 @@ function() {
 	this.initialDataLoaded = ko.observable( false );
 
 	this.fetchEvent = function() {
-		var dataAccessor = new DataAccessor();
 		dataAccessor.getEventByUri( window.location.pathname,
 				function( event ) {
 			self.updateEvent( event );
@@ -33,5 +33,54 @@ function() {
 	};
 
 	this.fetchEvent();
+
+
+	/* Event Entries -> Pratilipi List */
+	var cursor = null;
+	var resultCount = 20;
+
+	this.pratilipiList = ko.observableArray();
+	this.hasMoreContents = ko.observable( true );
+	this.isLoading = ko.observable( false );
+
+	this.updatePratilipiList = function( pratilipiList ) {
+		for( var i = 0; i < pratilipiList.length; i++ )
+			self.pratilipiList.push( ko.mapping.fromJS( pratilipiList[i] ) );
+	};
+
+	this.fetchPratilipiList = function() {
+		if( self.isLoading() || ! self.hasMoreContents() ) return;
+		self.isLoading( true );
+		dataAccessor.getPratilipiListByEventId( self.event.eventId(), cursor, null, resultCount,
+				function( pratilipiListResponse ) {
+					if( pratilipiListResponse == null ) {
+						self.isLoading( false );
+						return;
+					}
+					var loadMore = self.pratilipiList().length != 0;
+					var pratilipiList = pratilipiListResponse.pratilipiList;
+					self.updatePratilipiList( pratilipiList );
+					cursor = pratilipiListResponse.cursor;
+					self.isLoading( false );
+					self.hasMoreContents( pratilipiList.length == resultCount );
+					if( loadMore ) ga_CA( 'Pratilipi', 'LoadMore' );
+		});
+	};
+
+	this.pageScrollObserver = ko.computed( function() {
+		if( ( appViewModel.scrollTop() / $( ".js-pratilipi-list-grid" ).height() ) > 0.6 ) {
+			setTimeout( function() {
+				if( self.event.eventId() == null ) return;
+				self.fetchPratilipiList();
+			}, 0 );
+		}
+	}, this );
+
+	this.eventIdListener = ko.computed( function() {
+		if( self.event.eventId() == null ) return;
+		setTimeout( function() {
+			self.fetchPratilipiList();
+		}, 0);
+	}, this );
 
 }

@@ -4,13 +4,13 @@
 	<link rel="stylesheet" href="https://d3cwrmdwk8nw1j.cloudfront.net/resource-all/pwa/css/material-icons.materialise.materialise_dropdown.bootstrap_modal.css"/>
 	<link rel="stylesheet" type="text/css" href="http://public.pratilipi.com/resource-pwa/css/bootstrap.min.css" />
 	<link rel="stylesheet" type="text/css" href="/pwa-stylesheets/css/material.css?1" />
-	<link rel="stylesheet" href="/pwa-stylesheets/css/styles-new.css?132" />
+	<link rel="stylesheet" href="/pwa-stylesheets/css/styles-new.css?133" />
 
 	<script src="https://d3cwrmdwk8nw1j.cloudfront.net/resource-all/rangy_core.rangy_selectionsaverestore.min.js"></script>
 	<script src="/pwa-scripts/transliteration-suggester-${ lang }.js?1"></script>
 	<script src="/pwa-scripts/transliteration-app-${ lang }.js?3"></script>
 
-	<script src="/pwa-scripts/scripts-${ lang }.js?93"></script>
+	<script src="/pwa-scripts/scripts-${ lang }.js?94"></script>
 	<script src="/pwa-scripts/app-${ lang }.js?58"></script>
 
 	<script src="http://public.pratilipi.com/resource-pwa/js/bootstrap.min.js"></script>

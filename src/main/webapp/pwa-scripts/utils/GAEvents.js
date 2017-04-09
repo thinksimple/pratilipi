@@ -19,6 +19,10 @@
 
 var ga_value = new Date().getTime();
 
+String.prototype.count = function( s1 ) {
+    return ( this.length - this.replace( new RegExp(s1,"g"), '' ).length ) / s1.length;
+};
+
 
 var LOCATION = {
 
@@ -26,6 +30,7 @@ var LOCATION = {
 	LIST: { value: "ListPage", urlPattern: "/^\/[^\/]*.*$/s" },
 	SEARCH : { value: "SearchPage", urlPattern: "/\/search$/s" },
 	LIBRARY: { value: "LibraryPage", urlPattern: "/\/library$/s" },
+	EVENT: { value: "EventPage", urlPattern: "/\/event/\[^\/]*.*$/s" },
 
 	AUTHOR: { value: "AuthorPage", urlPattern: "/^\/[^\/]*.*$/s" },
 	USER: { value: "UserPage", urlPattern: "/^\/[^\/]*.*$/s" },
@@ -98,11 +103,10 @@ function ga_CA( category, action ) {
 		</#list>
 	</#list>
 
+	else if( currentLocation.startsWith( "/event/" ) && currentLocation.count( '/' ) == 2 )
+		location = LOCATION.EVENT.value;
 
 	if( location == null ) { /* Author or Pratilipi */
-		String.prototype.count = function( s1 ) { 
-			return ( this.length - this.replace( new RegExp(s1,"g"), '' ).length ) / s1.length;
-		};
 		if( currentLocation.count( '/' ) == 1 ) 
 			location = appViewModel.isUserPage() ? LOCATION.USER.value : LOCATION.AUTHOR.value;
 		else if( currentLocation.count( '/' ) == 2 )

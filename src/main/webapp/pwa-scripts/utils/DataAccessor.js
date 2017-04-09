@@ -235,6 +235,17 @@ var DataAccessor = function() {
 				function( response, status ) { processGetResponse( response, status, aCallBack ) } );
 	};
 
+	this.getPratilipiListByEventId = function( eventId, cursor, offset, resultCount, aCallBack ) {
+        if( eventId == null ) return;
+        var params = { "eventId": eventId, "state": "PUBLISHED" };
+        if( cursor != null ) params[ "cursor" ] = cursor;
+        if( offset != null ) params[ "offset" ] = offset;
+        if( resultCount != null ) params[ "resultCount" ] = resultCount;
+        httpUtil.get( API_PREFIX + PRATILIPI_LIST_API,
+                params,
+                function( response, status ) { processGetResponse( response, status, aCallBack ) } );
+    };
+
 	this.getUserLibraryList = function( cursor, resultCount, aCallBack ) {
 		var params = {};
 		if( cursor != null ) params[ "cursor" ] = cursor;
