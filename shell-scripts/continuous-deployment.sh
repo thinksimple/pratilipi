@@ -34,6 +34,16 @@ do
 		git clone -b release-prod https://github.com/Pratilipi/pratilipi.git    2>&1 | logger -t update-prod
 	fi
 
+
+	if [ -d "/root/prod-mark-7" ]; then
+		cd /root/prod-mark-7/pratilipi
+		bash $scripts/continuous-deployment-update-prod-mark-7.sh               2>&1 | logger -t update-prod-mark-7
+	else
+		mkdir -p /root/prod-mark-7
+		cd /root/prod-mark-7
+		git clone -b release-prod https://github.com/Pratilipi/pratilipi.git    2>&1 | logger -t update-prod-mark-7
+	fi
+
 	
 	if [ -d "/root/api" ]; then
 		cd /root/api/pratilipi
@@ -72,16 +82,6 @@ do
 		mkdir -p /root/gamma
 		cd /root/gamma
 		git clone -b master https://github.com/Pratilipi/pratilipi.git          2>&1 | logger -t update-gamma
-	fi
-
-
-	if [ -d "/root/gamma-mark-7" ]; then
-		cd /root/gamma-mark-7/pratilipi
-		bash $scripts/continuous-deployment-update-gamma-mark-7.sh                     2>&1 | logger -t update-gamma-mark-7
-	else
-		mkdir -p /root/gamma-mark-7
-		cd /root/gamma-mark-7
-		git clone -b master https://github.com/Pratilipi/pratilipi.git          2>&1 | logger -t update-gamma-mark-7
 	fi
 
 
