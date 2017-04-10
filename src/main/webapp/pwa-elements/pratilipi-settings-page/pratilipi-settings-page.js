@@ -84,6 +84,15 @@ function( params ) {
 	};
 
 	this.updateProfileSettings = function() {
+		/* Validity Checks */
+		if( self.email() != null && self.email().trim() > 0 && ! validateEmail( self.email() ) ) {
+			ToastUtil.toast( "${ _strings.android_email_incorrect }" );
+			return;
+		}
+		if( self.phone() != null && self.phone().trim() > 0 && ! validatePhone( self.phone() ) ) {
+			ToastUtil.toast( "${ _strings.android_phone_incorrect }" );
+			return;
+		}
 		var formatDateOfBirth = function( inputDate ) {
 			if( inputDate == null ) return null;
 			var d = new Date( inputDate ),
@@ -106,6 +115,8 @@ function( params ) {
 		/* 4 states: INITIAL, LOADING, SUCCESS, FAIL */
 		self.userApiCallState = ko.observable( "INITIAL" );
 		self.authorApiCallState = ko.observable( "INITIAL" );
+		var errorMessage = null; /* In case UserApi Or AuthorApi failed. */
+
 		self.callbackObserver = ko.computed( function() {
 			if( self.userApiCallState() == "SUCCESS" && self.authorApiCallState() == "SUCCESS" ) {
 				ToastUtil.toast( "${ _strings.success_generic_message }" );
@@ -115,7 +126,9 @@ function( params ) {
 			} else if( self.userApiCallState() == "LOADING" || self.authorApiCallState() == "LOADING" ) {
 				return;
 			} else if( self.userApiCallState() == "FAILED" || self.authorApiCallState() == "FAILED" ) {
-				ToastUtil.toast( "${ _strings.server_error_message }" );
+				if( self.userApiCallState() == "FAILED" )
+				ToastUtil.toast( errorMessage ); /* Ensure errorMessage field is set */
+				errorMessage = null;
 				self.isLoading( false );
 			}
 		}, self );
@@ -128,6 +141,11 @@ function( params ) {
 			function( user ) {
 				self.userApiCallState( "SUCCESS" );
 			}, function( error ) {
+				var message = "${ _strings.server_error_message }";
+				if( error[ "email" ] != null ) message = error[ "email" ];
+				if( error[ "phone" ] != null ) message = error[ "phone" ];
+				if( error[ "message" ] != null ) message = error[ "message" ];
+				errorMessage = message;
 				self.userApiCallState( "FAILED" );
 		});
 
@@ -136,6 +154,10 @@ function( params ) {
 			function( aAuthor ) {
 				self.authorApiCallState( "SUCCESS" );
 			}, function( error ) {
+				var message = "${ _strings.server_error_message }";
+				if( error[ "language" ] != null ) message = error[ "language" ];
+				if( error[ "message" ] != null ) message = error[ "message" ];
+				errorMessage = message;
 				self.authorApiCallState( "FAILED" );
 		});
 	};

@@ -80,8 +80,8 @@
 					</button>
 				</div>
 			</div>
-			<div class="author-summary-desktop" data-bind="visible: author.summary() != null">
-				<pratilipi-see-more onclick="ga_CA( 'Author', 'LoadMore' )" params="{ originalText: author.summary() }"></pratilipi-see-more>
+			<div class="author-summary-desktop">
+				<pratilipi-see-more data-bind="visible: author.summary() != null" onclick="ga_CA( 'Author', 'LoadMore' )" params="{ originalText: author.summary() }"></pratilipi-see-more>
 				<div class="author-read-count-holder material-subtitle-1"
 					data-bind="text: getReadCountText()"></div>
 			</div>
