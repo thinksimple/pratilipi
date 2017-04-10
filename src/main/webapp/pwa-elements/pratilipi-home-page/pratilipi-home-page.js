@@ -7,7 +7,7 @@ function() {
 
 	dataAccessor.getHomePageBanners( function( response ) {
 		self.bannerList( response.bannerList );
-		$( '#home-page-carousel' ).carousel({
+		$( '#carousel' ).carousel({
 			interval: 6000,
 			pause: "hover"
 		});
@@ -30,6 +30,6 @@ function() {
 
 	this.dataLoaded = ko.computed( function() {
 		return self.bannerList().length > 0 && self.sectionList().length > 0;
-	}, this ); 
+	}, this );
 
 }
