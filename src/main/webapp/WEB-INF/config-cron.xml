@@ -56,14 +56,12 @@
 
 
 	<!-- NOTIFICATION Table -->
-	<!--
 	<cron>
 		<url>/notification/process?cron</url>
 		<target>worker</target>
 		<schedule>every 1 minutes</schedule>
 		<timezone>Asia/Calcutta</timezone>
 	</cron>
-	-->
 
 
 	<!-- BATCH_PROCESS Table -->
