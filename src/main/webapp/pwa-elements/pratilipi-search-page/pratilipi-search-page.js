@@ -4,6 +4,7 @@ function() {
 	var resultCount = 20;
 	var dataAccessor = new DataAccessor();
 
+	this.searchTitle = ko.observable();
 	this.pratilipiList = ko.observableArray();
 	this.hasMoreContents = ko.observable( true );
 	
@@ -43,6 +44,7 @@ function() {
 	};
 
 	this.searchQueryUpdated = function() {
+		self.searchTitle( getSearchTitle() );
 		self.pratilipiList( [] );
 		cursor = null;
 		self.loadingState( null );
@@ -64,5 +66,19 @@ function() {
 			}, 0 );
 		}
 	}, this );
+
+
+	/* Setting searchTitle for search pages coming from navigation */
+	var getSearchTitle = function() {
+		var listsearchTitleMap = {
+			<#list navigationList as navigation>
+				<#list navigation.linkList as link>
+				"${ link.url }": "${ link.name }",
+				</#list>
+			</#list>
+		};
+		return listsearchTitleMap[ "/search?q=" + appViewModel.searchQuery() ] != null ?
+			listsearchTitleMap[ "/search?q=" + appViewModel.searchQuery() ] : "${ _strings.search_results }";
+	};
 
 }

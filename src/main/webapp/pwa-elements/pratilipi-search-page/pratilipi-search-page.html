@@ -1,6 +1,7 @@
 <div class="mdl-cell mdl-cell--8-col-tablet mdl-cell--9-col mobile-card">
-	<div class="load-more-container mdl-card-border material-heading" style="margin-top: 0;">
-		${ _strings.search_results }
+	<div data-bind="text: searchTitle()"
+	     class="load-more-container mdl-card-border material-heading"
+	     style="margin-top: 0;">
 	</div>
 	<div data-bind="foreach: { data: pratilipiList, as: 'pratilipi' }, visible: pratilipiList().length > 0"
 	     class="mdl-grid pratilipi-list-grid js-pratilipi-list-grid mobile-card">
