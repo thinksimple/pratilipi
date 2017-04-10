@@ -19,6 +19,11 @@ $pratilipi_red: #d0021b;
 .mdl-button {
 	min-width: initial;
 }
+
+.mdl-button--colored .material-icons {
+	line-height: 36px;
+}
+
 .mdl-card-border {
 	border: 1px solid lightgrey;
 }
