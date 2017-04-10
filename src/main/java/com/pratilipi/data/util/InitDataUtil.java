@@ -232,26 +232,26 @@ public class InitDataUtil {
 		
 		initBannerDocs = new InitBannerDoc[] {
 
-				docAccessor.newInitBannerDoc( "బాల సాహిత్యం", 
-						"pratilipi-telugu-carousel-28.jpg", 
-						"pratilipi-telugu-carousel-28-small.jpg", 
-						"/children",
+				docAccessor.newInitBannerDoc( "ప్రేమ",
+						"pratilipi-telugu-carousel-31.jpg",
+						"pratilipi-telugu-carousel-31-small.jpg",
+						"/life",
 						"PratilipiListApi",
-						gson.fromJson( "{ \"language\":\"TELUGU\", \"state\":\"PUBLISHED\", \"listName\":\"children\" }", JsonElement.class ).getAsJsonObject() ),
+						gson.fromJson( "{ \"language\":\"TELUGU\", \"state\":\"PUBLISHED\", \"listName\":\"life\" }", JsonElement.class ).getAsJsonObject() ),
 
-				docAccessor.newInitBannerDoc( "మినీ కథలు", 
-						"pratilipi-telugu-carousel-29.jpg", 
-						"pratilipi-telugu-carousel-29-small.jpg", 
-						"/ministories",
+				docAccessor.newInitBannerDoc( "జీవితం",
+						"pratilipi-telugu-carousel-32.jpg",
+						"pratilipi-telugu-carousel-32-small.jpg",
+						"/love",
 						"PratilipiListApi",
-						gson.fromJson( "{ \"language\":\"TELUGU\", \"state\":\"PUBLISHED\", \"listName\":\"ministories\" }", JsonElement.class ).getAsJsonObject() ),
+						gson.fromJson( "{ \"language\":\"TELUGU\", \"state\":\"PUBLISHED\", \"listName\":\"love\" }", JsonElement.class ).getAsJsonObject() ),
 
-				docAccessor.newInitBannerDoc( "తెలుగు సంస్కృతి", 
-						"pratilipi-telugu-carousel-30.jpg", 
-						"pratilipi-telugu-carousel-30-small.jpg", 
-						"/teluguculture",
+				docAccessor.newInitBannerDoc( "ఆధ్యాత్మికం",
+						"pratilipi-telugu-carousel-33.jpg",
+						"pratilipi-telugu-carousel-33-small.jpg",
+						"/spiritual",
 						"PratilipiListApi",
-						gson.fromJson( "{ \"language\":\"TELUGU\", \"state\":\"PUBLISHED\", \"listName\":\"teluguculture\" }", JsonElement.class ).getAsJsonObject() ),
+						gson.fromJson( "{ \"language\":\"TELUGU\", \"state\":\"PUBLISHED\", \"listName\":\"spiritual\" }", JsonElement.class ).getAsJsonObject() ),
 
 		};
 			
