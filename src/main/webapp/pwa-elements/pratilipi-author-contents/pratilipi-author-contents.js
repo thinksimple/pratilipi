@@ -57,7 +57,7 @@ function( params ) {
 					self.updatePublishedPratilipiList( pratilipiList );
 					publishedCursor = pratilipiListResponse.cursor;
 					self.loadingStatePublished( self.publishedPratilipiList().length > 0 || pratilipiList.length > 0 ? "LOADED" : "LOADED_EMPTY" );
-					self.hasMorePublishedContents( pratilipiList.length == resultCount );
+					self.hasMorePublishedContents( pratilipiList.length == resultCount && publishedCursor != null );
 		});
 	};
 
@@ -74,7 +74,7 @@ function( params ) {
 					self.updateDraftedPratilipiList( pratilipiList );
 					draftedCursor = pratilipiListResponse.cursor;
 					self.loadingStateDrafted( self.draftedPratilipiList().length > 0 || pratilipiList.length > 0 ? "LOADED" : "LOADED_EMPTY" );
-					self.hasMoreDraftedContents( pratilipiList.length == resultCount );
+					self.hasMoreDraftedContents( pratilipiList.length == resultCount && draftedCursor != null );
 		});
 	};
 

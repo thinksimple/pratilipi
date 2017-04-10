@@ -29,7 +29,7 @@ function() {
 					self.updatePratilipiList( pratilipiList );
 					cursor = pratilipiListResponse.cursor;
 					self.isLoading( false );
-					self.hasMoreContents( pratilipiList.length == resultCount );
+					self.hasMoreContents( pratilipiList.length == resultCount && cursor != null );
 					if( loadMore ) ga_CA( 'Pratilipi', 'LoadMore' );
 		});
 	};

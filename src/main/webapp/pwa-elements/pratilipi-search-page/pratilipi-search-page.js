@@ -37,7 +37,7 @@ function() {
 					self.updatePratilipiList( pratilipiList );
 					cursor = pratilipiListResponse.cursor;
 					self.loadingState( self.pratilipiList().length > 0 || pratilipiList.length > 0 ? "LOADED" : "LOADED_EMPTY" );
-					self.hasMoreContents( pratilipiList.length == resultCount );
+					self.hasMoreContents( pratilipiList.length == resultCount && cursor != null );
 					if( loadMore ) ga_CA( 'Pratilipi', 'LoadMore' );
 		});
 	};
