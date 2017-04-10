@@ -59,7 +59,7 @@ public class EmailDataUtil {
 	private static String _getContentSnippet( Email email ) throws UnexpectedServerException {
 		return _getContentSnippet( email, null );
 	}
-	
+
 	private static void _updateUserEntity( Long userId ) {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -81,7 +81,7 @@ public class EmailDataUtil {
 
 		Object[] emailData = null;
 
-		if( email.getType() == EmailType.PRATILIPI_PUBLISHED_AUTHOR 
+		if( email.getType() == EmailType.PRATILIPI_PUBLISHED_AUTHOR
 				|| email.getType() == EmailType.PRATILIPI_PUBLISHED_FOLLOWER )
 			emailData = _createDataModelForPratilipiPublishedEmail( email.getPrimaryContentIdLong() );
 
@@ -91,7 +91,7 @@ public class EmailDataUtil {
 		else if( email.getType() == EmailType.USER_PRATILIPI_RATING || email.getType() == EmailType.USER_PRATILIPI_REVIEW )
 			emailData = _createDataModelForUserPratilipiEmail( email.getPrimaryContentId() );
 
-		else if( email.getType() == EmailType.COMMENT_REVIEW_REVIEWER 
+		else if( email.getType() == EmailType.COMMENT_REVIEW_REVIEWER
 					|| email.getType() == EmailType.COMMENT_REVIEW_AUTHOR )
 			emailData = _createDataModelForCommentReviewEmail( email.getPrimaryContentIdLong() );
 
@@ -101,7 +101,7 @@ public class EmailDataUtil {
 		else if( email.getType() == EmailType.VOTE_COMMENT_REVIEW_COMMENTOR )
 			emailData = _createDataModelForVoteCommentEmail( email.getPrimaryContentId() );
 
-		String template = EmailTemplateUtil.getEmailTemplate( email.getType(), 
+		String template = EmailTemplateUtil.getEmailTemplate( email.getType(),
 				language != null ? language : (Language) emailData[1] );
 
 		return FreeMarkerUtil.processString( ( Map<String, Object> ) emailData[0], template );
@@ -113,6 +113,16 @@ public class EmailDataUtil {
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
 
 		UserData user = UserDataUtil.createUserData( dataAccessor.getUser( userId ) );
+		// Dropping mails if user doesn't have name or language
+		if( user.getDisplayName() == null || user.getLanguage() == null ) {
+			for( Email email : emailList ) {
+				email.setState( EmailState.DROPPED );
+				email.setLastUpdated( new Date() );
+			}
+			emailList = dataAccessor.createOrUpdateEmailList( emailList );
+			return;
+		}
+
 		String consolidatedContent = new String();
 
 		for( Email email : emailList ) {
@@ -127,7 +137,7 @@ public class EmailDataUtil {
 
 		}
 
-		if( consolidatedContent.isEmpty() ) // No PENDING emails 
+		if( consolidatedContent.isEmpty() ) // No PENDING emails
 			return;
 
 		String content = EmailTemplateUtil.getEmailBody( consolidatedContent, user.getLanguage() );
@@ -145,9 +155,9 @@ public class EmailDataUtil {
 		if( ( m = senderEmailPattern.matcher( content ) ).find() )
 			senderEmail = m.group( 1 ).trim();
 
-		EmailUtil.sendMail( senderName, senderEmail, 
-				user.getDisplayName(), user.getEmail(), 
-				subject, 
+		EmailUtil.sendMail( senderName, senderEmail,
+				user.getDisplayName(), user.getEmail(),
+				subject,
 				content );
 
 		dataAccessor.createOrUpdateEmailList( emailList );
@@ -165,6 +175,13 @@ public class EmailDataUtil {
 			return;
 
 		UserData user = UserDataUtil.createUserData( dataAccessor.getUser( email.getUserId() ) );
+		if( user.getDisplayName() == null || user.getLanguage() == null ) {
+			email.setState( EmailState.DROPPED );
+			email.setLastUpdated( new Date() );
+			email = dataAccessor.createOrUpdateEmail( email );
+			return;
+		}
+
 		String content = _getContentSnippet( email );
 
 		Pattern senderNamePattern = Pattern.compile( "<!-- SENDER_NAME:(.+?) -->" );
@@ -183,10 +200,10 @@ public class EmailDataUtil {
 		if( ( m = subjectPattern.matcher( content ) ).find() )
 			subject = m.group( 1 ).trim();
 
-		EmailUtil.sendMail( senderName, senderEmail, 
-				user.getDisplayName(), user.getEmail(), 
-				subject, 
-				EmailTemplateUtil.getEmailBody( content, 
+		EmailUtil.sendMail( senderName, senderEmail,
+				user.getDisplayName(), user.getEmail(),
+				subject,
+				EmailTemplateUtil.getEmailBody( content,
 									user.getLanguage() != null ? user.getLanguage() : Language.ENGLISH ) );
 
 		email.setState( EmailState.SENT );
@@ -196,7 +213,7 @@ public class EmailDataUtil {
 		_updateUserEntity( email.getUserId() );
 
 	}
-	
+
 	public static void sendEmailsToUser( Long userId ) throws UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -231,7 +248,7 @@ public class EmailDataUtil {
 
 	}
 
-	private static Object[] _createDataModelForAuthorFollowEmail( String userAuthorId ) 
+	private static Object[] _createDataModelForAuthorFollowEmail( String userAuthorId )
 			throws UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -266,9 +283,9 @@ public class EmailDataUtil {
 
 		dataModel.put( "pratilipi_title", pratilipi.getTitle() != null ? pratilipi.getTitle() : pratilipi.getTitleEn() );
 		dataModel.put( "pratilipi_page_url", _getDomainName( pratilipi.getLanguage() ) + pratilipi.getPageUrl() );
-		
-		dataModel.put( "reviewer_name", reviewer.getAuthor().getName() != null 
-												? reviewer.getAuthor().getName() 
+
+		dataModel.put( "reviewer_name", reviewer.getAuthor().getName() != null
+												? reviewer.getAuthor().getName()
 												: reviewer.getAuthor().getNameEn() );
 		dataModel.put( "reviewer_page_url", _getDomainName( pratilipi.getLanguage() ) + reviewer.getProfilePageUrl() );
 		dataModel.put( "reviewer_image_url", reviewer.getAuthor().getProfileImageUrl( 100 ) );
@@ -287,7 +304,7 @@ public class EmailDataUtil {
 
 	}
 
-	private static Object[] _createDataModelForCommentReviewEmail( Long commentId ) 
+	private static Object[] _createDataModelForCommentReviewEmail( Long commentId )
 			throws UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -309,7 +326,7 @@ public class EmailDataUtil {
 		dataModel.put( "review_date", _getDateFormat( review.getReviewDate() ) );
 		dataModel.put( "review_review", HtmlUtil.truncateText( review.getReview(), 250 ) );
 
-		dataModel.put( "commentor_name", comment.getUser().getAuthor().getName() != null 
+		dataModel.put( "commentor_name", comment.getUser().getAuthor().getName() != null
 										? comment.getUser().getAuthor().getName()
 										: comment.getUser().getAuthor().getNameEn() );
 		dataModel.put( "commentor_page_url", _getDomainName( comment.getUser().getAuthor().getLanguage() ) + comment.getUser().getProfilePageUrl() );
@@ -320,8 +337,8 @@ public class EmailDataUtil {
 		return new Object[] { dataModel, pratilipi.getLanguage() };
 
 	}
-	
-	private static Object[] _createDataModelForVoteReviewEmail( String voteId ) 
+
+	private static Object[] _createDataModelForVoteReviewEmail( String voteId )
 			throws UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -338,7 +355,7 @@ public class EmailDataUtil {
 		dataModel.put( "reviewer_page_url", _getDomainName( userPratilipi.getUser().getLanguage() ) + userPratilipi.getUser().getProfilePageUrl() );
 		dataModel.put( "reviewer_image_url", userPratilipi.getUser().getAuthor().getProfileImageUrl( 64 ) );
 		dataModel.put( "reviewer_name", userPratilipi.getUser().getAuthor().getName() != null
-												? userPratilipi.getUser().getAuthor().getName() 
+												? userPratilipi.getUser().getAuthor().getName()
 												: userPratilipi.getUser().getAuthor().getNameEn() );
 		dataModel.put( "review_creation_date", _getDateFormat( userPratilipi.getReviewDate() ) );
 		dataModel.put( "review_review", HtmlUtil.toPlainText( userPratilipi.getReview() ) );
@@ -353,8 +370,8 @@ public class EmailDataUtil {
 		return new Object[] { dataModel, pratilipi.getLanguage() };
 
 	}
-	
-	private static Object[] _createDataModelForVoteCommentEmail( String voteId ) 
+
+	private static Object[] _createDataModelForVoteCommentEmail( String voteId )
 			throws UnexpectedServerException {
 
 		DataAccessor dataAccessor = DataAccessorFactory.getDataAccessor();
@@ -382,7 +399,7 @@ public class EmailDataUtil {
 		dataModel.put( "review_date", _getDateFormat( review.getReviewDate() ) );
 		dataModel.put( "review_review", HtmlUtil.truncateText( review.getReview(), 250 ) );
 
-		dataModel.put( "commentor_name", comment.getUser().getAuthor().getName() != null 
+		dataModel.put( "commentor_name", comment.getUser().getAuthor().getName() != null
 										? comment.getUser().getAuthor().getName()
 										: comment.getUser().getAuthor().getNameEn() );
 		dataModel.put( "commentor_page_url", _getDomainName( comment.getUser().getAuthor().getLanguage() ) + comment.getUser().getProfilePageUrl() );
