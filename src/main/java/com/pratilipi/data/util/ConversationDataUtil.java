@@ -159,12 +159,12 @@ public class ConversationDataUtil {
 			throws UnsupportedEncodingException {
 		ArrayList<String> emailList = new ArrayList<>();
 		emailList.add("sankar@pratilipi.com");
-		if (teamName.contains(AEE) || teamName.contains(ISSUES)) {
-			// when contact team name is AEE_* or ANDROID_APP_ISSUES
-			if (language != null)
-				emailList.add(language + DOMAIN);
-			logger.log(Level.INFO, "Language Team : " + language + DOMAIN);
-		} else if (teamName.contains(TECH_SUPPORT)) {
+		
+		if (language != null)
+			emailList.add(language + DOMAIN);
+		logger.log(Level.INFO, "Language Team : " + language + DOMAIN);
+		
+		if (teamName.contains(TECH_SUPPORT)) {
 			// when contact team name is ANDROID_APP_TECH_SUPPORT
 			emailList.add("prashant@pratilipi.com");
 			emailList.add("kshitij@pratilipi.com");
