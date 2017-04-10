@@ -860,12 +860,9 @@ public class DataAccessorGaeImpl implements DataAccessor {
 			AccessToken accessToken = AccessTokenFilter.getAccessToken();
 			Long userId = accessToken.getUserId();
 			String memcacheId = "DataStore.Pratilipi-list." + userId + "." + pratilipiFilter.getLanguage().getCode() + "." + pratilipiFilter.getListName() + "?" + SystemProperty.STAGE;
-			logger.log(Level.INFO, "Memcache Id / Time : " + memcacheId + "/" + System.currentTimeMillis());
 			ArrayList<Long> pratilipiIdList = memcache.get( memcacheId );
 
 			if( pratilipiIdList == null ) {
-				
-				logger.log(Level.INFO, "CACHE MISS");
 				
 				List<String> uriList = null;
 				try {
@@ -904,9 +901,7 @@ public class DataAccessorGaeImpl implements DataAccessor {
 						pratilipiIdList.add( page.getPrimaryContentId() );
 				}
 	
-				logger.log(Level.INFO, "INITIAL PRATILIPI LIST : " + pratilipiIdList);
-				
-				// TODO : create user specific pratilipi list.
+				// create user specific pratilipi list.
 				
 				// fetch Read content list.
 				// For better performance, new index is required with userId and lastOpenedDate filters.
@@ -924,19 +919,15 @@ public class DataAccessorGaeImpl implements DataAccessor {
 				logger.log(Level.INFO, "PRATILIPI Read list : " + contentsReadList);
 				pratilipiIdList.removeAll(contentsReadList);		// Remove already read content from the list
 				pratilipiIdList.addAll(contentsReadList);		// Append read content at end of the list
-				logger.log(Level.INFO, "FINAL PRATILIPI LIST : " + pratilipiIdList);
 				
 				// Shuffling and saving in Memcache
 //				Collections.shuffle( pratilipiIdList );
 				memcache.put(
 						memcacheId,
 						(ArrayList<Long>) pratilipiIdList,
-						SystemProperty.STAGE == SystemProperty.STAGE_PROD ? 5 : 360 );
+						SystemProperty.STAGE == SystemProperty.STAGE_PROD ? 60 : 360 );
 				
-			} else {
-				logger.log(Level.INFO, "CAHCE HIT. List size : " + pratilipiIdList.size());
 			}
-
 			
 			offset = ( cursorStr == null ? 0 : Integer.parseInt( cursorStr ) )
 					+ ( offset == null || offset < 0 ? 0 : offset );
