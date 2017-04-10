@@ -25,16 +25,6 @@ do
 	fi
 
 
-	if [ -d "/root/prod" ]; then
-		cd /root/prod/pratilipi
-		bash $scripts/continuous-deployment-update-prod.sh                      2>&1 | logger -t update-prod
-	else
-		mkdir -p /root/prod
-		cd /root/prod
-		git clone -b release-prod https://github.com/Pratilipi/pratilipi.git    2>&1 | logger -t update-prod
-	fi
-
-
 	if [ -d "/root/prod-mark-7" ]; then
 		cd /root/prod-mark-7/pratilipi
 		bash $scripts/continuous-deployment-update-prod-mark-7.sh               2>&1 | logger -t update-prod-mark-7
@@ -44,7 +34,17 @@ do
 		git clone -b release-prod https://github.com/Pratilipi/pratilipi.git    2>&1 | logger -t update-prod-mark-7
 	fi
 
-	
+
+	if [ -d "/root/prod" ]; then
+        cd /root/prod/pratilipi
+        bash $scripts/continuous-deployment-update-prod.sh                      2>&1 | logger -t update-prod
+    else
+        mkdir -p /root/prod
+        cd /root/prod
+        git clone -b release-prod https://github.com/Pratilipi/pratilipi.git    2>&1 | logger -t update-prod
+    fi
+
+
 	if [ -d "/root/api" ]; then
 		cd /root/api/pratilipi
 		bash $scripts/continuous-deployment-update-api.sh                       2>&1 | logger -t update-api
