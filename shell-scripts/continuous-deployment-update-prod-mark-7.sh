@@ -22,7 +22,7 @@ then
 	cp src/main/webapp/WEB-INF/prod-appengine-web.xml   src/main/webapp/WEB-INF/appengine-web.xml
 
 	# Update prod-pratilipi/prod-mark-7
-	mvn gcloud:deploy -Dapp.id=prod-pratilipi -Dapp.module=default
+	mvn gcloud:deploy -Dapp.id=prod-pratilipi -Dapp.module=default -Dapp.setDefault=false
 
 
 	# Cleaning up .git directory
