@@ -11,8 +11,9 @@
 		<div data-bind="html: event.description()" class="material-subtitle-1"></div>
 	</div>
 	<div class="mdl-cell mdl-cell--8-col-tablet mdl-cell--9-col mobile-card event-entries">
-		<div class="load-more-container mdl-card-border material-heading"
-		     style="margin-top: 0;">
+		<div data-bind="visible: pratilipiList().length > 0"
+		     class="load-more-container mdl-card-border material-heading"
+		     style="margin-top: 0; border-top: none;">
 			${ _strings.event_entries }
 		</div>
 		<div data-bind="foreach: { data: pratilipiList, as: 'pratilipi' }, visible: pratilipiList().length > 0"
