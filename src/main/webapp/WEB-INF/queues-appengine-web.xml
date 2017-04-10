@@ -8,7 +8,7 @@
 	<threadsafe>true</threadsafe>
 	<sessions-enabled>false</sessions-enabled>
 
-	<instance-class>B1</instance-class>
+	<instance-class>B2</instance-class>
 	<basic-scaling>
 		<max-instances>5</max-instances>
 		<idle-timeout>15m</idle-timeout>
