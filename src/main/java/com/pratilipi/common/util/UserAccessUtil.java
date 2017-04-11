@@ -2,6 +2,10 @@ package com.pratilipi.common.util;
 
 import com.pratilipi.common.type.AccessType;
 import com.pratilipi.common.type.Language;
+import org.apache.commons.codec.language.bm.Lang;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserAccessUtil {
 	
@@ -47,6 +51,10 @@ public class UserAccessUtil {
 			this.accessTypes = accessTypes;
 		}
 
+		public Language getLanguage() {
+			return language;
+		}
+
 		public boolean hasAccess( Language language, AccessType accessType ) {
 			if( this.language != null && this.language != language )
 				return false;
@@ -59,65 +67,81 @@ public class UserAccessUtil {
 		}
 		
 	}
-	
-	private static Role[] getRoles( Long userId ) { // TODO: Migrate this data to DataStore/CloudStore
-		switch( userId.toString() ) {
-			case "0":
-				return new Role[] { Role.GUEST };
-				
-			case "6243664397336576": // moumita@
-				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_BENGALI };
-			case "5644707593977856": // nimisha@
-				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_GUJARATI, Role.ADMIN_HINDI, Role.ADMIN_MARATHI, Role.ADMIN_BENGALI };
-			case "4790800105865216": // veena@
-				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_GUJARATI, Role.ADMIN_HINDI, Role.ADMIN_MARATHI };
-			case "4900189601005568": // vrushali@
-				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_MARATHI };
-			case "6046961763352576": // brinda@
-				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_GUJARATI };
-			case "5373377891008512": // kimaya@
-				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_MARATHI };
-			case "5743817900687360": // jitesh@
-				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_BENGALI, Role.ADMIN_GUJARATI, Role.ADMIN_HINDI, Role.ADMIN_MARATHI };
-			case "5664902681198592": // shally@		
-				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_BENGALI, Role.ADMIN_GUJARATI, Role.ADMIN_HINDI, Role.ADMIN_MARATHI };
-				
-			case "5666355716030464" : // vaisakh@
-				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_MALAYALAM };
-			case "4900071594262528": // dileepan@
-				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_TAMIL };
-			case "5187684625547264" : // johny@
-				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_TELUGU };
-			case "5715256422694912": // aruna@
-				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_KANNADA };
-			case "5991416564023296": // sankar@
-				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_BENGALI, Role.ADMIN_GUJARATI, Role.ADMIN_HINDI, Role.ADMIN_KANNADA, Role.ADMIN_MALAYALAM, Role.ADMIN_MARATHI, Role.ADMIN_TAMIL, Role.ADMIN_TELUGU };
 
-			case "6196244602945536": // raghu@
-				return new Role[] { Role.MEMBER, Role.ADMINISTRATOR };
-			case "5124071978172416": // radhika@
-				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_HINDI, Role.ADMIN_TAMIL };
-			case "4908348089565184": // drasti@
-				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_HINDI, Role.ADMIN_GUJARATI };
-			case "5694768648552448": // abhishek@
-				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_BENGALI, Role.ADMIN_GUJARATI, Role.ADMIN_HINDI, Role.ADMIN_KANNADA, Role.ADMIN_MALAYALAM, Role.ADMIN_MARATHI, Role.ADMIN_TAMIL, Role.ADMIN_TELUGU };
-			case "5451511011213312": // shreyans@
-				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_BENGALI, Role.ADMIN_GUJARATI, Role.ADMIN_HINDI, Role.ADMIN_KANNADA, Role.ADMIN_MALAYALAM, Role.ADMIN_MARATHI, Role.ADMIN_TAMIL, Role.ADMIN_TELUGU };
-			case "5705241014042624": // prashant@
-				return new Role[] { Role.MEMBER, Role.ADMINISTRATOR };
-			case "6264191547604992" : // ranjeet@
-				return new Role[] { Role.MEMBER, Role.ADMIN, Role.ADMIN_BENGALI, Role.ADMIN_GUJARATI, Role.ADMIN_HINDI, Role.ADMIN_KANNADA, Role.ADMIN_MALAYALAM, Role.ADMIN_MARATHI, Role.ADMIN_TAMIL, Role.ADMIN_TELUGU };
+	private enum AEE {
 
-			default:
-				return new Role[] { Role.MEMBER };
+		MOUMITA ( 6243664397336576L, Role.MEMBER, Role.ADMIN, Role.ADMIN_BENGALI ),
+		NIMISHA ( 5644707593977856L, Role.MEMBER, Role.ADMIN, Role.ADMIN_GUJARATI, Role.ADMIN_HINDI, Role.ADMIN_MARATHI, Role.ADMIN_BENGALI ),
+		VEENA   ( 4790800105865216L, Role.MEMBER, Role.ADMIN, Role.ADMIN_GUJARATI, Role.ADMIN_HINDI, Role.ADMIN_MARATHI ),
+		VRUSHALI( 4900189601005568L, Role.MEMBER, Role.ADMIN, Role.ADMIN_MARATHI ),
+		BRINDA  ( 6046961763352576L, Role.MEMBER, Role.ADMIN, Role.ADMIN_GUJARATI ),
+
+		KIMAYA  ( 5373377891008512L, Role.MEMBER, Role.ADMIN, Role.ADMIN_MARATHI ),
+		JITESH  ( 5743817900687360L, Role.MEMBER, Role.ADMIN, Role.ADMIN_BENGALI, Role.ADMIN_GUJARATI, Role.ADMIN_HINDI, Role.ADMIN_MARATHI ),
+		SHALLY  ( 5664902681198592L, Role.MEMBER, Role.ADMIN, Role.ADMIN_BENGALI, Role.ADMIN_GUJARATI, Role.ADMIN_HINDI, Role.ADMIN_MARATHI ),
+
+		VAISAKH     ( 5666355716030464L, Role.MEMBER, Role.ADMIN, Role.ADMIN_MALAYALAM ),
+		DIPLEEPAN   ( 4900071594262528L, Role.MEMBER, Role.ADMIN, Role.ADMIN_TAMIL ),
+		JOHNY       ( 5187684625547264L, Role.MEMBER, Role.ADMIN, Role.ADMIN_TELUGU ),
+		ARUNA       ( 5715256422694912L, Role.MEMBER, Role.ADMIN, Role.ADMIN_KANNADA ),
+		SANKAR      ( 5991416564023296L, Role.MEMBER, Role.ADMIN, Role.ADMIN_BENGALI, Role.ADMIN_GUJARATI, Role.ADMIN_HINDI, Role.ADMIN_KANNADA, Role.ADMIN_MALAYALAM, Role.ADMIN_MARATHI, Role.ADMIN_TAMIL, Role.ADMIN_TELUGU ),
+
+		RADHIKA ( 5124071978172416L, Role.MEMBER, Role.ADMIN, Role.ADMIN_HINDI, Role.ADMIN_TAMIL ),
+		DRASTI  ( 4908348089565184L, Role.MEMBER, Role.ADMIN, Role.ADMIN_HINDI, Role.ADMIN_GUJARATI ),
+		ABHISHEK( 5694768648552448L, Role.MEMBER, Role.ADMIN, Role.ADMIN_BENGALI, Role.ADMIN_GUJARATI, Role.ADMIN_HINDI, Role.ADMIN_KANNADA, Role.ADMIN_MALAYALAM, Role.ADMIN_MARATHI, Role.ADMIN_TAMIL, Role.ADMIN_TELUGU ),
+		SHREYANS( 5451511011213312L, Role.MEMBER, Role.ADMIN, Role.ADMIN_BENGALI, Role.ADMIN_GUJARATI, Role.ADMIN_HINDI, Role.ADMIN_KANNADA, Role.ADMIN_MALAYALAM, Role.ADMIN_MARATHI, Role.ADMIN_TAMIL, Role.ADMIN_TELUGU ),
+		RANJEET ( 6264191547604992L, Role.MEMBER, Role.ADMIN, Role.ADMIN_BENGALI, Role.ADMIN_GUJARATI, Role.ADMIN_HINDI, Role.ADMIN_KANNADA, Role.ADMIN_MALAYALAM, Role.ADMIN_MARATHI, Role.ADMIN_TAMIL, Role.ADMIN_TELUGU ),
+		RAGHU   ( 6196244602945536L, Role.MEMBER, Role.ADMINISTRATOR ),
+		PRASHANT( 5705241014042624L, Role.MEMBER, Role.ADMINISTRATOR );
+
+
+		private Long userId;
+		private Role[] roles;
+
+		private AEE( Long userId, Role ...roles ) {
+			this.userId = userId;
+			this.roles = roles;
 		}
+
+		public Long getUserId() {
+			return userId;
+		}
+
+		public Role[] getRoles() {
+			return roles;
+		}
+
 	}
-	
+
+	private static Role[] getRoles( Long userId ) { // TODO: Migrate this data to DataStore/CloudStore
+
+		if( userId.equals( 0L ) )
+			return new Role[] { Role.GUEST };
+
+		for( AEE aEE : AEE.values() )
+			if( userId.equals( aEE.getUserId() ) )
+				return aEE.roles;
+
+		return new Role[] { Role.MEMBER };
+
+	}
+
 	public static boolean hasUserAccess( Long userId, Language language, AccessType access ) {
 		for( Role role : getRoles( userId ) )
 			if( role.hasAccess( language, access ) )
 				return true;
 		return false;
+	}
+
+	public static List<Long> getAeeUserIdList( Language language ) {
+		List<Long> aeeUserIdList = new ArrayList<>();
+		for( AEE aEE : AEE.values() ) {
+			for( Role role : aEE.roles ) {
+				if( role.getLanguage() == language )
+					aeeUserIdList.add( aEE.getUserId() );
+			}
+		}
+		return aeeUserIdList;
 	}
 
 }
