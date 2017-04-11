@@ -33,6 +33,7 @@ var DataAccessor = function() {
 	var USER_AUTHOR_FOLLOW_LIST_API = "/userauthor/follow/list";
 	var EVENT_API = "/event";
 	var EVENT_LIST_API = "/event/list";
+	var BLOG_POST_API = "/blogpost";
 
 	var request = function( name, api, params ) {
 		return {
@@ -158,6 +159,20 @@ var DataAccessor = function() {
 		httpUtil.get( API_PREFIX + EVENT_LIST_API,
 		                { "language": "${ language }" },
 		                function( response, status ) { processGetResponse( response, status, aCallBack ) } );
+    };
+
+    this.getBlogPostByUri = function( pageUri, aCallBack ) {
+        var requests = [];
+        requests.push( new request( "req1", PAGE_API, { "uri": pageUri } ) );
+        requests.push( new request( "req2", BLOG_POST_API, { "blogPostId": "$req1.primaryContentId" } ) );
+
+        httpUtil.get( API_PREFIX, { "requests": processRequests( requests ) },
+            function( response, status ) {
+                if( aCallBack != null ) {
+                    var blogpost = response.req2.status == 200 ? response.req2.response : null;
+                    aCallBack( blogpost );
+                }
+        });
     };
 
 	this.getUser = function( aCallBack ) {

@@ -545,8 +545,13 @@ public class PratilipiSite extends HttpServlet {
 				templateName = ( basicMode ? "BlogPostListBasic.ftl" : "BlogPostList.ftl" );
 
 			} else if( page != null && page.getType() == PageType.BLOG_POST ) {
-				dataModel = createDataModelForBlogPostPage( page.getPrimaryContentId(), filterLanguage, basicMode );
-				templateName = ( basicMode ? "BlogPostBasic.ftl" : "BlogPost.ftl" );
+				if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) ) {
+					dataModel = new HashMap<>();
+					templateName = "BlogPostPWA.ftl";
+				} else {
+					dataModel = createDataModelForBlogPostPage( page.getPrimaryContentId(), filterLanguage, basicMode );
+					templateName = ( basicMode ? "BlogPostBasic.ftl" : "BlogPost.ftl" );
+				}
 
 			} else if( page != null && page.getType() == PageType.READ ) {
 
