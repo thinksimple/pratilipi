@@ -19,6 +19,8 @@ function( params ) {
 	this.dateOfBirth = ko.observable();
 	this.isLoading = ko.observable();
 
+	this.authorPageUrl = null;
+
 	this.updateLanguage = function() {
 		self.language( document.querySelector( '#pratilipi-settings-language' ).getAttribute( "data-val" ) );
 	};
@@ -39,7 +41,7 @@ function( params ) {
 		if( self.isLoading() ) return;
 		self.isLoading( true );
 		dataAccessor.getAuthorById( getAuthorId(), false,
-			function( author, user ) {
+			function( author ) {
 				self.firstName( author.firstName );
 				self.lastName( author.lastName );
 				self.firstNameEn( author.firstNameEn );
@@ -69,6 +71,9 @@ function( params ) {
 						return [ year, month, day ].join( '-' );
 				};
 				self.dateOfBirth( getDateOfBirthValue( author.dateOfBirth ) );
+				authorPageUrl = author.pageUrl;
+
+				/* Loading User Info */
 				if( self.isAdmin ) {
 					dataAccessor.getUserById( author.user.userId,
 						function( user ) {
@@ -80,6 +85,7 @@ function( params ) {
 					self.phone( appViewModel.user.phone() );
 				}
 				self.isLoading( false );
+
 		});
 	};
 
@@ -123,6 +129,10 @@ function( params ) {
 				self.isLoading( false );
 				self.userApiCallState( "INITIAL" );
 				self.authorApiCallState( "INITIAL" );
+				if( self.isAdmin ) {
+					/* Redirect to the author page */
+					window.location.href = self.authorPageUrl;
+				}
 			} else if( self.userApiCallState() == "LOADING" || self.authorApiCallState() == "LOADING" ) {
 				return;
 			} else if( self.userApiCallState() == "FAILED" || self.authorApiCallState() == "FAILED" ) {
@@ -152,6 +162,7 @@ function( params ) {
 		self.authorApiCallState( "LOADING" );
 		dataAccessor.createOrUpdateAuthor( author,
 			function( aAuthor ) {
+				self.authorPageUrl = aAuthor.pageUrl;
 				self.authorApiCallState( "SUCCESS" );
 			}, function( error ) {
 				var message = "${ _strings.server_error_message }";
