@@ -32,6 +32,7 @@ var DataAccessor = function() {
 	var INIT_BANNER_LIST_API = "/init/banner/list";
 	var USER_AUTHOR_FOLLOW_LIST_API = "/userauthor/follow/list";
 	var EVENT_API = "/event";
+	var EVENT_LIST_API = "/event/list";
 
 	var request = function( name, api, params ) {
 		return {
@@ -151,6 +152,12 @@ var DataAccessor = function() {
                     aCallBack( event );
                 }
         });
+    };
+
+    this.getEventList = function( aCallBack ) {
+		httpUtil.get( API_PREFIX + EVENT_LIST_API,
+		                { "language": "${ language }" },
+		                function( response, status ) { processGetResponse( response, status, aCallBack ) } );
     };
 
 	this.getUser = function( aCallBack ) {

@@ -233,8 +233,13 @@ public class PratilipiSite extends HttpServlet {
 				}
 
 			} else if( uri.equals( "/events" ) ) {
-				dataModel = createDataModelForEventsPage( filterLanguage, basicMode );
-				templateName = ( basicMode ? "EventListBasic.ftl" : "EventList.ftl" );
+				if( ! SystemProperty.STAGE.equals( SystemProperty.STAGE_PROD ) ) {
+					dataModel = new HashMap<>();
+					templateName = "EventListPWA.ftl";
+				} else {
+					dataModel = createDataModelForEventsPage( filterLanguage, basicMode );
+					templateName = ( basicMode ? "EventListBasic.ftl" : "EventList.ftl" );
+				}
 
 			} else if( uri.equals( "/followers" ) ) {
 

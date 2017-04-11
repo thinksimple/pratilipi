@@ -1,0 +1,30 @@
+<div class="mdl-cell mdl-cell--8-col-tablet mdl-cell--9-col mobile-card pratilipi-event-list-page">
+	<div class="load-more-container mdl-card-border material-heading"
+	     style="margin-top: 0;">
+		${ _strings.event_events }
+	</div>
+	<div data-bind="foreach: { data: eventList, as: 'event' }, visible: eventList().length > 0"
+	     class="mdl-grid pratilipi-list-grid js-pratilipi-list-grid mobile-card">
+		<div class="mdl-cell mdl-cell--12-col-phone mdl-cell--12-col-tablet mdl-cell--12-col-desktop mobile-card pratilipi-list-card">
+			<div class="event-container">
+				<div class="event-cover-image"
+				     data-bind="attr: { 'alt': event.name },
+							style: { backgroundImage: 'url(' + event.bannerImageUrl + ')' }"></div>
+				<div class="event-meta-container">
+					<span class="material-title" data-bind="text: event.name"></span>
+					<a data-bind="{ attr: { 'href': event.pageUrl } }"
+					   class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect small-button pull-right">
+						<i class="material-icons" style="font-size: 20px;">open_in_new</i>
+					</a>
+					<!--
+					<div class="material-subtitle-1" data-bind="text: event.name"></div>
+					<div class="material-subtitle-2" data-bind="text: event.name"></div>
+					-->
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="load-more-container mdl-card-border text-center" data-bind="visible: isLoading()">
+		<span class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></span>
+	</div>
+</div>
