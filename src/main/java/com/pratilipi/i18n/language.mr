@@ -343,7 +343,7 @@ reader_enjoyed_review_book		= पुनरावलोकन लिहा
 reader_enjoyed_reading_part2	= सामायिक करा
 
 # Notifications
-notification_notifications = सूचनाएँ 
+notification_notifications = सूचना
 notifications_no_notifications = क्षमस्व! सध्या आपल्या करीता कोणत्याही सूचना नाही. कृपया नंतर पहा. 
 notifications_load_failed = Notifications failed to load. Please click here to re-load the notifications.
 
