@@ -233,22 +233,22 @@ public class InitDataUtil {
 		initBannerDocs = new InitBannerDoc[] {
 
 				docAccessor.newInitBannerDoc( "ప్రేమ",
-						"pratilipi-telugu-carousel-31.jpg",
-						"pratilipi-telugu-carousel-31-small.jpg",
+						"pratilipi-telugu-carousel-31a.jpg",
+						"pratilipi-telugu-carousel-31a-small.jpg",
 						"/life",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"TELUGU\", \"state\":\"PUBLISHED\", \"listName\":\"life\" }", JsonElement.class ).getAsJsonObject() ),
 
 				docAccessor.newInitBannerDoc( "జీవితం",
-						"pratilipi-telugu-carousel-32.jpg",
-						"pratilipi-telugu-carousel-32-small.jpg",
+						"pratilipi-telugu-carousel-32a.jpg",
+						"pratilipi-telugu-carousel-32a-small.jpg",
 						"/love",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"TELUGU\", \"state\":\"PUBLISHED\", \"listName\":\"love\" }", JsonElement.class ).getAsJsonObject() ),
 
 				docAccessor.newInitBannerDoc( "ఆధ్యాత్మికం",
-						"pratilipi-telugu-carousel-33.jpg",
-						"pratilipi-telugu-carousel-33-small.jpg",
+						"pratilipi-telugu-carousel-33a.jpg",
+						"pratilipi-telugu-carousel-33a-small.jpg",
 						"/spiritual",
 						"PratilipiListApi",
 						gson.fromJson( "{ \"language\":\"TELUGU\", \"state\":\"PUBLISHED\", \"listName\":\"spiritual\" }", JsonElement.class ).getAsJsonObject() ),
