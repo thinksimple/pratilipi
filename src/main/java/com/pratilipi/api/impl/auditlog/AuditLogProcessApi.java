@@ -1,7 +1,6 @@
 package com.pratilipi.api.impl.auditlog;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -36,6 +35,7 @@ import com.pratilipi.common.type.VoteParentType;
 import com.pratilipi.common.type.VoteType;
 import com.pratilipi.common.util.GsonLongDateAdapter;
 import com.pratilipi.common.util.SystemProperty;
+import com.pratilipi.common.util.UserAccessUtil;
 import com.pratilipi.data.DataAccessor;
 import com.pratilipi.data.DataAccessorFactory;
 import com.pratilipi.data.DataListCursorTuple;
@@ -653,71 +653,17 @@ public class AuditLogProcessApi extends GenericApi {
 	
 	private List<Long> _getAeeUserIdList( Language language ) {
 
-		Long[] userIds = {};
-		
-		switch( language ) {
-			case HINDI:
-				userIds = new Long[] {
-						4790800105865216L, // veena@
-						5743817900687360L, // jitesh@
-						5991416564023296L, // sankar@
-						5664902681198592L, // shally@
-				}; break;
-			case GUJARATI:
-				userIds = new Long[] {
-						5644707593977856L, // nimisha@
-						6046961763352576L, // brinda@
-						5743817900687360L, // jitesh@
-						5991416564023296L, // sankar@
-						5664902681198592L, // shally@
-				}; break;
-			case TAMIL:
-				userIds = new Long[] {
-						5991416564023296L, // sankar@
-						5674672871964672L, // krithiha@
-						4900071594262528L, // dileepan@
-				}; break;
-			case MARATHI:
-				userIds = new Long[] {
-						4900189601005568L, // vrushali@
-						5743817900687360L, // jitesh@
-						5991416564023296L, // sankar@
-						5664902681198592L, // shally@
-				}; break;
-			case MALAYALAM:
-				userIds = new Long[] {
-						5666355716030464L, // vaisakh@
-						5674672871964672L, // krithiha@
-						5991416564023296L, // sankar@
-				}; break;
-			case BENGALI:
-				userIds = new Long[] {
-						6243664397336576L, // moumita@
-						5743817900687360L, // jitesh@
-						5991416564023296L, // sankar@
-						5664902681198592L, // shally@
-				}; break;
-			case TELUGU:
-				userIds = new Long[] {
-						5187684625547264L, // johny@
-						5674672871964672L, // krithiha@
-						5991416564023296L, // sankar@
-				}; break;
-			case KANNADA:
-				userIds = new Long[] {
-						5715256422694912L, // aruna@
-						5674672871964672L, // krithiha@
-						5991416564023296L, // sankar@
-				}; break;
-			default:
-				userIds = new Long[] {
-						5705241014042624L, // prashant@
-				}; break;
-			
-		}
+		List<Long> userIds = UserAccessUtil.getAeeUserIdList( language );
+		userIds.remove( UserAccessUtil.AEE.RADHIKA.getUserId() );
+		userIds.remove( UserAccessUtil.AEE.DRASTI.getUserId() );
+		userIds.remove( UserAccessUtil.AEE.ABHISHEK.getUserId() );
+		userIds.remove( UserAccessUtil.AEE.SHREYANS.getUserId() );
+		userIds.remove( UserAccessUtil.AEE.RANJEET.getUserId() );
+		userIds.remove( UserAccessUtil.AEE.RAGHU.getUserId() );
+		userIds.remove( UserAccessUtil.AEE.PRASHANT.getUserId() );
 
-		return Arrays.asList( userIds );
-		
+		return userIds;
+
 	}
 	
 	private void _updateEmailTable( List<Email> emailList ) throws UnexpectedServerException {

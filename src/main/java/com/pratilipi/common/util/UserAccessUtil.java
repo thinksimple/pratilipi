@@ -1,21 +1,20 @@
 package com.pratilipi.common.util;
 
-import com.pratilipi.common.type.AccessType;
-import com.pratilipi.common.type.Language;
-import org.apache.commons.codec.language.bm.Lang;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import com.pratilipi.common.type.AccessType;
+import com.pratilipi.common.type.Language;
+
 public class UserAccessUtil {
-	
+
 	private static final AccessType[] MEMBER_ACCESS = {
 			AccessType.PRATILIPI_ADD_REVIEW,
 			AccessType.USER_PRATILIPI_REVIEW, AccessType.USER_PRATILIPI_LIBRARY,
 			AccessType.USER_AUTHOR_FOLLOWING,
 			AccessType.COMMENT_ADD, AccessType.COMMENT_UPDATE,
 			AccessType.VOTE };
-	
+
 	private static final AccessType[] ADMIN_ACCESS = {
 			AccessType.INIT_UPDATE,
 			AccessType.PRATILIPI_LIST, AccessType.PRATILIPI_ADD, AccessType.PRATILIPI_UPDATE,
@@ -38,14 +37,14 @@ public class UserAccessUtil {
 		ADMIN_MARATHI	( Language.MARATHI,		ADMIN_ACCESS ),
 		ADMIN_TAMIL		( Language.TAMIL,		ADMIN_ACCESS ),
 		ADMIN_TELUGU	( Language.TELUGU,		ADMIN_ACCESS ),
-		
+
 		ADMINISTRATOR	( null,					AccessType.values() );
 
-		
+
 		private Language language;
 		private AccessType[] accessTypes;
-		
-		
+
+
 		private Role( Language language, AccessType ...accessTypes ) {
 			this.language = language;
 			this.accessTypes = accessTypes;
@@ -65,10 +64,10 @@ public class UserAccessUtil {
 					return true;
 			return false;
 		}
-		
+
 	}
 
-	private enum AEE {
+	public enum AEE {
 
 		MOUMITA ( 6243664397336576L, Role.MEMBER, Role.ADMIN, Role.ADMIN_BENGALI ),
 		NIMISHA ( 5644707593977856L, Role.MEMBER, Role.ADMIN, Role.ADMIN_GUJARATI, Role.ADMIN_HINDI, Role.ADMIN_MARATHI, Role.ADMIN_BENGALI ),
